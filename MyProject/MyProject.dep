@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>2186172762</fileChecksum>
+  <configuration>
+    <name>Debug</name>
+    <outputs>
+      <file>$TOOLKIT_DIR$\inc\ycheck.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\sdram_32M_16bit_drv.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\sys.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\NXP\iolpc2478.h</file>
+      <file>$PROJ_DIR$\application\main.c</file>
+      <file>$TOOLKIT_DIR$\inc\yvals.h</file>
+      <file>$TOOLKIT_DIR$\inc\ysizet.h</file>
+      <file>$TOOLKIT_DIR$\lib\rt4t_al.a</file>
+      <file>$PROJ_DIR$\Debug\List\MyProject.map</file>
+      <file>$TOOLKIT_DIR$\inc\stdio.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\MyProject.out</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Config_Normal.h</file>
+      <file>$TOOLKIT_DIR$\lib\dl4t_tl_in.a</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Product.h</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Threads.h</file>
+      <file>$TOOLKIT_DIR$\inc\io_macros.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\MyProject.pbd</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$TOOLKIT_DIR$\lib\shs_l.a</file>
+      <file>$PROJ_DIR$\Debug\Obj\sys.o</file>
+      <file>$TOOLKIT_DIR$\inc\NXP\iolpc2470.h</file>
+      <file>$TOOLKIT_DIR$\inc\xencoding_limits.h</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\sdram_32M_16bit_drv.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+      <file>$PROJ_DIR$\config\lpc2478_Flash.mac</file>
+      <file>$PROJ_DIR$\config\LPC2478_Flash.icf</file>
+      <file>$PROJ_DIR$\config\LPC2478_SRAM.icf</file>
+      <file>$PROJ_DIR$\config\lpc2478_SRAM.mac</file>
+      <file>$PROJ_DIR$\system\arm_comm.h</file>
+      <file>$PROJ_DIR$\system\board.h</file>
+      <file>$PROJ_DIR$\system\sdram_32M_16bit_drv.c</file>
+      <file>$PROJ_DIR$\system\sdram_32M_16bit_drv.h</file>
+      <file>$PROJ_DIR$\system\sys.c</file>
+      <file>$PROJ_DIR$\system\sys.h</file>
+      <file>$TOOLKIT_DIR$\src\lib\dlib\main.h</file>
+    </outputs>
+    <file>
+      <name>$PROJ_DIR$\application\main.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 2</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 18</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 25 0 10 6 23 12 14 22 15 7 31 4 21 16 30 35 33</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 25 0 10 6 23 14 22 15 7 31 4 21 16 30 35 33</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\MyProject.out</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 9</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 27 2 1 20 19 8 13</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 11 9</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Obj\MyProject.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 18 24 3</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\system\sdram_32M_16bit_drv.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 1</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 24</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 10 0 6 23 12 14 22 15 7 31 25 4 21 16 30 33</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 10 0 6 23 14 22 15 7 31 25 4 21 16 30 33</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\system\sys.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 20</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 3</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 31 25 0 4 21 16 30 33 35</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 31 25 0 4 21 16 30 33 35</file>
+        </tool>
+      </inputs>
+    </file>
+  </configuration>
+</project>
+
+
