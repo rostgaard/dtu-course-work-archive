@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ELF Linker V5.30.2.51295/W32 for ARM              05/Jan/2010  13:10:05 #
+# IAR ELF Linker V5.30.2.51295/W32 for ARM              05/Jan/2010  15:55:45 #
 # Copyright 2007-2009 IAR Systems AB.                                         #
 #                                                                             #
 #    Output file  =  C:\31070\v1\MyProject\Debug\Exe\MyProject.out.tmp        #
@@ -34,56 +34,63 @@ __thumb_aware = enabled
           rw, block CSTACK, block SVC_STACK, block IRQ_STACK, block FIQ_STACK,
           block UND_STACK, block ABT_STACK, block HEAP };
 
-  Section          Kind        Address   Size  Object
-  -------          ----        -------   ----  ------
-"A1":                                    0x3c
-  .intvec          ro code  0x00000000   0x3c  cstartup.o [4]
-                          - 0x0000003c   0x3c
+  Section            Kind        Address   Size  Object
+  -------            ----        -------   ----  ------
+"A1":                                      0x3c
+  .intvec            ro code  0x00000000   0x3c  cstartup.o [4]
+                            - 0x0000003c   0x3c
 
-"P1":                                   0xbd8
-  .text            ro code  0x00000044  0x3f4  sys.o [1]
-  .text            ro code  0x00000438  0x24c  sdram_32M_16bit_drv.o [1]
-  .text            ro code  0x00000684  0x234  main.o [1]
-  Veneer           ro code  0x000008b8    0x4  - Linker created -
-  .text            ro code  0x000008bc  0x1c4  I32DivMod.o [4]
-  .text            ro code  0x00000a80   0x50  cstartup.o [4]
-  .text            ro code  0x00000ad0   0x34  data_init2.o [4]
-  .text            ro code  0x00000b04   0x30  iarwstd.o [5]
-  .text            ro code  0x00000b34   0x28  zero_init2.o [4]
-  Veneer           ro code  0x00000b5c    0xc  - Linker created -
-  Veneer           ro code  0x00000b68    0xc  - Linker created -
-  Veneer           ro code  0x00000b74    0xc  - Linker created -
-  .text            ro code  0x00000b80   0x24  cmain.o [4]
-  .iar.init_table  const    0x00000ba4   0x10  - Linker created -
-  .text            ro code  0x00000bb4   0x1c  exit.o [5]
-  Veneer           ro code  0x00000bd0    0x4  - Linker created -
-  .text            ro code  0x00000bd4   0x10  main.o [1]
-  Veneer           ro code  0x00000be4    0x4  - Linker created -
-  .text            ro code  0x00000be8   0x10  cexit.o [4]
-  .text            ro code  0x00000bf8    0x6  exit.o [3]
-  .text            ro code  0x00000c00    0x4  vectortrap.o [4]
-  .text            ro code  0x00000c04    0x4  vectortrap.o [4]
-  .text            ro code  0x00000c08    0x4  vectortrap.o [4]
-  .text            ro code  0x00000c0c    0x4  vectortrap.o [4]
-  .text            ro code  0x00000c10    0x4  IntDivZer.o [4]
-  .text            ro code  0x00000c14    0x4  xreturnswi.o [5]
-  .text            ro code  0x00000c18    0x4  low_level_init.o [3]
-                          - 0x00000c1c  0xbd8
+"P1":                                     0xd60
+  .text              ro code  0x00000044  0x3f4  sys.o [1]
+  .text              ro code  0x00000438  0x378  main.o [1]
+  .text              ro code  0x000007b0  0x24c  sdram_32M_16bit_drv.o [1]
+  Veneer             ro code  0x000009fc    0x4  - Linker created -
+  .text              ro code  0x00000a00  0x1c4  I32DivMod.o [4]
+  .text              ro code  0x00000bc4   0x50  cstartup.o [4]
+  .text              ro code  0x00000c14   0x34  data_init2.o [4]
+  .text              ro code  0x00000c48   0x30  iarwstd.o [5]
+  .text              ro code  0x00000c78   0x2c  copy_init2.o [4]
+  .text              ro code  0x00000ca4   0x28  zero_init2.o [4]
+  Veneer             ro code  0x00000ccc    0xc  - Linker created -
+  Veneer             ro code  0x00000cd8    0xc  - Linker created -
+  Veneer             ro code  0x00000ce4    0xc  - Linker created -
+  .text              ro code  0x00000cf0   0x24  cmain.o [4]
+  .iar.init_table    const    0x00000d14   0x24  - Linker created -
+  .text              ro code  0x00000d38   0x1c  exit.o [5]
+  Veneer             ro code  0x00000d54    0x4  - Linker created -
+  .text              ro code  0x00000d58   0x10  main.o [1]
+  Veneer             ro code  0x00000d68    0x4  - Linker created -
+  .text              ro code  0x00000d6c   0x10  cexit.o [4]
+  .text              ro code  0x00000d7c    0x6  exit.o [3]
+  .text              ro code  0x00000d84    0x4  vectortrap.o [4]
+  .text              ro code  0x00000d88    0x4  vectortrap.o [4]
+  .text              ro code  0x00000d8c    0x4  vectortrap.o [4]
+  .text              ro code  0x00000d90    0x4  vectortrap.o [4]
+  .text              ro code  0x00000d94    0x4  IntDivZer.o [4]
+  .text              ro code  0x00000d98    0x4  xreturnswi.o [5]
+  .text              ro code  0x00000d9c    0x4  low_level_init.o [3]
+  Initializer bytes  ro data  0x00000da0    0x4  <for P2 s0>
+                            - 0x00000da4  0xd60
 
-"P2", part 1 of 2:                      0x540
-  CSTACK                    0x40000040  0x400  <Block>
-    CSTACK         uninit   0x40000040  0x400  <Block tail>
-  IRQ_STACK                 0x40000440  0x100  <Block>
-    IRQ_STACK      uninit   0x40000440  0x100  <Block tail>
-  FIQ_STACK                 0x40000540   0x40  <Block>
-    FIQ_STACK      uninit   0x40000540   0x40  <Block tail>
-                          - 0x40000580  0x540
+"P2", part 1 of 3:                        0x540
+  CSTACK                      0x40000040  0x400  <Block>
+    CSTACK           uninit   0x40000040  0x400  <Block tail>
+  IRQ_STACK                   0x40000440  0x100  <Block>
+    IRQ_STACK        uninit   0x40000440  0x100  <Block tail>
+  FIQ_STACK                   0x40000540   0x40  <Block>
+    FIQ_STACK        uninit   0x40000540   0x40  <Block tail>
+                            - 0x40000580  0x540
 
-"P2", part 2 of 2:                        0xc
-  .bss             zero     0x40000580    0x4  main.o [1]
-  .bss             zero     0x40000584    0x4  main.o [1]
-  .bss             zero     0x40000588    0x4  iarwstd.o [5]
-                          - 0x4000058c    0xc
+"P2", part 2 of 3:                          0xc
+  .bss               zero     0x40000580    0x4  main.o [1]
+  .bss               zero     0x40000584    0x4  main.o [1]
+  .bss               zero     0x40000588    0x4  iarwstd.o [5]
+                            - 0x4000058c    0xc
+
+"P2", part 3 of 3:                          0x4
+  P2 s0                       0x4000058c    0x4  <Init block>
+    .data            inited   0x4000058c    0x4  main.o [1]
+                            - 0x40000590    0x4
 
 
 *******************************************************************************
@@ -96,6 +103,12 @@ Zero (__iar_zero_init2)
     1 destination range, total size 0xc:
           0x40000580   0xc
 
+Copy (__iar_copy_init2)
+    1 source range, total size 0x4 (100% of destination):
+               0xda0   0x4
+    1 destination range, total size 0x4:
+          0x4000058c   0x4
+
 
 *******************************************************************************
 *** MODULE SUMMARY
@@ -104,11 +117,11 @@ Zero (__iar_zero_init2)
     Module                 ro code  ro data  rw data
     ------                 -------  -------  -------
 C:\31070\v1\MyProject\Debug\Obj: [1]
-    main.o                     580                 8
+    main.o                     904        4       12
     sdram_32M_16bit_drv.o      588
     sys.o                    1 012
     ------------------------------------------------
-    Total:                   2 180                 8
+    Total:                   2 504        4       12
 
 command line: [2]
     ------------------------------------------------
@@ -125,12 +138,13 @@ rt4t_al.a: [4]
     IntDivZer.o                  4
     cexit.o                     16
     cmain.o                     36
+    copy_init2.o                44
     cstartup.o                 140
     data_init2.o                52
     vectortrap.o                16
     zero_init2.o                40
     ------------------------------------------------
-    Total:                     756
+    Total:                     800
 
 shs_l.a: [5]
     exit.o                      28
@@ -140,9 +154,9 @@ shs_l.a: [5]
     Total:                      80                 4
 
     Gaps                         2
-    Linker created              48       16    1 344
+    Linker created              48       36    1 344
 ----------------------------------------------------
-    Grand Total:             3 076       16    1 356
+    Grand Total:             3 444       40    1 360
 
 
 *******************************************************************************
@@ -151,10 +165,12 @@ shs_l.a: [5]
 
 Entry                      Address   Size  Type      Object
 -----                      -------   ----  ----      ------
-?main                   0x00000b80         Code  Gb  cmain.o [4]
-Abort_Handler           0x00000c0c         Code  Wk  vectortrap.o [4]
+?main                   0x00000cf0         Code  Gb  cmain.o [4]
+ADC_Intr_Handler        0x00000515   0x38  Code  Gb  main.o [1]
+Abort_Handler           0x00000d90         Code  Wk  vectortrap.o [4]
 CSTACK$$Base            0x40000040          --   Gb  - Linker created -
 CSTACK$$Limit           0x40000440          --   Gb  - Linker created -
+Data                    0x4000058c    0x4  Data  Gb  main.o [1]
 FIQ_Handler             0x00000044    0x4  Code  Gb  sys.o [1]
 FIQ_STACK$$Base         0x40000540          --   Gb  - Linker created -
 FIQ_STACK$$Limit        0x40000580          --   Gb  - Linker created -
@@ -163,23 +179,27 @@ IRQ_Handler             0x00000048   0x3c  Code  Gb  sys.o [1]
 IRQ_STACK$$Base         0x40000440          --   Gb  - Linker created -
 IRQ_STACK$$Limit        0x40000540          --   Gb  - Linker created -
 InitClock               0x00000111  0x104  Code  Gb  sys.o [1]
-Prefetch_Handler        0x00000c08         Code  Wk  vectortrap.o [4]
-Region$$Table$$Base     0x00000ba4          --   Gb  - Linker created -
-Region$$Table$$Limit    0x00000bb4          --   Gb  - Linker created -
+Prefetch_Handler        0x00000d8c         Code  Wk  vectortrap.o [4]
+Region$$Table$$Base     0x00000d14          --   Gb  - Linker created -
+Region$$Table$$Limit    0x00000d38          --   Gb  - Linker created -
 SDRAM_BASE_ADDR         0xa0000000          --   Gb  command line/config [2]
-SDRAM_Init              0x00000439  0x24c  Code  Gb  sdram_32M_16bit_drv.o [1]
-SWI_Handler             0x00000c04         Code  Wk  vectortrap.o [4]
+SDRAM_Init              0x000007b1  0x24c  Code  Gb  sdram_32M_16bit_drv.o [1]
+SWI_Handler             0x00000d88         Code  Wk  vectortrap.o [4]
 SYS_GetFpclk            0x000002a9   0x42  Code  Gb  sys.o [1]
 SYS_GetFsclk            0x00000219   0x84  Code  Gb  sys.o [1]
 Sys_Init                0x000003ed   0x4c  Code  Gb  sys.o [1]
 T0MR0                   0xe0004018    0x4  Data  Wk  main.o [1]
 T0PR                    0xe000400c    0x4  Data  Wk  main.o [1]
-Timer0IntrHandler       0x00000685   0x88  Code  Gb  main.o [1]
-Undefined_Handler       0x00000c00         Code  Wk  vectortrap.o [4]
+Timer0IntrHandler       0x00000721   0x90  Code  Gb  main.o [1]
+Undefined_Handler       0x00000d84         Code  Wk  vectortrap.o [4]
 VICADDRESS              0xffffff00    0x4  Data  Wk  main.o [1]
 VICVECTADDR0            0xfffff100    0x4  Data  Wk  sys.o [1]
 VIC_Init                0x00000085   0x58  Code  Gb  sys.o [1]
 VIC_SetVectoredIRQ      0x000000dd   0x28  Code  Gb  sys.o [1]
+_A_AD0CR                0xe0034000    0x4  Data  Wk  main.o [1]
+_A_AD0GDR               0xe0034004    0x4  Data  Wk  main.o [1]
+_A_ADINTEN              0xe003400c    0x4  Data  Wk  main.o [1]
+_A_ADSTAT               0xe0034030    0x4  Data  Wk  main.o [1]
 _A_CCLKCFG              0xe01fc104    0x4  Data  Wk  sys.o [1]
 _A_CLKSRCSEL            0xe01fc10c    0x4  Data  Wk  sys.o [1]
 _A_DACR                 0xe006c000    0x4  Data  Wk  main.o [1]
@@ -250,31 +270,34 @@ _A_VICINTSELECT         0xfffff00c    0x4  Data  Wk  sys.o [1]
 _A_VICPROTECTION        0xfffff020    0x4  Data  Wk  sys.o [1]
 _A_VICSOFTINTCLEAR      0xfffff01c    0x4  Data  Wk  sys.o [1]
 _A_VICVECTPRIORITY0     0xfffff200    0x4  Data  Wk  sys.o [1]
-__aeabi_idiv0           0x00000c10         Code  Gb  IntDivZer.o [4]
-__aeabi_uidiv           0x000008bc         Code  Gb  I32DivMod.o [4]
-__aeabi_uidivmod        0x000008bc         Code  Gb  I32DivMod.o [4]
-__exit                  0x00000bb4   0x1c  Code  Gb  exit.o [5]
-__iar_data_init2        0x00000ad0   0x34  Code  Gb  data_init2.o [4]
-__iar_enable_interrupt  0x00000bd4         Code  Wk  main.o [1]
-__iar_program_start     0x00000a80         Code  Gb  cstartup.o [4]
-__iar_return_from_swi   0x00000c14    0x4  Code  Gb  xreturnswi.o [5]
-__iar_sh_stdout_close   0x00000b04   0x2c  Code  Gb  iarwstd.o [5]
+__aeabi_idiv0           0x00000d94         Code  Gb  IntDivZer.o [4]
+__aeabi_uidiv           0x00000a00         Code  Gb  I32DivMod.o [4]
+__aeabi_uidivmod        0x00000a00         Code  Gb  I32DivMod.o [4]
+__exit                  0x00000d38   0x1c  Code  Gb  exit.o [5]
+__iar_copy_init2        0x00000c78   0x2c  Code  Gb  copy_init2.o [4]
+__iar_data_init2        0x00000c14   0x34  Code  Gb  data_init2.o [4]
+__iar_enable_interrupt  0x00000d58         Code  Wk  main.o [1]
+__iar_program_start     0x00000bc4         Code  Gb  cstartup.o [4]
+__iar_return_from_swi   0x00000d98    0x4  Code  Gb  xreturnswi.o [5]
+__iar_sh_stdout_close   0x00000c48   0x2c  Code  Gb  iarwstd.o [5]
 __iar_sh_stdout_handle  0x40000588    0x4  Data  Lc  iarwstd.o [5]
-__iar_zero_init2        0x00000b34   0x28  Code  Gb  zero_init2.o [4]
-__low_level_init        0x00000c19    0x4  Code  Gb  low_level_init.o [3]
+__iar_zero_init2        0x00000ca4   0x28  Code  Gb  zero_init2.o [4]
+__low_level_init        0x00000d9d    0x4  Code  Gb  low_level_init.o [3]
 __vector                0x00000000         Code  Gb  cstartup.o [4]
 __vector_0x14           0x00000014         Code  Gb  cstartup.o [4]
-_exit                   0x00000be8         Code  Gb  cexit.o [4]
+_exit                   0x00000d6c         Code  Gb  cexit.o [4]
 blink_timer             0x40000580    0x4  Data  Gb  main.o [1]
 dac_timer               0x40000584    0x4  Data  Gb  main.o [1]
-exit                    0x00000bf9    0x6  Code  Gb  exit.o [3]
-initialize_dac          0x00000791   0x34  Code  Gb  main.o [1]
-initialize_led          0x00000751   0x40  Code  Gb  main.o [1]
-initialize_timer        0x000007c5   0x98  Code  Gb  main.o [1]
-main                    0x0000070d   0x44  Code  Gb  main.o [1]
-start_timer             0x00000861    0xe  Code  Gb  main.o [1]
-stop_timer              0x0000086f    0xe  Code  Gb  main.o [1]
-toggle_led              0x00000881   0x34  Code  Gb  main.o [1]
+exit                    0x00000d7d    0x6  Code  Gb  exit.o [3]
+initialize_adc          0x00000555   0xb8  Code  Gb  main.o [1]
+initialize_dac          0x000004e1   0x34  Code  Gb  main.o [1]
+initialize_led          0x000004a1   0x40  Code  Gb  main.o [1]
+initialize_timer        0x0000062d   0x94  Code  Gb  main.o [1]
+main                    0x00000439   0x68  Code  Gb  main.o [1]
+start_adc               0x00000611   0x14  Code  Gb  main.o [1]
+start_timer             0x000006c9    0xe  Code  Gb  main.o [1]
+stop_timer              0x000006d7    0xe  Code  Gb  main.o [1]
+toggle_led              0x000006e9   0x34  Code  Gb  main.o [1]
 
 
 [1] = C:\31070\v1\MyProject\Debug\Obj
@@ -283,9 +306,9 @@ toggle_led              0x00000881   0x34  Code  Gb  main.o [1]
 [4] = rt4t_al.a
 [5] = shs_l.a
 
-  3 076 bytes of readonly  code memory
-     16 bytes of readonly  data memory
-  1 356 bytes of readwrite data memory
+  3 444 bytes of readonly  code memory
+     40 bytes of readonly  data memory
+  1 360 bytes of readwrite data memory
 
 Errors: none
 Warnings: none

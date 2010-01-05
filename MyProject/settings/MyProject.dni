@@ -1,7 +1,7 @@
 [JLinkDriver]
 WatchCond=_ 0
-Watch0=_ 0 "" 0 "" 0 "" 0 "" 0 0 0 0
-Watch1=_ 0 "" 0 "" 0 "" 0 "" 0 0 0 0
+Watch0=_ 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 0 0 0
+Watch1=_ 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 0 0 0
 [DisAssemblyWindow]
 NumStates=_ 1
 State 1=_ 1
@@ -23,9 +23,15 @@ ByteLimit=50
 Enabled=0
 ShowSource=1
 [DebugChecksum]
-Checksum=1659127191
+Checksum=-574621103
 [InstructionProfiling]
 Enabled=_ 0
+[Disassemble mode]
+mode=0
+[Breakpoints]
+Bp0=_ "EMUL_DATA" "AD0CR_bit" 0 0 0 116 0 "" 0 ""
+Bp1=_ "STD_CODE" "{$PROJ_DIR$\application\main.c}.112.3@1" 1 0 0 0 "" 0 "" 0
+Count=2
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -37,7 +43,3 @@ LogFile=_ ""
 Enabled=0
 Source=2
 Graph=0
-[Disassemble mode]
-mode=0
-[Breakpoints]
-Count=0
