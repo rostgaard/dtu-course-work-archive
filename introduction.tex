@@ -1,0 +1,29 @@
+\chapter{Introduction}
+\label{chap:intro}
+
+Take a look at \citet{knueppel2008} to see this template in action.
+
+% insert nomenclature
+\def\nompreamble{
+
+To create the list of symbols execute:
+
+\texttt{makeindex <filenamee>.nlo -s nomencl.ist -o <filename>.nls}
+
+\begin{tabular}{l l}\\
+  \multicolumn{2}{l}{{\bf Abbreviations:}}\\
+  TSO & Transmission System Operator \\
+  ISO & Independent System Operator \\
+  \ldots & 
+\end{tabular}
+
+{Upper-case notation of voltages and currents are phasors.
+  Vectors and matrices are written in {\bf bold}.}
+}
+\addcontentsline{toc}{chapter}{Nomenclature}
+\printnomenclature
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "master"
+%%% End: 

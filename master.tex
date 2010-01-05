@@ -1,0 +1,190 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Thesis template file
+%  prepared by:
+%  Thyge Knüppel, tkn@elektro.dtu.dk, DTU Elektro, May 2008
+%
+%  Based on the work of Jan Larsen, IMM, DTU (cf. http://www2.imm.dtu.dk/teaching/phd/)
+%
+%  The front and back matter setup are based on the work from an earlier cet
+%  template 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% compilation using latex (i.e. via a ps file)
+\documentclass[a4paper,11pt,twoside,openright,dvips]{book}
+
+% compilation using PDFLATEX - Note that pdflatex is known to have issues with
+% some of the pstricks-packages
+% \documentclass[a4paper,11pt,twoside,openright,pdftex]{book}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Input info. for cover, titlepages, pdf properties, version etc.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\ThesisAuthor{MyAuthor1\\MyAuthor2}%multiple authors separated by "\\"
+                         %If there are multiple authors adjust the \vspace 
+                         %in thesislayout.sty as necessary 
+\def\ThesisAuthorForHyperref{MyAuthor1, MyAuthor2}%list of authors for pdf
+                                %properties. Multiple authors separated by ","
+\def\ThesisTitle{My Very Long and Complicated Thesis Title} %project title
+\def\Subtitle{Thesis Subtitle} %subtitle - if any
+\def\thesiskeywords{latex template, other keywords} %keywords for the pdf file
+\def\thesissubject{} %only for pdf properties - doesn't appear on printed
+                     %versions
+\def\Supervisor{Supervisor 1\\Supervisor 2} %list of supervisors. multiple
+                                %supervisors are separated by "\\"
+\def\projecttype{Master's Thesis, Month year} %type of project (see README file
+                                %for explanation)
+\def\ISBNNUMBER{} %type \ISBNNUMBER{ISBN: xxx} if your project has one
+\def\DatePublished{Date published} %date of publication
+\def\Klasse{1 (public)} %project class (see README file for explanation)
+\def\Degree{Master of Science in Engineering (M.Sc.Eng.)} %obtained degree (see
+                                %README file for explanation)
+\def\ECTSpoints{30} %# of ECTS points 
+\def\Udgave{First} %edition
+\def\Owner{MyOwner, 2008} %name of copyright and year
+
+\def\thesisversion{final} %OBSOBS choose this for final version (official set of
+                          %title pages) 
+%\def\thesisversion{draft} %OBSOBS choose this for draft version (simple title
+                           %page and no info page
+
+%\def\thesislinks{no}%OBSOBS choose this for paper version 
+\def\thesislinks{yes}%OBSOBS choose this for online version 
+
+\def\thesislanguage{en}%OBSOBS compile document for English 
+%\def\thesislanguage{da}%OBSOBS compile document for Danish
+
+%do NOT modify
+\def\danishlang{da}
+\def\printversion{final}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Load style definitions, packages, etc. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%load thesisdef and styles
+\usepackage{thesisdef}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FRONT MATTER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frontmatter
+
+\ifx\thesisversion\printversion
+% for final version include standard dtu cover pages
+\pagenumbering{alph}%dummy numbering for pdf-file (numbering set as a
+                    %pdf-property and is NOT visible on the document). The
+                    %hyperref package complains if duplicate numbering exists
+
+\coverpages         %generate the first four pages
+\else
+  %for draft version use simple title page
+\title{\ThesisTitle{} - \Subtitle{}}
+\author{\ThesisAuthor}
+\thispagestyle{empty}
+\maketitle
+\newpage
+\thispagestyle{empty}
+\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PREFACE CHAPTERS INCLUDE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\setcounter{page}{1}\pagenumbering{roman}%\pagestyle{headings}
+%preface chapters
+\pagenumbering{roman}
+\input{preface.tex}
+\pagestyle{empty}%disable headers in the preface chapters
+\markboth{}{}
+\input{summary.tex}
+\markboth{}{}
+\input{resume.tex}
+\markboth{}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TOC,LOF,LOT and SETUP HEADER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\tableofcontents 
+\pagestyle{fancyplain}%enable headers in the main document
+%\chaptermark{Contents}
+%\renewcommand{\sectionmark}[1]{\markright{#1}}
+%\sectionmark{Contents}
+\newpage
+
+\ifx\thesislanguage\danishlang
+\addcontentsline{toc}{chapter}{Figurliste}
+\else
+\addcontentsline{toc}{chapter}{List of Figures}
+\fi
+\listoffigures
+
+
+\ifx\thesislanguage\danishlang
+\addcontentsline{toc}{chapter}{Tabelliste}
+\else
+\addcontentsline{toc}{chapter}{List of Tables}
+\fi
+\listoftables
+
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MAIN CHAPTERS INCLUDE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mainmatter
+
+%\setcounter{page}{1}\pagenumbering{arabic} %\pagestyle{fancyplain}
+\input{introduction.tex}
+\input{chap2.tex}
+\input{perspectives.tex}
+\input{conclusion.tex}
+%\input{...}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BIBLIOGRAPHY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\ifx\thesislanguage\danishlang
+\addcontentsline{toc}{chapter}{Referencer}
+\else
+\addcontentsline{toc}{chapter}{References}
+\fi
+\bibliographystyle{plainnat}
+\bibliography{bibbase}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDIX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\appendix
+\ifx\thesislanguage\danishlang
+\addcontentsline{toc}{chapter}{Appendiks}
+\else
+\addcontentsline{toc}{chapter}{Appendix}
+\fi
+\input{app1.tex} 
+%\input{...}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BACK MATTER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\backmatter
+\ifx\thesisversion\printversion
+  \makebackpage %generate the backmatter
+\fi
+
+
+\end{document}
