@@ -16,10 +16,13 @@ unsigned long timetick =0;
 Int32U Data=50;
 int channel = 0;
 int adcCLK = 0;
-float ADdata[2] = {0.0,0.0};
+float ADdata[2] = {0.0,0.0};    //([y(k-1) y(k)]) => ADdata(1)=y(k-1), ADdata(0)=y(k)
 float alpha;
 float frequency;
 int tick_count = 0;
+int linear_inerpolaion = false;
+float zero_crossing_detection_level = 512.0;
+float AD_zerocrossing_delay[2] = {0.0,0.0};   //([y(k-1) y(k)]) just after the zero-crossing accured
 
 
 
@@ -36,6 +39,9 @@ void start_adc();
 void update_alpha();
 int detect_ZeroCrossing();
 float ADfilter(Int32U Data);
+float ZeroCrossing_delays();
+float Frequency_with_interpolation();
+float Frequency_without_interpolation();
 
 /*************************************************************************
  * Function Name: Timer0IntrHandler
@@ -188,7 +194,16 @@ void Timer0IntrHandler (void)
   tick_count++;
   if(detect_ZeroCrossing() == true)
   {
-    frequency = 1/(dT*tick_count);
+    if(linear_inerpolaion == true){
+      //Updating the array with the zero crossing delays 
+      AD_zerocrossing_delay[1]=AD_zerocrossing_delay[0];
+      AD_zerocrossing_delay[0]=ZeroCrossing_delays();
+      frequency = Frequency_with_interpolation(tick_count);
+    }
+    else{
+      frequency = Frequency_without_interpolation(tick_count);
+    }
+    
     tick_count=0; 
   }
 
@@ -207,7 +222,7 @@ void Timer0IntrHandler (void)
     }
   }
   
-  if(tick_count < 10)
+  if(tick_count < 30)
   { 
     DACR_bit.VALUE = 1023;
   }
@@ -236,8 +251,27 @@ float ADfilter(Int32U x){
 }
 int detect_ZeroCrossing()
 {
-  if((ADdata[1]<512)&(ADdata[0]>=512)) //on rising edge 
+  if((ADdata[1]<zero_crossing_detection_level)&(ADdata[0]>=zero_crossing_detection_level)) //on rising edge 
     return true;
   else
     return false;
+}
+
+float ZeroCrossing_delays(){
+  float T=dT;
+  float x_dT=(zero_crossing_detection_level-ADdata[1])/(ADdata[0]-ADdata[1])*T;
+  return T-x_dT;
+
+}
+
+float Frequency_with_interpolation(){
+  
+  float T=dT;
+  return 1.0/((tick_count*T)+(AD_zerocrossing_delay[0]-AD_zerocrossing_delay[1]));
+}
+
+float Frequency_without_interpolation(){
+  
+  float frequency = 1.0/(dT*tick_count);
+    return frequency;
 }
