@@ -12,7 +12,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>16</version>
+        <version>17</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -29,7 +29,7 @@
         </option>
         <option>
           <name>Variant</name>
-          <version>8</version>
+          <version>9</version>
           <state>1</state>
         </option>
         <option>
@@ -126,13 +126,22 @@
           <version>0</version>
           <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
         </option>
+        <option>
+          <name>GeneralMisraVer</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GeneralMisraRules04</name>
+          <version>0</version>
+          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>20</version>
+        <version>21</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -310,6 +319,11 @@
           <name>CompilerMisraRules98</name>
           <version>0</version>
           <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
+        </option>
+        <option>
+          <name>CompilerMisraRules04</name>
+          <version>0</version>
+          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
       </data>
     </settings>
@@ -534,7 +548,7 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>6</version>
+        <version>7</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -744,6 +758,10 @@
           <name>IlinkStdoutInterfaceSlave</name>
           <state>1</state>
         </option>
+        <option>
+          <name>CrcFullSize</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -775,6 +793,9 @@
   </configuration>
   <group>
     <name>Application</name>
+    <file>
+      <name>$PROJ_DIR$\application\config.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$\application\main.c</name>
     </file>

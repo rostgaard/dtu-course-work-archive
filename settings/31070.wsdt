@@ -12,7 +12,7 @@
           
           
           
-        <Column0>143</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+        <Column0>143</Column0><Column1>11</Column1><Column2>27</Column2><Column3>1242260</Column3></ColumnWidths>
       </Workspace>
       <Build>
         
@@ -25,7 +25,7 @@
     <Windows>
       
       
-    <Wnd2>
+    <Wnd0>
         <Tabs>
           <Tab>
             <Identity>TabID-10323-27083</Identity>
@@ -33,11 +33,11 @@
             <Factory>Workspace</Factory>
             <Session>
               
-            <NodeDict><ExpandedNode>MyProject</ExpandedNode><ExpandedNode>MyProject/Application</ExpandedNode><ExpandedNode>MyProject/Application/main.c</ExpandedNode><ExpandedNode>MyProject/Config</ExpandedNode><ExpandedNode>MyProject/Output</ExpandedNode><ExpandedNode>MyProject/System</ExpandedNode></NodeDict></Session>
+            <NodeDict><ExpandedNode>MyProject</ExpandedNode><ExpandedNode>MyProject/Application</ExpandedNode><ExpandedNode>MyProject/Application/main.c</ExpandedNode><ExpandedNode>MyProject/Application/main.c/Output</ExpandedNode><ExpandedNode>MyProject/Config</ExpandedNode><ExpandedNode>MyProject/Output</ExpandedNode><ExpandedNode>MyProject/System</ExpandedNode></NodeDict></Session>
           </Tab>
         </Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd2><Wnd3>
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1>
         <Tabs>
           <Tab>
             <Identity>TabID-745-27877</Identity>
@@ -47,20 +47,20 @@
           </Tab>
         </Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd3></Windows>
+      <SelectedTab>0</SelectedTab></Wnd1></Windows>
     <Editor>
       
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>C:\Program Files\IAR Systems\Embedded Workbench 5.4\arm\INC\NXP\iolpc2470.h</Filename><XPos>0</XPos><YPos>5606</YPos><SelStart>176768</SelStart><SelEnd>176768</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\system\sys.c</Filename><XPos>0</XPos><YPos>30</YPos><SelStart>1080</SelStart><SelEnd>1080</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\System\board.h</Filename><XPos>0</XPos><YPos>159</YPos><SelStart>5602</SelStart><SelEnd>5602</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\main.c</Filename><XPos>0</XPos><YPos>90</YPos><SelStart>2300</SelStart><SelEnd>2300</SelEnd></Tab><ActiveTab>3</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>C:\Program Files\IAR Systems\Embedded Workbench 5.4\arm\inc\NXP\iolpc2478.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\main.c</Filename><XPos>0</XPos><YPos>196</YPos><SelStart>3985</SelStart><SelEnd>3985</SelEnd></Tab><ActiveTab>0</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\config.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>302</SelStart><SelEnd>302</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\config\LPC2478_Flash.icf</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\system\sys.c</Filename><XPos>0</XPos><YPos>38</YPos><SelStart>1436</SelStart><SelEnd>1436</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\System\board.h</Filename><XPos>0</XPos><YPos>159</YPos><SelStart>5265</SelStart><SelEnd>5265</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
     <Positions>
       
       
       
       
       
-    <Top><Row0><Sizes><Toolbar-00b0aef8><key>iaridepm.enu1</key></Toolbar-00b0aef8></Sizes></Row0><Row1><Sizes/></Row1><Row2><Sizes><Toolbar-047903e0><key>debuggergui.enu1</key></Toolbar-047903e0></Sizes></Row2></Top><Left><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>746</Bottom><Right>217</Right><x>-2</x><y>-2</y><xscreen>133</xscreen><yscreen>170</yscreen><sizeHorzCX>103906</sizeHorzCX><sizeHorzCY>177453</sizeHorzCY><sizeVertCX>171094</sizeVertCX><sizeVertCY>780793</sizeVertCY></Rect></Wnd2></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>168</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>170</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>177453</sizeHorzCY><sizeVertCX>103906</sizeVertCX><sizeVertCY>177453</sizeVertCY></Rect></Wnd3></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-00b0aef8><key>iaridepm.enu1</key></Toolbar-00b0aef8></Sizes></Row0><Row1><Sizes/></Row1></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>746</Bottom><Right>217</Right><x>-2</x><y>-2</y><xscreen>133</xscreen><yscreen>170</yscreen><sizeHorzCX>103906</sizeHorzCX><sizeHorzCY>177453</sizeHorzCY><sizeVertCX>171094</sizeVertCX><sizeVertCY>780793</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>168</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>170</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>177453</sizeHorzCY><sizeVertCX>103906</sizeVertCX><sizeVertCY>177453</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Workspace>
 

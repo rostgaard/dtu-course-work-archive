@@ -3,23 +3,25 @@
 #include <stdio.h>
 #include "board.h"
 #include "sys.h"
+#include "config.h"
 #include "sdram_32M_16bit_drv.h"
-/*#include "drv_glcd.h"
-#include "logo.h"
-#include "Cursor.h"
-#include "smb380_drv.h"*/
 
 
-#define DAC_MAXIMUM  1024 // 2^10
-#define FREQUENCY 50
-#define TIMER0_TICK_PER_SEC  FREQUENCY*DAC_MAXIMUM
-#define SAMPLE_FREQUENCY 10000
-#define dT 1/SAMPLE_FREQUENCY
-#define Fc 50
-#define VREF 3.3
+
+
+
+
 
 unsigned long timetick =0;
 Int32U Data=50;
+int channel = 0;
+int adcCLK = 0;
+float ADdata[2] = {0.0,0.0};
+float alpha;
+float frequency;
+int tick_count = 0;
+
+
 
 void start_timer();
 void stop_timer();
@@ -31,6 +33,9 @@ void initialize_dac();
 void initialize_adc();
 void toggle_led(int led_number);
 void start_adc();
+void update_alpha();
+int detect_ZeroCrossing();
+float ADfilter(Int32U Data);
 
 /*************************************************************************
  * Function Name: Timer0IntrHandler
@@ -82,7 +87,7 @@ int main(void)
   start_adc();
  //Enable interrupts
   __enable_interrupt();
-
+  update_alpha(); //sets the alpha value for the low-pass filter 
   while (1) {
     ;
   };
@@ -99,44 +104,25 @@ void initialize_led()
   FIO1PIN_bit.P1_18 = 0;
   FIO1PIN_bit.P1_18 = 1;
 }
+
 void initialize_dac()
 {
   PINMODE1_bit.P0_26 = 2; 
   PINSEL1_bit.P0_26 = 2;
 }
-void ADC_Intr_Handler ()
-{
-  //Int32U Data;
-  
-  AD0CR_bit.START = 0;
-  Data = AD0GDR_bit.RESULT;
 
- AD0CR_bit.START = 1;
-  // clear interrupt
-  VICADDRESS = 0;
- 
-}
 void initialize_adc()
 {
-  
+  PINMODE1_bit.P0_25 = 2; 
+  PINSEL1_bit.P0_25 = 1;
   // Init ADC
   PCONP_bit.PCAD = 1;         // Enable ADC clocks
   AD0CR_bit.PDN  = 1;         // converter is operational
-  AD0CR_bit.START = 0;
-  
-  ADINTEN |= 1UL << 1;
-  
-  AD0CR_bit.SEL  = 1UL<<2;    // select Ch1
-  AD0CR_bit.CLKDIV = (int)(SYS_GetFpclk(ADC_PCLK_OFFSET)/ TIMER0_TICK_PER_SEC);
+  AD0CR_bit.START = 0; 
+  AD0CR_bit.SEL |= 1UL << 2;    // select Ch2
+  AD0CR_bit.CLKDIV = (SYS_GetFpclk(ADC_PCLK_OFFSET)/ 4);       //sampling frequency Fs=(AD0CR_bit.CLKDIV)/11=409090Hz
   AD0CR_bit.BURST  = 0;       // disable burst
   AD0CR_bit.CLKS   = 0;       // 10 bits resolution
-
-  // clear all pending interrupts
-  while(ADSTAT_bit.ADINT)
-  {
-    volatile Int32U Dummy = AD0GDR;
-  }
- 
 }
 
 void start_adc(){
@@ -185,23 +171,73 @@ void toggle_led(int led_number) {
   }
 }
 
+void ADC_Intr_Handler ()
+{
+  //Int32U Data;
+  
+  AD0CR_bit.START = 0;  //Stop the ADC
+  
+  Data = (Int32U)ADfilter(AD0GDR_bit.RESULT);
+
+ // AD0CR_bit.START = 1;
+  // clear interrupt
+  VICADDRESS = 0;
+}
 void Timer0IntrHandler (void)
 {
+  tick_count++;
+  if(detect_ZeroCrossing() == true)
+  {
+    frequency = 1/(dT*tick_count);
+    tick_count=0; 
+  }
+
   
+  AD0CR_bit.START = 1;  //Start the ADC
   dac_timer++;
   if(dac_timer == DAC_MAXIMUM) {
     dac_timer = 0;
     
     blink_timer++;
-    if(blink_timer == FREQUENCY) {
+    if(blink_timer == FREQUENCY/5) {
       toggle_led(1);
       toggle_led(2);
       blink_timer = 0;
+      
     }
   }
+  
+  if(tick_count < 10)
+  { 
+    DACR_bit.VALUE = 1023;
+  }
+  else
+  {
+    DACR_bit.VALUE = Data;
+  }
   //DACR_bit.VALUE = dac_timer;
-  DACR_bit.VALUE = Data;
+  //DACR_bit.VALUE = Data;
   // clear interrupt
   T0IR_bit.MR0INT = 1;
   VICADDRESS = 0;
+}
+void update_alpha()
+{
+    alpha=dT/(1/(2*PI*ADFILTER_CUT_OFF_FREQUENCY)+dT);
+}
+float ADfilter(Int32U x){
+  
+  //shifting data in the ADdata array ([y(k-1) y(k)]) => ADdata(1)=y(k-1), ADdata(0)=y(k)
+  ADdata[1]=ADdata[0];
+  ADdata[0]=(alpha*x+(1-alpha)*ADdata[1]);
+    //return filtered y(k)
+    return (Int32U)ADdata[0];
+  
+}
+int detect_ZeroCrossing()
+{
+  if((ADdata[1]<512)&(ADdata[0]>=512)) //on rising edge 
+    return true;
+  else
+    return false;
 }
