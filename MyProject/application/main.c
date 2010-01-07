@@ -20,7 +20,7 @@ float ADdata[2] = {0.0,0.0};    //([y(k-1) y(k)]) => ADdata(1)=y(k-1), ADdata(0)
 float alpha;
 float frequency;
 int tick_count = 0;
-int linear_inerpolaion = false;
+int linear_inerpolaion = true;
 float zero_crossing_detection_level = 512.0;
 float AD_zerocrossing_delay[2] = {0.0,0.0};   //([y(k-1) y(k)]) just after the zero-crossing accured
 
@@ -84,7 +84,7 @@ int main(void)
   initialize_timer();
   
  //Setup VIC to respond to VIC_TIMER0 and call Timer0IntrHandler()
-  VIC_SetVectoredIRQ(Timer0IntrHandler,0,VIC_TIMER0);
+  VIC_SetVectoredIRQ(Timer0IntrHandler,1,VIC_TIMER0);
   VIC_SetVectoredIRQ(ADC_Intr_Handler,0,VIC_AD0);
   VICINTENABLE |= 1UL << VIC_AD0;  
   VICINTENABLE |= 1UL << VIC_TIMER0;
@@ -185,12 +185,13 @@ void ADC_Intr_Handler ()
   
   Data = (Int32U)ADfilter(AD0GDR_bit.RESULT);
 
- // AD0CR_bit.START = 1;
   // clear interrupt
   VICADDRESS = 0;
 }
 void Timer0IntrHandler (void)
 {
+  AD0CR_bit.START = 1;  //Start the ADC, ADC will be done before next timer interrupt
+                        //it has higer priority and will therefore be handlet first  
   tick_count++;
   if(detect_ZeroCrossing() == true)
   {
@@ -198,6 +199,7 @@ void Timer0IntrHandler (void)
       //Updating the array with the zero crossing delays 
       AD_zerocrossing_delay[1]=AD_zerocrossing_delay[0];
       AD_zerocrossing_delay[0]=ZeroCrossing_delays();
+      
       frequency = Frequency_with_interpolation(tick_count);
     }
     else{
@@ -208,7 +210,8 @@ void Timer0IntrHandler (void)
   }
 
   
-  AD0CR_bit.START = 1;  //Start the ADC
+  
+  
   dac_timer++;
   if(dac_timer == DAC_MAXIMUM) {
     dac_timer = 0;
@@ -258,20 +261,18 @@ int detect_ZeroCrossing()
 }
 
 float ZeroCrossing_delays(){
-  float T=dT;
-  float x_dT=(zero_crossing_detection_level-ADdata[1])/(ADdata[0]-ADdata[1])*T;
-  return T-x_dT;
+
+  float x_dT=(zero_crossing_detection_level-ADdata[1])/(ADdata[0]-ADdata[1])*dT;
+  return dT-x_dT;
 
 }
 
 float Frequency_with_interpolation(){
   
-  float T=dT;
-  return 1.0/((tick_count*T)+(AD_zerocrossing_delay[0]-AD_zerocrossing_delay[1]));
+  return 1.0/((tick_count*dT)+(AD_zerocrossing_delay[0]-AD_zerocrossing_delay[1]));
 }
 
 float Frequency_without_interpolation(){
-  
-  float frequency = 1.0/(dT*tick_count);
-    return frequency;
+
+  return 1.0/(dT*tick_count);
 }

@@ -6,35 +6,35 @@
   <configuration>
     <name>Debug</name>
     <outputs>
-      <file>$PROJ_DIR$\application\config.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\sdram_32M_16bit_drv.pbi</file>
+      <file>$TOOLKIT_DIR$\lib\dl4t_tl_in.a</file>
       <file>$PROJ_DIR$\application\main.c</file>
-      <file>$PROJ_DIR$\Debug\Exe\MyProject.out</file>
-      <file>$TOOLKIT_DIR$\inc\NXP\iolpc2470.h</file>
+      <file>$PROJ_DIR$\Debug\List\MyProject.map</file>
+      <file>$PROJ_DIR$\config\LPC2478_Flash.icf</file>
+      <file>$PROJ_DIR$\application\config.h</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Product.h</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Threads.h</file>
+      <file>$TOOLKIT_DIR$\inc\yvals.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\MyProject.pbd</file>
+      <file>$TOOLKIT_DIR$\inc\io_macros.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.o</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\sdram_32M_16bit_drv.o</file>
+      <file>$TOOLKIT_DIR$\inc\xencoding_limits.h</file>
+      <file>$TOOLKIT_DIR$\inc\stdio.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\sys.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\ycheck.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\NXP\iolpc2478.h</file>
+      <file>$TOOLKIT_DIR$\lib\rt4t_al.a</file>
+      <file>$PROJ_DIR$\Debug\Obj\sys.o</file>
       <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
       <file>$TOOLKIT_DIR$\inc\ysizet.h</file>
       <file>$TOOLKIT_DIR$\inc\DLib_Config_Normal.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\MyProject.pbd</file>
+      <file>$TOOLKIT_DIR$\inc\NXP\iolpc2470.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\MyProject.out</file>
       <file>$TOOLKIT_DIR$\lib\shs_l.a</file>
-      <file>$PROJ_DIR$\Debug\Obj\sdram_32M_16bit_drv.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
-      <file>$TOOLKIT_DIR$\lib\dl4t_tl_in.a</file>
-      <file>$PROJ_DIR$\Debug\Obj\sys.o</file>
-      <file>$TOOLKIT_DIR$\inc\ycheck.h</file>
-      <file>$TOOLKIT_DIR$\inc\yvals.h</file>
-      <file>$TOOLKIT_DIR$\inc\DLib_Threads.h</file>
       <file>$PROJ_DIR$\config\lpc2478_Flash.mac</file>
-      <file>$TOOLKIT_DIR$\inc\DLib_Product.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\sdram_32M_16bit_drv.o</file>
-      <file>$PROJ_DIR$\Debug\List\MyProject.map</file>
-      <file>$TOOLKIT_DIR$\inc\xencoding_limits.h</file>
-      <file>$TOOLKIT_DIR$\inc\DLib_Defaults.h</file>
-      <file>$TOOLKIT_DIR$\inc\stdio.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\sys.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\main.o</file>
-      <file>$TOOLKIT_DIR$\lib\rt4t_al.a</file>
-      <file>$TOOLKIT_DIR$\inc\NXP\iolpc2478.h</file>
-      <file>$PROJ_DIR$\config\LPC2478_Flash.icf</file>
-      <file>$TOOLKIT_DIR$\inc\io_macros.h</file>
       <file>$PROJ_DIR$\config\LPC2478_SRAM.icf</file>
       <file>$PROJ_DIR$\config\lpc2478_SRAM.mac</file>
       <file>$PROJ_DIR$\system\arm_comm.h</file>
@@ -43,44 +43,27 @@
       <file>$PROJ_DIR$\system\sdram_32M_16bit_drv.h</file>
       <file>$PROJ_DIR$\system\sys.c</file>
       <file>$PROJ_DIR$\system\sys.h</file>
-      <file>$TOOLKIT_DIR$\inc\math.h</file>
-      <file>$TOOLKIT_DIR$\inc\ymath.h</file>
     </outputs>
     <file>
       <name>$PROJ_DIR$\application\main.c</name>
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 24</file>
+          <file> 11</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 10</file>
+          <file> 18</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 4 13 22 14 21 6 17 20 15 5 32 26 3 28 31 36 0 34</file>
+          <file> 22 17 15 8 12 24 6 14 7 23 32 19 25 10 31 36 5 34</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 4 13 22 14 21 17 20 15 5 32 26 3 28 31 36 0 34</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Debug\Exe\MyProject.out</name>
-      <outputs>
-        <tool>
-          <name>ILINK</name>
-          <file> 19</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ILINK</name>
-          <file> 27 24 18 12 8 25 11</file>
+          <file> 22 17 15 8 12 6 14 7 23 32 19 25 10 31 36 5 34</file>
         </tool>
       </inputs>
     </file>
@@ -89,7 +72,7 @@
       <inputs>
         <tool>
           <name>BILINK</name>
-          <file> 10 9 23</file>
+          <file> 18 0 16</file>
         </tool>
       </inputs>
     </file>
@@ -98,30 +81,45 @@
       <outputs>
         <tool>
           <name>ILINK</name>
-          <file> 2 19</file>
+          <file> 26 3</file>
         </tool>
       </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\MyProject.out</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 3</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 4 11 13 21 27 20 1</file>
+        </tool>
+      </inputs>
     </file>
     <file>
       <name>$PROJ_DIR$\system\sdram_32M_16bit_drv.c</name>
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 18</file>
+          <file> 13</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 9</file>
+          <file> 0</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 22 13 14 21 6 17 20 15 5 32 4 26 3 28 31 34</file>
+          <file> 15 17 8 12 24 6 14 7 23 32 22 19 25 10 31 34</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 22 13 14 21 17 20 15 5 32 4 26 3 28 31 34</file>
+          <file> 15 17 8 12 6 14 7 23 32 22 19 25 10 31 34</file>
         </tool>
       </inputs>
     </file>
@@ -130,21 +128,21 @@
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 12</file>
+          <file> 21</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 23</file>
+          <file> 16</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 32 4 13 26 3 28 31 34 36</file>
+          <file> 32 22 17 19 25 10 31 34 36</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 32 4 13 26 3 28 31 34 36</file>
+          <file> 32 22 17 19 25 10 31 34 36</file>
         </tool>
       </inputs>
     </file>
