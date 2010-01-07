@@ -1,0 +1,118 @@
+% compilation using latex (i.e. via a ps file)
+% \documentclass[a4paper,11pt,twoside,openright,dvips]{book}
+
+% compilation using PDFLATEX - Note that pdflatex is known to have issues with
+% some of the pstricks-packages
+\documentclass[a4paper,11pt,pdftex,oneside]{book}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Input info. for cover, titlepages, pdf properties, version etc.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\ThesisAuthor{Anders Bahnsen\\Aleksander Gosk\\Kim Rostgaard Christensen}
+                         %multiple authors separated by "\\"
+                         %If there are multiple authors adjust the \vspace 
+                         %in thesislayout.sty as necessary 
+
+\def\ThesisAuthorForHyperref{Anders Bahnsen,Aleksander Gosk,Kim Rostgaard Christensen}
+                                %list of authors for pdf
+                                %properties. Multiple authors separated by ","
+
+\def\ThesisTitle{31070} %project title
+\def\Subtitle{Hands-on mikrocontroller programmering} %subtitle - if any
+
+\def\thesiskeywords{latex template, other keywords} %keywords for the pdf file
+
+\def\thesissubject{} %only for pdf properties - doesn't appear on printed
+                     %versions
+
+\def\Supervisor{Preben Nyeng} %list of supervisors. multiple
+                                %supervisors are separated by "\\"
+\def\projecttype{3 week project report, January 2010} %type of project (see README file
+                                %for explanation)
+\def\ISBNNUMBER{} %type \ISBNNUMBER{ISBN: xxx} if your project has one
+\def\DatePublished{22. January 2010} %date of publication
+\def\Klasse{1 (public)} %project class (see README file for explanation)
+\def\Degree{} %obtained degree (see
+                                %README file for explanation)
+\def\ECTSpoints{5} %# of ECTS points 
+\def\Udgave{First} %edition
+\def\Owner{Group 6, 2010} %name of copyright and year
+
+\def\thesisversion{final} %OBSOBS choose this for final version (official set of
+                          %title pages) 
+%\def\thesisversion{draft} %OBSOBS choose this for draft version (simple title
+                           %page and no info page
+
+\def\thesislinks{no}%OBSOBS choose this for paper version 
+%\def\thesislinks{yes}%OBSOBS choose this for online version 
+
+\def\thesislanguage{en}%OBSOBS compile document for English 
+%\def\thesislanguage{da}%OBSOBS compile document for Danish
+
+%do NOT modify
+\def\danishlang{da}
+\def\printversion{final}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Load style definitions, packages, etc. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%load thesisdef and styles
+\usepackage{thesisdef}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FRONT MATTER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frontmatter
+
+\ifx\thesisversion\printversion
+% for final version include standard dtu cover pages
+%\pagenumbering{alph}%dummy numbering for pdf-file (numbering set as a
+                    %pdf-property and is NOT visible on the document). The
+                    %hyperref package complains if duplicate numbering exists
+
+\coverpages         %generate the first four pages
+\else
+  %for draft version use simple title page
+\title{\ThesisTitle{} - \Subtitle{}}
+\author{\ThesisAuthor}
+%\thispagestyle{empty}
+\maketitle
+%\newpage
+%\thispagestyle{empty}
+\fi
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TOC,LOF,LOT and SETUP HEADER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\newpage
+\tableofcontents 
+\pagestyle{fancyplain}%enable headers in the main document
+%\chaptermark{Contents}
+%\renewcommand{\sectionmark}[1]{\markright{#1}}
+%\sectionmark{Contents}
+%\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MAIN CHAPTERS INCLUDE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mainmatter
+
+\setcounter{page}{1}\pagenumbering{arabic} %\pagestyle{fancyplain}
+
+\input{chapter1.tex}
+\input{conclusion.tex}
+
+\input{appendix.tex} 
+
+
+
+\end{document}
