@@ -9,7 +9,7 @@
 #define bulb 1 
 #define socket 2
 
-#define ADFILTER_CUT_OFF_FREQUENCY 100.0
+#define ADFILTER_CUT_OFF_FREQUENCY 55.0
 #define PI 3.14159265358979323846
 
 

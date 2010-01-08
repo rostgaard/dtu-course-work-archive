@@ -800,10 +800,52 @@
       <name>$PROJ_DIR$\application\adc.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\application\Black_bg.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\Black_bg.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\button_lightgrey.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\button_lightgrey.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\application\config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\application\filter.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\filter.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\frequency.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\frequency.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\interrupt_handlers.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\interrupt_handlers.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\application\main.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\photo.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\photo.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\Terminal_18_24x12.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\Terminal_9_12x6.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\application\timer.c</name>
@@ -859,6 +901,12 @@
   </file>
   <file>
     <name>$PROJ_DIR$\application\dac.h</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\application\drv_glcd.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\application\drv_glcd.h</name>
   </file>
   <file>
     <name>$PROJ_DIR$\application\gpio.c</name>
