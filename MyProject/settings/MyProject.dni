@@ -23,15 +23,14 @@ ByteLimit=50
 Enabled=0
 ShowSource=1
 [DebugChecksum]
-Checksum=-164627815
+Checksum=821961106
 [InstructionProfiling]
 Enabled=_ 0
 [Disassemble mode]
 mode=0
 [Breakpoints]
 Bp0=_ "EMUL_DATA" "AD0CR_bit" 0 0 0 116 0 "" 0 ""
-Bp1=_ "STD_CODE" "{$PROJ_DIR$\application\main.c}.40.1@1" 0 0 0 0 "" 0 "" 0
-Count=2
+Count=1
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""

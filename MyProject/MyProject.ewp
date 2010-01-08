@@ -794,10 +794,28 @@
   <group>
     <name>Application</name>
     <file>
+      <name>$PROJ_DIR$\application\adc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\adc.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\application\config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\application\main.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\timer.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\timer.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\zerocrossing.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\zerocrossing.h</name>
     </file>
   </group>
   <group>
@@ -836,6 +854,18 @@
       <name>$PROJ_DIR$\system\sys.h</name>
     </file>
   </group>
+  <file>
+    <name>$PROJ_DIR$\application\dac.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\application\dac.h</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\application\gpio.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\application\gpio.h</name>
+  </file>
 </project>
 
 

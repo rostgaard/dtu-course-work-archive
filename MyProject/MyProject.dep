@@ -2,7 +2,7 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>2365918813</fileChecksum>
+  <fileChecksum>4037409368</fileChecksum>
   <configuration>
     <name>Debug</name>
     <outputs>
@@ -43,6 +43,27 @@
       <file>$PROJ_DIR$\system\sdram_32M_16bit_drv.h</file>
       <file>$PROJ_DIR$\system\sys.c</file>
       <file>$PROJ_DIR$\system\sys.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\adc.o</file>
+      <file>$PROJ_DIR$\application\dac.c</file>
+      <file>$PROJ_DIR$\application\adc.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\dac.pbi</file>
+      <file>$PROJ_DIR$\application\zerocrossing.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\gpio.o</file>
+      <file>$PROJ_DIR$\application\zerocrossing.c</file>
+      <file>$PROJ_DIR$\application\timer.c</file>
+      <file>$PROJ_DIR$\application\adc.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\timer.o</file>
+      <file>$PROJ_DIR$\application\gpio.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\timer.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\adc.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\dac.o</file>
+      <file>$PROJ_DIR$\application\dac.h</file>
+      <file>$TOOLKIT_DIR$\inc\assert.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\zerocrossing.pbi</file>
+      <file>$PROJ_DIR$\application\timer.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\gpio.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\zerocrossing.o</file>
+      <file>$PROJ_DIR$\application\gpio.h</file>
     </outputs>
     <file>
       <name>$PROJ_DIR$\application\main.c</name>
@@ -59,11 +80,11 @@
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 22 17 15 8 12 24 6 14 7 23 32 19 25 10 31 36 5 34</file>
+          <file> 22 17 15 8 12 24 6 14 7 23 32 19 25 10 31 36 5 34 57 51 39 54 41</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 22 17 15 8 12 6 14 7 23 32 19 25 10 31 36 5 34</file>
+          <file> 22 17 15 8 12 6 14 7 23 32 19 25 10 31 36 5 34 57 51 39 54 41</file>
         </tool>
       </inputs>
     </file>
@@ -72,7 +93,7 @@
       <inputs>
         <tool>
           <name>BILINK</name>
-          <file> 18 0 16</file>
+          <file> 49 40 55 18 0 16 48 53</file>
         </tool>
       </inputs>
     </file>
@@ -96,7 +117,7 @@
       <inputs>
         <tool>
           <name>ILINK</name>
-          <file> 4 11 13 21 27 20 1</file>
+          <file> 4 37 50 42 11 13 21 46 56 27 20 1</file>
         </tool>
       </inputs>
     </file>
@@ -143,6 +164,121 @@
         <tool>
           <name>BICOMP</name>
           <file> 32 22 17 19 25 10 31 34 36</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\dac.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 50</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 40</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 32 22 17 19 25 10 31</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 32 22 17 19 25 10 31</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\zerocrossing.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 56</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 53</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 41 5</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 41 5</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\timer.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 46</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 48</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 32 22 17 19 25 10 31 36 54 5</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 32 22 17 19 25 10 31 36 54 5</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\adc.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 37</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 49</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 39 32 22 17 19 25 10 31 36</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 39 32 22 17 19 25 10 31 36</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\gpio.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 42</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 55</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 57 32 22 17 19 25 10 31 52 8 12 24 6 14 7</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 57 32 22 17 19 25 10 31 52 8 12 6 14 7</file>
         </tool>
       </inputs>
     </file>
