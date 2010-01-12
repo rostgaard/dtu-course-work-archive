@@ -17,12 +17,16 @@
 #include "photo.h"
 #include "button_lightgrey.h"
 #include "Black_bg.h"
+#include "touch_scr.h"
+
+
 
 
 //float ADdata[2] = {0.0,0.0};    //([y(k-1) y(k)]) => ADdata(1)=y(k-1), ADdata(0)=y(k)
-struct ADdata_t ADdata;
+struct ADdata_t ADdata = {0.0,0.0};
 struct ADC_p_p_t ADC_p_p;
-
+extern struct time_t real_time;
+extern struct Touch_data_t Touch_data;
 
 unsigned long timetick =0;
 Int32U Data=0;
@@ -44,66 +48,62 @@ Int32U Y_Up =75;
 Int32U Y_Down =113;
 Int32U Linespace = 35*2;
 float AD_zerocrossing_delay[2] = {0.0,0.0};   //([y(k-1) y(k)]) just after the zero-crossing accured
+extern Int32U X_coord, Y_coord;
 
 void Program_Init ();
-void ADC_Intr_Handler ();
-void Timer0IntrHandler ();
-
-float Frequency_with_interpolation();
-float Frequency_without_interpolation();
-
-void update_alpha();
-float ADfilter(Int32U Data);
-
 void LCD_Init();
 void LCD_Write();
-
 void P_P_value();
-
-
 int between(float input, float lower_limit, float upper_limit);
+
+extern void ADC_Inter_Handler ();
+extern void Timer0IntrHandler ();
+extern float Frequency_with_interpolation();
+extern float Frequency_without_interpolation();
+extern void update_alpha();
+extern float ADfilter(Int32U Data);
+extern void TouchScrInit();
 
 
 extern FontType_t Terminal_9_12_6;
 extern FontType_t Terminal_18_24_12;
 extern float frequency;
+extern int blink_timer;
 
-/*************************************************************************
- * Function Name: Timer0IntrHandler
- * Parameters: none
- *
- * Return: none
- *
- * Description: Timer 0 interrupt handler
- *
- *************************************************************************/
 
 
 
 
 int main(void)
 {
+  
   Program_Init();
   
-
-  LCD_Init();
- // Reset ADdata struct values
-  ADdata.v_current = 0.0;
-  ADdata.v_previous = 0.0;
  //Setup VIC to respond to VIC_TIMER0 and call Timer0IntrHandler()
   VIC_SetVectoredIRQ(Timer0IntrHandler,1,VIC_TIMER0);
-  VIC_SetVectoredIRQ(ADC_Intr_Handler,0,VIC_AD0);
+  VIC_SetVectoredIRQ(ADC_Inter_Handler,0,VIC_AD0);
+
   VICINTENABLE |= 1UL << VIC_AD0;  
   VICINTENABLE |= 1UL << VIC_TIMER0;
  // Start Timer
   timer0_start();
-  adc_start();
+//  adc_start();
  //Enable interrupts
   __enable_interrupt();
   update_alpha(); //sets the alpha value for the low-pass filter 
+  
+  
+  // Init touch screen
+  TouchScrInit();
+  
+  
+  
   while (1) {
-    LCD_Write();
+
+     LCD_Write();
+    
     P_P_value();
+
   };
 }
 
@@ -128,9 +128,9 @@ void Program_Init (){
   Sys_Init();
   
  // Init clock
-  InitClock();
+//  InitClock();
  // Init VIC
-  VIC_Init();
+//  VIC_Init();
  // Init DAC
   initialize_dac();
   initialize_adc();
@@ -140,6 +140,7 @@ void Program_Init (){
   initialize_relays();
  // Init Timer0
   initialize_timer();
+  LCD_Init();
   
 
 }
@@ -148,7 +149,8 @@ void LCD_Init(){
   SDRAM_Init();
   GLCD_Ctrl (FALSE);
   //Load the "*.c" file containing the logo
-  GLCD_Init (Black_bgPic.pPicStream, NULL);
+  GLCD_Init (NULL, NULL);
+//  GLCD_Init (Black_bgPic.pPicStream, NULL);
   GLCD_LoadPic (1, 1, &button_lightgreyPic, NULL);
   GLCD_LoadPic (320-80, 1, &button_lightgreyPic, NULL);
   GLCD_Ctrl (TRUE);
@@ -160,17 +162,26 @@ void LCD_Write(){
   GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
   GLCD_SetWindow(X_Left, Y_Up, X_Right, Y_Down);
   GLCD_TextSetPos(0,0);
-  printf("F      =   %f Hz", f_out);
+  printf("Touch : %5d",Touch_data.touched);
+  //  printf("Coords:%5d, %5d",X_coord,Y_coord);
+  //printf("Time      =   %d S", real_time.second);
   
   GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
   GLCD_SetWindow(95, 10, 250, 40);
   GLCD_TextSetPos(0,0);
   printf("MAIN SCREEN");
+  
+  // turn on led 2 if screen is touched
+  if(  Touch_data.touched&led_status(2))
+    toggle_led(2);
+  if(  (!Touch_data.touched)&!led_status(2))
+    toggle_led(2);
 }
 
 void P_P_value(){
   GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
   GLCD_SetWindow(X_Left, Y_Up+Linespace, X_Right, Y_Down+Linespace);
   GLCD_TextSetPos(0,0);
-  printf("P_rms  =   %f VA", f_out*3.0);
+  //printf("Time      =    S");
+  printf("Time  =   %4d mS", (real_time.second));
 }

@@ -1,3 +1,6 @@
+#include <math.h>
+#include <stdio.h>
+
 #define DAC_MAXIMUM  1024 // 2^10
 #define FREQUENCY 50
 #define TIMER0_TICK_PER_SEC 10000
@@ -8,6 +11,13 @@
 #define true 1
 #define bulb 1 
 #define socket 2
+#define wait 0
+#define X_ch 1
+#define Y_ch 2
+#define confirm 3
+
+#define NOT_STARTED 0;
+#define STARTED 1;
 
 #define ADFILTER_CUT_OFF_FREQUENCY 55.0
 #define PI 3.14159265358979323846

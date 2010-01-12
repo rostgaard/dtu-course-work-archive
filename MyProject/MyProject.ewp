@@ -854,6 +854,12 @@
       <name>$PROJ_DIR$\application\timer.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\application\touch_scr.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\touch_scr.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\application\zerocrossing.c</name>
     </file>
     <file>
@@ -909,10 +915,19 @@
     <name>$PROJ_DIR$\application\drv_glcd.h</name>
   </file>
   <file>
+    <name>$PROJ_DIR$\application\drv_touch_scr.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\application\drv_touch_scr.h</name>
+  </file>
+  <file>
     <name>$PROJ_DIR$\application\gpio.c</name>
   </file>
   <file>
     <name>$PROJ_DIR$\application\gpio.h</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\application\includes.h</name>
   </file>
 </project>
 

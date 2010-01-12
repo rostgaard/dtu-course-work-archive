@@ -12,7 +12,7 @@
           
           
           
-        <Column0>200</Column0><Column1>11</Column1><Column2>27</Column2><Column3>1242260</Column3></ColumnWidths>
+        <Column0>206</Column0><Column1>11</Column1><Column2>27</Column2><Column3>1242260</Column3></ColumnWidths>
       </Workspace>
       <Build>
         
@@ -21,11 +21,11 @@
         
       <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1395</ColumnWidth1><ColumnWidth2>372</ColumnWidth2><ColumnWidth3>93</ColumnWidth3></Build>
       <TerminalIO/>
-    </Static>
+    <Disassembly><MixedMode>1</MixedMode><CodeCovShow>0</CodeCovShow><InstrProfShow>0</InstrProfShow></Disassembly><Find-in-Files><ColumnWidth0>440</ColumnWidth0><ColumnWidth1>62</ColumnWidth1><ColumnWidth2>754</ColumnWidth2></Find-in-Files></Static>
     <Windows>
       
       
-    <Wnd0>
+    <Wnd1>
         <Tabs>
           <Tab>
             <Identity>TabID-10323-27083</Identity>
@@ -33,11 +33,11 @@
             <Factory>Workspace</Factory>
             <Session>
               
-            <NodeDict><ExpandedNode>MyProject</ExpandedNode><ExpandedNode>MyProject/Application</ExpandedNode><ExpandedNode>MyProject/Application/led.c</ExpandedNode></NodeDict></Session>
+            <NodeDict><ExpandedNode>MyProject</ExpandedNode><ExpandedNode>MyProject/Application</ExpandedNode></NodeDict></Session>
           </Tab>
         </Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd0><Wnd1>
+      <SelectedTab>0</SelectedTab></Wnd1><Wnd3>
         <Tabs>
           <Tab>
             <Identity>TabID-745-27877</Identity>
@@ -45,22 +45,22 @@
             <Factory>Build</Factory>
             <Session/>
           </Tab>
-        </Tabs>
+        <Tab><Identity>TabID-32758-9635</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab></Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd1></Windows>
+      <SelectedTab>0</SelectedTab></Wnd3></Windows>
     <Editor>
       
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\interrupt_handlers.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>25</SelStart><SelEnd>25</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\zerocrossing.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>47</SelStart><SelEnd>82</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\button_black.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>87</SelStart><SelEnd>102</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\photo.c</Filename><XPos>0</XPos><YPos>9576</YPos><SelStart>873719</SelStart><SelEnd>873730</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\photo.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\drv_glcd.h</Filename><XPos>0</XPos><YPos>63</YPos><SelStart>712</SelStart><SelEnd>712</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\interrupt_handlers.c</Filename><XPos>0</XPos><YPos>6</YPos><SelStart>330</SelStart><SelEnd>330</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\main.c</Filename><XPos>0</XPos><YPos>62</YPos><SelStart>1686</SelStart><SelEnd>1686</SelEnd></Tab><ActiveTab>7</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\Black_bg.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>21</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\drv_glcd.c</Filename><XPos>0</XPos><YPos>289</YPos><SelStart>9381</SelStart><SelEnd>9460</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\Terminal_9_12x6.c</Filename><XPos>0</XPos><YPos>393</YPos><SelStart>19840</SelStart><SelEnd>19840</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\button_lightgrey.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>29</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\touch_scr.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\filter.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>624</SelStart><SelEnd>624</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\zerocrossing.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>93</SelStart><SelEnd>93</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\System\board.h</Filename><XPos>0</XPos><YPos>103</YPos><SelStart>4631</SelStart><SelEnd>4631</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\drv_touch_scr.c</Filename><XPos>0</XPos><YPos>258</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\dac.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>165</SelStart><SelEnd>165</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\system\sys.c</Filename><XPos>0</XPos><YPos>85</YPos><SelStart>6849</SelStart><SelEnd>6849</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\adc.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>696</SelStart><SelEnd>696</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\interrupt_handlers.c</Filename><XPos>0</XPos><YPos>41</YPos><SelStart>1528</SelStart><SelEnd>1545</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\drv_glcd.c</Filename><XPos>0</XPos><YPos>363</YPos><SelStart>11339</SelStart><SelEnd>11339</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\touch_scr.c</Filename><XPos>0</XPos><YPos>30</YPos><SelStart>181</SelStart><SelEnd>181</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\main.c</Filename><XPos>0</XPos><YPos>57</YPos><SelStart>1641</SelStart><SelEnd>1641</SelEnd></Tab><ActiveTab>11</ActiveTab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
     <Positions>
       
       
       
       
       
-    <Top><Row0><Sizes><Toolbar-00b08f48><key>iaridepm.enu1</key></Toolbar-00b08f48></Sizes></Row0><Row1><Sizes/></Row1></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>729</Bottom><Right>258</Right><x>-2</x><y>-2</y><xscreen>158</xscreen><yscreen>187</yscreen><sizeHorzCX>123438</sizeHorzCX><sizeHorzCY>195198</sizeHorzCY><sizeVertCX>203125</sizeVertCX><sizeVertCY>763048</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>185</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>187</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>195198</sizeHorzCY><sizeVertCX>123438</sizeVertCX><sizeVertCY>195198</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-00b09b68><key>iaridepm.enu1</key></Toolbar-00b09b68></Sizes></Row0><Row1><Sizes/></Row1><Row2><Sizes><Toolbar-00be7fb8><key>debuggergui.enu1</key></Toolbar-00be7fb8></Sizes></Row2></Top><Left><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>651</Bottom><Right>280</Right><x>-2</x><y>-2</y><xscreen>212</xscreen><yscreen>265</yscreen><sizeHorzCX>165625</sizeHorzCX><sizeHorzCY>276618</sizeHorzCY><sizeVertCX>220313</sizeVertCX><sizeVertCY>681628</sizeVertCY></Rect></Wnd1></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>263</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>265</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>276618</sizeHorzCY><sizeVertCX>165625</sizeVertCX><sizeVertCY>276618</sizeVertCY></Rect></Wnd3></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Workspace>
 

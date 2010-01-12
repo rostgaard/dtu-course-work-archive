@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ELF Linker V5.30.2.51295/W32 for ARM              08/Jan/2010  16:35:54 #
+# IAR ELF Linker V5.30.2.51295/W32 for ARM              12/Jan/2010  17:27:35 #
 # Copyright 2007-2009 IAR Systems AB.                                         #
 #                                                                             #
 #    Output file  =  C:\31070\v1\MyProject\Debug\Exe\MyProject.out.tmp        #
@@ -12,6 +12,7 @@
 #                    C:\31070\v1\MyProject\Debug\Obj\button_lightgrey.o       #
 #                    C:\31070\v1\MyProject\Debug\Obj\dac.o                    #
 #                    C:\31070\v1\MyProject\Debug\Obj\drv_glcd.o               #
+#                    C:\31070\v1\MyProject\Debug\Obj\drv_touch_scr.o          #
 #                    C:\31070\v1\MyProject\Debug\Obj\filter.o                 #
 #                    C:\31070\v1\MyProject\Debug\Obj\frequency.o              #
 #                    C:\31070\v1\MyProject\Debug\Obj\gpio.o                   #
@@ -21,6 +22,7 @@
 #                    C:\31070\v1\MyProject\Debug\Obj\sdram_32M_16bit_drv.o    #
 #                    C:\31070\v1\MyProject\Debug\Obj\sys.o                    #
 #                    C:\31070\v1\MyProject\Debug\Obj\timer.o                  #
+#                    C:\31070\v1\MyProject\Debug\Obj\touch_scr.o              #
 #                    C:\31070\v1\MyProject\Debug\Obj\zerocrossing.o -o        #
 #                    C:\31070\v1\MyProject\Debug\Exe\MyProject.out.tmp --map  #
 #                    C:\31070\v1\MyProject\Debug\List\MyProject.map --config  #
@@ -48,189 +50,193 @@ __thumb_aware = enabled
           rw, block CSTACK, block SVC_STACK, block IRQ_STACK, block FIQ_STACK,
           block UND_STACK, block ABT_STACK, block HEAP };
 
-  Section            Kind        Address     Size  Object
-  -------            ----        -------     ----  ------
-"A1":                                        0x3c
-  .intvec            ro code  0x00000000     0x3c  cstartup.o [4]
-                            - 0x0000003c     0x3c
+  Section            Kind        Address    Size  Object
+  -------            ----        -------    ----  ------
+"A1":                                       0x3c
+  .intvec            ro code  0x00000000    0x3c  cstartup.o [4]
+                            - 0x0000003c    0x3c
 
-"P1":                                     0x557f4
-  .rodata            const    0x00000044  0x4b000  Black_bg.o [1]
-  .rodata            const    0x0004b044   0x3200  button_lightgrey.o [1]
-  .rodata            const    0x0004e244   0x3000  Terminal_18_24x12.o [1]
-  Veneer             ro code  0x00051244     0x10  - Linker created -
-  Veneer             ro code  0x00051254     0x10  - Linker created -
-  .text              ro code  0x00051264    0xf0a  xprintffull.o [3]
-  .text              ro code  0x00052170    0xa44  drv_glcd.o [1]
-  .text              ro code  0x00052bb4    0x3f4  sys.o [1]
-  Veneer             ro code  0x00052fa8      0x4  - Linker created -
-  .text              ro code  0x00052fac    0x338  DblDiv.o [4]
-  .text              ro code  0x000532e4    0x24c  sdram_32M_16bit_drv.o [1]
-  .text              ro code  0x00053530    0x218  interrupt_handlers.o [1]
-  Veneer             ro code  0x00053748      0x4  - Linker created -
-  .text              ro code  0x0005374c    0x1f8  DblMul.o [4]
-  Veneer             ro code  0x00053944      0x4  - Linker created -
-  .text              ro code  0x00053948    0x1f0  DblSub.o [4]
-  Veneer             ro code  0x00053b38      0x4  - Linker created -
-  .text              ro code  0x00053b3c    0x1d4  I32DivMod.o [4]
-  .text              ro code  0x00053d10    0x1cc  main.o [1]
-  Veneer             ro code  0x00053edc      0x4  - Linker created -
-  .text              ro code  0x00053ee0    0x1c8  FltDiv.o [4]
-  .text              ro code  0x000540a8    0x17c  gpio.o [1]
-  Veneer             ro code  0x00054224      0x4  - Linker created -
-  .text              ro code  0x00054228    0x14c  FltMul.o [4]
-  Veneer             ro code  0x00054374      0x4  - Linker created -
-  .text              ro code  0x00054378    0x140  DblAdd.o [4]
-  Veneer             ro code  0x000544b8      0x4  - Linker created -
-  .text              ro code  0x000544bc    0x12c  FltSub.o [4]
-  .text              ro code  0x000545e8    0x12c  xdscale.o [3]
-  .text              ro code  0x00054714    0x128  I64DivMod.o [4]
-  .text              ro code  0x0005483c     0xdc  adc.o [1]
-  Veneer             ro code  0x00054918      0x4  - Linker created -
-  .text              ro code  0x0005491c     0xd4  ABImemcpy.o [4]
-  .text              ro code  0x000549f0     0xc0  timer.o [1]
-  .text              ro code  0x00054ab0     0xc0  xdnorm.o [3]
-  .text              ro code  0x00054b70     0xb8  zerocrossing.o [1]
-  Veneer             ro code  0x00054c28      0x4  - Linker created -
-  .text              ro code  0x00054c2c     0xac  DblToFlt.o [4]
-  Veneer             ro code  0x00054cd8      0x4  - Linker created -
-  .text              ro code  0x00054cdc     0xa4  FltAdd.o [4]
-  .text              ro code  0x00054d80     0x94  frequency.o [1]
-  Veneer             ro code  0x00054e14      0x4  - Linker created -
-  .text              ro code  0x00054e18     0x94  memchr.o [4]
-  .text              ro code  0x00054eac     0x84  filter.o [1]
-  .text              ro code  0x00054f30     0x7c  xreportassert.o [3]
-  .text              ro code  0x00054fac     0x68  dac.o [1]
-  Veneer             ro code  0x00055014      0x4  - Linker created -
-  .text              ro code  0x00055018     0x64  FltToDbl.o [4]
-  .text              ro code  0x0005507c     0x64  S32ToFlt.o [4]
-  Veneer             ro code  0x000550e0      0x4  - Linker created -
-  .text              ro code  0x000550e4     0x60  DblToS32.o [4]
-  Veneer             ro code  0x00055144      0x4  - Linker created -
-  .text              ro code  0x00055148     0x58  S32ToDbl.o [4]
-  .text              ro code  0x000551a0     0x58  xassert.o [3]
-  Veneer             ro code  0x000551f8      0x4  - Linker created -
-  .text              ro code  0x000551fc     0x54  strlen.o [4]
-  .text              ro code  0x00055250     0x50  cstartup.o [4]
-  Veneer             ro code  0x000552a0      0x4  - Linker created -
-  .text              ro code  0x000552a4     0x3c  DblToU32.o [4]
-  Veneer             ro code  0x000552e0      0x4  - Linker created -
-  .text              ro code  0x000552e4     0x38  DblCmpLe.o [4]
-  Veneer             ro code  0x0005531c      0x4  - Linker created -
-  .text              ro code  0x00055320     0x38  DblCmpGe.o [4]
-  Veneer             ro code  0x00055358      0x4  - Linker created -
-  .text              ro code  0x0005535c     0x34  FltToU32.o [4]
-  .text              ro code  0x00055390     0x34  data_init2.o [4]
-  .rodata            const    0x000553c4     0x30  drv_glcd.o [1]
-  .rodata            const    0x000553f4     0x30  xreportassert.o [3]
-  .text              ro code  0x00055424     0x30  iarwstd.o [5]
-  .rodata            const    0x00055454     0x2c  gpio.o [1]
-  Veneer             ro code  0x00055480      0x4  - Linker created -
-  .text              ro code  0x00055484     0x2c  FltCmpLe.o [4]
-  Veneer             ro code  0x000554b0      0x4  - Linker created -
-  .text              ro code  0x000554b4     0x2c  FltCmpGe.o [4]
-  .text              ro code  0x000554e0     0x2c  copy_init2.o [4]
-  .text              ro code  0x0005550c     0x28  zero_init2.o [4]
-  .text              ro code  0x00055534     0x28  div.o [3]
-  Veneer             ro code  0x0005555c      0xc  - Linker created -
-  Veneer             ro code  0x00055568      0xc  - Linker created -
-  Veneer             ro code  0x00055574      0xc  - Linker created -
-  .text              ro code  0x00055580     0x24  cmain.o [4]
-  .iar.init_table    const    0x000555a4     0x24  - Linker created -
-  .text              ro code  0x000555c8     0x20  printf.o [3]
-  Veneer             ro code  0x000555e8      0x4  - Linker created -
-  .text              ro code  0x000555ec     0x20  strchr.o [4]
-  .text              ro code  0x0005560c     0x1e  xprout.o [3]
-  Veneer             ro code  0x0005562c      0x4  - Linker created -
-  .text              ro code  0x00055630     0x1c  exit.o [5]
-  .rodata            const    0x0005564c     0x18  button_lightgrey.o [1]
-  .rodata            const    0x00055664     0x18  drv_glcd.o [1]
-  .rodata            const    0x0005567c     0x18  drv_glcd.o [1]
-  .rodata            const    0x00055694     0x18  gpio.o [1]
-  .rodata            const    0x000556ac     0x14  Terminal_18_24x12.o [1]
-  .rodata            const    0x000556c0     0x14  drv_glcd.o [1]
-  .rodata            const    0x000556d4     0x14  main.o [1]
-  .rodata            const    0x000556e8     0x14  main.o [1]
-  .rodata            const    0x000556fc     0x10  Black_bg.o [1]
-  .rodata            const    0x0005570c     0x10  drv_glcd.o [1]
-  Veneer             ro code  0x0005571c      0x4  - Linker created -
-  .text              ro code  0x00055720     0x10  main.o [1]
-  Veneer             ro code  0x00055730      0x4  - Linker created -
-  .text              ro code  0x00055734     0x10  U32ToFlt.o [4]
-  Veneer             ro code  0x00055744      0x4  - Linker created -
-  .text              ro code  0x00055748     0x10  cexit.o [4]
-  .rodata            const    0x00055758      0xc  drv_glcd.o [1]
-  .rodata            const    0x00055764      0xc  main.o [1]
-  Veneer             ro code  0x00055770      0x4  - Linker created -
-  .text              ro code  0x00055774      0xc  U32ToDbl.o [4]
-  .rodata            const    0x00055780      0x8  xprintffull.o [3]
-  .text              ro code  0x00055788      0x8  abort.o [3]
-  .text              ro code  0x00055790      0x6  exit.o [3]
-  .text              ro code  0x00055798      0x4  vectortrap.o [4]
-  .text              ro code  0x0005579c      0x4  vectortrap.o [4]
-  .text              ro code  0x000557a0      0x4  vectortrap.o [4]
-  .text              ro code  0x000557a4      0x4  vectortrap.o [4]
-  .text              ro code  0x000557a8      0x4  IntDivZer.o [4]
-  .text              ro code  0x000557ac      0x4  xreturnswi.o [5]
-  .text              ro code  0x000557b0      0x4  I64DivZer.o [4]
-  .text              ro code  0x000557b4      0x4  low_level_init.o [3]
-  .text              ro code  0x000557b8      0x2  xprintffull.o [3]
-  Initializer bytes  ro data  0x000557bc     0x7c  <for P2 s0>
-                            - 0x00055838  0x557f4
+"P1":                                     0xada0
+  .rodata            const    0x00000044  0x3200  button_lightgrey.o [1]
+  .rodata            const    0x00003244  0x3000  Terminal_18_24x12.o [1]
+  Veneer             ro code  0x00006244    0x10  - Linker created -
+  Veneer             ro code  0x00006254    0x10  - Linker created -
+  .text              ro code  0x00006264   0xf0a  xprintffull.o [3]
+  .text              ro code  0x00007170   0xa44  drv_glcd.o [1]
+  .text              ro code  0x00007bb4   0x414  interrupt_handlers.o [1]
+  .text              ro code  0x00007fc8   0x3f4  sys.o [1]
+  Veneer             ro code  0x000083bc     0x4  - Linker created -
+  .text              ro code  0x000083c0   0x338  DblDiv.o [4]
+  .text              ro code  0x000086f8   0x2e0  touch_scr.o [1]
+  .text              ro code  0x000089d8   0x24c  sdram_32M_16bit_drv.o [1]
+  Veneer             ro code  0x00008c24     0x4  - Linker created -
+  .text              ro code  0x00008c28   0x1f8  DblMul.o [4]
+  Veneer             ro code  0x00008e20     0x4  - Linker created -
+  .text              ro code  0x00008e24   0x1f0  DblSub.o [4]
+  Veneer             ro code  0x00009014     0x4  - Linker created -
+  .text              ro code  0x00009018   0x1d4  I32DivMod.o [4]
+  .text              ro code  0x000091ec   0x1c8  main.o [1]
+  Veneer             ro code  0x000093b4     0x4  - Linker created -
+  .text              ro code  0x000093b8   0x1c8  FltDiv.o [4]
+  .text              ro code  0x00009580   0x1b8  gpio.o [1]
+  Veneer             ro code  0x00009738     0x4  - Linker created -
+  .text              ro code  0x0000973c   0x14c  FltMul.o [4]
+  .text              ro code  0x00009888   0x144  adc.o [1]
+  Veneer             ro code  0x000099cc     0x4  - Linker created -
+  .text              ro code  0x000099d0   0x140  DblAdd.o [4]
+  Veneer             ro code  0x00009b10     0x4  - Linker created -
+  .text              ro code  0x00009b14   0x12c  FltSub.o [4]
+  .text              ro code  0x00009c40   0x12c  xdscale.o [3]
+  .text              ro code  0x00009d6c   0x128  I64DivMod.o [4]
+  Veneer             ro code  0x00009e94     0x4  - Linker created -
+  .text              ro code  0x00009e98    0xd4  ABImemcpy.o [4]
+  .text              ro code  0x00009f6c    0xc0  timer.o [1]
+  .text              ro code  0x0000a02c    0xc0  xdnorm.o [3]
+  .text              ro code  0x0000a0ec    0xb8  zerocrossing.o [1]
+  Veneer             ro code  0x0000a1a4     0x4  - Linker created -
+  .text              ro code  0x0000a1a8    0xac  DblToFlt.o [4]
+  Veneer             ro code  0x0000a254     0x4  - Linker created -
+  .text              ro code  0x0000a258    0xa4  FltAdd.o [4]
+  .text              ro code  0x0000a2fc    0x94  frequency.o [1]
+  Veneer             ro code  0x0000a390     0x4  - Linker created -
+  .text              ro code  0x0000a394    0x94  memchr.o [4]
+  .text              ro code  0x0000a428    0x84  filter.o [1]
+  .text              ro code  0x0000a4ac    0x7c  xreportassert.o [3]
+  .text              ro code  0x0000a528    0x68  dac.o [1]
+  Veneer             ro code  0x0000a590     0x4  - Linker created -
+  .text              ro code  0x0000a594    0x64  FltToDbl.o [4]
+  .text              ro code  0x0000a5f8    0x64  S32ToFlt.o [4]
+  Veneer             ro code  0x0000a65c     0x4  - Linker created -
+  .text              ro code  0x0000a660    0x60  DblToS32.o [4]
+  Veneer             ro code  0x0000a6c0     0x4  - Linker created -
+  .text              ro code  0x0000a6c4    0x58  S32ToDbl.o [4]
+  .text              ro code  0x0000a71c    0x58  xassert.o [3]
+  Veneer             ro code  0x0000a774     0x4  - Linker created -
+  .text              ro code  0x0000a778    0x54  strlen.o [4]
+  .text              ro code  0x0000a7cc    0x50  cstartup.o [4]
+  Veneer             ro code  0x0000a81c     0x4  - Linker created -
+  .text              ro code  0x0000a820    0x3c  DblToU32.o [4]
+  Veneer             ro code  0x0000a85c     0x4  - Linker created -
+  .text              ro code  0x0000a860    0x38  DblCmpLe.o [4]
+  Veneer             ro code  0x0000a898     0x4  - Linker created -
+  .text              ro code  0x0000a89c    0x38  DblCmpGe.o [4]
+  .rodata            const    0x0000a8d4    0x34  touch_scr.o [1]
+  Veneer             ro code  0x0000a908     0x4  - Linker created -
+  .text              ro code  0x0000a90c    0x34  FltToU32.o [4]
+  .text              ro code  0x0000a940    0x34  data_init2.o [4]
+  .rodata            const    0x0000a974    0x30  drv_glcd.o [1]
+  .rodata            const    0x0000a9a4    0x30  touch_scr.o [1]
+  .rodata            const    0x0000a9d4    0x30  xreportassert.o [3]
+  .text              ro code  0x0000aa04    0x30  iarwstd.o [5]
+  .rodata            const    0x0000aa34    0x2c  gpio.o [1]
+  Veneer             ro code  0x0000aa60     0x4  - Linker created -
+  .text              ro code  0x0000aa64    0x2c  FltCmpLe.o [4]
+  Veneer             ro code  0x0000aa90     0x4  - Linker created -
+  .text              ro code  0x0000aa94    0x2c  FltCmpGe.o [4]
+  .text              ro code  0x0000aac0    0x2c  copy_init2.o [4]
+  .text              ro code  0x0000aaec    0x28  zero_init2.o [4]
+  .text              ro code  0x0000ab14    0x28  div.o [3]
+  Veneer             ro code  0x0000ab3c     0xc  - Linker created -
+  Veneer             ro code  0x0000ab48     0xc  - Linker created -
+  Veneer             ro code  0x0000ab54     0xc  - Linker created -
+  .text              ro code  0x0000ab60    0x24  cmain.o [4]
+  .iar.init_table    const    0x0000ab84    0x24  - Linker created -
+  .text              ro code  0x0000aba8    0x20  printf.o [3]
+  Veneer             ro code  0x0000abc8     0x4  - Linker created -
+  .text              ro code  0x0000abcc    0x20  strchr.o [4]
+  .text              ro code  0x0000abec    0x1e  xprout.o [3]
+  Veneer             ro code  0x0000ac0c     0x4  - Linker created -
+  .text              ro code  0x0000ac10    0x1c  exit.o [5]
+  .rodata            const    0x0000ac2c    0x18  button_lightgrey.o [1]
+  .rodata            const    0x0000ac44    0x18  drv_glcd.o [1]
+  .rodata            const    0x0000ac5c    0x18  drv_glcd.o [1]
+  .rodata            const    0x0000ac74    0x18  gpio.o [1]
+  .rodata            const    0x0000ac8c    0x14  Terminal_18_24x12.o [1]
+  .rodata            const    0x0000aca0    0x14  drv_glcd.o [1]
+  .rodata            const    0x0000acb4    0x14  main.o [1]
+  .rodata            const    0x0000acc8    0x10  drv_glcd.o [1]
+  Veneer             ro code  0x0000acd8     0x4  - Linker created -
+  .text              ro code  0x0000acdc    0x10  main.o [1]
+  Veneer             ro code  0x0000acec     0x4  - Linker created -
+  .text              ro code  0x0000acf0    0x10  U32ToFlt.o [4]
+  Veneer             ro code  0x0000ad00     0x4  - Linker created -
+  .text              ro code  0x0000ad04    0x10  cexit.o [4]
+  .rodata            const    0x0000ad14     0xc  drv_glcd.o [1]
+  .rodata            const    0x0000ad20     0xc  main.o [1]
+  .rodata            const    0x0000ad2c     0xc  main.o [1]
+  Veneer             ro code  0x0000ad38     0x4  - Linker created -
+  .text              ro code  0x0000ad3c     0xc  U32ToDbl.o [4]
+  .rodata            const    0x0000ad48     0x8  xprintffull.o [3]
+  .text              ro code  0x0000ad50     0x8  abort.o [3]
+  .text              ro code  0x0000ad58     0x6  exit.o [3]
+  .text              ro code  0x0000ad60     0x4  vectortrap.o [4]
+  .text              ro code  0x0000ad64     0x4  vectortrap.o [4]
+  .text              ro code  0x0000ad68     0x4  vectortrap.o [4]
+  .text              ro code  0x0000ad6c     0x4  vectortrap.o [4]
+  .text              ro code  0x0000ad70     0x4  IntDivZer.o [4]
+  .text              ro code  0x0000ad74     0x4  xreturnswi.o [5]
+  .text              ro code  0x0000ad78     0x4  I64DivZer.o [4]
+  .text              ro code  0x0000ad7c     0x4  low_level_init.o [3]
+  .text              ro code  0x0000ad80     0x2  xprintffull.o [3]
+  Initializer bytes  ro data  0x0000ad84    0x60  <for P2 s0>
+                            - 0x0000ade4  0xada0
 
-"P2", part 1 of 3:                          0x540
-  CSTACK                      0x40000040    0x400  <Block>
-    CSTACK           uninit   0x40000040    0x400  <Block tail>
-  IRQ_STACK                   0x40000440    0x100  <Block>
-    IRQ_STACK        uninit   0x40000440    0x100  <Block tail>
-  FIQ_STACK                   0x40000540     0x40  <Block>
-    FIQ_STACK        uninit   0x40000540     0x40  <Block tail>
-                            - 0x40000580    0x540
+"P2", part 1 of 3:                         0x540
+  CSTACK                      0x40000040   0x400  <Block>
+    CSTACK           uninit   0x40000040   0x400  <Block tail>
+  IRQ_STACK                   0x40000440   0x100  <Block>
+    IRQ_STACK        uninit   0x40000440   0x100  <Block tail>
+  FIQ_STACK                   0x40000540    0x40  <Block>
+    FIQ_STACK        uninit   0x40000540    0x40  <Block tail>
+                            - 0x40000580   0x540
 
-"P2", part 2 of 3:                           0x74
-  .bss               zero     0x40000580     0x10  main.o [1]
-  .bss               zero     0x40000590      0x8  main.o [1]
-  .bss               zero     0x40000598      0x8  main.o [1]
-  .bss               zero     0x400005a0      0x4  drv_glcd.o [1]
-  .bss               zero     0x400005a4      0x4  drv_glcd.o [1]
-  .bss               zero     0x400005a8      0x4  drv_glcd.o [1]
-  .bss               zero     0x400005ac      0x4  drv_glcd.o [1]
-  .bss               zero     0x400005b0      0x4  drv_glcd.o [1]
-  .bss               zero     0x400005b4      0x4  drv_glcd.o [1]
-  .bss               zero     0x400005b8      0x4  drv_glcd.o [1]
-  .bss               zero     0x400005bc      0x4  drv_glcd.o [1]
-  .bss               zero     0x400005c0      0x4  drv_glcd.o [1]
-  .bss               zero     0x400005c4      0x4  drv_glcd.o [1]
-  .bss               zero     0x400005c8      0x4  drv_glcd.o [1]
-  .bss               zero     0x400005cc      0x4  drv_glcd.o [1]
-  .bss               zero     0x400005d0      0x4  drv_glcd.o [1]
-  .bss               zero     0x400005d4      0x4  main.o [1]
-  .bss               zero     0x400005d8      0x4  main.o [1]
-  .bss               zero     0x400005dc      0x4  main.o [1]
-  .bss               zero     0x400005e0      0x4  main.o [1]
-  .bss               zero     0x400005e4      0x4  main.o [1]
-  .bss               zero     0x400005e8      0x4  main.o [1]
-  .bss               zero     0x400005ec      0x4  main.o [1]
-  .bss               zero     0x400005f0      0x4  iarwstd.o [5]
-                            - 0x400005f4     0x74
+"P2", part 2 of 3:                          0xa4
+  .bss               zero     0x40000580    0x1c  touch_scr.o [1]
+  .bss               zero     0x4000059c    0x10  main.o [1]
+  .bss               zero     0x400005ac     0xc  interrupt_handlers.o [1]
+  .bss               zero     0x400005b8     0x8  main.o [1]
+  .bss               zero     0x400005c0     0x8  main.o [1]
+  .bss               zero     0x400005c8     0x4  drv_glcd.o [1]
+  .bss               zero     0x400005cc     0x4  drv_glcd.o [1]
+  .bss               zero     0x400005d0     0x4  drv_glcd.o [1]
+  .bss               zero     0x400005d4     0x4  drv_glcd.o [1]
+  .bss               zero     0x400005d8     0x4  drv_glcd.o [1]
+  .bss               zero     0x400005dc     0x4  drv_glcd.o [1]
+  .bss               zero     0x400005e0     0x4  drv_glcd.o [1]
+  .bss               zero     0x400005e4     0x4  drv_glcd.o [1]
+  .bss               zero     0x400005e8     0x4  drv_glcd.o [1]
+  .bss               zero     0x400005ec     0x4  drv_glcd.o [1]
+  .bss               zero     0x400005f0     0x4  drv_glcd.o [1]
+  .bss               zero     0x400005f4     0x4  drv_glcd.o [1]
+  .bss               zero     0x400005f8     0x4  drv_glcd.o [1]
+  .bss               zero     0x400005fc     0x4  main.o [1]
+  .bss               zero     0x40000600     0x4  main.o [1]
+  .bss               zero     0x40000604     0x4  main.o [1]
+  .bss               zero     0x40000608     0x4  main.o [1]
+  .bss               zero     0x4000060c     0x4  main.o [1]
+  .bss               zero     0x40000610     0x4  main.o [1]
+  .bss               zero     0x40000614     0x4  main.o [1]
+  .bss               zero     0x40000618     0x4  touch_scr.o [1]
+  .bss               zero     0x4000061c     0x4  touch_scr.o [1]
+  .bss               zero     0x40000620     0x4  iarwstd.o [5]
+                            - 0x40000624    0xa4
 
-"P2", part 3 of 3:                           0x7c
-  P2 s0                       0x400005f4     0x7c  <Init block>
-    .data            inited   0x400005f4     0x1c  Black_bg.o [1]
-    .data            inited   0x40000610     0x1c  button_lightgrey.o [1]
-    .data            inited   0x4000062c     0x18  Terminal_18_24x12.o [1]
-    .data            inited   0x40000644      0x4  drv_glcd.o [1]
-    .data            inited   0x40000648      0x4  drv_glcd.o [1]
-    .data            inited   0x4000064c      0x4  drv_glcd.o [1]
-    .data            inited   0x40000650      0x4  main.o [1]
-    .data            inited   0x40000654      0x4  main.o [1]
-    .data            inited   0x40000658      0x4  main.o [1]
-    .data            inited   0x4000065c      0x4  main.o [1]
-    .data            inited   0x40000660      0x4  main.o [1]
-    .data            inited   0x40000664      0x4  main.o [1]
-    .data            inited   0x40000668      0x4  main.o [1]
-    .data            inited   0x4000066c      0x4  zerocrossing.o [1]
-                            - 0x40000670     0x7c
+"P2", part 3 of 3:                          0x60
+  P2 s0                       0x40000624    0x60  <Init block>
+    .data            inited   0x40000624    0x1c  button_lightgrey.o [1]
+    .data            inited   0x40000640    0x18  Terminal_18_24x12.o [1]
+    .data            inited   0x40000658     0x4  drv_glcd.o [1]
+    .data            inited   0x4000065c     0x4  drv_glcd.o [1]
+    .data            inited   0x40000660     0x4  drv_glcd.o [1]
+    .data            inited   0x40000664     0x4  main.o [1]
+    .data            inited   0x40000668     0x4  main.o [1]
+    .data            inited   0x4000066c     0x4  main.o [1]
+    .data            inited   0x40000670     0x4  main.o [1]
+    .data            inited   0x40000674     0x4  main.o [1]
+    .data            inited   0x40000678     0x4  main.o [1]
+    .data            inited   0x4000067c     0x4  main.o [1]
+    .data            inited   0x40000680     0x4  zerocrossing.o [1]
+                            - 0x40000684    0x60
 
 
 *******************************************************************************
@@ -240,14 +246,14 @@ __thumb_aware = enabled
           Address     Size
           -------     ----
 Zero (__iar_zero_init2)
-    1 destination range, total size 0x74:
-          0x40000580  0x74
+    1 destination range, total size 0xa4:
+          0x40000580  0xa4
 
 Copy (__iar_copy_init2)
-    1 source range, total size 0x7c (100% of destination):
-             0x557bc  0x7c
-    1 destination range, total size 0x7c:
-          0x400005f4  0x7c
+    1 source range, total size 0x60 (100% of destination):
+              0xad84  0x60
+    1 destination range, total size 0x60:
+          0x40000624  0x60
 
 
 *******************************************************************************
@@ -257,23 +263,23 @@ Copy (__iar_copy_init2)
     Module                 ro code  ro data  rw data
     ------                 -------  -------  -------
 C:\31070\v1\MyProject\Debug\Obj: [1]
-    Black_bg.o                      307 244       28
     Terminal_18_24x12.o              12 332       24
-    adc.o                      220
+    adc.o                      324
     button_lightgrey.o               12 852       28
     dac.o                      104
     drv_glcd.o               2 628      156       64
     filter.o                   132
     frequency.o                148
-    gpio.o                     380       68
-    interrupt_handlers.o       536
-    main.o                     476       80       88
+    gpio.o                     440       68
+    interrupt_handlers.o     1 044                12
+    main.o                     472       72       88
     sdram_32M_16bit_drv.o      588
     sys.o                    1 012
     timer.o                    192
+    touch_scr.o                736      100       36
     zerocrossing.o             184        4        4
     ------------------------------------------------
-    Total:                   6 600  332 736      236
+    Total:                   8 004   25 584      256
 
 command line: [2]
     ------------------------------------------------
@@ -344,289 +350,303 @@ shs_l.a: [5]
     Gaps                         6
     Linker created             180       38    1 344
 ----------------------------------------------------
-    Grand Total:            17 426  332 830    1 584
+    Grand Total:            18 830   25 678    1 604
 
 
 *******************************************************************************
 *** ENTRY LIST
 ***
 
-Entry                      Address     Size  Type      Object
------                      -------     ----  ----      ------
-?main                   0x00055580           Code  Gb  cmain.o [4]
-ADC_Intr_Handler        0x00053531     0x84  Code  Gb  interrupt_handlers.o [1]
-ADC_p_p                 0x40000580     0x10  Data  Gb  main.o [1]
-AD_zerocrossing_delay   0x40000598      0x8  Data  Gb  main.o [1]
-ADdata                  0x40000590      0x8  Data  Gb  main.o [1]
-ADfilter                0x00054eb9     0x74  Code  Gb  filter.o [1]
-ADfilter_enable         0x40000650      0x4  Data  Gb  main.o [1]
-Abort_Handler           0x000557a4           Code  Wk  vectortrap.o [4]
-Black_bgPic             0x400005f4     0x1c  Data  Gb  Black_bg.o [1]
-Black_bgStream          0x00000044  0x4b000  Data  Gb  Black_bg.o [1]
-CSTACK$$Base            0x40000040            --   Gb  - Linker created -
-CSTACK$$Limit           0x40000440            --   Gb  - Linker created -
-CurrX_Size              0x400005c8      0x4  Data  Lc  drv_glcd.o [1]
-CurrY_Size              0x400005c4      0x4  Data  Lc  drv_glcd.o [1]
-Data                    0x400005d4      0x4  Data  Gb  main.o [1]
-FIQ_Handler             0x00052bb4      0x4  Code  Gb  sys.o [1]
-FIQ_STACK$$Base         0x40000540            --   Gb  - Linker created -
-FIQ_STACK$$Limit        0x40000580            --   Gb  - Linker created -
+Entry                      Address    Size  Type      Object
+-----                      -------    ----  ----      ------
+?main                   0x0000ab60          Code  Gb  cmain.o [4]
+ADC_Inter_Handler       0x00007bb5   0x128  Code  Gb  interrupt_handlers.o [1]
+ADC_p_p                 0x4000059c    0x10  Data  Gb  main.o [1]
+AD_zerocrossing_delay   0x400005c0     0x8  Data  Gb  main.o [1]
+ADdata                  0x400005b8     0x8  Data  Gb  main.o [1]
+ADfilter                0x0000a435    0x74  Code  Gb  filter.o [1]
+ADfilter_enable         0x40000664     0x4  Data  Gb  main.o [1]
+Abort_Handler           0x0000ad6c          Code  Wk  vectortrap.o [4]
+CSTACK$$Base            0x40000040           --   Gb  - Linker created -
+CSTACK$$Limit           0x40000440           --   Gb  - Linker created -
+CurrX_Size              0x400005f0     0x4  Data  Lc  drv_glcd.o [1]
+CurrY_Size              0x400005ec     0x4  Data  Lc  drv_glcd.o [1]
+Data                    0x400005fc     0x4  Data  Gb  main.o [1]
+FIQ_Handler             0x00007fc8     0x4  Code  Gb  sys.o [1]
+FIQ_STACK$$Base         0x40000540           --   Gb  - Linker created -
+FIQ_STACK$$Limit        0x40000580           --   Gb  - Linker created -
 Frequency_with_interpolation
-                        0x00054d81     0x5c  Code  Gb  frequency.o [1]
+                        0x0000a2fd    0x5c  Code  Gb  frequency.o [1]
 Frequency_without_interpolation
-                        0x00054ddd     0x30  Code  Gb  frequency.o [1]
-GLCD_Ctrl               0x0005253d     0x70  Code  Gb  drv_glcd.o [1]
-GLCD_Init               0x00052171    0x384  Code  Gb  drv_glcd.o [1]
-GLCD_LoadPic            0x00052b25     0x90  Code  Gb  drv_glcd.o [1]
-GLCD_SetFont            0x000525ad     0x1c  Code  Gb  drv_glcd.o [1]
-GLCD_SetPallet          0x000524f5     0x48  Code  Gb  drv_glcd.o [1]
-GLCD_SetWindow          0x000525c9     0x9c  Code  Gb  drv_glcd.o [1]
-GLCD_TextCalcWindow     0x0005273d     0xf4  Code  Lc  drv_glcd.o [1]
-GLCD_TextSetPos         0x00052665     0x14  Code  Gb  drv_glcd.o [1]
-GpioInit                0x00052e65     0xf8  Code  Gb  sys.o [1]
-IRQ_Handler             0x00052bb8     0x3c  Code  Gb  sys.o [1]
-IRQ_STACK$$Base         0x40000440            --   Gb  - Linker created -
-IRQ_STACK$$Limit        0x40000540            --   Gb  - Linker created -
-InitClock               0x00052c81    0x104  Code  Gb  sys.o [1]
-LCD_Init                0x00053dad     0x44  Code  Gb  main.o [1]
-LCD_LPBASE              0xffe10014      0x4  Data  Wk  drv_glcd.o [1]
-LCD_PAL_BASE            0xffe10200      0x4  Data  Wk  drv_glcd.o [1]
-LCD_SET_WINDOW          0x00052679     0x50  Code  Lc  drv_glcd.o [1]
-LCD_UPBASE              0xffe10010      0x4  Data  Wk  drv_glcd.o [1]
-LCD_WRITE_PIXEL         0x000526c9     0x74  Code  Lc  drv_glcd.o [1]
-LCD_Write               0x00053df1     0x6c  Code  Gb  main.o [1]
-Linespace               0x40000668      0x4  Data  Gb  main.o [1]
-P_P_value               0x00053e5d     0x60  Code  Gb  main.o [1]
-Prefetch_Handler        0x000557a0           Code  Wk  vectortrap.o [4]
-Program_Init            0x00053d85     0x28  Code  Gb  main.o [1]
-Region$$Table$$Base     0x000555a4            --   Gb  - Linker created -
-Region$$Table$$Limit    0x000555c8            --   Gb  - Linker created -
-SDRAM_BASE_ADDR         0xa0000000            --   Gb  command line/config [2]
-SDRAM_Init              0x000532e5    0x24c  Code  Gb  sdram_32M_16bit_drv.o [1]
-SWI_Handler             0x0005579c           Code  Wk  vectortrap.o [4]
-SYS_GetFpclk            0x00052e19     0x42  Code  Gb  sys.o [1]
-SYS_GetFsclk            0x00052d89     0x84  Code  Gb  sys.o [1]
-Sys_Init                0x00052f5d     0x4c  Code  Gb  sys.o [1]
-T0MR0                   0xe0004018      0x4  Data  Wk  timer.o [1]
-T0PR                    0xe000400c      0x4  Data  Wk  timer.o [1]
-TabSize                 0x4000064c      0x4  Data  Lc  drv_glcd.o [1]
-Terminal_18_24_12       0x4000062c     0x18  Data  Gb  Terminal_18_24x12.o [1]
-TextBackgndColour       0x400005a8      0x4  Data  Lc  drv_glcd.o [1]
-TextColour              0x400005a4      0x4  Data  Lc  drv_glcd.o [1]
-TextStream              0x0004e244   0x3000  Data  Lc  Terminal_18_24x12.o [1]
-TextX_Pos               0x400005ac      0x4  Data  Lc  drv_glcd.o [1]
-TextY_Pos               0x400005b0      0x4  Data  Lc  drv_glcd.o [1]
-Timer0IntrHandler       0x000535b5    0x184  Code  Gb  interrupt_handlers.o [1]
-Undefined_Handler       0x00055798           Code  Wk  vectortrap.o [4]
-VICADDRESS              0xffffff00      0x4  Data  Wk  interrupt_handlers.o [1]
-VICVECTADDR0            0xfffff100      0x4  Data  Wk  sys.o [1]
-VIC_Init                0x00052bf5     0x58  Code  Gb  sys.o [1]
-VIC_SetVectoredIRQ      0x00052c4d     0x28  Code  Gb  sys.o [1]
-WindX_Size              0x400005c0      0x4  Data  Lc  drv_glcd.o [1]
-WindY_Size              0x400005bc      0x4  Data  Lc  drv_glcd.o [1]
-XL_Win                  0x400005b4      0x4  Data  Lc  drv_glcd.o [1]
-XR_Win                  0x40000644      0x4  Data  Lc  drv_glcd.o [1]
-X_Left                  0x40000658      0x4  Data  Gb  main.o [1]
-X_Right                 0x4000065c      0x4  Data  Gb  main.o [1]
-YD_Win                  0x40000648      0x4  Data  Lc  drv_glcd.o [1]
-YU_Win                  0x400005b8      0x4  Data  Lc  drv_glcd.o [1]
-Y_Down                  0x40000664      0x4  Data  Gb  main.o [1]
-Y_Up                    0x40000660      0x4  Data  Gb  main.o [1]
-ZeroCrossing_delays     0x00054bb5     0x70  Code  Gb  zerocrossing.o [1]
-_A_AD0CR                0xe0034000      0x4  Data  Wk  adc.o [1]
-_A_AD0GDR               0xe0034004      0x4  Data  Wk  interrupt_handlers.o [1]
-_A_CCLKCFG              0xe01fc104      0x4  Data  Wk  sys.o [1]
-_A_CLKSRCSEL            0xe01fc10c      0x4  Data  Wk  sys.o [1]
-_A_CRSR_CFG             0xffe10c04      0x4  Data  Wk  drv_glcd.o [1]
-_A_CRSR_CLIP            0xffe10c14      0x4  Data  Wk  drv_glcd.o [1]
-_A_CRSR_CTRL            0xffe10c00      0x4  Data  Wk  drv_glcd.o [1]
-_A_CRSR_XY              0xffe10c10      0x4  Data  Wk  drv_glcd.o [1]
-_A_DACR                 0xe006c000      0x4  Data  Wk  dac.o [1]
-_A_EMCCONTROL           0xffe08000      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDINAMICCTRL       0xffe08020      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDINAMICRDCFG      0xffe08028      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDINAMICRFR        0xffe08024      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDYNAMICAPR        0xffe0803c      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDYNAMICCFG0       0xffe08100      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDYNAMICDAL        0xffe08040      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDYNAMICMRD        0xffe08058      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDYNAMICRAS        0xffe08034      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDYNAMICRASCAS0    0xffe08104      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDYNAMICRC         0xffe08048      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDYNAMICRFC        0xffe0804c      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDYNAMICRP         0xffe08030      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDYNAMICRRD        0xffe08054      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDYNAMICSREX       0xffe08038      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDYNAMICWR         0xffe08044      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_EMCDYNAMICXSR        0xffe08050      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_FIO0DIR              0x3fffc000      0x4  Data  Wk  gpio.o [1]
-_A_FIO0MASK             0x3fffc010      0x4  Data  Wk  sys.o [1]
-_A_FIO0PIN              0x3fffc014      0x4  Data  Wk  gpio.o [1]
-_A_FIO1DIR              0x3fffc020      0x4  Data  Wk  gpio.o [1]
-_A_FIO1MASK             0x3fffc030      0x4  Data  Wk  sys.o [1]
-_A_FIO1PIN              0x3fffc034      0x4  Data  Wk  gpio.o [1]
-_A_FIO2DIR              0x3fffc040      0x4  Data  Wk  sys.o [1]
-_A_FIO2MASK             0x3fffc050      0x4  Data  Wk  sys.o [1]
-_A_FIO3DIR              0x3fffc060      0x4  Data  Wk  sys.o [1]
-_A_FIO3MASK             0x3fffc070      0x4  Data  Wk  sys.o [1]
-_A_FIO4DIR              0x3fffc080      0x4  Data  Wk  sys.o [1]
-_A_FIO4MASK             0x3fffc090      0x4  Data  Wk  sys.o [1]
-_A_IO0DIR               0xe0028008      0x4  Data  Wk  sys.o [1]
-_A_IO1DIR               0xe0028018      0x4  Data  Wk  sys.o [1]
-_A_LCD_CFG              0xe01fc1b8      0x4  Data  Wk  drv_glcd.o [1]
-_A_LCD_CTRL             0xffe10018      0x4  Data  Wk  drv_glcd.o [1]
-_A_LCD_POL              0xffe10008      0x4  Data  Wk  drv_glcd.o [1]
-_A_LCD_TIMH             0xffe10000      0x4  Data  Wk  drv_glcd.o [1]
-_A_LCD_TIMV             0xffe10004      0x4  Data  Wk  drv_glcd.o [1]
-_A_MAMCR                0xe01fc000      0x4  Data  Wk  sys.o [1]
-_A_MAMTIM               0xe01fc004      0x4  Data  Wk  sys.o [1]
-_A_PCLKSEL0             0xe01fc1a8      0x4  Data  Wk  sys.o [1]
-_A_PCLKSEL1             0xe01fc1ac      0x4  Data  Wk  sys.o [1]
-_A_PCONP                0xe01fc0c4      0x4  Data  Wk  adc.o [1]
-_A_PINMODE0             0xe002c040      0x4  Data  Wk  drv_glcd.o [1]
-_A_PINMODE1             0xe002c044      0x4  Data  Wk  adc.o [1]
-_A_PINMODE3             0xe002c04c      0x4  Data  Wk  drv_glcd.o [1]
-_A_PINMODE4             0xe002c050      0x4  Data  Wk  drv_glcd.o [1]
-_A_PINMODE5             0xe002c054      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_PINMODE6             0xe002c058      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_PINMODE8             0xe002c060      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_PINMODE9             0xe002c064      0x4  Data  Wk  drv_glcd.o [1]
-_A_PINSEL0              0xe002c000      0x4  Data  Wk  drv_glcd.o [1]
-_A_PINSEL1              0xe002c004      0x4  Data  Wk  adc.o [1]
-_A_PINSEL10             0xe002c028      0x4  Data  Wk  sys.o [1]
-_A_PINSEL11             0xe002c02c      0x4  Data  Wk  drv_glcd.o [1]
-_A_PINSEL2              0xe002c008      0x4  Data  Wk  sys.o [1]
-_A_PINSEL3              0xe002c00c      0x4  Data  Wk  drv_glcd.o [1]
-_A_PINSEL4              0xe002c010      0x4  Data  Wk  drv_glcd.o [1]
-_A_PINSEL5              0xe002c014      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_PINSEL6              0xe002c018      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_PINSEL7              0xe002c01c      0x4  Data  Wk  sys.o [1]
-_A_PINSEL8              0xe002c020      0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
-_A_PINSEL9              0xe002c024      0x4  Data  Wk  drv_glcd.o [1]
-_A_PLLCFG               0xe01fc084      0x4  Data  Wk  sys.o [1]
-_A_PLLCON               0xe01fc080      0x4  Data  Wk  sys.o [1]
-_A_PLLFEED              0xe01fc08c      0x4  Data  Wk  sys.o [1]
-_A_PLLSTAT              0xe01fc088      0x4  Data  Wk  sys.o [1]
-_A_SCS                  0xe01fc1a0      0x4  Data  Wk  sys.o [1]
-_A_T0CTCR               0xe0004070      0x4  Data  Wk  timer.o [1]
-_A_T0IR                 0xe0004000      0x4  Data  Wk  timer.o [1]
-_A_T0MCR                0xe0004014      0x4  Data  Wk  timer.o [1]
-_A_T0TCR                0xe0004004      0x4  Data  Wk  timer.o [1]
-_A_USBCLKCFG            0xe01fc108      0x4  Data  Wk  sys.o [1]
-_A_VICINTENABLE         0xfffff010      0x4  Data  Wk  main.o [1]
-_A_VICINTENCLEAR        0xfffff014      0x4  Data  Wk  sys.o [1]
-_A_VICINTSELECT         0xfffff00c      0x4  Data  Wk  sys.o [1]
-_A_VICPROTECTION        0xfffff020      0x4  Data  Wk  sys.o [1]
-_A_VICSOFTINTCLEAR      0xfffff01c      0x4  Data  Wk  sys.o [1]
-_A_VICVECTPRIORITY0     0xfffff200      0x4  Data  Wk  sys.o [1]
-_GenldDefault           0x00051eb9    0x27c  Code  Lc  xprintffull.o [3]
-_LdtobDefault           0x00051a19    0x4a0  Code  Lc  xprintffull.o [3]
-_LitobDefault           0x00051905    0x114  Code  Lc  xprintffull.o [3]
-_Printf                 0x00051265    0x69e  Code  Gb  xprintffull.o [3]
-_Prout                  0x0005560d     0x1e  Code  Gb  xprout.o [3]
-_PutcharsDefault        0x00052135     0x3a  Code  Lc  xprintffull.o [3]
-__aeabi_assert          0x000551a3     0x56  Code  Gb  xassert.o [3]
-__aeabi_cdcmple         0x000552e4           Code  Gb  DblCmpLe.o [4]
-__aeabi_cdrcmple        0x00055320           Code  Gb  DblCmpGe.o [4]
-__aeabi_cfcmple         0x00055484           Code  Gb  FltCmpLe.o [4]
-__aeabi_cfrcmple        0x000554b4           Code  Gb  FltCmpGe.o [4]
-__aeabi_d2f             0x00054c2c           Code  Gb  DblToFlt.o [4]
-__aeabi_d2iz            0x000550e4           Code  Gb  DblToS32.o [4]
-__aeabi_d2uiz           0x000552a4           Code  Gb  DblToU32.o [4]
-__aeabi_dadd            0x00054378           Code  Gb  DblAdd.o [4]
-__aeabi_ddiv            0x00052fac           Code  Gb  DblDiv.o [4]
-__aeabi_dmul            0x0005374c           Code  Gb  DblMul.o [4]
-__aeabi_dsub            0x00053948           Code  Gb  DblSub.o [4]
-__aeabi_f2d             0x00055018           Code  Gb  FltToDbl.o [4]
-__aeabi_f2uiz           0x0005535c           Code  Gb  FltToU32.o [4]
-__aeabi_fadd            0x00054cdc           Code  Gb  FltAdd.o [4]
-__aeabi_fdiv            0x00053ee0           Code  Gb  FltDiv.o [4]
-__aeabi_fmul            0x00054228           Code  Gb  FltMul.o [4]
-__aeabi_fsub            0x000544bc           Code  Gb  FltSub.o [4]
-__aeabi_i2d             0x00055148           Code  Gb  S32ToDbl.o [4]
-__aeabi_i2f             0x0005507c           Code  Gb  S32ToFlt.o [4]
-__aeabi_idiv            0x00053b3c           Code  Gb  I32DivMod.o [4]
-__aeabi_idiv0           0x000557a8           Code  Gb  IntDivZer.o [4]
-__aeabi_idivmod         0x00053b3c           Code  Gb  I32DivMod.o [4]
-__aeabi_ldiv0           0x000557b0           Code  Gb  I64DivZer.o [4]
-__aeabi_ldivmod         0x00054714           Code  Gb  I64DivMod.o [4]
-__aeabi_memcpy          0x0005491c           Code  Gb  ABImemcpy.o [4]
-__aeabi_memcpy4         0x00054940           Code  Gb  ABImemcpy.o [4]
-__aeabi_memcpy8         0x00054940           Code  Gb  ABImemcpy.o [4]
-__aeabi_ui2d            0x00055774           Code  Gb  U32ToDbl.o [4]
-__aeabi_ui2f            0x00055734           Code  Gb  U32ToFlt.o [4]
-__aeabi_uidiv           0x00053b4c           Code  Gb  I32DivMod.o [4]
-__aeabi_uidivmod        0x00053b4c           Code  Gb  I32DivMod.o [4]
-__aeabi_uldivmod        0x0005472c           Code  Gb  I64DivMod.o [4]
-__exit                  0x00055630     0x1c  Code  Gb  exit.o [5]
-__iar_Dnorm             0x00054ab1     0xc0  Code  Gb  xdnorm.o [3]
-__iar_Dscale            0x000545e9    0x12c  Code  Gb  xdscale.o [3]
-__iar_EmptyStepPoint    0x000551a1      0x2  Code  Gb  xassert.o [3]
-__iar_Memchr            0x00054e18           Code  Gb  memchr.o [4]
-__iar_ReportAssert      0x00054f4d     0x60  Code  Gb  xreportassert.o [3]
-__iar_Strchr            0x000555ec           Code  Gb  strchr.o [4]
-__iar_SubNrm            0x00054348           Code  Gb  FltMul.o [4]
-__iar_SubNrmP           0x00054344           Code  Gb  FltMul.o [4]
-__iar_copy_init2        0x000554e0     0x2c  Code  Gb  copy_init2.o [4]
-__iar_dadd              0x00054388           Code  Gb  DblAdd.o [4]
-__iar_data_init2        0x00055390     0x34  Code  Gb  data_init2.o [4]
-__iar_dsub              0x00053958           Code  Gb  DblSub.o [4]
-__iar_dsubStart         0x00053978           Code  Gb  DblSub.o [4]
-__iar_enable_interrupt  0x00055720           Code  Wk  main.o [1]
-__iar_fadd              0x00054ce8           Code  Gb  FltAdd.o [4]
-__iar_fsub              0x000544c8           Code  Gb  FltSub.o [4]
-__iar_fsubStart         0x000544d8           Code  Gb  FltSub.o [4]
-__iar_i2d               0x0005514c           Code  Gb  S32ToDbl.o [4]
-__iar_i2f               0x00055090           Code  Gb  S32ToFlt.o [4]
-__iar_program_start     0x00055250           Code  Gb  cstartup.o [4]
-__iar_return_from_swi   0x000557ac      0x4  Code  Gb  xreturnswi.o [5]
-__iar_sh_stdout_close   0x00055424     0x2c  Code  Gb  iarwstd.o [5]
-__iar_sh_stdout_handle  0x400005f0      0x4  Data  Lc  iarwstd.o [5]
-__iar_via_R2            0x000557b9           Code  Wk  xprintffull.o [3]
-__iar_zero_init2        0x0005550c     0x28  Code  Gb  zero_init2.o [4]
-__low_level_init        0x000557b5      0x4  Code  Gb  low_level_init.o [3]
-__vector                0x00000000           Code  Gb  cstartup.o [4]
-__vector_0x14           0x00000014           Code  Gb  cstartup.o [4]
-_exit                   0x00055748           Code  Gb  cexit.o [4]
-abort                   0x00055789      0x8  Code  Gb  abort.o [3]
-adc_start               0x000548ed     0x14  Code  Gb  adc.o [1]
-adc_stop                0x00054901      0xe  Code  Gb  adc.o [1]
-alpha                   0x400005d8      0x4  Data  Gb  main.o [1]
-blink_timer             0x400005e8      0x4  Data  Gb  main.o [1]
-button_lightgreyPic     0x40000610     0x1c  Data  Gb  button_lightgrey.o [1]
-button_lightgreyStream  0x0004b044   0x3200  Data  Gb  button_lightgrey.o [1]
-dac_timer               0x400005ec      0x4  Data  Gb  main.o [1]
-dac_write               0x00054fe1     0x34  Code  Gb  dac.o [1]
-detect_ZeroCrossing     0x00054b71     0x42  Code  Gb  zerocrossing.o [1]
-div                     0x00055535     0x28  Code  Gb  div.o [3]
-exit                    0x00055791      0x6  Code  Gb  exit.o [3]
-f_out                   0x400005e0      0x4  Data  Gb  main.o [1]
-frequency               0x400005dc      0x4  Data  Gb  main.o [1]
-initialize_adc          0x0005483d     0xb0  Code  Gb  adc.o [1]
-initialize_dac          0x00054fad     0x34  Code  Gb  dac.o [1]
-initialize_led          0x000540a9     0x40  Code  Gb  gpio.o [1]
-initialize_relays       0x000540e9     0x3c  Code  Gb  gpio.o [1]
-initialize_timer        0x000549f1     0x98  Code  Gb  timer.o [1]
-linear_inerpolaion      0x40000654      0x4  Data  Gb  main.o [1]
-main                    0x00053d11     0x74  Code  Gb  main.o [1]
-memchr                  0x00054e18           Code  Gb  memchr.o [4]
-out                     0x00054f31     0x1a  Code  Lc  xreportassert.o [3]
-pCurrFont               0x400005a0      0x4  Data  Lc  drv_glcd.o [1]
-pPix                    0x400005d0      0x4  Data  Lc  drv_glcd.o [1]
-pWind                   0x400005cc      0x4  Data  Lc  drv_glcd.o [1]
-printf                  0x000555c9     0x20  Code  Gb  printf.o [3]
-putchar                 0x00052831    0x2f4  Code  Gb  drv_glcd.o [1]
-relays_status           0x000541ad     0x3a  Code  Gb  gpio.o [1]
-strchr                  0x000555ec           Code  Gb  strchr.o [4]
-strlen                  0x000551fc           Code  Gb  strlen.o [4]
-tick_count              0x400005e4      0x4  Data  Gb  main.o [1]
-timer0_interrupt_reset  0x00054a9d      0xe  Code  Gb  timer.o [1]
-timer0_start            0x00054a89      0xe  Code  Gb  timer.o [1]
-toggle_led              0x000541ed     0x34  Code  Gb  gpio.o [1]
-toggle_relays           0x00054125     0x80  Code  Gb  gpio.o [1]
-update_alpha            0x00054ead      0xc  Code  Gb  filter.o [1]
+                        0x0000a359    0x30  Code  Gb  frequency.o [1]
+GLCD_Ctrl               0x0000753d    0x70  Code  Gb  drv_glcd.o [1]
+GLCD_Init               0x00007171   0x384  Code  Gb  drv_glcd.o [1]
+GLCD_LoadPic            0x00007b25    0x90  Code  Gb  drv_glcd.o [1]
+GLCD_SetFont            0x000075ad    0x1c  Code  Gb  drv_glcd.o [1]
+GLCD_SetPallet          0x000074f5    0x48  Code  Gb  drv_glcd.o [1]
+GLCD_SetWindow          0x000075c9    0x9c  Code  Gb  drv_glcd.o [1]
+GLCD_TextCalcWindow     0x0000773d    0xf4  Code  Lc  drv_glcd.o [1]
+GLCD_TextSetPos         0x00007665    0x14  Code  Gb  drv_glcd.o [1]
+GpioInit                0x00008279    0xf8  Code  Gb  sys.o [1]
+IRQ_Handler             0x00007fcc    0x3c  Code  Gb  sys.o [1]
+IRQ_STACK$$Base         0x40000440           --   Gb  - Linker created -
+IRQ_STACK$$Limit        0x40000540           --   Gb  - Linker created -
+InitClock               0x00008095   0x104  Code  Gb  sys.o [1]
+LCD_Init                0x0000926d    0x3c  Code  Gb  main.o [1]
+LCD_LPBASE              0xffe10014     0x4  Data  Wk  drv_glcd.o [1]
+LCD_PAL_BASE            0xffe10200     0x4  Data  Wk  drv_glcd.o [1]
+LCD_SET_WINDOW          0x00007679    0x50  Code  Lc  drv_glcd.o [1]
+LCD_UPBASE              0xffe10010     0x4  Data  Wk  drv_glcd.o [1]
+LCD_WRITE_PIXEL         0x000076c9    0x74  Code  Lc  drv_glcd.o [1]
+LCD_Write               0x000092a9    0xa0  Code  Gb  main.o [1]
+Linespace               0x4000067c     0x4  Data  Gb  main.o [1]
+P_P_value               0x00009349    0x50  Code  Gb  main.o [1]
+Prefetch_Handler        0x0000ad68          Code  Wk  vectortrap.o [4]
+Program_Init            0x00009249    0x24  Code  Gb  main.o [1]
+Region$$Table$$Base     0x0000ab84           --   Gb  - Linker created -
+Region$$Table$$Limit    0x0000aba8           --   Gb  - Linker created -
+SDRAM_BASE_ADDR         0xa0000000           --   Gb  command line/config [2]
+SDRAM_Init              0x000089d9   0x24c  Code  Gb  sdram_32M_16bit_drv.o [1]
+SWI_Handler             0x0000ad64          Code  Wk  vectortrap.o [4]
+SYS_GetFpclk            0x0000822d    0x42  Code  Gb  sys.o [1]
+SYS_GetFsclk            0x0000819d    0x84  Code  Gb  sys.o [1]
+Sys_Init                0x00008371    0x4c  Code  Gb  sys.o [1]
+T0MR0                   0xe0004018     0x4  Data  Wk  drv_touch_scr.o [1]
+T0PR                    0xe000400c     0x4  Data  Wk  timer.o [1]
+TabSize                 0x40000660     0x4  Data  Lc  drv_glcd.o [1]
+Terminal_18_24_12       0x40000640    0x18  Data  Gb  Terminal_18_24x12.o [1]
+TextBackgndColour       0x400005d0     0x4  Data  Lc  drv_glcd.o [1]
+TextColour              0x400005cc     0x4  Data  Lc  drv_glcd.o [1]
+TextStream              0x00003244  0x3000  Data  Lc  Terminal_18_24x12.o [1]
+TextX_Pos               0x400005d4     0x4  Data  Lc  drv_glcd.o [1]
+TextY_Pos               0x400005d8     0x4  Data  Lc  drv_glcd.o [1]
+Timer0IntrHandler       0x00007d01   0x2c8  Code  Gb  interrupt_handlers.o [1]
+TouchScrInit            0x000086f9    0xc0  Code  Gb  touch_scr.o [1]
+Touch_data              0x40000580    0x1c  Data  Gb  touch_scr.o [1]
+Undefined_Handler       0x0000ad60          Code  Wk  vectortrap.o [4]
+VICADDRESS              0xffffff00     0x4  Data  Wk  drv_touch_scr.o [1]
+VICVECTADDR0            0xfffff100     0x4  Data  Wk  sys.o [1]
+VIC_Init                0x00008009    0x58  Code  Gb  sys.o [1]
+VIC_SetVectoredIRQ      0x00008061    0x28  Code  Gb  sys.o [1]
+WindX_Size              0x400005e8     0x4  Data  Lc  drv_glcd.o [1]
+WindY_Size              0x400005e4     0x4  Data  Lc  drv_glcd.o [1]
+XL_Win                  0x400005dc     0x4  Data  Lc  drv_glcd.o [1]
+XR_Win                  0x40000658     0x4  Data  Lc  drv_glcd.o [1]
+X_Left                  0x4000066c     0x4  Data  Gb  main.o [1]
+X_Right                 0x40000670     0x4  Data  Gb  main.o [1]
+X_coord                 0x40000618     0x4  Data  Gb  touch_scr.o [1]
+YD_Win                  0x4000065c     0x4  Data  Lc  drv_glcd.o [1]
+YU_Win                  0x400005e0     0x4  Data  Lc  drv_glcd.o [1]
+Y_Down                  0x40000678     0x4  Data  Gb  main.o [1]
+Y_Up                    0x40000674     0x4  Data  Gb  main.o [1]
+Y_coord                 0x4000061c     0x4  Data  Gb  touch_scr.o [1]
+ZeroCrossing_delays     0x0000a131    0x70  Code  Gb  zerocrossing.o [1]
+_A_AD0CR                0xe0034000     0x4  Data  Wk  adc.o [1]
+_A_AD0GDR               0xe0034004     0x4  Data  Wk  drv_touch_scr.o [1]
+_A_ADDR0                0xe0034010     0x4  Data  Wk  interrupt_handlers.o [1]
+_A_ADDR1                0xe0034014     0x4  Data  Wk  interrupt_handlers.o [1]
+_A_ADDR2                0xe0034018     0x4  Data  Wk  interrupt_handlers.o [1]
+_A_ADDR3                0xe003401c     0x4  Data  Wk  interrupt_handlers.o [1]
+_A_ADINTEN              0xe003400c     0x4  Data  Wk  adc.o [1]
+_A_CCLKCFG              0xe01fc104     0x4  Data  Wk  sys.o [1]
+_A_CLKSRCSEL            0xe01fc10c     0x4  Data  Wk  sys.o [1]
+_A_CRSR_CFG             0xffe10c04     0x4  Data  Wk  drv_glcd.o [1]
+_A_CRSR_CLIP            0xffe10c14     0x4  Data  Wk  drv_glcd.o [1]
+_A_CRSR_CTRL            0xffe10c00     0x4  Data  Wk  drv_glcd.o [1]
+_A_CRSR_XY              0xffe10c10     0x4  Data  Wk  drv_glcd.o [1]
+_A_DACR                 0xe006c000     0x4  Data  Wk  dac.o [1]
+_A_EMCCONTROL           0xffe08000     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDINAMICCTRL       0xffe08020     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDINAMICRDCFG      0xffe08028     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDINAMICRFR        0xffe08024     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDYNAMICAPR        0xffe0803c     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDYNAMICCFG0       0xffe08100     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDYNAMICDAL        0xffe08040     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDYNAMICMRD        0xffe08058     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDYNAMICRAS        0xffe08034     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDYNAMICRASCAS0    0xffe08104     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDYNAMICRC         0xffe08048     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDYNAMICRFC        0xffe0804c     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDYNAMICRP         0xffe08030     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDYNAMICRRD        0xffe08054     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDYNAMICSREX       0xffe08038     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDYNAMICWR         0xffe08044     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_EMCDYNAMICXSR        0xffe08050     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_FIO0CLR              0x3fffc01c     0x4  Data  Wk  drv_touch_scr.o [1]
+_A_FIO0DIR              0x3fffc000     0x4  Data  Wk  drv_touch_scr.o [1]
+_A_FIO0MASK             0x3fffc010     0x4  Data  Wk  sys.o [1]
+_A_FIO0PIN              0x3fffc014     0x4  Data  Wk  drv_touch_scr.o [1]
+_A_FIO0SET              0x3fffc018     0x4  Data  Wk  drv_touch_scr.o [1]
+_A_FIO1DIR              0x3fffc020     0x4  Data  Wk  gpio.o [1]
+_A_FIO1MASK             0x3fffc030     0x4  Data  Wk  sys.o [1]
+_A_FIO1PIN              0x3fffc034     0x4  Data  Wk  gpio.o [1]
+_A_FIO2DIR              0x3fffc040     0x4  Data  Wk  sys.o [1]
+_A_FIO2MASK             0x3fffc050     0x4  Data  Wk  sys.o [1]
+_A_FIO3DIR              0x3fffc060     0x4  Data  Wk  sys.o [1]
+_A_FIO3MASK             0x3fffc070     0x4  Data  Wk  sys.o [1]
+_A_FIO4DIR              0x3fffc080     0x4  Data  Wk  sys.o [1]
+_A_FIO4MASK             0x3fffc090     0x4  Data  Wk  sys.o [1]
+_A_IO0DIR               0xe0028008     0x4  Data  Wk  sys.o [1]
+_A_IO0INTCLR            0xe002808c     0x4  Data  Wk  drv_touch_scr.o [1]
+_A_IO0INTENR            0xe0028090     0x4  Data  Wk  drv_touch_scr.o [1]
+_A_IO1DIR               0xe0028018     0x4  Data  Wk  sys.o [1]
+_A_LCD_CFG              0xe01fc1b8     0x4  Data  Wk  drv_glcd.o [1]
+_A_LCD_CTRL             0xffe10018     0x4  Data  Wk  drv_glcd.o [1]
+_A_LCD_POL              0xffe10008     0x4  Data  Wk  drv_glcd.o [1]
+_A_LCD_TIMH             0xffe10000     0x4  Data  Wk  drv_glcd.o [1]
+_A_LCD_TIMV             0xffe10004     0x4  Data  Wk  drv_glcd.o [1]
+_A_MAMCR                0xe01fc000     0x4  Data  Wk  sys.o [1]
+_A_MAMTIM               0xe01fc004     0x4  Data  Wk  sys.o [1]
+_A_PCLKSEL0             0xe01fc1a8     0x4  Data  Wk  sys.o [1]
+_A_PCLKSEL1             0xe01fc1ac     0x4  Data  Wk  sys.o [1]
+_A_PCONP                0xe01fc0c4     0x4  Data  Wk  adc.o [1]
+_A_PINMODE0             0xe002c040     0x4  Data  Wk  drv_glcd.o [1]
+_A_PINMODE1             0xe002c044     0x4  Data  Wk  adc.o [1]
+_A_PINMODE3             0xe002c04c     0x4  Data  Wk  drv_glcd.o [1]
+_A_PINMODE4             0xe002c050     0x4  Data  Wk  drv_glcd.o [1]
+_A_PINMODE5             0xe002c054     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_PINMODE6             0xe002c058     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_PINMODE8             0xe002c060     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_PINMODE9             0xe002c064     0x4  Data  Wk  drv_glcd.o [1]
+_A_PINSEL0              0xe002c000     0x4  Data  Wk  drv_glcd.o [1]
+_A_PINSEL1              0xe002c004     0x4  Data  Wk  adc.o [1]
+_A_PINSEL10             0xe002c028     0x4  Data  Wk  sys.o [1]
+_A_PINSEL11             0xe002c02c     0x4  Data  Wk  drv_glcd.o [1]
+_A_PINSEL2              0xe002c008     0x4  Data  Wk  sys.o [1]
+_A_PINSEL3              0xe002c00c     0x4  Data  Wk  drv_glcd.o [1]
+_A_PINSEL4              0xe002c010     0x4  Data  Wk  drv_glcd.o [1]
+_A_PINSEL5              0xe002c014     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_PINSEL6              0xe002c018     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_PINSEL7              0xe002c01c     0x4  Data  Wk  sys.o [1]
+_A_PINSEL8              0xe002c020     0x4  Data  Wk  sdram_32M_16bit_drv.o [1]
+_A_PINSEL9              0xe002c024     0x4  Data  Wk  drv_glcd.o [1]
+_A_PLLCFG               0xe01fc084     0x4  Data  Wk  sys.o [1]
+_A_PLLCON               0xe01fc080     0x4  Data  Wk  sys.o [1]
+_A_PLLFEED              0xe01fc08c     0x4  Data  Wk  sys.o [1]
+_A_PLLSTAT              0xe01fc088     0x4  Data  Wk  sys.o [1]
+_A_SCS                  0xe01fc1a0     0x4  Data  Wk  sys.o [1]
+_A_T0CTCR               0xe0004070     0x4  Data  Wk  timer.o [1]
+_A_T0IR                 0xe0004000     0x4  Data  Wk  drv_touch_scr.o [1]
+_A_T0MCR                0xe0004014     0x4  Data  Wk  timer.o [1]
+_A_T0TCR                0xe0004004     0x4  Data  Wk  drv_touch_scr.o [1]
+_A_USBCLKCFG            0xe01fc108     0x4  Data  Wk  sys.o [1]
+_A_VICINTENABLE         0xfffff010     0x4  Data  Wk  main.o [1]
+_A_VICINTENCLEAR        0xfffff014     0x4  Data  Wk  sys.o [1]
+_A_VICINTSELECT         0xfffff00c     0x4  Data  Wk  sys.o [1]
+_A_VICPROTECTION        0xfffff020     0x4  Data  Wk  sys.o [1]
+_A_VICSOFTINTCLEAR      0xfffff01c     0x4  Data  Wk  sys.o [1]
+_A_VICVECTPRIORITY0     0xfffff200     0x4  Data  Wk  sys.o [1]
+_GenldDefault           0x00006eb9   0x27c  Code  Lc  xprintffull.o [3]
+_LdtobDefault           0x00006a19   0x4a0  Code  Lc  xprintffull.o [3]
+_LitobDefault           0x00006905   0x114  Code  Lc  xprintffull.o [3]
+_Printf                 0x00006265   0x69e  Code  Gb  xprintffull.o [3]
+_Prout                  0x0000abed    0x1e  Code  Gb  xprout.o [3]
+_PutcharsDefault        0x00007135    0x3a  Code  Lc  xprintffull.o [3]
+__aeabi_assert          0x0000a71f    0x56  Code  Gb  xassert.o [3]
+__aeabi_cdcmple         0x0000a860          Code  Gb  DblCmpLe.o [4]
+__aeabi_cdrcmple        0x0000a89c          Code  Gb  DblCmpGe.o [4]
+__aeabi_cfcmple         0x0000aa64          Code  Gb  FltCmpLe.o [4]
+__aeabi_cfrcmple        0x0000aa94          Code  Gb  FltCmpGe.o [4]
+__aeabi_d2f             0x0000a1a8          Code  Gb  DblToFlt.o [4]
+__aeabi_d2iz            0x0000a660          Code  Gb  DblToS32.o [4]
+__aeabi_d2uiz           0x0000a820          Code  Gb  DblToU32.o [4]
+__aeabi_dadd            0x000099d0          Code  Gb  DblAdd.o [4]
+__aeabi_ddiv            0x000083c0          Code  Gb  DblDiv.o [4]
+__aeabi_dmul            0x00008c28          Code  Gb  DblMul.o [4]
+__aeabi_dsub            0x00008e24          Code  Gb  DblSub.o [4]
+__aeabi_f2d             0x0000a594          Code  Gb  FltToDbl.o [4]
+__aeabi_f2uiz           0x0000a90c          Code  Gb  FltToU32.o [4]
+__aeabi_fadd            0x0000a258          Code  Gb  FltAdd.o [4]
+__aeabi_fdiv            0x000093b8          Code  Gb  FltDiv.o [4]
+__aeabi_fmul            0x0000973c          Code  Gb  FltMul.o [4]
+__aeabi_fsub            0x00009b14          Code  Gb  FltSub.o [4]
+__aeabi_i2d             0x0000a6c4          Code  Gb  S32ToDbl.o [4]
+__aeabi_i2f             0x0000a5f8          Code  Gb  S32ToFlt.o [4]
+__aeabi_idiv            0x00009018          Code  Gb  I32DivMod.o [4]
+__aeabi_idiv0           0x0000ad70          Code  Gb  IntDivZer.o [4]
+__aeabi_idivmod         0x00009018          Code  Gb  I32DivMod.o [4]
+__aeabi_ldiv0           0x0000ad78          Code  Gb  I64DivZer.o [4]
+__aeabi_ldivmod         0x00009d6c          Code  Gb  I64DivMod.o [4]
+__aeabi_memcpy          0x00009e98          Code  Gb  ABImemcpy.o [4]
+__aeabi_memcpy4         0x00009ebc          Code  Gb  ABImemcpy.o [4]
+__aeabi_memcpy8         0x00009ebc          Code  Gb  ABImemcpy.o [4]
+__aeabi_ui2d            0x0000ad3c          Code  Gb  U32ToDbl.o [4]
+__aeabi_ui2f            0x0000acf0          Code  Gb  U32ToFlt.o [4]
+__aeabi_uidiv           0x00009028          Code  Gb  I32DivMod.o [4]
+__aeabi_uidivmod        0x00009028          Code  Gb  I32DivMod.o [4]
+__aeabi_uldivmod        0x00009d84          Code  Gb  I64DivMod.o [4]
+__exit                  0x0000ac10    0x1c  Code  Gb  exit.o [5]
+__iar_Dnorm             0x0000a02d    0xc0  Code  Gb  xdnorm.o [3]
+__iar_Dscale            0x00009c41   0x12c  Code  Gb  xdscale.o [3]
+__iar_EmptyStepPoint    0x0000a71d     0x2  Code  Gb  xassert.o [3]
+__iar_Memchr            0x0000a394          Code  Gb  memchr.o [4]
+__iar_ReportAssert      0x0000a4c9    0x60  Code  Gb  xreportassert.o [3]
+__iar_Strchr            0x0000abcc          Code  Gb  strchr.o [4]
+__iar_SubNrm            0x0000985c          Code  Gb  FltMul.o [4]
+__iar_SubNrmP           0x00009858          Code  Gb  FltMul.o [4]
+__iar_copy_init2        0x0000aac0    0x2c  Code  Gb  copy_init2.o [4]
+__iar_dadd              0x000099e0          Code  Gb  DblAdd.o [4]
+__iar_data_init2        0x0000a940    0x34  Code  Gb  data_init2.o [4]
+__iar_dsub              0x00008e34          Code  Gb  DblSub.o [4]
+__iar_dsubStart         0x00008e54          Code  Gb  DblSub.o [4]
+__iar_enable_interrupt  0x0000acdc          Code  Wk  main.o [1]
+__iar_fadd              0x0000a264          Code  Gb  FltAdd.o [4]
+__iar_fsub              0x00009b20          Code  Gb  FltSub.o [4]
+__iar_fsubStart         0x00009b30          Code  Gb  FltSub.o [4]
+__iar_i2d               0x0000a6c8          Code  Gb  S32ToDbl.o [4]
+__iar_i2f               0x0000a60c          Code  Gb  S32ToFlt.o [4]
+__iar_program_start     0x0000a7cc          Code  Gb  cstartup.o [4]
+__iar_return_from_swi   0x0000ad74     0x4  Code  Gb  xreturnswi.o [5]
+__iar_sh_stdout_close   0x0000aa04    0x2c  Code  Gb  iarwstd.o [5]
+__iar_sh_stdout_handle  0x40000620     0x4  Data  Lc  iarwstd.o [5]
+__iar_via_R2            0x0000ad81          Code  Wk  xprintffull.o [3]
+__iar_zero_init2        0x0000aaec    0x28  Code  Gb  zero_init2.o [4]
+__low_level_init        0x0000ad7d     0x4  Code  Gb  low_level_init.o [3]
+__vector                0x00000000          Code  Gb  cstartup.o [4]
+__vector_0x14           0x00000014          Code  Gb  cstartup.o [4]
+_exit                   0x0000ad04          Code  Gb  cexit.o [4]
+abort                   0x0000ad51     0x8  Code  Gb  abort.o [3]
+adc_start               0x000099a5    0x10  Code  Gb  adc.o [1]
+adc_stop                0x000099b5     0xe  Code  Gb  adc.o [1]
+alpha                   0x40000600     0x4  Data  Gb  main.o [1]
+blink_timer             0x40000610     0x4  Data  Gb  main.o [1]
+button_lightgreyPic     0x40000624    0x1c  Data  Gb  button_lightgrey.o [1]
+button_lightgreyStream  0x00000044  0x3200  Data  Gb  button_lightgrey.o [1]
+dac_timer               0x40000614     0x4  Data  Gb  main.o [1]
+dac_write               0x0000a55d    0x34  Code  Gb  dac.o [1]
+detect_ZeroCrossing     0x0000a0ed    0x42  Code  Gb  zerocrossing.o [1]
+div                     0x0000ab15    0x28  Code  Gb  div.o [3]
+exit                    0x0000ad59     0x6  Code  Gb  exit.o [3]
+f_out                   0x40000608     0x4  Data  Gb  main.o [1]
+frequency               0x40000604     0x4  Data  Gb  main.o [1]
+initialize_adc          0x00009889   0x11c  Code  Gb  adc.o [1]
+initialize_dac          0x0000a529    0x34  Code  Gb  dac.o [1]
+initialize_led          0x00009581    0x40  Code  Gb  gpio.o [1]
+initialize_relays       0x000095c1    0x3c  Code  Gb  gpio.o [1]
+initialize_timer        0x00009f6d    0x98  Code  Gb  timer.o [1]
+led_status              0x000096f9    0x3a  Code  Gb  gpio.o [1]
+linear_inerpolaion      0x40000668     0x4  Data  Gb  main.o [1]
+main                    0x000091ed    0x5c  Code  Gb  main.o [1]
+memchr                  0x0000a394          Code  Gb  memchr.o [4]
+out                     0x0000a4ad    0x1a  Code  Lc  xreportassert.o [3]
+pCurrFont               0x400005c8     0x4  Data  Lc  drv_glcd.o [1]
+pPix                    0x400005f8     0x4  Data  Lc  drv_glcd.o [1]
+pWind                   0x400005f4     0x4  Data  Lc  drv_glcd.o [1]
+printf                  0x0000aba9    0x20  Code  Gb  printf.o [3]
+putchar                 0x00007831   0x2f4  Code  Gb  drv_glcd.o [1]
+real_time               0x400005ac     0xc  Data  Gb  interrupt_handlers.o [1]
+relays_status           0x00009685    0x3a  Code  Gb  gpio.o [1]
+set_touch_meassure_ch   0x000087b9   0x1f8  Code  Gb  touch_scr.o [1]
+strchr                  0x0000abcc          Code  Gb  strchr.o [4]
+strlen                  0x0000a778          Code  Gb  strlen.o [4]
+tick_count              0x4000060c     0x4  Data  Gb  main.o [1]
+timer0_interrupt_reset  0x0000a019     0xe  Code  Gb  timer.o [1]
+timer0_start            0x0000a005     0xe  Code  Gb  timer.o [1]
+toggle_led              0x000096c5    0x34  Code  Gb  gpio.o [1]
+toggle_relays           0x000095fd    0x80  Code  Gb  gpio.o [1]
+update_alpha            0x0000a429     0xc  Code  Gb  filter.o [1]
 zero_crossing_detection_level
-                        0x4000066c      0x4  Data  Gb  zerocrossing.o [1]
+                        0x40000680     0x4  Data  Gb  zerocrossing.o [1]
 
 
 [1] = C:\31070\v1\MyProject\Debug\Obj
@@ -635,9 +655,9 @@ zero_crossing_detection_level
 [4] = rt4t_al.a
 [5] = shs_l.a
 
-   17 426 bytes of readonly  code memory
-  332 830 bytes of readonly  data memory
-    1 584 bytes of readwrite data memory
+  18 830 bytes of readonly  code memory
+  25 678 bytes of readonly  data memory
+   1 604 bytes of readwrite data memory
 
 Errors: none
 Warnings: none
