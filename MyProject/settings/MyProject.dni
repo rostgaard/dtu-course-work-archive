@@ -23,7 +23,7 @@ ByteLimit=50
 Enabled=0
 ShowSource=1
 [DebugChecksum]
-Checksum=1582060308
+Checksum=2060587993
 [InstructionProfiling]
 Enabled=_ 0
 [Disassemble mode]
@@ -31,8 +31,13 @@ mode=0
 [Breakpoints]
 Bp0=_ "EMUL_DATA" "AD0CR_bit" 0 0 0 116 0 "" 0 ""
 Bp1=_ "STD_CODE" "{$PROJ_DIR$\application\drv_touch_scr.c}.48.1@1" 0 0 0 0 "" 0 "" 0
-Bp2=_ "STD_CODE" "{$PROJ_DIR$\application\interrupt_handlers.c}.58.3@1" 1 0 0 0 "" 0 "" 0
-Count=3
+Bp2=_ "STD_CODE" "{$PROJ_DIR$\application\touch_scr.c}.130.3@1" 0 0 0 0 "" 0 "" 0
+Bp3=_ "STD_CODE" "{$PROJ_DIR$\application\touch_scr.c}.130.3@1" 0 0 0 0 "" 0 "" 0
+Bp4=_ "STD_CODE" "{$PROJ_DIR$\application\touch_scr.c}.130.3@1" 0 0 0 0 "" 0 "" 0
+Bp5=_ "STD_CODE" "{$PROJ_DIR$\application\touch_scr.c}.130.3@1" 0 0 0 0 "" 0 "" 0
+Bp6=_ "STD_CODE" "{$PROJ_DIR$\application\touch_scr.c}.130.3@1" 0 0 0 0 "" 0 "" 0
+Bp7=_ "STD_CODE" "{$PROJ_DIR$\application\touch_scr.c}.130.3@1" 0 0 0 0 "" 0 "" 0
+Count=8
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""

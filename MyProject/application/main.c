@@ -48,7 +48,7 @@ Int32U Y_Up =75;
 Int32U Y_Down =113;
 Int32U Linespace = 35*2;
 float AD_zerocrossing_delay[2] = {0.0,0.0};   //([y(k-1) y(k)]) just after the zero-crossing accured
-extern Int32U X_coord, Y_coord;
+
 
 void Program_Init ();
 void LCD_Init();
@@ -86,7 +86,6 @@ int main(void)
   VICINTENABLE |= 1UL << VIC_AD0;  
   VICINTENABLE |= 1UL << VIC_TIMER0;
  // Start Timer
-  timer0_start();
 //  adc_start();
  //Enable interrupts
   __enable_interrupt();
@@ -95,13 +94,15 @@ int main(void)
   
   // Init touch screen
   TouchScrInit();
+
+  FIO0DIR_bit.P0_11 = 1;
+  FIO0DIR_bit.P0_19 = 1;
   
   
   
   while (1) {
 
-     LCD_Write();
-    
+    LCD_Write();
     P_P_value();
 
   };
@@ -162,8 +163,8 @@ void LCD_Write(){
   GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
   GLCD_SetWindow(X_Left, Y_Up, X_Right, Y_Down);
   GLCD_TextSetPos(0,0);
-  printf("Touch : %5d",Touch_data.touched);
-  //  printf("Coords:%5d, %5d",X_coord,Y_coord);
+  //printf("Touch : %5d",Touch_data.touched);
+  printf("Coords: X %5d, Y %5d",Touch_data.X ,Touch_data.Y );
   //printf("Time      =   %d S", real_time.second);
   
   GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
@@ -172,10 +173,12 @@ void LCD_Write(){
   printf("MAIN SCREEN");
   
   // turn on led 2 if screen is touched
-  if(  Touch_data.touched&led_status(2))
-    toggle_led(2);
-  if(  (!Touch_data.touched)&!led_status(2))
-    toggle_led(2);
+    touch_scr_detect_touch(Touch_data.X);
+  if((Touch_data.touched)&(led_status(2)))
+      toggle_led(2);
+  else if((!Touch_data.touched)&(!led_status(2)))
+      toggle_led(2);
+
 }
 
 void P_P_value(){

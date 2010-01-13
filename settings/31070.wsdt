@@ -25,7 +25,7 @@
     <Windows>
       
       
-    <Wnd1>
+    <Wnd0>
         <Tabs>
           <Tab>
             <Identity>TabID-10323-27083</Identity>
@@ -37,7 +37,7 @@
           </Tab>
         </Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd1><Wnd3>
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1>
         <Tabs>
           <Tab>
             <Identity>TabID-745-27877</Identity>
@@ -47,20 +47,20 @@
           </Tab>
         <Tab><Identity>TabID-32758-9635</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab></Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd3></Windows>
+      <SelectedTab>0</SelectedTab></Wnd1></Windows>
     <Editor>
       
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\touch_scr.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\filter.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>624</SelStart><SelEnd>624</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\zerocrossing.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>93</SelStart><SelEnd>93</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\System\board.h</Filename><XPos>0</XPos><YPos>103</YPos><SelStart>4631</SelStart><SelEnd>4631</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\drv_touch_scr.c</Filename><XPos>0</XPos><YPos>258</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\dac.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>165</SelStart><SelEnd>165</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\system\sys.c</Filename><XPos>0</XPos><YPos>85</YPos><SelStart>6849</SelStart><SelEnd>6849</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\adc.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>696</SelStart><SelEnd>696</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\interrupt_handlers.c</Filename><XPos>0</XPos><YPos>41</YPos><SelStart>1528</SelStart><SelEnd>1545</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\drv_glcd.c</Filename><XPos>0</XPos><YPos>363</YPos><SelStart>11339</SelStart><SelEnd>11339</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\touch_scr.c</Filename><XPos>0</XPos><YPos>30</YPos><SelStart>181</SelStart><SelEnd>181</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\main.c</Filename><XPos>0</XPos><YPos>57</YPos><SelStart>1641</SelStart><SelEnd>1641</SelEnd></Tab><ActiveTab>11</ActiveTab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\dac.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>165</SelStart><SelEnd>165</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\System\board.h</Filename><XPos>0</XPos><YPos>127</YPos><SelStart>4397</SelStart><SelEnd>4404</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\zerocrossing.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>292</SelStart><SelEnd>292</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\system\sys.c</Filename><XPos>0</XPos><YPos>40</YPos><SelStart>1436</SelStart><SelEnd>1436</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\adc.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>972</SelStart><SelEnd>972</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\drv_glcd.c</Filename><XPos>0</XPos><YPos>591</YPos><SelStart>16002</SelStart><SelEnd>16002</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\config.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>122</SelStart><SelEnd>122</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\interrupt_handlers.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>90</SelStart><SelEnd>90</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\touch_scr.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>189</SelStart><SelEnd>189</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\gpio.c</Filename><XPos>0</XPos><YPos>36</YPos><SelStart>1060</SelStart><SelEnd>1060</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\touch_scr.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>420</SelStart><SelEnd>420</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\timer.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>121</SelStart><SelEnd>127</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\timer.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\interrupt_handlers.c</Filename><XPos>0</XPos><YPos>97</YPos><SelStart>2519</SelStart><SelEnd>2519</SelEnd></Tab><ActiveTab>13</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\main.c</Filename><XPos>0</XPos><YPos>55</YPos><SelStart>1610</SelStart><SelEnd>1610</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
     <Positions>
       
       
       
       
       
-    <Top><Row0><Sizes><Toolbar-00b09b68><key>iaridepm.enu1</key></Toolbar-00b09b68></Sizes></Row0><Row1><Sizes/></Row1><Row2><Sizes><Toolbar-00be7fb8><key>debuggergui.enu1</key></Toolbar-00be7fb8></Sizes></Row2></Top><Left><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>651</Bottom><Right>280</Right><x>-2</x><y>-2</y><xscreen>212</xscreen><yscreen>265</yscreen><sizeHorzCX>165625</sizeHorzCX><sizeHorzCY>276618</sizeHorzCY><sizeVertCX>220313</sizeVertCX><sizeVertCY>681628</sizeVertCY></Rect></Wnd1></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>263</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>265</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>276618</sizeHorzCY><sizeVertCX>165625</sizeVertCX><sizeVertCY>276618</sizeVertCY></Rect></Wnd3></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-00b0af10><key>iaridepm.enu1</key></Toolbar-00b0af10></Sizes></Row0><Row1><Sizes/></Row1><Row2><Sizes><Toolbar-031b7438><key>debuggergui.enu1</key></Toolbar-031b7438></Sizes></Row2></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>651</Bottom><Right>280</Right><x>-2</x><y>-2</y><xscreen>212</xscreen><yscreen>265</yscreen><sizeHorzCX>165625</sizeHorzCX><sizeHorzCY>276618</sizeHorzCY><sizeVertCX>220313</sizeVertCX><sizeVertCY>681628</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>263</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>265</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>276618</sizeHorzCY><sizeVertCX>165625</sizeVertCX><sizeVertCY>276618</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Workspace>
 
