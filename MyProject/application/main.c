@@ -5,6 +5,7 @@
 #include "config.h"
 #include "sdram_32M_16bit_drv.h"
 #include "drv_glcd.h"
+#include "cursor_arrow.h"
 
 #include "frequency.h"
 #include "gpio.h"
@@ -27,6 +28,8 @@ struct ADdata_t ADdata = {0.0,0.0};
 struct ADC_p_p_t ADC_p_p;
 extern struct time_t real_time;
 extern struct Touch_data_t Touch_data;
+extern Button_coords_t Up_left_Button;
+extern Button_coords_t Up_right_Button;
 
 unsigned long timetick =0;
 Int32U Data=0;
@@ -52,8 +55,9 @@ float AD_zerocrossing_delay[2] = {0.0,0.0};   //([y(k-1) y(k)]) just after the z
 
 void Program_Init ();
 void LCD_Init();
-void LCD_Write();
+void LCD_Main_Screen();
 void P_P_value();
+void LCD_Config_Screen();
 int between(float input, float lower_limit, float upper_limit);
 
 extern void ADC_Inter_Handler ();
@@ -70,7 +74,8 @@ extern FontType_t Terminal_18_24_12;
 extern float frequency;
 extern int blink_timer;
 
-
+int screen_state = -1;
+int screen_state_is_changing = 1;
 
 
 
@@ -95,16 +100,82 @@ int main(void)
   // Init touch screen
   TouchScrInit();
 
+//  // Why here ??? 
+//  //
   FIO0DIR_bit.P0_11 = 1;
   FIO0DIR_bit.P0_19 = 1;
   
   
-  
+  int isonbutton1=-1;
+  int isonbutton2=-1;
+
+   
+
   while (1) {
+    
 
-    LCD_Write();
+    
+    GLCD_Move_Cursor(Touch_data.X_cursor, Touch_data.Y_cursor);
+    
+    isonbutton1 = check_if_coursor_in_rectangle(Up_left_Button.X_coord, Up_left_Button.Y_coord, Up_left_Button.length, Up_left_Button.height);
+    isonbutton2 = check_if_coursor_in_rectangle(Up_right_Button.X_coord, Up_right_Button.Y_coord, Up_right_Button.length, Up_right_Button.height);
+    if((isonbutton1)&(screen_state==-1)&(screen_state_is_changing==-1)){
+      screen_state=1;
+      screen_state_is_changing=1;
+    }
+    else if((!isonbutton1)&(screen_state==1)&(screen_state_is_changing=-1)){
+      screen_state=-1;
+      screen_state_is_changing=1;
+    } 
+
+    if((screen_state==1)&(screen_state_is_changing==1)){
+  
+  GLCD_Ctrl (FALSE);
+  //Load the "*.c" file containing the logo
+  GLCD_Init (NULL, NULL);
+//GLCD_Init (Black_bgPic.pPicStream, NULL);
+  GLCD_LoadPic (1, 1, &button_lightgreyPic, NULL);
+  GLCD_LoadPic (320-80, 1, &button_lightgreyPic, NULL);
+  GLCD_Ctrl (TRUE);
+   // Init Cursor
+  GLCD_Cursor_Dis(0);
+  GLCD_Copy_Cursor ((Int32U *)Cursor, 0, sizeof(Cursor)/sizeof(Int32U));
+  GLCD_Cursor_Cfg(CRSR_FRAME_SYNC | CRSR_PIX_32);
+  GLCD_Move_Cursor(Touch_data.X_cursor, Touch_data.Y_cursor);
+  GLCD_Cursor_En(0);
+  
+  
+  screen_state_is_changing=-1;
+//      P_P_value();
+    }
+      else if((screen_state==-1)&(screen_state_is_changing==1)){
+  GLCD_Ctrl (FALSE);
+  //Load the "*.c" file containing the logo
+  GLCD_Init (NULL, NULL);
+//  GLCD_Init (Black_bgPic.pPicStream, NULL);
+  GLCD_LoadPic (1, 1, &button_lightgreyPic, NULL);
+  GLCD_LoadPic (320-80, 1, &button_lightgreyPic, NULL);
+  GLCD_Ctrl (TRUE);
+//    P_P_value();
+ // Init Cursor
+  GLCD_Cursor_Dis(0);
+  GLCD_Copy_Cursor ((Int32U *)Cursor, 0, sizeof(Cursor)/sizeof(Int32U));
+  GLCD_Cursor_Cfg(CRSR_FRAME_SYNC | CRSR_PIX_32);
+  GLCD_Move_Cursor(Touch_data.X_cursor, Touch_data.Y_cursor);
+  GLCD_Cursor_En(0);
+  screen_state_is_changing=-1;
+      }
+  
+    if(screen_state==1){
+    LCD_Config_Screen();
+    }
+    
+    if(screen_state==-1){
+    LCD_Main_Screen();
     P_P_value();
-
+    }
+    
+  
   };
 }
 
@@ -142,7 +213,15 @@ void Program_Init (){
  // Init Timer0
   initialize_timer();
   LCD_Init();
+  Touch_data.cursor_stay = true;
   
+ // Init Cursor
+  GLCD_Cursor_Dis(0);
+  GLCD_Copy_Cursor ((Int32U *)Cursor, 0, sizeof(Cursor)/sizeof(Int32U));
+  GLCD_Cursor_Cfg(CRSR_FRAME_SYNC | CRSR_PIX_32);
+  GLCD_Move_Cursor(Touch_data.X_cursor, Touch_data.Y_cursor);
+  GLCD_Cursor_En(0);
+//   
 
 }
 
@@ -158,33 +237,68 @@ void LCD_Init(){
   
 }
 
-void LCD_Write(){
+void LCD_Main_Screen(){
  
-  GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
-  GLCD_SetWindow(X_Left, Y_Up, X_Right, Y_Down);
-  GLCD_TextSetPos(0,0);
-  //printf("Touch : %5d",Touch_data.touched);
-  printf("Coords: X %5d, Y %5d",Touch_data.X ,Touch_data.Y );
-  //printf("Time      =   %d S", real_time.second);
+
   
   GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
   GLCD_SetWindow(95, 10, 250, 40);
   GLCD_TextSetPos(0,0);
   printf("MAIN SCREEN");
   
-  // turn on led 2 if screen is touched
-    touch_scr_detect_touch(Touch_data.X);
-  if((Touch_data.touched)&(led_status(2)))
-      toggle_led(2);
-  else if((!Touch_data.touched)&(!led_status(2)))
-      toggle_led(2);
+
+
+}
+
+void LCD_Config_Screen(){
+ 
+
+  
+  GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
+  GLCD_SetWindow(95, 10, 250, 40);
+  GLCD_TextSetPos(0,0);
+  printf("__CONFIG__ ");
+  
+
 
 }
 
 void P_P_value(){
+    
+  
+  GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
+  GLCD_SetWindow(X_Left, Y_Up, X_Right, Y_Down);
+  GLCD_TextSetPos(0,0);
+  //printf("Touch : %5d",Touch_data.touched);
+  printf("Coords: X %5d, Y %5d",Touch_data.X ,Touch_data.Y );
+  
+  
+  // Write cursor data 
+  GLCD_SetWindow(X_Left, Y_Up+35, X_Right, Y_Down+35);
+  GLCD_TextSetPos(0,0);
+  //printf("Touch : %5d",Touch_data.touched);
+  printf("Cursor: X %5d, Y %5d",Touch_data.X_cursor ,Touch_data.Y_cursor);
+  //printf("Time      =   %d S", real_time.second);
+  
+  
   GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
   GLCD_SetWindow(X_Left, Y_Up+Linespace, X_Right, Y_Down+Linespace);
   GLCD_TextSetPos(0,0);
   //printf("Time      =    S");
-  printf("Time  =   %4d mS", (real_time.second));
+  printf("Time  =   %3d:%3d", (real_time.second), (real_time.millisecond));
+  
+  
+  GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
+  GLCD_SetWindow(X_Left, Y_Up+Linespace+35, X_Right, Y_Down+Linespace+35);
+  GLCD_TextSetPos(0,0);
+  //printf("Time      =    S");
+  printf("Vpp  max:%.02f, min:%.02f", (ADC_p_p.v_max), (ADC_p_p.v_min));
+  
+  
+    // turn on led 2 if screen is touched
+    //touch_scr_detect_touch(Touch_data.X);
+  if((Touch_data.touched)&(led_status(2)))
+      toggle_led(2);
+  else if((!Touch_data.touched)&(!led_status(2)))
+      toggle_led(2);
 }

@@ -815,6 +815,12 @@
       <name>$PROJ_DIR$\application\config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\application\cursor_arrow.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\cursor_arrow.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\application\filter.c</name>
     </file>
     <file>
