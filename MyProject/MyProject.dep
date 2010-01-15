@@ -6,527 +6,181 @@
   <configuration>
     <name>Debug</name>
     <outputs>
-      <file>$PROJ_DIR$\application\adc.h</file>
-      <file>$PROJ_DIR$\application\Black_bg.c</file>
-      <file>$TOOLKIT_DIR$\inc\ymath.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\adc.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\string.h</file>
+      <file>$TOOLKIT_DIR$\inc\NXP\iolpc2470.h</file>
+      <file>$TOOLKIT_DIR$\inc\NXP\iolpc2478.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\drv_glcd.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\filter.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\sys.o</file>
+      <file>$PROJ_DIR$\Debug\Exe\MyProject.out</file>
+      <file>$TOOLKIT_DIR$\inc\ycheck.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\timer.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Product.h</file>
       <file>$TOOLKIT_DIR$\inc\DLib_Config_Normal.h</file>
       <file>$TOOLKIT_DIR$\inc\xlocale.h</file>
-      <file>$TOOLKIT_DIR$\lib\rt4t_al.a</file>
-      <file>$PROJ_DIR$\Debug\Obj\timer.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\Terminal_9_12x6.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\Terminal_9_12x6.o</file>
-      <file>$TOOLKIT_DIR$\inc\DLib_Defaults.h</file>
-      <file>$TOOLKIT_DIR$\inc\xlocaleuse.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\cursor_arrow.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\filter.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\xencoding_limits.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\sdram_32M_16bit_drv.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\zerocrossing.o</file>
-      <file>$TOOLKIT_DIR$\inc\DLib_Threads.h</file>
-      <file>$TOOLKIT_DIR$\inc\limits.h</file>
-      <file>$TOOLKIT_DIR$\lib\dl4t_tl_in.a</file>
-      <file>$TOOLKIT_DIR$\inc\yvals.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\sdram_32M_16bit_drv.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\wchar.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\Black_bg.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\interrupt_handlers.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\touch_scr.o</file>
-      <file>$TOOLKIT_DIR$\inc\xtls.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\interrupt_handlers.o</file>
-      <file>$TOOLKIT_DIR$\inc\ysizet.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\frequency.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\sys.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\button_lightgrey.pbi</file>
-      <file>$TOOLKIT_DIR$\lib\shs_l.a</file>
-      <file>$PROJ_DIR$\Debug\Obj\Terminal_18_24x12.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\drv_touch_scr.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\zerocrossing.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\math.h</file>
-      <file>$PROJ_DIR$\Debug\List\MyProject.map</file>
-      <file>$PROJ_DIR$\Debug\Obj\drv_glcd.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\assert.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\MyProject.pbd</file>
-      <file>$PROJ_DIR$\Debug\Obj\photo.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\adc.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\Terminal_18_24x12.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\gpio.o</file>
-      <file>$TOOLKIT_DIR$\inc\stdlib.h</file>
-      <file>$TOOLKIT_DIR$\inc\ctype.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\dac.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\xlocale_c.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\button_lightgrey.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\photo.o</file>
-      <file>$PROJ_DIR$\application\adc.c</file>
-      <file>$TOOLKIT_DIR$\inc\stdio.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\filter.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\Black_bg.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\drv_glcd.o</file>
-      <file>$TOOLKIT_DIR$\inc\NXP\iolpc2478.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\frequency.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\NXP\iolpc2470.h</file>
+      <file>$PROJ_DIR$\application\includes.h</file>
+      <file>$PROJ_DIR$\application\gpio.h</file>
+      <file>$PROJ_DIR$\application\gpio.c</file>
+      <file>$PROJ_DIR$\application\drv_touch_scr.h</file>
+      <file>$PROJ_DIR$\application\drv_touch_scr.c</file>
+      <file>$PROJ_DIR$\application\drv_glcd.h</file>
+      <file>$PROJ_DIR$\application\drv_glcd.c</file>
+      <file>$PROJ_DIR$\application\dac.h</file>
+      <file>$PROJ_DIR$\application\dac.c</file>
+      <file>$PROJ_DIR$\system\sys.h</file>
+      <file>$PROJ_DIR$\system\sys.c</file>
+      <file>$PROJ_DIR$\system\sdram_32M_16bit_drv.h</file>
+      <file>$PROJ_DIR$\system\sdram_32M_16bit_drv.c</file>
+      <file>$PROJ_DIR$\system\board.h</file>
+      <file>$PROJ_DIR$\system\arm_comm.h</file>
+      <file>$PROJ_DIR$\config\LPC2478_Flash.icf</file>
+      <file>$PROJ_DIR$\application\zerocrossing.h</file>
+      <file>$PROJ_DIR$\application\zerocrossing.c</file>
+      <file>$PROJ_DIR$\application\touch_scr.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\dac.o</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Product_string.h</file>
       <file>$PROJ_DIR$\Debug\Obj\cursor_arrow.o</file>
       <file>$PROJ_DIR$\Debug\Obj\drv_touch_scr.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\ycheck.h</file>
-      <file>$TOOLKIT_DIR$\inc\DLib_Product.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\timer.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\sys.o</file>
-      <file>$TOOLKIT_DIR$\inc\stdbool.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\touch_scr.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\xmtx.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\dac.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\frequency.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\Black_bg.o</file>
+      <file>$TOOLKIT_DIR$\inc\stdio.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\button_lightgrey.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\photo.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\dac.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\xtls.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\touch_scr.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\Black_bg.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\interrupt_handlers.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\sdram_32M_16bit_drv.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\yvals.h</file>
+      <file>$TOOLKIT_DIR$\lib\dl4t_tl_in.a</file>
+      <file>$TOOLKIT_DIR$\inc\limits.h</file>
+      <file>$TOOLKIT_DIR$\inc\wchar.h</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Threads.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\sdram_32M_16bit_drv.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\zerocrossing.o</file>
+      <file>$TOOLKIT_DIR$\inc\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\cursor_arrow.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\xlocaleuse.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\filter.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\Terminal_9_12x6.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\adc.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\Terminal_9_12x6.pbi</file>
+      <file>$PROJ_DIR$\application\adc.c</file>
       <file>$PROJ_DIR$\Debug\Obj\gpio.pbi</file>
-      <file>$PROJ_DIR$\Debug\Exe\MyProject.out</file>
-      <file>$PROJ_DIR$\application\button_lightgrey.h</file>
-      <file>$PROJ_DIR$\application\config.h</file>
-      <file>$PROJ_DIR$\application\cursor_arrow.c</file>
-      <file>$PROJ_DIR$\application\cursor_arrow.h</file>
-      <file>$PROJ_DIR$\application\filter.c</file>
-      <file>$PROJ_DIR$\application\filter.h</file>
-      <file>$PROJ_DIR$\application\frequency.c</file>
-      <file>$PROJ_DIR$\application\frequency.h</file>
-      <file>$PROJ_DIR$\application\interrupt_handlers.c</file>
-      <file>$PROJ_DIR$\application\interrupt_handlers.h</file>
-      <file>$PROJ_DIR$\application\main.c</file>
-      <file>$PROJ_DIR$\application\photo.c</file>
-      <file>$PROJ_DIR$\application\photo.h</file>
-      <file>$PROJ_DIR$\application\Terminal_18_24x12.c</file>
-      <file>$PROJ_DIR$\application\Terminal_9_12x6.c</file>
-      <file>$PROJ_DIR$\application\timer.c</file>
-      <file>$PROJ_DIR$\application\timer.h</file>
-      <file>$PROJ_DIR$\application\touch_scr.c</file>
-      <file>$PROJ_DIR$\application\touch_scr.h</file>
-      <file>$PROJ_DIR$\application\zerocrossing.c</file>
-      <file>$PROJ_DIR$\application\zerocrossing.h</file>
-      <file>$PROJ_DIR$\config\LPC2478_Flash.icf</file>
-      <file>$PROJ_DIR$\config\lpc2478_Flash.mac</file>
-      <file>$PROJ_DIR$\config\LPC2478_SRAM.icf</file>
-      <file>$PROJ_DIR$\config\lpc2478_SRAM.mac</file>
-      <file>$PROJ_DIR$\system\arm_comm.h</file>
-      <file>$PROJ_DIR$\system\board.h</file>
-      <file>$PROJ_DIR$\system\sdram_32M_16bit_drv.c</file>
-      <file>$PROJ_DIR$\system\sdram_32M_16bit_drv.h</file>
-      <file>$PROJ_DIR$\system\sys.c</file>
-      <file>$PROJ_DIR$\system\sys.h</file>
-      <file>$PROJ_DIR$\application\dac.c</file>
-      <file>$PROJ_DIR$\application\dac.h</file>
-      <file>$PROJ_DIR$\application\drv_glcd.c</file>
-      <file>$PROJ_DIR$\application\drv_glcd.h</file>
-      <file>$PROJ_DIR$\application\drv_touch_scr.c</file>
-      <file>$PROJ_DIR$\application\drv_touch_scr.h</file>
-      <file>$PROJ_DIR$\application\gpio.c</file>
-      <file>$PROJ_DIR$\application\gpio.h</file>
-      <file>$PROJ_DIR$\application\includes.h</file>
-      <file>$TOOLKIT_DIR$\inc\DLib_Product_string.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\main.o</file>
+      <file>$TOOLKIT_DIR$\inc\ctype.h</file>
+      <file>$TOOLKIT_DIR$\inc\xlocale_c.h</file>
+      <file>$TOOLKIT_DIR$\inc\stdlib.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\gpio.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\Terminal_18_24x12.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\adc.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\MyProject.pbd</file>
+      <file>$PROJ_DIR$\Debug\Obj\photo.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\assert.h</file>
+      <file>$PROJ_DIR$\Debug\List\MyProject.map</file>
+      <file>$PROJ_DIR$\Debug\Obj\drv_glcd.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\math.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\zerocrossing.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\Terminal_18_24x12.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\drv_touch_scr.o</file>
+      <file>$TOOLKIT_DIR$\lib\shs_l.a</file>
+      <file>$PROJ_DIR$\Debug\Obj\button_lightgrey.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\frequency.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\sys.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\interrupt_handlers.o</file>
+      <file>$TOOLKIT_DIR$\inc\ysizet.h</file>
       <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
-      <file>$TOOLKIT_DIR$\inc\io_macros.h</file>
-      <file>$PROJ_DIR$\application\Black_bg.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.o</file>
+      <file>$PROJ_DIR$\application\touch_scr.c</file>
+      <file>$PROJ_DIR$\application\timer.h</file>
+      <file>$PROJ_DIR$\application\timer.c</file>
+      <file>$PROJ_DIR$\application\Terminal_9_12x6.c</file>
+      <file>$PROJ_DIR$\application\Terminal_18_24x12.c</file>
+      <file>$PROJ_DIR$\application\photo.h</file>
+      <file>$PROJ_DIR$\application\photo.c</file>
+      <file>$PROJ_DIR$\application\main.c</file>
+      <file>$PROJ_DIR$\application\interrupt_handlers.h</file>
+      <file>$PROJ_DIR$\application\interrupt_handlers.c</file>
+      <file>$PROJ_DIR$\application\frequency.h</file>
+      <file>$PROJ_DIR$\application\frequency.c</file>
+      <file>$PROJ_DIR$\application\filter.h</file>
+      <file>$PROJ_DIR$\application\filter.c</file>
+      <file>$PROJ_DIR$\application\cursor_arrow.h</file>
+      <file>$PROJ_DIR$\application\cursor_arrow.c</file>
+      <file>$PROJ_DIR$\application\config.h</file>
+      <file>$PROJ_DIR$\application\button_lightgrey.h</file>
       <file>$PROJ_DIR$\application\button_lightgrey.c</file>
-      <file>$PROJ_DIR$\application\menu.c</file>
-      <file>$PROJ_DIR$\application\menu.h</file>
-      <file>$TOOLKIT_DIR$\src\lib\dlib\main.h</file>
+      <file>$PROJ_DIR$\application\Black_bg.h</file>
+      <file>$TOOLKIT_DIR$\inc\ymath.h</file>
+      <file>$TOOLKIT_DIR$\inc\string.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\timer.o</file>
+      <file>$TOOLKIT_DIR$\lib\rt4t_al.a</file>
+      <file>$PROJ_DIR$\application\adc.h</file>
+      <file>$PROJ_DIR$\application\Black_bg.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\touch_scr.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\stdbool.h</file>
+      <file>$TOOLKIT_DIR$\inc\xmtx.h</file>
+      <file>$TOOLKIT_DIR$\inc\io_macros.h</file>
     </outputs>
-    <file>
-      <name>$PROJ_DIR$\application\Black_bg.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 56</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 24</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 117 107 98 115 63</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 117 107 98 115 63</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>[ROOT_NODE]</name>
-      <outputs>
-        <tool>
-          <name>ILINK</name>
-          <file> 72 38</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Debug\Obj\MyProject.pbd</name>
-      <inputs>
-        <tool>
-          <name>BILINK</name>
-          <file> 24 34 9 3 32 13 49 39 62 14 59 71 25 43 42 22 31 65 68 36</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\application\adc.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 44</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 3</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 0 99 115 63 58 60 116 98 103</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 0 99 115 63 58 60 116 98 103</file>
-        </tool>
-      </inputs>
-    </file>
     <file>
       <name>$PROJ_DIR$\Debug\Exe\MyProject.out</name>
       <outputs>
         <tool>
           <name>ILINK</name>
-          <file> 38</file>
+          <file> 72</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ILINK</name>
-          <file> 94 56 45 10 44 51 61 70 57 35 55 30 46 28 114 52 16 66 8 26 17 33 7 20</file>
+          <file> 26 35 66 57 67 37 32 30 2 77 3 80 65 82 85 38 50 4 108 41 51 78 109 46</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\application\cursor_arrow.c</name>
+      <name>$PROJ_DIR$\application\gpio.c</name>
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 61</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 13</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 76 98 115 63</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 76 98 115 63</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\application\filter.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 55</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 14</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 78 99 115 63 58 60 116 98 74 37 2 21 11 5 64 15 18 54 29 0</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 78 99 115 63 58 60 116 98 74 37 2 21 11 64 15 18 54 29 0</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\application\frequency.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 30</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 59</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 80 74 37 63 2 21 11 5 64 15 18 54 29 93 0 82 99 115 58 60 116 98</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 80 74 37 63 2 21 11 64 15 18 54 29 93 0 82 99 115 58 60 116 98</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\application\interrupt_handlers.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 28</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 25</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 82 80 111 105 0 89 93 74 37 63 2 21 11 5 64 15 18 54 29 99 115 58 60 116 98 91 103</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 82 80 111 105 0 89 93 74 37 63 2 21 11 64 15 18 54 29 99 115 58 60 116 98 91 103</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\application\main.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 114</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 43</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 115 63 54 21 11 5 64 15 18 29 99 58 60 116 98 103 74 37 2 101 107 76 80 111 105 0 89 93 82 78 85 73 117 91</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 115 63 54 21 11 64 15 18 29 99 58 60 116 98 103 74 37 2 101 107 76 80 111 105 0 89 93 82 78 85 73 117 91</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\application\photo.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 52</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 42</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 85 107 98 115 63</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 85 107 98 115 63</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\application\Terminal_18_24x12.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 45</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 34</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 107 98 115 63</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 107 98 115 63</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\application\Terminal_9_12x6.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 10</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 9</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 107 98 115 63</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 107 98 115 63</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\application\timer.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 8</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
           <file> 65</file>
         </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 61</file>
+        </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 99 115 63 58 60 116 98 103 89 74 37 2 21 11 5 64 15 18 54 29</file>
+          <file> 12 24 84 6 1 0 115 25 71 45 56 9 8 52 49</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 99 115 63 58 60 116 98 103 89 74 37 2 21 11 64 15 18 54 29</file>
+          <file> 12 24 84 6 1 0 115 25 71 45 56 8 52 49</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\application\touch_scr.c</name>
+      <name>$PROJ_DIR$\application\drv_touch_scr.c</name>
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 26</file>
+          <file> 77</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 68</file>
+          <file> 33</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 99 115 63 58 60 116 98 103 91 74 37 2 21 11 5 64 15 18 54 29 40 0</file>
+          <file> 14 11 36 6 45 56 9 8 52 49 83 107 31 62 10 40 114 64 54 63 48 113 47 84 71 1 0 115 25 24 20 22 16</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 99 115 63 58 60 116 98 103 91 74 37 2 21 11 64 15 18 54 29 40 0</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\application\zerocrossing.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 17</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 36</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 93 74 37 63 2 21 11 5 64 15 18 54 29</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 93 74 37 63 2 21 11 64 15 18 54 29</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\system\sdram_32M_16bit_drv.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 16</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 22</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 54 63 21 11 5 64 15 18 29 99 115 58 60 116 98 101</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 54 63 21 11 64 15 18 29 99 115 58 60 116 98 101</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\system\sys.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 66</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 31</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 99 115 63 58 60 116 98 101 103</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 99 115 63 58 60 116 98 101 103</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\application\dac.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 70</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 49</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 99 115 63 58 60 116 98</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 99 115 63 58 60 116 98</file>
+          <file> 14 11 36 6 45 56 8 52 49 83 107 31 62 10 40 114 64 54 63 48 113 47 84 71 1 0 115 25 24 20 22 16</file>
         </tool>
       </inputs>
     </file>
@@ -535,7 +189,30 @@
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 57</file>
+          <file> 2</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 73</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 36 6 45 56 9 8 52 49 83 64 71 24 84 1 0 115 25 20 16</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 36 6 45 56 8 52 49 83 64 71 24 84 1 0 115 25 20 16</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\dac.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 30</file>
         </tool>
         <tool>
           <name>BICOMP</name>
@@ -545,57 +222,351 @@
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 54 63 21 11 5 64 15 18 29 47 40 99 115 58 60 116 98 103 107</file>
+          <file> 24 84 6 1 0 115 25</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 54 63 21 11 64 15 18 29 47 40 99 115 58 60 116 98 103 107</file>
+          <file> 24 84 6 1 0 115 25</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\application\drv_touch_scr.c</name>
+      <name>$PROJ_DIR$\system\sys.c</name>
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 35</file>
+          <file> 4</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 62</file>
+          <file> 81</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 109 112 54 63 21 11 5 64 15 18 29 4 113 48 6 27 69 47 12 50 23 67 19 115 40 58 60 116 98 99 103 101 107</file>
+          <file> 24 84 6 1 0 115 25 22 20</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 109 112 54 63 21 11 64 15 18 29 4 113 48 6 27 69 47 12 50 23 67 19 115 40 58 60 116 98 99 103 101 107</file>
+          <file> 24 84 6 1 0 115 25 22 20</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\application\gpio.c</name>
+      <name>$PROJ_DIR$\system\sdram_32M_16bit_drv.c</name>
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 46</file>
+          <file> 50</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 71</file>
+          <file> 44</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 111 99 115 63 58 60 116 98 40 21 11 5 64 15 18</file>
+          <file> 36 6 45 56 9 8 52 49 83 24 84 1 0 115 25 22</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 111 99 115 63 58 60 116 98 40 21 11 64 15 18</file>
+          <file> 36 6 45 56 8 52 49 83 24 84 1 0 115 25 22</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\zerocrossing.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 51</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 75</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 27 102 74 6 106 45 56 9 8 52 49 36 83</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 27 102 74 6 106 45 56 8 52 49 36 83</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 5 72</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\adc.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 67</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 58</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 110 24 84 6 1 0 115 25 20</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 110 24 84 6 1 0 115 25 20</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Obj\MyProject.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 42 76 59 58 79 53 39 73 33 55 34 61 43 68 70 44 81 7 112 75</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\touch_scr.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 41</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 112</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 24 84 6 1 0 115 25 20 29 102 74 106 45 56 9 8 52 49 36 83 71 110</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 24 84 6 1 0 115 25 20 29 102 74 106 45 56 8 52 49 36 83 71 110</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\timer.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 108</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 7</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 24 84 6 1 0 115 25 20 87 102 74 106 45 56 9 8 52 49 36 83</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 24 84 6 1 0 115 25 20 87 102 74 106 45 56 8 52 49 36 83</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\Terminal_9_12x6.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 57</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 59</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 16 25 84 6</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 16 25 84 6</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\Terminal_18_24x12.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 66</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 76</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 16 25 84 6</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 16 25 84 6</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\photo.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 38</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 70</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 91 16 25 84 6</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 91 16 25 84 6</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\main.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 85</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 68</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 84 6 36 45 56 9 8 52 49 83 24 1 0 115 25 20 102 74 106 22 16 100 96 12 18 110 87 27 94 98 91 103 105 29</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 84 6 36 45 56 8 52 49 83 24 1 0 115 25 20 102 74 106 22 16 100 96 12 18 110 87 27 94 98 91 103 105 29</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\interrupt_handlers.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 82</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 43</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 94 96 12 18 110 87 27 102 74 6 106 45 56 9 8 52 49 36 83 24 84 1 0 115 25 29 20</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 94 96 12 18 110 87 27 102 74 6 106 45 56 8 52 49 36 83 24 84 1 0 115 25 29 20</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\frequency.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 80</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 34</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 96 102 74 6 106 45 56 9 8 52 49 36 83 27 110 94 24 84 1 0 115 25</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 96 102 74 6 106 45 56 8 52 49 36 83 27 110 94 24 84 1 0 115 25</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\filter.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 3</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 55</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 98 24 84 6 1 0 115 25 102 74 106 45 56 9 8 52 49 36 83 110</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 98 24 84 6 1 0 115 25 102 74 106 45 56 8 52 49 36 83 110</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\cursor_arrow.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 32</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 53</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 100 25 84 6</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 100 25 84 6</file>
         </tool>
       </inputs>
     </file>
@@ -604,21 +575,44 @@
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 51</file>
+          <file> 37</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 32</file>
+          <file> 79</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 73 107 98 115 63</file>
+          <file> 103 16 25 84 6</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 73 107 98 115 63</file>
+          <file> 103 16 25 84 6</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\application\Black_bg.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 35</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 42</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 105 16 25 84 6</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 105 16 25 84 6</file>
         </tool>
       </inputs>
     </file>
