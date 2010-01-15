@@ -33,6 +33,17 @@
 #include "sys.h"
 #include "sdram_32M_16bit_drv.h"
 #include "drv_glcd.h"
-#include "drv_touch_scr.h"
+//#include "drv_touch_scr.h"
+
+#include "clock-arch.h"
+
+#include "uip-timer.h"
+#include "uip-conf.h"
+#include "uipopt.h"
+#include "uip_arp.h"
+#include "uip.h"
+#include "tapdev.h"
+#include "httpd.h"
 
 #endif  // __INCLUDES_H
+

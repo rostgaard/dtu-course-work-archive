@@ -6,6 +6,7 @@
 #include "sdram_32M_16bit_drv.h"
 #include "drv_glcd.h"
 #include "cursor_arrow.h"
+#include "includes.h"
 
 #include "frequency.h"
 #include "gpio.h"
@@ -42,7 +43,7 @@ float frequency;
 float f_out;
 int tick_count = 0;
 int ADfilter_enable = true;
-int linear_inerpolaion = true;
+int linear_inerpolaion = false;
 int blink_timer = 0;
 int dac_timer = 0;
 Int32U X_Left =5;
@@ -77,10 +78,18 @@ extern int blink_timer;
 int screen_state = -1;
 int screen_state_is_changing = 1;
 
+#define BUF ((struct uip_eth_hdr *)&uip_buf[0])
 
 
 int main(void)
 {
+
+  unsigned int i;
+uip_ipaddr_t ipaddr;
+struct timer periodic_timer, arp_timer;
+
+
+
   
   Program_Init();
   
@@ -95,6 +104,33 @@ int main(void)
  //Enable interrupts
   __enable_interrupt();
   update_alpha(); //sets the alpha value for the low-pass filter 
+  
+ 
+/** WEB server */  
+    // Sys timer init 1/100 sec tick
+  clock_init(2);
+
+  timer_set(&periodic_timer, CLOCK_SECOND / 2);
+  timer_set(&arp_timer, CLOCK_SECOND * 10);
+
+  while(!tapdev_init());
+
+  // uIP web server
+  // Initialize the uIP TCP/IP stack.
+  uip_init();
+
+  uip_ipaddr(ipaddr, 192,168,0,100);
+  uip_sethostaddr(ipaddr);
+  uip_ipaddr(ipaddr, 192,168,0,1);
+  uip_setdraddr(ipaddr);
+  uip_ipaddr(ipaddr, 255,255,255,0);
+  uip_setnetmask(ipaddr);
+
+  // Initialize the HTTP server.
+  httpd_init();
+
+  /** web server */
+  
   
   
   // Init touch screen
@@ -113,7 +149,70 @@ int main(void)
 
   while (1) {
     
-
+/** web server */
+    uip_len = tapdev_read(uip_buf);
+    if(uip_len > 0)
+    {
+      if(BUF->type == htons(UIP_ETHTYPE_IP))
+      {
+	      uip_arp_ipin();
+	      uip_input();
+	      /* If the above function invocation resulted in data that
+	         should be sent out on the network, the global variable
+	         uip_len is set to a value > 0. */
+	      if(uip_len > 0)
+        {
+	        uip_arp_out();
+	        tapdev_send(uip_buf,uip_len);
+	      }
+      }
+      else if(BUF->type == htons(UIP_ETHTYPE_ARP))
+      {
+        uip_arp_arpin();
+	      /* If the above function invocation resulted in data that
+	         should be sent out on the network, the global variable
+	         uip_len is set to a value > 0. */
+	      if(uip_len > 0)
+        {
+	        tapdev_send(uip_buf,uip_len);
+	      }
+      }
+    }
+    else if(timer_expired(&periodic_timer))
+    {
+      timer_reset(&periodic_timer);
+      for(i = 0; i < UIP_CONNS; i++)
+      {
+      	uip_periodic(i);
+        /* If the above function invocation resulted in data that
+           should be sent out on the network, the global variable
+           uip_len is set to a value > 0. */
+        if(uip_len > 0)
+        {
+          uip_arp_out();
+          tapdev_send(uip_buf,uip_len);
+        }
+      }
+#if UIP_UDP
+      for(i = 0; i < UIP_UDP_CONNS; i++) {
+        uip_udp_periodic(i);
+        /* If the above function invocation resulted in data that
+           should be sent out on the network, the global variable
+           uip_len is set to a value > 0. */
+        if(uip_len > 0) {
+          uip_arp_out();
+          tapdev_send();
+        }
+      }
+#endif /* UIP_UDP */
+      /* Call the ARP timer function every 10 seconds. */
+      if(timer_expired(&arp_timer))
+      {
+        timer_reset(&arp_timer);
+        uip_arp_timer();
+      }
+    }
+/** web server */    
     
     GLCD_Move_Cursor(Touch_data.X_cursor, Touch_data.Y_cursor);
     
@@ -200,9 +299,9 @@ void Program_Init (){
   Sys_Init();
   
  // Init clock
-//  InitClock();
+  InitClock();
  // Init VIC
-//  VIC_Init();
+  VIC_Init();
  // Init DAC
   initialize_dac();
   initialize_adc();

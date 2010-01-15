@@ -58,7 +58,7 @@ float accumulator_min=0.0;
  *************************************************************************/
 void ADC_Inter_Handler ()
 {
-//  FIO0PIN_bit.P0_11 = 1;
+  FIO0PIN_bit.P0_11 = 1;
   adc_stop();
   
   touch_scr_detect_touch(Touch_data.X);
@@ -75,8 +75,8 @@ void ADC_Inter_Handler ()
 
 
 
-//  FIO0PIN_bit.P0_11 = 0;
-//  FIO0PIN_bit.P0_19 = 0;
+  FIO0PIN_bit.P0_11 = 0;
+  FIO0PIN_bit.P0_19 = 0;
  
   // clear interrupt
   VICADDRESS = 0;
@@ -116,22 +116,20 @@ void Timer0IntrHandler (void)
   update_real_time();
 
   calculate_p_p_values();   
-
-  if(detect_ZeroCrossing(ADdata.v_previous, ADdata.v_current) == true)
-          tick_count=0;
-    
-    
-
   
   
   
   //frequency calculation: START
-  calculate_frequency(tick_count);
+  
   //frequency calculation: STOP
   
   
   
-  
+    if(detect_ZeroCrossing(ADdata.v_previous, ADdata.v_current))
+    {
+      calculate_frequency(tick_count);
+          tick_count=0;
+    }
  
   
   

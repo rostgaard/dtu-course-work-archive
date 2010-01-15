@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system-status>
+ <processes>
+%! processes
+ </processes>
+ <file-stats>
+%! file-stats
+ </file-stats>
+ 
+ <tcp-connections>
+%! xml-tcp-connections
+ </tcp-connections>
+</system-status>

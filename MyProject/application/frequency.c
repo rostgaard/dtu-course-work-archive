@@ -15,12 +15,10 @@ extern float frequency;
 extern struct ADC_p_p_t ADC_p_p;
 
 float Frequency_with_interpolation(int number_of_samples){
-  
   return 1.0/((number_of_samples*dT)+(-AD_zerocrossing_delay[0]+AD_zerocrossing_delay[1]));
 }
 
-float Frequency_without_interpolation(number_of_samples){
-
+float Frequency_without_interpolation(int number_of_samples){
   return 1.0/(dT*number_of_samples);
 }
 
@@ -28,7 +26,7 @@ float Frequency_without_interpolation(number_of_samples){
 
 
 void calculate_frequency(int number_of_samples){
-    if(detect_ZeroCrossing(ADdata.v_previous, ADdata.v_current) == true)
+//    if(detect_ZeroCrossing(ADdata.v_previous, ADdata.v_current) == true)
   {
     if(linear_inerpolaion == true){
       //Updating the array with the zero crossing delays 

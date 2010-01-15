@@ -11,7 +11,8 @@ int detect_ZeroCrossing(float v_previous, float v_current) {
 }
 
 float ZeroCrossing_delays(float v_previous, float v_current){
-  float x_dT=(zero_crossing_detection_level-v_previous)/(v_current-v_previous)*dT;
+  float T=dT;
+  float x_dT=((zero_crossing_detection_level-v_previous)/(v_current-v_previous))*dT;
   return dT-x_dT;
 }
 
