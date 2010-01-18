@@ -25,7 +25,7 @@
     <Windows>
       
       
-    <Wnd2>
+    <Wnd0>
         <Tabs>
           <Tab>
             <Identity>TabID-10323-27083</Identity>
@@ -37,7 +37,7 @@
           </Tab>
         </Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd2><Wnd3>
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1>
         <Tabs>
           <Tab>
             <Identity>TabID-745-27877</Identity>
@@ -47,20 +47,20 @@
           </Tab>
         <Tab><Identity>TabID-32758-9635</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab></Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd3></Windows>
+      <SelectedTab>0</SelectedTab></Wnd1></Windows>
     <Editor>
       
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\filter.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>624</SelStart><SelEnd>624</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\main.c</Filename><XPos>0</XPos><YPos>66</YPos><SelStart>1874</SelStart><SelEnd>1874</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\system\sys.c</Filename><XPos>0</XPos><YPos>32</YPos><SelStart>1172</SelStart><SelEnd>1172</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\interrupt_handlers.c</Filename><XPos>0</XPos><YPos>56</YPos><SelStart>1671</SelStart><SelEnd>1671</SelEnd></Tab><ActiveTab>3</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\drv_glcd.c</Filename><XPos>0</XPos><YPos>367</YPos><SelStart>11320</SelStart><SelEnd>11320</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\dac.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>130</SelStart><SelEnd>130</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\timer.c</Filename><XPos>0</XPos><YPos>29</YPos><SelStart>947</SelStart><SelEnd>947</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\zerocrossing.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>162</SelStart><SelEnd>162</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\touch_scr.c</Filename><XPos>0</XPos><YPos>147</YPos><SelStart>4146</SelStart><SelEnd>4146</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\frequency.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>1656</SelStart><SelEnd>1656</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\config.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>122</SelStart><SelEnd>122</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\filter.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>624</SelStart><SelEnd>624</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\main.c</Filename><XPos>0</XPos><YPos>66</YPos><SelStart>1874</SelStart><SelEnd>1874</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\system\sys.c</Filename><XPos>0</XPos><YPos>32</YPos><SelStart>1172</SelStart><SelEnd>1172</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\interrupt_handlers.c</Filename><XPos>0</XPos><YPos>47</YPos><SelStart>1671</SelStart><SelEnd>1671</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\drv_glcd.c</Filename><XPos>0</XPos><YPos>367</YPos><SelStart>11320</SelStart><SelEnd>11320</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\dac.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>130</SelStart><SelEnd>130</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\timer.c</Filename><XPos>0</XPos><YPos>29</YPos><SelStart>947</SelStart><SelEnd>947</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\zerocrossing.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>162</SelStart><SelEnd>162</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\touch_scr.c</Filename><XPos>0</XPos><YPos>147</YPos><SelStart>4146</SelStart><SelEnd>4146</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v2\MyProject\application\frequency.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>1656</SelStart><SelEnd>1656</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\main.c</Filename><XPos>0</XPos><YPos>74</YPos><SelStart>1874</SelStart><SelEnd>1874</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\drv_glcd.c</Filename><XPos>0</XPos><YPos>548</YPos><SelStart>15929</SelStart><SelEnd>15929</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\zerocrossing.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>156</SelStart><SelEnd>156</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\filter.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>624</SelStart><SelEnd>624</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\interrupt_handlers.c</Filename><XPos>0</XPos><YPos>51</YPos><SelStart>2267</SelStart><SelEnd>2267</SelEnd></Tab><ActiveTab>14</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\config.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>123</SelStart><SelEnd>123</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
     <Positions>
       
       
       
       
       
-    <Top><Row0><Sizes><Toolbar-00b09e00><key>iaridepm.enu1</key></Toolbar-00b09e00></Sizes></Row0><Row1><Sizes/></Row1></Top><Left><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>651</Bottom><Right>443</Right><x>-2</x><y>-2</y><xscreen>212</xscreen><yscreen>265</yscreen><sizeHorzCX>165625</sizeHorzCX><sizeHorzCY>276618</sizeHorzCY><sizeVertCX>347656</sizeVertCX><sizeVertCY>681628</sizeVertCY></Rect></Wnd2></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>263</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>265</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>276618</sizeHorzCY><sizeVertCX>165625</sizeVertCX><sizeVertCY>276618</sizeVertCY></Rect></Wnd3></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-00b09e00><key>iaridepm.enu1</key></Toolbar-00b09e00></Sizes></Row0><Row1><Sizes/></Row1><Row2><Sizes><Toolbar-033939b0><key>debuggergui.enu1</key></Toolbar-033939b0></Sizes></Row2></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>651</Bottom><Right>443</Right><x>-2</x><y>-2</y><xscreen>212</xscreen><yscreen>265</yscreen><sizeHorzCX>165625</sizeHorzCX><sizeHorzCY>276618</sizeHorzCY><sizeVertCX>347656</sizeVertCX><sizeVertCY>681628</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>263</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>265</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>276618</sizeHorzCY><sizeVertCX>165625</sizeVertCX><sizeVertCY>276618</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Workspace>
 

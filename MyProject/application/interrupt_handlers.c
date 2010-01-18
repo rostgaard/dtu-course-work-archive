@@ -58,7 +58,7 @@ float accumulator_min=0.0;
  *************************************************************************/
 void ADC_Inter_Handler ()
 {
-  FIO0PIN_bit.P0_11 = 1;
+  FIO0PIN_bit.P0_11 = 0;
   adc_stop();
   
   touch_scr_detect_touch(Touch_data.X);
@@ -75,7 +75,7 @@ void ADC_Inter_Handler ()
 
 
 
-  FIO0PIN_bit.P0_11 = 0;
+
   FIO0PIN_bit.P0_19 = 0;
  
   // clear interrupt
@@ -106,7 +106,9 @@ void Timer0IntrHandler (void)
 
   // ========== LCD - touch meassurement loop: STOP
   
-//  if (Touch_data.state==(Y_ch || confirm))    
+//  if (Touch_data.state==(Y_ch || confirm))   
+  
+  FIO0PIN_bit.P0_11 = 1;
   adc_start();  //Start the ADC, ADC will be done before next timer interrupt
                 //it has higer priority and will therefore be handlet first 
 
@@ -158,7 +160,7 @@ void Timer0IntrHandler (void)
   dac_write(Data);
   // clear interrupt
   timer0_interrupt_reset();
-  FIO0PIN_bit.P0_19 = 0;
+//  FIO0PIN_bit.P0_19 = 0;
   VICADDRESS = 0;
 
 }

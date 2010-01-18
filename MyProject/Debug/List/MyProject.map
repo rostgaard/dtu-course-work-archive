@@ -1,44 +1,44 @@
 ###############################################################################
 #                                                                             #
-# IAR ELF Linker V5.30.2.51295/W32 for ARM              15/Jan/2010  16:25:13 #
+# IAR ELF Linker V5.30.2.51295/W32 for ARM              15/Jan/2010  16:53:37 #
 # Copyright 2007-2009 IAR Systems AB.                                         #
 #                                                                             #
-#    Output file  =  C:\31070\v2\MyProject\Debug\Exe\MyProject.out.tmp        #
-#    Map file     =  C:\31070\v2\MyProject\Debug\List\MyProject.map           #
-#    Command line =  C:\31070\v2\MyProject\Debug\Obj\Black_bg.o               #
-#                    C:\31070\v2\MyProject\Debug\Obj\LPC24xx_enet.o           #
-#                    C:\31070\v2\MyProject\Debug\Obj\Terminal_18_24x12.o      #
-#                    C:\31070\v2\MyProject\Debug\Obj\Terminal_9_12x6.o        #
-#                    C:\31070\v2\MyProject\Debug\Obj\adc.o                    #
-#                    C:\31070\v2\MyProject\Debug\Obj\button_lightgrey.o       #
-#                    C:\31070\v2\MyProject\Debug\Obj\clock-arch.o             #
-#                    C:\31070\v2\MyProject\Debug\Obj\cursor_arrow.o           #
-#                    C:\31070\v2\MyProject\Debug\Obj\dac.o                    #
-#                    C:\31070\v2\MyProject\Debug\Obj\drv_glcd.o               #
-#                    C:\31070\v2\MyProject\Debug\Obj\drv_touch_scr.o          #
-#                    C:\31070\v2\MyProject\Debug\Obj\filter.o                 #
-#                    C:\31070\v2\MyProject\Debug\Obj\frequency.o              #
-#                    C:\31070\v2\MyProject\Debug\Obj\gpio.o                   #
-#                    C:\31070\v2\MyProject\Debug\Obj\http-strings.o           #
-#                    C:\31070\v2\MyProject\Debug\Obj\httpd-cgi.o              #
-#                    C:\31070\v2\MyProject\Debug\Obj\httpd-fs.o               #
-#                    C:\31070\v2\MyProject\Debug\Obj\httpd.o                  #
-#                    C:\31070\v2\MyProject\Debug\Obj\interrupt_handlers.o     #
-#                    C:\31070\v2\MyProject\Debug\Obj\main.o                   #
-#                    C:\31070\v2\MyProject\Debug\Obj\photo.o                  #
-#                    C:\31070\v2\MyProject\Debug\Obj\psock.o                  #
-#                    C:\31070\v2\MyProject\Debug\Obj\sdram_32M_16bit_drv.o    #
-#                    C:\31070\v2\MyProject\Debug\Obj\sys.o                    #
-#                    C:\31070\v2\MyProject\Debug\Obj\timer.o                  #
-#                    C:\31070\v2\MyProject\Debug\Obj\touch_scr.o              #
-#                    C:\31070\v2\MyProject\Debug\Obj\uip-timer.o              #
-#                    C:\31070\v2\MyProject\Debug\Obj\uip.o                    #
-#                    C:\31070\v2\MyProject\Debug\Obj\uip_arp.o                #
-#                    C:\31070\v2\MyProject\Debug\Obj\uiplib.o                 #
-#                    C:\31070\v2\MyProject\Debug\Obj\zerocrossing.o -o        #
-#                    C:\31070\v2\MyProject\Debug\Exe\MyProject.out.tmp --map  #
-#                    C:\31070\v2\MyProject\Debug\List\MyProject.map --config  #
-#                    C:\31070\v2\MyProject\config\LPC2478_Flash.icf           #
+#    Output file  =  C:\31070\v1\MyProject\Debug\Exe\MyProject.out.tmp        #
+#    Map file     =  C:\31070\v1\MyProject\Debug\List\MyProject.map           #
+#    Command line =  C:\31070\v1\MyProject\Debug\Obj\Black_bg.o               #
+#                    C:\31070\v1\MyProject\Debug\Obj\LPC24xx_enet.o           #
+#                    C:\31070\v1\MyProject\Debug\Obj\Terminal_18_24x12.o      #
+#                    C:\31070\v1\MyProject\Debug\Obj\Terminal_9_12x6.o        #
+#                    C:\31070\v1\MyProject\Debug\Obj\adc.o                    #
+#                    C:\31070\v1\MyProject\Debug\Obj\button_lightgrey.o       #
+#                    C:\31070\v1\MyProject\Debug\Obj\clock-arch.o             #
+#                    C:\31070\v1\MyProject\Debug\Obj\cursor_arrow.o           #
+#                    C:\31070\v1\MyProject\Debug\Obj\dac.o                    #
+#                    C:\31070\v1\MyProject\Debug\Obj\drv_glcd.o               #
+#                    C:\31070\v1\MyProject\Debug\Obj\drv_touch_scr.o          #
+#                    C:\31070\v1\MyProject\Debug\Obj\filter.o                 #
+#                    C:\31070\v1\MyProject\Debug\Obj\frequency.o              #
+#                    C:\31070\v1\MyProject\Debug\Obj\gpio.o                   #
+#                    C:\31070\v1\MyProject\Debug\Obj\http-strings.o           #
+#                    C:\31070\v1\MyProject\Debug\Obj\httpd-cgi.o              #
+#                    C:\31070\v1\MyProject\Debug\Obj\httpd-fs.o               #
+#                    C:\31070\v1\MyProject\Debug\Obj\httpd.o                  #
+#                    C:\31070\v1\MyProject\Debug\Obj\interrupt_handlers.o     #
+#                    C:\31070\v1\MyProject\Debug\Obj\main.o                   #
+#                    C:\31070\v1\MyProject\Debug\Obj\photo.o                  #
+#                    C:\31070\v1\MyProject\Debug\Obj\psock.o                  #
+#                    C:\31070\v1\MyProject\Debug\Obj\sdram_32M_16bit_drv.o    #
+#                    C:\31070\v1\MyProject\Debug\Obj\sys.o                    #
+#                    C:\31070\v1\MyProject\Debug\Obj\timer.o                  #
+#                    C:\31070\v1\MyProject\Debug\Obj\touch_scr.o              #
+#                    C:\31070\v1\MyProject\Debug\Obj\uip-timer.o              #
+#                    C:\31070\v1\MyProject\Debug\Obj\uip.o                    #
+#                    C:\31070\v1\MyProject\Debug\Obj\uip_arp.o                #
+#                    C:\31070\v1\MyProject\Debug\Obj\uiplib.o                 #
+#                    C:\31070\v1\MyProject\Debug\Obj\zerocrossing.o -o        #
+#                    C:\31070\v1\MyProject\Debug\Exe\MyProject.out.tmp --map  #
+#                    C:\31070\v1\MyProject\Debug\List\MyProject.map --config  #
+#                    C:\31070\v1\MyProject\config\LPC2478_Flash.icf           #
 #                    --semihosting --entry __iar_program_start                #
 #                                                                             #
 #                                                                             #
@@ -70,7 +70,7 @@ __thumb_aware = enabled
   .intvec            ro code  0x00000000     0x3c  cstartup.o [4]
                             - 0x0000003c     0x3c
 
-"P1":                                     0x10720
+"P1":                                     0x10714
   .rodata            const    0x00000044   0x3200  button_lightgrey.o [1]
   .rodata            const    0x00003244   0x3000  Terminal_18_24x12.o [1]
   .text              ro code  0x00006244   0x1300  uip.o [1]
@@ -103,147 +103,148 @@ __thumb_aware = enabled
   Veneer             ro code  0x0000dab0      0x4  - Linker created -
   .text              ro code  0x0000dab4    0x1c8  FltDiv.o [4]
   .text              ro code  0x0000dc7c    0x1b8  frequency.o [1]
-  .text              ro code  0x0000de34    0x1ac  interrupt_handlers.o [1]
-  Veneer             ro code  0x0000dfe0      0x4  - Linker created -
-  .text              ro code  0x0000dfe4    0x14c  FltMul.o [4]
-  Veneer             ro code  0x0000e130      0x4  - Linker created -
-  .text              ro code  0x0000e134    0x140  DblAdd.o [4]
-  .text              ro code  0x0000e274    0x138  gpio.o [1]
-  .text              ro code  0x0000e3ac    0x12c  clock-arch.o [1]
-  Veneer             ro code  0x0000e4d8      0x4  - Linker created -
-  .text              ro code  0x0000e4dc    0x12c  FltSub.o [4]
-  .text              ro code  0x0000e608    0x12c  xdscale.o [3]
-  .text              ro code  0x0000e734    0x128  I64DivMod.o [4]
-  .text              ro code  0x0000e85c    0x120  adc.o [1]
-  .text              ro code  0x0000e97c    0x114  timer.o [1]
-  .rodata            const    0x0000ea90    0x100  cursor_arrow.o [1]
-  .rodata            const    0x0000eb90     0xf4  httpd-fs.o [1]
-  .rodata            const    0x0000ec84     0xe8  httpd-fs.o [1]
-  .rodata            const    0x0000ed6c     0xe4  httpd-fs.o [1]
-  .text              ro code  0x0000ee50     0xe4  httpd-fs.o [1]
-  Veneer             ro code  0x0000ef34      0x4  - Linker created -
-  .text              ro code  0x0000ef38     0xd4  ABImemcpy.o [4]
-  .rodata            const    0x0000f00c     0xd0  httpd-fs.o [1]
-  .text              ro code  0x0000f0dc     0xc0  xdnorm.o [3]
-  .rodata            const    0x0000f19c     0xb4  httpd-fs.o [1]
-  .text              ro code  0x0000f250     0xb0  zerocrossing.o [1]
-  Veneer             ro code  0x0000f300      0x4  - Linker created -
-  .text              ro code  0x0000f304     0xac  DblToFlt.o [4]
-  .rodata            const    0x0000f3b0     0xa8  httpd-cgi.o [1]
-  Veneer             ro code  0x0000f458      0x4  - Linker created -
-  .text              ro code  0x0000f45c     0xa4  FltAdd.o [4]
-  Veneer             ro code  0x0000f500      0x4  - Linker created -
-  .text              ro code  0x0000f504     0x9c  strncpy.o [4]
-  Veneer             ro code  0x0000f5a0      0x4  - Linker created -
-  .text              ro code  0x0000f5a4     0x94  memchr.o [4]
-  .text              ro code  0x0000f638     0x84  filter.o [1]
-  Veneer             ro code  0x0000f6bc      0x4  - Linker created -
-  .text              ro code  0x0000f6c0     0x7c  ABImemset.o [4]
-  .text              ro code  0x0000f73c     0x7c  xreportassert.o [3]
-  Veneer             ro code  0x0000f7b8      0x4  - Linker created -
-  .text              ro code  0x0000f7bc     0x6c  strcpy.o [4]
-  .text              ro code  0x0000f828     0x68  dac.o [1]
-  Veneer             ro code  0x0000f890      0x4  - Linker created -
-  .text              ro code  0x0000f894     0x64  FltToDbl.o [4]
-  .text              ro code  0x0000f8f8     0x64  S32ToFlt.o [4]
-  .rodata            const    0x0000f95c     0x60  httpd-cgi.o [1]
-  Veneer             ro code  0x0000f9bc      0x4  - Linker created -
-  .text              ro code  0x0000f9c0     0x60  DblToS32.o [4]
-  .rodata            const    0x0000fa20     0x5c  http-strings.o [1]
-  Veneer             ro code  0x0000fa7c      0x4  - Linker created -
-  .text              ro code  0x0000fa80     0x58  S32ToDbl.o [4]
-  .text              ro code  0x0000fad8     0x58  xassert.o [3]
-  .rodata            const    0x0000fb30     0x54  http-strings.o [1]
-  Veneer             ro code  0x0000fb84      0x4  - Linker created -
-  .text              ro code  0x0000fb88     0x54  strlen.o [4]
-  .text              ro code  0x0000fbdc     0x50  cstartup.o [4]
-  .text              ro code  0x0000fc2c     0x44  snprintf.o [3]
-  .text              ro code  0x0000fc70     0x44  uip-timer.o [1]
-  Veneer             ro code  0x0000fcb4      0x4  - Linker created -
-  .text              ro code  0x0000fcb8     0x3c  DblToU32.o [4]
-  Veneer             ro code  0x0000fcf4      0x4  - Linker created -
-  .text              ro code  0x0000fcf8     0x38  DblCmpLe.o [4]
-  Veneer             ro code  0x0000fd30      0x4  - Linker created -
-  .text              ro code  0x0000fd34     0x38  DblCmpGe.o [4]
-  Veneer             ro code  0x0000fd6c      0x4  - Linker created -
-  .text              ro code  0x0000fd70     0x34  FltToU32.o [4]
-  .text              ro code  0x0000fda4     0x34  data_init2.o [4]
-  .rodata            const    0x0000fdd8     0x30  drv_glcd.o [1]
-  .rodata            const    0x0000fe08     0x30  touch_scr.o [1]
-  .rodata            const    0x0000fe38     0x30  xreportassert.o [3]
-  .text              ro code  0x0000fe68     0x30  iarwstd.o [5]
-  .text              ro code  0x0000fe98     0x30  strncmp.o [3]
-  .rodata            const    0x0000fec8     0x2c  http-strings.o [1]
-  Veneer             ro code  0x0000fef4      0x4  - Linker created -
-  .text              ro code  0x0000fef8     0x2c  FltCmpLe.o [4]
-  Veneer             ro code  0x0000ff24      0x4  - Linker created -
-  .text              ro code  0x0000ff28     0x2c  FltCmpGe.o [4]
-  .text              ro code  0x0000ff54     0x2c  copy_init2.o [4]
-  .text              ro code  0x0000ff80     0x28  zero_init2.o [4]
-  .text              ro code  0x0000ffa8     0x28  div.o [3]
+  .text              ro code  0x0000de34    0x1a0  interrupt_handlers.o [1]
+  Veneer             ro code  0x0000dfd4      0x4  - Linker created -
+  .text              ro code  0x0000dfd8    0x14c  FltMul.o [4]
+  Veneer             ro code  0x0000e124      0x4  - Linker created -
+  .text              ro code  0x0000e128    0x140  DblAdd.o [4]
+  .text              ro code  0x0000e268    0x138  gpio.o [1]
+  .text              ro code  0x0000e3a0    0x12c  clock-arch.o [1]
+  Veneer             ro code  0x0000e4cc      0x4  - Linker created -
+  .text              ro code  0x0000e4d0    0x12c  FltSub.o [4]
+  .text              ro code  0x0000e5fc    0x12c  xdscale.o [3]
+  .text              ro code  0x0000e728    0x128  I64DivMod.o [4]
+  .text              ro code  0x0000e850    0x120  adc.o [1]
+  .text              ro code  0x0000e970    0x114  timer.o [1]
+  .rodata            const    0x0000ea84    0x100  cursor_arrow.o [1]
+  .rodata            const    0x0000eb84     0xf4  httpd-fs.o [1]
+  .rodata            const    0x0000ec78     0xe8  httpd-fs.o [1]
+  .rodata            const    0x0000ed60     0xe4  httpd-fs.o [1]
+  .text              ro code  0x0000ee44     0xe4  httpd-fs.o [1]
+  Veneer             ro code  0x0000ef28      0x4  - Linker created -
+  .text              ro code  0x0000ef2c     0xd4  ABImemcpy.o [4]
+  .rodata            const    0x0000f000     0xd0  httpd-fs.o [1]
+  .text              ro code  0x0000f0d0     0xc0  xdnorm.o [3]
+  .rodata            const    0x0000f190     0xb4  httpd-fs.o [1]
+  .text              ro code  0x0000f244     0xb0  zerocrossing.o [1]
+  Veneer             ro code  0x0000f2f4      0x4  - Linker created -
+  .text              ro code  0x0000f2f8     0xac  DblToFlt.o [4]
+  .rodata            const    0x0000f3a4     0xa8  httpd-cgi.o [1]
+  Veneer             ro code  0x0000f44c      0x4  - Linker created -
+  .text              ro code  0x0000f450     0xa4  FltAdd.o [4]
+  Veneer             ro code  0x0000f4f4      0x4  - Linker created -
+  .text              ro code  0x0000f4f8     0x9c  strncpy.o [4]
+  Veneer             ro code  0x0000f594      0x4  - Linker created -
+  .text              ro code  0x0000f598     0x94  memchr.o [4]
+  .text              ro code  0x0000f62c     0x84  filter.o [1]
+  Veneer             ro code  0x0000f6b0      0x4  - Linker created -
+  .text              ro code  0x0000f6b4     0x7c  ABImemset.o [4]
+  .text              ro code  0x0000f730     0x7c  xreportassert.o [3]
+  Veneer             ro code  0x0000f7ac      0x4  - Linker created -
+  .text              ro code  0x0000f7b0     0x6c  strcpy.o [4]
+  .text              ro code  0x0000f81c     0x68  dac.o [1]
+  Veneer             ro code  0x0000f884      0x4  - Linker created -
+  .text              ro code  0x0000f888     0x64  FltToDbl.o [4]
+  .text              ro code  0x0000f8ec     0x64  S32ToFlt.o [4]
+  .rodata            const    0x0000f950     0x60  httpd-cgi.o [1]
+  Veneer             ro code  0x0000f9b0      0x4  - Linker created -
+  .text              ro code  0x0000f9b4     0x60  DblToS32.o [4]
+  .rodata            const    0x0000fa14     0x5c  http-strings.o [1]
+  Veneer             ro code  0x0000fa70      0x4  - Linker created -
+  .text              ro code  0x0000fa74     0x58  S32ToDbl.o [4]
+  .text              ro code  0x0000facc     0x58  xassert.o [3]
+  .rodata            const    0x0000fb24     0x54  http-strings.o [1]
+  Veneer             ro code  0x0000fb78      0x4  - Linker created -
+  .text              ro code  0x0000fb7c     0x54  strlen.o [4]
+  .text              ro code  0x0000fbd0     0x50  cstartup.o [4]
+  .text              ro code  0x0000fc20     0x44  snprintf.o [3]
+  .text              ro code  0x0000fc64     0x44  uip-timer.o [1]
+  Veneer             ro code  0x0000fca8      0x4  - Linker created -
+  .text              ro code  0x0000fcac     0x3c  DblToU32.o [4]
+  Veneer             ro code  0x0000fce8      0x4  - Linker created -
+  .text              ro code  0x0000fcec     0x38  DblCmpLe.o [4]
+  Veneer             ro code  0x0000fd24      0x4  - Linker created -
+  .text              ro code  0x0000fd28     0x38  DblCmpGe.o [4]
+  Veneer             ro code  0x0000fd60      0x4  - Linker created -
+  .text              ro code  0x0000fd64     0x34  FltToU32.o [4]
+  .text              ro code  0x0000fd98     0x34  data_init2.o [4]
+  .rodata            const    0x0000fdcc     0x30  drv_glcd.o [1]
+  .rodata            const    0x0000fdfc     0x30  touch_scr.o [1]
+  .rodata            const    0x0000fe2c     0x30  xreportassert.o [3]
+  .text              ro code  0x0000fe5c     0x30  iarwstd.o [5]
+  .text              ro code  0x0000fe8c     0x30  strncmp.o [3]
+  .rodata            const    0x0000febc     0x2c  http-strings.o [1]
+  Veneer             ro code  0x0000fee8      0x4  - Linker created -
+  .text              ro code  0x0000feec     0x2c  FltCmpLe.o [4]
+  Veneer             ro code  0x0000ff18      0x4  - Linker created -
+  .text              ro code  0x0000ff1c     0x2c  FltCmpGe.o [4]
+  .text              ro code  0x0000ff48     0x2c  copy_init2.o [4]
+  .text              ro code  0x0000ff74     0x28  zero_init2.o [4]
+  .text              ro code  0x0000ff9c     0x28  div.o [3]
+  Veneer             ro code  0x0000ffc4      0xc  - Linker created -
   Veneer             ro code  0x0000ffd0      0xc  - Linker created -
   Veneer             ro code  0x0000ffdc      0xc  - Linker created -
-  Veneer             ro code  0x0000ffe8      0xc  - Linker created -
-  .text              ro code  0x0000fff4     0x24  cmain.o [4]
-  .iar.init_table    const    0x00010018     0x24  - Linker created -
-  .rodata            const    0x0001003c     0x20  http-strings.o [1]
-  .rodata            const    0x0001005c     0x20  http-strings.o [1]
-  .rodata            const    0x0001007c     0x20  httpd-fs.o [1]
-  .text              ro code  0x0001009c     0x20  printf.o [3]
-  Veneer             ro code  0x000100bc      0x4  - Linker created -
-  .text              ro code  0x000100c0     0x20  strchr.o [4]
-  .text              ro code  0x000100e0     0x1e  strrchr.o [3]
-  .text              ro code  0x000100fe     0x1e  xprout.o [3]
-  .rodata            const    0x0001011c     0x1c  LPC24xx_enet.o [1]
-  .rodata            const    0x00010138     0x1c  LPC24xx_enet.o [1]
-  .rodata            const    0x00010154     0x1c  http-strings.o [1]
-  .rodata            const    0x00010170     0x1c  http-strings.o [1]
-  .rodata            const    0x0001018c     0x1c  http-strings.o [1]
-  .rodata            const    0x000101a8     0x1c  http-strings.o [1]
-  .rodata            const    0x000101c4     0x1c  http-strings.o [1]
-  .rodata            const    0x000101e0     0x1c  main.o [1]
-  Veneer             ro code  0x000101fc      0x4  - Linker created -
-  .text              ro code  0x00010200     0x1c  exit.o [5]
-  .text              ro code  0x0001021c     0x1c  LPC24xx_enet.o [1]
-  .text              ro code  0x00010238     0x1c  uip_arp.o [1]
-  .text              ro code  0x00010254     0x1c  xsnprout.o [3]
-  .rodata            const    0x00010270     0x18  LPC24xx_enet.o [1]
-  .rodata            const    0x00010288     0x18  LPC24xx_enet.o [1]
-  .rodata            const    0x000102a0     0x18  button_lightgrey.o [1]
-  .rodata            const    0x000102b8     0x18  drv_glcd.o [1]
-  .rodata            const    0x000102d0     0x18  drv_glcd.o [1]
-  .rodata            const    0x000102e8     0x18  main.o [1]
-  .rodata            const    0x00010300     0x18  main.o [1]
-  .rodata            const    0x00010318     0x18  touch_scr.o [1]
-  .text              ro code  0x00010330     0x18  httpd.o [1]
-  .rodata            const    0x00010348     0x14  LPC24xx_enet.o [1]
-  .rodata            const    0x0001035c     0x14  Terminal_18_24x12.o [1]
-  .rodata            const    0x00010370     0x14  drv_glcd.o [1]
-  .rodata            const    0x00010384     0x14  httpd-cgi.o [1]
-  .rodata            const    0x00010398     0x14  httpd-fs.o [1]
-  .rodata            const    0x000103ac     0x14  httpd-fs.o [1]
-  .rodata            const    0x000103c0     0x14  httpd-fs.o [1]
-  .rodata            const    0x000103d4     0x14  httpd-fs.o [1]
-  .rodata            const    0x000103e8     0x14  httpd-fs.o [1]
-  .rodata            const    0x000103fc     0x14  httpd-fs.o [1]
-  .rodata            const    0x00010410     0x14  httpd-fs.o [1]
-  .rodata            const    0x00010424     0x14  httpd-fs.o [1]
-  .rodata            const    0x00010438     0x14  httpd-fs.o [1]
-  .rodata            const    0x0001044c     0x14  httpd-fs.o [1]
-  .rodata            const    0x00010460     0x14  httpd-fs.o [1]
-  .rodata            const    0x00010474     0x14  main.o [1]
-  .rodata            const    0x00010488     0x10  drv_glcd.o [1]
-  .rodata            const    0x00010498     0x10  httpd-cgi.o [1]
-  Veneer             ro code  0x000104a8      0x4  - Linker created -
-  .text              ro code  0x000104ac     0x10  main.o [1]
-  Veneer             ro code  0x000104bc      0x4  - Linker created -
-  .text              ro code  0x000104c0     0x10  U32ToFlt.o [4]
-  Veneer             ro code  0x000104d0      0x4  - Linker created -
-  .text              ro code  0x000104d4     0x10  cexit.o [4]
-  .rodata            const    0x000104e4      0xc  drv_glcd.o [1]
+  .text              ro code  0x0000ffe8     0x24  cmain.o [4]
+  .iar.init_table    const    0x0001000c     0x24  - Linker created -
+  .rodata            const    0x00010030     0x20  http-strings.o [1]
+  .rodata            const    0x00010050     0x20  http-strings.o [1]
+  .rodata            const    0x00010070     0x20  httpd-fs.o [1]
+  .text              ro code  0x00010090     0x20  printf.o [3]
+  Veneer             ro code  0x000100b0      0x4  - Linker created -
+  .text              ro code  0x000100b4     0x20  strchr.o [4]
+  .text              ro code  0x000100d4     0x1e  strrchr.o [3]
+  .text              ro code  0x000100f2     0x1e  xprout.o [3]
+  .rodata            const    0x00010110     0x1c  LPC24xx_enet.o [1]
+  .rodata            const    0x0001012c     0x1c  LPC24xx_enet.o [1]
+  .rodata            const    0x00010148     0x1c  http-strings.o [1]
+  .rodata            const    0x00010164     0x1c  http-strings.o [1]
+  .rodata            const    0x00010180     0x1c  http-strings.o [1]
+  .rodata            const    0x0001019c     0x1c  http-strings.o [1]
+  .rodata            const    0x000101b8     0x1c  http-strings.o [1]
+  .rodata            const    0x000101d4     0x1c  main.o [1]
+  Veneer             ro code  0x000101f0      0x4  - Linker created -
+  .text              ro code  0x000101f4     0x1c  exit.o [5]
+  .text              ro code  0x00010210     0x1c  LPC24xx_enet.o [1]
+  .text              ro code  0x0001022c     0x1c  uip_arp.o [1]
+  .text              ro code  0x00010248     0x1c  xsnprout.o [3]
+  .rodata            const    0x00010264     0x18  LPC24xx_enet.o [1]
+  .rodata            const    0x0001027c     0x18  LPC24xx_enet.o [1]
+  .rodata            const    0x00010294     0x18  button_lightgrey.o [1]
+  .rodata            const    0x000102ac     0x18  drv_glcd.o [1]
+  .rodata            const    0x000102c4     0x18  drv_glcd.o [1]
+  .rodata            const    0x000102dc     0x18  main.o [1]
+  .rodata            const    0x000102f4     0x18  main.o [1]
+  .rodata            const    0x0001030c     0x18  touch_scr.o [1]
+  .text              ro code  0x00010324     0x18  httpd.o [1]
+  .rodata            const    0x0001033c     0x14  LPC24xx_enet.o [1]
+  .rodata            const    0x00010350     0x14  Terminal_18_24x12.o [1]
+  .rodata            const    0x00010364     0x14  drv_glcd.o [1]
+  .rodata            const    0x00010378     0x14  httpd-cgi.o [1]
+  .rodata            const    0x0001038c     0x14  httpd-fs.o [1]
+  .rodata            const    0x000103a0     0x14  httpd-fs.o [1]
+  .rodata            const    0x000103b4     0x14  httpd-fs.o [1]
+  .rodata            const    0x000103c8     0x14  httpd-fs.o [1]
+  .rodata            const    0x000103dc     0x14  httpd-fs.o [1]
+  .rodata            const    0x000103f0     0x14  httpd-fs.o [1]
+  .rodata            const    0x00010404     0x14  httpd-fs.o [1]
+  .rodata            const    0x00010418     0x14  httpd-fs.o [1]
+  .rodata            const    0x0001042c     0x14  httpd-fs.o [1]
+  .rodata            const    0x00010440     0x14  httpd-fs.o [1]
+  .rodata            const    0x00010454     0x14  httpd-fs.o [1]
+  .rodata            const    0x00010468     0x14  main.o [1]
+  .rodata            const    0x0001047c     0x10  drv_glcd.o [1]
+  .rodata            const    0x0001048c     0x10  httpd-cgi.o [1]
+  Veneer             ro code  0x0001049c      0x4  - Linker created -
+  .text              ro code  0x000104a0     0x10  main.o [1]
+  Veneer             ro code  0x000104b0      0x4  - Linker created -
+  .text              ro code  0x000104b4     0x10  U32ToFlt.o [4]
+  Veneer             ro code  0x000104c4      0x4  - Linker created -
+  .text              ro code  0x000104c8     0x10  cexit.o [4]
+  .rodata            const    0x000104d8      0xc  drv_glcd.o [1]
+  .rodata            const    0x000104e4      0xc  http-strings.o [1]
   .rodata            const    0x000104f0      0xc  http-strings.o [1]
   .rodata            const    0x000104fc      0xc  http-strings.o [1]
-  .rodata            const    0x00010508      0xc  http-strings.o [1]
+  .rodata            const    0x00010508      0xc  httpd-cgi.o [1]
   .rodata            const    0x00010514      0xc  httpd-cgi.o [1]
   .rodata            const    0x00010520      0xc  httpd-cgi.o [1]
   .rodata            const    0x0001052c      0xc  httpd-cgi.o [1]
@@ -252,45 +253,44 @@ __thumb_aware = enabled
   .rodata            const    0x00010550      0xc  httpd-cgi.o [1]
   .rodata            const    0x0001055c      0xc  httpd-cgi.o [1]
   .rodata            const    0x00010568      0xc  httpd-cgi.o [1]
-  .rodata            const    0x00010574      0xc  httpd-cgi.o [1]
+  .rodata            const    0x00010574      0xc  main.o [1]
   .rodata            const    0x00010580      0xc  main.o [1]
-  .rodata            const    0x0001058c      0xc  main.o [1]
-  Veneer             ro code  0x00010598      0x4  - Linker created -
-  .text              ro code  0x0001059c      0xc  U32ToDbl.o [4]
-  .rodata            const    0x000105a8      0x8  http-strings.o [1]
-  .rodata            const    0x000105b0      0x8  http-strings.o [1]
-  .rodata            const    0x000105b8      0x8  http-strings.o [1]
-  .rodata            const    0x000105c0      0x8  http-strings.o [1]
-  .rodata            const    0x000105c8      0x8  http-strings.o [1]
-  .rodata            const    0x000105d0      0x8  http-strings.o [1]
-  .rodata            const    0x000105d8      0x8  http-strings.o [1]
-  .rodata            const    0x000105e0      0x8  http-strings.o [1]
-  .rodata            const    0x000105e8      0x8  httpd-cgi.o [1]
-  .rodata            const    0x000105f0      0x8  httpd-cgi.o [1]
-  .rodata            const    0x000105f8      0x8  httpd-cgi.o [1]
-  .rodata            const    0x00010600      0x8  httpd-cgi.o [1]
-  .rodata            const    0x00010608      0x8  httpd-cgi.o [1]
-  .rodata            const    0x00010610      0x8  httpd-cgi.o [1]
-  .rodata            const    0x00010618      0x8  httpd-cgi.o [1]
-  .rodata            const    0x00010620      0x8  uip.o [1]
-  .rodata            const    0x00010628      0x8  uip_arp.o [1]
-  .rodata            const    0x00010630      0x8  xprintffull.o [3]
-  .text              ro code  0x00010638      0x8  abort.o [3]
-  .text              ro code  0x00010640      0x6  exit.o [3]
-  .rodata            const    0x00010648      0x4  uip.o [1]
-  .rodata            const    0x0001064c      0x4  uip_arp.o [1]
+  Veneer             ro code  0x0001058c      0x4  - Linker created -
+  .text              ro code  0x00010590      0xc  U32ToDbl.o [4]
+  .rodata            const    0x0001059c      0x8  http-strings.o [1]
+  .rodata            const    0x000105a4      0x8  http-strings.o [1]
+  .rodata            const    0x000105ac      0x8  http-strings.o [1]
+  .rodata            const    0x000105b4      0x8  http-strings.o [1]
+  .rodata            const    0x000105bc      0x8  http-strings.o [1]
+  .rodata            const    0x000105c4      0x8  http-strings.o [1]
+  .rodata            const    0x000105cc      0x8  http-strings.o [1]
+  .rodata            const    0x000105d4      0x8  http-strings.o [1]
+  .rodata            const    0x000105dc      0x8  httpd-cgi.o [1]
+  .rodata            const    0x000105e4      0x8  httpd-cgi.o [1]
+  .rodata            const    0x000105ec      0x8  httpd-cgi.o [1]
+  .rodata            const    0x000105f4      0x8  httpd-cgi.o [1]
+  .rodata            const    0x000105fc      0x8  httpd-cgi.o [1]
+  .rodata            const    0x00010604      0x8  httpd-cgi.o [1]
+  .rodata            const    0x0001060c      0x8  httpd-cgi.o [1]
+  .rodata            const    0x00010614      0x8  uip.o [1]
+  .rodata            const    0x0001061c      0x8  uip_arp.o [1]
+  .rodata            const    0x00010624      0x8  xprintffull.o [3]
+  .text              ro code  0x0001062c      0x8  abort.o [3]
+  .text              ro code  0x00010634      0x6  exit.o [3]
+  .rodata            const    0x0001063c      0x4  uip.o [1]
+  .rodata            const    0x00010640      0x4  uip_arp.o [1]
+  .text              ro code  0x00010644      0x4  vectortrap.o [4]
+  .text              ro code  0x00010648      0x4  vectortrap.o [4]
+  .text              ro code  0x0001064c      0x4  vectortrap.o [4]
   .text              ro code  0x00010650      0x4  vectortrap.o [4]
-  .text              ro code  0x00010654      0x4  vectortrap.o [4]
-  .text              ro code  0x00010658      0x4  vectortrap.o [4]
-  .text              ro code  0x0001065c      0x4  vectortrap.o [4]
-  .text              ro code  0x00010660      0x4  IntDivZer.o [4]
-  .text              ro code  0x00010664      0x4  xreturnswi.o [5]
-  .text              ro code  0x00010668      0x4  I64DivZer.o [4]
-  .text              ro code  0x0001066c      0x4  low_level_init.o [3]
-  .text              ro code  0x00010670      0x2  httpd.o [1]
-  .text              ro code  0x00010672      0x2  psock.o [1]
-  Initializer bytes  ro data  0x00010674     0xf0  <for P2 s0>
-                            - 0x00010764  0x10720
+  .text              ro code  0x00010654      0x4  IntDivZer.o [4]
+  .text              ro code  0x00010658      0x4  xreturnswi.o [5]
+  .text              ro code  0x0001065c      0x4  I64DivZer.o [4]
+  .text              ro code  0x00010660      0x4  low_level_init.o [3]
+  .text              ro code  0x00010664      0x2  httpd.o [1]
+  .text              ro code  0x00010666      0x2  psock.o [1]
+  Initializer bytes  ro data  0x00010668     0xf0  <for P2 s0>
+                            - 0x00010758  0x10714
 
 "P2", part 1 of 3:                          0x540
   CSTACK                      0x40000040    0x400  <Block>
@@ -407,7 +407,7 @@ Zero (__iar_zero_init2)
 
 Copy (__iar_copy_init2)
     1 source range, total size 0xf0 (100% of destination):
-             0x10674    0xf0
+             0x10668    0xf0
     1 destination range, total size 0xf0:
           0x40002d0c    0xf0
 
@@ -418,7 +418,7 @@ Copy (__iar_copy_init2)
 
     Module                 ro code  ro data  rw data
     ------                 -------  -------  -------
-C:\31070\v2\MyProject\Debug\Obj: [1]
+C:\31070\v1\MyProject\Debug\Obj: [1]
     LPC24xx_enet.o           2 008      124    6 201
     Terminal_18_24x12.o              12 332       24
     adc.o                      288
@@ -434,7 +434,7 @@ C:\31070\v2\MyProject\Debug\Obj: [1]
     httpd-cgi.o              1 148      520       56
     httpd-fs.o                 228    6 212       24
     httpd.o                  2 134
-    interrupt_handlers.o       428                 4
+    interrupt_handlers.o       416                 4
     main.o                   1 720      152       96
     psock.o                    876
     sdram_32M_16bit_drv.o      588
@@ -446,7 +446,7 @@ C:\31070\v2\MyProject\Debug\Obj: [1]
     uip_arp.o                1 204       12      104
     zerocrossing.o             176        4        4
     ------------------------------------------------
-    Total:                  22 618   33 312   16 558
+    Total:                  22 606   33 312   16 558
 
 command line: [2]
     ------------------------------------------------
@@ -524,7 +524,7 @@ shs_l.a: [5]
     Gaps                         2        4
     Linker created             192       36    1 344
 ----------------------------------------------------
-    Grand Total:            34 012   33 408   17 906
+    Grand Total:            34 000   33 408   17 906
 
 
 *******************************************************************************
@@ -533,19 +533,19 @@ shs_l.a: [5]
 
 Entry                      Address    Size  Type      Object
 -----                      -------    ----  ----      ------
-?main                   0x0000fff4          Code  Gb  cmain.o [4]
-ADC_Inter_Handler       0x0000de35    0xa0  Code  Gb  interrupt_handlers.o [1]
+?main                   0x0000ffe8          Code  Gb  cmain.o [4]
+ADC_Inter_Handler       0x0000de35    0x94  Code  Gb  interrupt_handlers.o [1]
 ADC_p_p                 0x40002c48    0x10  Data  Gb  main.o [1]
 AD_zerocrossing_delay   0x40002c6c     0x8  Data  Gb  main.o [1]
 ADdata                  0x40002c64     0x8  Data  Gb  main.o [1]
-ADfilter                0x0000f645    0x74  Code  Gb  filter.o [1]
+ADfilter                0x0000f639    0x74  Code  Gb  filter.o [1]
 ADfilter_enable         0x40002dd8     0x4  Data  Gb  main.o [1]
-Abort_Handler           0x0001065c          Code  Wk  vectortrap.o [4]
+Abort_Handler           0x00010650          Code  Wk  vectortrap.o [4]
 CSTACK$$Base            0x40000040           --   Gb  - Linker created -
 CSTACK$$Limit           0x40000440           --   Gb  - Linker created -
 CurrX_Size              0x40002ca0     0x4  Data  Lc  drv_glcd.o [1]
 CurrY_Size              0x40002c9c     0x4  Data  Lc  drv_glcd.o [1]
-Cursor                  0x0000ea90   0x100  Data  Gb  cursor_arrow.o [1]
+Cursor                  0x0000ea84   0x100  Data  Gb  cursor_arrow.o [1]
 Data                    0x40002cb0     0x4  Data  Gb  main.o [1]
 ENET_MIIReadRegister    0x00009f59    0x70  Code  Lc  LPC24xx_enet.o [1]
 ENET_MIIWriteRegister   0x00009eed    0x6c  Code  Lc  LPC24xx_enet.o [1]
@@ -589,17 +589,17 @@ LCD_WRITE_PIXEL         0x00008ae5    0x74  Code  Lc  drv_glcd.o [1]
 Linespace               0x40002dec     0x4  Data  Gb  main.o [1]
 P_P_value               0x0000a4e5   0x18c  Code  Gb  main.o [1]
 PhyAddr                 0x40002d02     0x1  Data  Lc  LPC24xx_enet.o [1]
-Prefetch_Handler        0x00010658          Code  Wk  vectortrap.o [4]
+Prefetch_Handler        0x0001064c          Code  Wk  vectortrap.o [4]
 Program_Init            0x0000a3c5    0x6c  Code  Gb  main.o [1]
 RXDESCRIPTOR            0xffe00108     0x4  Data  Wk  LPC24xx_enet.o [1]
 RXSTATUS                0xffe0010c     0x4  Data  Wk  LPC24xx_enet.o [1]
-Region$$Table$$Base     0x00010018           --   Gb  - Linker created -
-Region$$Table$$Limit    0x0001003c           --   Gb  - Linker created -
+Region$$Table$$Base     0x0001000c           --   Gb  - Linker created -
+Region$$Table$$Limit    0x00010030           --   Gb  - Linker created -
 RxBuff0                 0x7fe00000   0x600  Data  Gb  LPC24xx_enet.o [1]
 RxBuff1                 0x7fe00600   0x600  Data  Gb  LPC24xx_enet.o [1]
 SDRAM_BASE_ADDR         0xa0000000           --   Gb  command line/config [2]
 SDRAM_Init              0x0000d29d   0x24c  Code  Gb  sdram_32M_16bit_drv.o [1]
-SWI_Handler             0x00010654          Code  Wk  vectortrap.o [4]
+SWI_Handler             0x00010648          Code  Wk  vectortrap.o [4]
 SYS_GetFpclk            0x0000c0d9    0x42  Code  Gb  sys.o [1]
 SYS_GetFsclk            0x0000c049    0x84  Code  Gb  sys.o [1]
 Sys_Init                0x0000c21d    0x4c  Code  Gb  sys.o [1]
@@ -617,13 +617,13 @@ TextStream              0x00003244  0x3000  Data  Lc  Terminal_18_24x12.o [1]
 TextX_Pos               0x40002c84     0x4  Data  Lc  drv_glcd.o [1]
 TextY_Pos               0x40002c88     0x4  Data  Lc  drv_glcd.o [1]
 Ticks                   0x40002c74     0x4  Data  Gb  clock-arch.o [1]
-Timer0IntrHandler       0x0000ded5    0xfc  Code  Gb  interrupt_handlers.o [1]
-Timer1IntrHandler       0x0000e3ad    0x44  Code  Lc  clock-arch.o [1]
+Timer0IntrHandler       0x0000dec9   0x100  Code  Gb  interrupt_handlers.o [1]
+Timer1IntrHandler       0x0000e3a1    0x44  Code  Lc  clock-arch.o [1]
 TouchScrInit            0x0000a671    0xc0  Code  Gb  touch_scr.o [1]
 Touch_data              0x40002d0c    0x34  Data  Gb  touch_scr.o [1]
 TxBuff0                 0x7fe00c00   0x600  Data  Gb  LPC24xx_enet.o [1]
 TxBuff1                 0x7fe01200   0x600  Data  Gb  LPC24xx_enet.o [1]
-Undefined_Handler       0x00010650          Code  Wk  vectortrap.o [4]
+Undefined_Handler       0x00010644          Code  Wk  vectortrap.o [4]
 Up_left_Button          0x40002dac    0x10  Data  Gb  touch_scr.o [1]
 Up_right_Button         0x40002dbc    0x10  Data  Gb  touch_scr.o [1]
 VICADDRESS              0xffffff00     0x4  Data  Wk  clock-arch.o [1]
@@ -640,7 +640,7 @@ YD_Win                  0x40002dd0     0x4  Data  Lc  drv_glcd.o [1]
 YU_Win                  0x40002c90     0x4  Data  Lc  drv_glcd.o [1]
 Y_Down                  0x40002de8     0x4  Data  Gb  main.o [1]
 Y_Up                    0x40002de4     0x4  Data  Gb  main.o [1]
-ZeroCrossing_delays     0x0000f295    0x68  Code  Gb  zerocrossing.o [1]
+ZeroCrossing_delays     0x0000f289    0x68  Code  Gb  zerocrossing.o [1]
 _A_AD0CR                0xe0034000     0x4  Data  Wk  adc.o [1]
 _A_AD0GDR               0xe0034004     0x4  Data  Wk  drv_touch_scr.o [1]
 _A_ADDR0                0xe0034010     0x4  Data  Wk  touch_scr.o [1]
@@ -769,87 +769,87 @@ _GenldDefault           0x000081b9   0x27c  Code  Lc  xprintffull.o [3]
 _LdtobDefault           0x00007d19   0x4a0  Code  Lc  xprintffull.o [3]
 _LitobDefault           0x00007c05   0x114  Code  Lc  xprintffull.o [3]
 _Printf                 0x00007565   0x69e  Code  Gb  xprintffull.o [3]
-_Prout                  0x000100ff    0x1e  Code  Gb  xprout.o [3]
+_Prout                  0x000100f3    0x1e  Code  Gb  xprout.o [3]
 _PutcharsDefault        0x00008435    0x3a  Code  Lc  xprintffull.o [3]
-_SNProut                0x00010255    0x1c  Code  Gb  xsnprout.o [3]
-__aeabi_assert          0x0000fadb    0x56  Code  Gb  xassert.o [3]
-__aeabi_cdcmple         0x0000fcf8          Code  Gb  DblCmpLe.o [4]
-__aeabi_cdrcmple        0x0000fd34          Code  Gb  DblCmpGe.o [4]
-__aeabi_cfcmple         0x0000fef8          Code  Gb  FltCmpLe.o [4]
-__aeabi_cfrcmple        0x0000ff28          Code  Gb  FltCmpGe.o [4]
-__aeabi_d2f             0x0000f304          Code  Gb  DblToFlt.o [4]
-__aeabi_d2iz            0x0000f9c0          Code  Gb  DblToS32.o [4]
-__aeabi_d2uiz           0x0000fcb8          Code  Gb  DblToU32.o [4]
-__aeabi_dadd            0x0000e134          Code  Gb  DblAdd.o [4]
+_SNProut                0x00010249    0x1c  Code  Gb  xsnprout.o [3]
+__aeabi_assert          0x0000facf    0x56  Code  Gb  xassert.o [3]
+__aeabi_cdcmple         0x0000fcec          Code  Gb  DblCmpLe.o [4]
+__aeabi_cdrcmple        0x0000fd28          Code  Gb  DblCmpGe.o [4]
+__aeabi_cfcmple         0x0000feec          Code  Gb  FltCmpLe.o [4]
+__aeabi_cfrcmple        0x0000ff1c          Code  Gb  FltCmpGe.o [4]
+__aeabi_d2f             0x0000f2f8          Code  Gb  DblToFlt.o [4]
+__aeabi_d2iz            0x0000f9b4          Code  Gb  DblToS32.o [4]
+__aeabi_d2uiz           0x0000fcac          Code  Gb  DblToU32.o [4]
+__aeabi_dadd            0x0000e128          Code  Gb  DblAdd.o [4]
 __aeabi_ddiv            0x0000ccd0          Code  Gb  DblDiv.o [4]
 __aeabi_dmul            0x0000d4ec          Code  Gb  DblMul.o [4]
 __aeabi_dsub            0x0000d6e8          Code  Gb  DblSub.o [4]
-__aeabi_f2d             0x0000f894          Code  Gb  FltToDbl.o [4]
-__aeabi_f2uiz           0x0000fd70          Code  Gb  FltToU32.o [4]
-__aeabi_fadd            0x0000f45c          Code  Gb  FltAdd.o [4]
+__aeabi_f2d             0x0000f888          Code  Gb  FltToDbl.o [4]
+__aeabi_f2uiz           0x0000fd64          Code  Gb  FltToU32.o [4]
+__aeabi_fadd            0x0000f450          Code  Gb  FltAdd.o [4]
 __aeabi_fdiv            0x0000dab4          Code  Gb  FltDiv.o [4]
-__aeabi_fmul            0x0000dfe4          Code  Gb  FltMul.o [4]
-__aeabi_fsub            0x0000e4dc          Code  Gb  FltSub.o [4]
-__aeabi_i2d             0x0000fa80          Code  Gb  S32ToDbl.o [4]
-__aeabi_i2f             0x0000f8f8          Code  Gb  S32ToFlt.o [4]
+__aeabi_fmul            0x0000dfd8          Code  Gb  FltMul.o [4]
+__aeabi_fsub            0x0000e4d0          Code  Gb  FltSub.o [4]
+__aeabi_i2d             0x0000fa74          Code  Gb  S32ToDbl.o [4]
+__aeabi_i2f             0x0000f8ec          Code  Gb  S32ToFlt.o [4]
 __aeabi_idiv            0x0000d8dc          Code  Gb  I32DivMod.o [4]
-__aeabi_idiv0           0x00010660          Code  Gb  IntDivZer.o [4]
+__aeabi_idiv0           0x00010654          Code  Gb  IntDivZer.o [4]
 __aeabi_idivmod         0x0000d8dc          Code  Gb  I32DivMod.o [4]
-__aeabi_ldiv0           0x00010668          Code  Gb  I64DivZer.o [4]
-__aeabi_ldivmod         0x0000e734          Code  Gb  I64DivMod.o [4]
-__aeabi_memcpy          0x0000ef38          Code  Gb  ABImemcpy.o [4]
-__aeabi_memcpy4         0x0000ef5c          Code  Gb  ABImemcpy.o [4]
-__aeabi_memcpy8         0x0000ef5c          Code  Gb  ABImemcpy.o [4]
-__aeabi_memset          0x0000f6c0          Code  Gb  ABImemset.o [4]
-__aeabi_ui2d            0x0001059c          Code  Gb  U32ToDbl.o [4]
-__aeabi_ui2f            0x000104c0          Code  Gb  U32ToFlt.o [4]
+__aeabi_ldiv0           0x0001065c          Code  Gb  I64DivZer.o [4]
+__aeabi_ldivmod         0x0000e728          Code  Gb  I64DivMod.o [4]
+__aeabi_memcpy          0x0000ef2c          Code  Gb  ABImemcpy.o [4]
+__aeabi_memcpy4         0x0000ef50          Code  Gb  ABImemcpy.o [4]
+__aeabi_memcpy8         0x0000ef50          Code  Gb  ABImemcpy.o [4]
+__aeabi_memset          0x0000f6b4          Code  Gb  ABImemset.o [4]
+__aeabi_ui2d            0x00010590          Code  Gb  U32ToDbl.o [4]
+__aeabi_ui2f            0x000104b4          Code  Gb  U32ToFlt.o [4]
 __aeabi_uidiv           0x0000d8ec          Code  Gb  I32DivMod.o [4]
 __aeabi_uidivmod        0x0000d8ec          Code  Gb  I32DivMod.o [4]
-__aeabi_uldivmod        0x0000e74c          Code  Gb  I64DivMod.o [4]
-__exit                  0x00010200    0x1c  Code  Gb  exit.o [5]
-__iar_Dnorm             0x0000f0dd    0xc0  Code  Gb  xdnorm.o [3]
-__iar_Dscale            0x0000e609   0x12c  Code  Gb  xdscale.o [3]
-__iar_EmptyStepPoint    0x0000fad9     0x2  Code  Gb  xassert.o [3]
-__iar_Memchr            0x0000f5a4          Code  Gb  memchr.o [4]
-__iar_Memset            0x0000f6c0          Code  Gb  ABImemset.o [4]
-__iar_Memset_word       0x0000f6cc          Code  Gb  ABImemset.o [4]
-__iar_ReportAssert      0x0000f759    0x60  Code  Gb  xreportassert.o [3]
-__iar_Strchr            0x000100c0          Code  Gb  strchr.o [4]
-__iar_Strrchr           0x000100e1    0x1e  Code  Wk  strrchr.o [3]
-__iar_SubNrm            0x0000e104          Code  Gb  FltMul.o [4]
-__iar_SubNrmP           0x0000e100          Code  Gb  FltMul.o [4]
-__iar_copy_init2        0x0000ff54    0x2c  Code  Gb  copy_init2.o [4]
-__iar_dadd              0x0000e144          Code  Gb  DblAdd.o [4]
-__iar_data_init2        0x0000fda4    0x34  Code  Gb  data_init2.o [4]
+__aeabi_uldivmod        0x0000e740          Code  Gb  I64DivMod.o [4]
+__exit                  0x000101f4    0x1c  Code  Gb  exit.o [5]
+__iar_Dnorm             0x0000f0d1    0xc0  Code  Gb  xdnorm.o [3]
+__iar_Dscale            0x0000e5fd   0x12c  Code  Gb  xdscale.o [3]
+__iar_EmptyStepPoint    0x0000facd     0x2  Code  Gb  xassert.o [3]
+__iar_Memchr            0x0000f598          Code  Gb  memchr.o [4]
+__iar_Memset            0x0000f6b4          Code  Gb  ABImemset.o [4]
+__iar_Memset_word       0x0000f6c0          Code  Gb  ABImemset.o [4]
+__iar_ReportAssert      0x0000f74d    0x60  Code  Gb  xreportassert.o [3]
+__iar_Strchr            0x000100b4          Code  Gb  strchr.o [4]
+__iar_Strrchr           0x000100d5    0x1e  Code  Wk  strrchr.o [3]
+__iar_SubNrm            0x0000e0f8          Code  Gb  FltMul.o [4]
+__iar_SubNrmP           0x0000e0f4          Code  Gb  FltMul.o [4]
+__iar_copy_init2        0x0000ff48    0x2c  Code  Gb  copy_init2.o [4]
+__iar_dadd              0x0000e138          Code  Gb  DblAdd.o [4]
+__iar_data_init2        0x0000fd98    0x34  Code  Gb  data_init2.o [4]
 __iar_dsub              0x0000d6f8          Code  Gb  DblSub.o [4]
 __iar_dsubStart         0x0000d718          Code  Gb  DblSub.o [4]
-__iar_enable_interrupt  0x000104ac          Code  Wk  main.o [1]
-__iar_fadd              0x0000f468          Code  Gb  FltAdd.o [4]
-__iar_fsub              0x0000e4e8          Code  Gb  FltSub.o [4]
-__iar_fsubStart         0x0000e4f8          Code  Gb  FltSub.o [4]
-__iar_i2d               0x0000fa84          Code  Gb  S32ToDbl.o [4]
-__iar_i2f               0x0000f90c          Code  Gb  S32ToFlt.o [4]
-__iar_program_start     0x0000fbdc          Code  Gb  cstartup.o [4]
-__iar_return_from_swi   0x00010664     0x4  Code  Gb  xreturnswi.o [5]
-__iar_sh_stdout_close   0x0000fe68    0x2c  Code  Gb  iarwstd.o [5]
+__iar_enable_interrupt  0x000104a0          Code  Wk  main.o [1]
+__iar_fadd              0x0000f45c          Code  Gb  FltAdd.o [4]
+__iar_fsub              0x0000e4dc          Code  Gb  FltSub.o [4]
+__iar_fsubStart         0x0000e4ec          Code  Gb  FltSub.o [4]
+__iar_i2d               0x0000fa78          Code  Gb  S32ToDbl.o [4]
+__iar_i2f               0x0000f900          Code  Gb  S32ToFlt.o [4]
+__iar_program_start     0x0000fbd0          Code  Gb  cstartup.o [4]
+__iar_return_from_swi   0x00010658     0x4  Code  Gb  xreturnswi.o [5]
+__iar_sh_stdout_close   0x0000fe5c    0x2c  Code  Gb  iarwstd.o [5]
 __iar_sh_stdout_handle  0x40002cf4     0x4  Data  Lc  iarwstd.o [5]
-__iar_via_R2            0x00010671          Code  Wk  httpd.o [1]
-__iar_via_R5            0x00010673          Code  Wk  psock.o [1]
-__iar_zero_init2        0x0000ff80    0x28  Code  Gb  zero_init2.o [4]
-__low_level_init        0x0001066d     0x4  Code  Gb  low_level_init.o [3]
+__iar_via_R2            0x00010665          Code  Wk  httpd.o [1]
+__iar_via_R5            0x00010667          Code  Wk  psock.o [1]
+__iar_zero_init2        0x0000ff74    0x28  Code  Gb  zero_init2.o [4]
+__low_level_init        0x00010661     0x4  Code  Gb  low_level_init.o [3]
 __vector                0x00000000          Code  Gb  cstartup.o [4]
 __vector_0x14           0x00000014          Code  Gb  cstartup.o [4]
-_exit                   0x000104d4          Code  Gb  cexit.o [4]
-abort                   0x00010639     0x8  Code  Gb  abort.o [3]
-adc_start               0x0000e955    0x10  Code  Gb  adc.o [1]
-adc_stop                0x0000e965     0xe  Code  Gb  adc.o [1]
-all_zeroes_addr         0x00010648     0x4  Data  Lc  uip.o [1]
+_exit                   0x000104c8          Code  Gb  cexit.o [4]
+abort                   0x0001062d     0x8  Code  Gb  abort.o [3]
+adc_start               0x0000e949    0x10  Code  Gb  adc.o [1]
+adc_stop                0x0000e959     0xe  Code  Gb  adc.o [1]
+all_zeroes_addr         0x0001063c     0x4  Data  Lc  uip.o [1]
 alpha                   0x40002cb4     0x4  Data  Gb  main.o [1]
 arp_table               0x40002b54    0x60  Data  Lc  uip_arp.o [1]
 arptime                 0x40002d08     0x1  Data  Lc  uip_arp.o [1]
 blink_timer             0x40002cc8     0x4  Data  Gb  main.o [1]
-broadcast_ethaddr       0x00010628     0x8  Data  Lc  uip_arp.o [1]
-broadcast_ipaddr        0x0001064c     0x4  Data  Lc  uip_arp.o [1]
+broadcast_ethaddr       0x0001061c     0x8  Data  Lc  uip_arp.o [1]
+broadcast_ipaddr        0x00010640     0x4  Data  Lc  uip_arp.o [1]
 buf_bufto               0x0000c603    0x82  Code  Lc  psock.o [1]
 buf_setup               0x0000c5fd     0x6  Code  Lc  psock.o [1]
 button_lightgreyPic     0x40002d64    0x1c  Data  Gb  button_lightgrey.o [1]
@@ -862,45 +862,45 @@ calls                   0x40002d98    0x14  Data  Lc  httpd-cgi.o [1]
 check_if_coursor_in_rectangle
                         0x0000a9d1    0x54  Code  Gb  touch_scr.o [1]
 chksum                  0x000062f1    0x58  Code  Lc  uip.o [1]
-clock_init              0x0000e3f1    0xd8  Code  Gb  clock-arch.o [1]
-clock_time              0x0000e4cd     0x6  Code  Gb  clock-arch.o [1]
-closed                  0x00010610     0x8  Data  Lc  httpd-cgi.o [1]
-closing                 0x00010618     0x8  Data  Lc  httpd-cgi.o [1]
+clock_init              0x0000e3e5    0xd8  Code  Gb  clock-arch.o [1]
+clock_time              0x0000e4c1     0x6  Code  Gb  clock-arch.o [1]
+closed                  0x00010604     0x8  Data  Lc  httpd-cgi.o [1]
+closing                 0x0001060c     0x8  Data  Lc  httpd-cgi.o [1]
 count                   0x40002c30    0x18  Data  Lc  httpd-fs.o [1]
 dac_timer               0x40002ccc     0x4  Data  Gb  main.o [1]
-dac_write               0x0000f85d    0x34  Code  Gb  dac.o [1]
-data_404_html           0x0000f19c    0xb4  Data  Lc  httpd-fs.o [1]
+dac_write               0x0000f851    0x34  Code  Gb  dac.o [1]
+data_404_html           0x0000f190    0xb4  Data  Lc  httpd-fs.o [1]
 data_acked              0x0000c6cf    0x58  Code  Lc  psock.o [1]
-data_fade_png           0x0000f00c    0xd0  Data  Lc  httpd-fs.o [1]
+data_fade_png           0x0000f000    0xd0  Data  Lc  httpd-fs.o [1]
 data_files_shtml        0x0000abe8   0x518  Data  Lc  httpd-fs.o [1]
-data_footer_html        0x0001007c    0x20  Data  Lc  httpd-fs.o [1]
+data_footer_html        0x00010070    0x20  Data  Lc  httpd-fs.o [1]
 data_header_html        0x0000d008   0x294  Data  Lc  httpd-fs.o [1]
 data_index_html         0x0000c268   0x394  Data  Lc  httpd-fs.o [1]
-data_processes_shtml    0x0000ec84    0xe8  Data  Lc  httpd-fs.o [1]
+data_processes_shtml    0x0000ec78    0xe8  Data  Lc  httpd-fs.o [1]
 data_stats_shtml        0x0000c968   0x364  Data  Lc  httpd-fs.o [1]
 data_style_css          0x0000ba14   0x460  Data  Lc  httpd-fs.o [1]
-data_tcp_shtml          0x0000ed6c    0xe4  Data  Lc  httpd-fs.o [1]
-data_test_xml           0x0000eb90    0xf4  Data  Lc  httpd-fs.o [1]
-detect_ZeroCrossing     0x0000f251    0x42  Code  Gb  zerocrossing.o [1]
-div                     0x0000ffa9    0x28  Code  Gb  div.o [3]
-established             0x00010544     0xc  Data  Lc  httpd-cgi.o [1]
-exit                    0x00010641     0x6  Code  Gb  exit.o [3]
+data_tcp_shtml          0x0000ed60    0xe4  Data  Lc  httpd-fs.o [1]
+data_test_xml           0x0000eb84    0xf4  Data  Lc  httpd-fs.o [1]
+detect_ZeroCrossing     0x0000f245    0x42  Code  Gb  zerocrossing.o [1]
+div                     0x0000ff9d    0x28  Code  Gb  div.o [3]
+established             0x00010538     0xc  Data  Lc  httpd-cgi.o [1]
+exit                    0x00010635     0x6  Code  Gb  exit.o [3]
 f_out                   0x40002cbc     0x4  Data  Gb  main.o [1]
-file                    0x000105f0     0x8  Data  Lc  httpd-cgi.o [1]
-file_404_html           0x00010398    0x14  Data  Gb  httpd-fs.o [1]
-file_fade_png           0x000103ac    0x14  Data  Gb  httpd-fs.o [1]
-file_files_shtml        0x000103c0    0x14  Data  Gb  httpd-fs.o [1]
-file_footer_html        0x000103d4    0x14  Data  Gb  httpd-fs.o [1]
-file_header_html        0x000103e8    0x14  Data  Gb  httpd-fs.o [1]
-file_index_html         0x000103fc    0x14  Data  Gb  httpd-fs.o [1]
-file_processes_shtml    0x00010410    0x14  Data  Gb  httpd-fs.o [1]
+file                    0x000105e4     0x8  Data  Lc  httpd-cgi.o [1]
+file_404_html           0x0001038c    0x14  Data  Gb  httpd-fs.o [1]
+file_fade_png           0x000103a0    0x14  Data  Gb  httpd-fs.o [1]
+file_files_shtml        0x000103b4    0x14  Data  Gb  httpd-fs.o [1]
+file_footer_html        0x000103c8    0x14  Data  Gb  httpd-fs.o [1]
+file_header_html        0x000103dc    0x14  Data  Gb  httpd-fs.o [1]
+file_index_html         0x000103f0    0x14  Data  Gb  httpd-fs.o [1]
+file_processes_shtml    0x00010404    0x14  Data  Gb  httpd-fs.o [1]
 file_stats              0x0000b62d    0x58  Code  Lc  httpd-cgi.o [1]
-file_stats_shtml        0x00010424    0x14  Data  Gb  httpd-fs.o [1]
-file_style_css          0x00010438    0x14  Data  Gb  httpd-fs.o [1]
-file_tcp_shtml          0x0001044c    0x14  Data  Gb  httpd-fs.o [1]
-file_test_xml           0x00010460    0x14  Data  Gb  httpd-fs.o [1]
-fin_wait_1              0x00010550     0xc  Data  Lc  httpd-cgi.o [1]
-fin_wait_2              0x0001055c     0xc  Data  Lc  httpd-cgi.o [1]
+file_stats_shtml        0x00010418    0x14  Data  Gb  httpd-fs.o [1]
+file_style_css          0x0001042c    0x14  Data  Gb  httpd-fs.o [1]
+file_tcp_shtml          0x00010440    0x14  Data  Gb  httpd-fs.o [1]
+file_test_xml           0x00010454    0x14  Data  Gb  httpd-fs.o [1]
+fin_wait_1              0x00010544     0xc  Data  Lc  httpd-cgi.o [1]
+fin_wait_2              0x00010550     0xc  Data  Lc  httpd-cgi.o [1]
 frequency               0x40002cb8     0x4  Data  Gb  main.o [1]
 generate_file_stats     0x0000b5fd    0x30  Code  Lc  httpd-cgi.o [1]
 generate_net_stats      0x0000b971    0x3c  Code  Lc  httpd-cgi.o [1]
@@ -912,62 +912,62 @@ handle_input            0x00009621   0x128  Code  Lc  httpd.o [1]
 handle_output           0x000094c9   0x158  Code  Lc  httpd.o [1]
 handle_script           0x00009109   0x17c  Code  Lc  httpd.o [1]
 htons                   0x000074fd    0x10  Code  Gb  uip.o [1]
-http_404_html           0x000104fc     0xc  Data  Gb  http-strings.o [1]
+http_404_html           0x000104f0     0xc  Data  Gb  http-strings.o [1]
 http_content_type_binary
-                        0x0000fec8    0x2c  Data  Gb  http-strings.o [1]
-http_content_type_css   0x0001018c    0x1c  Data  Gb  http-strings.o [1]
-http_content_type_gif   0x000101c4    0x1c  Data  Gb  http-strings.o [1]
-http_content_type_html  0x00010154    0x1c  Data  Gb  http-strings.o [1]
-http_content_type_jpg   0x0001005c    0x20  Data  Gb  http-strings.o [1]
+                        0x0000febc    0x2c  Data  Gb  http-strings.o [1]
+http_content_type_css   0x00010180    0x1c  Data  Gb  http-strings.o [1]
+http_content_type_gif   0x000101b8    0x1c  Data  Gb  http-strings.o [1]
+http_content_type_html  0x00010148    0x1c  Data  Gb  http-strings.o [1]
+http_content_type_jpg   0x00010050    0x20  Data  Gb  http-strings.o [1]
 http_content_type_plain
-                        0x0001003c    0x20  Data  Gb  http-strings.o [1]
-http_content_type_png   0x000101a8    0x1c  Data  Gb  http-strings.o [1]
-http_content_type_xml   0x00010170    0x1c  Data  Gb  http-strings.o [1]
-http_css                0x000105c8     0x8  Data  Gb  http-strings.o [1]
-http_get                0x000105a8     0x8  Data  Gb  http-strings.o [1]
-http_gif                0x000105d8     0x8  Data  Gb  http-strings.o [1]
-http_header_200         0x0000fb30    0x54  Data  Gb  http-strings.o [1]
-http_header_404         0x0000fa20    0x5c  Data  Gb  http-strings.o [1]
-http_html               0x000105b0     0x8  Data  Gb  http-strings.o [1]
-http_index_html         0x000104f0     0xc  Data  Gb  http-strings.o [1]
-http_jpg                0x000105e0     0x8  Data  Gb  http-strings.o [1]
-http_png                0x000105d0     0x8  Data  Gb  http-strings.o [1]
-http_referer            0x00010508     0xc  Data  Gb  http-strings.o [1]
-http_shtml              0x000105c0     0x8  Data  Gb  http-strings.o [1]
-http_xml                0x000105b8     0x8  Data  Gb  http-strings.o [1]
+                        0x00010030    0x20  Data  Gb  http-strings.o [1]
+http_content_type_png   0x0001019c    0x1c  Data  Gb  http-strings.o [1]
+http_content_type_xml   0x00010164    0x1c  Data  Gb  http-strings.o [1]
+http_css                0x000105bc     0x8  Data  Gb  http-strings.o [1]
+http_get                0x0001059c     0x8  Data  Gb  http-strings.o [1]
+http_gif                0x000105cc     0x8  Data  Gb  http-strings.o [1]
+http_header_200         0x0000fb24    0x54  Data  Gb  http-strings.o [1]
+http_header_404         0x0000fa14    0x5c  Data  Gb  http-strings.o [1]
+http_html               0x000105a4     0x8  Data  Gb  http-strings.o [1]
+http_index_html         0x000104e4     0xc  Data  Gb  http-strings.o [1]
+http_jpg                0x000105d4     0x8  Data  Gb  http-strings.o [1]
+http_png                0x000105c4     0x8  Data  Gb  http-strings.o [1]
+http_referer            0x000104fc     0xc  Data  Gb  http-strings.o [1]
+http_shtml              0x000105b4     0x8  Data  Gb  http-strings.o [1]
+http_xml                0x000105ac     0x8  Data  Gb  http-strings.o [1]
 httpd_appcall           0x00009769    0x94  Code  Gb  httpd.o [1]
 httpd_cgi               0x0000b5b9    0x44  Code  Gb  httpd-cgi.o [1]
-httpd_fs_count          0x0000eef1    0x3a  Code  Gb  httpd-fs.o [1]
-httpd_fs_open           0x0000ee9b    0x56  Code  Gb  httpd-fs.o [1]
-httpd_fs_strcmp         0x0000ee51    0x4a  Code  Lc  httpd-fs.o [1]
+httpd_fs_count          0x0000eee5    0x3a  Code  Gb  httpd-fs.o [1]
+httpd_fs_open           0x0000ee8f    0x56  Code  Gb  httpd-fs.o [1]
+httpd_fs_strcmp         0x0000ee45    0x4a  Code  Lc  httpd-fs.o [1]
 httpd_init              0x000097fd    0x10  Code  Gb  httpd.o [1]
 i                       0x40002d06     0x1  Data  Lc  uip_arp.o [1]
-initialize_adc          0x0000e85d    0xf8  Code  Gb  adc.o [1]
-initialize_dac          0x0000f829    0x34  Code  Gb  dac.o [1]
-initialize_led          0x0000e275    0x40  Code  Gb  gpio.o [1]
-initialize_relays       0x0000e2b5    0x3c  Code  Gb  gpio.o [1]
-initialize_timer        0x0000e97d    0xa8  Code  Gb  timer.o [1]
+initialize_adc          0x0000e851    0xf8  Code  Gb  adc.o [1]
+initialize_dac          0x0000f81d    0x34  Code  Gb  dac.o [1]
+initialize_led          0x0000e269    0x40  Code  Gb  gpio.o [1]
+initialize_relays       0x0000e2a9    0x3c  Code  Gb  gpio.o [1]
+initialize_timer        0x0000e971    0xa8  Code  Gb  timer.o [1]
 ipaddr                  0x40002cf0     0x4  Data  Lc  uip_arp.o [1]
 ipid                    0x40002cfc     0x2  Data  Lc  uip.o [1]
 iss                     0x40002ce8     0x4  Data  Lc  uip.o [1]
-last_ack                0x00010574     0xc  Data  Lc  httpd-cgi.o [1]
+last_ack                0x00010568     0xc  Data  Lc  httpd-cgi.o [1]
 lastport                0x40002cfe     0x2  Data  Lc  uip.o [1]
-led_status              0x0000e36d    0x3a  Code  Gb  gpio.o [1]
+led_status              0x0000e361    0x3a  Code  Gb  gpio.o [1]
 linear_inerpolaion      0x40002cc4     0x4  Data  Gb  main.o [1]
 main                    0x00009fc9   0x3f4  Code  Gb  main.o [1]
-memchr                  0x0000f5a4          Code  Gb  memchr.o [4]
-memcpy                  0x0001021d    0x1c  Code  Wk  LPC24xx_enet.o [1]
-memset                  0x00010239    0x1c  Code  Wk  uip_arp.o [1]
-net                     0x00010608     0x8  Data  Lc  httpd-cgi.o [1]
+memchr                  0x0000f598          Code  Gb  memchr.o [4]
+memcpy                  0x00010211    0x1c  Code  Wk  LPC24xx_enet.o [1]
+memset                  0x0001022d    0x1c  Code  Wk  uip_arp.o [1]
+net                     0x000105fc     0x8  Data  Lc  httpd-cgi.o [1]
 net_stats               0x0000b9ad    0x68  Code  Lc  httpd-cgi.o [1]
 next_scriptstate        0x000090d3    0x36  Code  Lc  httpd.o [1]
 nullfunction            0x0000b599    0x20  Code  Lc  httpd-cgi.o [1]
 opt                     0x40002d05     0x1  Data  Lc  uip.o [1]
-out                     0x0000f73d    0x1a  Code  Lc  xreportassert.o [3]
+out                     0x0000f731    0x1a  Code  Lc  xreportassert.o [3]
 pCurrFont               0x40002c78     0x4  Data  Lc  drv_glcd.o [1]
 pPix                    0x40002ca8     0x4  Data  Lc  drv_glcd.o [1]
 pWind                   0x40002ca4     0x4  Data  Lc  drv_glcd.o [1]
-printf                  0x0001009d    0x20  Code  Gb  printf.o [3]
+printf                  0x00010091    0x20  Code  Gb  printf.o [3]
 psock_datalen           0x0000c839     0xc  Code  Gb  psock.o [1]
 psock_generator_send    0x0000c7a5    0x8e  Code  Gb  psock.o [1]
 psock_init              0x0000c931    0x36  Code  Gb  psock.o [1]
@@ -976,7 +976,7 @@ psock_readto            0x0000c885    0xac  Code  Gb  psock.o [1]
 psock_send              0x0000c72d    0x78  Code  Gb  psock.o [1]
 putchar                 0x00008c4d   0x2f4  Code  Gb  drv_glcd.o [1]
 real_time               0x40002c58     0xc  Data  Gb  timer.o [1]
-relays_status           0x0000e2f9    0x3a  Code  Gb  gpio.o [1]
+relays_status           0x0000e2ed    0x3a  Code  Gb  gpio.o [1]
 screen_state            0x40002df0     0x4  Data  Gb  main.o [1]
 screen_state_is_changing
                         0x40002df4     0x4  Data  Gb  main.o [1]
@@ -985,34 +985,34 @@ send_file               0x00009011    0x74  Code  Lc  httpd.o [1]
 send_headers            0x00009289   0x240  Code  Lc  httpd.o [1]
 send_part_of_file       0x00009085    0x4e  Code  Lc  httpd.o [1]
 set_touch_meassure_ch   0x0000a781   0x1e0  Code  Gb  touch_scr.o [1]
-snprintf                0x0000fc2d    0x44  Code  Gb  snprintf.o [3]
+snprintf                0x0000fc21    0x44  Code  Gb  snprintf.o [3]
 states                  0x40002d40    0x24  Data  Lc  httpd-cgi.o [1]
-strchr                  0x000100c0          Code  Gb  strchr.o [4]
-strcpy                  0x0000f7bc          Code  Gb  strcpy.o [4]
-strlen                  0x0000fb88          Code  Gb  strlen.o [4]
-strncmp                 0x0000fe99    0x30  Code  Wk  strncmp.o [3]
-strncpy                 0x0000f504          Code  Gb  strncpy.o [4]
-strrchr                 0x00010331    0x18  Code  Wk  httpd.o [1]
+strchr                  0x000100b4          Code  Gb  strchr.o [4]
+strcpy                  0x0000f7b0          Code  Gb  strcpy.o [4]
+strlen                  0x0000fb7c          Code  Gb  strlen.o [4]
+strncmp                 0x0000fe8d    0x30  Code  Wk  strncmp.o [3]
+strncpy                 0x0000f4f8          Code  Gb  strncpy.o [4]
+strrchr                 0x00010325    0x18  Code  Wk  httpd.o [1]
 switch_touch_meassure_channel
                         0x0000a989    0x48  Code  Gb  touch_scr.o [1]
-syn_rcvd                0x0001052c     0xc  Data  Lc  httpd-cgi.o [1]
-syn_sent                0x00010538     0xc  Data  Lc  httpd-cgi.o [1]
+syn_rcvd                0x00010520     0xc  Data  Lc  httpd-cgi.o [1]
+syn_sent                0x0001052c     0xc  Data  Lc  httpd-cgi.o [1]
 tapdev_init             0x0000980d   0x5d4  Code  Gb  LPC24xx_enet.o [1]
 tapdev_read             0x00009de1    0x7c  Code  Gb  LPC24xx_enet.o [1]
 tapdev_send             0x00009e5d    0x90  Code  Gb  LPC24xx_enet.o [1]
-tcp                     0x000105f8     0x8  Data  Lc  httpd-cgi.o [1]
+tcp                     0x000105ec     0x8  Data  Lc  httpd-cgi.o [1]
 tcp_stats               0x0000b871    0x7c  Code  Lc  httpd-cgi.o [1]
-tcp_xml                 0x00010600     0x8  Data  Lc  httpd-cgi.o [1]
+tcp_xml                 0x000105f4     0x8  Data  Lc  httpd-cgi.o [1]
 tick_count              0x40002cc0     0x4  Data  Gb  main.o [1]
-time_wait               0x00010568     0xc  Data  Lc  httpd-cgi.o [1]
-timer0_interrupt_reset  0x0000ea25     0xe  Code  Gb  timer.o [1]
-timer_expired           0x0000fc93    0x22  Code  Gb  uip-timer.o [1]
-timer_reset             0x0000fc89     0xa  Code  Gb  uip-timer.o [1]
-timer_set               0x0000fc71    0x18  Code  Gb  uip-timer.o [1]
+time_wait               0x0001055c     0xc  Data  Lc  httpd-cgi.o [1]
+timer0_interrupt_reset  0x0000ea19     0xe  Code  Gb  timer.o [1]
+timer_expired           0x0000fc87    0x22  Code  Gb  uip-timer.o [1]
+timer_reset             0x0000fc7d     0xa  Code  Gb  uip-timer.o [1]
+timer_set               0x0000fc65    0x18  Code  Gb  uip-timer.o [1]
 tmp                     0x40002cac     0x4  Data  Gb  interrupt_handlers.o [1]
 tmp16                   0x40002d00     0x2  Data  Lc  uip.o [1]
 tmpage                  0x40002d09     0x1  Data  Lc  uip_arp.o [1]
-toggle_led              0x0000e339    0x34  Code  Gb  gpio.o [1]
+toggle_led              0x0000e32d    0x34  Code  Gb  gpio.o [1]
 touch_scr_detect_touch  0x0000a739    0x42  Code  Gb  touch_scr.o [1]
 uip_acc32               0x40002cec     0x4  Data  Gb  uip.o [1]
 uip_add32               0x00006245    0x9c  Code  Gb  uip.o [1]
@@ -1026,7 +1026,7 @@ uip_buf                 0x40002560   0x5f4  Data  Gb  uip.o [1]
 uip_conn                0x40002ce4     0x4  Data  Gb  uip.o [1]
 uip_conns               0x40000580  0x1fe0  Data  Gb  uip.o [1]
 uip_draddr              0x40002cd4     0x4  Data  Gb  uip.o [1]
-uip_ethaddr             0x00010620     0x8  Data  Gb  uip.o [1]
+uip_ethaddr             0x00010614     0x8  Data  Gb  uip.o [1]
 uip_flags               0x40002d03     0x1  Data  Gb  uip.o [1]
 uip_hostaddr            0x40002cd0     0x4  Data  Gb  uip.o [1]
 uip_init                0x00006407    0x62  Code  Gb  uip.o [1]
@@ -1041,10 +1041,10 @@ uip_send                0x0000750d    0x38  Code  Gb  uip.o [1]
 uip_slen                0x40002cfa     0x2  Data  Gb  uip.o [1]
 uip_stat                0x40002c04    0x2c  Data  Gb  uip.o [1]
 uip_tcpchksum           0x000063f9     0xe  Code  Gb  uip.o [1]
-update_alpha            0x0000f639     0xc  Code  Gb  filter.o [1]
+update_alpha            0x0000f62d     0xc  Code  Gb  filter.o [1]
 update_instance_p_p_values
                         0x0000dde9    0x44  Code  Gb  frequency.o [1]
-update_real_time        0x0000ea39    0x58  Code  Gb  timer.o [1]
+update_real_time        0x0000ea2d    0x58  Code  Gb  timer.o [1]
 update_touch_coordinates
                         0x0000aa25   0x1c4  Code  Gb  touch_scr.o [1]
 upper_layer_chksum      0x00006381    0x62  Code  Lc  uip.o [1]
@@ -1053,13 +1053,13 @@ zero_crossing_detection_level
                         0x40002df8     0x4  Data  Gb  zerocrossing.o [1]
 
 
-[1] = C:\31070\v2\MyProject\Debug\Obj
+[1] = C:\31070\v1\MyProject\Debug\Obj
 [2] = command line
 [3] = dl4t_tl_in.a
 [4] = rt4t_al.a
 [5] = shs_l.a
 
-  34 012 bytes of readonly  code memory
+  34 000 bytes of readonly  code memory
   33 408 bytes of readonly  data memory
   17 906 bytes of readwrite data memory
 

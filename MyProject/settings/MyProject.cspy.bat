@@ -22,7 +22,7 @@
 @REM but they are listed at the end of this file for reference.
 
 
-"C:\Program Files\IAR Systems\Embedded Workbench 5.4\common\bin\cspybat" "C:\Program Files\IAR Systems\Embedded Workbench 5.4\arm\bin\armproc.dll" "C:\Program Files\IAR Systems\Embedded Workbench 5.4\arm\bin\armjlink.dll"  %1 --plugin "C:\Program Files\IAR Systems\Embedded Workbench 5.4\arm\bin\<libsupport_plugin>" --macro "C:\31070\v2\MyProject\config\lpc2478_Flash.mac" --backend -B "--endian=little" "--cpu=ARM7TDMI-S" "--fpu=None" "-p" "C:\Program Files\IAR Systems\Embedded Workbench 5.4\arm\CONFIG\debugger\NXP\iolpc2470.ddf" "--drv_verify_download" "--semihosting" "--device=LPC2478" "-d" "jlink" "--drv_communication=USB0" "--jlink_speed=adaptive" "--jlink_reset_strategy=0,9" 
+"C:\Program Files\IAR Systems\Embedded Workbench 5.4\common\bin\cspybat" "C:\Program Files\IAR Systems\Embedded Workbench 5.4\arm\bin\armproc.dll" "C:\Program Files\IAR Systems\Embedded Workbench 5.4\arm\bin\armjlink.dll"  %1 --plugin "C:\Program Files\IAR Systems\Embedded Workbench 5.4\arm\bin\<libsupport_plugin>" --macro "C:\31070\v1\MyProject\config\lpc2478_Flash.mac" --backend -B "--endian=little" "--cpu=ARM7TDMI-S" "--fpu=None" "-p" "C:\Program Files\IAR Systems\Embedded Workbench 5.4\arm\CONFIG\debugger\NXP\iolpc2470.ddf" "--drv_verify_download" "--semihosting" "--device=LPC2478" "-d" "jlink" "--drv_communication=USB0" "--jlink_speed=adaptive" "--jlink_reset_strategy=0,9" 
 
 
 @REM Loaded plugins:
