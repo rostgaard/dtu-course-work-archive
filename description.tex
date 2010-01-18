@@ -1,0 +1,38 @@
+\chapter[Description]{Description of program}
+\label{chap:description}
+
+\section{Program structure}
+The developed application is devided into three modules.
+\begin{itemize}
+\item Conversion
+\item LCD
+\item uip
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.4]{figs/program_structure.pdf}
+\end{center}
+
+The conversion part is responsible for most of the ADC, DAC, GPIO and interrupt handling parts of the program. The LCD is taking care of the physical user interface, both touchscreen and displaying values on the screen. The uip is accepting remote connections and serving data to remote clients.
+
+
+\section{Measurements and control}
+% explanation of burst mode
+% 
+\section{User interface}
+\section{Communication}
+The communication part of the program is done by reusing the uip network stack. The built-in http server has the ability to both serve files and do some basic server-side scripting. \\
+We plan on refactoring the server, making able to serve xml and xsl\footnote{XML Stylesheet} (with the right content-type). Xsl will enable us to generate a single xml file and then transform it for the user to view via a browser. The xml document will be treated as a regulear html page, making the transformation transparent for the user. \\
+The really nice thing about xsl is that we only need one source of information for both the userinterface (webpage) and for automatically downloading done by programs interested in only the data. The programs will disreguard the xml stylesheet and only fetch the data, minimizing overhead.
+\subsection{Implementation}
+The first step in getting the webserver working as we intended was getting the stand-alone server accepting xml files. This was relatively easy, and do was getting the server to generate content dynamically. This was mostly done by copy-pasting, so we wont bore you with the details - the code is included.\\
+The next step was getting the generic server merged into our main project. The big challenge was that the uip server used a global timer, and not just any timer - the same timer we already used i our main project.\\
+The migration was again done in two steps. First step was moving the httpd timer from timer0 to timer1, and check if that worked. Next step was merging the code of the two timers into one, and get the timing right. The change from timer0 to timer1 resulted in a very slow, but working, webserver.\\\\
+The problem in merging the two timers was due to the fact that they ran at two different frequencies. One at 20MHz and another at 100Hz. As these was both defined in our config.h as respectively TIMER0\_TICK\_PER\_SEC and HTTPD\_TICK\_PER\_SEC we figured we needed to add a counter and do the following:
+\begin{equation}
+  counter \% \frac{TIMER0\_TICK\_PER\_SEC}{HTTPD\_TICK\_PER\_SEC} = 0
+\end{equation}
+The \% is the modulus operation. Upon true, the counter should reset and the http tick should increment. This implementation should make the http server insensible to changes in the timer0 frequency.
+
+\section{Chapter Summary}
+\label{sec:SummaryDescription}
+The finished result can be viewed by accessing the ip (typically 192.168.0.100) and requesting the data.xml document. And the xsl file is with the other http-fs files. The server is still s
