@@ -21,7 +21,7 @@
 #define __CLOCK_ARCH_H__
 
 #define TICK_PER_SEC        100
-
+void httpd_tick();
 typedef Int32U clock_time_t;
 
 #define CLOCK_CONF_SECOND TICK_PER_SEC

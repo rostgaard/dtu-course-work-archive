@@ -1,30 +1,16 @@
 #include <intrinsics.h>
 #include <stdio.h>
-#include "board.h"
-#include "sys.h"
+
 #include "config.h"
-#include "sdram_32M_16bit_drv.h"
-#include "drv_glcd.h"
-#include "cursor_arrow.h"
 #include "includes.h"
 
-#include "frequency.h"
-#include "gpio.h"
-#include "dac.h"
 #include "adc.h"
-#include "timer.h"
 #include "zerocrossing.h"
 #include "interrupt_handlers.h"
+#include "timer.h"
 #include "filter.h"
-#include "photo.h"
-#include "button_lightgrey.h"
-#include "Black_bg.h"
 #include "touch_scr.h"
 
-
-
-
-//float ADdata[2] = {0.0,0.0};    //([y(k-1) y(k)]) => ADdata(1)=y(k-1), ADdata(0)=y(k)
 struct ADdata_t ADdata = {0.0,0.0};
 struct ADC_p_p_t ADC_p_p;
 extern struct time_t real_time;
@@ -88,9 +74,6 @@ int main(void)
 uip_ipaddr_t ipaddr;
 struct timer periodic_timer, arp_timer;
 
-
-
-  
   Program_Init();
   
  //Setup VIC to respond to VIC_TIMER0 and call Timer0IntrHandler()
@@ -142,10 +125,10 @@ struct timer periodic_timer, arp_timer;
   FIO0DIR_bit.P0_19 = 1;
   
   
-  int isonbutton1=-1;
-  int isonbutton2=-1;
-
-   
+  // The target of the two buttons
+  int isonbutton1=false;
+  int isonbutton2=false;
+  
 
   while (1) {
     
@@ -214,10 +197,12 @@ struct timer periodic_timer, arp_timer;
     }
 /** web server */    
     
-    GLCD_Move_Cursor(Touch_data.X_cursor, Touch_data.Y_cursor);
+    if(Touch_data.touched) {
+       GLCD_Move_Cursor(Touch_data.X_cursor, Touch_data.Y_cursor);
+       isonbutton1 = check_if_coursor_in_rectangle(Up_left_Button.X_coord, Up_left_Button.Y_coord, Up_left_Button.length, Up_left_Button.height);
+       isonbutton2 = check_if_coursor_in_rectangle(Up_right_Button.X_coord, Up_right_Button.Y_coord, Up_right_Button.length, Up_right_Button.height);
+    }
     
-    isonbutton1 = check_if_coursor_in_rectangle(Up_left_Button.X_coord, Up_left_Button.Y_coord, Up_left_Button.length, Up_left_Button.height);
-    isonbutton2 = check_if_coursor_in_rectangle(Up_right_Button.X_coord, Up_right_Button.Y_coord, Up_right_Button.length, Up_right_Button.height);
     if((isonbutton1)&(screen_state==-1)&(screen_state_is_changing==-1)){
       screen_state=1;
       screen_state_is_changing=1;
@@ -227,61 +212,56 @@ struct timer periodic_timer, arp_timer;
       screen_state_is_changing=1;
     } 
 
+    /**
+     * Changes the graphics on the scren upon pagechange
+     */ 
     if((screen_state==1)&(screen_state_is_changing==1)){
+      GLCD_Ctrl (FALSE);
+      //Load the "*.c" file containing the logo
+      GLCD_Init (NULL, NULL);
+      //GLCD_Init (Black_bgPic.pPicStream, NULL);
+      GLCD_LoadPic (1, 1, &button_lightgreyPic, NULL);
+      GLCD_LoadPic (320-80, 1, &button_lightgreyPic, NULL);
+      GLCD_Ctrl (TRUE);
+      // Init Cursor
+      GLCD_Cursor_Dis(0);
+      GLCD_Copy_Cursor ((Int32U *)Cursor, 0, sizeof(Cursor)/sizeof(Int32U));
+      GLCD_Cursor_Cfg(CRSR_FRAME_SYNC | CRSR_PIX_32);
+      GLCD_Move_Cursor(Touch_data.X_cursor, Touch_data.Y_cursor);
+      GLCD_Cursor_En(0);
+      screen_state_is_changing=-1;
+      LCD_Config_Screen();
+   }
+   else if((screen_state==-1)&(screen_state_is_changing==1)){
+      GLCD_Ctrl (FALSE);
+      //Load the "*.c" file containing the logo
+      GLCD_Init (NULL, NULL);
+      // GLCD_Init (Black_bgPic.pPicStream, NULL);
+      GLCD_LoadPic (1, 1, &button_lightgreyPic, NULL);
+      GLCD_LoadPic (320-80, 1, &button_lightgreyPic, NULL);
+      GLCD_Ctrl (TRUE);
+      // Init Cursor
+      GLCD_Cursor_Dis(0);
+      GLCD_Copy_Cursor ((Int32U *)Cursor, 0, sizeof(Cursor)/sizeof(Int32U));
+      GLCD_Cursor_Cfg(CRSR_FRAME_SYNC | CRSR_PIX_32);
+      GLCD_Move_Cursor(Touch_data.X_cursor, Touch_data.Y_cursor);
+      GLCD_Cursor_En(0);
+      screen_state_is_changing=-1;
+      LCD_Main_Screen();
+   }
   
-  GLCD_Ctrl (FALSE);
-  //Load the "*.c" file containing the logo
-  GLCD_Init (NULL, NULL);
-//GLCD_Init (Black_bgPic.pPicStream, NULL);
-  GLCD_LoadPic (1, 1, &button_lightgreyPic, NULL);
-  GLCD_LoadPic (320-80, 1, &button_lightgreyPic, NULL);
-  GLCD_Ctrl (TRUE);
-   // Init Cursor
-  GLCD_Cursor_Dis(0);
-  GLCD_Copy_Cursor ((Int32U *)Cursor, 0, sizeof(Cursor)/sizeof(Int32U));
-  GLCD_Cursor_Cfg(CRSR_FRAME_SYNC | CRSR_PIX_32);
-  GLCD_Move_Cursor(Touch_data.X_cursor, Touch_data.Y_cursor);
-  GLCD_Cursor_En(0);
-  
-  
-  screen_state_is_changing=-1;
-//      P_P_value();
-    }
-      else if((screen_state==-1)&(screen_state_is_changing==1)){
-  GLCD_Ctrl (FALSE);
-  //Load the "*.c" file containing the logo
-  GLCD_Init (NULL, NULL);
-//  GLCD_Init (Black_bgPic.pPicStream, NULL);
-  GLCD_LoadPic (1, 1, &button_lightgreyPic, NULL);
-  GLCD_LoadPic (320-80, 1, &button_lightgreyPic, NULL);
-  GLCD_Ctrl (TRUE);
-//    P_P_value();
- // Init Cursor
-  GLCD_Cursor_Dis(0);
-  GLCD_Copy_Cursor ((Int32U *)Cursor, 0, sizeof(Cursor)/sizeof(Int32U));
-  GLCD_Cursor_Cfg(CRSR_FRAME_SYNC | CRSR_PIX_32);
-  GLCD_Move_Cursor(Touch_data.X_cursor, Touch_data.Y_cursor);
-  GLCD_Cursor_En(0);
-  screen_state_is_changing=-1;
-      }
-  
-    if(screen_state==1){
-    LCD_Config_Screen();
-    }
+   if(screen_state==1 && (real_time.millisecond%200) == 0){
+      LCD_Config_Screen();
+   }
     
-    if(screen_state==-1){
-    LCD_Main_Screen();
-    P_P_value();
-    }
+   if(screen_state==-1 && (real_time.millisecond%200) == 0){
+      LCD_Main_Screen();
+      P_P_value();
+   }
     
+  }
   
-  };
 }
-
-
-
-
-
 
 
 
@@ -314,6 +294,9 @@ void Program_Init (){
   LCD_Init();
   Touch_data.cursor_stay = true;
   
+  // Center cursor on screen
+  Touch_data.X_cursor = C_GLCD_H_SIZE/2;
+  Touch_data.Y_cursor = C_GLCD_V_SIZE/2;
  // Init Cursor
   GLCD_Cursor_Dis(0);
   GLCD_Copy_Cursor ((Int32U *)Cursor, 0, sizeof(Cursor)/sizeof(Int32U));
@@ -384,7 +367,7 @@ void P_P_value(){
   GLCD_SetWindow(X_Left, Y_Up+Linespace, X_Right, Y_Down+Linespace);
   GLCD_TextSetPos(0,0);
   //printf("Time      =    S");
-  printf("Time  =   %3d:%3d", (real_time.second), (real_time.millisecond));
+  printf("Time  =  %3d:%2d", (real_time.second/60),(real_time.second%60));
   
   
   GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);

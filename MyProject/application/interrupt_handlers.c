@@ -58,7 +58,7 @@ float accumulator_min=0.0;
  *************************************************************************/
 void ADC_Inter_Handler ()
 {
-  FIO0PIN_bit.P0_11 = 0;
+
   adc_stop();
   
   touch_scr_detect_touch(Touch_data.X);
@@ -73,9 +73,6 @@ void ADC_Inter_Handler ()
   update_instance_p_p_values(Data);
   
 
-
-
-
   FIO0PIN_bit.P0_19 = 0;
  
   // clear interrupt
@@ -84,7 +81,7 @@ void ADC_Inter_Handler ()
   
 }
 
-
+int httpd_tick_count = 0;
 
 
 /*************************************************************************
@@ -108,10 +105,17 @@ void Timer0IntrHandler (void)
   
 //  if (Touch_data.state==(Y_ch || confirm))   
   
-  FIO0PIN_bit.P0_11 = 1;
+
   adc_start();  //Start the ADC, ADC will be done before next timer interrupt
                 //it has higer priority and will therefore be handlet first 
 
+  httpd_tick_count++;
+  if((httpd_tick_count)%85 == 0) {
+    FIO0PIN_bit.P0_11 = 1;    
+    httpd_tick();
+    httpd_tick_count = 0;
+  }
+  
   
   tick_count++;
 
@@ -161,6 +165,7 @@ void Timer0IntrHandler (void)
   // clear interrupt
   timer0_interrupt_reset();
 //  FIO0PIN_bit.P0_19 = 0;
+    FIO0PIN_bit.P0_11 = 0;
   VICADDRESS = 0;
 
 }

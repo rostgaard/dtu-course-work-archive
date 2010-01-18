@@ -26,6 +26,14 @@
 
 #include "arm_comm.h"
 #include "board.h"
+#include "cursor_arrow.h"
+#include "frequency.h"
+#include "gpio.h"
+#include "dac.h"
+
+#include "photo.h"
+#include "button_lightgrey.h"
+#include "Black_bg.h"
 
 //#include "iar_logo.h"
 //#include "cursor_arrow.h"

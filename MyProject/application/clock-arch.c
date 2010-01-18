@@ -17,7 +17,7 @@
 #include "clock-arch.h"
 
 volatile clock_time_t Ticks;
-
+void init_timer1(Int32U IntrPriority);
 /*************************************************************************
  * Function Name: Tim0Handler
  * Parameters: none
@@ -30,11 +30,13 @@ volatile clock_time_t Ticks;
 static
 void Timer1IntrHandler (void)
 {
-    FIO0PIN_bit.P0_11 = 1;
-  ++Ticks;
+  httpd_tick();
   T1IR_bit.MR0INT = 1;
   VICADDRESS = 0;
-  FIO0PIN_bit.P0_11 = 0;
+}
+
+void httpd_tick() {
+  ++Ticks;
 }
 
 /*************************************************************************
@@ -49,7 +51,10 @@ void Timer1IntrHandler (void)
 void clock_init(Int32U IntrPriority)
 {
   Ticks = 0;
+//  init_timer1(IntrPriority);
+}
 
+void init_timer1(Int32U IntrPriority) {
   // Init Time0
   PCONP_bit.PCTIM1 = 1; // Enable TMR0 clk
   T1TCR_bit.CE = 0;     // counting  disable
@@ -67,6 +72,7 @@ void clock_init(Int32U IntrPriority)
   VIC_SetVectoredIRQ(Timer1IntrHandler,IntrPriority,VIC_TIMER1);
   VICINTENABLE |= 1UL << VIC_TIMER1;
   T1TCR_bit.CE = 1;     // counting Enable
+  
 }
 
 /*************************************************************************

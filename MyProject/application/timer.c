@@ -15,7 +15,7 @@ void initialize_timer() {
   PCONP_bit.PCTIM0 = 1; // enable clock
 
 
-  // Init Time0
+  // Init Timer0
   //timer0_start();
   T0TCR_bit.CR = 1;     // set reset
   T0TCR_bit.CR = 0;     // release reset

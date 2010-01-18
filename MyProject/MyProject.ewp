@@ -967,6 +967,9 @@
       <name>$PROJ_DIR$\application\config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\application\includes.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\application\main.c</name>
     </file>
     <file>
