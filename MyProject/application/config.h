@@ -3,7 +3,9 @@
 
 #define DAC_MAXIMUM  1024 // 2^10
 #define FREQUENCY 50
-#define TIMER0_TICK_PER_SEC 8500    //also the Frequency of the TIMER 0 interupt 
+#define TIMER0_TICK_PER_SEC 8500    //also the Frequency of the TIMER 0 interupt
+#define HTTPD_TICK_PER_SEC 100
+
 #define SAMPLE_FREQUENCY TIMER0_TICK_PER_SEC
 #define dT (1.0/SAMPLE_FREQUENCY)
 

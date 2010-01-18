@@ -23,7 +23,7 @@ ByteLimit=50
 Enabled=0
 ShowSource=1
 [DebugChecksum]
-Checksum=1721926572
+Checksum=-917057796
 [InstructionProfiling]
 Enabled=_ 0
 [Disassemble mode]
@@ -38,7 +38,7 @@ Bp5=_ "STD_CODE" "{$PROJ_DIR$\application\touch_scr.c}.160.3@1" 0 0 0 0 "" 0 "" 
 Bp6=_ "STD_CODE" "{$PROJ_DIR$\application\touch_scr.c}.160.3@1" 0 0 0 0 "" 0 "" 0
 Bp7=_ "STD_CODE" "{$PROJ_DIR$\application\touch_scr.c}.160.3@1" 0 0 0 0 "" 0 "" 0
 Bp8=_ "STD_CODE" "{$PROJ_DIR$\Application\includes.h}.40.1@1" 0 0 0 0 "" 0 "" 0
-Bp9=_ "STD_CODE" "{$PROJ_DIR$\application\config.h}.9.1@1" 0 0 0 0 "" 0 "" 0
+Bp9=_ "STD_CODE" "{$PROJ_DIR$\application\config.h}.11.1@1" 0 0 0 0 "" 0 "" 0
 Count=10
 [Log file]
 LoggingEnabled=_ 0
