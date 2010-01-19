@@ -1,6 +1,10 @@
 struct ADdata_t {
-  float v_current;
-  float v_previous;
+  
+  int current_raw_measurement;
+  int previous_raw_measurement;
+
+  float current_filtered_measurement;
+  float previous_filtered_measurement;
 };
 
 

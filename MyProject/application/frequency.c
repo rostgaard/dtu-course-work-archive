@@ -26,12 +26,12 @@ float Frequency_without_interpolation(int number_of_samples){
 
 
 void calculate_frequency(int number_of_samples){
-//    if(detect_ZeroCrossing(ADdata.v_previous, ADdata.v_current) == true)
+//    if(detect_ZeroCrossing(ADdata.previous_filtered_measurement, ADdata.current_filtered_measurement) == true)
   {
     if(linear_inerpolaion == true){
       //Updating the array with the zero crossing delays 
       AD_zerocrossing_delay[1]=AD_zerocrossing_delay[0];
-      AD_zerocrossing_delay[0]=ZeroCrossing_delays(ADdata.v_previous, ADdata.v_current);
+      AD_zerocrossing_delay[0]=ZeroCrossing_delays(ADdata.previous_filtered_measurement, ADdata.current_filtered_measurement);
       
       frequency = Frequency_with_interpolation(number_of_samples);
     }
@@ -44,24 +44,30 @@ void calculate_frequency(int number_of_samples){
 
 
 void calculate_p_p_values(){
-    if((detect_ZeroCrossing(ADdata.v_previous, ADdata.v_current) == true)||((tick_count>1000)))
+    if((detect_ZeroCrossing(ADdata.previous_filtered_measurement, ADdata.current_filtered_measurement) == true)||((tick_count>1000)))
   {
-    ADC_p_p.v_min=ADC_p_p.v_instance_min_bits*(3.3/1023.0);
-    ADC_p_p.v_max=ADC_p_p.v_instance_max_bits*(3.3/1023.0);
+//    ADC_p_p.v_min=(ADC_p_p.v_instance_min_bits-512)*(0.3317803079*2.0); //*(0.4044368601)
+//    ADC_p_p.v_max=(ADC_p_p.v_instance_max_bits-512)*(0.3317803079*2.0); //*(0.4044368601)
+    
+        ADC_p_p.v_min=Bits_2_Grid_Voltage(ADC_p_p.v_instance_min_bits);
+    ADC_p_p.v_max=Bits_2_Grid_Voltage(ADC_p_p.v_instance_max_bits);
+    
+//            ADC_p_p.v_min=(ADC_p_p.v_instance_min_bits);
+//    ADC_p_p.v_max=(ADC_p_p.v_instance_max_bits);
     
     ADC_p_p.v_instance_min_bits=(ADC_p_p.v_instance_max_bits-ADC_p_p.v_instance_min_bits)/2;
     ADC_p_p.v_instance_max_bits=(ADC_p_p.v_instance_max_bits-ADC_p_p.v_instance_min_bits)/2; 
   }
 }
 
-void update_instance_p_p_values(Int32U Data){
+void update_instance_p_p_values(Int32U current_raw_measurement){
  
-    if(Data>ADC_p_p.v_instance_max_bits){
-    ADC_p_p.v_instance_max_bits=Data;
+    if(current_raw_measurement>ADC_p_p.v_instance_max_bits){
+    ADC_p_p.v_instance_max_bits=current_raw_measurement;
   }
-  else if(Data<ADC_p_p.v_instance_min_bits){
+  else if(current_raw_measurement<ADC_p_p.v_instance_min_bits){
     
-    ADC_p_p.v_instance_min_bits=Data;
+    ADC_p_p.v_instance_min_bits=current_raw_measurement;
   }
   
 }

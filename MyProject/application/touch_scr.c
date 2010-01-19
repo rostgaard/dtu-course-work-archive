@@ -5,8 +5,8 @@
 #include "adc.h"
 
 struct Touch_data_t Touch_data = {false,X_ch,0,100,false,0,0,0,0,0,0,0,0};
-Button_coords_t Up_left_Button = {1, 1, 80, 40};
-Button_coords_t Up_right_Button = {240, 1, 80, 40};
+Button_t Up_left_Button = {0, 0, 1, 1, 80, 40};
+Button_t Up_right_Button = {0, 0, 240, 1, 80, 40};
 
 
 /*************************************************************************
@@ -46,14 +46,14 @@ int touch_scr_touched()
  return Touch_data.touched;
 }
 
-void touch_scr_detect_touch(Int32U x)
+void touch_scr_detect_touch(Int32U y)
 {
   // check for touch
-  if((x>=100)&(Touch_data.touched==false))
+  if((y>=190)&(Touch_data.touched==false))
   {
     Touch_data.touched=true;
   }
-  if((x<=100)&(Touch_data.touched==true))
+  if((y<=190)&(Touch_data.touched==true))
   {
     Touch_data.touched=false;
   }
@@ -231,3 +231,5 @@ void update_touch_coordinates(){
   }
 
 }
+
+

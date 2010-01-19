@@ -19,12 +19,14 @@ struct Touch_data_t {
   Int32U Y;
 };
 
-typedef struct _Button_coords_t {
+typedef struct _Button_t {
+  int is_pushed;
+  int was_pushed;
   Int32U X_coord; 
   Int32U Y_coord;
   Int32U length;
   Int32U height;
-} Button_coords_t, *pButton_coords_t;
+} Button_t, *pButton_t;
 
 extern int screen_state;
 extern int screen_state_is_changing;
@@ -41,3 +43,4 @@ void touch_ADC_setup_Loop();
 void switch_touch_meassure_channel();
 void update_touch_coordinates();
 int check_if_coursor_in_rectangle(int x, int y, int l, int h);
+

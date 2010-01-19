@@ -50,6 +50,7 @@
 #include "httpd.h"
 #include "httpd-cgi.h"
 #include "httpd-fs.h"
+#include "config.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -57,9 +58,13 @@
 HTTPD_CGI_CALL(file, "file-stats", file_stats);
 HTTPD_CGI_CALL(tcp, "tcp-connections", tcp_stats);
 HTTPD_CGI_CALL(tcp_xml, "xml-tcp-connections", xml_tcp_stats);
+HTTPD_CGI_CALL(xml_configuration, "xml-configuration", xml_configuration_send);
+
 HTTPD_CGI_CALL(net, "net-stats", net_stats);
 
-static const struct httpd_cgi_call *calls[] = { &file, &tcp, &net, &tcp_xml, NULL };
+
+
+static const struct httpd_cgi_call *calls[] = { &file, &tcp, &net, &tcp_xml, &xml_configuration, NULL };
 
 /*---------------------------------------------------------------------------*/
 static
@@ -182,6 +187,18 @@ generate_xml_tcp_stats(void *arg)
 		 (uip_outstanding(conn))? '*':' ',
 		 (uip_stopped(conn))? '!':' ');
 }
+
+static unsigned short
+generate_xml_configuration(void *arg)
+{
+  struct uip_conn *conn;
+  struct httpd_state *s = (struct httpd_state *)arg;
+
+  conn = &uip_conns[s->count];
+  return snprintf((char *)uip_appdata, UIP_APPDATA_SIZE,
+		 "<frequency>%d</frequency><sample-frequency>%d</sample-frequency><vref>%f</vref><ad-cutoff>%f</ad-cutoff>\r\n",FREQUENCY,SAMPLE_FREQUENCY,VREF,ADFILTER_CUT_OFF_FREQUENCY);
+}
+
 /*---------------------------------------------------------------------------*/
 static
 PT_THREAD(tcp_stats(struct httpd_state *s, char *ptr))
@@ -213,6 +230,22 @@ PT_THREAD(xml_tcp_stats(struct httpd_state *s, char *ptr))
   PSOCK_END(&s->sout);
 }
 /*---------------------------------------------------------------------------*/
+static
+PT_THREAD(xml_configuration_send(struct httpd_state *s, char *ptr))
+{
+
+  PSOCK_BEGIN(&s->sout);
+
+  for(s->count = 0; s->count < UIP_CONNS; ++s->count) {
+    if((uip_conns[s->count].tcpstateflags & UIP_TS_MASK) != UIP_CLOSED) {
+      PSOCK_GENERATOR_SEND(&s->sout, generate_xml_configuration, s);
+    }
+  }
+
+  PSOCK_END(&s->sout);
+}
+
+/*---------------------------------------------------------------------------*/
 static unsigned short
 generate_net_stats(void *arg)
 {
@@ -237,5 +270,6 @@ PT_THREAD(net_stats(struct httpd_state *s, char *ptr))
 
   PSOCK_END(&s->sout);
 }
+
 /*---------------------------------------------------------------------------*/
 /** @} */

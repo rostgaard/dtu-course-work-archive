@@ -203,6 +203,9 @@ PT_THREAD(send_headers(struct httpd_state *s, const char *statushdr))
   } else if(strncmp(http_xml, ptr, 4) == 0) {
     PSOCK_SEND_STR(&s->sout, http_content_type_xml);
 
+  } else if(strncmp(http_xsl, ptr, 4) == 0) {
+    PSOCK_SEND_STR(&s->sout, http_content_type_xsl);
+    
   } else if(strncmp(http_css, ptr, 4) == 0) {
     PSOCK_SEND_STR(&s->sout, http_content_type_css);
   } else if(strncmp(http_png, ptr, 4) == 0) {

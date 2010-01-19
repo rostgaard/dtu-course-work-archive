@@ -8,6 +8,8 @@
 #include "config.h"
 #include "board.h"
 #include "touch_scr.h"
+#include <math.h>
+
 
 //External structs 
 extern struct ADdata_t ADdata;
@@ -30,10 +32,10 @@ extern float zero_crossing_detection_level;
 
 extern float Frequency_with_interpolation();
 extern float Frequency_without_interpolation();
-extern float ADfilter(Int32U Data);
+extern float ADfilter(Int32U current_raw_measurement);
 extern void  calculate_frequency(int tick_count);
 
-extern void update_instance_p_p_values(Int32U Data);
+extern void update_instance_p_p_values(Int32U current_raw_measurement);
 extern void calculate_p_p_values();
 
 Int32U tmp = 0;
@@ -42,6 +44,10 @@ extern int measurement_status;
 
 float accumulator_max=0.0;
 float accumulator_min=0.0;
+
+float V_RMS=0.0;
+float V_RMS_2_accumulator=0.0;
+
 
 //Starting definition of interrupt Handlers 
 //
@@ -61,19 +67,32 @@ void ADC_Inter_Handler ()
 
   adc_stop();
   
-  touch_scr_detect_touch(Touch_data.X);
+  touch_scr_detect_touch(Touch_data.Y);
   update_touch_coordinates();
   
   tmp = ADDR3_bit.RESULT;
-  
+  ADdata.previous_raw_measurement = ADdata.current_raw_measurement;
+  ADdata.current_raw_measurement=ADDR2_bit.RESULT;
     
-  ADdata.v_current = (Int32U)ADfilter(ADDR2_bit.RESULT);
-  Data = (Int32U)ADdata.v_current;
+//  ADdata.current_filtered_measurement = (Int32U)ADfilter(ADdata.current_raw_measurement);
+//  ADdata.current_filtered_measurement = ADfilter(ADdata.current_raw_measurement);
+//  Data = ADdata.current_raw_measurement;
+//  Data = ADdata.current_filtered_measurement;
   
-  update_instance_p_p_values(Data);
+  ADdata.previous_filtered_measurement = ADdata.current_filtered_measurement;
+  ADdata.current_filtered_measurement=ADfilter(ADdata.current_raw_measurement);
   
+  Data = (Int32U)ADdata.current_filtered_measurement;
+  
+  
+  update_instance_p_p_values(ADdata.current_raw_measurement);
+  
+  V_RMS_2_accumulator += pow(Bits_2_Grid_Voltage(ADdata.current_raw_measurement),2.0);
+//V_RMS_2_accumulator += pow(Data, 2.0);  
+  
+//    V_RMS_2_accumulator += pow(ADdata.current_raw_measurement,2.0);
 
-  FIO0PIN_bit.P0_19 = 0;
+  FIO0PIN_bit.P0_11 = 0;
  
   // clear interrupt
   VICADDRESS = 0;
@@ -105,13 +124,12 @@ void Timer0IntrHandler (void)
   
 //  if (Touch_data.state==(Y_ch || confirm))   
   
-
+    FIO0PIN_bit.P0_11 = 1;
   adc_start();  //Start the ADC, ADC will be done before next timer interrupt
                 //it has higer priority and will therefore be handlet first 
 
   httpd_tick_count++;
-  if((httpd_tick_count)%85 == 0) {
-    FIO0PIN_bit.P0_11 = 1;    
+  if((httpd_tick_count)%(TIMER0_TICK_PER_SEC/HTTPD_TICK_PER_SEC) == 0) {
     httpd_tick();
     httpd_tick_count = 0;
   }
@@ -125,15 +143,20 @@ void Timer0IntrHandler (void)
   
   
   
+  
   //frequency calculation: START
   
   //frequency calculation: STOP
   
   
   
-    if(detect_ZeroCrossing(ADdata.v_previous, ADdata.v_current))
+    if(detect_ZeroCrossing(ADdata.previous_filtered_measurement, ADdata.current_filtered_measurement))
     {
+
+      V_RMS = calculate_X_RMS(V_RMS_2_accumulator);
+      V_RMS_2_accumulator=0.0;
       calculate_frequency(tick_count);
+      
           tick_count=0;
     }
  
@@ -164,10 +187,21 @@ void Timer0IntrHandler (void)
   dac_write(Data);
   // clear interrupt
   timer0_interrupt_reset();
-//  FIO0PIN_bit.P0_19 = 0;
-    FIO0PIN_bit.P0_11 = 0;
+  FIO0PIN_bit.P0_19 = 0;
+//    FIO0PIN_bit.P0_11 = 0;
   VICADDRESS = 0;
 
+}
+
+float calculate_X_RMS(float accumulator_X_2){
+  
+  return sqrt((accumulator_X_2/tick_count));
+}
+
+float Bits_2_Grid_Voltage(int Bits_reslut){
+  //Calibrating by factor of 0.404
+  return ((Int32U)Bits_reslut-513.0)*0.679226;
+  
 }
 
 

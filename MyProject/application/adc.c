@@ -15,7 +15,7 @@ void initialize_adc()
   AD0CR_bit.PDN  = 1;         // converter is operational
   AD0CR_bit.START = 0; 
   AD0CR_bit.SEL  = 31;    // select Ch0-Ch3
-  AD0CR_bit.CLKDIV = (SYS_GetFpclk(ADC_PCLK_OFFSET)/ 4);       //sampling frequency Fs=(AD0CR_bit.CLKDIV)/11=409090Hz
+  AD0CR_bit.CLKDIV = 3;       //sampling frequency Fs=(AD0CR_bit.CLKDIV)/11=409090Hz
   AD0CR_bit.BURST  = 0;       // disable burst
   AD0CR_bit.CLKS   = 0;       // 10 bits resolution
   ADINTEN_bit.ADINTEN0 = 0;    // select the chanels to generate interupt
