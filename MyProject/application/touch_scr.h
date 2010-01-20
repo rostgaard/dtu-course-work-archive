@@ -3,6 +3,7 @@
 
 struct Touch_data_t {
   Int32U touched;
+  Int32U was_touched;
   Int32U state;
   Int32U accumulator_count;
   Int32U accumulator_size;

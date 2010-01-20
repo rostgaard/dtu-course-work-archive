@@ -2,6 +2,8 @@
 #include "board.h"
 #include "assert.h"
 
+
+
 void initialize_led()
 {
   // Init USB Link  LED
@@ -29,6 +31,7 @@ void initialize_relays()
 void toggle_relays(int relay_number, int status) {
   
   assert((status==0)|(status==1));
+ 
   switch(relay_number) {
   case 1:
     FIO0PIN_bit.P0_11 = status;
@@ -39,6 +42,8 @@ void toggle_relays(int relay_number, int status) {
   default:
     break;
   }
+ 
+ 
 }
 
 int relays_status(int relay_number) {

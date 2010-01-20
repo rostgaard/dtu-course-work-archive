@@ -11,12 +11,16 @@
 #include "filter.h"
 #include "touch_scr.h"
 
+
+
 struct ADdata_t ADdata = {0,0,0.0,0.0};
 struct ADC_p_p_t ADC_p_p;
 extern struct time_t real_time;
 extern struct Touch_data_t Touch_data;
 extern Button_t Up_left_Button;
 extern Button_t Up_right_Button;
+extern Button_t Relay1_Button;
+extern Button_t Relay2_Button;
 
 unsigned long timetick =0;
 Int32U Data=0;
@@ -36,8 +40,8 @@ int blink_timer = 0;
 int dac_timer = 0;
 Int32U X_Left =5;
 Int32U X_Right =310;
-Int32U Y_Up =75;
-Int32U Y_Down =113;
+Int32U Y_Up =45;          //Just below the top bar (with buttons and screen name)
+Int32U Y_Down =83;        
 Int32U Linespace = 35*2;
 float AD_zerocrossing_delay[2] = {0.0,0.0};   //([y(k-1) y(k)]) just after the zero-crossing accured
 
@@ -51,6 +55,9 @@ int between(float input, float lower_limit, float upper_limit);
 void update_scr_state();
 void change_scr();
 void load_scr_graphics(Int32U *pBackground_painting);
+void enable_line_of_text(float line_nr, int font_size, LdcPixel_t Color, LdcPixel_t BackgndColor);
+void update_relay_buttons_state();
+void activate_response_to_relay_buttons();
 
 extern void ADC_Inter_Handler ();
 extern void Timer0IntrHandler ();
@@ -68,12 +75,20 @@ extern int blink_timer;
 
 extern float V_RMS;
 
+extern Bmp_t button_relay_off_lightgreyPic;
+extern Bmp_t button_relay_on_lightgreyPic;
+
 int screen_state = 0;   //0 - MAIN SCR., 1 - CONFIG SCR., 2 - TEST SCR.
 int screen_state_is_changing = 1;     //0 - scr is NOT changing, 1 - scr IS changing
 
   // The target of the two buttons
 int isonbutton1=0;
 int isonbutton2=0;
+
+int Relay1_button_state = 0;
+int Relay1_button_state_is_changing =0;
+int Relay2_button_state = 0;
+int Relay2_button_state_is_changing =0;
 
 #define BUF ((struct uip_eth_hdr *)&uip_buf[0])
 
@@ -206,13 +221,32 @@ struct timer periodic_timer, arp_timer;
     }
 /** web server */    
     
-           
+                     
+                     
+             
+    
+
+    
        Up_left_Button.was_pushed =  Up_left_Button.is_pushed;
        Up_right_Button.was_pushed =  Up_right_Button.is_pushed;
+       
+       Relay1_Button.was_pushed =  Relay1_Button.is_pushed;
+       Relay2_Button.was_pushed =  Relay2_Button.is_pushed;       
        
        Up_left_Button.is_pushed = (Touch_data.touched)&(check_if_coursor_in_rectangle(Up_left_Button.X_coord, Up_left_Button.Y_coord, Up_left_Button.length, Up_left_Button.height));
        Up_right_Button.is_pushed = (Touch_data.touched)&(check_if_coursor_in_rectangle(Up_right_Button.X_coord, Up_right_Button.Y_coord, Up_right_Button.length, Up_right_Button.height));
  
+     
+       
+      
+       Relay1_Button.is_pushed = ((Touch_data.touched)&(check_if_coursor_in_rectangle(Relay1_Button.X_coord, Relay1_Button.Y_coord, Relay1_Button.length, Relay1_Button.height)));
+       Relay2_Button.is_pushed = (Touch_data.touched)&(check_if_coursor_in_rectangle(Relay2_Button.X_coord, Relay2_Button.Y_coord, Relay2_Button.length, Relay2_Button.height));        
+       
+       
+       update_relay_buttons_state();
+                 
+       activate_response_to_relay_buttons();
+       
     
     if(Touch_data.touched) {
       
@@ -229,6 +263,8 @@ struct timer periodic_timer, arp_timer;
     
     
       change_scr();
+      
+
     
   }
   
@@ -299,25 +335,28 @@ void LCD_Main_Screen(){
   GLCD_TextSetPos(0,0);
   printf("MAIN SCREEN");
   
-  
-  GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
-  GLCD_SetWindow(X_Left, Y_Up, X_Right, Y_Down);
-  GLCD_TextSetPos(0,0);
-  //printf("Touch : %5d",Touch_data.touched);
+  enable_line_of_text(0, 0, 0xFFFFFF,0x505050);
   printf("Voltage, RMS: %0.4f V", V_RMS);
          
-  GLCD_SetWindow(X_Left, Y_Up+35, X_Right, Y_Down+35);
-  GLCD_TextSetPos(0,0);
-  //printf("Touch : %5d",Touch_data.touched);
+  enable_line_of_text(1, 0, 0xFFFFFF,0x505050);
   printf("Frequency: %0.4f Hz", frequency);
-  //printf("Time      =   %d S", real_time.second);
   
-  GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
-  GLCD_SetWindow(X_Left, Y_Up+Linespace, X_Right, Y_Down+Linespace);
-  GLCD_TextSetPos(0,0);
-  //printf("Time      =    S");
+  enable_line_of_text(2, 0, 0xFFFFFF,0x505050);
   printf("Power  =  Warm beer sucks");
   
+  enable_line_of_text(3, 0, 0xFFFFFF,0x505050);
+  if(FIO0PIN_bit.P0_11 == 1)
+  printf("Relay 1: ON ");
+  else if(FIO0PIN_bit.P0_11 == 0)
+  printf("Relay 1: OFF");    
+  
+  enable_line_of_text(4, 0, 0xFFFFFF,0x505050);
+  if(FIO0PIN_bit.P0_19 == 1)
+  printf("Relay 2: ON ");
+  else if(FIO0PIN_bit.P0_19 == 0)
+  printf("Relay 2: OFF"); 
+
+        activate_response_to_relay_buttons();
 
 
 }
@@ -351,41 +390,33 @@ void LCD_Test_Screen(){
 void P_P_value(){
     
   
-  GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
-  GLCD_SetWindow(X_Left, Y_Up, X_Right, Y_Down);
-  GLCD_TextSetPos(0,0);
+  enable_line_of_text(0, 1, 0xFFFFFF,0x505050);
   //printf("Touch : %5d",Touch_data.touched);
   printf("Coords: X %5d, Y %5d",Touch_data.X ,Touch_data.Y );
   
   
   // Write cursor data 
-  GLCD_SetWindow(X_Left, Y_Up+35, X_Right, Y_Down+35);
-  GLCD_TextSetPos(0,0);
-  //printf("Touch : %5d",Touch_data.touched);
+  enable_line_of_text(1, 1, 0xFFFFFF,0x505050);
   printf("Cursor: X %5d, Y %5d",Touch_data.X_cursor ,Touch_data.Y_cursor);
   //printf("Time      =   %d S", real_time.second);
   
   
-  GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
-  GLCD_SetWindow(X_Left, Y_Up+Linespace, X_Right, Y_Down+Linespace);
-  GLCD_TextSetPos(0,0);
+  enable_line_of_text(2, 0, 0xFFFFFF,0x505050);
   //printf("Time      =    S");
   printf("Time  =  %3d:%2d", (real_time.second/60),(real_time.second%60));
   
   
-  GLCD_SetFont(&Terminal_18_24_12,0xFFFFFF,0x505050);
-  GLCD_SetWindow(X_Left, Y_Up+Linespace+35, X_Right, Y_Down+Linespace+35);
-  GLCD_TextSetPos(0,0);
+  enable_line_of_text(3, 0, 0xFFFFFF,0x505050);
   //printf("Time      =    S");
   printf("Vpp  max:%.02f, min:%.02f", (ADC_p_p.v_max), (ADC_p_p.v_min));
   
   
     // turn on led 2 if screen is touched
     //touch_scr_detect_touch(Touch_data.X);
-  if((Touch_data.touched)&(led_status(2)))
-      toggle_led(2);
-  else if((!Touch_data.touched)&(!led_status(2)))
-      toggle_led(2);
+//  if((Touch_data.touched)&(led_status(2)))
+//      toggle_led(2);
+//  else if((!Touch_data.touched)&(!led_status(2)))
+//      toggle_led(2);
 }
 
 
@@ -446,16 +477,26 @@ void change_scr(){
    
       
    
-   if(screen_state==2 && (screen_state_is_changing==0) && (real_time.millisecond%200) == 0){
+   if(screen_state==2 && (screen_state_is_changing==0) && (real_time.millisecond%50) == 0){
       LCD_Test_Screen();
 
    }
-   if(screen_state==1 && (screen_state_is_changing==0) && (real_time.millisecond%200) == 0){
+   if(screen_state==1 && (screen_state_is_changing==0) && (real_time.millisecond%50) == 0){
       LCD_Config_Screen();
    }
     
-   if(screen_state==0 && (screen_state_is_changing==0) && (real_time.millisecond%200) == 0){
+   if(screen_state==0 && (screen_state_is_changing==0) && (real_time.millisecond%50) == 0){
       LCD_Main_Screen();
+      if(Relay1_button_state==1)
+        GLCD_LoadPic (170, (int)(Y_Up+(3*34.0)), &button_relay_on_lightgreyPic, NULL);
+      else if(Relay1_button_state==0)
+        GLCD_LoadPic (170, (int)(Y_Up+(3*34.0)), &button_relay_off_lightgreyPic, NULL);
+      
+      if(Relay2_button_state==1)
+        GLCD_LoadPic (170, (int)(Y_Up+(4*34.0)), &button_relay_on_lightgreyPic, NULL);
+      else if(Relay2_button_state==0)
+        GLCD_LoadPic (170, (int)(Y_Up+(4*34.0)), &button_relay_off_lightgreyPic, NULL);
+
 
    }
 
@@ -480,4 +521,81 @@ void load_scr_graphics(Int32U *pBackground_painting){
       GLCD_Cursor_En(0);
   
   
+}
+
+/*
+  Enables certain line, in wich we can write text, on LCD.
+  Use "printf("")" afterwards to specify this text. */
+void enable_line_of_text(float line_nr, int font_size, LdcPixel_t Color, LdcPixel_t BackgndColor){
+  
+  //font 0 (big) allows only 6 lines of text
+  if(font_size==0){
+  GLCD_SetFont(&Terminal_18_24_12,Color,BackgndColor);
+  GLCD_SetWindow(X_Left, (int)(Y_Up+(line_nr*34.0)), X_Right, (int)(Y_Down+(line_nr*34.0)));
+  GLCD_TextSetPos(0,0);
+  }
+  
+  //font 1 (small) allows only 12 lines of text
+  if(font_size==1){
+  GLCD_SetFont(&Terminal_9_12_6,Color,BackgndColor);
+  GLCD_SetWindow(X_Left, (int)(Y_Up+(line_nr*17.0)), X_Right, (int)(Y_Down+(line_nr*17.0)));
+  GLCD_TextSetPos(0,0);
+  }
+}
+
+
+void update_relay_buttons_state(){
+  
+         if((Relay1_Button.is_pushed) && (!Relay1_Button.was_pushed) && (Relay1_button_state==0)&(Relay1_button_state_is_changing==0)&(screen_state==0)){
+         Relay1_button_state=1;
+         Relay1_button_state_is_changing=1;
+         }
+       else if((Relay1_Button.is_pushed)&(!Relay1_Button.was_pushed)&(Relay1_button_state==1)&(screen_state_is_changing==0)&(screen_state==0)){
+         Relay1_button_state=0;
+         Relay1_button_state_is_changing=1;
+        }
+        
+       if((Relay2_Button.is_pushed) && (!Relay2_Button.was_pushed) && (Relay2_button_state==0)&(Relay2_button_state_is_changing==0)&(screen_state==0)){
+         Relay2_button_state=1;
+         Relay2_button_state_is_changing=1;
+         }
+       else if((Relay2_Button.is_pushed)&(!Relay2_Button.was_pushed)&(Relay2_button_state==1)&(screen_state_is_changing==0)&(screen_state==0)){
+         Relay2_button_state=0;
+         Relay2_button_state_is_changing=1;
+        }
+  
+}
+
+
+
+void activate_response_to_relay_buttons(){
+  
+      if(Relay1_button_state==1 && Relay1_button_state_is_changing==1){
+         toggle_led(2);
+//         GLCD_LoadPic (170, (int)(Y_Up+(3*34.0)), &button_relay_on_lightgreyPic, NULL);
+         Relay1_button_state_is_changing=0;
+        }
+      else if(Relay1_button_state==0 && Relay1_button_state_is_changing==1){
+          toggle_led(2);
+//          GLCD_LoadPic (170, (int)(Y_Up+(3*34.0)), &button_relay_off_lightgreyPic, NULL);
+          Relay1_button_state_is_changing=0;
+         } 
+      
+      
+      if(Relay2_button_state==1 && Relay2_button_state_is_changing==1){
+//         GLCD_LoadPic (170, (int)(Y_Up+(3*34.0)), &button_relay_on_lightgreyPic, NULL);
+         Relay2_button_state_is_changing=0;
+        }
+      else if(Relay2_button_state==0 && Relay2_button_state_is_changing==1){
+    
+//          GLCD_LoadPic (170, (int)(Y_Up+(3*34.0)), &button_relay_off_lightgreyPic, NULL);
+          Relay2_button_state_is_changing=0;
+         } 
+      
+//       if(Relay1_button_state==1 && Relay1_button_state_is_changing==0 & (real_time.millisecond%500)){
+//          GLCD_LoadPic (170, (int)(Y_Up+(3*34.0)), &button_relay_on_lightgreyPic, NULL);
+//       }
+//       else if((Relay1_button_state==0 && Relay1_button_state_is_changing==0) & (real_time.millisecond%500)){
+//         GLCD_LoadPic (170, (int)(Y_Up+(3*34.0)), &button_relay_off_lightgreyPic, NULL);
+//       }
 }

@@ -48,6 +48,9 @@ float accumulator_min=0.0;
 float V_RMS=0.0;
 float V_RMS_2_accumulator=0.0;
 
+extern int Relay1_button_state;
+extern int Relay2_button_state;
+
 
 //Starting definition of interrupt Handlers 
 //
@@ -66,6 +69,8 @@ void ADC_Inter_Handler ()
 {
 
   adc_stop();
+  
+
   
   touch_scr_detect_touch(Touch_data.Y);
   update_touch_coordinates();
@@ -92,7 +97,7 @@ void ADC_Inter_Handler ()
   
 //    V_RMS_2_accumulator += pow(ADdata.current_raw_measurement,2.0);
 
-  FIO0PIN_bit.P0_11 = 0;
+//  FIO0PIN_bit.P0_11 = 0;
  
   // clear interrupt
   VICADDRESS = 0;
@@ -114,7 +119,7 @@ int httpd_tick_count = 0;
  *************************************************************************/
 void Timer0IntrHandler (void)
 {
-  FIO0PIN_bit.P0_19 = 1;
+//  FIO0PIN_bit.P0_19 = 1;
   
 //   ========== LCD - touch meassurement loop: START
   
@@ -124,7 +129,7 @@ void Timer0IntrHandler (void)
   
 //  if (Touch_data.state==(Y_ch || confirm))   
   
-    FIO0PIN_bit.P0_11 = 1;
+//    FIO0PIN_bit.P0_11 = 1;
   adc_start();  //Start the ADC, ADC will be done before next timer interrupt
                 //it has higer priority and will therefore be handlet first 
 
@@ -173,13 +178,34 @@ void Timer0IntrHandler (void)
 //      toggle_led(2);
       blink_timer = 0;
       f_out = frequency;
+      
+      
+      
+    if(Relay1_button_state==1)
+    FIO0PIN_bit.P0_11 = 1;
+    else{
 
       if(frequency>=55.0 && relays_status(bulb) != 1) {
-//        toggle_relays(bulb, 1);
+        toggle_relays(bulb, 1);
       }
       else if(frequency<=45.0 && relays_status(bulb) != 0){
-//        toggle_relays(bulb, 0);
+        toggle_relays(bulb, 0);
       }
+ }
+ 
+ 
+ 
+     if(Relay2_button_state==1)
+    FIO0PIN_bit.P0_19 = 1;
+    else{
+
+      if(frequency>=55.0 && relays_status(socket) != 1) {
+        toggle_relays(socket, 1);
+      }
+      else if(frequency<=45.0 && relays_status(socket) != 0){
+        toggle_relays(socket, 0);
+      }
+ }
       
     }
   }
@@ -187,7 +213,7 @@ void Timer0IntrHandler (void)
   dac_write(Data);
   // clear interrupt
   timer0_interrupt_reset();
-  FIO0PIN_bit.P0_19 = 0;
+//  FIO0PIN_bit.P0_19 = 0;
 //    FIO0PIN_bit.P0_11 = 0;
   VICADDRESS = 0;
 

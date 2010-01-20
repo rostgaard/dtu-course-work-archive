@@ -4,9 +4,11 @@
 #include <assert.h>
 #include "adc.h"
 
-struct Touch_data_t Touch_data = {false,X_ch,0,100,false,0,0,0,0,0,0,0,0};
+struct Touch_data_t Touch_data = {false,false,X_ch,0,100,false,0,0,0,0,0,0,0,0};
 Button_t Up_left_Button = {0, 0, 1, 1, 80, 40};
 Button_t Up_right_Button = {0, 0, 240, 1, 80, 40};
+Button_t Relay1_Button = {0, 0, 170, 147, 118, 23};
+Button_t Relay2_Button = {0, 0, 170, 182, 118, 23};
 
 
 /*************************************************************************
@@ -48,6 +50,7 @@ int touch_scr_touched()
 
 void touch_scr_detect_touch(Int32U y)
 {
+//  Touch_data.was_touched=Touch_data.touched;
   // check for touch
   if((y>=190)&(Touch_data.touched==false))
   {
