@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=latex 2010.1.21)  21 JAN 2010 17:51
+This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=latex 2010.1.21)  21 JAN 2010 19:13
 entering extended mode
 **report.tex
 
@@ -619,20 +619,20 @@ rt\thesislayout.sty"
 )
 ("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
 rt\report.aux")
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
  ("C:\Programmer\MiKTeX 2.8\tex\context\base\supp-pdf.tex"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count176
@@ -648,12 +648,12 @@ LaTeX Font Info:    ... okay on input line 64.
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption3 Info: subfig package 1.2 or 1.3 is loaded.
-LaTeX Info: Redefining \subref on input line 64.
+LaTeX Info: Redefining \subref on input line 65.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count181
-Package hyperref Info: Link coloring ON on input line 64.
+Package hyperref Info: Link coloring ON on input line 65.
  ("C:\Programmer\MiKTeX 2.8\tex\latex\hyperref\nameref.sty"
 Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
 
@@ -662,8 +662,8 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
 \c@section@level=\count182
 )
-LaTeX Info: Redefining \ref on input line 64.
-LaTeX Info: Redefining \pageref on input line 64.
+LaTeX Info: Redefining \ref on input line 65.
+LaTeX Info: Redefining \pageref on input line 65.
 
 ("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
 rt\report.out")
@@ -678,26 +678,26 @@ File: figs/dtu_elektro_A_UK.pdf Graphic file (type pdf)
 <figs/dtu_A1_UK.pdf, id=75, 247.29088pt x 56.87148pt>
 File: figs/dtu_A1_UK.pdf Graphic file (type pdf)
  <use figs/dtu_A1_UK.pdf>
-LaTeX Font Info:    Try loading font information for T1+aess on input line 78.
+LaTeX Font Info:    Try loading font information for T1+aess on input line 79.
 
 ("C:\Programmer\MiKTeX 2.8\tex\latex\ae\t1aess.fd"
 File: t1aess.fd 1997/11/16 Font definitions for T1/aess.
 )
 LaTeX Font Info:    Font shape `T1/aess/m/it' in size <10.95> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 78.
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 79.
 LaTeX Font Info:    Font shape `T1/aess/m/it' in size <14.4> not available
-(Font)              Font shape `T1/aess/m/sl' tried instead on input line 78.
-LaTeX Font Info:    Try loading font information for U+msa on input line 78.
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 79.
+LaTeX Font Info:    Try loading font information for U+msa on input line 79.
 
 ("C:\Programmer\MiKTeX 2.8\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 78.
+LaTeX Font Info:    Try loading font information for U+msb on input line 79.
 
 ("C:\Programmer\MiKTeX 2.8\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
-Overfull \hbox (66.79134pt too wide) in paragraph at lines 78--78
+Overfull \hbox (66.79134pt too wide) in paragraph at lines 79--79
 [][] 
  []
 
@@ -714,372 +714,11 @@ pdftex.map} <D:/Skole/Kandidat/1 semester/31070 - HandsOnMicrocontrollerProgram
 ering/Rapport/figs/dtu_elektro_A_UK.pdf> <D:/Skole/Kandidat/1 semester/31070 - 
 HandsOnMicrocontrollerProgramering/Rapport/figs/dtu_A1_UK.pdf>]
 ("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
-rt\report.toc"
-! Undefined control sequence.
-<argument> ...inkstart {link}{chapter.1}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.2 ...Introduction}{\@Arabic \c@page }{chapter.1}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.2 ...Introduction}{\@Arabic \c@page }{chapter.1}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...inkstart {link}{chapter.1}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.3 ...Nomenclature}{\@Arabic \c@page }{chapter.1}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.3 ...Nomenclature}{\@Arabic \c@page }{chapter.1}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...inkstart {link}{chapter.2}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.4 ...Requirements}{\@Arabic \c@page }{chapter.2}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.4 ...Requirements}{\@Arabic \c@page }{chapter.2}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...kstart {link}{section.2.1}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.5 ...Tools used}{\@Arabic \c@page }{section.2.1}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.5 ...Tools used}{\@Arabic \c@page }{section.2.1}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...t {link}{subsection.2.1.1}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.6 ...tools}{\@Arabic \c@page }{subsection.2.1.1}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.6 ...tools}{\@Arabic \c@page }{subsection.2.1.1}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...t {link}{subsection.2.1.2}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.7 ...oning}{\@Arabic \c@page }{subsection.2.1.2}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.7 ...oning}{\@Arabic \c@page }{subsection.2.1.2}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...inkstart {link}{chapter.3}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.8 ...}Description}{\@Arabic \c@page }{chapter.3}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.8 ...}Description}{\@Arabic \c@page }{chapter.3}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...kstart {link}{section.3.1}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.9 ... structure}{\@Arabic \c@page }{section.3.1}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.9 ... structure}{\@Arabic \c@page }{section.3.1}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...kstart {link}{section.3.2}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.10 ...d control}{\@Arabic \c@page }{section.3.2}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.10 ...d control}{\@Arabic \c@page }{section.3.2}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...t {link}{subsection.3.2.1}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.11 ...tion}{\@Arabic \c@page }{subsection.3.2.1}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.11 ...tion}{\@Arabic \c@page }{subsection.3.2.1}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...t {link}{subsection.3.2.2}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.13 ...tion}{\@Arabic \c@page }{subsection.3.2.2}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.13 ...tion}{\@Arabic \c@page }{subsection.3.2.2}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...kstart {link}{section.3.3}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.17 ...interface}{\@Arabic \c@page }{section.3.3}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.17 ...interface}{\@Arabic \c@page }{section.3.3}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...kstart {link}{section.3.4}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.18 ...unication}{\@Arabic \c@page }{section.3.4}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.18 ...unication}{\@Arabic \c@page }{section.3.4}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...t {link}{subsection.3.4.1}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.19 ...tion}{\@Arabic \c@page }{subsection.3.4.1}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.19 ...tion}{\@Arabic \c@page }{subsection.3.4.1}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...kstart {link}{section.3.5}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.21 ...r Summary}{\@Arabic \c@page }{section.3.5}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.21 ...r Summary}{\@Arabic \c@page }{section.3.5}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...t {link}{subsection.3.5.1}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.22 ...tion}{\@Arabic \c@page }{subsection.3.5.1}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.22 ...tion}{\@Arabic \c@page }{subsection.3.5.1}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...inkstart {link}{chapter.4}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.23 ...}Conclusion}{\@Arabic \c@page }{chapter.4}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.23 ...}Conclusion}{\@Arabic \c@page }{chapter.4}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Undefined control sequence.
-<argument> ...inkstart {link}{chapter.5}{\@Arabic 
-                                                  \c@page }\hyper@linkend 
-l.24 ...}Appendix A}{\@Arabic \c@page }{chapter.5}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   }
-l.24 ...}Appendix A}{\@Arabic \c@page }{chapter.5}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.i}) has 
-been already used, duplicate ignored
+rt\report.toc"pdfTeX warning (ext4): destination with the same identifier (name
+{page.i}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.24 ...}Appendix A}{\@Arabic \c@page }{chapter.5}
+l.24 ...{\numberline {5}Appendix A}{10}{chapter.5}
                                                    [1
 
 ])
@@ -1201,33 +840,30 @@ Chapter 5.
 
 ]
 ("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
-rt\report.aux")
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+rt\report.aux") ) 
 Here is how much of TeX's memory you used:
- 11265 strings out of 495286
- 157356 string characters out of 3180594
- 264488 words of memory out of 3000000
- 14114 multiletter control sequences out of 15000+200000
+ 11264 strings out of 495286
+ 157349 string characters out of 3180594
+ 264483 words of memory out of 3000000
+ 14113 multiletter control sequences out of 15000+200000
  70332 words of font info for 143 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  45i,12n,45p,526b,391s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Progr
-ammer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Programmer/MiKTe
-X 2.8/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Programmer/MiKTeX 2.8/font
-s/type1/public/amsfonts/cm/cmmi10.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/pub
-lic/amsfonts/cm/cmmi8.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts
-/cm/cmr10.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmr17.pf
-b><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program
-mer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Programmer/MiKTeX 2.
-8/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1
-/public/amsfonts/cm/cmss12.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/ams
-fonts/cm/cmssbx10.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/
-cmssi12.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmsy10.pfb
-><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on report.pdf (13 pages, 274639 bytes).
+<C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmbx1
+0.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/P
+rogrammer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Programmer/
+MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Programmer/MiKTeX 2.8/
+fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/
+public/amsfonts/cm/cmr10.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfo
+nts/cm/cmr17.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmr6.
+pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Progr
+ammer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Programmer/MiKTeX 
+2.8/fonts/type1/public/amsfonts/cm/cmss12.pfb><C:/Programmer/MiKTeX 2.8/fonts/t
+ype1/public/amsfonts/cm/cmssbx10.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/publ
+ic/amsfonts/cm/cmssi12.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfont
+s/cm/cmsy10.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmsy8.
+pfb>
+Output written on report.pdf (13 pages, 275220 bytes).
 PDF statistics:
  272 PDF objects out of 1000 (max. 8388607)
  39 named destinations out of 1000 (max. 500000)
