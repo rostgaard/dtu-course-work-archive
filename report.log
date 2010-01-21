@@ -1,0 +1,1235 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=latex 2010.1.21)  21 JAN 2010 17:51
+entering extended mode
+**report.tex
+
+("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
+rt\report.tex"
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman, ngerman, german-x-2009-06-19, ngerman-x-2009-06-19, french, loaded.
+("C:\Programmer\MiKTeX 2.8\tex\latex\base\book.cls"
+Document Class: book 2007/10/19 v1.4h Standard LaTeX document class
+("C:\Programmer\MiKTeX 2.8\tex\latex\base\bk11.clo"
+File: bk11.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
+rt\thesisdef.sty" ("C:\Programmer\MiKTeX 2.8\tex\latex\ams\math\amsmath.sty"
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip43
+
+For additional information on amsmath, use the `?' option.
+("C:\Programmer\MiKTeX 2.8\tex\latex\ams\math\amstext.sty"
+Package: amstext 2000/06/29 v2.01
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\ams\math\amsgen.sty"
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks14
+\ex@=\dimen103
+))
+("C:\Programmer\MiKTeX 2.8\tex\latex\ams\math\amsbsy.sty"
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen104
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\ams\math\amsopn.sty"
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count88
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count89
+\leftroot@=\count90
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count91
+\DOTSCASE@=\count92
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count93
+\c@MaxMatrixCols=\count94
+\dotsspace@=\muskip10
+\c@parentequation=\count95
+\dspbrk@lvl=\count96
+\tag@help=\toks15
+\row@=\count97
+\column@=\count98
+\maxfields@=\count99
+\andhelp@=\toks16
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks17
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\amsfonts\amssymb.sty"
+Package: amssymb 2009/06/22 v3.00
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\amsfonts\amsfonts.sty"
+Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
+))
+("C:\Programmer\MiKTeX 2.8\tex\latex\ntheorem\ntheorem.sty"
+Style `ntheorem', Version 1.25 <2005/07/07>
+Package: ntheorem 2005/07/07 1.25
+\theorem@style=\toks19
+\theorem@@style=\toks20
+\theorembodyfont=\toks21
+\theoremnumbering=\toks22
+\theorempreskipamount=\skip46
+\theorempostskipamount=\skip47
+\theoremindent=\dimen112
+\theorem@indent=\dimen113
+\theoremheaderfont=\toks23
+\theoremseparator=\toks24
+\theoremprework=\toks25
+\theorempostwork=\toks26
+\theoremsymbol=\toks27
+\qedsymbol=\toks28
+\theoremkeyword=\toks29
+\qedsymbol=\toks30
+\thm@topsepadd=\skip48
+Package ntheorem Info: Option `thmmarks' loaded on input line 1029.
+\c@endNonectr=\count100
+\c@currNonectr=\count101
+\mysavskip=\skip49
+Package ntheorem Info: option `amsmath' handling for `thmmarks' loaded on input
+ line 1029.
+\thm@amstmpdepth=\dimen114
+) ("C:\Programmer\MiKTeX 2.8\tex\latex\base\fontenc.sty"
+Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\base\t1enc.def"
+File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+))
+("C:\Programmer\MiKTeX 2.8\tex\latex\ae\ae.sty"
+Package: ae 2001/02/12 1.3 Almost European Computer Modern
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\base\fontenc.sty"
+Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\base\t1enc.def"
+File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+)
+LaTeX Font Info:    Try loading font information for T1+aer on input line 100.
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\ae\t1aer.fd"
+File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
+)))
+("C:\Programmer\MiKTeX 2.8\tex\latex\ae\aecompl.sty"
+Package: aecompl 1998/07/23 0.9 T1 Complements for AE fonts (D. Roegel)
+)
+("C:\Programmer\MiKTeX 2.8\tex\generic\babel\babel.sty"
+Package: babel 2008/07/06 v3.8l The Babel package
+
+*************************************
+* Local config file bblopts.cfg used
+*
+("C:\Programmer\MiKTeX 2.8\tex\latex\00miktex\bblopts.cfg"
+File: bblopts.cfg 2006/07/31 v1.0 MiKTeX 'babel' configuration
+)
+("C:\Programmer\MiKTeX 2.8\tex\generic\babel\english.ldf"
+Language: english 2005/03/30 v3.3o English support from the babel system
+
+("C:\Programmer\MiKTeX 2.8\tex\generic\babel\babel.def"
+File: babel.def 2008/07/06 v3.8l Babel common definitions
+\babel@savecnt=\count102
+\U@D=\dimen115
+)
+\l@canadian = a dialect from \language\l@american 
+\l@australian = a dialect from \language\l@british 
+\l@newzealand = a dialect from \language\l@british 
+))
+("C:\Programmer\MiKTeX 2.8\tex\latex\base\inputenc.sty"
+Package: inputenc 2008/03/30 v1.1d Input encoding file
+\inpenc@prehook=\toks31
+\inpenc@posthook=\toks32
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\base\latin1.def"
+File: latin1.def 2008/03/30 v1.1d Input encoding file
+))
+("C:\Programmer\MiKTeX 2.8\tex\latex\tools\verbatim.sty"
+Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks33
+\verbatim@line=\toks34
+\verbatim@in@stream=\read1
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\fancyhdr\fancyhdr.sty"
+\fancy@headwidth=\skip50
+\f@ncyO@elh=\skip51
+\f@ncyO@erh=\skip52
+\f@ncyO@olh=\skip53
+\f@ncyO@orh=\skip54
+\f@ncyO@elf=\skip55
+\f@ncyO@erf=\skip56
+\f@ncyO@olf=\skip57
+\f@ncyO@orf=\skip58
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\tools\longtable.sty"
+Package: longtable 2004/02/01 v4.11 Multi-page Table package (DPC)
+\LTleft=\skip59
+\LTright=\skip60
+\LTpre=\skip61
+\LTpost=\skip62
+\LTchunksize=\count103
+\LTcapwidth=\dimen116
+\LT@head=\box28
+\LT@firsthead=\box29
+\LT@foot=\box30
+\LT@lastfoot=\box31
+\LT@cols=\count104
+\LT@rows=\count105
+\c@LT@tables=\count106
+\c@LT@chunks=\count107
+\LT@p@ftn=\toks35
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\multirow\multirow.sty"
+\bigstrutjot=\dimen117
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\rotating\rotating.sty"
+Package: rotating 2009/03/28 v2.16a rotated objects in LaTeX
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\graphics\graphicx.sty"
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\graphics\keyval.sty"
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks36
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\graphics\graphics.sty"
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\graphics\trig.sty"
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2009/08/25 v0.04m Graphics/color for pdfTeX
+
+
+! Package pdftex.def Error: PDF mode expected, but DVI mode detected!
+(pdftex.def)                If you are using `latex', then call `pdflatex'.
+(pdftex.def)                Otherwise check and correct the driver options.
+(pdftex.def)                Error recovery by switching to PDF mode.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.385     }\@ehc
+                
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+\Gread@gobject=\count108
+))
+\Gin@req@height=\dimen118
+\Gin@req@width=\dimen119
+) ("C:\Programmer\MiKTeX 2.8\tex\latex\base\ifthen.sty"
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\c@r@tfl@t=\count109
+\rotFPtop=\skip63
+\rotFPbot=\skip64
+\rot@float@box=\box32
+\rot@mess@toks=\toks37
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\graphics\lscape.sty"
+Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\psfrag\psfrag.sty"
+Package: psfrag 1998/04/11 v3.04 PSfrag (MCG)
+\pfg@pcount=\count110
+\pfg@scount=\count111
+\pfg@temp=\write3
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\graphics\color.sty"
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\00miktex\color.cfg"
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 130.
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\pstricks\pstricks.sty"
+Package: pstricks 2008/11/26 v0.40 LaTeX wrapper for `PSTricks' (RN,HV)
+
+("C:\Programmer\MiKTeX 2.8\tex\generic\pstricks\pstricks.tex"
+`PSTricks' v1.29  <2009/05/19> (tvz)
+\pst@dima=\dimen120
+\pst@dimb=\dimen121
+\pst@dimc=\dimen122
+\pst@dimd=\dimen123
+\pst@dimg=\dimen124
+\pst@dimh=\dimen125
+\pst@hbox=\box33
+\pst@boxg=\box34
+\pst@cnta=\count112
+\pst@cntb=\count113
+\pst@cntc=\count114
+\pst@cntd=\count115
+\pst@cntg=\count116
+\pst@cnth=\count117
+\pst@toks=\toks38
+("C:\Programmer\MiKTeX 2.8\tex\generic\pstricks\pstricks.con")
+\psunit=\dimen126
+\psxunit=\dimen127
+\psyunit=\dimen128
+\pslinewidth=\dimen129
+\pst@customdefs=\toks39
+\pslinearc=\dimen130
+\everypsbox=\toks40
+\psframesep=\dimen131
+\pslabelsep=\dimen132
+\pst@shift=\dimen133
+\theoverlaybox=\box35
+)
+File: pstricks.tex 2009/05/19 v1.29 `PSTricks' (tvz,hv)
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\xcolor\xcolor.sty"
+Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\00miktex\color.cfg"
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+LaTeX Info: Redefining \color on input line 702.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
+Package xcolor Info: Model `RGB' extended on input line 1353.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
+))
+("C:\Programmer\MiKTeX 2.8\tex\latex\curves\curves.sty"
+Package: curves 2009/08/31 1.53 Curves for LaTeX picture environment
+\;sc=\count118
+\;scp=\count119
+\;t=\count120
+\;cc=\count121
+\;cnd=\count122
+\;mcnd=\count123
+\;np=\count124
+\;overhang=\count125
+\;pbs=\count126
+\;pns=\count127
+\;psc=\count128
+\;rc=\count129
+\;rtc=\count130
+\;tc=\count131
+\csdiameter=\skip65
+\curvelength=\skip66
+\overhang=\skip67
+\;x=\skip68
+\;dx=\skip69
+\;ddx=\skip70
+\;y=\skip71
+\;dy=\skip72
+\;ddy=\skip73
+\;pl=\skip74
+\;ucd=\skip75
+\;csbox=\box36
+\;pt=\box37
+\;strline=\toks41
+\m;ssingcoord=\toks42
+\;negdash=\toks43
+\;oddcoord=\toks44
+\;wc=\count132
+\;X=\skip76
+\;Y=\skip77
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\caption\caption.sty"
+Package: caption 2010/01/09 v3.1m Customizing captions (AR)
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\caption\caption3.sty"
+Package: caption3 2010/01/14 v3.1m caption3 kernel (AR)
+\captionmargin=\dimen134
+\captionmargin@=\dimen135
+\captionwidth=\dimen136
+\caption@indent=\dimen137
+\caption@parindent=\dimen138
+\caption@hangindent=\dimen139
+)
+\c@ContinuedFloat=\count133
+Package caption Info: longtable package is loaded.
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\caption\ltcaption.sty"
+Package: ltcaption 2008/03/28 v1.2 longtable captions (AR)
+)
+Package caption Info: rotating package is loaded.
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\natbib\natbib.sty"
+Package: natbib 2009/11/07 8.31a (PWD, AO)
+\bibhang=\skip78
+\bibsep=\skip79
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count134
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\nomencl\nomencl.sty"
+Package: nomencl 2005/09/22 v4.2 Nomenclature package (LN)
+\nomlabelwidth=\dimen140
+\nom@tempdim=\dimen141
+\nomitemsep=\skip80
+)
+\@nomenclaturefile=\write4
+
+Writing nomenclature file report.nlo
+("C:\Programmer\MiKTeX 2.8\tex\latex\ltxmisc\url.sty"
+\Urlmuskip=\muskip11
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\listings\listings.sty"
+\lst@mode=\count135
+\lst@gtempboxa=\box38
+\lst@token=\toks45
+\lst@length=\count136
+\lst@currlwidth=\dimen142
+\lst@column=\count137
+\lst@pos=\count138
+\lst@lostspace=\dimen143
+\lst@width=\dimen144
+\lst@newlines=\count139
+\lst@lineno=\count140
+\lst@maxwidth=\dimen145
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\listings\lstmisc.sty"
+File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
+\c@lstnumber=\count141
+\lst@skipnumbers=\count142
+\lst@framebox=\box39
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\listings\listings.cfg"
+File: listings.cfg 2007/02/22 1.4 listings configuration
+))
+Package: listings 2007/02/22 1.4 (Carsten Heinz)
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\listings\lstlang1.sty"
+File: lstlang1.sty 2004/09/05 1.3 listings language file
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\subfig\subfig.sty"
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+\c@KVtest=\count143
+\sf@farskip=\skip81
+\sf@captopadj=\dimen146
+\sf@capskip=\skip82
+\sf@nearskip=\skip83
+\c@subfigure=\count144
+\c@subfigure@save=\count145
+\c@lofdepth=\count146
+\c@subtable=\count147
+\c@subtable@save=\count148
+\c@lotdepth=\count149
+\sf@top=\skip84
+\sf@bottom=\skip85
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\hyperref\hyperref.sty"
+Package: hyperref 2009/10/19 v6.79b Hypertext links for LaTeX
+
+("C:\Programmer\MiKTeX 2.8\tex\generic\oberdiek\ifpdf.sty"
+Package: ifpdf 2009/04/10 v2.0 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in pdf mode detected.
+)
+("C:\Programmer\MiKTeX 2.8\tex\generic\oberdiek\ifvtex.sty"
+Package: ifvtex 2008/11/04 v1.4 Switches for detecting VTeX and its modes (HO)
+Package ifvtex Info: VTeX not detected.
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\ifxetex\ifxetex.sty"
+Package: ifxetex 2009/01/23 v0.5 Provides ifxetex conditional
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\oberdiek\hycolor.sty"
+Package: hycolor 2009/10/02 v1.5 Code for color options of hyperref/bookmark (H
+O)
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\oberdiek\xcolor-patch.sty"
+Package: xcolor-patch 2009/10/02 xcolor patch
+))
+\@linkdim=\dimen147
+\Hy@linkcounter=\count150
+\Hy@pagecounter=\count151
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\hyperref\pd1enc.def"
+File: pd1enc.def 2009/10/19 v6.79b Hyperref: PDFDocEncoding definition (HO)
+)
+("C:\Programmer\MiKTeX 2.8\tex\generic\oberdiek\etexcmds.sty"
+Package: etexcmds 2007/12/12 v1.2 Prefix for e-TeX command names (HO)
+
+("C:\Programmer\MiKTeX 2.8\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2007/09/09 v1.2 Providing info/warning/message (HO)
+)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\00miktex\hyperref.cfg"
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\oberdiek\kvoptions.sty"
+Package: kvoptions 2009/08/13 v3.4 Keyval support for LaTeX options (HO)
+
+("C:\Programmer\MiKTeX 2.8\tex\generic\oberdiek\kvsetkeys.sty"
+Package: kvsetkeys 2009/07/30 v1.5 Key value parser with default handler suppor
+t (HO)
+))
+Package hyperref Info: Option `plainpages' set `false' on input line 2864.
+Package hyperref Info: Hyper figures OFF on input line 2975.
+Package hyperref Info: Link nesting OFF on input line 2980.
+Package hyperref Info: Hyper index ON on input line 2983.
+Package hyperref Info: Plain pages OFF on input line 2990.
+Package hyperref Info: Backreferencing OFF on input line 2995.
+
+Implicit mode ON; LaTeX internals redefined
+Package hyperref Info: Bookmarks ON on input line 3191.
+LaTeX Info: Redefining \url on input line 3428.
+("C:\Programmer\MiKTeX 2.8\tex\generic\oberdiek\bitset.sty"
+Package: bitset 2007/09/28 v1.0 Data type bit set (HO)
+
+("C:\Programmer\MiKTeX 2.8\tex\generic\oberdiek\intcalc.sty"
+Package: intcalc 2007/09/27 v1.1 Expandable integer calculations (HO)
+)
+("C:\Programmer\MiKTeX 2.8\tex\generic\oberdiek\bigintcalc.sty"
+Package: bigintcalc 2007/11/11 v1.1 Expandable big integer calculations (HO)
+
+("C:\Programmer\MiKTeX 2.8\tex\generic\oberdiek\pdftexcmds.sty"
+Package: pdftexcmds 2009/09/23 v0.6 LuaTeX support for pdfTeX utility functions
+ (HO)
+
+("C:\Programmer\MiKTeX 2.8\tex\generic\oberdiek\ifluatex.sty"
+Package: ifluatex 2009/04/17 v1.2 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+("C:\Programmer\MiKTeX 2.8\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2009/08/05 v1.0 Some LaTeX kernel commands for general use (HO
+)
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+)))
+\Fld@menulength=\count152
+\Field@Width=\dimen148
+\Fld@charsize=\dimen149
+\Field@toks=\toks46
+Package hyperref Info: Hyper figures OFF on input line 4377.
+Package hyperref Info: Link nesting OFF on input line 4382.
+Package hyperref Info: Hyper index ON on input line 4385.
+Package hyperref Info: backreferencing OFF on input line 4392.
+Package hyperref Info: Link coloring OFF on input line 4397.
+Package hyperref Info: Link coloring with OCG OFF on input line 4402.
+Package hyperref Info: PDF/A mode OFF on input line 4407.
+
+("C:\Programmer\MiKTeX 2.8\tex\generic\oberdiek\atbegshi.sty"
+Package: atbegshi 2008/07/31 v1.9 At begin shipout hook (HO)
+)
+\Hy@abspage=\count153
+\c@Item=\count154
+\c@Hfootnote=\count155
+)
+*hyperref using driver hpdftex*
+("C:\Programmer\MiKTeX 2.8\tex\latex\hyperref\hpdftex.def"
+File: hpdftex.def 2009/10/19 v6.79b Hyperref driver for pdfTeX
+\Fld@listcount=\count156
+)
+("C:\Programmer\MiKTeX 2.8\tex\latex\breakurl\breakurl.sty"
+Package: breakurl 2009/01/24 v1.30 Breakable hyperref URLs
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\xkeyval\xkeyval.sty"
+Package: xkeyval 2008/08/13 v2.6a package option processing (HA)
+
+("C:\Programmer\MiKTeX 2.8\tex\generic\xkeyval\xkeyval.tex"
+\XKV@toks=\toks47
+\XKV@tempa@toks=\toks48
+\XKV@depth=\count157
+File: xkeyval.tex 2008/08/13 v2.6a key=value parser (HA)
+))
+
+Package breakurl Warning: You are using breakurl while processing via pdflatex.
+
+(breakurl)                \burl will be just a synonym of \url.
+(breakurl)                 on input line 47.
+
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 109.
+Package hyperref Info: Option `breaklinks' set `true' on input line 109.
+Package hyperref Info: Option `linktocpage' set `true' on input line 109.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 109.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 109.
+
+
+! Extra \fi.
+l.110 \fi
+         
+I'm ignoring this; it doesn't match any \if.
+
+)
+("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
+rt\thesislayout.sty"
+\c@currtheoremctr=\count158
+\c@endtheoremctr=\count159
+\c@theorem=\count160
+\c@currexamplectr=\count161
+\c@endexamplectr=\count162
+\c@example=\count163
+\c@currdefinitionctr=\count164
+\c@enddefinitionctr=\count165
+\c@definition=\count166
+\c@currproofctr=\count167
+\c@endproofctr=\count168
+\c@proof=\count169
+\c@currassumptionctr=\count170
+\c@endassumptionctr=\count171
+\c@assumption=\count172
+\c@currremarkctr=\count173
+\c@endremarkctr=\count174
+\c@remark=\count175
+)
+("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
+rt\report.aux")
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+ ("C:\Programmer\MiKTeX 2.8\tex\context\base\supp-pdf.tex"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count176
+\scratchdimen=\dimen150
+\scratchbox=\box40
+\nofMPsegments=\count177
+\nofMParguments=\count178
+\everyMPshowfont=\toks49
+\MPscratchCnt=\count179
+\MPscratchDim=\dimen151
+\MPnumerator=\count180
+\everyMPtoPDFconversion=\toks50
+)
+Package caption Info: Begin \AtBeginDocument code.
+Package caption3 Info: subfig package 1.2 or 1.3 is loaded.
+LaTeX Info: Redefining \subref on input line 64.
+Package caption Info: hyperref package is loaded.
+Package caption Info: listings package is loaded.
+Package caption Info: End \AtBeginDocument code.
+\c@lstlisting=\count181
+Package hyperref Info: Link coloring ON on input line 64.
+ ("C:\Programmer\MiKTeX 2.8\tex\latex\hyperref\nameref.sty"
+Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\oberdiek\refcount.sty"
+Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
+)
+\c@section@level=\count182
+)
+LaTeX Info: Redefining \ref on input line 64.
+LaTeX Info: Redefining \pageref on input line 64.
+
+("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
+rt\report.out")
+("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
+rt\report.out")
+\@outlinefile=\write5
+\AtBeginShipoutBox=\box41
+ <figs/dtu_elektro_A_UK.pdf, id=74, 193.9195pt x 36.86975pt>
+File: figs/dtu_elektro_A_UK.pdf Graphic file (type pdf)
+
+<use figs/dtu_elektro_A_UK.pdf>
+<figs/dtu_A1_UK.pdf, id=75, 247.29088pt x 56.87148pt>
+File: figs/dtu_A1_UK.pdf Graphic file (type pdf)
+ <use figs/dtu_A1_UK.pdf>
+LaTeX Font Info:    Try loading font information for T1+aess on input line 78.
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\ae\t1aess.fd"
+File: t1aess.fd 1997/11/16 Font definitions for T1/aess.
+)
+LaTeX Font Info:    Font shape `T1/aess/m/it' in size <10.95> not available
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 78.
+LaTeX Font Info:    Font shape `T1/aess/m/it' in size <14.4> not available
+(Font)              Font shape `T1/aess/m/sl' tried instead on input line 78.
+LaTeX Font Info:    Try loading font information for U+msa on input line 78.
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\amsfonts\umsa.fd"
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 78.
+
+("C:\Programmer\MiKTeX 2.8\tex\latex\amsfonts\umsb.fd"
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+)
+Overfull \hbox (66.79134pt too wide) in paragraph at lines 78--78
+[][] 
+ []
+
+[1
+Non-PDF special ignored!
+Non-PDF special ignored!
+Non-PDF special ignored!
+Non-PDF special ignored!
+
+
+
+{C:/Documents and Settings/All Users/Application Data/MiKTeX/2.8/pdftex/config/
+pdftex.map} <D:/Skole/Kandidat/1 semester/31070 - HandsOnMicrocontrollerProgram
+ering/Rapport/figs/dtu_elektro_A_UK.pdf> <D:/Skole/Kandidat/1 semester/31070 - 
+HandsOnMicrocontrollerProgramering/Rapport/figs/dtu_A1_UK.pdf>]
+("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
+rt\report.toc"
+! Undefined control sequence.
+<argument> ...inkstart {link}{chapter.1}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.2 ...Introduction}{\@Arabic \c@page }{chapter.1}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.2 ...Introduction}{\@Arabic \c@page }{chapter.1}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...inkstart {link}{chapter.1}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.3 ...Nomenclature}{\@Arabic \c@page }{chapter.1}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.3 ...Nomenclature}{\@Arabic \c@page }{chapter.1}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...inkstart {link}{chapter.2}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.4 ...Requirements}{\@Arabic \c@page }{chapter.2}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.4 ...Requirements}{\@Arabic \c@page }{chapter.2}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...kstart {link}{section.2.1}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.5 ...Tools used}{\@Arabic \c@page }{section.2.1}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.5 ...Tools used}{\@Arabic \c@page }{section.2.1}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...t {link}{subsection.2.1.1}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.6 ...tools}{\@Arabic \c@page }{subsection.2.1.1}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.6 ...tools}{\@Arabic \c@page }{subsection.2.1.1}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...t {link}{subsection.2.1.2}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.7 ...oning}{\@Arabic \c@page }{subsection.2.1.2}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.7 ...oning}{\@Arabic \c@page }{subsection.2.1.2}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...inkstart {link}{chapter.3}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.8 ...}Description}{\@Arabic \c@page }{chapter.3}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.8 ...}Description}{\@Arabic \c@page }{chapter.3}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...kstart {link}{section.3.1}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.9 ... structure}{\@Arabic \c@page }{section.3.1}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.9 ... structure}{\@Arabic \c@page }{section.3.1}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...kstart {link}{section.3.2}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.10 ...d control}{\@Arabic \c@page }{section.3.2}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.10 ...d control}{\@Arabic \c@page }{section.3.2}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...t {link}{subsection.3.2.1}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.11 ...tion}{\@Arabic \c@page }{subsection.3.2.1}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.11 ...tion}{\@Arabic \c@page }{subsection.3.2.1}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...t {link}{subsection.3.2.2}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.13 ...tion}{\@Arabic \c@page }{subsection.3.2.2}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.13 ...tion}{\@Arabic \c@page }{subsection.3.2.2}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...kstart {link}{section.3.3}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.17 ...interface}{\@Arabic \c@page }{section.3.3}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.17 ...interface}{\@Arabic \c@page }{section.3.3}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...kstart {link}{section.3.4}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.18 ...unication}{\@Arabic \c@page }{section.3.4}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.18 ...unication}{\@Arabic \c@page }{section.3.4}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...t {link}{subsection.3.4.1}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.19 ...tion}{\@Arabic \c@page }{subsection.3.4.1}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.19 ...tion}{\@Arabic \c@page }{subsection.3.4.1}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...kstart {link}{section.3.5}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.21 ...r Summary}{\@Arabic \c@page }{section.3.5}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.21 ...r Summary}{\@Arabic \c@page }{section.3.5}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...t {link}{subsection.3.5.1}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.22 ...tion}{\@Arabic \c@page }{subsection.3.5.1}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.22 ...tion}{\@Arabic \c@page }{subsection.3.5.1}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...inkstart {link}{chapter.4}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.23 ...}Conclusion}{\@Arabic \c@page }{chapter.4}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.23 ...}Conclusion}{\@Arabic \c@page }{chapter.4}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Undefined control sequence.
+<argument> ...inkstart {link}{chapter.5}{\@Arabic 
+                                                  \c@page }\hyper@linkend 
+l.24 ...}Appendix A}{\@Arabic \c@page }{chapter.5}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.24 ...}Appendix A}{\@Arabic \c@page }{chapter.5}
+                                                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.i}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.24 ...}Appendix A}{\@Arabic \c@page }{chapter.5}
+                                                   [1
+
+])
+\tf@toc=\write6
+ [2]
+("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
+rt\introduction.tex"
+Chapter 1.
+No file report.nls.
+)
+("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
+rt\requirements.tex" [1
+
+
+]
+Chapter 2.
+
+Underfull \hbox (badness 10000) in paragraph at lines 4--7
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4--7
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 8--11
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 8--11
+
+ []
+
+[2
+
+]
+LaTeX Font Info:    Try loading font information for OMS+aer on input line 12.
+ ("C:\Programmer\MiKTeX 2.8\tex\latex\ae\omsaer.fd"
+File: omsaer.fd 1999/12/27
+)
+LaTeX Font Info:    Font shape `OMS/aer/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 12.
+)
+("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
+rt\description.tex" [3]
+Chapter 3.
+<figs/program_structure.pdf, id=142, 410.333pt x 297.913pt>
+File: figs/program_structure.pdf Graphic file (type pdf)
+
+<use figs/program_structure.pdf>
+Underfull \hbox (badness 10000) in paragraph at lines 15--17
+
+ []
+
+<figs/program_sequence.pdf, id=144, 401.5pt x 375.001pt>
+File: figs/program_sequence.pdf Graphic file (type pdf)
+
+<use figs/program_sequence.pdf> [4
+
+ <D:/Skole/Kandidat/1 semester/31070 - HandsOnMicrocontrollerProgramering/Rappo
+rt/figs/program_structure.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 20--21
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--21
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 22--25
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 28--29
+
+ []
+
+<figs/burst_mode.pdf, id=152, 562.90298pt x 236.885pt>
+File: figs/burst_mode.pdf Graphic file (type pdf)
+
+<use figs/burst_mode.pdf> [5 <D:/Skole/Kandidat/1 semester/31070 - HandsOnMicro
+controllerProgramering/Rapport/figs/program_sequence.pdf>] [6 <D:/Skole/Kandida
+t/1 semester/31070 - HandsOnMicrocontrollerProgramering/Rapport/figs/burst_mode
+.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 71--75
+
+ []
+
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 77--80
+
+ []
+
+)
+("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
+rt\conclusion.tex"
+Overfull \hbox (1.25696pt too wide) in paragraph at lines 89--1
+\T1/aer/m/n/10.95 The fin-ished re-sult can be viewed by ac-cess-ing the ip (ty
+p-i-cally 192.168.0.100)
+ []
+
+[8]
+Chapter 4.
+)
+("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
+rt\appendix.tex" [9
+
+]
+Chapter 5.
+)
+\tf@thm=\write7
+ [10
+
+]
+("D:\Skole\Kandidat\1 semester\31070 - HandsOnMicrocontrollerProgramering\Rappo
+rt\report.aux")
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 11265 strings out of 495286
+ 157356 string characters out of 3180594
+ 264488 words of memory out of 3000000
+ 14114 multiletter control sequences out of 15000+200000
+ 70332 words of font info for 143 fonts, out of 3000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 45i,12n,45p,526b,391s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Progr
+ammer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Programmer/MiKTe
+X 2.8/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Programmer/MiKTeX 2.8/font
+s/type1/public/amsfonts/cm/cmmi10.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/pub
+lic/amsfonts/cm/cmmi8.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts
+/cm/cmr10.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmr17.pf
+b><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program
+mer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Programmer/MiKTeX 2.
+8/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1
+/public/amsfonts/cm/cmss12.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/ams
+fonts/cm/cmssbx10.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/
+cmssi12.pfb><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+><C:/Programmer/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on report.pdf (13 pages, 274639 bytes).
+PDF statistics:
+ 272 PDF objects out of 1000 (max. 8388607)
+ 39 named destinations out of 1000 (max. 500000)
+ 170 words of extra memory for PDF output out of 10000 (max. 10000000)
+
