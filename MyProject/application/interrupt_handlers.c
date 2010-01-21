@@ -14,7 +14,7 @@
 //External structs 
 extern struct ADdata_t ADdata;
 extern struct Touch_data_t Touch_data;
-
+extern struct ADC_p_p_t ADC_p_p;
 
 //External variables
 extern float frequency;
@@ -38,15 +38,25 @@ extern void  calculate_frequency(int tick_count);
 extern void update_instance_p_p_values(Int32U current_raw_measurement);
 extern void calculate_p_p_values();
 
-Int32U tmp = 0;
+
 extern int measurement_status;
 
 
 float accumulator_max=0.0;
 float accumulator_min=0.0;
 
+//float I_scale = 3.1/1023.;
+float I_scale_PP = 1./1023.*1.414213;
+float V_scale_PP = 236./341.*1.414213;
+float I_scale    = 1./1023.;
+float V_scale    = 236./341.;
+
 float V_RMS=0.0;
 float V_RMS_2_accumulator=0.0;
+float I_RMS=0.0;
+float I_RMS_2_accumulator=0.0;
+float P_RMS=0.0;
+float P_RMS_2_accumulator=0.0;
 
 extern int Relay1_button_state;
 extern int Relay2_button_state;
@@ -73,11 +83,11 @@ void ADC_Inter_Handler ()
 
   
   touch_scr_detect_touch(Touch_data.Y);
-  update_touch_coordinates();
+  //update_touch_coordinates();
   
-  tmp = ADDR3_bit.RESULT;
+  ADdata.I_current = ADDR3_bit.RESULT;
   ADdata.previous_raw_measurement = ADdata.current_raw_measurement;
-  ADdata.current_raw_measurement=ADDR2_bit.RESULT;
+  ADdata.current_raw_measurement = ADDR2_bit.RESULT;
     
 //  ADdata.current_filtered_measurement = (Int32U)ADfilter(ADdata.current_raw_measurement);
 //  ADdata.current_filtered_measurement = ADfilter(ADdata.current_raw_measurement);
@@ -85,14 +95,16 @@ void ADC_Inter_Handler ()
 //  Data = ADdata.current_filtered_measurement;
   
   ADdata.previous_filtered_measurement = ADdata.current_filtered_measurement;
-  ADdata.current_filtered_measurement=ADfilter(ADdata.current_raw_measurement);
+  ADdata.current_filtered_measurement = ADfilter(ADdata.current_raw_measurement);
   
   Data = (Int32U)ADdata.current_filtered_measurement;
   
   
-  update_instance_p_p_values(ADdata.current_raw_measurement);
+  //update_instance_p_p_values(ADdata.current_raw_measurement);
   
   V_RMS_2_accumulator += pow(Bits_2_Grid_Voltage(ADdata.current_raw_measurement),2.0);
+  I_RMS_2_accumulator += pow((ADdata.I_current-512.)*I_scale,2.0);
+  P_RMS_2_accumulator += (((ADdata.current_raw_measurement-512.)*V_scale_PP)*((ADdata.I_current-512.)*I_scale_PP));
 //V_RMS_2_accumulator += pow(Data, 2.0);  
   
 //    V_RMS_2_accumulator += pow(ADdata.current_raw_measurement,2.0);
@@ -119,6 +131,7 @@ int httpd_tick_count = 0;
  *************************************************************************/
 void Timer0IntrHandler (void)
 {
+  update_touch_coordinates();
 //  FIO0PIN_bit.P0_19 = 1;
   
 //   ========== LCD - touch meassurement loop: START
@@ -144,7 +157,7 @@ void Timer0IntrHandler (void)
 
   update_real_time();
 
-  calculate_p_p_values();   
+  //calculate_p_p_values();   
   
   
   
@@ -157,12 +170,19 @@ void Timer0IntrHandler (void)
   
     if(detect_ZeroCrossing(ADdata.previous_filtered_measurement, ADdata.current_filtered_measurement))
     {
-
+      //Calculate RMS value
       V_RMS = calculate_X_RMS(V_RMS_2_accumulator);
+      I_RMS = calculate_X_RMS(I_RMS_2_accumulator);
+      P_RMS = ((P_RMS_2_accumulator)/(tick_count));
+      //CAlculate peak value from RMS value
+      ADC_p_p.v_max = sqrt(2)*V_RMS;
+      ADC_p_p.v_min = -sqrt(2)*V_RMS;
+      //Clear RMS accumulator 
       V_RMS_2_accumulator=0.0;
-      calculate_frequency(tick_count);
-      
-          tick_count=0;
+      I_RMS_2_accumulator=0.0;
+      P_RMS_2_accumulator=0.0;
+      calculate_frequency(tick_count);      
+      tick_count=0;
     }
  
   
@@ -225,8 +245,8 @@ float calculate_X_RMS(float accumulator_X_2){
 }
 
 float Bits_2_Grid_Voltage(int Bits_reslut){
-  //Calibrating by factor of 0.404
-  return ((Int32U)Bits_reslut-513.0)*0.679226;
+  //Calibrating by factor of 0.404//*0.679226//*0.6920821
+  return (Bits_reslut-512.0)*V_scale;
   
 }
 

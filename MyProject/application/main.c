@@ -13,7 +13,7 @@
 
 
 
-struct ADdata_t ADdata = {0,0,0.0,0.0};
+struct ADdata_t ADdata = {0,0,0,0,0.0,0.0};
 struct ADC_p_p_t ADC_p_p;
 extern struct time_t real_time;
 extern struct Touch_data_t Touch_data;
@@ -74,6 +74,10 @@ extern float frequency;
 extern int blink_timer;
 
 extern float V_RMS;
+extern float I_RMS;
+extern float P_RMS;
+
+
 
 extern Bmp_t button_relay_off_lightgreyPic;
 extern Bmp_t button_relay_on_lightgreyPic;
@@ -342,7 +346,7 @@ void LCD_Main_Screen(){
   printf("Frequency: %0.4f Hz", frequency);
   
   enable_line_of_text(2, 0, 0xFFFFFF,0x505050);
-  printf("Power  =  Warm beer sucks");
+  printf("Power  = %0.2f", P_RMS);
   
   enable_line_of_text(3, 0, 0xFFFFFF,0x505050);
   if(FIO0PIN_bit.P0_11 == 1)
@@ -563,7 +567,6 @@ void update_relay_buttons_state(){
          Relay2_button_state=0;
          Relay2_button_state_is_changing=1;
         }
-  
 }
 
 
