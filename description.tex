@@ -32,6 +32,30 @@ We are using the ADC for two purposes: Detecting input from the touchscreen and 
 Burst is started by entering Timer0 interrupt
 % explanation of burst mode, timer0 and ADC conversion timer.
 
+
+
+
+
+\subsection{Measurement algorithms and their implementation}
+The values measured with the microcontroller (ADC) are:
+\begin{itemize}
+\item Grid frequency
+\item Grid voltage
+\item Grid current
+\item LCD voltege (checking if, and if yes then where, LCD screen has been touched)
+\end{itemize}
+
+\subsubsection{Voltage and Current measurements}
+The voltage from the grid had to be passed through a circuit that would lower it's value to 0...3.3V range, before it could be processed by the microcontroller. The same thing had to be done with the current - it had to be converted to a voltage signal of the same scope. Both signals were scaled afterwards so the output of calculations would be in grid values. Two different approaches were used for each of them.
+
+\paragraph{Voltage scaling}
+Firs the RMS and offset values of the grid voltage has been measured. The results were: 
+\[ V_{RMS}=236V \] 
+\[ V_{Offset} \approx 0V\]
+We can conver them into peak-to-peak values:
+\[ V_{p-p}=2(V_{RMS}-V_{Offset})\sqrt{2}=2(236V-0)\sqrt{2}=667.5V \]
+Since the offset is approximately zero we can wrtie that maximum an minimum values of volatege are $ \pm333.75V $. The maximum and minimum number of bits after ADC conversions were 1002 and 20. Hence the zero Volts was represented by $ (1002_{bits}-20_{bits})/2=491_{bits} $ and $ 1_{bit}=333.75_{volts}/491_{bits}=0.679735234_{volts} $.
+
  
 \section{User interface}
 \section{Communication}
