@@ -70,6 +70,8 @@ The LCD measurements are conducted to check if the touch screen has been touched
 
  
 \section{User interface}
+The user interface's layout is presened below:
+
 \section{Communication}
 The communication part of the program is done by reusing the uip network stack. The built-in http server has the ability to both serve files and do some basic server-side scripting. \\
 We plan on refactoring the server, making able to serve xml and xsl\footnote{XML Stylesheet} (with the right content-type). Xsl will enable us to generate a single xml file and then transform it for the user to view via a browser. The xml document will be treated as a regulear html page, making the transformation transparent for the user. \\
