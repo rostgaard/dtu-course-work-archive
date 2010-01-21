@@ -1,26 +1,19 @@
-
 \chapter[Requirements]{Requirements analysis and specification}
 \label{chap:requirements}
+ELSAM states that we should be sensitive to changes in the powergrid frequency, and be able to communicate using a network.
 
-The relation between sending end and receiving end quantities are given as
-%
-\begin{subequations}\label{eq:GenericTwoPort}
-\begin{align}
-  V_s &= AV_r + BI_r \\
-  I_s &= CV_r + DI_r 
-\end{align}
-\end{subequations}%
-\nomenclature{$V$}{Steady-state voltage phasor\nomunit{V}}%
-\nomenclature{$I$}{Steady-state current phasor\nomunit{A}}%
-\nomenclature{$._r$}{Subscript refers to receiving end quantity}%
-\nomenclature{$._s$}{Subscript refers to sending end quantity}%
-%
-The first time a parameter or variable occur that should be included in the list
-of symbols write:
+\begin{itemize}
+\item Detect grid frequency
+\item Toggle relays based on frequency algorithm
+\item Implement a TCP/IP stack
+\item Implement a HTTP server
+\item Design human interfaces for local access
+\item Design human interfaces for remote access
+\item Design machine interfaces for remote/local access
+\end{itemize}
 
-\verb+\nomenclature{$<symbol>$}{Steady-state voltage phasor\nomunit{<unit>}}+
-
-
+\subsection{Tools used}
+% Optional paragraph containing descriptions on svn, wiki, debuggin methods aso.
 
 \section{Chapter Summary}
 \label{sec:SummaryChap2}
