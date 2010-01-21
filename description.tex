@@ -46,7 +46,7 @@ The values measured with the microcontroller (ADC) are:
 \end{itemize}
 
 \subsubsection{Voltage and Current measurements}
-The voltage from the grid had to be passed through a circuit that would lower it's value to 0...3.3V range, before it could be processed by the microcontroller. The same thing had to be done with the current - it had to be converted to a voltage signal of the same scope. Both signals were scaled afterwards so the output of calculations would be in grid values. Two different approaches were used for each of them.
+The voltage from the grid is passed through a circuit that lowers it's value to 0...3.3V range, before it can be processed by the microcontroller. The same thing is done with the current - it is converted to a voltage signal of the same scope. Both signals are scaled afterwards so the output of calculations is in grid values. Two different approaches were used for each of them.
 
 \paragraph{Voltage scaling}
 Firs the RMS and offset values of the grid voltage has been measured. The results were: 
@@ -54,23 +54,68 @@ Firs the RMS and offset values of the grid voltage has been measured. The result
 \[ V_{Offset} \approx 0V\]
 We can conver them into peak-to-peak values:
 \[ V_{p-p}=2(V_{RMS}-V_{Offset})\sqrt{2}=2(236V-0)\sqrt{2}=667.5V \]
-Since the offset is approximately zero we can wrtie that maximum an minimum values of volatege are $ \pm333.75V $. The maximum and minimum quantization levels accuired by ADC conversions were 1002 and 20. Hence the zero Volts was represented by $ (1002-20)/2=491_{levels} $ and $ 1_{level}=333.75_{volts}/491_{levels}=0.679735234_{volts} $.
+Since the offset is approximately zero we can wrtie that maximum an minimum values of volatege are $ \pm333.75V $. The highest and lowest quantization levels accuired by ADC conversions were 1002 and 20. Hence the zero Volts was represented by $ (1002-20)/2=491_{level} $ and $ 1_{level}=333.75_{volts}/491_{level}=0.679735234_{volts} $.
 
 \paragraph{Current scaling}
-A bit different approach have been used while calculating the scaling ratio in the case of the grid's current. Here we've assumed that the current converting circuit is very precise and that the output values are exactly 0....3.3V. Thus we can suspect that the amount of bits corresponding to 0A is equal to 512. After aquring the raw samples of the measured current from ADC, substracting 512, calculating their RMS value and multiplying the result by $ \sqrt{2} $ we get the current signal's digital representation's amplitude, which represents the real signals amplitude. Sclaing is done as in the case of the voltege from this point.
+A bit different approach have been used while calculating the scaling ratio in the case of the grid's current. Here we've assumed that the current converting circuit is very precise and that the output values are exactly 0....3.3V. Thus we can suspect that the quantization level corresponding to 0A is equal to 512. After aquring the raw samples of the measured current from ADC, substracting 512, calculating their RMS value and multiplying the result by $ \sqrt{2} $ we got the current signal's digital representation's amplitude, which represents the real signals amplitude. Sclaing is done as in the case of the voltege from this point onward.
 
 \subsubsection{Frequency measurement}
-The frequency measurement is done by calculating the length of the period of a given signal. We've done this by calculating the number of samples between the points at wich the signal is crossing an arbitrairly defined zero line with an assumed direction (rising edge or falling edge) and comparing it (number of samples) with the sampling frequency.\\
-In order to detect zero-crossing two succeding samples had to be remembered by the system. If the previous sample was below the zero-level and the current one is above, than the system marks this time as a rising edge zero-crossing and starts to count the samples until the next one.\\
-Due to significant disturbances a low pass filter had to be used, in order to smoothen out the data. Without it detecting false zero-crossings would be very common, which in turn would render the method completly useless.\\
-The lowpass filter is used only for this particular purouse, though. All the other calculations, like voltage RMS value, power etc. were performed on raw data.
+The frequency measurement is done by calculating the length of the period of a given signal. It is done by calculating the number of samples between the points at wich the signal is crossing an arbitrairly defined zero line with an assumed direction (rising edge or falling edge) and comparing it (number of samples) with the sampling frequency.\\
+In order to detect zero-crossing two succeding samples have to be remembered by the system. If the previous sample was below the zero-level and the current one is above, than the system marks this time as a rising edge zero-crossing and starts to count the samples until the next one.\\
+Due to significant disturbances a low pass filter has to be used, in order to smoothen out the data. Without it detecting false zero-crossings would be very common, which in turn would render the method completly useless.\\
+The lowpass filter is used only for this particular purouse, though. All the other calculations, like voltage RMS value, power etc. are performed on raw data. That is due to the fact that the filters output differ significnatly from its input (the amplitude is attenuated and the signal is shifted in phase). On the other hand filters, by definition, never change frequency, which make them usefull in this particular case. This is shown on the Figure ~\ref{fig:filter}
+
+\begin{figure}[!h]
+  \centering
+  \subfloat[Cut-off at 100Hz]{\label{fig:100@10}\includegraphics[width=0.3\textwidth]{img/used/100Hz@10kHz_small.png}}                
+  \subfloat[Cut-off at 50Hz]{\label{fig:50@10}\includegraphics[width=0.3\textwidth]{img/used/50Hz@10kHz_small.png}}
+  \subfloat[Cut-off at 10Hz]{\label{fig:10@10}\includegraphics[width=0.3\textwidth]{img/used/10Hz@10kHz_small.png}}
+  \caption{Input and output signals of a low-pass filter at a sampling frequency of 10kHz for three different cut-off frequencies.}
+  \label{fig:filter}
+\end{figure}
+
+
+
 
 \subsubsection{LCD measurements}
-The LCD measurements are conducted to check if the touch screen has been touched and if yes, where exactly did it happen. The possition of the touch is determined by measuring the voltage on the LCD's outputs. Measurement of the X and Y coordinates arn't done simultanously. If we want to measure the X coordinate the ADC and the pins have to be set to a certain state. In order to meassure the Y coordinate those set up options have to be different. Hence, every coordinate is meassured on every second ADC action.
+The LCD measurements are conducted to check if the touch screen has been touched and if yes, where exactly did it happen. The possition of the touch is determined by measuring the voltage on the LCD's outputs. Measurement of the X and Y coordinates aren't done simultanously. If we want to measure the X coordinate the ADC and the pins have to be set to a certain state. In order to meassure the Y coordinate those set up options have to be different. Hence, every coordinate is meassured on every second ADC action.
 
  
 \section{User interface}
-The user interface's layout is presened below:
+The user interface's layout is presened below:\\
+====[\texttt{PASTE A SCREEN LAYOUT}]====
+It is build out of three different screens:
+\begin{itemize}
+\item Main screen
+\item Config screen
+\item Test screen
+\end{itemize}
+There is a panel's name lable at the top of each screen. There are also two buttons on it's both sides. They allow the user to switch between screens in a ring fashion (if one button is pressed continously, then the screens repeat their selves).\\
+
+\subsection{Main screen}
+The main screen is the default panel presented on the LCD. It shows the values of:
+\begin{itemize}
+\item $ Voltage_{RMS} $
+\item Frequency
+\item Power
+\item State of relay 1
+\item State of relay 2
+\end{itemize}
+Apart from the above there are two bistable buttons, next to the information on the realy status. If they are on the system forces the relays to be switched on at all times. If not, the relays will be automaticly  switched off if the grid frequency will drop below a certain level.
+
+\subsection{Config screen}
+This panel may depict some of the information on the configuration of the system [\emph{IMPLEMENT IN THE uC}]:
+\begin{itemize}
+\item The cut-off frequency of the low-pass filter
+\item Sampling frequency
+\item ADC convertion mode
+\item Usages of the linearization function
+\item Relay switch off frequency
+\item Relay switch on frequency
+\end{itemize}
+
+\subsection{Test screen}
+This panel may be used during the updating/debuging of the programme for displaying certain variables. Thanks to a special function ({\textit{enable\_line\_of\_text()}) only two simple lines of code are required to display a given text line in a specified position on the screen, wich makes checking how certain variables change in the real time, fairly easy.
 
 \section{Communication}
 The communication part of the program is done by reusing the uip network stack. The built-in http server has the ability to both serve files and do some basic server-side scripting. \\
