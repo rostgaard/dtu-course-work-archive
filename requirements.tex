@@ -1,9 +1,11 @@
 \chapter[Requirements]{Requirements analysis and specification}
 \label{chap:requirements}
 %ELSAM states that we should be sensitive to changes in the powergrid frequency, and be able to communicate using a network.
-The ELSAM agreement states that the grid frequency at all times must be 50Hz. If the values goes lower, our device should turn off unneeded devices. ELSAM defines two types of loads; Normal operation reserve and Disturbance reserve.\\
-The Normal operation reserve should off-load when the frequency drops 49.9Hz, and shut off equipment able to do so in 2-3 minutes or less, not crucial to production (e.g. heater or lighting).\\ 
-Disturbance reserve mode is used when the grid frequency does not return to normal state. In our case we turn off a battery powered device (a laptop) and try to make sure we dont empty their batteries completely before getting the power back.
+The ELSAM agreement states that the grid frequency must be 50Hz at all times . If the frequency is lower, our device should turn off unneeded loads or devices. ELSAM defines two types of loads; Normal operation reserve and Disturbance reserve.\\
+The Normal operation reserve should be completely activated when the frequency drops 49.9Hz. Under these conditions it should turn off equipment, witch is able to do so in 2-3 minutes or less. These devices would include equipment not crucial to production (e.g.heater or lighting ).\\ 
+Disturbance reserve mode is used when the grid frequency does not return to normal state. In our case we turn off a battery powered device (a laptop) and try to make sure we dont empty their batteries completely before turning the power back on.
+
+Hello
 
 \begin{figure}[!h]
   \centering
@@ -11,7 +13,7 @@ Disturbance reserve mode is used when the grid frequency does not return to norm
   \includegraphics[width=0.9\textwidth]{figs/Demands_for_automatic_active_reserves.pdf}
   \caption{Hierarchy of the frequency controlled reserves in this report}
 \end{figure}
-To be able to do more ``intelligent'' grid-off loading, we must be able to communicate with the outside world. As there is no protocol specified, the logical choice would be tcp/ip for transport, as there is is already a well-established global infrastructure using this. The data should be transferred in an easy parsable format, such as XML.\\\\
+To be able to do more ``intelligent'' grid offloading, we must be able to communicate with the outside world. As there is no protocol specified, the logical choice would be tcp/ip for transport, as there is is already a well-established global infrastructure using this. The data should be transferred in an easy parsable format, such as XML.\\\\
 Users of the device should also be able to view the status, current configuration and make changes to the configuration as well. The status and configuration should be available both from a physical interface and via a remote interface. As out device has a touchscreen it will serve the purpose as a physical interface, and the remote interface should be done in html.\\\\
 This leaves us with the following requirements:
 \begin{itemize}
