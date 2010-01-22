@@ -294,7 +294,7 @@ void Program_Init (){
  // Init VIC
   VIC_Init();
  // Init DAC
-  initialize_dac();
+ // initialize_dac();
   initialize_adc();
  // Init LED
   initialize_led();

@@ -7,8 +7,8 @@ void initialize_adc()
   PINMODE1_bit.P0_25 = 2; 
   PINSEL1_bit.P0_25 = 1;
   
-//  PINMODE1_bit.P0_26 = 2; 
-//  PINSEL1_bit.P0_26 = 1;
+  PINMODE1_bit.P0_26 = 2; 
+  PINSEL1_bit.P0_26 = 1;
   
   // Init ADC
   PCONP_bit.PCAD = 1;         // Enable ADC clocks
