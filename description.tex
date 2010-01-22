@@ -87,7 +87,7 @@ The lowpass filter is used only for this particular purouse, though. All the oth
 
 \subsubsection{LCD measurements}
 The LCD measurements are conducted to check if the touch screen has been touched and if yes, where exactly did it happen. The possition of the touch is determined by measuring the voltage on the LCD's outputs. Measurement of the X and Y coordinates aren't done simultanously. If we want to measure the X coordinate the ADC and the pins have to be set to a certain state. In order to meassure the Y coordinate those set up options have to be different. This is due to the way that the measurements are conducted. The electrical setup of the LCD screen is depicted on Figure \ref{fig:LCD_screen_measurement}.
-
+easuring Y coordinates requires seting up ADC and GPIO pins in reverse manner. Since every LCD output channel is hardwired to a different port and we need to change the GPIO configuration each time we want to reset ADC for measuring different coo
 \begin{figure}
   \centering
   \includegraphics[width=0.75\textwidth]{img/used/adc_layers.pdf}               
@@ -95,14 +95,34 @@ The LCD measurements are conducted to check if the touch screen has been touched
   \label{fig:LCD_screen_measurement}
 \end{figure}
 
-In order to measure the X coordinate of the touched place on the LCD screen a potential gradient has to be applied to the bars represented as X1 and X2 on Figure \ref{fig:LCD_screen_measurement}. The actual X coordinate
+In order to measure the X coordinate of the touched place on the LCD screen a potential gradient has to be applied to the bars represented as X1 and X2 on Figure \ref{fig:LCD_screen_measurement}. The actual X coordinate is determined by measuring the voltage on the Y layer wich changes with the distance, from one of the X bars, at witch the touch accured. Applying a gradient in an opposite direction would cause the measurement to be giving position references with regards to the other side of LCD (X coordinates would measured from right to left instead of doing it in the left-to-right fashion). \\
+Measuring Y coordinates requires seting up ADC and GPIO pins in reverse manner. Since every LCD output channel is hardwired to a different port and we need to change the GPIO configuration each time we want to reset ADC for measuring different coordinate, every coordinate is meassured only every second ADC action. The overview of connections needed for every ADC conversion cyckle is shown in the below table:
 
-Hence, every coordinate is meassured on every second ADC action.
+
+\begin{table}
+\caption{Simplified overview of a two layer LCD electrical setup.}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+ & X normal & X reverse & Y normal & Y reverse \\ \hline
+ $X_{1}$ (pin 24) & set to high & set to low & ADC input & ADC input \\ \hline
+ $X_{2}$ (pin 22) & set to low & set to high & disabled & disabled\\ \hline
+ $Y_{1}$ (pin 23) & ADC input & ADC input & set to high & set to low \\ \hline
+ $Y_{2}$ (pin 21) & disabled & disabled & set to low & set to high \\ \hline
+\end{tabular}
+\label{table:LCD_screen_measurement} 
+\end{table}
+
 
  
 \section{User interface}
 The user interface's layout is presented below:\\
-%====[\texttt{PASTE A SCREEN LAYOUT}]====
+\begin{figure}[!h]
+  \centering
+  \subfloat[Main screen]{\label{fig:main_scr}\includegraphics[width=0.3\textwidth]{img/main_menu_small.jpg}}       \subfloat[Config screen]{\label{fig:config_scr}\includegraphics[width=0.3\textwidth]{img/config_small.jpg}}
+  \subfloat[Test screen]{\label{fig:test_scr}\includegraphics[width=0.3\textwidth]{img/test_screen_screen.jpg}}
+  \caption{Screenshots of the graphical user interface parts}
+  \label{fig:filter}
+\end{figure}
 It is build out of three different screens:
 \begin{itemize}
 \item Main screen
