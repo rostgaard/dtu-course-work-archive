@@ -2,81 +2,79 @@
 \label{chap:description}
 
 \section{Program structure}
-The developed application is devided into three modules as seen in figure \ref{fig:program_structure}
+The developed application is divided into three modules as seen in figure \ref{fig:program_structure}
 
 \begin{figure}[!h]
   \centering
-  \label{fig:program_structure}
   \includegraphics[width=0.5\textwidth]{figs/program_structure.pdf}
   \caption{The overall program structure}
+  \label{fig:program_structure}
 \end{figure}
-
-
 
 The conversion part is responsible for most of the ADC, DAC, GPIO and interrupt handling parts of the program. The LCD is taking care of the physical user interface, both touchscreen and displaying values on the screen. The uip is accepting remote connections and serving data to remote clients.\\\\
-The program runs roughly this sequence:
+The program runs roughly this sequence depicted in figure \ref{fig:program_sequence}
 
 \begin{figure}[!h]
   \centering
-  \label{fig:program_sequence}
-  \includegraphics[width=0.5\textwidth]{figs/program_sequence.pdf}
+  \includegraphics[width=0.6\textwidth]{figs/program_sequence.pdf}
   \caption{The overall program sequence}
+  \label{fig:program_sequence}
 \end{figure}
 
-The first thing done is the initialization. This obviously only run once. It gets the interrupts up and running and configures the appropriate GPIO pins. When done, it enters the main loop, where the application remains for remainder of run-time, while not processing interrupts. The Timer0 runs at a predefined frequency, and takes care of starting the ADC conversion process
-
-[INSERT TEXT]\\\\
-
-The ADC interrupt takes care of [INSERT TEXT].\\\\
+The first thing done is the initialization. This obviously only run once. It gets the interrupts up and running and configures the appropriate GPIO pins. When done, it enters the main loop, where the application remains for remainder of run-time, while not processing interrupts.\\
+The Timer0 runs at a predefined frequency, and takes care of starting the ADC conversion process, reading the touchscreen coordinates, detect zero-crossings, do http timer ticks and controlling relays.\\\\
+The ADC interrupt detects touches to the screen and stores the data from the measurements, does filtering and accumulates the squared values (integrates), used to calculate the corresponding RMS values.\\\\
 When not doing interrupts the main loop updates the screen, checks if a user has touched the screen and moves the cursor accordingly.\\
-It also does periodic checks on the IP stack, sending and recieving packets at a resonably stable frequency. This is done via the HTTP server.
-\section{Measurements and control}
-\subsection{Hardware resource allocation}
-\subsubsection{ADC}
-To get the maximum number of samples per second, we use burst mode. \\
+It also does periodic checks on the IP stack, sending and receiving packets at a reasonably stable frequency. This is done via the HTTP server.
+\subsubsection{Debugging the timing}
+Throughout our development process we har to erify that no single interrupt took so long time to execute that the next interrupt was delayed.\\\\
+We tought of three ways to ensure this.\\
+One method is to start another timer at the start of the interrupt routine, and stop it again at the end. We would now have the time the interrupt routine took.\\
+Another method wouldbe to clear the timer interrupt flag at the start of the interrupt routine and check the register at end of the routine. If it is high again - then our interrupt routine takes too long.\\
+The third method is to output a logical high signal to the DAC at the start of the interrupt routine, and then low again at the end of the routine. This was the method we used.
 
+\section{Measurements and control}
+\subsection{GPIO}
+We are using a number of GPIO's for various purposes. For example we are using P[1]\_18 and P[1]\_13 for LED's, P[0]\_11 and P[0]\_19 for controlling the relays. Other GPIO's are used in the touchscreen handling.
+
+\subsubsection{ADC}
+To get the maximum number of samples per second, we use burst mode (illustrated in figure \ref{fig:burst_mode}). As this enables us to free up some cputime and make the conversion faster.
 \begin{figure}[!h]
   \centering
+  \includegraphics[width=0.85\textwidth]{figs/burst_mode.pdf}
+  \caption{Illustration of the principle behind burst mode}
   \label{fig:burst_mode}
-  \includegraphics[width=0.5\textwidth]{figs/burst_mode.pdf}
-  \caption{Illustration of the priciple behind burst mode}
 \end{figure}
-
-Burst is started by entering Timer0 interrupt
-% explanation of burst mode, timer0 and ADC conversion timer. Graphic picturing burst mode
-
-
-
-
+The burst is started by entering the Timer0 interrupt handler, and runs simultaneously with our main loop and Timer0 handler. This is of course due to the fact that the conversion is done in hardware and does not need the processor for calculations.
 
 \subsection{Measurement algorithms and their implementation}
-The values measured with the microcontroller (ADC) are:
+The values measured with the micro-controller (ADC) are:
 \begin{itemize}
 \item Grid frequency
 \item Grid voltage
 \item Grid current
-\item LCD voltege (checking if, and if yes then where, LCD screen has been touched)
+\item LCD voltage (checking if, and if so, where LCD screen has been touched)
 \end{itemize}
 
 \subsubsection{Voltage and Current measurements}
-The voltage from the grid is passed through a circuit that lowers it's value to 0...3.3V range, before it can be processed by the microcontroller. The same thing is done with the current - it is converted to a voltage signal of the same scope. Both signals are scaled afterwards so the output of calculations is in grid values. Two different approaches were used for each of them.
+The voltage from the grid is passed through a circuit that lowers it's value to 0...3.3V range, before it can be processed by the micro-controller. The same thing is done with the current - it is converted to a voltage signal of the same scope. Both signals are scaled afterwards so the output of calculations is in grid values. Two different approaches were used for each of them.
 
 \paragraph{Voltage scaling}
 Firs the RMS and offset values of the grid voltage has been measured. The results were: 
 \[ V_{RMS}=236V \] 
 \[ V_{Offset} \approx 0V\]
-We can conver them into peak-to-peak values:
+We can convert them into peak-to-peak values:
 \[ V_{p-p}=2(V_{RMS}-V_{Offset})\sqrt{2}=2(236V-0)\sqrt{2}=667.5V \]
-Since the offset is approximately zero we can wrtie that maximum an minimum values of volatege are $ \pm333.75V $. The highest and lowest quantization levels accuired by ADC conversions were 1002 and 20. Hence the zero Volts was represented by $ (1002-20)/2=491_{level} $ and $ 1_{level}=333.75_{volts}/491_{level}=0.679735234_{volts} $.
+Since the offset is approximately zero we can write that maximum an minimum values of voltage are $ \pm333.75V $. The highest and lowest quantization levels acquired by ADC conversions were 1002 and 20. Hence the zero Volts was represented by $ (1002-20)/2=491_{level} $ and $ 1_{level}=333.75_{volts}/491_{level}=0.679735234_{volts} $.
 
 \paragraph{Current scaling}
-A bit different approach have been used while calculating the scaling ratio in the case of the grid's current. Here we've assumed that the current converting circuit is very precise and that the output values are exactly 0....3.3V. Thus we can suspect that the quantization level corresponding to 0A is equal to 512. After aquring the raw samples of the measured current from ADC, substracting 512, calculating their RMS value and multiplying the result by $ \sqrt{2} $ we got the current signal's digital representation's amplitude, which represents the real signals amplitude. Sclaing is done as in the case of the voltege from this point onward.
+A bit different approach have been used while calculating the scaling ratio in the case of the grid's current. Here we've assumed that the current converting circuit is very precise and that the output values are exactly 0....3.3V. Thus we can suspect that the quantization level corresponding to 0A is equal to 512. After acquiring the raw samples of the measured current from ADC, subtracting 512, calculating their RMS value and multiplying the result by $ \sqrt{2} $ we got the current signal's digital representation's amplitude, which represents the real signals amplitude. Scaling is done as in the case of the voltage from this point onward.
 
 \subsubsection{Frequency measurement}
-The frequency measurement is done by calculating the length of the period of a given signal. It is done by calculating the number of samples between the points at wich the signal is crossing an arbitrairly defined zero line with an assumed direction (rising edge or falling edge) and comparing it (number of samples) with the sampling frequency.\\
-In order to detect zero-crossing two succeding samples have to be remembered by the system. If the previous sample was below the zero-level and the current one is above, than the system marks this time as a rising edge zero-crossing and starts to count the samples until the next one.\\
-Due to significant disturbances a low pass filter has to be used, in order to smoothen out the data. Without it detecting false zero-crossings would be very common, which in turn would render the method completly useless.\\
-The lowpass filter is used only for this particular purouse, though. All the other calculations, like voltage RMS value, power etc. are performed on raw data. That is due to the fact that the filters output differ significnatly from its input (the amplitude is attenuated and the signal is shifted in phase). On the other hand filters, by definition, never change frequency, which make them usefull in this particular case. This is shown on the Figure ~\ref{fig:filter}
+The frequency measurement is done by calculating the length of the period of a given signal. It is done by calculating the number of samples between the points at which the signal is crossing an arbitrarily defined zero line with an assumed direction (rising edge or falling edge) and comparing it (number of samples) with the sampling frequency.\\
+In order to detect zero-crossing two succeeding samples have to be remembered by the system. If the previous sample was below the zero-level and the current one is above, than the system marks this time as a rising edge zero-crossing and starts to count the samples until the next one.\\
+Due to significant disturbances a low pass filter has to be used, in order to smoothen out the data. Without it detecting false zero-crossings would be very common, which in turn would render the method completely useless.\\
+The low-pass filter is used only for this particular purpose, though. All the other calculations, like voltage RMS value, power etc. are performed on raw data. That is due to the fact that the filters output differ significantly from its input (the amplitude is attenuated and the signal is shifted in phase). On the other hand filters, by definition, never change frequency, which make them useful in this particular case. This is shown on the Figure ~\ref{fig:filter}
 
 \begin{figure}[!h]
   \centering
@@ -91,11 +89,11 @@ The lowpass filter is used only for this particular purouse, though. All the oth
 
 
 \subsubsection{LCD measurements}
-The LCD measurements are conducted to check if the touch screen has been touched and if yes, where exactly did it happen. The possition of the touch is determined by measuring the voltage on the LCD's outputs. Measurement of the X and Y coordinates aren't done simultanously. If we want to measure the X coordinate the ADC and the pins have to be set to a certain state. In order to meassure the Y coordinate those set up options have to be different. Hence, every coordinate is meassured on every second ADC action.
+The LCD measurements are conducted to check if the touch screen has been touched and if yes, where exactly did it happen. The position of the touch is determined by measuring the voltage on the LCD's outputs. Measurement of the X and Y coordinates aren't done simultaneously. If we want to measure the X coordinate the ADC and the pins have to be set to a certain state. In order to measure the Y coordinate those set up options have to be different. Hence, every coordinate is measure on every second ADC action.
 
  
 \section{User interface}
-The user interface's layout is presened below:\\
+The user interface's layout is presented below:\\
 ====[\texttt{PASTE A SCREEN LAYOUT}]====
 It is build out of three different screens:
 \begin{itemize}
@@ -135,8 +133,8 @@ The communication part of the program is done by reusing the uip network stack. 
 We plan on refactoring the server, making able to serve xml and xsl\footnote{XML Stylesheet} (with the right content-type). Xsl will enable us to generate a single xml file and then transform it for the user to view via a browser. The xml document will be treated as a regulear html page, making the transformation transparent for the user. \\
 The really nice thing about xsl is that we only need one source of information for both the userinterface (webpage) and for automatically downloading done by programs interested in only the data. The programs will disreguard the xml stylesheet and only fetch the data, minimizing overhead.
 \subsection{Implementation}
-The first step in getting the webserver working as we intended was getting the stand-alone server accepting xml files. This was relatively easy, and so was getting the server to generate content dynamically. This was mostly done by copy-pasting, so we wont bore you with the details[OR PERHAPS WE WILL? MWUAHAHAHA!!] - the code is included.\\
-One thing that did baffle us though, was the fact that the uIP http server strings was written as arrays of bytes. Very unreadable and pointless, as a string or a char array would been just as good.\\
+The first step in getting the webserver working as we intended was getting the stand-alone server accepting xml files. This was relatively easy, and so was getting the server to generate content dynamically. This was mostly done by copy-pasting, and the code is included.\\
+One thing that did baffle us though, was the fact that the uIP http server strings was written as arrays of bytes. Very unreadable and pointless, as a string or a char array would been just as good.\\\\
 Our next step was getting the generic server merged into our main project. The big challenge was that the uip server used a global timer, and not just any timer - the same timer we already used i our main project.\\
 The migration was again done in two steps. First step was moving the httpd timer from timer0 to timer1, and check if that worked. Next step was merging the code of the two timers into one, and get the timing right. The change from timer0 to timer1 resulted in a very slow, but working, webserver.\\\\
 The problem in merging the two timers was due to the fact that they ran at two different frequencies. One at 20MHz and another at 100Hz. As these was both defined in our config.h as respectively TIMER0\_TICK\_PER\_SEC and HTTPD\_TICK\_PER\_SEC we figured we needed to add a counter and do the following:
