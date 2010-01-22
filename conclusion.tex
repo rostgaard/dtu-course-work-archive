@@ -1,6 +1,18 @@
 \chapter{Conclusion}
 \label{chap:conclusion}
 In the beginning of the project we spent a great deal of time cleaning and refactoring code, making it more modular and easy to navigate. But as the application evolved and grew in size and complexity, it became increasingly difficult to maintain a consistency in the code. Especially when thing were not doing as planned. New code arose in places where it did not belong.\\
-From this we have learned about the importance of defining a clear program structure and functionality from the start of the project, and enforcing it throughout the development process.\\\\
+From this we have learned about the importance of defining a clear program structure and functionality from the start of the project, and enforcing it throughout the development process.\\
+We have also learned that getting aqquainted with the users manual in the first place is a hard task. Still, with the help of the provided example codes it makes the proper configuration of the device much simplier.  \\\\
 The webserver is responding slowly, but is very functional. The xsl transformations works like a charm in modern browsers and should definitely be considered in the case of an official http+xml implementation.\\\\
-The LCD screen, acting as both in- an output, gives a quick way of getting an overview of the current status of the system. As well as modifying the system parameters real-time.\\ The values displayed are a bit off, due to programming errors. But it gives you an idea on how a finished system should look and behave.
+The LCD screen, acting as both in- an output, gives a quick way of getting an overview of the current status of the system. As well as modifying the system parameters real-time.\\ The values displayed are a bit off, due to programming errors. But it gives you an idea on how a finished system should look and behave.\\
+
+
+Measurements done with the use of Analog-Digital Converter need to be planed quite precisely due to the limitation of the ADC. If the sampling rate is to high compared to ADC's processing speed than we would encounter interferences between ADC and system timer (\textit{Timer 0}) interupts. This would render our measurements completly useless, due to the fact that the sampling period wouldn't be constant.  Similiar situation would accure if the interupts handling functions would take too long to execute (would be overfilled with the instructions).\\ To prevent this errors from happening we've measured the duration of the interupts with the use of ossciloscope. The duration of the interupt was maesured by setting a GPIO pin to 1 at the beginning of an interupt and setting it to 0 at it's end. From these measurements we've concluded that our system would safely perform its tasks with the sampling frequency set to 10kHz.
+
+Without linear interpolation the maximum precision of the frequency measurement would be:
+\[ SAMPLES\ PER\ PERIOD=\dfrac{frequency_{sampling}}{frequency_{grid}} = \dfrac{10000Hz}{50Hz}=200 \]
+\[ FREQUENCY\ RESOLUTION=\dfrac{frequency_{grid}}{SAMPLES\ PER\ PERIOD} = 0.25Hz \]
+
+With the interpolation we are able to increase the precison of the frequency calculations by approximately a factor of 10.
+
+
