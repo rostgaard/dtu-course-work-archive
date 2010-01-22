@@ -3,22 +3,27 @@
 \contentsline {chapter}{Nomenclature}{1}{chapter.1}
 \contentsline {chapter}{\numberline {2}Requirements}{2}{chapter.2}
 \contentsline {section}{\numberline {2.1}Tools used}{3}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}Debugging tools}{3}{subsection.2.1.1}
-\contentsline {subsection}{\numberline {2.1.2}Versioning}{3}{subsection.2.1.2}
-\contentsline {chapter}{\numberline {3}Description}{4}{chapter.3}
-\contentsline {section}{\numberline {3.1}Program structure}{4}{section.3.1}
-\contentsline {section}{\numberline {3.2}Measurements and control}{5}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Hardware resource allocation}{5}{subsection.3.2.1}
-\contentsline {subsubsection}{\numberline {3.2.1.1}ADC}{5}{subsubsection.3.2.1.1}
-\contentsline {subsection}{\numberline {3.2.2}Measurement algorithms and their implementation}{6}{subsection.3.2.2}
-\contentsline {subsubsection}{\numberline {3.2.2.1}Voltage and Current measurements}{6}{subsubsection.3.2.2.1}
-\contentsline {paragraph}{Voltage scaling}{6}{section*.2}
-\contentsline {paragraph}{Current scaling}{7}{section*.3}
-\contentsline {section}{\numberline {3.3}User interface}{7}{section.3.3}
-\contentsline {section}{\numberline {3.4}Communication}{7}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Implementation}{7}{subsection.3.4.1}
-\contentsline {subsubsection}{\numberline {3.4.1.1}Historical values}{8}{subsubsection.3.4.1.1}
-\contentsline {section}{\numberline {3.5}Chapter Summary}{8}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Communication}{8}{subsection.3.5.1}
-\contentsline {chapter}{\numberline {4}Conclusion}{9}{chapter.4}
-\contentsline {chapter}{\numberline {5}Appendix A}{10}{chapter.5}
+\contentsline {subsection}{\numberline {2.1.1}Debugging tools and methods}{3}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Information scraping}{4}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Versioning}{4}{subsection.2.1.3}
+\contentsline {chapter}{\numberline {3}Description}{5}{chapter.3}
+\contentsline {section}{\numberline {3.1}Program structure}{5}{section.3.1}
+\contentsline {section}{\numberline {3.2}Measurements and control}{6}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Hardware resource allocation}{6}{subsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.1.1}ADC}{6}{subsubsection.3.2.1.1}
+\contentsline {subsection}{\numberline {3.2.2}Measurement algorithms and their implementation}{7}{subsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.1}Voltage and Current measurements}{7}{subsubsection.3.2.2.1}
+\contentsline {paragraph}{Voltage scaling}{7}{section*.2}
+\contentsline {paragraph}{Current scaling}{8}{section*.3}
+\contentsline {subsubsection}{\numberline {3.2.2.2}Frequency measurement}{8}{subsubsection.3.2.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.3}LCD measurements}{9}{subsubsection.3.2.2.3}
+\contentsline {section}{\numberline {3.3}User interface}{9}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Main screen}{9}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Config screen}{10}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Test screen}{10}{subsection.3.3.3}
+\contentsline {section}{\numberline {3.4}Communication}{10}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Implementation}{11}{subsection.3.4.1}
+\contentsline {subsubsection}{\numberline {3.4.1.1}Historical values}{12}{subsubsection.3.4.1.1}
+\contentsline {section}{\numberline {3.5}Chapter Summary}{12}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Communication}{12}{subsection.3.5.1}
+\contentsline {chapter}{\numberline {4}Conclusion}{13}{chapter.4}

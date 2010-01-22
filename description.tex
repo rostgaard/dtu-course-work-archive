@@ -2,22 +2,30 @@
 \label{chap:description}
 
 \section{Program structure}
-The developed application is devided into three modules.
-\begin{itemize}
-\item Conversion
-\item LCD
-\item uip
-\end{itemize}
-\begin{center}
-\includegraphics[scale=0.4]{figs/program_structure.pdf}
-\end{center}
+The developed application is devided into three modules as seen in figure \ref{fig:program_structure}
+
+\begin{figure}[!h]
+  \centering
+  \label{fig:program_structure}
+  \includegraphics[width=0.5\textwidth]{figs/program_structure.pdf}
+  \caption{The overall program structure}
+\end{figure}
+
+
 
 The conversion part is responsible for most of the ADC, DAC, GPIO and interrupt handling parts of the program. The LCD is taking care of the physical user interface, both touchscreen and displaying values on the screen. The uip is accepting remote connections and serving data to remote clients.\\\\
 The program runs roughly this sequence:
-\begin{center}
-\includegraphics[scale=0.4]{figs/program_sequence.pdf}
-\end{center}
-The first thing done is the initialization. This obviously only run once. It gets the interrupts up and running and configures the appropriate GPIO pins. When done, it enters the main loop, where the application remains for remainder of run-time, while not processing interrupts. The Timer0 runs at a predefined frequency, and takes care of [INSERT TEXT]\\\\
+
+\begin{figure}[!h]
+  \centering
+  \label{fig:program_sequence}
+  \includegraphics[width=0.5\textwidth]{figs/program_sequence.pdf}
+  \caption{The overall program sequence}
+\end{figure}
+
+The first thing done is the initialization. This obviously only run once. It gets the interrupts up and running and configures the appropriate GPIO pins. When done, it enters the main loop, where the application remains for remainder of run-time, while not processing interrupts. The Timer0 runs at a predefined frequency, and takes care of starting the ADC conversion process
+
+[INSERT TEXT]\\\\
 
 The ADC interrupt takes care of [INSERT TEXT].\\\\
 When not doing interrupts the main loop updates the screen, checks if a user has touched the screen and moves the cursor accordingly.\\
@@ -25,10 +33,15 @@ It also does periodic checks on the IP stack, sending and recieving packets at a
 \section{Measurements and control}
 \subsection{Hardware resource allocation}
 \subsubsection{ADC}
-We are using the ADC for two purposes: Detecting input from the touchscreen and measuring grid frequency. This takes up three channels (one for each dimension on the screen, and one dedicated to the frequency). To get the maximum number of samples per second, we use burst mode. \\
-\begin{center}
-\includegraphics[scale=0.5]{figs/burst_mode.pdf}
-\end{center}
+To get the maximum number of samples per second, we use burst mode. \\
+
+\begin{figure}[!h]
+  \centering
+  \label{fig:burst_mode}
+  \includegraphics[width=0.5\textwidth]{figs/burst_mode.pdf}
+  \caption{Illustration of the priciple behind burst mode}
+\end{figure}
+
 Burst is started by entering Timer0 interrupt
 % explanation of burst mode, timer0 and ADC conversion timer. Graphic picturing burst mode
 
@@ -122,23 +135,26 @@ The communication part of the program is done by reusing the uip network stack. 
 We plan on refactoring the server, making able to serve xml and xsl\footnote{XML Stylesheet} (with the right content-type). Xsl will enable us to generate a single xml file and then transform it for the user to view via a browser. The xml document will be treated as a regulear html page, making the transformation transparent for the user. \\
 The really nice thing about xsl is that we only need one source of information for both the userinterface (webpage) and for automatically downloading done by programs interested in only the data. The programs will disreguard the xml stylesheet and only fetch the data, minimizing overhead.
 \subsection{Implementation}
-The first step in getting the webserver working as we intended was getting the stand-alone server accepting xml files. This was relatively easy, and do was getting the server to generate content dynamically. This was mostly done by copy-pasting, so we wont bore you with the details - the code is included.\\
-The next step was getting the generic server merged into our main project. The big challenge was that the uip server used a global timer, and not just any timer - the same timer we already used i our main project.\\
+The first step in getting the webserver working as we intended was getting the stand-alone server accepting xml files. This was relatively easy, and so was getting the server to generate content dynamically. This was mostly done by copy-pasting, so we wont bore you with the details[OR PERHAPS WE WILL? MWUAHAHAHA!!] - the code is included.\\
+One thing that did baffle us though, was the fact that the uIP http server strings was written as arrays of bytes. Very unreadable and pointless, as a string or a char array would been just as good.\\
+Our next step was getting the generic server merged into our main project. The big challenge was that the uip server used a global timer, and not just any timer - the same timer we already used i our main project.\\
 The migration was again done in two steps. First step was moving the httpd timer from timer0 to timer1, and check if that worked. Next step was merging the code of the two timers into one, and get the timing right. The change from timer0 to timer1 resulted in a very slow, but working, webserver.\\\\
 The problem in merging the two timers was due to the fact that they ran at two different frequencies. One at 20MHz and another at 100Hz. As these was both defined in our config.h as respectively TIMER0\_TICK\_PER\_SEC and HTTPD\_TICK\_PER\_SEC we figured we needed to add a counter and do the following:
 \begin{equation}
   counter \% \frac{TIMER0\_TICK\_PER\_SEC}{HTTPD\_TICK\_PER\_SEC} = 0
 \end{equation}
 The \% is the modulus operation. Upon true, the counter should reset and the http tick should increment. This implementation should make the http server insensible to changes in the timer0 frequency.\\\\
-The webpage itself refreshes every 5 seconds by asking the browser to do a delayed redirect to the same page.
+The webpage itself refreshes every 5 seconds by asking the browser to do a delayed redirect to the same page.\\\\
+Upon studying our code more closely, we discovered our slowdown was caused by the LCD doing refresh every free cputime it could get its dirty hands on. After getting the refresh down to 5Hz the server performance improved significally. Later on in the coding process the webserver suffered another slowdown, which we have not been able to fix yet.
 
 \subsubsection{Historical values}
 Although not implemented, due to different focus, we have spent some time considering a possible implementation.\\
 At first glance the buffer could be implemented using a linked list - but due to the fact that we do not have at memory manager we would at some point run out of free memory to store these these historical values. So, we could use a fixed size array of int pointers, and a pointer to the last element inserted. Then it should be possible to run through the array ``array-size'' number of times, starting from ``last\_inserted'' and break if we encounter a null pointer.\\
-The historical values should be displayed on a graph generated as an svg image, using JQuery to reload the values.
+The historical values should be displayed on a graph generated as an svg image, using JQuery to reload the values without reloading the page.
 
 \section{Chapter Summary}
 \label{sec:SummaryDescription}
 \subsection{Communication}
 The finished result can be viewed by accessing the ip (typically 192.168.0.100) and requesting the data.xml document. When doing this from a browser the transformation works like a charma and gives us a graphical representation of our values. The server is still slow when we enable the LCD and touchscreen, but this should just a matter of opimizing the code that handles these.\\
-The xsl file is with the other files in the uip/http-fs folder. 
+The browser refresh is, agreed, a bit quick n' dirty, but also works as intended. The xsl and xml files is with the other files in the uip/http-fs folder.\\
+For communication via TCP/IP on an intelligent powergrid, we do not think that xml+http should be the way to go. The overhead would be too big in comparison to a binary protocol.

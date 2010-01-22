@@ -3,8 +3,14 @@
 %ELSAM states that we should be sensitive to changes in the powergrid frequency, and be able to communicate using a network.
 The ELSAM agreement states that the grid frequency at all times must be 50Hz. If the values goes lower, our device should turn off unneeded devices. ELSAM defines two types of loads; Normal operation reserve and Disturbance reserve.\\
 The Normal operation reserve should off-load when the frequency drops 49.9Hz, and shut off equipment able to do so in 2-3 minutes or less, not crucial to production (e.g. heater or lighting).\\ 
-Disturbance reserve mode is used when the grid frequency does not return to normal state. In our case we turn off a battery powered device (a laptop) and try to make sure we dont empty their batteries completely before getting the power back.\\\\
+Disturbance reserve mode is used when the grid frequency does not return to normal state. In our case we turn off a battery powered device (a laptop) and try to make sure we dont empty their batteries completely before getting the power back.
 
+\begin{figure}[!h]
+  \centering
+  \label{fig:reserver_demands}
+  \includegraphics[width=0.9\textwidth]{figs/Demands_for_automatic_active_reserves.pdf}
+  \caption{ANDERS WRITES THIS ONE}
+\end{figure}
 To be able to do more ``intelligent'' grid-off loading, we must be able to communicate with the outside world. As there is no protocol specified, the logical choice would be tcp/ip for transport, as there is is already a well-established global infrastructure using this. The data should be transferred in an easy parsable format, such as XML.\\\\
 Users of the device should also be able to view the status, current configuration and make changes to the configuration as well. The status and configuration should be available both from a physical interface and via a remote interface. As out device has a touchscreen it will serve the purpose as a physical interface, and the remote interface should be done in html.\\\\
 This leaves us with the following requirements:
@@ -19,9 +25,14 @@ This leaves us with the following requirements:
 \end{itemize}
 
 \section{Tools used}
-\subsection{Debugging tools}
-When developing the communications interface we used the program ``wireshark'' \footnote{www.wireshark.org} to verify http requests and responses.
-% Optional paragraph containing descriptions on svn, wiki, debugging methods aso. 
+An application development process' success or failure can depend largely on the tools used in the process. Good tools for documenting, debugging and versioning should be considered bare minimums.
+\subsection{Debugging tools and methods}
+When developing the communications interface we use the program ``wireshark'' \footnote{www.wireshark.org} to verify http requests and responses.\\
+The board we will be using contains a JTAG port, for interactive debugging. This means we are able to stop the processor, read and modify registers or memory. This feature is extemly useful when debugging an application.
+
+\subsection{Information scraping}
+For doing quick notes on random information concerning code, documentation, requirements or specifications. We will be using a wiki for this purpose
+
 \subsection{Versioning}
 When developing an application, a versioning system is very useful both for experimenting with new features, because you have the ability to quickly roll-back to a working version. It is also a great way to do backup on your project.
 

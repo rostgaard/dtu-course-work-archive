@@ -2,17 +2,20 @@
 \BOOKMARK [0][]{chapter.1}{Nomenclature}{}
 \BOOKMARK [0][]{chapter.2}{2 Requirements}{}
 \BOOKMARK [1][-]{section.2.1}{2.1 Tools used}{chapter.2}
-\BOOKMARK [2][-]{subsection.2.1.1}{2.1.1 Debugging tools}{section.2.1}
-\BOOKMARK [2][-]{subsection.2.1.2}{2.1.2 Versioning}{section.2.1}
+\BOOKMARK [2][-]{subsection.2.1.1}{2.1.1 Debugging tools and methods}{section.2.1}
+\BOOKMARK [2][-]{subsection.2.1.2}{2.1.2 Information scraping}{section.2.1}
+\BOOKMARK [2][-]{subsection.2.1.3}{2.1.3 Versioning}{section.2.1}
 \BOOKMARK [0][]{chapter.3}{3 Description}{}
 \BOOKMARK [1][-]{section.3.1}{3.1 Program structure}{chapter.3}
 \BOOKMARK [1][-]{section.3.2}{3.2 Measurements and control}{chapter.3}
 \BOOKMARK [2][-]{subsection.3.2.1}{3.2.1 Hardware resource allocation}{section.3.2}
 \BOOKMARK [2][-]{subsection.3.2.2}{3.2.2 Measurement algorithms and their implementation}{section.3.2}
 \BOOKMARK [1][-]{section.3.3}{3.3 User interface}{chapter.3}
+\BOOKMARK [2][-]{subsection.3.3.1}{3.3.1 Main screen}{section.3.3}
+\BOOKMARK [2][-]{subsection.3.3.2}{3.3.2 Config screen}{section.3.3}
+\BOOKMARK [2][-]{subsection.3.3.3}{3.3.3 Test screen}{section.3.3}
 \BOOKMARK [1][-]{section.3.4}{3.4 Communication}{chapter.3}
 \BOOKMARK [2][-]{subsection.3.4.1}{3.4.1 Implementation}{section.3.4}
 \BOOKMARK [1][-]{section.3.5}{3.5 Chapter Summary}{chapter.3}
 \BOOKMARK [2][-]{subsection.3.5.1}{3.5.1 Communication}{section.3.5}
 \BOOKMARK [0][]{chapter.4}{4 Conclusion}{}
-\BOOKMARK [0][]{chapter.5}{5 Appendix A}{}
