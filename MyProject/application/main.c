@@ -322,8 +322,8 @@ void LCD_Init(){
   SDRAM_Init();
   GLCD_Ctrl (FALSE);
   //Load the "*.c" file containing the logo
-  GLCD_Init (NULL, NULL);
-//  GLCD_Init (Black_bgPic.pPicStream, NULL);
+//  GLCD_Init (NULL, NULL);
+  GLCD_Init (Black_bgPic.pPicStream, NULL);
   GLCD_LoadPic (1, 1, &button_lightgreyPic, NULL);
   GLCD_LoadPic (320-80, 1, &button_lightgreyPic, NULL);
   GLCD_Ctrl (TRUE);
@@ -374,7 +374,25 @@ void LCD_Config_Screen(){
   GLCD_TextSetPos(0,0);
   printf("__CONFIG__ ");
   
-
+  enable_line_of_text(0, 0, 0xFFFFFF,0x505050);
+  printf("Filter cut-off: %0.0f Hz", ADFILTER_CUT_OFF_FREQUENCY);
+  
+    enable_line_of_text(1, 0, 0xFFFFFF,0x505050);
+  printf("ADC samp. freq.: %0.0d Hz", TIMER0_TICK_PER_SEC);
+  
+//      enable_line_of_text(2, 0, 0xFFFFFF,0x505050);
+//  printf("ADC working mode: BURST");
+  
+  enable_line_of_text(2, 0, 0xFFFFFF,0x505050);
+  printf("Linear interpolation: ON");
+  
+  enable_line_of_text(3, 0, 0xFFFFFF,0x505050);
+  printf("Relays OFF freq.: %0.0f Hz",RELAY_OFF_FREQUENCY);
+         
+  enable_line_of_text(4, 0, 0xFFFFFF,0x505050);
+  printf("Relays ON freq.: %0.0f Hz",RELAY_ON_FREQUENCY);
+         
+  
 
 }
 
@@ -512,8 +530,8 @@ void load_scr_graphics(Int32U *pBackground_painting){
   
         GLCD_Ctrl (FALSE);
       //Load the "*.c" file containing the logo
-      GLCD_Init (pBackground_painting, NULL);
-      //GLCD_Init (Black_bgPic.pPicStream, NULL);
+//      GLCD_Init (pBackground_painting, NULL);
+      GLCD_Init (Black_bgPic.pPicStream, NULL);
       GLCD_LoadPic (1, 1, &button_lightgreyPic, NULL);
       GLCD_LoadPic (320-80, 1, &button_lightgreyPic, NULL);
       GLCD_Ctrl (TRUE);

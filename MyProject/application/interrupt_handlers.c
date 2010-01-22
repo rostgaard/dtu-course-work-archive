@@ -205,10 +205,10 @@ void Timer0IntrHandler (void)
     FIO0PIN_bit.P0_11 = 1;
     else{
 
-      if(frequency>=55.0 && relays_status(bulb) != 1) {
+      if(frequency>=RELAY_ON_FREQUENCY && relays_status(bulb) != 1) {
         toggle_relays(bulb, 1);
       }
-      else if(frequency<=45.0 && relays_status(bulb) != 0){
+      else if(frequency<=RELAY_OFF_FREQUENCY && relays_status(bulb) != 0){
         toggle_relays(bulb, 0);
       }
  }
@@ -219,10 +219,10 @@ void Timer0IntrHandler (void)
     FIO0PIN_bit.P0_19 = 1;
     else{
 
-      if(frequency>=55.0 && relays_status(socket) != 1) {
+      if(frequency>=RELAY_ON_FREQUENCY && relays_status(socket) != 1) {
         toggle_relays(socket, 1);
       }
-      else if(frequency<=45.0 && relays_status(socket) != 0){
+      else if(frequency<=RELAY_OFF_FREQUENCY && relays_status(socket) != 0){
         toggle_relays(socket, 0);
       }
  }
