@@ -60,12 +60,11 @@ The values measured with the micro-controller (ADC) are:
 The voltage from the grid is passed through a circuit that lowers it's value to 0...3.3V range, before it can be processed by the micro-controller. The same thing is done with the current - it is converted to a voltage signal of the same scope. Both signals are scaled afterwards so the output of calculations is in grid values. Two different approaches were used for each of them.
 
 \paragraph{Voltage scaling}
-Firs the RMS and offset values of the grid voltage has been measured. The results were: 
+Firs the RMS and offset values of the grid voltage has been measured. The results were:\\\\ 
 \[ V_{RMS}=236V \] 
-\[ V_{Offset} \approx 0V\]
-We can convert them into peak-to-peak values:
-\[ V_{p-p}=2(V_{RMS}-V_{Offset})\sqrt{2}=2(236V-0)\sqrt{2}=667.5V \]
-Since the offset is approximately zero we can write that maximum an minimum values of voltage are $ \pm333.75V $. The highest and lowest quantization levels acquired by ADC conversions were 1002 and 20. Hence the zero Volts was represented by $ (1002-20)/2=491_{level} $ and $ 1_{level}=333.75_{volts}/491_{level}=0.679735234_{volts} $.
+\[ V_{Offset} \approx 0V\]\\
+then assuming that the offset value corresponding to 0 V is exactly half of the measurement range we set this tis to 512, after subtracting this value from the raw data we get the raw data RMS value, this value can then be used to scale the raw data to physical values in volts. The raw data RMS value is 341 which means the the scaling factor for RMS voltage is
+\[ V_{RMS}= 236/341=0,692082\]
 
 \paragraph{Current scaling}
 A bit different approach have been used while calculating the scaling ratio in the case of the grid's current. Here we've assumed that the current converting circuit is very precise and that the output values are exactly 0....3.3V. Thus we can suspect that the quantization level corresponding to 0A is equal to 512. After acquiring the raw samples of the measured current from ADC, subtracting 512, calculating their RMS value and multiplying the result by $ \sqrt{2} $ we got the current signal's digital representation's amplitude, which represents the real signals amplitude. Scaling is done as in the case of the voltage from this point onward.
