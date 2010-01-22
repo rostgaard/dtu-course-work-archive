@@ -1,7 +1,7 @@
 [JLinkDriver]
 WatchCond=_ 0
-Watch0=_ 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 0 0 0
-Watch1=_ 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 0 0 0
+Watch0=_ 0 "" 0 "" 0 "" 0 "" 0 0 0 0
+Watch1=_ 0 "" 0 "" 0 "" 0 "" 0 0 0 0
 [DisAssemblyWindow]
 NumStates=_ 1
 State 1=_ 1
@@ -26,10 +26,6 @@ ShowSource=1
 Checksum=2109290364
 [InstructionProfiling]
 Enabled=_ 0
-[Disassemble mode]
-mode=0
-[Breakpoints]
-Count=0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -41,3 +37,7 @@ LogFile=_ ""
 Enabled=0
 Source=2
 Graph=0
+[Disassemble mode]
+mode=0
+[Breakpoints]
+Count=0
