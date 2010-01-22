@@ -27,10 +27,10 @@ The ADC interrupt detects touches to the screen and stores the data from the mea
 When not doing interrupts the main loop updates the screen, checks if a user has touched the screen and moves the cursor accordingly.\\
 It also does periodic checks on the IP stack, sending and receiving packets at a reasonably stable frequency. This is done via the HTTP server.
 \subsubsection{Debugging the timing}
-Throughout our development process we har to erify that no single interrupt took so long time to execute that the next interrupt was delayed.\\\\
-We tought of three ways to ensure this.\\
+Throughout our development process we had to verify that no single interrupt took so long time to execute that the next interrupt was delayed.\\\\
+We thought of three possible ways to ensure this.\\
 One method is to start another timer at the start of the interrupt routine, and stop it again at the end. We would now have the time the interrupt routine took.\\
-Another method wouldbe to clear the timer interrupt flag at the start of the interrupt routine and check the register at end of the routine. If it is high again - then our interrupt routine takes too long.\\
+Another method would be to clear the timer interrupt flag at the start of the interrupt routine and check the register at end of the routine. If it is high again - then our interrupt routine takes too long.\\
 The third method is to output a logical high signal to the DAC at the start of the interrupt routine, and then low again at the end of the routine. This was the method we used.
 
 \section{Measurements and control}
@@ -38,7 +38,7 @@ The third method is to output a logical high signal to the DAC at the start of t
 We are using a number of GPIO's for various purposes. For example we are using P[1]\_18 and P[1]\_13 for LED's, P[0]\_11 and P[0]\_19 for controlling the relays. Other GPIO's are used in the touchscreen handling.
 
 \subsubsection{ADC}
-To get the maximum number of samples per second, we use burst mode (illustrated in figure \ref{fig:burst_mode}). As this enables us to free up some cputime and make the conversion faster.
+To get the maximum number of samples per second, we use burst mode (illustrated in figure \ref{fig:burst_mode}). As this enables us to free up some cpu time and make the conversion faster.
 \begin{figure}[!h]
   \centering
   \includegraphics[width=0.85\textwidth]{figs/burst_mode.pdf}
@@ -101,7 +101,7 @@ It is build out of three different screens:
 \item Config screen
 \item Test screen
 \end{itemize}
-There is a panel's name lable at the top of each screen. There are also two buttons on it's both sides. They allow the user to switch between screens in a ring fashion (if one button is pressed continously, then the screens repeat their selves).\\
+There is a panel's name label at the top of each screen. There are also two buttons on it's both sides. They allow the user to switch between screens in a ring fashion (if one button is pressed continuously, then the screens repeat their selves).\\
 
 \subsection{Main screen}
 The main screen is the default panel presented on the LCD. It shows the values of:
@@ -112,26 +112,26 @@ The main screen is the default panel presented on the LCD. It shows the values o
 \item State of relay 1
 \item State of relay 2
 \end{itemize}
-Apart from the above there are two bistable buttons, next to the information on the realy status. If they are on the system forces the relays to be switched on at all times. If not, the relays will be automaticly  switched off if the grid frequency will drop below a certain level.
+Apart from the above there are two bistable buttons, next to the information on the relay status. If they are on the system forces the relays to be switched on at all times. If not, the relays will be automatically  switched off if the grid frequency will drop below a certain level.
 
 \subsection{Config screen}
 This panel may depict some of the information on the configuration of the system [\emph{IMPLEMENT IN THE uC}]:
 \begin{itemize}
 \item The cut-off frequency of the low-pass filter
 \item Sampling frequency
-\item ADC convertion mode
+\item ADC conversion mode
 \item Usages of the linearization function
 \item Relay switch off frequency
 \item Relay switch on frequency
 \end{itemize}
 
 \subsection{Test screen}
-This panel may be used during the updating/debuging of the programme for displaying certain variables. Thanks to a special function ({\textit{enable\_line\_of\_text()}) only two simple lines of code are required to display a given text line in a specified position on the screen, wich makes checking how certain variables change in the real time, fairly easy.
+This panel may be used during the updating/debugging of the programme for displaying certain variables. Thanks to a special function ({\textit{enable\_line\_of\_text()}) only two simple lines of code are required to display a given text line in a specified position on the screen, which makes checking how certain variables change in the real time, fairly easy.
 
 \section{Communication}
 The communication part of the program is done by reusing the uip network stack. The built-in http server has the ability to both serve files and do some basic server-side scripting. \\
-We plan on refactoring the server, making able to serve xml and xsl\footnote{XML Stylesheet} (with the right content-type). Xsl will enable us to generate a single xml file and then transform it for the user to view via a browser. The xml document will be treated as a regulear html page, making the transformation transparent for the user. \\
-The really nice thing about xsl is that we only need one source of information for both the userinterface (webpage) and for automatically downloading done by programs interested in only the data. The programs will disreguard the xml stylesheet and only fetch the data, minimizing overhead.
+We plan on refactoring the server, making able to serve xml and xsl\footnote{XML Stylesheet} (with the right content-type). Xsl will enable us to generate a single xml file and then transform it for the user to view via a browser. The xml document will be treated as a regular html page, making the transformation transparent for the user. \\
+The really nice thing about xsl is that we only need one source of information for both the user interface (webpage) and for automatically downloading done by programs interested in only the data. The programs will disregard the xml stylesheet and only fetch the data, minimizing overhead.
 \subsection{Implementation}
 The first step in getting the webserver working as we intended was getting the stand-alone server accepting xml files. This was relatively easy, and so was getting the server to generate content dynamically. This was mostly done by copy-pasting, and the code is included.\\
 One thing that did baffle us though, was the fact that the uIP http server strings was written as arrays of bytes. Very unreadable and pointless, as a string or a char array would been just as good.\\\\
@@ -143,7 +143,7 @@ The problem in merging the two timers was due to the fact that they ran at two d
 \end{equation}
 The \% is the modulus operation. Upon true, the counter should reset and the http tick should increment. This implementation should make the http server insensible to changes in the timer0 frequency.\\\\
 The webpage itself refreshes every 5 seconds by asking the browser to do a delayed redirect to the same page.\\\\
-Upon studying our code more closely, we discovered our slowdown was caused by the LCD doing refresh every free cputime it could get its dirty hands on. After getting the refresh down to 5Hz the server performance improved significally. Later on in the coding process the webserver suffered another slowdown, which we have not been able to fix yet.
+Upon studying our code more closely, we discovered our slowdown was caused by the LCD doing refresh every free cputime it could get its dirty hands on. After getting the refresh down to 5Hz the server performance improved significantly. Later on in the coding process the webserver suffered another slowdown, which we have not been able to fix yet.
 
 \subsubsection{Historical values}
 Although not implemented, due to different focus, we have spent some time considering a possible implementation.\\
@@ -153,6 +153,6 @@ The historical values should be displayed on a graph generated as an svg image, 
 \section{Chapter Summary}
 \label{sec:SummaryDescription}
 \subsection{Communication}
-The finished result can be viewed by accessing the ip (typically 192.168.0.100) and requesting the data.xml document. When doing this from a browser the transformation works like a charma and gives us a graphical representation of our values. The server is still slow when we enable the LCD and touchscreen, but this should just a matter of opimizing the code that handles these.\\
+The finished result can be viewed by accessing the ip (typically 192.168.0.100) and requesting the data.xml document. When doing this from a browser the transformation works like a charm and gives us a graphical representation of our values. The server is still slow when we enable the LCD and touchscreen, but this should just a matter of optimizing the code that handles these.\\
 The browser refresh is, agreed, a bit quick n' dirty, but also works as intended. The xsl and xml files is with the other files in the uip/http-fs folder.\\
-For communication via TCP/IP on an intelligent powergrid, we do not think that xml+http should be the way to go. The overhead would be too big in comparison to a binary protocol.
+For communication via TCP/IP on an intelligent power grid, we do not think that xml+http should be the way to go. The overhead would be too big in comparison to a binary protocol.
