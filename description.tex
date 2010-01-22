@@ -63,22 +63,30 @@ The voltage from the grid is passed through a circuit that lowers it's value to 
 Firs the RMS and offset values of the grid voltage has been measured. The results were:\\\\ 
 \[ V_{RMS}=236V \] 
 \[ V_{Offset} \approx 0V\]\\
-then assuming that the offset value corresponding to 0 V is exactly half of the measurement range we set this tis to 512, after subtracting this value from the raw data we get the raw data RMS value, this value can then be used to scale the raw data to physical values in volts. The raw data RMS value is 341 which means the the scaling factor for RMS voltage is
-\[ V_{RMS}= 236/341=0,692082\]
+then assuming that the offset value corresponding to 0 V is exactly half of the measurement range of the ADC we set this to 512. After subtracting this value 
+from the raw data we get the raw data RMS value. This value together with the measured RMS voltage can be used to scale the raw data to physical values in 
+volts. The raw data RMS value is 341 which means that the scaling factor for RMS voltage is
+\[ V_scalefactor= 236V/341=0,692082\]
 
 \paragraph{Current scaling}
-A bit different approach have been used while calculating the scaling ratio in the case of the grid's current. Here we've assumed that the current converting circuit is very precise and that the output values are exactly 0....3.3V. Thus we can suspect that the quantization level corresponding to 0A is equal to 512. After acquiring the raw samples of the measured current from ADC, subtracting 512, calculating their RMS value and multiplying the result by $ \sqrt{2} $ we got the current signal's digital representation's amplitude, which represents the real signals amplitude. Scaling is done as in the case of the voltage from this point onward.
+A bit different approach have been used while calculating the scaling ratio in the case of the grid's current. Here we've assumed that the current converting 
+circuit is very precise and that the output values are exactly 0....3.3V. Thus we can expect that the quantization level corresponding to 0A is equal to 512. 
+Because we can not really measure the actual current in the system we assume that the system uses the full measuring range this means that the RMS current 
+signal in raw data values should be 
+\[ Iraw_{RMS}=512/\sqrt(2)=362\]
+The specified maximum RMS current is 1A which gives us a current scaling factor of  
+\[ V_scalefactor= 1/362=0,00276243\]
 
 \subsubsection{Frequency measurement}
-The frequency measurement is done by calculating the length of the period of a given signal. It is done by calculating the number of samples between the points at wich the signal is crossing an arbitrairly defined zero line with an assumed direction (rising edge or falling edge) and comparing it (number of samples) with the sampling frequency.\\
-In order to detect zero-crossing two succeding samples have to be remembered by the system. If the previous sample was below the zero-level and the current one is above, than the system marks this time as a rising edge zero-crossing and starts to count the samples until the next one.\\
-Due to significant disturbances a low pass filter has to be used, in order to smoothen out the data. Without it detecting false zero-crossings would be very common, which in turn would render the method completly useless.\\
-The lowpass filter is used only for this particular purouse, though. All the other calculations, like voltage RMS value, power etc. are performed on raw data. That is due to the fact that the filters output differ significnatly from its input (the amplitude is attenuated and the signal is shifted in phase). On the other hand filters, by definition, never change frequency, which make them usefull in this particular case. This is shown on the Figure \ref{fig:filter}
-
+The frequency measurement is done by calculating the length of the period of a given signal. It is done by calculating the number of samples between the points at which the signal is crossing an arbitrarily defined zero line with an assumed direction (rising edge or falling edge) and comparing it (number of samples) with the sampling frequency.\\
+In order to detect zero-crossing two succeeding samples have to be remembered by the system. If the previous sample was below the zero-level and the current one is above, than the system marks this time as a rising edge zero-crossing and starts to count the samples until the next one.\\
+Due to significant disturbances a low pass filter has to be used, in order to smoothen out the data. Without it detecting false zero-crossings would be very common, which in turn would render the method completely useless.\\
+The low-pass filter is used only for this particular purpose, though. All the other calculations, like voltage RMS value, power etc. are performed on raw data. That is due to the fact that the filters output differ significantly from its input (the amplitude is attenuated and the signal is shifted in phase). On the other hand filters, by definition, never change frequency, which make them useful in this particular case. This is shown on the Figure ~\ref{fig:filter}
 
 \begin{figure}[!h]
   \centering
-  \subfloat[Cut-off at 100Hz]{\label{fig:100@10}\includegraphics[width=0.3\textwidth]{img/used/100Hz@10kHz_small.png}}       \subfloat[Cut-off at 50Hz]{\label{fig:50@10}\includegraphics[width=0.3\textwidth]{img/used/50Hz@10kHz_small.png}}
+  \subfloat[Cut-off at 100Hz]{\label{fig:100@10}\includegraphics[width=0.3\textwidth]{img/used/100Hz@10kHz_small.png}}                
+  \subfloat[Cut-off at 50Hz]{\label{fig:50@10}\includegraphics[width=0.3\textwidth]{img/used/50Hz@10kHz_small.png}}
   \subfloat[Cut-off at 10Hz]{\label{fig:10@10}\includegraphics[width=0.3\textwidth]{img/used/10Hz@10kHz_small.png}}
   \caption{Input and output signals of a low-pass filter at a sampling frequency of 10kHz for three different cut-off frequencies.}
   \label{fig:filter}
@@ -87,8 +95,7 @@ The lowpass filter is used only for this particular purouse, though. All the oth
 
 \subsubsection{LCD measurements}
 The LCD measurements are conducted to check if the touch screen has been touched and if yes, where exactly did it happen. The possition of the touch is determined by measuring the voltage on the LCD's outputs. Measurement of the X and Y coordinates aren't done simultanously. If we want to measure the X coordinate the ADC and the pins have to be set to a certain state. In order to meassure the Y coordinate those set up options have to be different. This is due to the way that the measurements are conducted. The electrical setup of the LCD screen is depicted on Figure \ref{fig:LCD_screen_measurement}.
-easuring Y coordinates requires seting up ADC and GPIO pins in reverse manner. Since every LCD output channel is hardwired to a different port and we need to change the GPIO configuration each time we want to reset ADC for measuring different coo
-\begin{figure}
+easuring Y coordinates requires seting up ADC and GPIO pins in reverse manner. Since every LCD output channel is hardwired to a different port and we need to change the GPIO configuration each time we want to reset ADC for measuring different coo\begin{figure}
   \centering
   \includegraphics[width=0.75\textwidth]{img/used/adc_layers.pdf}               
   \caption{Simplified overview of a two layer LCD electrical setup.}
@@ -98,22 +105,9 @@ easuring Y coordinates requires seting up ADC and GPIO pins in reverse manner. S
 In order to measure the X coordinate of the touched place on the LCD screen a potential gradient has to be applied to the bars represented as X1 and X2 on Figure \ref{fig:LCD_screen_measurement}. The actual X coordinate is determined by measuring the voltage on the Y layer wich changes with the distance, from one of the X bars, at witch the touch accured. Applying a gradient in an opposite direction would cause the measurement to be giving position references with regards to the other side of LCD (X coordinates would measured from right to left instead of doing it in the left-to-right fashion). \\
 Measuring Y coordinates requires seting up ADC and GPIO pins in reverse manner. Since every LCD output channel is hardwired to a different port and we need to change the GPIO configuration each time we want to reset ADC for measuring different coordinate, every coordinate is meassured only every second ADC action. The overview of connections needed for every ADC conversion cyckle is shown in the below table:
 
+Hence, every coordinate is meassured on every second ADC action.
 
-\begin{table}
-\caption{Simplified overview of a two layer LCD electrical setup.}
-\begin{tabular}{|l|l|l|l|l|}
-\hline
- & X normal & X reverse & Y normal & Y reverse \\ \hline
- $X_{1}$ (pin 24) & set to high & set to low & ADC input & ADC input \\ \hline
- $X_{2}$ (pin 22) & set to low & set to high & disabled & disabled\\ \hline
- $Y_{1}$ (pin 23) & ADC input & ADC input & set to high & set to low \\ \hline
- $Y_{2}$ (pin 21) & disabled & disabled & set to low & set to high \\ \hline
-\end{tabular}
-\label{table:LCD_screen_measurement} 
-\end{table}
-
-
- 
+\begin{table}\caption{Simplified overview of a two layer LCD electrical setup.}\begin{tabular}{|l|l|l|l|l|}\hline & X normal & X reverse & Y normal & Y reverse \\ \hline $X_{1}$ (pin 24) & set to high & set to low & ADC input & ADC input \\ \hline $X_{2}$ (pin 22) & set to low & set to high & disabled & disabled\\ \hline $Y_{1}$ (pin 23) & ADC input & ADC input & set to high & set to low \\ \hline $Y_{2}$ (pin 21) & disabled & disabled & set to low & set to high \\ \hline\end{tabular}\label{table:LCD_screen_measurement} \end{table} 
 \section{User interface}
 The user interface's layout is presented below:\\
 \begin{figure}[!h]
