@@ -70,10 +70,12 @@ then assuming that the offset value corresponding to 0 V is exactly half of the 
 A bit different approach have been used while calculating the scaling ratio in the case of the grid's current. Here we've assumed that the current converting circuit is very precise and that the output values are exactly 0....3.3V. Thus we can suspect that the quantization level corresponding to 0A is equal to 512. After acquiring the raw samples of the measured current from ADC, subtracting 512, calculating their RMS value and multiplying the result by $ \sqrt{2} $ we got the current signal's digital representation's amplitude, which represents the real signals amplitude. Scaling is done as in the case of the voltage from this point onward.
 
 \subsubsection{Frequency measurement}
-The frequency measurement is done by calculating the length of the period of a given signal. It is done by calculating the number of samples between the points at which the signal is crossing an arbitrarily defined zero line with an assumed direction (rising edge or falling edge) and comparing it (number of samples) with the sampling frequency.\\
-In order to detect zero-crossing two succeeding samples have to be remembered by the system. If the previous sample was below the zero-level and the current one is above, than the system marks this time as a rising edge zero-crossing and starts to count the samples until the next one.\\
-Due to significant disturbances a low pass filter has to be used, in order to smoothen out the data. Without it detecting false zero-crossings would be very common, which in turn would render the method completely useless.\\
-The low-pass filter is used only for this particular purpose, though. All the other calculations, like voltage RMS value, power etc. are performed on raw data. That is due to the fact that the filters output differ significantly from its input (the amplitude is attenuated and the signal is shifted in phase). On the other hand filters, by definition, never change frequency, which make them useful in this particular case. This is shown on the Figure ~\ref{fig:filter}
+<<<<<<< .mine
+The frequency measurement is done by calculating the length of the period of a given signal. It is done by calculating the number of samples between the points at wich the signal is crossing an arbitrairly defined zero line with an assumed direction (rising edge or falling edge) and comparing it (number of samples) with the sampling frequency.\\
+In order to detect zero-crossing two succeding samples have to be remembered by the system. If the previous sample was below the zero-level and the current one is above, than the system marks this time as a rising edge zero-crossing and starts to count the samples until the next one.\\
+Due to significant disturbances a low pass filter has to be used, in order to smoothen out the data. Without it detecting false zero-crossings would be very common, which in turn would render the method completly useless.\\
+The lowpass filter is used only for this particular purouse, though. All the other calculations, like voltage RMS value, power etc. are performed on raw data. That is due to the fact that the filters output differ significnatly from its input (the amplitude is attenuated and the signal is shifted in phase). On the other hand filters, by definition, never change frequency, which make them usefull in this particular case. This is shown on the Figure \ref{fig:filter}
+
 
 \begin{figure}[!h]
   \centering
@@ -85,10 +87,31 @@ The low-pass filter is used only for this particular purpose, though. All the ot
 \end{figure}
 
 
-
-
 \subsubsection{LCD measurements}
-The LCD measurements are conducted to check if the touch screen has been touched and if yes, where exactly did it happen. The position of the touch is determined by measuring the voltage on the LCD's outputs. Measurement of the X and Y coordinates aren't done simultaneously. If we want to measure the X coordinate the ADC and the pins have to be set to a certain state. In order to measure the Y coordinate those set up options have to be different. Hence, every coordinate is measure on every second ADC action.
+The LCD measurements are conducted to check if the touch screen has been touched and if yes, where exactly did it happen. The possition of the touch is determined by measuring the voltage on the LCD's outputs. Measurement of the X and Y coordinates aren't done simultanously. If we want to measure the X coordinate the ADC and the pins have to be set to a certain state. In order to meassure the Y coordinate those set up options have to be different. This is due to the way that the measurements are conducted. The electrical setup of the LCD screen is depicted on Figure \ref{fig:LCD_screen_measurement}.
+
+
+\begin{figure}
+  \centering
+\includegraphics[width=0.75\textwidth]{img/used/adc_layers.pdf}               
+  \caption{Simplified overview of a two layer LCD electrical setup.}
+  \label{fig:LCD_screen_measurement}
+\end{figure}
+
+In order to measure the X coordinate of the touched place on the LCD screen a potential gradient has to be applied to the bars represented as X_{1} and X_{2} on Figure \ref{fig:LCD_screen_measurement}. The actual X coordinate
+
+
+Hence, every coordinate is meassured on every second ADC action.
+
+\begin{figure}
+  \centering
+\includegraphics[width=0.75\textwidth]{img/used/adc_layers.pdf}               
+  \caption{Simplified overview of a two layer LCD electrical setup.}
+  \label{fig:LCD_screen_measurement}
+\end{figure}
+
+
+Hence, every coordinate is meassured on every second ADC action.
 
  
 \section{User interface}
@@ -111,6 +134,12 @@ The main screen is the default panel presented on the LCD. It shows the values o
 \item State of relay 1
 \item State of relay 2
 \end{itemize}
+\subsubsection{LCD measurements}
+<<<<<<< .mine
+The LCD measurements are conducted to check if the touch screen has been touched and if yes, where exactly did it happen. The possition of the touch is determined by measuring the voltage on the LCD's outputs. Measurement of the X and Y coordinates aren't done simultanously. If we want to measure the X coordinate the ADC and the pins have to be set to a certain state. In order to meassure the Y coordinate those set up options have to be different. This is due to the way that the measurements are conducted. The electrical setup of the LCD screen is depicted on Figure \ref{fig:LCD_screen_measurement}
+=======
+The LCD measurements are conducted to check if the touch screen has been touched and if yes, where exactly did it happen. The position of the touch is determined by measuring the voltage on the LCD's outputs. Measurement of the X and Y coordinates aren't done simultaneously. If we want to measure the X coordinate the ADC and the pins have to be set to a certain state. In order to measure the Y coordinate those set up options have to be different. Hence, every coordinate is measure on every second ADC action.
+>>>>>>> .r26
 Apart from the above there are two bistable buttons, next to the information on the relay status. If they are on the system forces the relays to be switched on at all times. If not, the relays will be automatically  switched off if the grid frequency will drop below a certain level.
 
 \subsection{Config screen}
