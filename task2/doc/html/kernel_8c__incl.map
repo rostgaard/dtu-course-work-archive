@@ -1,0 +1,3 @@
+<area shape="rect" href="$kernel_8h.html" title="This file holds kernel wide macros and declarations." alt="" coords="20,80,87,107">
+<area shape="rect" href="$syscall_8c.html" title="This files holds the implementations of system calls." alt="" coords="111,80,183,107">
+<area shape="rect" href="$sysdefines_8h.html" title="This file defines constants used by system calls." alt="" coords="5,155,101,181">
