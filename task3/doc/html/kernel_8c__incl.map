@@ -1,0 +1,6 @@
+<area shape="rect" href="$kernel_8h.html" title="This file holds kernel wide macros and declarations." alt="" coords="20,155,87,181">
+<area shape="rect" href="$threadqueue_8h.html" title="This file defines operations on thread queues." alt="" coords="47,80,151,107">
+<area shape="rect" href="$syscall_8c.html" title="This files holds the implementations of system calls." alt="" coords="175,80,247,107">
+<area shape="rect" href="$scheduler_8c.html" title="Implement the non&#45;preemptive scheduler here." alt="" coords="271,80,359,107">
+<area shape="rect" href="$pscheduler_8c.html" title="Implement the preemptive scheduler here." alt="" coords="383,80,476,107">
+<area shape="rect" href="$sysdefines_8h.html" title="This file defines constants used by system calls." alt="" coords="5,229,101,256">
