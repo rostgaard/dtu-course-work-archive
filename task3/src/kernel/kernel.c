@@ -605,9 +605,7 @@ system_call_handler(void)
   {
    /* Returns the current system time to the program. */
    /* Force a re-schedule. */
-/*
    schedule=1;
-*/
    SYSCALL_ARGUMENTS.rax=system_time;
    break;
   }

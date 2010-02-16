@@ -19,7 +19,7 @@ main(int argc, char* argv[])
 
   while(curr_time++ < 1000000);
 #else
-  pause(100);
+  pause(10000);
 #endif
 
   prints("Pang\n");
