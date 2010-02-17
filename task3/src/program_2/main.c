@@ -14,10 +14,10 @@ main(int argc, char* argv[])
  {
   /* When testing the preemptive scheduler, replace 0 in the c pre-processor
      if below with a 1.  */
-#if 0
+#if 1
   volatile long curr_time=0;
-
-  while(curr_time++ < 1000000);
+  
+  while(curr_time++ < 100000);
 #else
   pause(10000);
 #endif
