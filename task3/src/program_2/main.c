@@ -6,6 +6,7 @@
  */
 
 #include <scwrapper.h>
+#include "config.h"
 
 void 
 main(int argc, char* argv[])
@@ -14,10 +15,10 @@ main(int argc, char* argv[])
  {
   /* When testing the preemptive scheduler, replace 0 in the c pre-processor
      if below with a 1.  */
-#if 1
+#if PSCHEDULER
   volatile long curr_time=0;
   
-  while(curr_time++ < 100000);
+  while(curr_time++ < 10000);
 #else
   pause(10000);
 #endif
