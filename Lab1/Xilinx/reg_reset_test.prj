@@ -1,0 +1,2 @@
+vhdl work "reg_reset.vhd"
+vhdl work "../../../private/dokument/Hentede filer/reg_reset_test.vhd"

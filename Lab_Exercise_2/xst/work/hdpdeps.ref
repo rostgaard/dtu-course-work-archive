@@ -1,0 +1,16 @@
+V3 7
+FL "C:/Documents and Settings/s072923/Desktop/Lab_Exercise_2/reg_reset.vhd" 2010/02/26.13:26:37 K.37
+EN work/reg_reset 1267187642 \
+      FL "C:/Documents and Settings/s072923/Desktop/Lab_Exercise_2/reg_reset.vhd" \
+      PB ieee/std_logic_1164 1209777529 PB ieee/STD_LOGIC_UNSIGNED 1209777531 \
+      PH ieee/NUMERIC_STD 1209777529
+AR work/reg_reset/arch 1267187643 \
+      FL "C:/Documents and Settings/s072923/Desktop/Lab_Exercise_2/reg_reset.vhd" \
+      EN work/reg_reset 1267187642
+FL "C:/Documents and Settings/s072923/Desktop/Lab_Exercise_2/reg_reset_test.vhd" 2010/02/26.13:19:48 K.37
+EN work/reg_reset_test 1267187644 \
+      FL "C:/Documents and Settings/s072923/Desktop/Lab_Exercise_2/reg_reset_test.vhd" \
+      PB ieee/std_logic_1164 1209777529
+AR work/reg_reset_test/behavioral 1267187645 \
+      FL "C:/Documents and Settings/s072923/Desktop/Lab_Exercise_2/reg_reset_test.vhd" \
+      EN work/reg_reset_test 1267187644 CP work/reg_reset

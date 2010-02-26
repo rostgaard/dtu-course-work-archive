@@ -1,0 +1,24 @@
+CommandLine-Map
+
+s
+CommandLine-Ngdbuild
+C:\Program Files\Xilinx\10.1\ISE\bin\nt\unwrapped\ngdbuild.exe -ise H:/Public/Lab1/Xilinx/1_project.ise -intstyle ise -dd _ngo -nt timestamp -i -p xc2vp30-ff896-7 reg_reset_test.ngc reg_reset_test.ngd
+s
+CommandLine-Par
+
+s
+CommandLine-Xst
+
+s
+Previous-NGD
+reg_reset_test_prev_built.ngd
+s
+Previous-NGM
+
+s
+Previous-Packed-NCD
+
+s
+Previous-Routed-NCD
+
+s

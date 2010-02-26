@@ -1,0 +1,2 @@
+vhdl work "latch8.vhd"
+vhdl work "latch8_test.vhd"

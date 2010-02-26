@@ -1,0 +1,6 @@
+CommandLine
+C:\Program Files\Xilinx\10.1\ISE\bin\nt\unwrapped\xst.exe -ise H:/Public/Lab1/Xilinx/1_project.ise -intstyle ise -ifn reg_reset_test.xst -ofn reg_reset_test.stx -finalclean 1
+s
+FormatString
+xst [-ifn <InputFile>] [-ofn <OutputFile>] [-ise <iseProjectFile>] [--quiet] [-intstyle <Style>] [--deb <DebugLevel>] [--finalclean <Clean>] [--PcubeFlow] [--globOptFlow] [--XstNtrc]
+s

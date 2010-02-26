@@ -1,0 +1,30 @@
+Release 10.1.02 - xst K.37 (nt)
+Copyright (c) 1995-2008 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.11 secs
+ 
+--> 
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/Documents and Settings/s072923/Desktop/Lab_assignment_3.2/latch8.vhd" in Library work.
+Entity <latch8> compiled.
+Entity <latch8> (Architecture <arch>) compiled.
+Compiling vhdl file "C:/Documents and Settings/s072923/Desktop/Lab_assignment_3.2/latch8_test.vhd" in Library work.
+Entity <latch8_test> (Architecture <behavioral>) compiled.
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.23 secs
+ 
+--> 
+
+Total memory usage is 103640 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

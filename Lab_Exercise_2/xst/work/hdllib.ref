@@ -1,0 +1,4 @@
+AR reg_reset_test behavioral "C:/Documents and Settings/s072923/Desktop/Lab_Exercise_2/reg_reset_test.vhd" sub00/vhpl03 1267187645
+AR reg_reset arch "C:/Documents and Settings/s072923/Desktop/Lab_Exercise_2/reg_reset.vhd" sub00/vhpl02 1267187643
+EN reg_reset NULL "C:/Documents and Settings/s072923/Desktop/Lab_Exercise_2/reg_reset.vhd" sub00/vhpl01 1267187642
+EN reg_reset_test NULL "C:/Documents and Settings/s072923/Desktop/Lab_Exercise_2/reg_reset_test.vhd" sub00/vhpl00 1267187644

@@ -1,0 +1,27 @@
+# Reading C:/Program Files/Modeltech_xe_starter_60d/tcl/vsim/pref.tcl 
+# do {latch8_tb.fdo} 
+# ** Warning: (vlib-34) Library already exists at "work".
+# Model Technology ModelSim XE III vcom 6.0d Compiler 2005.04 Apr 26 2005
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Loading package numeric_std
+# -- Compiling entity latch8_tb
+# -- Compiling architecture behavior of latch8_tb
+# vsim -lib work -t 1ps latch8_tb 
+# Loading C:\Program Files\Modeltech_xe_starter_60d\win32xoem/../std.standard
+# Loading C:\Program Files\Modeltech_xe_starter_60d\win32xoem/../ieee.std_logic_1164(body)
+# Loading C:\Program Files\Modeltech_xe_starter_60d\win32xoem/../ieee.std_logic_arith(body)
+# Loading C:\Program Files\Modeltech_xe_starter_60d\win32xoem/../ieee.std_logic_unsigned(body)
+# Loading C:\Program Files\Modeltech_xe_starter_60d\win32xoem/../ieee.numeric_std(body)
+# Loading work.latch8_tb(behavior)
+# Loading work.latch8(arch)
+# .main_pane.mdi.interior.cs.vm.paneset.cli_0.wf.clip.cs
+# .main_pane.workspace
+# .main_pane.signals.interior.cs
+# ** Failure: End of Simulation
+#    Time: 180 ns  Iteration: 1  Process: /latch8_tb/line__82 File: latch8_tb.vhd
+# Break at latch8_tb.vhd line 124
+# Simulation Breakpoint: Break at latch8_tb.vhd line 124
+# MACRO ./latch8_tb.fdo PAUSED at line 11

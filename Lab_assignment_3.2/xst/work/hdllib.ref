@@ -1,0 +1,4 @@
+AR latch8_test behavioral "C:/Documents and Settings/s072923/Desktop/Lab_assignment_3.2/latch8_test.vhd" sub00/vhpl03 1267189408
+EN latch8_test NULL "C:/Documents and Settings/s072923/Desktop/Lab_assignment_3.2/latch8_test.vhd" sub00/vhpl00 1267189407
+EN latch8 NULL "C:/Documents and Settings/s072923/Desktop/Lab_assignment_3.2/latch8.vhd" sub00/vhpl01 1267189405
+AR latch8 arch "C:/Documents and Settings/s072923/Desktop/Lab_assignment_3.2/latch8.vhd" sub00/vhpl02 1267189406

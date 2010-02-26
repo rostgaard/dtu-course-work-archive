@@ -1,0 +1,24 @@
+CommandLine-Map
+
+s
+CommandLine-Ngdbuild
+C:\Program Files\Xilinx\10.1\ISE\bin\nt\unwrapped\ngdbuild.exe -ise C:/Documents and Settings/s072923/Desktop/Lab_assignment_3.2/Lab_assignment_3.2.ise -intstyle ise -dd _ngo -nt timestamp -i -p xc2vp30-ff896-7 latch8_test.ngc latch8_test.ngd
+s
+CommandLine-Par
+
+s
+CommandLine-Xst
+
+s
+Previous-NGD
+latch8_test_prev_built.ngd
+s
+Previous-NGM
+
+s
+Previous-Packed-NCD
+
+s
+Previous-Routed-NCD
+
+s

@@ -1,0 +1,6 @@
+CommandLine
+C:/Program Files/Xilinx/10.1/ISE/bin/nt/unwrapped/trce.exe -ise C:/Documents and Settings/s072923/Desktop/Lab_Exercise_2/Lab_Exercise_2.ise -intstyle ise -v 3 -s 7 -xml reg_reset_test reg_reset_test.ncd -o reg_reset_test.twr reg_reset_test.pcf -ucf reg_reset.ucf
+s
+FormatString
+trce.exe ([-e|-v [<limit:0,2000000000>]] [-l <limit:0,2000000000>] [-n [<limit:0,2000000000>]] [-u [<limit:0,2000000000>]] [-skew] [-a] [--p] [-s <speed>] [-o <report[.twr]>] [--m] [-stamp <stampfile>] [-tsi <tsifile[.tsi]>] [-xml <report[.twx]>] [-nodatasheet] [-timegroups] [-fastpaths] [-intstyle ise|xflow|silent] [-ise <projectfile>] [--ucf <constraint[.ucf]>] <design[.ncd]> [<constraint[.pcf]>]) | ([-run <macro[.xtm]> [<design[.ncd]> [<constraint[.pcf]>]]] [-intstyle ise|xflow|silent] [-ise <projectfile>])
+s

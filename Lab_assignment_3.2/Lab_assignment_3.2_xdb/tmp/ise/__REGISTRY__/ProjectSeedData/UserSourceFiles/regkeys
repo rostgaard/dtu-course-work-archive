@@ -1,0 +1,15 @@
+NUM_USER_FILES
+4
+s
+user_file_1
+latch8_test.vhd
+s
+user_file_2
+latch8.ucf
+s
+user_file_3
+latch8_tb.vhd
+s
+user_file_4
+latch8.vhd
+s
