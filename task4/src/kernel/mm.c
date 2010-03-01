@@ -50,21 +50,13 @@ kalloc(const register unsigned long length,
     for (alloc_page = start_addr; alloc_page <= cur_page; alloc_page++){
 	 page_frame_table[alloc_page].owner = process;
 	 page_frame_table[alloc_page].start = (start_addr*4096);
-	 page_frame_table[alloc_page].free_is_allowed = (flags & ALLOCATE_FLAG_KERNEL);
+	 
+	 page_frame_table[alloc_page].free_is_allowed = !((flags & ALLOCATE_FLAG_KERNEL) == ALLOCATE_FLAG_KERNEL);
+
 	}
 
-	kprints("page_frame_table[cur_page].start \n");
-	kprinthex(page_frame_table[cur_page].start);
-	kprints(" \n");
-	kprints("alloc_page \n");
-	
-	kprinthex(alloc_page);
-	kprints(" \n");
-	kprints("cur_page: \n");
-	kprinthex(cur_page);
-	kprints(" \n");
-	kprints(" \n");
-	kprints(" \n");
+         debug(cur_page, num_pages, start_addr, page_frame_table[cur_page].free_is_allowed);
+        
 
 	return page_frame_table[cur_page].start;
    }
@@ -77,27 +69,28 @@ kalloc(const register unsigned long length,
 long
 kfree(const register unsigned long address)
 {
-	
-	if (!(address%4096) || address<1 || address>memory_size) {
-	  return ERROR;
-	}
-	
-	int page = (address/4096);
+    	int page = (address/4096);
 	int start_addr = page_frame_table[page].start;
-	
-	if (start_addr!=address) {
+        int first_page = page;
+
+
+	// Sanity checks
+	if (address%4096 || address<1 || address>memory_size || start_addr!=address) {
 	  return ERROR;
 	}
 	
 	while (page_frame_table[page].start==address) {
-	  if (page_frame_table[page].free_is_allowed) {
-	    page_frame_table[page].owner = -1;
+            if (page_frame_table[page].free_is_allowed) {
+	        page_frame_table[page].owner = -1;
 		page_frame_table[page].start = 0;
 		page_frame_table[page].free_is_allowed = 0;
 	  }
+            else
+                return ERROR;
 	  page++;
+          
 	}
-	
+	debug_free(first_page, page);
  return ALL_OK;
 }
 
@@ -108,12 +101,44 @@ update_memory_protection(const register unsigned long page_table,
                          const register unsigned long length,
                          const register unsigned long flags)
 {
+
+
+
 }
 
 /* Change this function in task A4. */
 extern void
 initialize_memory_protection()
 {
+    //Update the kernel memory table
+    //update_memory_protection(kernel_page_table_root, start_address,length,flags);
+
+
 }
 
 /* Put any code you need to add to implement tasks B4 and A4 here. */
+
+void debug(int cur_page, int num_pages, int start_addr, int flags) {
+    	kprints("Trying to allocate ");
+        kprinthex(num_pages);
+        kprints(" starting from");
+        kprinthex(start_addr);
+        kprints(" to ");
+        kprinthex(cur_page);
+        kprints(" with memory address ");
+        kprinthex(page_frame_table[cur_page].start);
+        kprints(" and flags ");
+        kprinthex(flags);
+        kprints(" \n");
+}
+
+void debug_free(int first_page, int page){
+    kprints("Trying to free pages ");
+    kprinthex(first_page);
+    kprints(" to ");
+    kprinthex(page);
+    kprints(" (");
+    kprinthex(page-first_page);
+    kprints(" pages) ");
+    kprints(" \n");
+}

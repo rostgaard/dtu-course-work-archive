@@ -132,8 +132,7 @@ prepare_process(const struct Elf64_Ehdr* elf_image
     that it cannot be de-allocated via kfree. */
  long               address_to_memory_block = 
   kalloc(memory_footprint_size+19*4*1024, process, ALLOCATE_FLAG_KERNEL);
-kprints("LOL");
- struct prepare_process_return_value ret_val = {0, 0};
+  struct prepare_process_return_value ret_val = {0, 0};
 
 
  /* First check that we have enough memory. */
@@ -755,7 +754,7 @@ system_call_handler(void)
 
    SYSCALL_ARGUMENTS.rax=kalloc(
            SYSCALL_ARGUMENTS.rdi,
-           thread_table[thread_queue_head(&ready_queue)].data.owner,
+           thread_table[cpu_private_data.thread_index].data.owner,
            SYSCALL_ARGUMENTS.rsi & (ALLOCATE_FLAG_READONLY|ALLOCATE_FLAG_EX));
    break;
   }
