@@ -1,0 +1,35 @@
+Release 10.1.02 - xst K.37 (nt)
+Copyright (c) 1995-2008 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.09 secs
+ 
+--> 
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd" in Library work.
+Entity <Runner> compiled.
+ERROR:HDLParsers:3312 - "C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd" Line 55. Undefined symbol 'clk'.
+ERROR:HDLParsers:1209 - "C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd" Line 55. clk: Undefined symbol (last report in this block)
+ERROR:HDLParsers:1402 - "C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd" Line 58. Object s2 of mode IN can not be updated.
+ERROR:HDLParsers:1402 - "C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd" Line 59. Object s1 of mode IN can not be updated.
+ERROR:HDLParsers:1402 - "C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd" Line 60. Object s0 of mode IN can not be updated.
+ERROR:HDLParsers:808 - "C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd" Line 62. = can not have such operands in this context.
+ERROR:HDLParsers:164 - "C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd" Line 64. parse error, unexpected IDENTIFIER, expecting SEMICOLON
+ERROR:HDLParsers:1401 - "C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd" Line 65. Object n0 of mode OUT can not be read.
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.14 secs
+ 
+--> 
+
+Total memory usage is 103640 kilobytes
+
+Number of errors   :    8 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+
