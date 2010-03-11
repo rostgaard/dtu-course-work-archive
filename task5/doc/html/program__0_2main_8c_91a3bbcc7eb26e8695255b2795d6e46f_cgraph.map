@@ -1,0 +1,6 @@
+<area shape="rect" href="$scwrapper_8h.html#a13c30cb3214689721560d2b02dd0f26" title="Wrapper for the system call that creates processes." alt="" coords="104,5,208,32">
+<area shape="rect" href="$scwrapper_8h.html#d0e85724949004fce28c432a59ce7c91" title="Wrapper for the system call that invokes the bochs debugger." alt="" coords="119,56,193,83">
+<area shape="rect" href="$scwrapper_8h.html#908449d6f6d8835a372b8ccbfbf6b081" title="Wrapper for the system call that finds a port given an owning process and port identity..." alt="" coords="124,107,188,133">
+<area shape="rect" href="$scwrapper_8h.html#9c41493b95189aecbad23b74e0a012f6" title="Wrapper for the system call that prints a string." alt="" coords="129,157,183,184">
+<area shape="rect" href="$scwrapper_8h.html#8883c71f647434c2caeecca6622aa2f3" title="Wrapper for the system call that receives a message from a port." alt="" coords="124,208,188,235">
+<area shape="rect" href="$scwrapper_8h.html#e20d4c87f86bc2a9252301a744a8063b" title="Wrapper for the system call that sends a message to a port." alt="" coords="132,259,180,285">

@@ -1,0 +1,11 @@
+<area shape="rect" href="$scwrapper_8h.html" title="This file contains C wrapper functions for system calls." alt="" coords="256,80,413,107">
+<area shape="rect" href="$kernel_8h.html" title="This file holds kernel wide macros and declarations." alt="" coords="615,80,743,107">
+<area shape="rect" href="$program__0_2main_8c.html" title="The first user program &#45; in a neverending loop, waits for messages from the other..." alt="" coords="5,155,152,181">
+<area shape="rect" href="$program__1_2main_8c.html" title="The second user program &#45; in a neverending loop, sends a message to process 0 and..." alt="" coords="176,155,323,181">
+<area shape="rect" href="$program__2_2main_8c.html" title="The third user program &#45; You can add your own code here if you wish." alt="" coords="347,155,493,181">
+<area shape="rect" href="$kernel_8c.html" title="This is the main source code for the kernel." alt="" coords="517,304,645,331">
+<area shape="rect" href="$threadqueue_8h.html" title="This file defines operations on thread queues." alt="" coords="597,155,760,181">
+<area shape="rect" href="$sync_8c.html" title="Holds the implementation of the synchronization sub&#45;system." alt="" coords="785,304,905,331">
+<area shape="rect" href="$mm_8c.html" title="Holds the implementation of the memory sub&#45;system." alt="" coords="1000,155,1115,181">
+<area shape="rect" href="$sync_8h.html" title="Holds declarations for the synchronization sub&#45;system." alt="" coords="619,229,739,256">
+<area shape="rect" href="$threadqueue_8c.html" title="This file implements operations on thread queues." alt="" coords="763,229,925,256">

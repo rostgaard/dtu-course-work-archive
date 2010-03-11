@@ -1,0 +1,9 @@
+<area shape="rect" href="$sync_8c.html#3170b7ecf79b579f393b931fa18a1e1c" title="Allocates and initializes one port from the port table." alt="" coords="168,5,264,32">
+<area shape="rect" href="$threadqueue_8c.html#4f9b4c15c768da80e5a011cb0e3eb3c3" title="Initialize a thread queue." alt="" coords="385,31,508,57">
+<area shape="rect" href="$mm_8c.html#5c5406b9acf0bd23e1bbfb9aa5d8da34" title="Initialize the memory protection system." alt="" coords="123,107,309,133">
+<area shape="rect" href="$sync_8c.html#280dc009199a7b36e140434a552e1735" title="Initializes the port table." alt="" coords="164,157,268,184">
+<area shape="rect" href="$kernel_8c.html#76038da662be0fc9b74ae3c5210f2456" title="Outputs a string to the bochs console." alt="" coords="417,259,476,285">
+<area shape="rect" href="$kernel_8c.html#75a9031e7ebccf1be2f88c45ac980a42" title="Wrapper for a byte out instruction." alt="" coords="585,233,631,260">
+<area shape="rect" href="$kernel_8c.html#f3a273f0fac0c07c7118baac98937634" title="Copies an ELF image to memory and prepares a process." alt="" coords="157,309,275,336">
+<area shape="rect" href="$mm_8c.html#73fc229a6b53869921a7e5e806b7196d" title="Change the protection of a range of pages in a page table." alt="" coords="357,360,536,387">
+<area shape="rect" href="$mm_8c.html#f0bb7de0fd39a1dc516badc6bf7a0024" title="Allocates a memory block." alt="" coords="419,309,475,336">
