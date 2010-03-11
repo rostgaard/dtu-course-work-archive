@@ -83,7 +83,12 @@
                 process_table[i].threads++;
                 process_table[i].parent = thread_table[cpu_private_data.thread_index].data.owner;
 
-                int new_thread = allocate_thread();
+                if (allocate_port(0,i) == -1) {
+					SYSCALL_ARGUMENTS.rax = ERROR;
+					break;
+				}
+				
+				int new_thread = allocate_thread();
                 thread_table[new_thread].data.owner = i;
                 thread_table[new_thread].data.registers.integer_registers.rflags = 0x200;
                 thread_table[new_thread].data.registers.integer_registers.rip = prepared_process.first_instruction_address;
@@ -91,6 +96,8 @@
 
                 // Enqueue the new thread
                 thread_queue_enqueue(&ready_queue, new_thread);
+				
+				
 /*
                 kprints("Thread nr: ");
                 kprinthex(new_thread);
@@ -104,4 +111,84 @@
     }
     break;
 }
+    case SYSCALL_SEND:
+{
+	//a sender will block until some other thread performs a receive on the same port.
+	//if receive already ?
+	//SYSCALL_ARGUMENTS.rax = status code
+	//SYSCALL_ARGUMENTS.rdi = port index
+	//SYSCALL_ARGUMENTS.rsi = message type
+	//SYSCALL_ARGUMENTS.rbx = message ptr
+	
+	
+	
+	int sender_process = thread_table[cpu_private_data.thread_index].data.owner;
+	int receiver_thread = port_table[SYSCALL_ARGUMENTS.rdi].receiver;
+	
+	// Sanity check the arguments
+	if (SYSCALL_ARGUMENTS.rsi != SYSCALL_MSG_SHORT ||
+		port_table[SYSCALL_ARGUMENTS.rdi].owner == -1 ) {
+		SYSCALL_ARGUMENTS.rax = ERROR;
+		break;
+	}else{ SYSCALL_ARGUMENTS.rax = ALL_OK; }
+	
+	if(receiver_thread != -1){
+		//1 send data to receiver		
+		thread_table[receiver_thread].data.registers.integer_registers.rax = ALL_OK;
+		thread_table[receiver_thread].data.registers.integer_registers.rdi = sender_process;
+		thread_table[receiver_thread].data.registers.integer_registers.rsi = SYSCALL_ARGUMENTS.rsi;
+		thread_table[receiver_thread].data.registers.integer_registers.rbx = SYSCALL_ARGUMENTS.rbx;
+		
+		//2 unblock receiving thread
+		thread_queue_enqueue(&ready_queue, receiver_thread);
+		port_table[SYSCALL_ARGUMENTS.rdi].receiver = -1;
+		
+	} else {
+		//block current thread
+		thread_queue_enqueue(&port_table[SYSCALL_ARGUMENTS.rdi].sender_queue, cpu_private_data.thread_index);
+		cpu_private_data.thread_index = thread_queue_dequeue(&ready_queue);
+	} 
+	
+	break;
+}
+
+case SYSCALL_RECEIVE:
+{
+
+	int sender_process = thread_table[cpu_private_data.thread_index].data.owner;
+	
+	
+	//a thread that performs a receive primitive will block until some other thread sends a message to the same port
+	//is there a message ready already?
+	if (SYSCALL_ARGUMENTS.rsi != SYSCALL_MSG_SHORT ||
+		port_table[SYSCALL_ARGUMENTS.rdi].owner == -1 ||
+		port_table[SYSCALL_ARGUMENTS.rdi].receiver != -1) {
+		SYSCALL_ARGUMENTS.rax = ERROR;
+		break;
+	}else{ SYSCALL_ARGUMENTS.rax = ALL_OK; }
+	
+	if(!thread_queue_is_empty(&port_table[SYSCALL_ARGUMENTS.rdi].sender_queue)){
+		int thread = thread_queue_dequeue(&port_table[SYSCALL_ARGUMENTS.rdi].sender_queue);
+		
+		SYSCALL_ARGUMENTS.rdi = thread_table[thread].data.owner;
+		SYSCALL_ARGUMENTS.rsi = thread_table[thread].data.registers.integer_registers.rsi;
+		SYSCALL_ARGUMENTS.rbx = thread_table[thread].data.registers.integer_registers.rbx;
+		
+		thread_queue_enqueue(&ready_queue, thread);
+	} else {
+		//block current thread
+		port_table[SYSCALL_ARGUMENTS.rdi].receiver = cpu_private_data.thread_index;
+		cpu_private_data.thread_index = thread_queue_dequeue(&ready_queue);
+	}
+	
+	break;
+}
+
+
+
+
+
+
+
+
 
