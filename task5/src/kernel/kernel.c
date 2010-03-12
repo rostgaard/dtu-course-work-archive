@@ -15,7 +15,7 @@
 
 /* Variables */
 
-union thread
+union sender_thread
 thread_table[MAX_NUMBER_OF_THREADS];
 
 struct process
@@ -494,7 +494,7 @@ initialize(void)
     protection in task A4. */
 
  if ((0 >= executable_table_size) || 
-     (1024 != sizeof(union thread)))
+     (1024 != sizeof(union sender_thread)))
  {
   while (1)
   {

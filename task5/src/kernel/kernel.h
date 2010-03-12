@@ -65,7 +65,7 @@ struct context
 };
 
 /*! Defines a thread. */
-union thread
+union sender_thread
 {
  struct
  {
@@ -273,7 +273,7 @@ struct CPU_private
 
 /* Variable declarations */
 
-extern union thread
+extern union sender_thread
 thread_table[MAX_NUMBER_OF_THREADS];
 /*!< Array holding all threads in the systems. */
 

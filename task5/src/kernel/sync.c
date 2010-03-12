@@ -114,13 +114,13 @@ void free_all_ports(const int owner) {
 
         // Mark all processes wating to send to this process with ERROR
         while(!thread_queue_is_empty(&port_table[i].sender_queue)) {
-            int thread;
-            thread = thread_queue_dequeue(&port_table[i].sender_queue);
-            thread_queue_enqueue(&ready_queue, thread);
+            int sender_thread;
+            sender_thread = thread_queue_dequeue(&port_table[i].sender_queue);
+            thread_queue_enqueue(&ready_queue, sender_thread);
 
             // Setting the RAX register of the thread enables calling processes
             // to detect that messages have not been transferred.
-            thread_table[thread].data.registers.integer_registers.rax = ERROR;
+            thread_table[sender_thread].data.registers.integer_registers.rax = ERROR;
         }
   }
  }

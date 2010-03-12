@@ -111,6 +111,6 @@ main(int argc, char* argv[])
 
   prints(recvd_pong);
 
-  debugger();
+  //debugger();
  }
 }
