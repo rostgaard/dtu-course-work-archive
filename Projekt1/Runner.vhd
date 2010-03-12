@@ -29,7 +29,7 @@ USE ieee.numeric_std.ALL;
 
 entity Runner is
     Port ( 
-			  reset : in  STD_LOGIC;
+--			  reset : in  STD_LOGIC;
            clockwise : in  STD_LOGIC;
            
 --			  state : in std_logic_vector(2 downto 0);
@@ -45,6 +45,7 @@ entity Runner is
            n1 : out  STD_LOGIC;
            n0 : out  STD_LOGIC;
 
+           t : out  STD_LOGIC;
            d1 : out  STD_LOGIC;
            d0 : out  STD_LOGIC
 			  );
@@ -52,21 +53,26 @@ end Runner;
 
 architecture Behavioral of Runner is
 begin
-	process(clockwise,reset)
-	begin
-		if (reset='1') then
-			s2 <= '0';
-			s1 <= '0';
-			s0 <= '0';
-			
-		elsif (clk'event and clk = '1') then
-			s2 <= n2
-			s1 <= n1;
-			s0 <= n0;
-		end if;
-	end process;
-		n2 <= (not s2 and s1 and s0) or (s2 and s1) or (s2 and s1 and not s0);
-	
+--	process(clockwise,reset)
+--	begin
+--		if (reset='1') then
+--			s2 <= '0';
+--			s1 <= '0';
+--			s0 <= '0';
+--			
+--		elsif (clk'event and clk = '1') then
+--			s2 <= n2;
+--			s1 <= n1;
+--			s0 <= n0;
+--		end if;
+--	end process;
+	-- tp the regestery file
+		n2 <= (not s2 and s1 and s0) or (s2 and not s1 and not s0) or (not s2 and s1 and not s0) or ( s2 and not s1 and  s0);
+		n1 <= (not s2 and not s1 and s0) or (not s2 and s1 and not s0) or (s2 and not s1 and s0) or(s2 and s1 and s0 );
+		n0 <=	(s2 and s1 and s0) or (s2 and s1 and s0) or (s2 and s1 and s0) or(s2 and s1 and s0);
+		d0 <=	(not s2 and s0) or (s2 and not s1);
+		d1 <=	(not s2 and s1 ) or (s2 and not s1);
+		 t <=	(s2 and clockwise) or (not s2 and not clockwise); -- er ikke helt sikker på om denne er korrekt skrevet ind.
 	
 end Behavioral;
 

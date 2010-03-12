@@ -5,28 +5,13 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd</arg>&quot; Line <arg fmt="%d" index="2">55</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">clk</arg>&apos;.
+<msg type="error" file="HDLParsers" num="1401" delta="unknown" >&quot;<arg fmt="%s" index="1">//w3.b45x.dtu.dk/users/studerende/dtu/s072923/private/dokument/DigitalTeknik/02311/Projekt1/Runner.vhd</arg>&quot; Line <arg fmt="%d" index="2">65</arg>. Object <arg fmt="%s" index="3">n2</arg> of mode <arg fmt="%s" index="4">OUT</arg> can not be read.
 </msg>
 
-<msg type="error" file="HDLParsers" num="1209" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd</arg>&quot; Line <arg fmt="%d" index="2">55</arg>. <arg fmt="%s" index="3">clk</arg>: Undefined symbol (last report in this block)
+<msg type="error" file="HDLParsers" num="1401" delta="unknown" >&quot;<arg fmt="%s" index="1">//w3.b45x.dtu.dk/users/studerende/dtu/s072923/private/dokument/DigitalTeknik/02311/Projekt1/Runner.vhd</arg>&quot; Line <arg fmt="%d" index="2">66</arg>. Object <arg fmt="%s" index="3">n1</arg> of mode <arg fmt="%s" index="4">OUT</arg> can not be read.
 </msg>
 
-<msg type="error" file="HDLParsers" num="1402" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd</arg>&quot; Line <arg fmt="%d" index="2">58</arg>. Object <arg fmt="%s" index="3">s2</arg> of mode <arg fmt="%s" index="4">IN</arg> can not be updated.
-</msg>
-
-<msg type="error" file="HDLParsers" num="1402" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd</arg>&quot; Line <arg fmt="%d" index="2">59</arg>. Object <arg fmt="%s" index="3">s1</arg> of mode <arg fmt="%s" index="4">IN</arg> can not be updated.
-</msg>
-
-<msg type="error" file="HDLParsers" num="1402" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd</arg>&quot; Line <arg fmt="%d" index="2">60</arg>. Object <arg fmt="%s" index="3">s0</arg> of mode <arg fmt="%s" index="4">IN</arg> can not be updated.
-</msg>
-
-<msg type="error" file="HDLParsers" num="808" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd</arg>&quot; Line <arg fmt="%d" index="2">62</arg>. <arg fmt="%s" index="3">=</arg> can not have such operands in this context.
-</msg>
-
-<msg type="error" file="HDLParsers" num="164" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd</arg>&quot; Line <arg fmt="%d" index="2">64</arg>. <arg fmt="%s" index="3">parse error, unexpected IDENTIFIER, expecting SEMICOLON</arg>
-</msg>
-
-<msg type="error" file="HDLParsers" num="1401" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/Documents and Settings/s084283/Desktop/Projekt1/Runner.vhd</arg>&quot; Line <arg fmt="%d" index="2">65</arg>. Object <arg fmt="%s" index="3">n0</arg> of mode <arg fmt="%s" index="4">OUT</arg> can not be read.
+<msg type="error" file="HDLParsers" num="1401" delta="unknown" >&quot;<arg fmt="%s" index="1">//w3.b45x.dtu.dk/users/studerende/dtu/s072923/private/dokument/DigitalTeknik/02311/Projekt1/Runner.vhd</arg>&quot; Line <arg fmt="%d" index="2">67</arg>. Object <arg fmt="%s" index="3">n0</arg> of mode <arg fmt="%s" index="4">OUT</arg> can not be read.
 </msg>
 
 </messages>
