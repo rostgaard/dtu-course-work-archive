@@ -1,0 +1,17 @@
+V3 6
+FL "C:/Documents and Settings/Administrator.PCV/Desktop/Projekt_1/Runner.vhd" 2010/03/14.19:38:27 K.31
+EN work/Runner 1268591912 \
+      FL "C:/Documents and Settings/Administrator.PCV/Desktop/Projekt_1/Runner.vhd" \
+      PB ieee/std_logic_1164 1200023565 PB ieee/std_logic_arith 1200023566 \
+      PB ieee/STD_LOGIC_UNSIGNED 1200023567
+AR work/Runner/Runner_arch 1268591913 \
+      FL "C:/Documents and Settings/Administrator.PCV/Desktop/Projekt_1/Runner.vhd" \
+      EN work/Runner 1268591912
+FL "C:/Documents and Settings/Administrator.PCV/Desktop/Projekt_1/Runner_Registry.vhd" 2010/03/15.11:31:06 K.31
+EN work/Runner_Registry 1268649080 \
+      FL "C:/Documents and Settings/Administrator.PCV/Desktop/Projekt_1/Runner_Registry.vhd" \
+      PB ieee/std_logic_1164 1200023565 PB ieee/std_logic_arith 1200023566 \
+      PB ieee/STD_LOGIC_UNSIGNED 1200023567
+AR work/Runner_Registry/Behavioral 1268649081 \
+      FL "C:/Documents and Settings/Administrator.PCV/Desktop/Projekt_1/Runner_Registry.vhd" \
+      EN work/Runner_Registry 1268649080

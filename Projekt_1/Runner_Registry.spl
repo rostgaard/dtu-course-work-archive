@@ -1,0 +1,11 @@
+[Inputs]
+reset
+clk
+n2
+n1
+n0
+[Outputs]
+s2
+s1
+s0
+[BiDir]

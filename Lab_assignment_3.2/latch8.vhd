@@ -37,6 +37,7 @@ begin
 	begin
 		if (clk = '1') then
 			q <= d;
+
 		end if;
 	end process;
 end arch;

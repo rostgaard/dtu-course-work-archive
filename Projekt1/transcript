@@ -1,0 +1,30 @@
+# Reading C:/Modeltech_xe_starter/tcl/vsim/pref.tcl 
+# do {Runner.fdo} 
+# ** Warning: (vlib-34) Library already exists at "work".
+# Model Technology ModelSim XE III vcom 6.4b Compiler 2008.11 Nov 15 2008
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Loading package numeric_std
+# -- Compiling entity runner
+# -- Compiling architecture behavioral of runner
+# vsim -lib work -t 1ps Runner 
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading ieee.numeric_std(body)
+# Loading work.runner(behavioral)
+# .main_pane.mdi.interior.cs.vm.paneset.cli_0.wf.clip.cs.pw.wf
+# .main_pane.workspace.interior.cs.nb.canvas.notebook.cs.page2.cs
+# .main_pane.signals.interior.cs
+step
+# Nothing left to do.
+step
+# Nothing left to do.
+step
+# Nothing left to do.
+step
+# Nothing left to do.
+# Load canceled

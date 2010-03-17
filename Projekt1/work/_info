@@ -1,0 +1,39 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\Documents and Settings\Administrator.PCV\Desktop\Digitalteknik\Projekt1
+Erunner
+Z1 w1268558382
+Z2 DPx4 ieee 11 numeric_std 0 22 =NSdli^?T5OD8;4F<blj<3
+Z3 DPx4 ieee 15 std_logic_arith 0 22 GJbAT?7@hRQU9IQ702DT]2
+Z4 DPx4 ieee 18 std_logic_unsigned 0 22 hEMVMlaNCR^<OOoVNV;m90
+Z5 DPx4 ieee 14 std_logic_1164 0 22 GH1=`jDDBJ=`LM;:Ak`kf2
+Z6 8Runner.vhd
+Z7 FRunner.vhd
+l0
+L30
+V3l@5V6@ES200ZKP4b7iC:2
+!s100 LID0EPTHIn:KHQP<JUMUb3
+Z8 OX;C;6.4b;39
+31
+Z9 o-explicit -93 -O0
+Z10 tExplicit 1
+Abehavioral
+R2
+R3
+R4
+R5
+Z11 DEx4 work 6 runner 0 22 3l@5V6@ES200ZKP4b7iC:2
+l55
+L54
+Z12 V?E0M5Te24JldV2?gNVZXX2
+Z13 !s100 VMXMYkPX5LmDSF`S?>>2V2
+R8
+31
+Z14 Mx4 4 ieee 14 std_logic_1164
+Z15 Mx3 4 ieee 18 std_logic_unsigned
+Z16 Mx2 4 ieee 15 std_logic_arith
+Z17 Mx1 4 ieee 11 numeric_std
+R9
+R10

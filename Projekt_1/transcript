@@ -1,0 +1,34 @@
+# Reading C:/Modeltech_xe_starter/tcl/vsim/pref.tcl 
+# do {Runner_logic_tb.fdo} 
+# ** Warning: (vlib-34) Library already exists at "work".
+# Model Technology ModelSim XE III vcom 6.4b Compiler 2008.11 Nov 15 2008
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Compiling entity runner_logic
+# -- Compiling architecture behavioral of runner_logic
+# Model Technology ModelSim XE III vcom 6.4b Compiler 2008.11 Nov 15 2008
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Loading package numeric_std
+# -- Compiling entity runner_logic_tb
+# -- Compiling architecture behavior of runner_logic_tb
+# vsim -lib work -t 1ps Runner_logic_tb 
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading ieee.numeric_std(body)
+# Loading work.runner_logic_tb(behavior)
+# Loading work.runner_logic(behavioral)
+# .main_pane.mdi.interior.cs.vm.paneset.cli_0.wf.clip.cs.pw.wf
+# .main_pane.workspace.interior.cs.nb.canvas.notebook.cs.page2.cs
+# .main_pane.signals.interior.cs
+# ** Failure: End of Simulation
+#    Time: 320 ns  Iteration: 1  Process: /runner_logic_tb/stim_proc File: Runner_logic_tb.vhd
+# Break in Process stim_proc at Runner_logic_tb.vhd line 186
+# Simulation Breakpoint: Break in Process stim_proc at Runner_logic_tb.vhd line 186
+# MACRO ./Runner_logic_tb.fdo PAUSED at line 12

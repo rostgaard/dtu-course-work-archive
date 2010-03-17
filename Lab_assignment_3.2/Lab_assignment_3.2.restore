@@ -1,4 +1,4 @@
-# version: 10.1.02
+# version: 10.1
 # Project Navigator Project Restoration Script
 #
 # WARNING: Do not modify this file. Any alteration of this file is not
@@ -863,7 +863,7 @@ proc restore { { project_dir "" } } {
       "A" "" "" "" "PROPEXT_xilxSynthAddBufg_virtex2" "16" 
       "A" "" "" "" "PROPEXT_xilxSynthMaxFanout_virtex2" "500" 
       "A" "" "" "" "PROP_AutoGenFile" "false" 
-      "A" "" "" "" "PROP_BehavioralSimTop" "Architecture|latch8_tb|behavior" 
+      "A" "" "" "" "PROP_BehavioralSimTop" "Architecture|latch8_test|behavioral" 
       "A" "" "" "" "PROP_CPLDFitkeepio" "false" 
       "A" "" "" "" "PROP_CompxlibAbelLib" "true" 
       "A" "" "" "" "PROP_CompxlibCPLDDetLib" "true" 

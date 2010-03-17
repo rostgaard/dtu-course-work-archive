@@ -1,27 +1,23 @@
-# Reading C:/Program Files/Modeltech_xe_starter_60d/tcl/vsim/pref.tcl 
-# do {latch8_tb.fdo} 
+# Reading C:/Modeltech_xe_starter/tcl/vsim/pref.tcl 
+# do {latch8_test.fdo} 
 # ** Warning: (vlib-34) Library already exists at "work".
-# Model Technology ModelSim XE III vcom 6.0d Compiler 2005.04 Apr 26 2005
+# Model Technology ModelSim XE III vcom 6.4b Compiler 2008.11 Nov 15 2008
 # -- Loading package standard
 # -- Loading package std_logic_1164
+# -- Compiling entity latch8_test
+# -- Compiling architecture behavioral of latch8_test
 # -- Loading package std_logic_arith
 # -- Loading package std_logic_unsigned
 # -- Loading package numeric_std
-# -- Compiling entity latch8_tb
-# -- Compiling architecture behavior of latch8_tb
-# vsim -lib work -t 1ps latch8_tb 
-# Loading C:\Program Files\Modeltech_xe_starter_60d\win32xoem/../std.standard
-# Loading C:\Program Files\Modeltech_xe_starter_60d\win32xoem/../ieee.std_logic_1164(body)
-# Loading C:\Program Files\Modeltech_xe_starter_60d\win32xoem/../ieee.std_logic_arith(body)
-# Loading C:\Program Files\Modeltech_xe_starter_60d\win32xoem/../ieee.std_logic_unsigned(body)
-# Loading C:\Program Files\Modeltech_xe_starter_60d\win32xoem/../ieee.numeric_std(body)
-# Loading work.latch8_tb(behavior)
+# -- Loading entity latch8
+# vsim -lib work -t 1ps latch8_test 
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading ieee.numeric_std(body)
+# Loading work.latch8_test(behavioral)
 # Loading work.latch8(arch)
-# .main_pane.mdi.interior.cs.vm.paneset.cli_0.wf.clip.cs
-# .main_pane.workspace
+# .main_pane.mdi.interior.cs.vm.paneset.cli_0.wf.clip.cs.pw.wf
+# .main_pane.workspace.interior.cs.nb.canvas.notebook.cs.page2.cs
 # .main_pane.signals.interior.cs
-# ** Failure: End of Simulation
-#    Time: 180 ns  Iteration: 1  Process: /latch8_tb/line__82 File: latch8_tb.vhd
-# Break at latch8_tb.vhd line 124
-# Simulation Breakpoint: Break at latch8_tb.vhd line 124
-# MACRO ./latch8_tb.fdo PAUSED at line 11
