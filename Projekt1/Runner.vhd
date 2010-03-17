@@ -81,5 +81,15 @@ begin
 --		d1 <=	(not s2 and s1 ) or (s2 and not s1);
 --		 t <=	(s2 and clockwise) or (not s2 and not clockwise); -- er ikke helt sikker på om denne er korrekt skrevet ind.
 	
+		end if;
+	end process;
+	-- tp the regestery file
+--		n2 <= (not s2 and s1 and s0) or (s2 and not s1 and not s0) or (not s2 and s1 and not s0) or ( s2 and not s1 and  s0);
+--		n1 <= (not s2 and not s1 and s0) or (not s2 and s1 and not s0) or (s2 and not s1 and s0) or(s2 and s1 and s0 );
+--		n0 <=	(s2 and s1 and s0) or (s2 and s1 and s0) or (s2 and s1 and s0) or(s2 and s1 and s0);
+--		d0 <=	(not s2 and s0) or (s2 and not s1);
+--		d1 <=	(not s2 and s1 ) or (s2 and not s1);
+--		 t <=	(s2 and clockwise) or (not s2 and not clockwise); -- er ikke helt sikker på om denne er korrekt skrevet ind.
+	
 end Behavioral;
 
