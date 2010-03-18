@@ -1,0 +1,59 @@
+\documentclass[10pt,a4paper]{report}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+% This is a comment, use it well
+% Remember graphics should be in pdf format
+
+\tableofcontents
+
+\begin{abstract}
+The report is to describe in detail how we implemented the tasks in the course. The overall goal is to build a tiny operating system using the technologies also available in contemporary, widely used operating systems.
+\end{abstract}
+
+\chapter{Introduction}
+%Should this be here?
+
+\chapter{Related work}
+
+
+\chapter{Body}
+%The individual tasks should be described in a logical flow
+\section{Task B1}
+Task B1 is to implement a system call. This 
+
+\subsection{Reflections}
+
+\begin{itemize}
+  \item Draw a figure of the organization of the system. Relate the organization of the system to the different types of operation systems discussed in the text book by Tanenbaum and Woodhull. What kind of operating system is it? Why?
+\begin{itemize}
+  \item 	This seem to be a monolithic operating system, as nothing is implemented as a service (as in a micro-kernel) and the kernel runs on bare metal without a hypervisor.
+\end{itemize}
+   1.
+      Which portion execute in kernel mode? Which portions in user mode? What is the difference between user and kernel mode?
+          *
+            All system calls i run in kernel mode. The kernel mode has access to system resources user mode doesn't
+   2.
+      How is the kernel invoked from the user-level program? Explain and elaborate!
+          *
+            The kernel is invoked through system calls. When a syscall is invoked, the cpu registers is pushed on the stack and switches to kernel mode. The kernel uses a macro that calls some low-level assembler code.
+   3.
+      How is control passed back to the user-level program? Explain and elaborate!
+          *
+            When the syscall returns, the stack is pushed back into the registers and the computer returns to user mode.
+
+\end{itemize}
+
+
+\section{Task B2}
+Processes (create/terminate)
+
+\section{Task B3 and A3}
+Scheduling
+
+\chapter{Conclusion}
+
+\end{document}
