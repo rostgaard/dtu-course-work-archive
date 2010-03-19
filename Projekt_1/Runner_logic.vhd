@@ -46,12 +46,23 @@ architecture Behavioral of Runner_logic is
 begin
 
 		n2 <= ( ( (s2 and not s1) or (s1 and ((not s2 and s0) or (s2 and not s0)))) and clockwise) or
-		      ( not s2 and not clockwise);
+		      ((( not s2 and not s1 and not s0) or
+				  (     s2 and not s1 and     s0) or
+				  (     s2 and     s1 and not s0) or
+				  (     s2 and     s1 and     s0) ) and not clockwise);
+	
 
 		n1 <= (( (not s1 and s0) or (s1 and not s0) )and clockwise) or
-				(not s1 and not clockwise);
-		
-		n0 <=	not s0;
+		      ((( not s2 and not s1 and not s0) or
+				  ( not s2 and     s1 and     s0) or
+				  (     s2 and not s1 and not s0) or
+				  (     s2 and     s1 and     s0) ) and not clockwise);
+				  
+		n0 <=	not s0 or
+				((( not s2 and not s1 and not s0) or
+				  ( not s2 and     s1 and not s0) or
+				  (     s2 and not s1 and not s0) or
+				  (     s2 and     s1 and not s0) ) and not clockwise);
 
 		d1 <= (not s2 and s1) or (s2 and not s1);
 		d0 <=	(not s2 and s0) or (s2 and not s0);

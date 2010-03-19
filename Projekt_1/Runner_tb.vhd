@@ -2,15 +2,15 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   10:30:33 03/14/2010
+-- Create Date:   09:17:47 03/19/2010
 -- Design Name:   
--- Module Name:   C:/Documents and Settings/Administrator.PCV/Desktop/Projekt_1/Runner_tb.vhd
+-- Module Name:   C:/Documents and Settings/Administrator.PCV/Desktop/Digitalteknik/Projekt_1/Runner_tb.vhd
 -- Project Name:  Projekt_1
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
 -- 
--- VHDL Test Bench Created by ISE for module: Runner
+-- VHDL Test Bench Created by ISE for module: Runner_logic
 -- 
 -- Dependencies:
 -- 
@@ -39,174 +39,64 @@ ARCHITECTURE behavior OF Runner_tb IS
  
     COMPONENT Runner
     PORT(
-			clockwise : IN  std_logic;
-         s2 : IN  std_logic;
-         s1 : IN  std_logic;
-         s0 : IN  std_logic;
-         n2 : OUT  std_logic;
-         n1 : OUT  std_logic;
-         n0 : OUT  std_logic;
-         top : OUT  std_logic;
+		   clockwise: IN std_logic;
+         clk : IN  std_logic;
+         reset : IN  std_logic;
          d1 : OUT  std_logic;
-         d0 : OUT  std_logic
+         d0 : OUT  std_logic;
+         top : OUT  std_logic
         );
     END COMPONENT;
-	 
-	 
-   --Inputs
-   signal test_s2 : std_logic := '0';
-   signal test_s1 : std_logic := '0';
-   signal test_s0 : std_logic := '0';
-	signal test_clockwise : std_logic := '0';
- 	--Outputs
-	signal test_n2 : std_logic;
-   signal test_n1 : std_logic;
-   signal test_n0 : std_logic;
-   signal test_top : std_logic;
-   signal test_d1 : std_logic;
-   signal test_d0 : std_logic;
-   signal test_clk : std_logic;
+    
 
+   --Inputs
+   signal clk : std_logic := '0';
+   signal reset : std_logic := '1';
+	signal clockwise : std_logic := '1';
+
+ 	--Outputs
+   signal d1 : std_logic;
+   signal d0 : std_logic;
+   signal top : std_logic;
 
    -- Clock period definitions
-   constant clk_period : time := 20 ns; 
-BEGIN
+   constant clk_period : time := 10ns;
  
+BEGIN
 	-- Instantiate the Unit Under Test (UUT)
    uut: Runner PORT MAP (
-			clockwise => test_clockwise,
-          s2 => test_s2,
-          s1 => test_s1,
-          s0 => test_s0,
-          n2 => test_n2,
-          n1 => test_n1,
-          n0 => test_n0,
-          top  => test_top,
-          d1 => test_d1,
-          d0 => test_d0
+		    clockwise => clockwise,
+          clk => clk,
+          reset => reset,
+          d1 => d1,
+          d0 => d0,
+          top => top
         );
-		  
-   reg: entity work.Runner_Registry port map (
-		s2 => test_s2,
-		s1 => test_s1,
-		s0 => test_s0,
-    	n2 => test_n2,
-		n1 => test_n1,
-		n0 => test_n0,
-		reset => '0',
-		clk => test_clk);
 
    -- Clock process definitions
    clk_process :process
    begin
-		test_clk <= '0';
+		clk <= '0';
 		wait for clk_period/2;
-		test_clk <= '1';
+		clk <= '1';
 		wait for clk_period/2;
    end process;
- 
-
 
    -- Stimulus process
    stim_proc: process
-   begin		
-		test_s2 <= '0';
-		test_s1 <= '0';
-		test_s0 <= '0';
-	wait until falling_edge(test_clk);
+   begin
+	
+		wait until falling_edge(clk);
+		reset <= '0';
+		wait for 12*clk_period;
+		clockwise <= '0';
+		wait for 12*clk_period;
 
-	wait until falling_edge(test_clk);
-	wait until falling_edge(test_clk);
-	wait until falling_edge(test_clk);
-	wait until falling_edge(test_clk);
-	wait until falling_edge(test_clk);
-	wait until falling_edge(test_clk);
-	wait until falling_edge(test_clk);	
---		test_s2 <= '0';
---		test_s1 <= '0';
---		test_s0 <= '0';
---		wait until falling_edge(test_clk);
---
---		test_s2 <= '0';
---		test_s1 <= '0';
---		test_s0 <= '1';
---		wait until falling_edge(test_clk);
---		
---		test_s2 <= '0';
---		test_s1 <= '1';
---		test_s0 <= '0';
---		wait until falling_edge(test_clk);
---		
---		test_s2 <= '0';
---		test_s1 <= '1';
---		test_s0 <= '1';		
---		wait until falling_edge(test_clk);
---		
---		test_s2 <= '1';
---		test_s1 <= '0';
---		test_s0 <= '0';		
---		wait until falling_edge(test_clk);
---		
---		test_s2 <= '1';
---		test_s1 <= '0';
---		test_s0 <= '1';		
---		wait until falling_edge(test_clk);
---		
---		test_s2 <= '1';
---		test_s1 <= '1';
---		test_s0 <= '0';		
---		wait until falling_edge(test_clk);
---
---		test_s2 <= '1';
---		test_s1 <= '1';
---		test_s0 <= '1';
---		wait until falling_edge(test_clk);
---		
---		test_clockwise <= '1';
---		test_s2 <= '0';
---		test_s1 <= '0';
---		test_s0 <= '0';
---		wait until falling_edge(test_clk);
---
---		test_s2 <= '0';
---		test_s1 <= '0';
---		test_s0 <= '1';
---		wait until falling_edge(test_clk);
---		
---		test_s2 <= '0';
---		test_s1 <= '1';
---		test_s0 <= '0';
---		wait until falling_edge(test_clk);
---		
---		test_s2 <= '0';
---		test_s1 <= '1';
---		test_s0 <= '1';		
---		wait until falling_edge(test_clk);
---		
---		test_s2 <= '1';
---		test_s1 <= '0';
---		test_s0 <= '0';		
---		wait until falling_edge(test_clk);
---		
---		test_s2 <= '1';
---		test_s1 <= '0';
---		test_s0 <= '1';		
---		wait until falling_edge(test_clk);
---		
---		test_s2 <= '1';
---		test_s1 <= '1';
---		test_s0 <= '0';		
---		wait until falling_edge(test_clk);
---
---		test_s2 <= '1';
---		test_s1 <= '1';
---		test_s0 <= '1';
---		wait until falling_edge(test_clk);
-
+		
 		assert false
 			report "End of Simulation"
 			severity failure;
-			
    end process;
+
 
 END;

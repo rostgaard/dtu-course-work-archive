@@ -29,9 +29,14 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity Runner_Registry is
 	port(
-			reset, clk, n2,n1,n0 : in std_logic;
-			--reset, clk, n2,n1,n0 : in std_logic;
-			s2,s1,s0 : out std_logic
+         reset : IN  std_logic;
+         clk   : IN  std_logic;
+         n2    : IN  std_logic;
+         n1    : IN  std_logic;
+         n0    : IN  std_logic;
+         s2    : OUT  std_logic;
+         s1    : OUT  std_logic;
+         s0    : OUT  std_logic
 	);
 end Runner_Registry;
 

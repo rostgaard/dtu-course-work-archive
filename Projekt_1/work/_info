@@ -4,20 +4,39 @@ K3
 cModel Technology
 Z0 dC:\Documents and Settings\Administrator.PCV\Desktop\Projekt_1
 Erunner
-Z1 w1268643211
+Z1 w1268992916
 Z2 DPx4 ieee 18 std_logic_unsigned 0 22 hEMVMlaNCR^<OOoVNV;m90
 Z3 DPx4 ieee 15 std_logic_arith 0 22 GJbAT?7@hRQU9IQ702DT]2
 Z4 DPx4 ieee 14 std_logic_1164 0 22 GH1=`jDDBJ=`LM;:Ak`kf2
-Z5 8Runner.vhd
-Z6 FRunner.vhd
+Z5 dC:\Documents and Settings\Administrator.PCV\Desktop\Digitalteknik\Projekt_1
+Z6 8Runner.vhd
+Z7 FRunner.vhd
 l0
 L30
-Vc?lZhK@aZ@Bi5YLzD9oFQ1
-Z7 OX;C;6.4b;39
+V>49];EZjm;1G01M9_;^bU3
+Z8 OX;C;6.4b;39
 31
-Z8 o-explicit -93 -O0
-Z9 tExplicit 1
-!s100 0IMSBfGWbYH5mcC9j>dGh1
+Z9 o-explicit -93 -O0
+Z10 tExplicit 1
+!s100 aKW^hfG6j[WiLZhn^]<lJ1
+Abehavioral
+Z11 DEx4 work 12 runner_logic 0 22 Z7ojoMZmH>7zGW7[o6UhH3
+Z12 DEx4 work 15 runner_registry 0 22 zaGIOcnN=9<AKd4_TDX5n0
+R2
+R3
+R4
+DEx4 work 6 runner 0 22 >49];EZjm;1G01M9_;^bU3
+l78
+L41
+VnF^O;YgA^EXGHh<DHUWVP2
+!s100 CnUhG[IH0eMSMbP@MOTA70
+R8
+31
+Z13 Mx3 4 ieee 14 std_logic_1164
+Z14 Mx2 4 ieee 15 std_logic_arith
+Z15 Mx1 4 ieee 18 std_logic_unsigned
+R9
+R10
 Arunner_arch
 R2
 R3
@@ -26,97 +45,101 @@ DEx4 work 6 runner 0 22 c?lZhK@aZ@Bi5YLzD9oFQ1
 l49
 L47
 V=I[mIZ7A=0=Ki2d0gYm7n1
-R7
-31
-Z10 Mx3 4 ieee 14 std_logic_1164
-Z11 Mx2 4 ieee 15 std_logic_arith
-Z12 Mx1 4 ieee 18 std_logic_unsigned
 R8
+31
+R13
+R14
+R15
 R9
+R10
+w1268643211
 !s100 eJn?<4n]gG7nbR]X@IkPk1
 Erunner_logic
-Z13 w1268655060
+Z16 w1268995095
 R2
 R3
 R4
-Z14 8Runner_logic.vhd
-Z15 FRunner_logic.vhd
+R5
+Z17 8Runner_logic.vhd
+Z18 FRunner_logic.vhd
 l0
 L30
 VZ7ojoMZmH>7zGW7[o6UhH3
-R7
-31
 R8
+31
 R9
+R10
 !s100 ;9bB<fDE]F8A`zUDhTUAV0
 Abehavioral
 R2
 R3
 R4
-DEx4 work 12 runner_logic 0 22 Z7ojoMZmH>7zGW7[o6UhH3
+R11
 l46
 L45
-VJ2hb4EVUT8Re6Do42eB=o3
-!s100 UE654D@^[LCn<_IJnjnMP2
-R7
-31
-R10
-R11
-R12
+V=4Hh4e<KJd@E8?VmBYY940
 R8
+31
+R13
+R14
+R15
 R9
+R10
+!s100 WMhIzVePaTzPfGM2_9DVb1
 Erunner_logic_tb
-Z16 w1268651958
-Z17 DPx4 ieee 11 numeric_std 0 22 =NSdli^?T5OD8;4F<blj<3
+Z19 w1268651958
+Z20 DPx4 ieee 11 numeric_std 0 22 =NSdli^?T5OD8;4F<blj<3
 R3
 R2
 R4
-Z18 8Runner_logic_tb.vhd
-Z19 FRunner_logic_tb.vhd
+R5
+Z21 8Runner_logic_tb.vhd
+Z22 FRunner_logic_tb.vhd
 l0
 L33
 VlP0L0nAN4AQ=4=V`0XANF1
-!s100 e=7]TT`HjE1cfe;fL`iQN2
-R7
-31
 R8
+31
 R9
+R10
+!s100 e=7]TT`HjE1cfe;fL`iQN2
 Abehavior
-R17
+R20
 R3
 R2
 R4
-Z20 DEx4 work 15 runner_logic_tb 0 22 lP0L0nAN4AQ=4=V`0XANF1
+DEx4 work 15 runner_logic_tb 0 22 lP0L0nAN4AQ=4=V`0XANF1
 l74
 L36
-Z21 VN]ZOJRmk0@;@cASd<;il_2
-Z22 !s100 Ga8Ej?iZmN]`NL>_05XN:3
-R7
+VN]ZOJRmk0@;@cASd<;il_2
+R8
 31
 Z23 Mx4 4 ieee 14 std_logic_1164
 Z24 Mx3 4 ieee 18 std_logic_unsigned
-R11
+R14
 Z25 Mx1 4 ieee 11 numeric_std
-R8
 R9
+R10
+!s100 Ga8Ej?iZmN]`NL>_05XN:3
 Erunner_reg_tb
 Z26 w1268591529
-R17
+R20
 R3
 R2
 R4
+R5
 Z27 8Runner_reg_tb.vhd
 Z28 FRunner_reg_tb.vhd
 l0
 L33
 VSBcledC_[X^eQ<F5MQjVQ2
-R7
-31
 R8
+31
 R9
+R10
 !s100 T]Xhn<i:TanSK[WJ__l>R1
 Abehavior
-R17
+R20
 R3
 R2
 R4
@@ -124,64 +147,65 @@ DEx4 work 13 runner_reg_tb 0 22 SBcledC_[X^eQ<F5MQjVQ2
 l68
 L36
 V_5P]cIe7_>Z<1IX1jgF=Z1
-R7
+R8
 31
 R23
 R24
-R11
+R14
 R25
-R8
 R9
+R10
 !s100 1`CDHdJgWNJYdc?mz@oaI2
 Erunner_registry
-Z29 w1268650887
+Z29 w1268992728
 R2
 R3
 R4
+R5
 Z30 8Runner_Registry.vhd
 Z31 FRunner_Registry.vhd
 l0
 L30
-V;68RIW3jP[`W:`<aT57N]0
-R7
-31
+VzaGIOcnN=9<AKd4_TDX5n0
 R8
+31
 R9
-!s100 ;3N];YCT>@`V1@?zRCVLQ3
+R10
+!s100 ehb4NcHc1zX0jD2;OI:iP1
 Abehavioral
 R2
 R3
 R4
-Z32 DEx4 work 15 runner_registry 0 22 ;68RIW3jP[`W:`<aT57N]0
-l39
-L38
-VLJ]V[0aX:FGVA_MDgMX`h1
-R7
-31
-R10
-R11
 R12
+l44
+L43
+VLJ]V[0aX:FGVA_MDgMX`h1
 R8
+31
+R13
+R14
+R15
 R9
-!s100 :mWC@3n3iCgE;QmAPnbE63
+R10
+!s100 30_67GA2Z4looFaS]F;I<3
 Erunner_registy_tb
-Z33 w1268590826
-R17
+Z32 w1268590826
+R20
 R3
 R2
 R4
-Z34 8Runner_Registry_tb.vhd
-Z35 FRunner_Registry_tb.vhd
+Z33 8Runner_Registry_tb.vhd
+Z34 FRunner_Registry_tb.vhd
 l0
 L8
 VZ5>iaz5SNMgME04PJ;1i00
-R7
-31
 R8
+31
 R9
+R10
 !s100 M42C<jdj4B?0AlJMRITP71
 Abehavior
-R17
+R20
 R3
 R2
 R4
@@ -189,47 +213,47 @@ DEx4 work 17 runner_registy_tb 0 22 Z5>iaz5SNMgME04PJ;1i00
 l34
 L11
 VkSojXO5Th[IX3:lC7o>N`1
-R7
+R8
 31
 R23
 R24
-R11
+R14
 R25
-R8
 R9
+R10
 !s100 h^U0CgJJE1`aQYSQ3;Yl@1
 Erunner_tb
-Z36 w1268646049
-R17
+Z35 w1268994349
+R20
 R3
 R2
 R4
-Z37 8Runner_tb.vhd
-Z38 FRunner_tb.vhd
+R5
+Z36 8Runner_tb.vhd
+Z37 FRunner_tb.vhd
 l0
 L33
 Va3O6]@n]XFH<Wl8T2`1lk0
-R7
-31
-R8
-R9
 !s100 Kc30S[4nlNjTkWbgW80242
+R8
+31
+R9
+R10
 Abehavior
-R32
-R17
+R20
 R3
 R2
 R4
-DEx4 work 9 runner_tb 0 22 a3O6]@n]XFH<Wl8T2`1lk0
-l73
+Z38 DEx4 work 9 runner_tb 0 22 a3O6]@n]XFH<Wl8T2`1lk0
+l65
 L36
-V:bRORAGO@WME?Tz0PoeDC1
-R7
+VX[b9^GYNSIJME>^iemAgh2
+!s100 nh0^F<B0naSZDK;_I_h1E0
+R8
 31
 R23
 R24
-R11
+R14
 R25
-R8
 R9
-!s100 4M32K[No8kK6?hQA_W7E_1
+R10
