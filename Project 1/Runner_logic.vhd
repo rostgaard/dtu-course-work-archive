@@ -29,44 +29,41 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity Runner_logic is
 	port (
-			clockwise : IN   std_logic;
-         s2        : IN   std_logic;
-         s1        : IN   std_logic;
-         s0        : IN   std_logic;
-         n2        : OUT  std_logic;
-         n1        : OUT  std_logic;
-         n0        : OUT  std_logic;
+			clockwise  : IN   std_logic;
+			next_state : out std_logic_vector(2 downto 0);
+			current_state : in std_logic_vector(2 downto 0);
          top       : OUT  std_logic;
-         d1        : OUT  std_logic;
-         d0        : OUT  std_logic
+			digit		 : out std_logic_vector(1 downto 0)
 			);
 end Runner_logic;
 
 architecture Behavioral of Runner_logic is
 begin
-
-		n2 <= ( ( (s2 and not s1) or (s1 and ((not s2 and s0) or (s2 and not s0)))) and clockwise) or
-		      ((( not s2 and not s1 and not s0) or
-				  (     s2 and not s1 and     s0) or
-				  (     s2 and     s1 and not s0) or
-				  (     s2 and     s1 and     s0) ) and not clockwise);
+		next_state(2) <= ( ( (current_state(2) and not current_state(1)) or 
+		                     (current_state(1) and ((not current_state(2) and current_state(0)) or 
+									(current_state(2) and not current_state(0))))) and clockwise) or
+									
+		      ((( not current_state(2) and not current_state(1) and not current_state(0)) or
+				  (     current_state(2) and not current_state(1) and     current_state(0)) or
+				  (     current_state(2) and     current_state(1) and not current_state(0)) or
+				  (     current_state(2) and     current_state(1) and     current_state(0)) ) and not clockwise);
 	
 
-		n1 <= (( (not s1 and s0) or (s1 and not s0) )and clockwise) or
-		      ((( not s2 and not s1 and not s0) or
-				  ( not s2 and     s1 and     s0) or
-				  (     s2 and not s1 and not s0) or
-				  (     s2 and     s1 and     s0) ) and not clockwise);
+		next_state(1) <= (( (not current_state(1) and current_state(0)) or (current_state(1) and not current_state(0)) )and clockwise) or
+		      ((( not current_state(2) and not current_state(1) and not current_state(0)) or
+				  ( not current_state(2) and     current_state(1) and     current_state(0)) or
+				  (     current_state(2) and not current_state(1) and not current_state(0)) or
+				  (     current_state(2) and     current_state(1) and     current_state(0)) ) and not clockwise);
 				  
-		n0 <=	not s0 or
-				((( not s2 and not s1 and not s0) or
-				  ( not s2 and     s1 and not s0) or
-				  (     s2 and not s1 and not s0) or
-				  (     s2 and     s1 and not s0) ) and not clockwise);
+		next_state(0) <=	not current_state(0) or
+				((( not current_state(2) and not current_state(1) and not current_state(0)) or
+				  ( not current_state(2) and     current_state(1) and not current_state(0)) or
+				  (     current_state(2) and not current_state(1) and not current_state(0)) or
+				  (     current_state(2) and     current_state(1) and not current_state(0)) ) and not clockwise);
 
-		d1 <= (not s2 and s1) or (s2 and not s1);
-		d0 <=	(not s2 and s0) or (s2 and not s0);
-      top  <=	not s2;
+		digit(1) <= (not current_state(2) and current_state(1)) or (current_state(2) and not current_state(1));
+		digit(0) <=	(not current_state(2) and current_state(0)) or (current_state(2) and not current_state(0));
+      top  <=	not current_state(2);
 
 
 

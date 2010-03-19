@@ -50,29 +50,26 @@ architecture Behavioral of Runner is
 
 r_logic: entity work.Runner_logic(Behavioral) PORT MAP (
 			clockwise => clockwise,
-			s2 => current_state(2),
-			s1 => current_state(1),
-			s0 => current_state(0),
-			n2 => next_state(2),
-			n1 => next_state(1),
-			n0 => next_state(0),
+			current_state => current_state,
+			next_state => next_state,
 			top => top,
-			d1 => digit(1),
-			d0 => digit(0)
+			digit => digit
 			);
 			
 
 r_register: entity work.Runner_Registry(Behavioral) PORT MAP (
           reset => reset,
           clk => clk,
-          n2 => next_state(2),
-          n1 => next_state(1),
-          n0 => next_state(0),
-          s2 => current_state(2),
-          s1 => current_state(1),
-          s0 => current_state(0)
+			 current_state => current_state,
+			 next_state => next_state
          );
 
+--with s2 select
+--	pos <= s(1 downto 0) when '0',
+--			 not s(1 downto 0) when others;
+	      
+	
+	
 process(top,digit)
 begin
 case digit is
@@ -90,7 +87,6 @@ case digit is
 
 	when others =>
 		AN <= "0000";
-
 end case;
 
 case top is

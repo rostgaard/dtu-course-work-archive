@@ -31,12 +31,8 @@ entity Runner_Registry is
 	port(
          reset : IN  std_logic;
          clk   : IN  std_logic;
-         n2    : IN  std_logic;
-         n1    : IN  std_logic;
-         n0    : IN  std_logic;
-         s2    : OUT  std_logic;
-         s1    : OUT  std_logic;
-         s0    : OUT  std_logic
+			next_state : in std_logic_vector;
+			current_state : out std_logic_vector
 	);
 end Runner_Registry;
 
@@ -45,13 +41,9 @@ begin
 	process(clk,reset)
 	begin
 		if (reset = '1') then 
-			s2 <= '0';
-			s1 <= '0';
-			s0 <= '0';
+		   current_state <= "000";
 		elsif (clk = '1' and clk'event) then
-			s1 <= n1;
-			s2 <= n2;
-			s0 <=	n0;
+		   current_state <= next_state;
 		end if;
 	end process;
 end Behavioral;
