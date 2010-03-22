@@ -62,16 +62,13 @@ r_register: entity work.Runner_Registry(Behavioral) PORT MAP (
           clk => clk,
 			 current_state => current_state,
 			 next_state => next_state
-         );
-
---with s2 select
---	pos <= s(1 downto 0) when '0',
---			 not s(1 downto 0) when others;
-	      
+         );	      
 	
 	
+-- when top or digit changes process the correspondently case digit or top case 
 process(top,digit)
 begin
+-- Set AN ( Digit )
 case digit is
 	when "00" =>
 		AN <= "0111";
@@ -88,7 +85,7 @@ case digit is
 	when others =>
 		AN <= "0000";
 end case;
-
+-- Set SEG ( Top )
 case top is
 	when '1' =>
 		SEG <= "10011100";
@@ -100,7 +97,7 @@ end case;
 	
 end process;
 
-
+-- enables leds for testing
 LEDG <= '1';
 end Behavioral;
 
