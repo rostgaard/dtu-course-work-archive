@@ -1,23 +1,12 @@
 --------------------------------------------------------------------------------
--- Company: 
--- Engineer:
---
--- Create Date:   09:17:47 03/19/2010
--- Design Name:   
--- Module Name:   C:/Documents and Settings/Administrator.PCV/Desktop/Digitalteknik/Projekt_1/Runner_tb.vhd
--- Project Name:  Projekt_1
--- Target Device:  
--- Tool versions:  
--- Description:   
--- 
--- VHDL Test Bench Created by ISE for module: Runner_logic
--- 
--- Dependencies:
--- 
--- Revision:
+-- Engineer: 		Morten & Kim 
+-- Create Date:    	12:13:25 03/15/2010
+-- Module Name:    	Runner_tb
+-- Project Name:   	Project 1
+-- Description: 
+-- Dependencies: 
+-- Revision: 
 -- Revision 0.01 - File Created
--- Additional Comments:
---
 -- Notes: 
 -- This testbench has been automatically generated using types std_logic and
 -- std_logic_vector for the ports of the unit under test.  Xilinx recommends
@@ -85,7 +74,7 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin
-	
+		-- tests reset and CW CCW functionality
 		wait until falling_edge(clk);
 		reset <= '0';
 		wait for 12*clk_period;

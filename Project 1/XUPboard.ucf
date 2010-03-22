@@ -51,9 +51,11 @@ TIMESPEC "TS_clk" = PERIOD "clk" 20.00 ns HIGH 50 %;
 #NET "BTN4"	LOC = "V8";
 #NET "BTN5"	LOC = "AA1";
 
-
+#Enable reset on button 5
 NET "reset"	LOC = "P3"; #BTN1
 #NET "clk"	LOC = "AA1"; #BTN5
+
+#Enable CW/CCW on switch 1
 NET "clockwise"	LOC = "N6";	#SW1
 
 
@@ -87,7 +89,7 @@ NET "clockwise"	LOC = "N6";	#SW1
 #NET "LED<5>"	LOC = "Y1";
 #NET "LED<6>"	LOC = "U8";
 #NET "LED<7>"	LOC = "V6";
-
+#Enable Led's
 NET "LEDG"	LOC = "V7";
 
 #######################################

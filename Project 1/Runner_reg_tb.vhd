@@ -1,22 +1,13 @@
 --------------------------------------------------------------------------------
--- Company: 
--- Engineer:
---
--- Create Date:   19:29:56 03/14/2010
--- Design Name:   
--- Module Name:   C:/Documents and Settings/Administrator.PCV/Desktop/Projekt_1/Runner_reg_tb.vhd
--- Project Name:  Projekt_1
--- Target Device:  
--- Tool versions:  
--- Description:   
--- 
--- VHDL Test Bench Created by ISE for module: Runner_Registry
--- 
--- Dependencies:
--- 
--- Revision:
+-- Engineer: 		Morten & Kim 
+-- Create Date:    	12:13:25 03/15/2010
+-- Module Name:    	Runner_reg_tb
+-- Project Name:   	Project 1
+-- Description: 
+-- Dependencies: 
+-- Revision: 
 -- Revision 0.01 - File Created
--- Additional Comments:
+-- Additional Comments: 
 --
 -- Notes: 
 -- This testbench has been automatically generated using types std_logic and
