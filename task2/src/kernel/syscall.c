@@ -75,13 +75,15 @@ case SYSCALL_CREATEPROCESS:
   for(i=0; i<MAX_NUMBER_OF_PROCESSES; i++)
  {
 
-     if(!process_table[i].threads) {
-         static struct prepare_process_return_value prepared_process;
+     if(!process_table[i].threads) { // Great, we found one
+	// Preparing the executable image for executing
+        static struct prepare_process_return_value prepared_process;
         prepared_process = prepare_process(executable_table[SYSCALL_ARGUMENTS.rdi].elf_image,
                         i,
                         executable_table[SYSCALL_ARGUMENTS.rdi].memory_footprint_size);
 
-        process_table[i].threads++;
+	// We now have one more thread executing the process        
+	process_table[i].threads++;
         process_table[i].parent  = thread_table[current_thread].data.owner;
 
         int new_thread = allocate_thread();

@@ -1,0 +1,34 @@
+Task B2 was to implement process handling in out operating system. Lets look a bit closer on the concept of processes before discussing the implementation.
+\subsubsection{The process concept}
+A process is a in an instance of a program (an executable) that runs in an operating system environment, 
+and returns to this operating system upon completion. Hence, the operating system is the one resposible for 
+creating new processes and terminating them. An analogy to this is the a java object, being an instance of a java class.\\
+The process is therefore nothing more than a container for resources reserved to the process by the operating system. \\
+
+\subsubsection{The thread concept}
+A thread is the part of the process container responsible for executing the program.
+
+So, the operating system need to keep track of the running processes and take care of creating and terminating the processes. 
+For this, we have added two system calls; create and terminate.
+
+\begin{figure}
+\centering
+\epsfig{file=fig/Thread_Model_single.eps, width=0.5in}
+\caption{Our thread model}
+\end{figure}
+
+\subsubsection*{The create system call}
+To implement this, we need to keep track of the running processes. This is handled by a process table that contains structures holding information about an individual process. \\
+Processes are executed invoking this system call by executing a piece of assembler code that calls a named procedure called ``main'' and then calls terminate when main is done executing.
+\subsubsection*{The terminate system call}
+
+
+\subsubsection{Reflections}
+
+\subsubsection*{How is the system booted?}
+Our virtual pc starts a BIOS that searches for a bootloader (in our case Grub), that then loads the kernel image to memory from a harddisk - or in our case a disk image. The kernel image 
+\subsubsection*{How are processes created from executable files?}
+The kernel finds all executable files and loads them to memory, storing a pointer to the first instruction for each process.
+
+\subsubsection*{How does a daemon (process) differ from processes studied in this task?}
+Our processes runs ``interactively'' and daemons runs in the background. Otherwise they share the fact that they are started at bootup by the os.
