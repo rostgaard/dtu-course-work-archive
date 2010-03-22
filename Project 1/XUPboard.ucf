@@ -4,10 +4,10 @@
 ##	System clock 
 ##	To correctly enable the system clock you should uncoment all 4 lines that describe the clock!
 #######################################
-#NET "clk" LOC = "AJ15";
-#NET "clk" IOSTANDARD = LVCMOS25;
-#NET "clk" TNM_NET = "clk";
-#TIMESPEC "TS_clk" = PERIOD "clk" 10.00 ns HIGH 50 %;
+NET "clk" LOC = "AJ15";
+NET "clk" IOSTANDARD = LVCMOS25;
+NET "clk" TNM_NET = "clk";
+TIMESPEC "TS_clk" = PERIOD "clk" 20.00 ns HIGH 50 %;
 
 
 #***********************************************************************************#
@@ -53,7 +53,7 @@
 
 
 NET "reset"	LOC = "P3"; #BTN1
-NET "clk"	LOC = "AA1"; #BTN5
+#NET "clk"	LOC = "AA1"; #BTN5
 NET "clockwise"	LOC = "N6";	#SW1
 
 

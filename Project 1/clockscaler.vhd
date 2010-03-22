@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    12:30:04 03/19/2010 
+-- Create Date:    17:08:44 03/22/2010 
 -- Design Name: 
--- Module Name:    Runner_impl - Behavioral 
+-- Module Name:    clockscaler - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -27,14 +27,28 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity Runner_impl is
-end Runner_impl;
+entity clockscaler is
+	port(
+		clk : IN std_logic;
+		out_clk : out std_logic);
+end clockscaler;
 
-architecture Behavioral of Runner_impl is
+architecture Behavioral of clockscaler is
+	 signal scaled_clock: std_logic;
+    signal next_count,count: std_logic_vector(31 downto 0);
+
 begin
-
-AN <= "00";
-
-
+	process(clk)
+	begin
+		if (count = 10000000) then
+			count <= (others => '0');
+			scaled_clock <= '1';
+		elsif(clk'event and clk='1') then
+			count <= next_count;
+			scaled_clock <= '0';
+		end if;
+	end process;
+next_count <= count+1;
+out_clk <= scaled_clock;
 end Behavioral;
 

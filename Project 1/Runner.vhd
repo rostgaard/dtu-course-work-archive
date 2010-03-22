@@ -34,7 +34,6 @@ entity Runner is
 		AN : OUT std_logic_vector(3 downto 0);
 		SEG : OUT std_logic_vector(7 downto 0);
 		LEDG : OUT std_logic;
-		
 		reset: IN std_logic
 		);
 end Runner;
@@ -45,8 +44,13 @@ architecture Behavioral of Runner is
 	 signal current_state : std_logic_vector(2 downto 0);
 	 signal digit : std_logic_vector (1 downto 0);
 	 signal top : std_logic;
+	 signal scaled_clock : std_logic;
 
 	begin
+
+scaler: entity work.clockscaler(Behavioral) port map
+		(clk => clk,
+		 out_clk => scaled_clock);
 
 r_logic: entity work.Runner_logic(Behavioral) PORT MAP (
 			clockwise => clockwise,
@@ -56,50 +60,18 @@ r_logic: entity work.Runner_logic(Behavioral) PORT MAP (
 			digit => digit
 			);
 			
+sseg: entity work.sseg_decoder(Behavioral) port map (
+			top => top,
+			digit => digit,
+			AN => AN,
+			SEG => SEG);
 
 r_register: entity work.Runner_Registry(Behavioral) PORT MAP (
           reset => reset,
-          clk => clk,
+          clk => scaled_clock,
 			 current_state => current_state,
 			 next_state => next_state
          );
-
---with s2 select
---	pos <= s(1 downto 0) when '0',
---			 not s(1 downto 0) when others;
-	      
-	
-	
-process(top,digit)
-begin
-case digit is
-	when "00" =>
-		AN <= "0111";
-		
-	when "01" =>
-		AN <= "1011";
-
-	when "10" =>
-		AN <= "1101";
-		
-	when "11" =>
-		AN <= "1110";
-
-	when others =>
-		AN <= "0000";
-end case;
-
-case top is
-	when '1' =>
-		SEG <= "10011100";
-	when '0' =>
-		SEG <= "11100010";
-	when others =>
-		SEG <= "00000000";
-end case;
-	
-end process;
-
 
 LEDG <= '1';
 end Behavioral;
