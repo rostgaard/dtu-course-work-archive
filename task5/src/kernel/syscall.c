@@ -139,14 +139,7 @@
         struct message *rec_msg, *send_msg;
         send_msg = (struct message *) SYSCALL_ARGUMENTS.rbx;
         rec_msg = (struct message *) thread_table[receiver_thread].data.registers.integer_registers.rbx;
-        (*rec_msg).quad_0 = (*send_msg).quad_0;
-        (*rec_msg).quad_1 = (*send_msg).quad_1;
-        (*rec_msg).quad_2 = (*send_msg).quad_2;
-        (*rec_msg).quad_3 = (*send_msg).quad_3;
-        (*rec_msg).quad_4 = (*send_msg).quad_4;
-        (*rec_msg).quad_5 = (*send_msg).quad_5;
-        (*rec_msg).quad_6 = (*send_msg).quad_6;
-        (*rec_msg).quad_7 = (*send_msg).quad_7;
+	*rec_msg = *send_msg;
 
         //1 send data to receiver
         thread_table[receiver_thread].data.registers.integer_registers.rax = ALL_OK;
@@ -193,18 +186,10 @@
         struct message *rec_msg, *send_msg;
         send_msg = (struct message *) thread_table[sender_thread].data.registers.integer_registers.rbx;
         rec_msg = (struct message *) SYSCALL_ARGUMENTS.rbx;
-        (*rec_msg).quad_0 = (*send_msg).quad_0;
-        (*rec_msg).quad_1 = (*send_msg).quad_1;
-        (*rec_msg).quad_2 = (*send_msg).quad_2;
-        (*rec_msg).quad_3 = (*send_msg).quad_3;
-        (*rec_msg).quad_4 = (*send_msg).quad_4;
-        (*rec_msg).quad_5 = (*send_msg).quad_5;
-        (*rec_msg).quad_6 = (*send_msg).quad_6;
-        (*rec_msg).quad_7 = (*send_msg).quad_7;
+	*rec_msg = *send_msg;
 
         SYSCALL_ARGUMENTS.rdi = thread_table[sender_thread].data.owner;
         SYSCALL_ARGUMENTS.rsi = thread_table[sender_thread].data.registers.integer_registers.rsi;
-        //SYSCALL_ARGUMENTS.rbx = thread_table[thread].data.registers.integer_registers.rbx;
 
         thread_queue_enqueue(&ready_queue, sender_thread);
     } else {
