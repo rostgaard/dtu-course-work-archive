@@ -1,6 +1,0 @@
-CommandLine
-C:\Program Files\Xilinx\10.1\ISE\bin\nt\unwrapped\xst.exe -ise C:/Documents and Settings/s072923/Desktop/Lab_Exercise_2/Lab_Exercise_2.ise -intstyle ise -ifn C:/Documents and Settings/s072923/Desktop/Lab_Exercise_2/reg_reset_test.xst -ofn C:/Documents and Settings/s072923/Desktop/Lab_Exercise_2/reg_reset_test.syr -finalclean 1
-s
-FormatString
-xst [-ifn <InputFile>] [-ofn <OutputFile>] [-ise <iseProjectFile>] [--quiet] [-intstyle <Style>] [--deb <DebugLevel>] [--finalclean <Clean>] [--PcubeFlow] [--globOptFlow] [--XstNtrc]
-s

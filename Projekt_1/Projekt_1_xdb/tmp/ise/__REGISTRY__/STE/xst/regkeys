@@ -1,6 +1,0 @@
-CommandLine
-C:\Xilinx\10.1\ISE\bin\nt\unwrapped\xst.exe -ise C:/Documents and Settings/Administrator.PCV/Desktop/Projekt_1/Projekt_1.ise -intstyle ise -ifn Runner_Registry.xst -ofn Runner_Registry.stx -finalclean 1
-s
-FormatString
-xst [-ifn <InputFile>] [-ofn <OutputFile>] [-ise <iseProjectFile>] [--quiet] [-intstyle <Style>] [--deb <DebugLevel>] [--finalclean <Clean>] [--PcubeFlow] [--globOptFlow] [--XstNtrc]
-s

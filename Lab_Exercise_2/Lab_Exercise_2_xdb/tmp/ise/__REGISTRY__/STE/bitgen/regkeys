@@ -1,6 +1,0 @@
-CommandLine
-C:\Program Files\Xilinx\10.1\ISE\bin\nt\unwrapped\bitgen.exe -ise C:/Documents and Settings/s072923/Desktop/Lab_Exercise_2/Lab_Exercise_2.ise -intstyle ise -f reg_reset_test.ut reg_reset_test.ncd
-s
-FormatString
-bitgen [-d] [-j] [-b] [-w] [-l] [-m] [-t] [-n] [-u] [-a] [--p] [-r <bitFile>] [-intstyle ise|xflow|silent] [-ise <projectrepositoryfile>] {-bd <BRAM_data_file> [tag <tagname>]} {-g <setting_value>} <infile[.ncd]> [<outfile>] [<pcffile[.pcf]>]
-s
