@@ -4,6 +4,8 @@
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
 \usepackage{graphicx}
+\usepackage[letterpaper]{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
 
 %\usepackage{listings}
 %\lstset{ language=VHDL }   % For code blocks
@@ -30,49 +32,13 @@
 \section{Abstract}
 \input{abstract.tex}
 
+\tableofcontents
+\newpage
 \section{Specification analysis}
 \input{specification_analysis.tex}
 
 \section{Truth table}
-
-\begin{tabular}{cccc|cccccc}
-s2 & s1 & s0 & cw & n2 & n1 & n0 & d1 & d0 & top\tabularnewline
-\hline
-\hline 
-0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1\tabularnewline
-\hline
-0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 1 & 1\tabularnewline
-\hline 
-0 & 1 & 0 & 1 & 0 & 1 & 1 & 1 & 0 & 1\tabularnewline
-\hline 
-0 & 1 & 1 & 1 & 1 & 0 & 0 & 1 & 1 & 1\tabularnewline
-\hline 
-1 & 0 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0\tabularnewline
-\hline 
-1 & 0 & 1 & 1 & 1 & 1 & 0 & 1 & 0 & 0\tabularnewline
-\hline 
-1 & 1 & 0 & 1 & 1 & 1 & 1 & 0 & 1 & 0\tabularnewline
-\hline 
-1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\tabularnewline
-\hline 
-0 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 1\tabularnewline
-\hline 
-0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 1\tabularnewline
-\hline 
-0 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 1\tabularnewline
-\hline 
-0 & 1 & 1 & 0 & 0 & 1 & 0 & 1 & 1 & 1\tabularnewline
-\hline 
-1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 0\tabularnewline
-\hline 
-1 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 0\tabularnewline
-\hline 
-1 & 1 & 0 & 0 & 1 & 0 & 1 & 0 & 1 & 0\tabularnewline
-\hline 
-1 & 1 & 1 & 0 & 1 & 1 & 0 & 0 & 0 & 0\tabularnewline
-\hline
-\end{tabular}
-
+\input{truth_table.tex}
 
 \subsection{Equations}
 \input{equations.tex}
@@ -87,13 +53,8 @@ s2 & s1 & s0 & cw & n2 & n1 & n0 & d1 & d0 & top\tabularnewline
 \input{conclusion.tex}
 
 \newpage
-
+\section{Appendix}
 \appendix
-
-
-\section{Timetable}
 \input{timetable.tex}
-\section{Appendix2}
-\section{Appendix3}
 
 \end{document}
