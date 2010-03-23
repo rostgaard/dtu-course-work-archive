@@ -15,7 +15,17 @@
 
 \usepackage{babel}
 
+% The following can be used if not using custom frontpage
+\title{<document title>}
+\author{<name>\\
+        \\
+        <student id>
+}
+\date{\today}
+
 \begin{document}
+
+\section{Abstract}
 
 \section{Specification analysis}
 
@@ -32,7 +42,7 @@ Following the specification flow, leaves us with the following
 finite state machine.
 
 
-\section{Finite State Machine}
+\subsection{Finite State Machine}
 
 \includegraphics[width=0.7\textwidth]{fig/FSM_states}
 
@@ -78,31 +88,28 @@ s2 & s1 & s0 & cw & n2 & n1 & n0 & d1 & d0 & top\tabularnewline
 \end{tabular}
 
 
-\section{Equations}
+\subsection{Equations}
 
 
-\subsection{n2}
-
-
+\subsubsection{n2}
 $\left(s'_{2}s_{1}s_{0}+s_{2}s'_{1}s'_{0}+s'_{2}s_{1}s'_{0}+s_{2}s_{1}s'_{0}\right)cw'+\left(s'_{2}s_{1}s_{0}+s_{2}s'_{1}s'_{0}+s'_{2}s_{1}s'_{0}+s_{2}s_{1}s'_{0}\right)cw$ 
 
-$<=> s'_{2}s_{1}s_{0}+s_{2}s'_{1}s'_{0}+s'_{2}s_{1}s'_{0}+s_{2}s_{1}s'_{0}$
+$\Leftrightarrow  s'_{2}s_{1}s_{0}+s_{2}s'_{1}s'_{0}+s'_{2}s_{1}s'_{0}+s_{2}s_{1}s'_{0}$
 
-
-\subsection{n1}
+\subsubsection{n1}
 
 $\left(s'_{2}s'_{1}s_{0}+s'_{2}s_{1}s'_{0}+s_{2}s'_{1}s_{0}+s_{2}s_{1}s'_{0}\right)cw'+\left(s'_{2}s'_{1}s_{0}+s'_{2}s_{1}s'_{0}+s_{2}s'_{1}s_{0}+s_{2}s_{1}s'_{0}\right)cw$
 
-$<=> s'_{2}s'_{1}s_{0}+s'_{2}s_{1}s'_{0}+s_{2}s'_{1}s_{0}+s_{2}s_{1}s'_{0}$
+$\Leftrightarrow  s'_{2}s'_{1}s_{0}+s'_{2}s_{1}s'_{0}+s_{2}s'_{1}s_{0}+s_{2}s_{1}s'_{0}$
 
 
-\subsection{n0}
+\subsubsection{n0}
 
 $\left(s'_{2}s'_{1}s'_{0}+s'_{2}s_{1}s'_{0}+s_{2}s'_{1}s'_{0}+s_{2}s_{1}s'_{0}\right)cw'+\left(s'_{2}s'_{1}s'_{0}+s'_{2}s_{1}s'_{0}+s_{2}s'_{1}s'_{0}+s_{2}s_{1}s'_{0}\right)cw$
 
 $<=> s'_{2}s'_{1}s'_{0}+s'_{2}s_{1}s'_{0}+s_{2}s'_{1}s'_{0}+s_{2}s_{1}s'_{0}$
 
-\subsection{d1}
+\subsubsection{d1}
 $D_{1}$ is by definition unaffected by the $cw$ variable. 
 \begin{eqnarray*}
 s_{2}'s_{1}s_{0}' + s_{2}'s_{1}s_{0} + s_{2}s_{1}'s_{0}' + s_{2}s_{1}'s_{0} & \Leftrightarrow\\
@@ -110,8 +117,7 @@ s_{2}'s_{1} + s_{2}s_{1}'
 \end{eqnarray*}
 
 
-
-\subsection{d0}
+\subsubsection{d0}
 $D_{0}$ is by definition unaffected by the $cw$ variable. 
 
 \begin{eqnarray*}
@@ -121,7 +127,7 @@ s_{2}'s_{0}+s_{2}s_{0}'
 
 
 
-\subsection{$t$}
+\subsubsection{$t$}
 
 By Studying the truth table it becomes apparant that $t$ is only
 true when $s_{2}$ is false:
@@ -131,5 +137,20 @@ $t = s_{2}'$
 \par\end{center}
 
 
-\section{Enumerate the states}
+\section{Solution description}
+
+\section{Tests}
+
+\section{Conclusion}
+
+
+\newpage
+
+\appendix
+
+
+\section{Appendix1}
+\section{Appendix2}
+\section{Appendix3}
+
 \end{document}
