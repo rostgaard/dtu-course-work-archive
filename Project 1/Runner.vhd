@@ -27,7 +27,6 @@ entity Runner is
 end Runner;
 
 architecture Behavioral of Runner is
-	-- Variabels
 	 signal next_state : std_logic_vector(2 downto 0);
 	 signal current_state : std_logic_vector(2 downto 0);
 	 signal digit : std_logic_vector (1 downto 0);

@@ -23,7 +23,6 @@ end clockscaler;
 
 -- clockscaler architecture ( what do we do with the data )
 architecture Behavioral of clockscaler is
-	-- Variabels 
 	signal scaled_clock: std_logic;
     	signal next_count,count: std_logic_vector(31 downto 0);
 
