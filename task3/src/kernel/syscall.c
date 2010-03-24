@@ -86,11 +86,7 @@
 
                 // Enqueue the new thread
                 thread_queue_enqueue(&ready_queue, new_thread);
-/*
-                kprints("Thread nr: ");
-                kprinthex(new_thread);
-                kprints(" added\n");
-*/
+
                 
                 SYSCALL_ARGUMENTS.rax = ALL_OK;
                 break;

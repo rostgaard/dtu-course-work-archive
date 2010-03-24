@@ -449,7 +449,7 @@ initialize(void)
 
   /* Finally we set the current thread. */
   cpu_private_data.thread_index = 0;
-  cpu_private_data.ticks_left_of_time_slice = TIMESLICE_SIZE;
+  //cpu_private_data.ticks_left_of_time_slice = TIMESLICE_SIZE;
  }
 
  /* Set up the timer hardware to generate interrupts 200 times a second. */
