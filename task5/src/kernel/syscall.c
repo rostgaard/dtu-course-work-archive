@@ -154,7 +154,8 @@
     } else {
         //block current thread
         thread_queue_enqueue(&port_table[SYSCALL_ARGUMENTS.rdi].sender_queue, cpu_private_data.thread_index);
-        cpu_private_data.thread_index = thread_queue_dequeue(&ready_queue);
+        schedule = 1;
+        //cpu_private_data.thread_index = thread_queue_dequeue(&ready_queue);
     }
 
     break;
@@ -195,7 +196,8 @@
     } else {
         //block current thread
         port_table[SYSCALL_ARGUMENTS.rdi].receiver = cpu_private_data.thread_index;
-        cpu_private_data.thread_index = thread_queue_dequeue(&ready_queue);
+        //cpu_private_data.thread_index = thread_queue_dequeue(&ready_queue);
+        schedule = 1;
     }
 
     break;
