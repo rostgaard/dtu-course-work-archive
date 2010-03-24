@@ -1,33 +1,19 @@
 /*! \file scheduler.c
-   Implement the non-preemptive scheduler here. 
+   Implement the non-preemptive scheduler here.
  */
 
 #include "threadqueue.h"
+/*
+Check if we want to force a reschedule.
+Forcing a reschedule means that the previously
+running thread must not continue to execute and
+must not be put into the ready queue.
+*/
+if(schedule != 1){
+    // We dont want to force a reschedule so the currently running thread is put into the ready queue
+    thread_queue_enqueue(&ready_queue, cpu_private_data.thread_index);
 
 
-
-// Check if the system call blocked the thread.
-if (schedule == 1) {
-    register int new_thread_index, old_thread_index;
-
-    // Remove the head from the queue
-    new_thread_index = thread_queue_dequeue(&ready_queue);
-    // Save the current running thread
-    //old_thread_index = cpu_private_data.thread_index;
-
-    /*
-        kprints("Thread id: ");
-        kprinthex(old_thread_index);
-        kprints(" is now in ready queue\n");
-     */
-    /*
-        kprints("Thread id: ");
-        kprinthex(new_thread_index);
-        kprints(" is now running\n");
-     */
-
-    // Let the new thread run.
-    cpu_private_data.thread_index = new_thread_index;
 }
-
-
+// Dequeue the head thread and let it execute
+cpu_private_data.thread_index = thread_queue_dequeue(&ready_queue);
