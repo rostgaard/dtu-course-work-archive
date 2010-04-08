@@ -66,7 +66,6 @@ main(int argc, char* argv[])
  if (empty_semaphore_handle<0)
  {
   prints("createsemaphore failed!\n");
-  printhex(empty_semaphore_handle);
   return;
  }
 

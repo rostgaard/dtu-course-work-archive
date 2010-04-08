@@ -207,6 +207,32 @@
     case SYSCALL_CREATETHREAD:
     {
         SYSCALL_ARGUMENTS.rax = ERROR;
+
+        int current_process = thread_table[cpu_private_data.thread_index].data.owner;
+
+
+        int new_thread = allocate_thread();
+        if(new_thread != -1) {
+            thread_table[new_thread].data.owner = current_process   ;
+            thread_table[new_thread].data.registers.integer_registers.rflags = 0x200;
+            thread_table[new_thread].data.registers.integer_registers.rip = SYSCALL_ARGUMENTS.rdi;
+            thread_table[new_thread].data.registers.integer_registers.rsp = SYSCALL_ARGUMENTS.rsi;
+
+
+            // Enqueue the new thread
+            thread_queue_enqueue(&ready_queue, new_thread);
+
+
+            process_table[current_process].threads++;
+            /*
+                            kprints("Thread nr: ");
+                            kprinthex(new_thread);
+                            kprints(" added\n");
+             */
+
+            SYSCALL_ARGUMENTS.rax = ALL_OK;
+        }
+
         break;
     }
 
@@ -241,12 +267,65 @@
     case SYSCALL_SEMAPHOREDOWN:
     {
         SYSCALL_ARGUMENTS.rax = ERROR;
+
+        int s_index = SYSCALL_ARGUMENTS.rdi;
+
+
+        // Check if the calling thread's process owns the semaphore
+        if(semaphore_table[s_index].calling_process == thread_table[cpu_private_data.thread_index].data.owner &&
+           s_index >= 0 && s_index < MAX_NUMBER_OF_SEMAPHORES ) {
+
+
+            if (semaphore_table[s_index].count > 0) {
+                semaphore_table[s_index].count--;
+            }
+            else
+            {
+                // block the current thread
+
+
+                thread_queue_enqueue(&semaphore_table[s_index].blocked_threads,
+                                     cpu_private_data.thread_index);
+                // Force reschedule
+                schedule = 1;
+
+
+            }
+            SYSCALL_ARGUMENTS.rax = ALL_OK;
+
+        }
+
+
         break;
     }
 
     case SYSCALL_SEMAPHOREUP:
     {
         SYSCALL_ARGUMENTS.rax = ERROR;
+
+        int s_index = SYSCALL_ARGUMENTS.rdi;
+
+
+        // Check if the calling thread's process owns the semaphore
+        if(semaphore_table[s_index].calling_process == thread_table[cpu_private_data.thread_index].data.owner &&
+            s_index >= 0 && s_index < MAX_NUMBER_OF_SEMAPHORES ) {
+            
+            int released_thread;
+
+            if(!thread_queue_is_empty(&semaphore_table[s_index].blocked_threads)) {
+                released_thread = thread_queue_dequeue(&semaphore_table[s_index].blocked_threads);
+                thread_queue_enqueue(&ready_queue,released_thread);
+            }
+            else
+            {
+                semaphore_table[s_index].count++;
+            }
+
+            SYSCALL_ARGUMENTS.rax = ALL_OK;
+
+        }
+
+
         break;
     }
 
