@@ -8,7 +8,8 @@ This is made possible by the scheduler, whose job is to divide the processing po
 \\
 \\
 \\
-!!!!!!Maybe write a short intro to scheduling algorithms!!!!!!!!
+% Agreed - but we should write this in a comment
+% !!!!!!Maybe write a short intro to scheduling algorithms!!!!!!!!
 \subsubsection{Non-preemptive}
 Threads are allowed to run until it is finished or goes into blocked state on its own. A thread may for example block when requesting an I/O operation or calling the sleep system call.
 \\
@@ -37,7 +38,12 @@ Threads can be in one of three states; running state, ready state or blocked sta
 When a thread is in the running state, it is being executed by the CPU. It can from this state go to block or ready, depending on the circumstances. The ready state is for threads that are waiting for CPU time. It is then up to the scheduler which threads with ready state are executed by putting them in running state. Threads that already are in the blocked state and are designated to be run are returned to the ready state, and the scheduler takes over, as with all other threads in ready state.
 \\
 \\
-!!!!!! INSERT PROCESS STATE DIAGRAM !!!!!!
+\begin{figure}
+\centering
+\epsfig{file=fig/Process_states.eps, height=1.5in}
+\caption{Process states}
+\label{fig:process_states}
+\end{figure}
 
 \subsubsection{Implementation}
 \subsubsection*{scheduler.c}

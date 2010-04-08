@@ -41,18 +41,22 @@ case SYSCALL_TERMINATE:
 {
     SYSCALL_ARGUMENTS.rax=ERROR;
 
+    // The current process is the one being owned by the currently executing thread.
     int current_process = thread_table[current_thread].data.owner;
     int parent_process  = process_table[current_process].parent;
 
     // Setting the owner to -1 effectively frees up the thread slot
     thread_table[current_thread].data.owner=-1;
 
-    // Check if the process is the last one 
+    // Check if the process is not the last one (pid 1)
     if(! (--process_table[current_process].threads) ) {
-        //Finally we cleanup
         cleanup_process(current_process);
     }
     
+    /* The last thing we do is to insert the thread of the parent function (the one
+       that originally started the process we just terminated) in order to resume 
+       execution.
+    */ 
     int i;
     for(i = 0; i < MAX_NUMBER_OF_THREADS; i++) {
         if(thread_table[i].data.owner == parent_process) {

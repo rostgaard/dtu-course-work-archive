@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$scwrapper_8h.html#a3f91b86e986fbd19073b861b8c7fb9bf" title="Wrapper for the system call that prints a hexadecimal value." alt="" coords="136,5,203,35"/>
+<area shape="rect" id="node5" href="$scwrapper_8h.html#a9c41493b95189aecbad23b74e0a012f6" title="Wrapper for the system call that prints a string." alt="" coords="143,58,196,89"/>
+<area shape="rect" id="node7" href="$scwrapper_8h.html#a1721ba32edaf91a4ddba5a712c794802" title="Wrapper for the system call that performs a down operation on a semaphore." alt="" coords="112,111,227,142"/>
+<area shape="rect" id="node9" href="$scwrapper_8h.html#aad9c2b5e8f48d4699330d01f8912f408" title="Wrapper for the system call that performs an up operation on a semaphore." alt="" coords="120,165,219,195"/>
+<area shape="rect" id="node11" href="$scwrapper_8h.html#ae5a773506a43a9bc54bce503f234c209" title="Wrapper for the system call that terminates threads and processes." alt="" coords="132,218,207,249"/>
+</map>

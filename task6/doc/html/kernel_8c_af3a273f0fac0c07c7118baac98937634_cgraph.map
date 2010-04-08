@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$mm_8c.html#af0bb7de0fd39a1dc516badc6bf7a0024" title="Allocates a memory block." alt="" coords="235,5,291,35"/>
+<area shape="rect" id="node5" href="$kernel_8c.html#a76038da662be0fc9b74ae3c5210f2456" title="Outputs a string to the bochs console." alt="" coords="232,58,293,89"/>
+<area shape="rect" id="node9" href="$mm_8c.html#a73fc229a6b53869921a7e5e806b7196d" title="Change the protection of a range of pages in a page table." alt="" coords="173,111,352,142"/>
+<area shape="rect" id="node7" href="$kernel_8c.html#a75a9031e7ebccf1be2f88c45ac980a42" title="Wrapper for a byte out instruction." alt="" coords="401,58,447,89"/>
+</map>

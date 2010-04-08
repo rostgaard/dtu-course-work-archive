@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$kernel_8c.html" title="This is the main source code for the kernel." alt="" coords="58,166,186,197"/>
+<area shape="rect" id="node6" href="$mm_8c.html" title="Holds the implementation of the memory sub&#45;system." alt="" coords="22,86,136,117"/>
+<area shape="rect" id="node8" href="$sync_8c.html" title="Holds the implementation of the synchronization sub&#45;system." alt="" coords="79,246,199,277"/>
+<area shape="rect" id="node10" href="$threadqueue_8h.html" title="This file defines operations on thread queues." alt="" coords="211,86,376,117"/>
+<area shape="rect" id="node13" href="$sync_8h.html" title="Holds declarations for the synchronization sub&#45;system." alt="" coords="234,166,354,197"/>
+<area shape="rect" id="node16" href="$threadqueue_8c.html" title="This file implements operations on thread queues." alt="" coords="378,166,543,197"/>
+</map>

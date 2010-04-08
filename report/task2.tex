@@ -6,29 +6,33 @@ creating new processes and terminating them. An analogy to this is the a java ob
 The process is therefore nothing more than a container for resources reserved to the process by the operating system. \\
 
 \subsubsection{The thread concept}
-A thread is the part of the process container responsible for executing the program.
+A thread is the part of the process container responsible for executing the program. Usually processes can have a number of threads as iliustrated in figure \ref{fig:thread_models}.(a). \\
 
 So, the operating system need to keep track of the running processes and take care of creating and terminating the processes. 
 For this, we have added two system calls; create and terminate.
 
 \begin{figure}
 \centering
-\epsfig{file=fig/Thread_Model_single.eps, width=0.5in}
-\caption{Our thread model}
+\epsfig{file=fig/Thread_Models.eps, height=1in}
+\caption{Typical thread models}
+\label{fig:thread_models}
 \end{figure}
 
 \subsubsection*{The create system call}
 To implement this, we need to keep track of the running processes. This is handled by a process table that contains structures holding information about an individual process. \\
-Processes are executed invoking this system call by executing a piece of assembler code that calls a named procedure called ``main'' and then calls terminate when main is done executing.
-\subsubsection*{The terminate system call}
+Processes are executed invoking this system call by executing a piece of assembler code that calls a named procedure called ``main'' and then calls terminate when main is done executing. In this system call we create one thread, and only one for each process, so our thread model actually looks like figure \ref{fig:thread_models}.(b)
 
+\subsubsection*{The terminate system call}
+When a program finishes the terminate system call is invoked. This does cleanup by of course cleaning up references to the process 
+and the threads of the process, but also do a context switch. We switch back to the thread of the parent of the process just terminated.
 
 \subsubsection{Reflections}
 
 \subsubsection*{How is the system booted?}
-Our virtual pc starts a BIOS that searches for a bootloader (in our case Grub), that then loads the kernel image to memory from a harddisk - or in our case a disk image. The kernel image 
+Our virtual pc starts a BIOS that searches for a bootloader (in our case Grub), that then loads the kernel image to memory from a harddisk - or in our case a disk image. The virtual pc is an AMD64 architecture.
+
 \subsubsection*{How are processes created from executable files?}
-The kernel finds all executable files and loads them to memory, storing a pointer to the first instruction for each process.
+The kernel finds all executable files and loads them to memory, storing a pointer to the first instruction for each process. The function prepare\_process does a lot of sanity checks on the image assuring that it is in fact meant for execution.
 
 \subsubsection*{How does a daemon (process) differ from processes studied in this task?}
-Our processes runs ``interactively'' and daemons runs in the background. Otherwise they share the fact that they are started at bootup by the os.
+Our processes runs ``interactively'' and daemons traditionally runs in the background. Otherwise they share the fact that they are started at bootup by the operating system.
