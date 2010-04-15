@@ -16,34 +16,33 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- Clockscaler entity's ( in and out-puts )
 entity clockscaler is
-	port(
-		clk : IN std_logic;
-		out_clk : out std_logic);
+  port(
+    clk     : in  std_logic;
+    out_clk : out std_logic);
 end clockscaler;
 
 -- clockscaler architecture ( what do we do with the data )
 architecture Behavioral of clockscaler is
-	signal scaled_clock: std_logic;
-    	signal next_count,count: std_logic_vector(31 downto 0);
-
+  signal scaled_clock     : std_logic;
+  signal next_count,count : std_logic_vector(31 downto 0);
 begin
-	-- when the clk alters we process this
-	process(clk)
-	begin
-			-- when count is 10000000 it sets scaled_clock to 1
-			if (count = 10000000) then
-			count <= (others => '0');
-			scaled_clock <= '1';
+  -- when the clk alters we process this
+  process(clk)
+  begin
+    -- when count is 10000000 it sets scaled_clock to 1
+    if (count = 10000000) then
+      count <= (others => '0');
+      scaled_clock <= '1';
 
-			-- resets scaled_clock after use
-			elsif(clk'event and clk='1') then
-			count <= next_count;
-			scaled_clock <= '0';
-			end if;
-	end process;
+      -- resets scaled_clock after use
+    elsif(clk'event and clk='1') then
+      count <= next_count;
+      scaled_clock <= '0';
+    end if;
+  end process;
 
--- enumerates count
-next_count <= count+1;
-out_clk <= scaled_clock;
+  -- enumerates count
+  next_count <= count+1;
+  out_clk <= scaled_clock;
 end Behavioral;
 

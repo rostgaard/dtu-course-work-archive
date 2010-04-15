@@ -24,23 +24,22 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- in and output's
 entity Runner_logic is
-	port (
-			clockwise  : IN   std_logic;
-			next_state : out std_logic_vector(2 downto 0);
-			current_state : in std_logic_vector(2 downto 0);
-         		top     : OUT  std_logic;
-			digit	: out std_logic_vector(1 downto 0)
-			);
+  port (
+    clockwise     : in  std_logic;
+    next_state    : out std_logic_vector(2 downto 0);
+    current_state : in  std_logic_vector(2 downto 0);
+    top           : out std_logic;
+    digit	  : out std_logic_vector(1 downto 0));
 end Runner_logic;
 
 architecture Behavioral of Runner_logic is
 begin
-	-- next state logic
-	next_state <= current_state + 1 when clockwise = '1' else current_state - 1;
-
-	-- Output decoding
-	digit <= not current_state(1 downto 0) when current_state(2) = '1' else current_state(1 downto 0);
-	top <= not current_state(2);
+  -- next state logic
+  next_state <= current_state + 1 when clockwise = '1' else current_state - 1;
+  
+  -- Output decoding
+  digit <= not current_state(1 downto 0) when current_state(2) = '1' else current_state(1 downto 0);
+  top   <= not current_state(2);
 
 end Behavioral;
 
