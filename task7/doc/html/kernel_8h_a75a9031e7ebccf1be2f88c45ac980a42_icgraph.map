@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$kernel_8h.html#a9efe22aaead3a5e936b5df459de02eba" title="This fuction initializes the kernel after the assembly code portion has set the system..." alt="" coords="408,74,477,105"/>
+<area shape="rect" id="node5" href="$kernel_8h.html#a7a0f3218c297f7b225696bef0bb3340a" title="This function gets called from the interrupt handler and dispatches interrupts to..." alt="" coords="224,73,360,103"/>
+<area shape="rect" id="node7" href="$video_8c.html#a43a7639c869aabcbadfa32e21cd270c0" title="Prints a long formatted as a hexadecimal number to the bochs console." alt="" coords="101,22,176,53"/>
+<area shape="rect" id="node11" href="$video_8c.html#a76038da662be0fc9b74ae3c5210f2456" title="Outputs a string to the bochs console." alt="" coords="108,126,169,157"/>
+<area shape="rect" id="node15" href="$kernel_8c.html#af3a273f0fac0c07c7118baac98937634" title="Copies an ELF image to memory and prepares a process." alt="" coords="233,126,351,157"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$kernel_8h.html" title="This file holds kernel wide macros and declarations." alt="" coords="37,246,104,277"/>
+<area shape="rect" id="node7" href="$sync_8h.html" title="Holds declarations for the synchronization sub&#45;system." alt="" coords="75,86,133,117"/>
+<area shape="rect" id="node5" href="$sysdefines_8h.html" title="This file defines constants and data types used by system calls." alt="" coords="23,326,119,357"/>
+<area shape="rect" id="node9" href="$threadqueue_8h.html" title="This file defines operations on thread queues." alt="" coords="64,166,168,197"/>
+</map>

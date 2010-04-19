@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$kernel_8h.html#a9efe22aaead3a5e936b5df459de02eba" title="This fuction initializes the kernel after the assembly code portion has set the system..." alt="" coords="299,25,368,56"/>
+<area shape="rect" id="node5" href="$kernel_8h.html#a7a0f3218c297f7b225696bef0bb3340a" title="This function gets called from the interrupt handler and dispatches interrupts to..." alt="" coords="115,24,251,55"/>
+<area shape="rect" id="node7" href="$kernel_8c.html#af3a273f0fac0c07c7118baac98937634" title="Copies an ELF image to memory and prepares a process." alt="" coords="124,77,241,108"/>
+</map>
