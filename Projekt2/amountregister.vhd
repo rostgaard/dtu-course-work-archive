@@ -28,23 +28,26 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --use UNISIM.VComponents.all;
 
 entity amountregister is
-    Port ( addamount : in  STD_LOGIC_VECTOR( 3 downto 0);
+    Port ( input : in  STD_LOGIC_VECTOR( 3 downto 0) := (others => '0');
            total : out  STD_LOGIC_VECTOR( 3 downto 0);
 			  clk : in  STD_LOGIC;
 			  clr : in STD_LOGIC);
 end amountregister;
 
 architecture Behavioral of amountregister is
-	signal currentamount : STD_LOGIC_VECTOR(3 downto 0 ); 
+	signal nextamount, currentamount : STD_LOGIC_VECTOR(3 downto 0 ); 
 
 begin
    process(clr, clk)
 		begin
-			if(clr='1') then currentamount <= (others => '0');
-			elsif(clk ='1' and clk'event) then currentamount <= currentamount + addamount;
+			if(clr='1') then 
+				currentamount <= (others => '0');
+			elsif(clk ='1' and clk'event) then 
+				currentamount <= nextamount;
 			end if;
 	end process;
 	
-		total <= currentamount;
+	nextamount <= input;
+	total <= currentamount;
 end Behavioral;
 
