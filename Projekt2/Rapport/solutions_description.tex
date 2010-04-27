@@ -1,0 +1,31 @@
+
+Req.1 One product, a coke-can.
+\begin{lstlisting}
+entity stateregister is
+    Port ( reset : in  STD_LOGIC;
+           kr1 : in  STD_LOGIC;
+           kr2 : in  STD_LOGIC;
+			  clk : in STD_LOGIC;
+           amount : out  STD_LOGIC_VECTOR(3 downto 0));
+end stateregister;
+\end{lstlisting}
+
+
+Req.2 When sufficient coins is inserted, one product can be dispenced from the machine at a time.
+  
+Req.3 The product is fixed to 7 kr. ( in design this should be changebel ).
+
+Req.4 System accepts 1 and 2 Kr coins.
+ 
+Req.5 A display should show the total amount inserted.
+  
+Req.6 A LED should indicate if change is avaliable (min 1 kr coin available).
+ 
+Req.7 Remove product sensor, wil close the the coin slot and turn on indicating LED until product is removed.  
+
+Req.8 Return Change.
+ 
+Req.9 Return Coins.
+
+Req.10 If change is not available, the machine should only accept purchases with the right amount.
+
