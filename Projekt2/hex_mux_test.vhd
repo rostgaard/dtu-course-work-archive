@@ -6,8 +6,8 @@ entity hex_mux_test is
   port(
     clk: in std_logic;
     sw: in std_logic_vector ( 7 downto 0 ) ;
-    an: out std_logic_vector (3 downto 0 ) ;
-    sseg : out std_logic_vector (7 downto 0 ));
+    AN: out std_logic_vector (3 downto 0 ) ;
+    SEG : out std_logic_vector (7 downto 0 ));
 end hex_mux_test;
 
 architecture arch of hex_mux_test is
@@ -17,14 +17,14 @@ begin
   disp_unit : entity work.disp_hex_mux
     port map(
       clk=>clk,
-      reset=>'O',
+      reset=>'0',
       hex3=>sum(7 downto 4),
       hex2=>sum(3 downto 0),
-      hexl=>sw(7 downto 4),
-      hexO=>sw(3 downto 0),
-      dp_in=>"lOll",
-      an=>an,
-      sseg=>sseg);
+      hex1=>sw(7 downto 4),
+      hex0=>sw(3 downto 0),
+      dp_in=>"1011",
+      AN=>AN,
+      SEG=>SEG);
   
   a   <= "0000" & unsigned(sw(3 downto 0));
   b   <= "0000" & unsigned(sw(7 downto 4));
