@@ -39,21 +39,54 @@ ARCHITECTURE behavior OF test_tb IS
  
     COMPONENT test
     PORT(
-         kr1 : IN  std_logic;
-         kr2 : IN  std_logic;
-         clk : IN  std_logic;
-         amount : OUT  std_logic_vector(3 downto 0)
+	clk                : in  std_logic;
+	reset              : in  std_logic;
+	kr1                : in  std_logic;
+	kr2                : in  std_logic;
+	return_coins       : in  std_logic;
+	purchase_finished  : in  std_logic;
+	debug              : in  std_logic_vector(1 downto 0);
+
+   power_on           : out std_logic;
+   change_available   : out std_logic;
+   item_released      : out std_logic;
+	returned_all_coins : out std_logic;
+	returned_change    : out std_logic;
+	slot_closed        : out std_logic;
+	display            : out std_logic_vector(15 downto 0);
+	
+	amount_out         : out integer;
+	cur_state          : out std_logic_vector(3 downto 0)
         );
     END COMPONENT;
     
 
    --Inputs
-   signal kr1 : std_logic := '0';
-   signal kr2 : std_logic := '0';
    signal clk : std_logic := '0';
-
+	signal reset : std_logic := '0';
+	signal kr1 : std_logic := '0';
+   signal kr2 : std_logic := '0';
+   signal return_coins : std_logic := '0';
+   signal purchase_finished : std_logic := '0';
+	signal debug : std_logic_vector(1 downto 0);
+   
  	--Outputs
-   signal amount : std_logic_vector(3 downto 0);
+   
+   signal power_on : std_logic;
+   signal change_available : std_logic;
+   signal item_released : std_logic;
+   signal returned_all_coins : std_logic;
+   signal returned_change : std_logic;
+   signal slot_closed : std_logic;
+   signal display : std_logic_vector(15 downto 0);
+	
+	signal amount_out : integer;
+	signal cur_state : std_logic_vector(3 downto 0);
+	
+	
+	
+	
+	
 
    -- Clock period definitions
    constant clk_period : time := 1us;
@@ -62,10 +95,24 @@ BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: test PORT MAP (
-          kr1 => kr1,
-          kr2 => kr2,
-          clk => clk,
-          amount => amount
+	clk                => clk,
+	reset              => reset,
+	kr1                => kr1,
+	kr2                => kr2,
+	return_coins       => return_coins,
+	purchase_finished  => purchase_finished,
+	debug              => debug,
+
+   power_on           => power_on,
+   change_available   => change_available,
+   item_released      => item_released,
+	returned_all_coins => returned_all_coins,
+	returned_change    => returned_change,
+	slot_closed        => slot_closed,
+	display            => display,
+	
+	amount_out         => amount_out,
+	cur_state          => cur_state
         );
 
    -- Clock process definitions
@@ -86,6 +133,12 @@ BEGIN
       wait for clk_period*2;
 		kr1 <= '1';
 		wait for clk_period*2;
+		wait for clk_period*2;
+		kr1 <= '0';
+
+		wait for clk_period*2;
+		kr1 <= '1';
+		wait for clk_period*2;
 		kr1 <= '0';
 		wait for clk_period*2;
 
@@ -93,6 +146,46 @@ BEGIN
 		wait for clk_period*2;
 		kr2 <= '0';
 		wait for clk_period*2;
+
+		kr2 <= '1';
+		wait for clk_period*2;
+		kr2 <= '0';
+		wait for clk_period*2;
+
+		return_coins <= '1';
+		wait for clk_period;
+		return_coins <= '0';
+		wait for clk_period;
+
+		kr2 <= '1';
+		wait for clk_period*2;
+		kr2 <= '0';
+		wait for clk_period*2;
+		
+		purchase_finished <= '1';
+		wait for clk_period;
+		purchase_finished <= '0';
+		wait for clk_period;
+
+		kr2 <= '1';
+		wait for clk_period;
+		kr2 <= '0';
+		wait for clk_period;
+		
+		kr2 <= '1';
+		wait for clk_period;
+		kr2 <= '0';
+		wait for clk_period;
+
+		kr2 <= '1';
+		wait for clk_period;
+		kr2 <= '0';
+		wait for clk_period;
+
+		kr2 <= '1';
+		wait for clk_period;
+		kr2 <= '0';
+		wait for clk_period;
 
 
 
