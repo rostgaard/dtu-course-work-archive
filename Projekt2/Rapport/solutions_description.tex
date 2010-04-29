@@ -1,31 +1,63 @@
+\paragraph{Req.1 One product, a coke-can.}
+The cocke-can is the only product our vending machine can offer. This make the purchase senario of one coke-can our main senario. hence all our code revolves around this very requirement.
 
-Req.1 One product, a coke-can.
-\begin{lstlisting}
-entity stateregister is
-    Port ( reset : in  STD_LOGIC;
-           kr1 : in  STD_LOGIC;
-           kr2 : in  STD_LOGIC;
-			  clk : in STD_LOGIC;
-           amount : out  STD_LOGIC_VECTOR(3 downto 0));
-end stateregister;
+\paragraph{Req.2 When a sufficient amount is inserted, one cocke-can will be dispensed from the machine.} From the Purchase-state we will change to the Dispence-state if sufficient money has been inserted, that will lead to the dispence of one coke-can.
+
+\begin{lstlisting}[caption={[VHDL]eks. text }]
+
+\end{lstlisting}
+  
+\paragraph{Req.3 The product is fixed to 7 kr. ( in design this should be changeble ).} By changing this signal the price of one coke-can can can be changed. Unfortunately there are no inputs available for this action. we have agreed that a recompile would be neede to change the value. 
+\begin{lstlisting}[caption={[VHDL]eks. text }]
+
 \end{lstlisting}
 
 
-Req.2 When sufficient coins is inserted, one product can be dispenced from the machine at a time.
+\paragraph{Req.4 System accepts 1 and 2 Kr coins.}
+lalala
+\begin{lstlisting}[caption={[VHDL]eks. text }]
+
+\end{lstlisting}
+ 
+
+\paragraph{Req.5 A display should show the total amount inserted.}
+lalala
+\begin{lstlisting}[caption={[VHDL]eks. text }]
+
+\end{lstlisting}
   
-Req.3 The product is fixed to 7 kr. ( in design this should be changebel ).
 
-Req.4 System accepts 1 and 2 Kr coins.
- 
-Req.5 A display should show the total amount inserted.
-  
-Req.6 A LED should indicate if change is avaliable (min 1 kr coin available).
- 
-Req.7 Remove product sensor, wil close the the coin slot and turn on indicating LED until product is removed.  
+\paragraph{Req.6 A LED should indicate if change is avaliable (min 1 kr coin available).}
+lalala
+\begin{lstlisting}[caption={[VHDL]eks. text }]
 
-Req.8 Return Change.
+\end{lstlisting}
  
-Req.9 Return Coins.
 
-Req.10 If change is not available, the machine should only accept purchases with the right amount.
+\paragraph{Req.7 Remove product sensor, will close the the coin slot and turn on indicating LED until product is removed.}
+lalala
+\begin{lstlisting}[caption={[VHDL]eks. text }]
+
+\end{lstlisting}  
+
+
+\paragraph{Req.8 Return Change.}
+lalala
+\begin{lstlisting}[caption={[VHDL]eks. text }]
+
+\end{lstlisting}
+ 
+
+\paragraph{Req.9 Return Coins.}
+lalala
+\begin{lstlisting}[caption={[VHDL]eks. text }]
+
+\end{lstlisting}
+
+
+\paragraph{Req.10 If change is not available, the machine should only accept purchases with the right amount.}
+lalala
+\begin{lstlisting}[caption={[VHDL]eks. text }]
+
+\end{lstlisting}
 
