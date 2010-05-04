@@ -3,8 +3,9 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_ARITH.ALL;
-use IEEE.STD_LOGIC_UNSIGNED.ALL;
+--use IEEE.STD_LOGIC_ARITH.ALL;
+--use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use ieee.numeric_std.all;
 
 ---- Uncomment the following library declaration if instantiating
 ---- any Xilinx primitives in this code.
@@ -20,43 +21,54 @@ entity vm_processor is
 end vm_processor;
 
 architecture Behavioral of vm_processor is
-  type StateType is (reset, init, purchase, add1, add2, dispense,
-                     return_all, return_change);
-  signal state_reg, state_next : StateType := init;
+  type StateType is (s_reset, init, purchase, add1, add2, dispense,
+                     return_all, return_change, wait_for_user);
+  signal state_reg, state_next : StateType := s_reset;
 
   -- Input signals
   signal amount_eq_cost, amount_gt_cost, has_change : std_logic;
-
-  -- Output signals
-  signal TTC1_sub : std_logic;
   
-  -- Registers and 
-  signal CC1_reset,CC1_en : std_logic;
-  signal CC1_r_reg,CC1_r_next : unsigned;
+  -- Registers and Output signals
+  signal CC1_reset,CC1_en : std_logic := '0';
+  signal CC1_r_reg,CC1_r_next : std_logic_vector(3 downto 0);
   
-  signal CC2_reset,CC2_en : std_logic;
-  signal CC2_r_reg,CC2_r_next : unsigned;
+  signal CC2_reset,CC2_en : std_logic := '0';
+  signal CC2_r_reg,CC2_r_next : std_logic_vector(3 downto 0) := "0000";
   
-  signal TCC1_reset,TCC1_en : std_logic;
-  signal TCC1_r_reg,TCC1_r_next : unsigned;
+  signal TCC1_reset,TCC1_en : std_logic := '0';
+  signal TCC1_r_reg,TCC1_r_next : std_logic_vector(3 downto 0);
   
   signal TCC2_reset,TCC2_en : std_logic;
-  signal TCC2_r_reg,TCC2_r_next : unsigned;
-
-  signal cost_reset,cost_en : std_logic;
-  signal cost_r_reg,cost_r_next : unsigned;
+  signal TCC2_r_reg,TCC2_r_next : std_logic_vector(3 downto 0);
+  
+  signal CC2_sel : std_logic := '0';
+  signal CC1_sel : std_logic_vector(1 downto 0) := "00";
+  signal amount : std_logic_vector(3 downto 0);
+  
+  constant cost : std_logic_vector(3 downto 0) := "0111"; -- 7
+  constant inital_cc1 : std_logic_vector(3 downto 0) := "0001"; -- 1
+  constant inital_cc2 : std_logic_vector(3 downto 0) := "0010"; -- 2
+  
+  signal slot_closed_bit, returned_all_coins_bit, 
+         returned_change_bit, item_released_bit : std_logic := '0';
+  
+  
+  signal slot_closed_reset,        slot_closed_en : std_logic := '0';
+  signal returned_all_coins_reset, returned_all_coins_en : std_logic := '0';
+  signal returned_change_reset,    returned_change_en : std_logic := '0';
+  signal item_released_reset,      item_released_en : std_logic := '0';
   
   
 begin
-
-  NextStateDecoding : process (state_reg,clk)
+  NextStateDecoding : process (state_reg, clk, amount_gt_cost, amount_eq_cost, 
+                               has_change, return_coins, kr1, kr2, purchase_finished)
   begin
     --Init values
     state_next <= state_reg;
-    amount_out <= nextamount;
     --Assignments
+	 
     case state_reg is
-      when reset =>
+      when s_reset =>
         state_next <= init;
         
       when init => 
@@ -97,20 +109,24 @@ begin
         end if;
 
       when dispense =>
-        state_next <= return_change;
-        
+			if (amount_gt_cost = '1') then
+				state_next <= return_change;
+			else 
+			  state_next <= wait_for_user;
+         end if;   
       when return_all =>
         if purchase_finished = '1' then
-          state_next <= purchase;
-        else
-          state_next <= return_all;
+          state_next <= wait_for_user;
         end if;
         
       when return_change =>
+          state_next <= wait_for_user;
+		  
+		  when wait_for_user =>
         if purchase_finished = '1' then
-          state_next <= purchase;
+          state_next <= init;
         else
-          state_next <= return_change;
+          state_next <= wait_for_user;
         end if;
 
       when others => 
@@ -121,7 +137,7 @@ begin
   StateRegister: process (clk,reset)
   begin
     if reset = '1' then 
-      state_reg <= init;
+      state_reg <= s_reset;
     elsif clk'event and clk = '1' then
       state_reg <= state_next;
     end if;
@@ -129,50 +145,77 @@ begin
   
   OutputDecoding : process (state_reg)
   begin
+    --Initial values
+     TCC1_en <= '0'; TCC1_reset <= '0';
+     TCC2_en <= '0';	TCC2_reset <= '0';
+     CC1_en  <= '0'; CC1_reset <= '0';
+     CC2_en  <= '0'; CC2_reset <= '0';
+	  CC1_sel <= "00";
+	  CC2_sel <= '0';
+
+     slot_closed_en           <= '0';
+     returned_all_coins_en    <= '0';
+     returned_change_en       <= '0';
+     item_released_en         <= '0';
+     slot_closed_reset        <= '0';
+     returned_all_coins_reset <= '0';
+     returned_change_reset    <= '0';
+     item_released_reset      <= '0';
+	  
+	  
     case state_reg is
-      when reset =>
-        power_on <= '0';
+      when s_reset =>
+        CC1_en <= '1';
+        CC2_en <= '1';
+
+
         CC1_reset <= '1';
         CC2_reset <= '1';
+
+
+      when init =>
+        TCC1_en <= '1';
+        TCC2_en <= '1';
         TCC1_reset <= '1';
         TCC2_reset <= '1';
-      
-      when init =>
-        power_on <= '1';
-        returned_all_coins <= '0' ;
-        slot_closed <= '0';
-        returned_change <= '0';
-        item_released <= '0';
-        
+		  returned_all_coins_reset <= '1' ;
+		  returned_change_reset <= '1';
+		  slot_closed_reset <= '1';
+		  item_released_reset <= '1';
       when add1 =>
         TCC1_en <= '1';
-        TCC2_en <= '0';
         
       when add2 =>
         TCC2_en <= '1';
-        TCC1_en <= '0';
         
       when purchase =>
-        TCC1_en <= '0';
-        TCC2_en <= '0';
+			
 
       when dispense =>
         
-        Item_released <= '1';
-        slot_closed <= '1';           
+        item_released_en <= '1';
+        slot_closed_en <= '1';
         
       when return_all =>
         --empty temporary coin counter
-        TCC1_next <= 0;
-        TCC2_next <= 0;
-        nextamount <= 0;
-        returned_all_coins <= '1';
+        TCC1_reset <= '1';
+        TCC2_reset <= '1';
+        returned_all_coins_en <= '1';
         
       when return_change =>
-        returned_change <= '1';
+        returned_change_en <= '1';
         -- Reset temporary coin counters
         TCC1_reset <= '1';
         TCC2_reset <= '1';
+		  
+		  -- return change
+		  CC1_sel <= "01";
+		 when wait_for_user =>
+		   -- merge counters
+        CC1_en <= '1';
+        CC2_en <= '1';			
+		   CC1_sel <= "10";
+		   CC2_sel <= '0';
         
       when others => 
         null;
@@ -182,76 +225,192 @@ begin
 
   CC1_reg : process (clk,CC1_reset)
   begin
-    if reset = '1' then
-      CC1_r_reg <= 0;
+    if CC1_reset = '1' then
+      CC1_r_reg <= inital_cc1;
     elsif rising_edge(clk) and CC1_en = '1' then
       CC1_r_reg <= CC1_r_next;
     end if;
-  end CC1_reg;
+  end process;
 
   CC2_reg : process (clk,CC2_reset)
   begin
-    if reset = '1' then
-      CC2_r_reg <= 0;
+    if CC2_reset = '1' then
+      CC2_r_reg <= inital_cc1;
     elsif rising_edge(clk) and CC2_en = '1' then
       CC2_r_reg <= CC2_r_next;
     end if;
-  end CC2_reg;
+  end process;
 
   TCC1_reg : process (clk,TCC1_reset)
   begin
-    if reset = '1' then
-      TCC1_r_reg <= 0;
+    if TCC1_reset = '1' then
+      TCC1_r_reg <= (others => '0');
     elsif rising_edge(clk) and TCC1_en = '1' then
       TCC1_r_reg <= TCC1_r_next;
     end if;
-  end TCC1_reg;
+  end process;
 
   TCC2_reg : process (clk,TCC2_reset)
   begin
-    if reset = '1' then
-      TCC2_r_reg <= 0;
+    if TCC2_reset = '1' then
+      TCC2_r_reg <= (others => '0');
     elsif rising_edge(clk) and TCC2_en = '1' then
       TCC2_r_reg <= TCC2_r_next;
     end if;
-  end TCC2_reg;
+  end process;
 
-
-  cost_reg : process (clk,cost_reset)
+  
+slot_closed_reg : process (clk, slot_closed_reset)
   begin
-    if reset = '1' then
-      cost_r_reg <= 7;
-    elsif rising_edge(clk) and cost_en = '1' then
-      cost_r_reg <= cost_r_next;
+    if slot_closed_reset = '1' then
+		slot_closed_bit <= '0';
+	 elsif rising_edge(clk) and slot_closed_en = '1' then
+      slot_closed_bit <= '1';
     end if;
-  end TCC2_reg;
+  end process;
   
-  
-  -- debug
-  debugOutput : process (state_reg)
+returned_all_coins_reg : process (clk, returned_all_coins_reset)
   begin
-    case state_reg is
-      when reset =>
-        display(1 downto 0) <= "0000";
-      when init =>
-        display(1 downto 0) <= "0001";
-      when purchase =>
-        display(1 downto 0) <= "0010";
-      when add1 =>
-        display(1 downto 0) <= "0011";
-      when add2 =>
-        display(1 downto 0) <= "0100";
-      when dispense =>
-        display(1 downto 0) <= "0101";
-      when return_all =>
-        display(1 downto 0) <= "0110";
-      when return_change =>
-        display(1 downto 0) <= "0111";
-      when others =>
-        display(1 downto 0) <= "1111";
-    end case;
+    if returned_all_coins_reset = '1' then
+		returned_all_coins_bit <= '0';
+	 elsif rising_edge(clk) and returned_all_coins_en = '1' then
+      returned_all_coins_bit <= '1';
+    end if;
+  end process;  
+  
+returned_change_reg : process (clk, returned_change_reset)
+  begin
+    if returned_change_reset = '1' then
+		returned_change_bit <= '0';
+	 elsif rising_edge(clk) and returned_change_en = '1' then
+      returned_change_bit <= '1';
+    end if;
+  end process;  
 
-        
-      when others => null;
+item_released_reg : process (clk, item_released_reset)
+  begin
+    if item_released_reset = '1' then
+		item_released_bit <= '0';
+	 elsif rising_edge(clk) and item_released_en = '1' then
+      item_released_bit <= '1';
+    end if;
+  end process;  
+
+
+-- Single bit outputs
+power_on <= not reset;
+slot_closed <= slot_closed_bit;
+returned_all_coins <= returned_all_coins_bit;
+returned_change <= returned_change_bit;
+item_released <= item_released_bit;
+
+
+
+amount <= std_logic_vector((unsigned(TCC2_r_reg(2 downto 0) & '0'))+ unsigned(TCC1_r_reg));
+
+
+amount_gt_cost <= '1' when unsigned(amount) > unsigned(cost) else '0';
+amount_eq_cost <= '1' when unsigned(amount) = unsigned(cost) else '0';
+
+change_available <= '1' when unsigned(CC1_r_reg) > 0 else '0';
+
+CC2_r_next <= std_logic_vector(unsigned(TCC2_r_reg) + unsigned(CC2_r_reg)) when CC2_sel = '0' else CC2_r_reg;
+TCC1_r_next <= std_logic_vector(unsigned(TCC1_r_reg)+1) when TCC1_en = '1' else TCC1_r_reg;
+TCC2_r_next <= std_logic_vector(unsigned(TCC2_r_reg)+1) when TCC2_en = '1' else TCC1_r_reg;
+
+
+
+
+
+has_change <= '1' when (unsigned(TCC1_r_reg) + unsigned(CC1_r_reg)) > 0 else '0';
+
+
+datapath: process(CC1_sel,CC2_sel,TCC1_r_reg,CC1_r_reg)
+  begin
+    case CC1_sel is
+	   when "00" => CC1_r_next <= CC1_r_reg;
+	   when "01" => CC1_r_next <= std_logic_vector(unsigned(CC1_r_reg)-1);
+	   when "10" => CC1_r_next <= std_logic_vector(unsigned(TCC1_r_reg) + unsigned(CC1_r_reg));
+	   when "11" => CC1_r_next <= inital_cc1;
+		when others => CC1_r_next <= CC1_r_reg;
     end case;
+	 
+end process;
+	 
+
+
+
+-- debug, still part of datapath
+
+--process(
+
+
+  
+
+  
+-- debug
+debugOutput : process (state_reg,debug,amount,CC1_r_reg,CC2_r_reg)
+  begin
+  case debug is
+  when "00" =>
+    display(15 downto 4) <= (others => '0');
+    display(3 downto 0) <= amount;
+  when "01" =>
+	 display(15 downto 4) <= (others => '0');
+    case state_reg is
+	 
+      when s_reset =>
+        display(3 downto 0) <= "0000";
+      when init =>
+        display(3 downto 0) <= "0001";
+      when purchase =>
+        display(3 downto 0) <= "0010";
+      when add1 =>
+        display(3 downto 0) <= "0011";
+      when add2 =>
+        display(3 downto 0) <= "0100";
+      when dispense =>
+        display(3 downto 0) <= "0101";
+      when return_all =>
+        display(3 downto 0) <= "0110";
+      when return_change =>
+        display(3 downto 0) <= "0111";
+      when others =>
+        display(3 downto 0) <= "1111";
+		end case;
+	 when "10" =>
+	   display( 3 downto  0) <= CC2_r_reg;
+		display( 7 downto  4) <= (others => '0');
+		display(11 downto  8) <= CC1_r_reg;
+		display(15 downto 12) <= (others => '0');
+
+	 --default, self-defined debug
+	 when others =>
+		display( 7 downto  4) <= amount;
+		display(11 downto  8) <= CC1_r_reg;
+		display(15 downto 12) <= CC2_r_reg;
+	   case state_reg is
+
+      when s_reset =>
+        display(3 downto 0) <= "0000";
+      when init =>
+        display(3 downto 0) <= "0001";
+      when purchase =>
+        display(3 downto 0) <= "0010";
+      when add1 =>
+        display(3 downto 0) <= "0011";
+      when add2 =>
+        display(3 downto 0) <= "0100";
+      when dispense =>
+        display(3 downto 0) <= "0101";
+      when return_all =>
+        display(3 downto 0) <= "0110";
+      when return_change =>
+        display(3 downto 0) <= "0111";
+      when others =>
+        display(3 downto 0) <= "1111";
+		end case;
+	 end case;
+	end process;
+
 end Behavioral;

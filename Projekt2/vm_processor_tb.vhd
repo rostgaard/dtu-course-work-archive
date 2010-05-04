@@ -102,6 +102,7 @@ BEGIN
   stim_proc: process
   begin		
     -- hold reset state for 5 clock periods.
+	 debug <= "11";
     reset <= '1';
     wait for clk_period*5;	
     
