@@ -22,7 +22,7 @@ end vm_processor;
 
 architecture Behavioral of vm_processor is
   type StateType is (s_reset, init, purchase, add1, add2, dispense,
-                     return_all, return_change, wait_for_user);
+                     return_all, return_change, merge_counters, wait_for_user);
   signal state_reg, state_next : StateType := s_reset;
 
   -- Input signals
@@ -79,7 +79,7 @@ begin
         -- if the amount inserted is above the cost and we are unable to return
         -- change, abort the transaction - corresponding to req. 10
         if amount_eq_cost = '1' or (amount_gt_cost = '1' and has_change = '1') then
-          state_next <= dispense;          
+          state_next <= merge_counters;          
         elsif (amount_gt_cost = '1' and has_change = '0') or return_coins = '1' then
           state_next <= return_all;
         elsif kr1 = '1' and kr2 = '0' then 
@@ -115,14 +115,15 @@ begin
 			  state_next <= wait_for_user;
          end if;   
       when return_all =>
-        if purchase_finished = '1' then
           state_next <= wait_for_user;
-        end if;
-        
+       
       when return_change =>
           state_next <= wait_for_user;
+
+      when merge_counters =>
+		    state_next <= dispense;
 		  
-		  when wait_for_user =>
+		 when wait_for_user =>
         if purchase_finished = '1' then
           state_next <= init;
         else
@@ -162,16 +163,12 @@ begin
      returned_change_reset    <= '0';
      item_released_reset      <= '0';
 	  
-	  
     case state_reg is
       when s_reset =>
         CC1_en <= '1';
         CC2_en <= '1';
-
-
         CC1_reset <= '1';
         CC2_reset <= '1';
-
 
       when init =>
         TCC1_en <= '1';
@@ -182,6 +179,7 @@ begin
 		  returned_change_reset <= '1';
 		  slot_closed_reset <= '1';
 		  item_released_reset <= '1';
+		  
       when add1 =>
         TCC1_en <= '1';
         
@@ -189,8 +187,6 @@ begin
         TCC2_en <= '1';
         
       when purchase =>
-			
-
       when dispense =>
         
         item_released_en <= '1';
@@ -204,19 +200,20 @@ begin
         
       when return_change =>
         returned_change_en <= '1';
-        -- Reset temporary coin counters
-        TCC1_reset <= '1';
-        TCC2_reset <= '1';
-		  
 		  -- return change
+		  CC1_en <= '1';
 		  CC1_sel <= "01";
-		 when wait_for_user =>
-		   -- merge counters
-        CC1_en <= '1';
-        CC2_en <= '1';			
+		  
+      when merge_counters =>
+			-- merge counters
+         CC1_en <= '1';
+         CC2_en <= '1';
 		   CC1_sel <= "10";
-		   CC2_sel <= '0';
-        
+		   CC2_sel <= '0';	   
+
+		 when wait_for_user =>
+			null;
+
       when others => 
         null;
     end case;
@@ -235,7 +232,7 @@ begin
   CC2_reg : process (clk,CC2_reset)
   begin
     if CC2_reset = '1' then
-      CC2_r_reg <= inital_cc1;
+      CC2_r_reg <= inital_cc2;
     elsif rising_edge(clk) and CC2_en = '1' then
       CC2_r_reg <= CC2_r_next;
     end if;
@@ -305,9 +302,7 @@ returned_change <= returned_change_bit;
 item_released <= item_released_bit;
 
 
-
 amount <= std_logic_vector((unsigned(TCC2_r_reg(2 downto 0) & '0'))+ unsigned(TCC1_r_reg));
-
 
 amount_gt_cost <= '1' when unsigned(amount) > unsigned(cost) else '0';
 amount_eq_cost <= '1' when unsigned(amount) = unsigned(cost) else '0';
@@ -317,9 +312,6 @@ change_available <= '1' when unsigned(CC1_r_reg) > 0 else '0';
 CC2_r_next <= std_logic_vector(unsigned(TCC2_r_reg) + unsigned(CC2_r_reg)) when CC2_sel = '0' else CC2_r_reg;
 TCC1_r_next <= std_logic_vector(unsigned(TCC1_r_reg)+1) when TCC1_en = '1' else TCC1_r_reg;
 TCC2_r_next <= std_logic_vector(unsigned(TCC2_r_reg)+1) when TCC2_en = '1' else TCC1_r_reg;
-
-
-
 
 
 has_change <= '1' when (unsigned(TCC1_r_reg) + unsigned(CC1_r_reg)) > 0 else '0';
@@ -349,7 +341,7 @@ end process;
 
   
 -- debug
-debugOutput : process (state_reg,debug,amount,CC1_r_reg,CC2_r_reg)
+debugOutput : process (state_reg,debug,amount,TCC1_r_reg,TCC2_r_reg,CC1_r_reg,CC2_r_reg)
   begin
   case debug is
   when "00" =>
@@ -374,21 +366,26 @@ debugOutput : process (state_reg,debug,amount,CC1_r_reg,CC2_r_reg)
       when return_all =>
         display(3 downto 0) <= "0110";
       when return_change =>
-        display(3 downto 0) <= "0111";
+		  display(3 downto 0) <= "0111";
+      when merge_counters =>
+        display(3 downto 0) <= "1000";
+		when wait_for_user =>
+		  display(3 downto 0) <= "1001";
       when others =>
         display(3 downto 0) <= "1111";
 		end case;
 	 when "10" =>
-	   display( 3 downto  0) <= CC2_r_reg;
-		display( 7 downto  4) <= (others => '0');
-		display(11 downto  8) <= CC1_r_reg;
-		display(15 downto 12) <= (others => '0');
+		display <= X"0" &  CC2_r_reg & X"0" & CC1_r_reg;
+--	   display(11 downto  8) <= CC2_r_reg;
+--		display( 7 downto  4) <= (others => '0');
+--		display( 3 downto  0) <= CC1_r_reg;
+--		display(15 downto 12) <= (others => '0');
 
-	 --default, self-defined debug
+	 -- self-defined debug
 	 when others =>
 		display( 7 downto  4) <= amount;
-		display(11 downto  8) <= CC1_r_reg;
-		display(15 downto 12) <= CC2_r_reg;
+		display(11 downto  8) <= TCC1_r_reg;
+		display(15 downto 12) <= TCC2_r_reg;
 	   case state_reg is
 
       when s_reset =>
@@ -407,6 +404,10 @@ debugOutput : process (state_reg,debug,amount,CC1_r_reg,CC2_r_reg)
         display(3 downto 0) <= "0110";
       when return_change =>
         display(3 downto 0) <= "0111";
+      when merge_counters =>
+        display(3 downto 0) <= "1000";
+		when wait_for_user =>
+		  display(3 downto 0) <= "1001";
       when others =>
         display(3 downto 0) <= "1111";
 		end case;

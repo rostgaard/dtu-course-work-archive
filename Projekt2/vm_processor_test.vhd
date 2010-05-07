@@ -66,7 +66,7 @@ begin
       hex0 => display(3 downto 0),
       dp_in => "1111",
       an => an,
-      sseg => sseg);
+      SEG => sseg);
   
 end Behavioral;
 

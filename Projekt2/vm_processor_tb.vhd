@@ -50,7 +50,7 @@ ARCHITECTURE behavior OF vm_processor_tb IS
   signal kr2 : std_logic := '0';
   signal return_coins : std_logic := '0';
   signal purchase_finished : std_logic := '0';
-  signal debug : std_logic_vector(1 downto 0) := (others => '0');
+  signal debug : std_logic_vector(1 downto 0) := (others => '0') := "00";
 
   --Outputs
   signal power_on : std_logic;
@@ -102,7 +102,6 @@ BEGIN
   stim_proc: process
   begin		
     -- hold reset state for 5 clock periods.
-	 debug <= "11";
     reset <= '1';
     wait for clk_period*5;	
     
@@ -126,7 +125,31 @@ BEGIN
     return_coins <='1' ;
     wait for clk_period;
     return_coins <= '0';         
+    wait for clk_period;
+
+    --Insert a 2 kr coin
+    kr2 <='1' ;
+    wait for clk_period;
+    kr2 <= '0';         
+    wait for clk_period;
+
+
+    --Insert a 2 kr coin
+    kr2 <='1' ;
+    wait for clk_period;
+    kr2 <= '0';         
+    wait for clk_period;
+	 
+	 
+
+
     wait for clk_period*5;
+	 
+	 
+	 
+	 
+	 
+	 
 
 
     -- Fill up the rest of the testbench here 
