@@ -14,14 +14,16 @@ main(int argc, char* argv[]) {
     long send_port;
 
     if (ALL_OK != createprocess(1)) {
-        printat(MAIN_DEBUG_LINE, 0, "Sensor control: createprocess of Light control failed.\n");
+        printat(MAIN_DEBUG_LINE, 0, 
+		"Sensor control: createprocess of Light control failed.\n");
         return;
     }
 
     // Locating the send port of the light control process
     send_port = findport(0, 1);
     if (send_port < 0) {
-        printat(MAIN_DEBUG_LINE, 0, "Sensor control: findport() failed (Light control) ");
+        printat(MAIN_DEBUG_LINE, 0, 
+		"Sensor control: findport() failed (Light control) ");
         return;
     }
 
@@ -34,7 +36,8 @@ main(int argc, char* argv[]) {
             struct message msg;
             printat(MAIN_DEBUG_LINE, 0, "Sensor control: Got sensor input");
             if (ALL_OK != send(send_port, &msg)) {
-                printat(MAIN_DEBUG_LINE, 0, "Sensor control: send() failed (sensor->light_control)");
+                printat(MAIN_DEBUG_LINE, 0, 
+			"Sensor control: send() failed");
                 return;
             } else {
                 /* We let the debug message display some time*/

@@ -1,0 +1,31 @@
+The report is written in LaTEX format, and devided into smaller files. The report.tex file should assemble everything.
+
+Work disribution:
+ Kim
+  Task 2
+  Task 6
+  Task 8
+ Andreas
+  Task 1
+  Task 5
+ Demmus
+  Task 3
+  Task 7
+  Task 8
+ Gunnar
+  Task 3
+  Task 4
+  Task 8
+
+ Undistributed:
+  Introduction
+  Conclusion
+  Abstract
+
+Appendixes
+ Work distribution - use \ref or set you name after each section or subsection
+ 
+ bibtex
+
+Images
+ Your graphics should be in .eps  or .pdf format when vector. .jpg, .png if bitmap.
