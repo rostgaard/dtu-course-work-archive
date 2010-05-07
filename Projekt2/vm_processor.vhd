@@ -78,9 +78,12 @@ begin
       when purchase =>
         -- if the amount inserted is above the cost and we are unable to return
         -- change, abort the transaction - corresponding to req. 10
-        if amount_eq_cost = '1' or (amount_gt_cost = '1' and has_change = '1') then
+        if amount_eq_cost = '1'
+          or (amount_gt_cost = '1' and has_change = '1') then
           state_next <= merge_counters;          
-        elsif (amount_gt_cost = '1' and has_change = '0') or return_coins = '1' then
+        elsif (amount_gt_cost = '1' and has_change = '0')
+          or return_coins = '1' then
+          
           state_next <= return_all;
         elsif kr1 = '1' and kr2 = '0' then 
           state_next <= add1;
@@ -96,7 +99,7 @@ begin
         elsif kr2 = '1' and kr1 = '0' then 
           state_next <= add2;
         else
-          state_next <= purchase;					
+          state_next <= purchase;	
         end if;
         
       when add2 =>
@@ -109,21 +112,20 @@ begin
         end if;
 
       when dispense =>
-			if (amount_gt_cost = '1') then
-				state_next <= return_change;
-			else 
-			  state_next <= wait_for_user;
-         end if;   
+        if (amount_gt_cost = '1') then
+          state_next <= return_change;
+        else 
+          state_next <= wait_for_user;
+        end if;   
       when return_all =>
-          state_next <= wait_for_user;
-       
+        state_next <= wait_for_user;
+        
       when return_change =>
-          state_next <= wait_for_user;
-
+        state_next <= wait_for_user;
       when merge_counters =>
-		    state_next <= dispense;
-		  
-		 when wait_for_user =>
+        state_next <= dispense;     
+        
+      when wait_for_user =>
         if purchase_finished = '1' then
           state_next <= init;
         else
@@ -148,11 +150,11 @@ begin
   begin
     --Initial values
      TCC1_en <= '0'; TCC1_reset <= '0';
-     TCC2_en <= '0';	TCC2_reset <= '0';
+     TCC2_en <= '0'; TCC2_reset <= '0';
      CC1_en  <= '0'; CC1_reset <= '0';
      CC2_en  <= '0'; CC2_reset <= '0';
-	  CC1_sel <= "00";
-	  CC2_sel <= '0';
+     CC1_sel <= "00";
+     CC2_sel <= '0';
 
      slot_closed_en           <= '0';
      returned_all_coins_en    <= '0';
@@ -167,18 +169,18 @@ begin
       when s_reset =>
         CC1_en <= '1';
         CC2_en <= '1';
-        CC1_reset <= '1';
-        CC2_reset <= '1';
+        CC1_sel <= "00";
+        CC2_sel <= '1'; 
 
       when init =>
         TCC1_en <= '1';
         TCC2_en <= '1';
         TCC1_reset <= '1';
         TCC2_reset <= '1';
-		  returned_all_coins_reset <= '1' ;
-		  returned_change_reset <= '1';
-		  slot_closed_reset <= '1';
-		  item_released_reset <= '1';
+        returned_all_coins_reset <= '1' ;
+        returned_change_reset <= '1';
+        slot_closed_reset <= '1';
+        item_released_reset <= '1';
 		  
       when add1 =>
         TCC1_en <= '1';
@@ -200,19 +202,19 @@ begin
         
       when return_change =>
         returned_change_en <= '1';
-		  -- return change
-		  CC1_en <= '1';
-		  CC1_sel <= "01";
-		  
+        -- return change
+        CC1_en <= '1';
+        CC1_sel <= "01";
+        
       when merge_counters =>
-			-- merge counters
-         CC1_en <= '1';
-         CC2_en <= '1';
-		   CC1_sel <= "10";
-		   CC2_sel <= '0';	   
+        -- merge counters
+        CC1_en <= '1';
+        CC2_en <= '1';
+        CC1_sel <= "10";
+        CC2_sel <= '0';	  
 
-		 when wait_for_user =>
-			null;
+      when wait_for_user =>
+        null;
 
       when others => 
         null;
@@ -223,7 +225,7 @@ begin
   CC1_reg : process (clk,CC1_reset)
   begin
     if CC1_reset = '1' then
-      CC1_r_reg <= inital_cc1;
+      CC1_r_reg <= (others => '0');
     elsif rising_edge(clk) and CC1_en = '1' then
       CC1_r_reg <= CC1_r_next;
     end if;
@@ -232,7 +234,7 @@ begin
   CC2_reg : process (clk,CC2_reset)
   begin
     if CC2_reset = '1' then
-      CC2_r_reg <= inital_cc2;
+      CC2_r_reg <= (others => '0');
     elsif rising_edge(clk) and CC2_en = '1' then
       CC2_r_reg <= CC2_r_next;
     end if;
@@ -302,33 +304,30 @@ returned_change <= returned_change_bit;
 item_released <= item_released_bit;
 
 
-amount <= std_logic_vector((unsigned(TCC2_r_reg(2 downto 0) & '0'))+ unsigned(TCC1_r_reg));
+  amount <= std_logic_vector((unsigned(TCC2_r_reg(2 downto 0) & '0'))+ unsigned(TCC1_r_reg));
 
-amount_gt_cost <= '1' when unsigned(amount) > unsigned(cost) else '0';
-amount_eq_cost <= '1' when unsigned(amount) = unsigned(cost) else '0';
+  amount_gt_cost <= '1' when unsigned(amount) > unsigned(cost) else '0';
+  amount_eq_cost <= '1' when unsigned(amount) = unsigned(cost) else '0';
 
-change_available <= '1' when unsigned(CC1_r_reg) > 0 else '0';
+  change_available <= '1' when unsigned(CC1_r_reg) > 0 else '0';
+  
+  has_change <= '1' when (unsigned(TCC1_r_reg) + unsigned(CC1_r_reg)) > 0 else '0';
 
-CC2_r_next <= std_logic_vector(unsigned(TCC2_r_reg) + unsigned(CC2_r_reg)) when CC2_sel = '0' else CC2_r_reg;
-TCC1_r_next <= std_logic_vector(unsigned(TCC1_r_reg)+1) when TCC1_en = '1' else TCC1_r_reg;
-TCC2_r_next <= std_logic_vector(unsigned(TCC2_r_reg)+1) when TCC2_en = '1' else TCC1_r_reg;
+  TCC1_r_next <= std_logic_vector(unsigned(TCC1_r_reg)+1) when TCC1_en = '1' else TCC1_r_reg;
+  TCC2_r_next <= std_logic_vector(unsigned(TCC2_r_reg)+1) when TCC2_en = '1' else TCC1_r_reg;
 
-
-has_change <= '1' when (unsigned(TCC1_r_reg) + unsigned(CC1_r_reg)) > 0 else '0';
-
-
-datapath: process(CC1_sel,CC2_sel,TCC1_r_reg,CC1_r_reg)
+  CC2_r_next <= std_logic_vector(unsigned(TCC2_r_reg) + unsigned(CC2_r_reg)) when CC2_sel = '0' else cc2_initial;
+  datapath: process(CC1_sel,CC2_sel,TCC1_r_reg,CC1_r_reg)
   begin
     case CC1_sel is
-	   when "00" => CC1_r_next <= CC1_r_reg;
-	   when "01" => CC1_r_next <= std_logic_vector(unsigned(CC1_r_reg)-1);
-	   when "10" => CC1_r_next <= std_logic_vector(unsigned(TCC1_r_reg) + unsigned(CC1_r_reg));
-	   when "11" => CC1_r_next <= inital_cc1;
-		when others => CC1_r_next <= CC1_r_reg;
+      when "00" => CC1_r_next <= CC1_r_reg;
+      when "01" => CC1_r_next <= std_logic_vector(unsigned(CC1_r_reg)-1);
+      when "10" => CC1_r_next <= std_logic_vector(unsigned(TCC1_r_reg) + unsigned(CC1_r_reg));
+      when "11" => CC1_r_next <= inital_cc1;
+      when others => CC1_r_next <= CC1_r_reg;
     end case;
-	 
-end process;
-	 
+  end process;
+  
 
 
 
