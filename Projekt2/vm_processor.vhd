@@ -1,5 +1,5 @@
--- This file corresponds to the vending machine processor that you need to implement
---  for project 2.
+-- This file corresponds to the vending machine processor
+-- that you need to implement for project 2.
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -21,6 +21,7 @@ entity vm_processor is
 end vm_processor;
 
 architecture Behavioral of vm_processor is
+  -- Enumerated type of our states
   type StateType is (s_reset, init, purchase, add1, add2, dispense,
                      return_all, return_change, merge_counters, wait_for_user);
   signal state_reg, state_next : StateType := s_reset;
@@ -49,68 +50,64 @@ architecture Behavioral of vm_processor is
   constant inital_cc1 : std_logic_vector(3 downto 0) := "0001"; -- 1
   constant inital_cc2 : std_logic_vector(3 downto 0) := "0010"; -- 2
   
+  -- Simple D flip-flops for storing the value of output signals
+  -- over several states
   signal slot_closed_bit, returned_all_coins_bit, 
          returned_change_bit, item_released_bit : std_logic := '0';
-  
-  
+
   signal slot_closed_reset,        slot_closed_en : std_logic := '0';
   signal returned_all_coins_reset, returned_all_coins_en : std_logic := '0';
   signal returned_change_reset,    returned_change_en : std_logic := '0';
   signal item_released_reset,      item_released_en : std_logic := '0';
   
-  
 begin
   NextStateDecoding : process (state_reg, clk, amount_gt_cost, amount_eq_cost, 
-                               has_change, return_coins, kr1, kr2, purchase_finished)
+                               has_change, return_coins, kr1, kr2,
+                               purchase_finished)
   begin
-    --Init values
+    --Initial values, or default values
     state_next <= state_reg;
     --Assignments
 	 
     case state_reg is
+      -- This state should only be reached at power on or hard reset
       when s_reset =>
         state_next <= init;
-        
+
+      -- Setting up the values pre-purchase
       when init => 
         state_next <= purchase;
 
-        -- Purchase state 
+      -- Purchase state
       when purchase =>
         -- if the amount inserted is above the cost and we are unable to return
         -- change, abort the transaction - corresponding to req. 10
         if amount_eq_cost = '1'
           or (amount_gt_cost = '1' and has_change = '1') then
           state_next <= merge_counters;          
+
         elsif (amount_gt_cost = '1' and has_change = '0')
           or return_coins = '1' then
-          
           state_next <= return_all;
+
         elsif kr1 = '1' and kr2 = '0' then 
           state_next <= add1;
+
         elsif kr2 = '1' and kr1 = '0' then
           state_next <= add2;
+
         else
           state_next <= purchase;	
         end if;
-
+      -- 1 kr has been inserted
       when add1 =>
-        if kr1 = '1' and kr2 = '0' then 
-          state_next <= add1;
-        elsif kr2 = '1' and kr1 = '0' then 
-          state_next <= add2;
-        else
-          state_next <= purchase;	
-        end if;
-        
-      when add2 =>
-        if kr1 = '1' and kr2 = '0' then 
-          state_next <= add1;
-        elsif kr2 = '1' and kr1 = '0' then 
-          state_next <= add2;
-        else
-          state_next <= purchase;					
-        end if;
+        state_next <= purchase;	
 
+      -- 2 kr has been inserted
+      when add2 =>
+        state_next <= purchase;					
+
+      -- amount has reached cost
       when dispense =>
         if (amount_gt_cost = '1') then
           state_next <= return_change;
@@ -119,12 +116,14 @@ begin
         end if;   
       when return_all =>
         state_next <= wait_for_user;
-        
+
+      -- someone wants their money back, or we do not have change
       when return_change =>
         state_next <= wait_for_user;
       when merge_counters =>
         state_next <= dispense;     
-        
+
+      -- wait for the user to remove the can
       when wait_for_user =>
         if purchase_finished = '1' then
           state_next <= init;
@@ -132,6 +131,7 @@ begin
           state_next <= wait_for_user;
         end if;
 
+      -- Just to make sure
       when others => 
         state_next <= init;
     end case;
@@ -145,7 +145,8 @@ begin
       state_reg <= state_next;
     end if;
   end process;
-  
+
+  -- This one corresponds to the FSM outputs
   OutputDecoding : process (state_reg)
   begin
     --Initial values
@@ -221,7 +222,7 @@ begin
     end case;
   end process OutputDecoding;
 
-
+  -- Coin counter for 1 kr's
   CC1_reg : process (clk,CC1_reset)
   begin
     if CC1_reset = '1' then
@@ -231,6 +232,7 @@ begin
     end if;
   end process;
 
+  -- Coin counter for 2 kr's  
   CC2_reg : process (clk,CC2_reset)
   begin
     if CC2_reset = '1' then
@@ -240,6 +242,7 @@ begin
     end if;
   end process;
 
+  -- Coin counter for 1 kr's inserted
   TCC1_reg : process (clk,TCC1_reset)
   begin
     if TCC1_reset = '1' then
@@ -249,6 +252,7 @@ begin
     end if;
   end process;
 
+  -- Coin counter for 2 kr's inserted
   TCC2_reg : process (clk,TCC2_reset)
   begin
     if TCC2_reset = '1' then
@@ -258,159 +262,151 @@ begin
     end if;
   end process;
 
-  
-slot_closed_reg : process (clk, slot_closed_reset)
+  -- D Flip-flops to hold values of various outputs
+  slot_closed_reg : process (clk, slot_closed_reset)
   begin
     if slot_closed_reset = '1' then
-		slot_closed_bit <= '0';
-	 elsif rising_edge(clk) and slot_closed_en = '1' then
+      slot_closed_bit <= '0';
+    elsif rising_edge(clk) and slot_closed_en = '1' then
       slot_closed_bit <= '1';
     end if;
   end process;
   
-returned_all_coins_reg : process (clk, returned_all_coins_reset)
+  returned_all_coins_reg : process (clk, returned_all_coins_reset)
   begin
     if returned_all_coins_reset = '1' then
-		returned_all_coins_bit <= '0';
-	 elsif rising_edge(clk) and returned_all_coins_en = '1' then
+      returned_all_coins_bit <= '0';
+    elsif rising_edge(clk) and returned_all_coins_en = '1' then
       returned_all_coins_bit <= '1';
     end if;
   end process;  
   
-returned_change_reg : process (clk, returned_change_reset)
+  returned_change_reg : process (clk, returned_change_reset)
   begin
     if returned_change_reset = '1' then
-		returned_change_bit <= '0';
-	 elsif rising_edge(clk) and returned_change_en = '1' then
+      returned_change_bit <= '0';
+    elsif rising_edge(clk) and returned_change_en = '1' then
       returned_change_bit <= '1';
     end if;
   end process;  
 
-item_released_reg : process (clk, item_released_reset)
+  item_released_reg : process (clk, item_released_reset)
   begin
     if item_released_reset = '1' then
-		item_released_bit <= '0';
-	 elsif rising_edge(clk) and item_released_en = '1' then
+      item_released_bit <= '0';
+    elsif rising_edge(clk) and item_released_en = '1' then
       item_released_bit <= '1';
     end if;
   end process;  
 
 
--- Single bit outputs
-power_on <= not reset;
-slot_closed <= slot_closed_bit;
-returned_all_coins <= returned_all_coins_bit;
-returned_change <= returned_change_bit;
-item_released <= item_released_bit;
+  -- Single bit outputs not included in datapath diagram, although they
+  -- probably should be
+  slot_closed <= slot_closed_bit;
+  returned_all_coins <= returned_all_coins_bit;
+  returned_change <= returned_change_bit;
+  item_released <= item_released_bit;
 
-
-  amount <= std_logic_vector((unsigned(TCC2_r_reg(2 downto 0) & '0'))+ unsigned(TCC1_r_reg));
+  -- Datapath outputs, some are multiplexed
+  power_on <= not reset;  
+  amount <= std_logic_vector((unsigned(TCC2_r_reg(2 downto 0) & '0'))+
+                             unsigned(TCC1_r_reg));
 
   amount_gt_cost <= '1' when unsigned(amount) > unsigned(cost) else '0';
   amount_eq_cost <= '1' when unsigned(amount) = unsigned(cost) else '0';
 
   change_available <= '1' when unsigned(CC1_r_reg) > 0 else '0';
   
-  has_change <= '1' when (unsigned(TCC1_r_reg) + unsigned(CC1_r_reg)) > 0 else '0';
+  has_change <= '1' when (unsigned(TCC1_r_reg) + unsigned(CC1_r_reg)) > 0
+                else '0';
 
-  TCC1_r_next <= std_logic_vector(unsigned(TCC1_r_reg)+1) when TCC1_en = '1' else TCC1_r_reg;
-  TCC2_r_next <= std_logic_vector(unsigned(TCC2_r_reg)+1) when TCC2_en = '1' else TCC1_r_reg;
+  TCC1_r_next <= std_logic_vector(unsigned(TCC1_r_reg)+1) when TCC1_en = '1'
+                 else TCC1_r_reg;
+  TCC2_r_next <= std_logic_vector(unsigned(TCC2_r_reg)+1) when TCC2_en = '1'
+                 else TCC1_r_reg;
 
-  CC2_r_next <= std_logic_vector(unsigned(TCC2_r_reg) + unsigned(CC2_r_reg)) when CC2_sel = '0' else cc2_initial;
+  CC2_r_next <= std_logic_vector(unsigned(TCC2_r_reg) + unsigned(CC2_r_reg))
+                when CC2_sel = '0' else cc2_initial;
+  
   datapath: process(CC1_sel,CC2_sel,TCC1_r_reg,CC1_r_reg)
   begin
     case CC1_sel is
       when "00" => CC1_r_next <= CC1_r_reg;
       when "01" => CC1_r_next <= std_logic_vector(unsigned(CC1_r_reg)-1);
-      when "10" => CC1_r_next <= std_logic_vector(unsigned(TCC1_r_reg) + unsigned(CC1_r_reg));
+      when "10" => CC1_r_next <= std_logic_vector(unsigned(TCC1_r_reg) +
+                                                  unsigned(CC1_r_reg));
       when "11" => CC1_r_next <= inital_cc1;
       when others => CC1_r_next <= CC1_r_reg;
     end case;
   end process;
-  
 
-
-
--- debug, still part of datapath
-
---process(
-
-
-  
-
-  
--- debug
-debugOutput : process (state_reg,debug,amount,TCC1_r_reg,TCC2_r_reg,CC1_r_reg,CC2_r_reg)
+  -- debug, still part of datapath
+  debugOutput : process (state_reg,debug,amount,TCC1_r_reg,TCC2_r_reg,
+                         CC1_r_reg,CC2_r_reg)
   begin
-  case debug is
-  when "00" =>
-    display(15 downto 4) <= (others => '0');
-    display(3 downto 0) <= amount;
-  when "01" =>
-	 display(15 downto 4) <= (others => '0');
-    case state_reg is
-	 
-      when s_reset =>
-        display(3 downto 0) <= "0000";
-      when init =>
-        display(3 downto 0) <= "0001";
-      when purchase =>
-        display(3 downto 0) <= "0010";
-      when add1 =>
-        display(3 downto 0) <= "0011";
-      when add2 =>
-        display(3 downto 0) <= "0100";
-      when dispense =>
-        display(3 downto 0) <= "0101";
-      when return_all =>
-        display(3 downto 0) <= "0110";
-      when return_change =>
-		  display(3 downto 0) <= "0111";
-      when merge_counters =>
-        display(3 downto 0) <= "1000";
-		when wait_for_user =>
-		  display(3 downto 0) <= "1001";
+    case debug is
+      when "00" =>
+        display <= X"000" & amount;
+      when "01" =>
+        display(15 downto 4) <= X"000";
+        -- manual state encoding
+        case state_reg is
+          when s_reset =>
+            display(3 downto 0) <= X"0"
+          when init =>
+            display(3 downto 0) <= X"1";
+          when purchase =>
+            display(3 downto 0) <= X"2";
+          when add1 =>
+            display(3 downto 0) <= X"3";
+          when add2 =>
+            display(3 downto 0) <= X"4";
+          when dispense =>
+            display(3 downto 0) <= X"5";
+          when return_all =>
+            display(3 downto 0) <= X"6";
+          when return_change =>
+            display(3 downto 0) <= X"7";
+          when merge_counters =>
+            display(3 downto 0) <= X"8";
+          when wait_for_user =>
+            display(3 downto 0) <= X"9";
+          when others =>
+            display(3 downto 0) <= X"F";
+        end case;
+      when "10" =>
+        display <= X"0" &  CC2_r_reg & X"0" & CC1_r_reg;
+
+        -- self-defined debug
       when others =>
-        display(3 downto 0) <= "1111";
-		end case;
-	 when "10" =>
-		display <= X"0" &  CC2_r_reg & X"0" & CC1_r_reg;
---	   display(11 downto  8) <= CC2_r_reg;
---		display( 7 downto  4) <= (others => '0');
---		display( 3 downto  0) <= CC1_r_reg;
---		display(15 downto 12) <= (others => '0');
+        display( 7 downto  4) <= amount;
+        display(11 downto  8) <= TCC1_r_reg;
+        display(15 downto 12) <= TCC2_r_reg;
+        case state_reg is
 
-	 -- self-defined debug
-	 when others =>
-		display( 7 downto  4) <= amount;
-		display(11 downto  8) <= TCC1_r_reg;
-		display(15 downto 12) <= TCC2_r_reg;
-	   case state_reg is
-
-      when s_reset =>
-        display(3 downto 0) <= "0000";
-      when init =>
-        display(3 downto 0) <= "0001";
-      when purchase =>
-        display(3 downto 0) <= "0010";
-      when add1 =>
-        display(3 downto 0) <= "0011";
-      when add2 =>
-        display(3 downto 0) <= "0100";
-      when dispense =>
-        display(3 downto 0) <= "0101";
-      when return_all =>
-        display(3 downto 0) <= "0110";
-      when return_change =>
-        display(3 downto 0) <= "0111";
-      when merge_counters =>
-        display(3 downto 0) <= "1000";
-		when wait_for_user =>
-		  display(3 downto 0) <= "1001";
-      when others =>
-        display(3 downto 0) <= "1111";
-		end case;
-	 end case;
-	end process;
-
+          when s_reset =>
+            display(3 downto 0) <= "0000";
+          when init =>
+            display(3 downto 0) <= "0001";
+          when purchase =>
+            display(3 downto 0) <= "0010";
+          when add1 =>
+            display(3 downto 0) <= "0011";
+          when add2 =>
+            display(3 downto 0) <= "0100";
+          when dispense =>
+            display(3 downto 0) <= "0101";
+          when return_all =>
+            display(3 downto 0) <= "0110";
+          when return_change =>
+            display(3 downto 0) <= "0111";
+          when merge_counters =>
+            display(3 downto 0) <= "1000";
+          when wait_for_user =>
+            display(3 downto 0) <= "1001";
+          when others =>
+            display(3 downto 0) <= "1111";
+        end case;
+    end case;
+  end process;
 end Behavioral;
