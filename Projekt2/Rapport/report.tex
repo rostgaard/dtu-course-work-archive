@@ -5,6 +5,7 @@
 \usepackage[latin9]{inputenc}
 \usepackage{graphicx}
 \usepackage[letterpaper]{geometry}
+\renewcommand{\familydefault}{\sfdefault} % sans font
 \usepackage{listings}
 \geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
 
@@ -43,15 +44,14 @@
 \newpage
 
 \section{Project description}
+\label{sec:project_description}
 \input{projekt_description.tex}
-\newpage
 
 \section{Specification analysis}
 \input{specification_analysis.tex}
 
-
-
 \section{Solution description}
+\label{sec:solutions_description}
 \input{solutions_description.tex}
 
 \section{Tests}
@@ -62,12 +62,13 @@
 
 \newpage
 \appendix
-\section{Appendix}
-
-
-
+\section{Timetable}
 \input{timetable.tex}
 
+\section{Report distribution}
 \input{report_distribution.tex}
+
+\section{Figures}
+\input{figures.tex}
 
 \end{document}
