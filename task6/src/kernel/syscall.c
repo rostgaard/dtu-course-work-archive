@@ -8,6 +8,7 @@
 
 #include "threadqueue.h"
 #include "semaphore.h"
+#include "sync.h"
 
 
     case SYSCALL_PRINTS:
@@ -238,7 +239,6 @@
 
     case SYSCALL_CREATESEMAPHORE:
     {
-        kprinthex(SYSCALL_CREATESEMAPHORE);
         SYSCALL_ARGUMENTS.rax = ERROR;
 
         long i;
@@ -329,5 +329,160 @@
         break;
     }
 
+    case SYSCALL_CREATEMUTEX:
+    {
+        SYSCALL_ARGUMENTS.rax = ERROR;
 
-    
+        long i;
+
+        for(i = 0; i<MAX_NUMBER_OF_MUTEXES;i++) {
+            if(mutex_table[i].calling_process == -1) {
+                break;
+            }
+        }
+
+        if(i!=MAX_NUMBER_OF_MUTEXES){
+            kprints("Sanity check ok\n");
+            mutex_table[i].count = 1;
+
+            mutex_table[i].calling_process =
+                thread_table[cpu_private_data.thread_index].data.owner;
+
+            thread_queue_init(&mutex_table[i].blocked_threads);
+            SYSCALL_ARGUMENTS.rax = i;
+        }
+        break;
+    }
+
+    /*
+     mutexlock that performs a lock operation on a mutex. The handle to the mutex is
+passed in the rdi register. The system call returns, in register rax, ALL_OK if
+successful or an error code otherwise.
+mutexunlock that performs an unlock operation on a mutex. The handle to the
+
+     */
+    case SYSCALL_MUTEXLOCK: {
+        SYSCALL_ARGUMENTS.rax = ERROR;
+
+        int mutex_handle = SYSCALL_ARGUMENTS.rdi;
+
+        /* Check if the calling thread's process owns the mutex, and the mutex
+           handle is in range of valid handles. */
+        if(mutex_table[mutex_handle].calling_process == thread_table[cpu_private_data.thread_index].data.owner &&
+           mutex_handle >= 0 && mutex_handle < MAX_NUMBER_OF_MUTEXES ) {
+            /* If the mutex is unlocked, snatch it */
+            if (mutex_table[mutex_handle].count) {
+                mutex_table[mutex_handle].count = 0;
+            }
+            /* otherwise block the current thread */
+            else
+            {
+                thread_queue_enqueue(&mutex_table[mutex_handle].blocked_threads,
+                                     cpu_private_data.thread_index);
+                // Do explicit reschedule at this point
+                schedule = 1;
+            }
+            SYSCALL_ARGUMENTS.rax = ALL_OK;
+        }
+        break;
+    }
+
+    case SYSCALL_MUTEXUNLOCK: {
+        SYSCALL_ARGUMENTS.rax = ERROR;
+        int mutex_handle = SYSCALL_ARGUMENTS.rdi;
+
+        /* Check if the calling thread's process owns the mutex, and the mutex
+           handle is in range of valid handles. */
+        if(mutex_table[mutex_handle].calling_process == thread_table[cpu_private_data.thread_index].data.owner &&
+            mutex_handle >= 0 && mutex_handle < MAX_NUMBER_OF_MUTEXES ) {
+
+            /* if there are threads waiting for the mutex, release the next one*/
+            if(!thread_queue_is_empty(&mutex_table[mutex_handle].blocked_threads)) {
+                thread_queue_enqueue(&ready_queue,
+                                      thread_queue_dequeue(&mutex_table[mutex_handle].blocked_threads));
+            }
+            /* otherwise release the lock */
+            else
+            {
+                mutex_table[mutex_handle].count = 1;
+            }
+            SYSCALL_ARGUMENTS.rax = ALL_OK;
+        }
+        break;
+    }
+
+    /*
+     * createconditionvariable that creates a new condition variable. The system call
+returns, in the rax register, a handle to the condition variable if successful or an
+error code otherwise.*/
+    case SYSCALL_CREATECONDITIONVARIABLE : {
+        SYSCALL_ARGUMENTS.rax = ERROR;
+
+        long i;
+
+        for(i = 0; i<MAX_NUMBER_OF_CONDITION_VARIABLES;i++) {
+            if(condition_variable_table[i].owner == -1) {
+                break;
+            }
+        }
+        condition_variable_table[i].owner =
+            thread_table[cpu_private_data.thread_index].data.owner;
+        thread_queue_init(&condition_variable_table[i].blocked_threads);
+        SYSCALL_ARGUMENTS.rax = i;
+        break;
+    }
+/*conditionvariablewait that blocks the calling thread until a signal on the
+condition variable occurs. The system call takes two arguments. The handle to
+the condition variable is passed in the rdi register. The handle of a mutex, that
+must be in the taken state, is passed in the rsi register. The mutex is assumed to
+be used to ensure mutual exclusion to a monitor. Before the calling thread is
+blocked, an unlock operation is performed on the mutex. The system call
+returns, in the rax register, ALL_OK if successful or an error code otherwise.
+*/
+    case SYSCALL_CONDITIONVARIABLEWAIT: {
+        SYSCALL_ARGUMENTS.rax = ERROR;
+        int condition_variable_handle = SYSCALL_ARGUMENTS.rdi;
+        int mutex_handle = SYSCALL_ARGUMENTS.rsi;
+        /* mutex must be in the taken state */
+        if(!mutex_table[mutex_handle].count) {
+            thread_queue_enqueue(&ready_queue,
+                                  thread_queue_dequeue(&mutex_table[mutex_handle].blocked_threads));
+        }
+
+        /*The mutex is assumed to
+        be used to ensure mutual exclusion to a monitor. Before the calling thread is
+        blocked, an unlock operation is performed on the mutex. The system call
+        returns, in the rax register, ALL_OK if successful or an error code otherwise.*/
+
+        if(condition_variable_table[condition_variable_handle].owner ==
+                thread_table[cpu_private_data.thread_index].data.owner) {
+            thread_queue_enqueue(&condition_variable_table[condition_variable_handle].blocked_threads,
+                                 cpu_private_data.thread_index);
+
+        // Do explicit reschedule at this point
+        schedule = 1;
+        SYSCALL_ARGUMENTS.rax = ALL_OK;
+        }
+
+        break;
+    }
+    /*conditionvariablesignal which performs a signal operation on the condition
+variable. Nothing happens if no threads are waiting on the condition variable. If
+threads are waiting then at least one of them are released. For each thread
+released, a lock operation is performed on the mutex they passed as argument to
+the condtionvariablewait system call. The system call returns, in the rax register,
+ALL_OK if successful or an error code otherwise.
+*/
+    case SYSCALL_CONDITIONVARIABLESIGNAL: {
+        int condition_variable_handle = SYSCALL_ARGUMENTS.rdi;
+        int thread;
+        int mutex = condition_variable_table[condition_variable_handle].mutex_handle;
+
+        while(!thread_queue_is_empty(&condition_variable_table[condition_variable_handle].blocked_threads)) {
+            thread = thread_queue_dequeue(&condition_variable_table[condition_variable_handle].blocked_threads);
+            thread_queue_enqueue(&mutex_table[mutex].blocked_threads, thread);
+        }
+
+
+        break;
+    }

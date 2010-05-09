@@ -55,4 +55,30 @@ initialize_thread_synchronization(void);
    here. */
 
 
+/* Semaphore and mutex handles */
+
+struct semaphore
+{
+    int count ;
+    int calling_process;
+    //blocked threads
+    struct thread_queue blocked_threads;
+};
+
+struct mutex
+{
+    int count ;
+    int calling_process;
+    //blocked threads
+    struct thread_queue blocked_threads;
+};
+
+struct condition_variable
+{
+    int owner;
+    int mutex_handle;
+    struct thread_queue blocked_threads;
+};
+
+
 #endif
