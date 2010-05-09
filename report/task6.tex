@@ -1,0 +1,40 @@
+Handling more than one process at a time, and giving the opportunity to pause a program execution at \emph{any} time introduces a new problem; race conditions.\\
+\subsection{Race conditions}
+%A race condition is anomalous behavior caused by the unexpected dependence on the relative timing of events. In other words, a programmer incorrectly %assumed that a particular event would always happen before another.
+
+%Some of the common causes of race conditions are signals, access checks, and file opens. Signals are asynchronous events by nature so special care must be taken in dealing with them. Checking access with access(2) then open(2) is clearly non-atomic. Users can move files in between the two calls. %Instead, privileged applications should seteuid() and then call open() directly. Along the same lines, an application should always set a proper umask before open() to obviate the need for spurious chmod() calls.
+
+\subsection{Reflections}
+Explain what mutual exclusion means. How can semaphores be used to achieve
+mutual exclusion? How can mutexes be used? How can monitors be used?\\
+
+Mutual exclusion means that no two thread can access the same shared resource at the same time. This could be a block of memory or a device like a hard drive, where an non-atomic write could lead to data corruption. It makes good sense to provide this mechanism along with the ability to run multiple threads in a pre-emptive scheduler, as these are logically connected.\\
+Mutexes are used protecting the entry to a single point (a function or block). They could also be used to protect a global.\\
+Semaphores are similar to mutexes, although they provide access to the shared resource to any limited number of threads. This number is specified upon creation of the semaphore. Creation of a semaphore with a limit of one is in principle a mutex, as it provides mutual exclusion to the threads using it.\\
+Mutexes are used by wrapping the critical region with lock and an a unlock primitive. Written in pseudo code, it looks something like this:
+\begin{lstlisting}[basicstyle={\small}]
+lock(myMutex);
+critical_region_stuff();
+unlock(myMutex);
+\end{lstlisting}
+
+
+1) Semaphores involve counting, so they are typically used for 
+controlling
+   access to a limited, but plural, number of connections to some 
+resource.
+   Some good examples are audio channels or IO channels.
+
+2) Monitors are an OO construct and work well with controlling 
+concurrent
+   access to the multiple entry points in an object. A good example 
+might
+   be a shared queue object, on which the enqueue and dequeue operations
+   are protected.
+
+
+
+ In the example kernel and when running in kernel mode, interrupts are disabled. This
+makes it very easy to implement atomic actions. How would you implement atomic
+actions if interrupts were enabled? How would you implement atomic actions if you
+have multiple processors?
