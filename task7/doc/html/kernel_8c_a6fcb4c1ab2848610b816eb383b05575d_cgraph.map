@@ -1,6 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$kernel_8h.html#a9f93bca09d4119462c80dc2f9d827aeb" title="Wrapper for a byte in instruction." alt="" coords="292,5,329,35"/>
-<area shape="rect" id="node5" href="$threadqueue_8c.html#a16c0d68bc5798a49a11254c1dcff9284" title="Remove the head of the queue." alt="" coords="233,58,388,89"/>
-<area shape="rect" id="node7" href="$threadqueue_8c.html#a1c009f9bb2c8c322a5c0b2fba61e682a" title="Checks if the queue is empty." alt="" coords="437,110,597,141"/>
-<area shape="rect" id="node9" href="$threadqueue_8c.html#a73ba284636fbdaec32574e90c51afa84" title="Enqueue one thread into the thread queue." alt="" coords="233,162,388,193"/>
-</map>

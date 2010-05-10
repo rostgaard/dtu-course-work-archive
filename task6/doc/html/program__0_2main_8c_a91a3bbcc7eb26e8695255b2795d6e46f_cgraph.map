@@ -1,8 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$scwrapper_8h.html#a20ad2c0320d85cfaa00ae8204b0d4efd" title="Wrapper for the system call that allocates a memory block." alt="" coords="141,5,189,35"/>
-<area shape="rect" id="node5" href="$scwrapper_8h.html#a2fbb7d35f66a331192ae51be8971f7a2" title="Wrapper for the system call that creates a semaphore." alt="" coords="104,58,227,89"/>
-<area shape="rect" id="node7" href="$scwrapper_8h.html#af079150d504f7a8e4c14c54067e35c68" title="Wrapper for the system call that creates a thread." alt="" coords="119,111,212,142"/>
-<area shape="rect" id="node9" href="$scwrapper_8h.html#a9c41493b95189aecbad23b74e0a012f6" title="Wrapper for the system call that prints a string." alt="" coords="139,165,192,195"/>
-<area shape="rect" id="node11" href="$scwrapper_8h.html#a1721ba32edaf91a4ddba5a712c794802" title="Wrapper for the system call that performs a down operation on a semaphore." alt="" coords="108,218,223,249"/>
-<area shape="rect" id="node13" href="$scwrapper_8h.html#aad9c2b5e8f48d4699330d01f8912f408" title="Wrapper for the system call that performs an up operation on a semaphore." alt="" coords="116,271,215,302"/>
-</map>

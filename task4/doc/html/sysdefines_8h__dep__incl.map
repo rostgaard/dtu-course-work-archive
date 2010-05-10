@@ -1,9 +1,0 @@
-<area shape="rect" href="$scwrapper_8h.html" title="This file contains C wrapper functions for system calls." alt="" coords="256,80,413,107">
-<area shape="rect" href="$kernel_8h.html" title="This file holds kernel wide macros and declarations." alt="" coords="525,80,653,107">
-<area shape="rect" href="$program__0_2main_8c.html" title="The first user program &#45; tests the memory allocation routines by allocating and de&#45;allocating..." alt="" coords="5,155,152,181">
-<area shape="rect" href="$program__1_2main_8c.html" title="The second user program &#45; empty program." alt="" coords="176,155,323,181">
-<area shape="rect" href="$program__2_2main_8c.html" title="The third user program &#45; empty program." alt="" coords="347,155,493,181">
-<area shape="rect" href="$kernel_8c.html" title="This is the main source code for the kernel." alt="" coords="467,229,595,256">
-<area shape="rect" href="$threadqueue_8h.html" title="This file defines operations on thread queues." alt="" coords="568,155,731,181">
-<area shape="rect" href="$mm_8c.html" title="Holds the implementation of the memory sub&#45;system." alt="" coords="755,155,869,181">
-<area shape="rect" href="$threadqueue_8c.html" title="This file implements operations on thread queues." alt="" coords="619,229,781,256">

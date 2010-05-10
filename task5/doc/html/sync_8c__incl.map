@@ -1,4 +1,0 @@
-<area shape="rect" href="$kernel_8h.html" title="This file holds kernel wide macros and declarations." alt="" coords="37,229,104,256">
-<area shape="rect" href="$sync_8h.html" title="Holds declarations for the synchronization sub&#45;system." alt="" coords="75,80,133,107">
-<area shape="rect" href="$sysdefines_8h.html" title="This file defines constants and data types used by system calls." alt="" coords="23,304,119,331">
-<area shape="rect" href="$threadqueue_8h.html" title="This file defines operations on thread queues." alt="" coords="64,155,168,181">

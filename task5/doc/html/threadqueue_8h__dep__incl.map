@@ -1,4 +1,0 @@
-<area shape="rect" href="$kernel_8c.html" title="This is the main source code for the kernel." alt="" coords="5,155,133,181">
-<area shape="rect" href="$sync_8h.html" title="Holds declarations for the synchronization sub&#45;system." alt="" coords="107,80,227,107">
-<area shape="rect" href="$threadqueue_8c.html" title="This file implements operations on thread queues." alt="" coords="251,80,413,107">
-<area shape="rect" href="$sync_8c.html" title="Holds the implementation of the synchronization sub&#45;system." alt="" coords="157,155,277,181">

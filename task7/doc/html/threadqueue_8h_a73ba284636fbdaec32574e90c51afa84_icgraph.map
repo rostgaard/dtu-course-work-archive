@@ -1,4 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$kernel_8c.html#a6fcb4c1ab2848610b816eb383b05575d" title="Keyboard interrupt handler." alt="" coords="211,5,389,35"/>
-<area shape="rect" id="node5" href="$kernel_8h.html#a7a0f3218c297f7b225696bef0bb3340a" title="This function gets called from the interrupt handler and dispatches interrupts to..." alt="" coords="437,5,573,35"/>
-</map>

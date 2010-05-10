@@ -1,6 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$kernel_8c.html#a6fcb4c1ab2848610b816eb383b05575d" title="Keyboard interrupt handler." alt="" coords="419,22,597,53"/>
-<area shape="rect" id="node7" href="$threadqueue_8h.html#a16c0d68bc5798a49a11254c1dcff9284" title="Remove the head of the queue." alt="" coords="215,22,369,53"/>
-<area shape="rect" id="node10" href="$threadqueue_8h.html#a73ba284636fbdaec32574e90c51afa84" title="Enqueue one thread into the thread queue." alt="" coords="215,75,369,106"/>
-<area shape="rect" id="node5" href="$kernel_8h.html#a7a0f3218c297f7b225696bef0bb3340a" title="This function gets called from the interrupt handler and dispatches interrupts to..." alt="" coords="645,22,781,53"/>
-</map>

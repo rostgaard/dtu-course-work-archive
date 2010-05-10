@@ -1,6 +1,0 @@
-<area shape="rect" href="$scwrapper_8h.html" title="This file contains C wrapper functions for system calls." alt="" coords="212,80,369,107">
-<area shape="rect" href="$kernel_8h.html" title="This file holds kernel wide macros and declarations." alt="" coords="476,80,604,107">
-<area shape="rect" href="$program__0_2main_8c.html" title="The first user program &#45; it creates a processe and then waits for it to finish." alt="" coords="5,155,152,181">
-<area shape="rect" href="$program__1_2main_8c.html" title="The second user program." alt="" coords="176,155,323,181">
-<area shape="rect" href="$program__2_2main_8c.html" title="The third user program." alt="" coords="347,155,493,181">
-<area shape="rect" href="$kernel_8c.html" title="This is the main source code for the kernel." alt="" coords="517,155,645,181">
