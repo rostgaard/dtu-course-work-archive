@@ -24,13 +24,6 @@ When the user has inserted enough money, we move to the merge\_counters state. T
 \\
 No assignments are done here as it is not needed.
 
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{fig/datapath.pdf}
-\caption{Datapath of the processesor (larger version can found in appendix~\ref{app:figures})}
-\label{fig:datapath_small}
-\end{figure}
-
 \subsubsection{add1}
 When 1 kr has been inserted into the machine, this state is reached. It counts up the TCC1 register by enabling it and setting the multiplexer to the corresponding value. This is illustrated in figure~\ref{fig:datapath} in appendix~\ref{app:figures}. On the next clock we return to the purchase state.\\
 \\
@@ -42,13 +35,17 @@ This is similar to the kr1 state. It just adds to the TCC2 register instead.
 \subsubsection{return\_all}
 This state simply clears the TCC1 and TCC2 registers (symbolizing a coin return), sets the returned\_all\_coins register high and goes the wait\_for\_user state.
 
+
 \subsubsection{return\_change}
 This state sets the returned\_changed register, decrements CC1 by one and goes to the dispense state.
 
 \subsubsection{merge\_counter}
 This is a state that was added relatively late in the process. Our original design was to merge the coin counters in the wait\_for\_user state, but this did not work. This was caused by the fact that we cycled the wait\_for\_user state while the user did not press then purchase\_finished button. As a result, our counters were merged on every clock rising edge. This was no problem with a manual clock, as you could just not clock, but with a clock of just 5Hz the counters would be merged 5 times every second.\\
 \\
-The solution was to go to a merge state that adds TCC1 with CC1 and TCC2 with CC2 before dispensing. We still have our amount\_eq\_cost and amount\_gt\_cost to guide ud to either the dispense or  the return\_change state.
+The solution was to go to a merge state that adds TCC1 with CC1 and TCC2 with CC2 before dispensing. We still have our amount\_eq\_cost and amount\_gt\_cost to guide ud to either the dispense or  the return\_change state.\\
+By merging these counters before returning change we complete the case described in purchase section, as we are sure we have change (either CC1 or TCC1 holds a 1 kr), we can go directly to the return\_change state.
+
+
 
 \subsubsection{dispense}
 This state releases the can and closes the coin slot. These are both D-flip-flops
@@ -57,12 +54,20 @@ This state releases the can and closes the coin slot. These are both D-flip-flop
 Here we just wait for the user to take the item. Otherwise the machine would go back to init, and purchase too fast for the user too see on a fast clock.\\
 This state eventually goes to back init, and the process can start again.
 
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{fig/datapath.pdf}
+\caption{Datapath of the processesor (larger version can found in appendix~\ref{app:figures})}
+\label{fig:datapath_small}
+\end{figure}
+
 \subsection{Datapath}
 
 By putting some of the logic into a datapath we can distinguish the state logic from the calculations. By doing this we were also also able to trim down on our design.
 \subsubsection{Cutting the fat}
 In a early implementation we had a amount register. This was trivial and involved a lot of housekeeping on it. When designing the datapath we realized that we could do without, as the only things we were really interested in could be calculated on the fly using our TCC1 and TCC2 registers. By left shifting the TCC2 register and adding it with the TCC1 register we now had a bus containing the current amount. Getting the amount\_gt\_cost and amount\_eq\_cost was now just a matter of doing simple comparisons on the bus and the cost register.
 \subsubsection{debug}
+\label{sec:debug}
 The purpose of the debugging circuit is to provide various information to the programmer. The datapath shown in figure~\ref{fig:debug} is the implementation. It is corresponding to the informal requirement project description. In our current implementation we have also added a ``11" state for internal usage. This i documented in the code.
 \begin{figure}
 \centering

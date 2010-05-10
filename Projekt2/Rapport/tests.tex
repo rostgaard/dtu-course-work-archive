@@ -2,13 +2,14 @@ thoroughly testing the VM will help identifying the correctness, completeness an
 In the development and testing phase of the VM several test benches has been made to follow the data flow. Five of these test benches scenarios will show the required functionality's of the VM.   
 
 \subsection{Test Cases}
-\begin{enumerate}
+\subsubsection*{Test 1:  Dispense one coke with the amount 7 kr }
 
-\item Test 1:  Dispense one coke with the amount 7 kr 
-Precondition: Power on
-Expected result: VM will dispense a coke and become available to the next purchase.
-Actual result: One coke was dispensed and the system became available for the next purchase.
-reference til Wave diagram i appendix
+Precondition: Power on\\
+Expected result: VM will dispense a coke and become available to the next purchase.\\
+Actual result: One coke was dispensed and the system became available for the next purchase.\\
+%Diagram: \figure~\ref{fig:test1}
+
+\begin{enumerate}
 
 \item Test 2 Return change from purchase with the amount 8kr.
 Precondition:  Power on, Change available 
@@ -18,19 +19,19 @@ reference til Wave diagram i appendix
 
 \item Test 3 Return all insert 8 kr in 2kr coins.
 Precondition:  Power on, No change avaliable.
-Expected result: VM will return all coins and wait in the _______ state.
+%Expected result: VM will return all coins and wait in the $_______$ state.
 Actual result: 
 reference til Wave diagram i appendix
 
 \item Test 4 insert 6 kr and return all coins. 
 Precondition:  Power on
-Expected result: VM will return all coins and wait in the _______ state.
+%Expected result: VM will return all coins and wait in the _______ state.
 Actual result: 
 reference til Wave diagram i appendix
 
 \item Test 5 insert 8 kr in order 1kr+1kr+2kr+2kr+2kr with no change avaliable.
 Precondition:  Power on, No change avaliable.
-Expected result: VM will dispense one coke, give 1kr change and wait in the _______ state. 
+%Expected result: VM will dispense one coke, give 1kr change and wait in the _______ state. 
 Actual result: 
 reference til Wave diagram i appendix
 

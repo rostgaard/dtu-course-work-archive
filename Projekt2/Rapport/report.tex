@@ -11,6 +11,11 @@
 
 \usepackage[final]{pdfpages} % For including extra pages.
 
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
+
+
 
 \usepackage{listings}
 \lstset{ language=VHDL }   % For code blocks
@@ -61,7 +66,7 @@
 \input{development_process.tex}
 
 \section{Tests}
-%\input{tests.tex}
+\input{tests.tex}
 
 \section{Conclusion}
 \input{conclusion.tex}
