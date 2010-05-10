@@ -4,6 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
 \usepackage{graphicx}
+
 \usepackage[letterpaper]{geometry}
 \usepackage{listings}
 \geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
@@ -34,7 +35,9 @@
 
 
 \begin{document}
-\includepdf{frontpage.pdf}
+%\includepdf{frontpage.pdf}
+\input{frontpage.tex}
+
 \begin{abstract}
  \input{abstract.tex}
 \end{abstract}
@@ -53,8 +56,12 @@
 \label{sec:solutions_description}
 \input{solutions_description.tex}
 
+\section{Development process}
+\label{sec:development_process}
+\input{development_process.tex}
+
 \section{Tests}
-\input{tests.tex}
+%\input{tests.tex}
 
 \section{Conclusion}
 \input{conclusion.tex}

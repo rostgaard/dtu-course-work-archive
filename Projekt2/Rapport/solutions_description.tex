@@ -1,49 +1,3 @@
-\subsection{Requirements analysis}
-By first doing a step-by-step analysis of the requirements, it becomes easier to implement every one of them in smaller steps.
-\subsubsection*{Requirement 1}
-The first requirement is that the machine should only be able to sell one type of product.\\
-This is a requirement that actually simplifies the design, as it limits the user input we have to account for.
-
-\subsubsection*{Requirement 2}
-The machine dispenses one can at a time and dispenses as soon as the correct amount has been inserted.\\
-This implies that we should do a transition to a dispense state if our amount is greater than or equal to the cost of one can.
-
-\subsubsection*{Requirement 3}
-The price must be changeable, though initially 7 kr.\\
-By loading the cost into a register we could supply the cost via a bus. If the processor is implemented with an FPGA, it could also be specified in the VHDL code and then changed by rebuilding and reloading.
-
-\subsubsection*{Requirement 4}
-System accepts 1 and 2 Kr coins.\\
-This can be implemented either by having a generic add state that does addition based on what coin was inserted, or by having separate states for adding 1 kr and adding 2 kr.
-
-\subsubsection*{Requirement 5}
-A display should show the total amount inserted.\\
-This is solved by informal requirement described in section~\ref{sec:debug}. 
-
-\subsubsection*{Requirement 6}
-A LED should indicate if change is available.\\
-In conjunction with requirement 4, this effectively becomes; the system should at least hold one 1 kr coin. 
-
-\subsubsection*{Requirement 7}
-The machine should close the coin slot until the product is removed. The original requirement is a bit ambiguous, as it state that the coin slot should be closed until the \emph{last} can has been removed. This contradicts requirement 1.\\
-One way or the other, this gives us a wait state where we patiently wait for the user to remove the product.
-
-\subsubsection*{Requirement 8}
-The machine should be able to return change.\\
-To detect if a user should receive change we need to able to detect if the amount of money inserted into the machine is more than cost of a product.
-
-\subsubsection*{Requirement 9}
-The user should at any time be able to cancel the purchase at any time up till the cost has been reached.\\
-
-
-\subsubsection*{Requirement 10}
-If change is not available, the machine should only accept purchases with the right amount.\\
-
-\subsubsection*{Debug - informal requirement}
-\label{sec:debug}
-
-\subsection{Implementation}
-
 The solution is done by dividing the state machine into a FSMD as shown in figure~\ref{fig:fsmd} in appendix~\ref{app:figures} and attaching a datapath
 
 \subsection{The individual states}
@@ -69,6 +23,13 @@ to make this work - to be continued.\\
 When the user has inserted enough money, we move to the merge\_counters state. The logic is shown in figure~\ref{fig:fsm} in appendix~\ref{app:figures}.\\
 \\
 No assignments are done here as it is not needed.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{fig/datapath.pdf}
+\caption{Datapath of the processesor (larger version can found in appendix~\ref{app:figures})}
+\label{fig:datapath_small}
+\end{figure}
 
 \subsubsection{add1}
 When 1 kr has been inserted into the machine, this state is reached. It counts up the TCC1 register by enabling it and setting the multiplexer to the corresponding value. This is illustrated in figure~\ref{fig:datapath} in appendix~\ref{app:figures}. On the next clock we return to the purchase state.\\
@@ -97,29 +58,22 @@ Here we just wait for the user to take the item. Otherwise the machine would go 
 This state eventually goes to back init, and the process can start again.
 
 \subsection{Datapath}
+
 By putting some of the logic into a datapath we can distinguish the state logic from the calculations. By doing this we were also also able to trim down on our design.
 \subsubsection{Cutting the fat}
 In a early implementation we had a amount register. This was trivial and involved a lot of housekeeping on it. When designing the datapath we realized that we could do without, as the only things we were really interested in could be calculated on the fly using our TCC1 and TCC2 registers. By left shifting the TCC2 register and adding it with the TCC1 register we now had a bus containing the current amount. Getting the amount\_gt\_cost and amount\_eq\_cost was now just a matter of doing simple comparisons on the bus and the cost register.
-
+\subsubsection{debug}
+The purpose of the debugging circuit is to provide various information to the programmer. The datapath shown in figure~\ref{fig:debug} is the implementation. It is corresponding to the informal requirement project description. In our current implementation we have also added a ``11" state for internal usage. This i documented in the code.
+\begin{figure}
+\centering
+\includegraphics[width=0.3\textwidth]{fig/datapath_debug.pdf}
+\caption{Datapath of the debug circuit}
+\label{fig:debug}
+\end{figure}
 
 \subsection{Implementation issues}
 \label{sec:implementation_issues}
 \subsubsection{The missing coins}
 \label{sec:missing_coins}
-
-\paragraph{Req.1 One product, a coke-can.}
-The cocke-can is the only product our vending machine can offer. This make the purchase senario of one coke-can our main senario. hence all our code revolves around this very requirement.
-
-\paragraph{Req.2 When a sufficient amount is inserted, one cocke-can will be dispensed from the machine.} From the Purchase-state we will change to the Dispence-state if sufficient money has been inserted, that will lead to the dispence of one coke-can.
-
-\begin{lstlisting}[caption={[VHDL]eks. text }]
-
-\end{lstlisting}
-  
-\paragraph{Req.3 The product is fixed to 7 kr. ( in design this should be changeble ).} By changing this signal the price of one coke-can can can be changed. Unfortunately there are no inputs available for this action. we have agreed that a recompile would be neede to change the value. 
-\begin{lstlisting}[caption={[VHDL]eks. text }]
-
-\end{lstlisting}
-
-
-
+In our implementation we have a problem regarding input of coins. If a user were to insert a coin in a wrong state, for example insert a 2 kr in the add1 state, this input would be lost, thus "eating" the users coins.\\
+This was tried resolved in the project by reacting to kr1 and kr2 inputs in the add2 and add1 respectively. This proved unsuccessful, as we would introduce the opportunity of inserting more than 8 kr in the machine. This would imply that that the user would have to insert money in every clock cycle. We decided that the first problem was the lesser of several evils, as it would probably not pose a problem when using a fast clock.
