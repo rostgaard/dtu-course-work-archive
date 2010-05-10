@@ -50,7 +50,7 @@ ARCHITECTURE behavior OF vm_processor_tb IS
   signal kr2 : std_logic := '0';
   signal return_coins : std_logic := '0';
   signal purchase_finished : std_logic := '0';
-  signal debug : std_logic_vector(1 downto 0) := (others => '0') := "00";
+  signal debug : std_logic_vector(1 downto 0) := "00";
 
   --Outputs
   signal power_on : std_logic;
@@ -101,43 +101,49 @@ BEGIN
   -- Stimulus process
   stim_proc: process
   begin		
-    -- hold reset state for 5 clock periods.
+    --Reset
     reset <= '1';
-    wait for clk_period*5;	
-    
+    wait for clk_period;	
     reset <= '0';
-    wait for clk_period*5;
+    wait for clk_period;
 
 	--Test1 insert 7 kr with change avaliable - dispense 
 	--Test2 insert 8 kr in 2kr coins with change avaliable - Dispense, 1kr change
-	    --Insert a 2 kr coin
+	 
+	 --Insert a 2 kr coin
+    kr2 <='1' ;
+    wait for clk_period;
+    kr2 <= '0';         
+    wait for clk_period;
+	 
+    --Insert a 2 kr coin
+    kr2 <='1' ;
+    wait for clk_period;
+    kr2 <= '0';         
+    wait for clk_period;
+	 
+    --Insert a 2 kr coin
+    kr2 <='1' ;
+    wait for clk_period;
+    kr2 <= '0';         
+    wait for clk_period;
+	 
+    --Insert a 2 kr coin
+    kr2 <='1' ;
+    wait for clk_period;
+    kr2 <= '0';         
+    wait for clk_period;
+	 
+    --Insert a 2 kr coin
     kr2 <='1' ;
     wait for clk_period;
     kr2 <= '0';         
     wait for clk_period*5;
 	 
-        --Insert a 2 kr coin
-    kr2 <='1' ;
-    wait for clk_period;
-    kr2 <= '0';         
+	 --Purchase finished
+	 purchase_finished <='1' ;
     wait for clk_period*5;
-	 
-        --Insert a 2 kr coin
-    kr2 <='1' ;
-    wait for clk_period;
-    kr2 <= '0';         
-    wait for clk_period*5;
-	 
-        --Insert a 2 kr coin
-    kr2 <='1' ;
-    wait for clk_period;
-    kr2 <= '0';         
-    wait for clk_period*5;
-	 
-        --Insert a 2 kr coin
-    kr2 <='1' ;
-    wait for clk_period;
-    kr2 <= '0';         
+    purchase_finished <= '0';
     wait for clk_period*5;
     
 	--Test3 insert 8 kr in 2kr coins with no change avaliable - Return all coins

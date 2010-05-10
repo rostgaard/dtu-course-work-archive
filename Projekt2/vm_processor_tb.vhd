@@ -50,7 +50,7 @@ ARCHITECTURE behavior OF vm_processor_tb IS
   signal kr2 : std_logic := '0';
   signal return_coins : std_logic := '0';
   signal purchase_finished : std_logic := '0';
-  signal debug : std_logic_vector(1 downto 0) := (others => '0') := "00";
+  signal debug : std_logic_vector(1 downto 0) := "00";
 
   --Outputs
   signal power_on : std_logic;
@@ -103,23 +103,23 @@ BEGIN
   begin		
     -- hold reset state for 5 clock periods.
     reset <= '1';
-    wait for clk_period*5;	
+    wait for clk_period;	
     
     reset <= '0';
-    wait for clk_period*5;
+    wait for clk_period;
 
     --Insert a 1 kr coin
     kr1 <='1' ;
     wait for clk_period; --This signal should be active only 1 clock period
     kr1 <= '0';          --  otherwise the state machine might think that we have
     --  introduced more than 1 coin
-    wait for clk_period*5;
+    wait for clk_period;
 
     --Insert a 2 kr coin
     kr2 <='1' ;
     wait for clk_period;
     kr2 <= '0';         
-    wait for clk_period*5;
+    wait for clk_period;
     
     --return all coins
     return_coins <='1' ;
