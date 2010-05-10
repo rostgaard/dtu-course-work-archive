@@ -25,7 +25,8 @@ Work disribution:
 Appendixes
  Work distribution - use \ref or set you name after each section or subsection
  
- bibtex
+References
+ All references are in bibtex format, insert new references into the sigproc.bib file
 
 Images
  Your graphics should be in .eps  or .pdf format when vector. .jpg, .png if bitmap.

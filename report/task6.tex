@@ -38,3 +38,34 @@ might
 makes it very easy to implement atomic actions. How would you implement atomic
 actions if interrupts were enabled? How would you implement atomic actions if you
 have multiple processors?
+
+\subsection{Condition variables}
+Condition variables is a primitive used to signal threads when certain events has occured.
+\subsubsection{monitors}
+
+\subsection{implementation}
+\subsubsection*{createsemaphore}
+The semaphores handles are stored just like our threads - in an array. Not much to this primitive other than finding the first available (the first one with owner member value -1 and pass the handle. The semaphore is created with an initial count passed in the rdi register.
+\subsubsection*{semaphoreup}
+When calling this method simply checks if there are free slots (the count is above 0), and if there are decrement the counter. Otherwise, we block the thread.
+\subsubsection*{semaphoredown}
+This primitive will do a check on whether we have any threads waiting to enter the semaphore. If this is the case, release one of them and enqueue it in the running queue. When there are no blocked threads, it simply release a slot by adding one to the count variable;
+
+\subsubsection*{createmutex}
+The mutex bla bla
+
+added a holding thread member
+
+locked/unlocked
+
+\subsubsection*{mutexlock}
+\subsubsection*{mutexunlock}
+
+\subsubsection*{createconditionvariable}
+This is corresponding to the pthreads' \emph{pthread\_cond\_init} call
+\subsubsection*{conditionvariablewait}
+\subsubsection*{conditionvariablesignal}
+
+
+
+
