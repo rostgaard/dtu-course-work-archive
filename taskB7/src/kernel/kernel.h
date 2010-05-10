@@ -27,7 +27,11 @@
 #define MAX_NUMBER_OF_THREADS   (256)
 /*!< Size of the thread_table. */
 
+#define MAX_NUMBER_OF_SEMAPHORES (256)
+/*!< Size of the semaphore_table. */
 
+#define MAX_NUMBER_OF_MUTEXES (256)
+/*!< Size of the mutex_table. */
 
 /* Type declarations */
 

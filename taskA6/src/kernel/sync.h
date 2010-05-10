@@ -8,6 +8,9 @@
 
 #define MAX_NUMBER_OF_PORTS     (256)
 
+#define TAKEN 0
+#define FREE 1
+
 /*! Describes a port. */
 struct port
 {
@@ -54,5 +57,40 @@ initialize_thread_synchronization(void);
 /* Put any declarations you need to add to implement tasks B5, A5, B6 or A6 
    here. */
 
+
+/* Semaphore and mutex handles */
+
+struct semaphore
+{
+    int count ;
+    int calling_process;
+    //blocked threads
+    struct thread_queue blocked_threads;
+};
+
+
+/* The mutex is similar to the semaphore, although is uses a binary count. See
+ * system call for details */
+struct mutex
+{
+    int state;
+    int calling_process;
+    int holding_thread;
+    //blocked threads
+    struct thread_queue blocked_threads;
+};
+
+
+/* The condition variable needs to have a list of threads waiting on
+ the condition, the mutex inquestioned and for security reasons; an owner */
+struct condition_variable
+{
+    int owner;
+    int mutex_handle;
+    struct thread_queue blocked_threads;
+};
+
+
+#define DEBUG 1;
 
 #endif

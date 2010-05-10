@@ -25,6 +25,9 @@ process_table[MAX_NUMBER_OF_PROCESSES];
 struct thread_queue
 ready_queue;
 
+struct semaphore
+semaphore_table[MAX_NUMBER_OF_SEMAPHORES]; 
+
 static struct executable
 executable_table[MAX_NUMBER_OF_PROCESSES];
 /*!< Array holding descriptions of all executable programs. */

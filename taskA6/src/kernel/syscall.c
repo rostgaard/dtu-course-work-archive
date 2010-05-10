@@ -8,6 +8,7 @@
 
 #include "threadqueue.h"
 #include "semaphore.h"
+#include "sync.h"
 
 
     case SYSCALL_PRINTS:
@@ -238,7 +239,6 @@
 
     case SYSCALL_CREATESEMAPHORE:
     {
-        kprinthex(SYSCALL_CREATESEMAPHORE);
         SYSCALL_ARGUMENTS.rax = ERROR;
 
         long i;
@@ -329,5 +329,232 @@
         break;
     }
 
+    /* This systemcall creates a mutex */
+    case SYSCALL_CREATEMUTEX:
+    {
+        SYSCALL_ARGUMENTS.rax = ERROR;
 
-    
+        long i;
+
+        for(i = 0; i<MAX_NUMBER_OF_MUTEXES;i++) {
+            if(mutex_table[i].calling_process == -1) {
+                break;
+            }
+        }
+
+        if(i!=MAX_NUMBER_OF_MUTEXES){
+            mutex_table[i].state = FREE;
+            mutex_table[i].calling_process =
+                thread_table[cpu_private_data.thread_index].data.owner;
+
+            thread_queue_init(&mutex_table[i].blocked_threads);
+            SYSCALL_ARGUMENTS.rax = i;
+        }
+        break;
+    }
+
+    /* This is the primitive for locking a mutex, it is very simple. If the
+       mutex is locked, block the calling thread (unless it owns the mutex)
+       otherwise aquire the lock*/
+    case SYSCALL_MUTEXLOCK: {
+        SYSCALL_ARGUMENTS.rax = ALL_OK;
+
+        /* mutex handle is passed in rdi*/
+        int mutex_handle = SYSCALL_ARGUMENTS.rdi;
+
+        /* The calling thread */
+        int c_thread = cpu_private_data.thread_index;
+
+
+        /* Check if the calling thread's process owns the mutex, and if the
+         * mutex handle is in range of valid handles. These are critical
+           errors*/
+        if(mutex_table[mutex_handle].calling_process != thread_table[c_thread].data.owner ||
+           mutex_handle < 0 || mutex_handle > MAX_NUMBER_OF_MUTEXES) {
+            SYSCALL_ARGUMENTS.rax = ERROR;
+            break;
+        }
+
+        /* If the mutex is unlocked, snatch it */
+        if (mutex_table[mutex_handle].state == FREE) {
+            mutex_table[mutex_handle].state = TAKEN;
+            mutex_table[mutex_handle].holding_thread = c_thread;
+
+            kprints("Kernel.muxlock: mutex was free, now owned by thread:");
+            kprinthex(c_thread);
+            kprints(" \n");
+        }
+        /* otherwise block the current thread */
+        else
+        {
+            kprints("Kernel.muxlock: mutex is taken by thread:");
+            kprinthex(mutex_table[mutex_handle].holding_thread);
+            kprints(" \n");
+            thread_queue_enqueue(&mutex_table[mutex_handle].blocked_threads,
+                                 cpu_private_data.thread_index);
+            // Do explicit reschedule at this point
+            schedule = 1;
+        }
+           
+        break;
+    }
+
+    /* This is the primitive for unlocking a mutex */
+    case SYSCALL_MUTEXUNLOCK: {
+        SYSCALL_ARGUMENTS.rax = ALL_OK;
+        
+        int mutex_handle = SYSCALL_ARGUMENTS.rdi;
+
+        // The calling thread;
+        int c_thread = cpu_private_data.thread_index;
+        int process  = thread_table[cpu_private_data.thread_index].data.owner;
+
+        kprints("Kernel.muxunlock: mutex is  by thread:");
+        kprinthex(mutex_table[mutex_handle].holding_thread);
+        kprints(" \n");
+
+        /* ignore the unlock call if the calling thread has not locked the
+           mutex in the first place */
+        if(c_thread != mutex_table[mutex_handle].holding_thread) {
+            break;
+        }
+
+        /* Check if the calling thread's process owns the mutex, and the mutex
+           handle is in range of valid handles. These are critical errors*/
+        if (mutex_table[mutex_handle].calling_process != process ||
+            mutex_handle < 0 ||
+            mutex_handle > MAX_NUMBER_OF_MUTEXES ) {
+            SYSCALL_ARGUMENTS.rax = ERROR;
+            break;
+        }
+
+        /* Only unlock if the mutex is actually locked */
+        if(mutex_table[mutex_handle].state == TAKEN) {
+            kprints("Kernel.muxunlock: mutex is taken by thread:");
+            kprinthex(mutex_table[mutex_handle].holding_thread);
+            kprints(" \n");
+            
+            /* if there are threads waiting for the mutex, release the next one,
+               enqueue it in running queue and dont unlock */
+            if (!thread_queue_is_empty(&mutex_table[mutex_handle].blocked_threads)) {
+                int thread = thread_queue_dequeue(&mutex_table[mutex_handle].blocked_threads);
+                thread_queue_enqueue(&ready_queue,thread);
+                mutex_table[mutex_handle].holding_thread = thread;
+                
+                kprints("Kernel.muxunlock: mutex has threads waiting, passing mutex to thread: ");
+                kprinthex(thread);
+                kprints(" \n");
+
+            }
+            else {
+                kprints("Kernel.muxlock: mutex unlocked \n");
+                /* If no others threads are  release the lock */
+                mutex_table[mutex_handle].state = FREE;
+            }
+        }
+        
+        break;
+    }
+
+    /* This pimitive creates a condition variable, and returns its handle
+       in the rax register */
+    case SYSCALL_CREATECONDITIONVARIABLE : {
+        SYSCALL_ARGUMENTS.rax = ERROR;
+
+        long i;
+        for(i = 0; i<MAX_NUMBER_OF_CONDITION_VARIABLES;i++) {
+            if(condition_variable_table[i].owner == -1) {
+                break;
+            }
+        }
+        /* The owner is the current process */
+        condition_variable_table[i].owner =
+            thread_table[cpu_private_data.thread_index].data.owner;
+        
+        thread_queue_init(&condition_variable_table[i].blocked_threads);
+        SYSCALL_ARGUMENTS.rax = i;
+        break;
+    }
+
+    /* conditionvariablewait primitive, this primitive unlocks the supplied
+       mutex (if owned by calling thread) and blocks, waiting on condition signal*/
+    case SYSCALL_CONDITIONVARIABLEWAIT: {
+        SYSCALL_ARGUMENTS.rax = ALL_OK;
+        /*The handle to the condition variable */
+        int condition_variable_handle = SYSCALL_ARGUMENTS.rdi;
+
+        /*The handle to the mutex */
+        int mutex_handle = SYSCALL_ARGUMENTS.rsi;
+        int c_thread = cpu_private_data.thread_index;
+
+        /* mutex must be in the taken state */
+        if(mutex_table[mutex_handle].state != TAKEN) {
+            kprints("Kernel.condwait: thread " );
+            kprinthex(c_thread);
+            kprints("tried to grab unlocked mutex, discarding request \n" );
+
+            break;
+        }
+
+        /* the mutex must be owned by the calling thread */
+        if(c_thread == mutex_table[mutex_handle].holding_thread) {
+            kprints("Kernel.condwait: thread " );
+            kprinthex(c_thread);
+            kprints("tried to unlocked mutex, not locked by it\n" );
+            break;
+        }
+
+        /* If you got this far, good stuff avaits :-) Unblock a thread waiting
+           to get a hold of the mutex. This is corresponding to an unlock */
+        thread_queue_enqueue(&condition_variable_table[condition_variable_handle].blocked_threads,
+                             c_thread);
+
+        if(!thread_queue_is_empty(&mutex_table[mutex_handle].blocked_threads)) {
+            int thread = thread_queue_dequeue(&mutex_table[mutex_handle].blocked_threads);
+            thread_queue_enqueue(&ready_queue,thread);
+            mutex_table[mutex_handle].holding_thread = thread;
+            mutex_table[mutex_handle].state = FREE;
+ 
+        } else {
+            kprints("Kernel.condwait: mutex_table empty - no threads wanted the mutex\n" );
+        }
+
+
+       // We should reschedule at this point
+        schedule = 1;
+        SYSCALL_ARGUMENTS.rax = ALL_OK;
+
+        break;
+    }
+    /* conditionvariablesignal performs a signal operation on the condition variable */
+    case SYSCALL_CONDITIONVARIABLESIGNAL: {
+        SYSCALL_ARGUMENTS.rax = ALL_OK;
+        int condition_variable_handle = SYSCALL_ARGUMENTS.rdi;
+        int thread;
+        int mutex = condition_variable_table[condition_variable_handle].mutex_handle;
+
+        /* enqeue every thread in the mutex blocked queue */
+        while(!thread_queue_is_empty(&condition_variable_table[condition_variable_handle].blocked_threads)) {
+            kprints("Kernel.condsignal: putting threads into mutex table \n" );
+            thread = thread_queue_dequeue(&condition_variable_table[condition_variable_handle].blocked_threads);
+            thread_queue_enqueue(&mutex_table[mutex].blocked_threads, thread);
+        }
+
+        /* If the mutex is unlocked, and has threads waiting,  we do a lock operation */
+        if(!thread_queue_is_empty(&mutex_table[mutex].blocked_threads) &&
+            mutex_table[mutex].state == FREE ) {
+            int thread = thread_queue_dequeue(&mutex_table[mutex].blocked_threads);
+            thread_queue_enqueue(&ready_queue,thread);
+
+            mutex_table[mutex].state = TAKEN;
+            mutex_table[mutex].holding_thread = thread;
+
+
+            kprints("Kernel.condsignal: mutex was free, now owned by thread:");
+            kprinthex(thread);
+            kprints(" \n");
+        }
+
+
+        break;
+    }

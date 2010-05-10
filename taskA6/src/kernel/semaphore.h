@@ -8,6 +8,14 @@
 #ifndef _SEMAPHORE_H
 #define	_SEMAPHORE_H
 
+struct semaphore
+{
+    int count ;
+    int calling_process;
+    //blocked threads
+    struct thread_queue blocked_threads;
+};
+
 
 #endif	/* _SEMAPHORE_H */
 

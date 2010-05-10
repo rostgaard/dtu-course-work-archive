@@ -6,31 +6,37 @@
 
  */
 
-case SYSCALL_PRINTS:
+#include "threadqueue.h"
+#include "semaphore.h"
+
+
+    case SYSCALL_PRINTS:
 {
- kprints((char*) (SYSCALL_ARGUMENTS.rdi));
- SYSCALL_ARGUMENTS.rax=ALL_OK;
- break;
+    kprints((char*) (SYSCALL_ARGUMENTS.rdi));
+    SYSCALL_ARGUMENTS.rax = ALL_OK;
+    break;
 }
 
-case SYSCALL_PRINTHEX:
+    case SYSCALL_PRINTHEX:
 {
- kprinthex(SYSCALL_ARGUMENTS.rdi);
- SYSCALL_ARGUMENTS.rax=ALL_OK;
- break;
+    kprinthex(SYSCALL_ARGUMENTS.rdi);
+    SYSCALL_ARGUMENTS.rax = ALL_OK;
+    break;
 }
 
-case SYSCALL_DEBUGGER:
+    case SYSCALL_DEBUGGER:
 {
- /* Enable the bochs iodevice and force a return to the debugger. */
- outw(0x8a00, 0x8a00);
- outw(0x8a00, 0x8ae0);
+    /* Enable the bochs iodevice and force a return to the debugger. */
+    outw(0x8a00, 0x8a00);
+    outw(0x8a00, 0x8ae0);
 
- SYSCALL_ARGUMENTS.rax=ALL_OK;
- break;
+    SYSCALL_ARGUMENTS.rax = ALL_OK;
+    break;
 }
 
-case SYSCALL_TERMINATE:
+/* Add the implementation of more system calls here. */
+
+    case SYSCALL_TERMINATE:
 {
     SYSCALL_ARGUMENTS.rax = ERROR;
     schedule = 1;
@@ -68,7 +74,7 @@ case SYSCALL_TERMINATE:
         /* Loop over all processes in the process table, finding an empty slot. */
         int i;
         for (i = 0; i < MAX_NUMBER_OF_PROCESSES; i++) {
-            // Check if the process has any threads.
+            // Check if the process has any threads. 
             if (!process_table[i].threads) {
                 static struct prepare_process_return_value prepared_process;
                 prepared_process = prepare_process(executable_table[SYSCALL_ARGUMENTS.rdi].elf_image,
@@ -303,7 +309,7 @@ case SYSCALL_TERMINATE:
         // Check if the calling thread's process owns the semaphore
         if(semaphore_table[s_index].calling_process == thread_table[cpu_private_data.thread_index].data.owner &&
             s_index >= 0 && s_index < MAX_NUMBER_OF_SEMAPHORES ) {
-
+            
             int released_thread;
 
             if(!thread_queue_is_empty(&semaphore_table[s_index].blocked_threads)) {
@@ -322,6 +328,31 @@ case SYSCALL_TERMINATE:
 
         break;
     }
+    case SYSCALL_PRINTAT:
+{
 
-/* Add the implementation of more system calls here. */
+	//clear_screen();
 
+	// Variables
+	int row;			// Row
+	int col;			// Column
+	char* afc;			// Address of First Character
+
+	// Initialize
+	row = SYSCALL_ARGUMENTS.rdi;
+	col = SYSCALL_ARGUMENTS.rsi;
+	afc = (char*) SYSCALL_ARGUMENTS.rdx;
+
+	while (*afc != '\0' && *afc != '\n') {
+
+		screen_pointer->positions[row][col].character=*afc;
+
+		afc++;
+		col++;
+	}
+
+	break;
+}
+
+
+    

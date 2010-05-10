@@ -30,6 +30,12 @@
 #define MAX_NUMBER_OF_SEMAPHORES (256)
 /*!< Size of the semaphore_table. */
 
+#define MAX_NUMBER_OF_MUTEXES (256)
+/*!< Size of the mutex_table. */
+
+#define MAX_NUMBER_OF_CONDITION_VARIABLES (256)
+/*!< Size of the condition_variable_table. */
+
 
 /* Type declarations */
 
