@@ -1,41 +1,47 @@
-thoroughly testing the VM will help identifying the correctness, completeness and quality of the system. Testing can never completely establish the correctness of a system but its a good indication. Testing is mainly a comparison of the actual output and the expected output.
-In the development and testing phase of the VM several test benches has been made to follow the data flow. Five of these test benches scenarios will show the required functionality's of the VM.   
+Thoroughly testing the VM will help identifying the correctness, completeness and quality of the system. Testing can however never completely establish the correctness of a system but its a good indication. These test are mainly a comparison of the expected output and actual output.
+In the development and testing phase of the VM several test benches has been made to follow the actual data flow.    
 
 \subsection{Test Cases}
-\subsubsection*{Test 1:  Dispense one coke with the amount 7 kr }
-
-Precondition: Power on\\
+Five test benches with the most complex functionality has been set as Test Cases.
+\subsubsection*{Test 1:  Dispense one coke}
+This test will insert 7 kr with a mix of 2 kr and 1kr coins and finalize with finish\_purchase.\\
+\\
+Precondition: Power on.\\
 Expected result: VM will dispense a coke and become available to the next purchase.\\
 Actual result: One coke was dispensed and the system became available for the next purchase.\\
-%Diagram: \figure~\ref{fig:test1}
+Wave Diagram: Figure~\ref{fig:test1} in appendix~\ref{app:figures}
 
-\begin{enumerate}
+\subsubsection*{Test 2 : Return change from purchase}
+This test will Insert 8 kr with 4 x 2 kr coins and finalize with finish\_purchase.\\
+\\
+Precondition:  Power on, Change available.\\ 
+Expected result:  VM will dispense one coke, return 1 kr change and become available for next purchase.\\
+Actual result: One coke was dispensed, 1 kr in change and ready for next purchase.\\
+Wave Diagram: Figure~\ref{fig:test2} in appendix~\ref{app:figures}
 
-\item Test 2 Return change from purchase with the amount 8kr.
-Precondition:  Power on, Change available 
-Expected result:  VM will dispense one coke, return 1kr change and become available for next purchase.
-Actual result: One coke was dispensed, 1kr in change and ready for next purchase.
-reference til Wave diagram i appendix
+\subsubsection*{Test 3 : Return all coins if no change is available}
+This test will insert 8 kr with 4 x 2 kr coins and finalize with finish\_purchase.\\
+ \\
+Precondition:  Power on, no change available.\\
+Expected result: VM will return all coins and and become ready for next purchase.\\
+Actual result: Coins where returned and ready for next purchase.\\
+Wave Diagram: Figure~\ref{fig:test3} in appendix~\ref{app:figures}
 
-\item Test 3 Return all insert 8 kr in 2kr coins.
-Precondition:  Power on, No change avaliable.
-%Expected result: VM will return all coins and wait in the $_______$ state.
-Actual result: 
-reference til Wave diagram i appendix
+\subsubsection*{Test 4 : Return inserted coins}
+This test will insert 6 kr with a mix of 2 kr and 1kr coins and finalize with return all coins.\\
+ \\
+Precondition:  Power on.\\
+Expected result: VM will return all inserted coins and become ready for next purchase.\\
+Actual result: All coins where returned and ready for next purchase.\\
+Wave Diagram: Figure~\ref{fig:test4} in appendix~\ref{app:figures}
 
-\item Test 4 insert 6 kr and return all coins. 
-Precondition:  Power on
-%Expected result: VM will return all coins and wait in the _______ state.
-Actual result: 
-reference til Wave diagram i appendix
-
-\item Test 5 insert 8 kr in order 1kr+1kr+2kr+2kr+2kr with no change avaliable.
-Precondition:  Power on, No change avaliable.
-%Expected result: VM will dispense one coke, give 1kr change and wait in the _______ state. 
-Actual result: 
-reference til Wave diagram i appendix
-
-\end{enumerate}
+\subsubsection*{Test 5 : Difficult coin order }
+This test handles difficult coin order purchase, with no change available and finalize with finish\_purchase.\\\
+ \\
+Precondition:  Power on, No change available.\\
+Expected result: VM will dispense one coke, give 1 kr change and become ready for next purchase.\\
+Actual result: One coke dispensed, 1 kr change and ready for next purchase.\\
+Wave Diagram: Figure~\ref{fig:test5} in appendix~\ref{app:figures}
 
 \subsection{Test Conclusion}
 All tests has given the desired output. The differed testing scenarios has given a clear indication that the VM works properly and has the desired functionalists given by the requirements.
