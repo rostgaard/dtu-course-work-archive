@@ -47,8 +47,8 @@ architecture Behavioral of vm_processor is
   signal amount : std_logic_vector(3 downto 0);
   
   constant cost : std_logic_vector(3 downto 0) := "0111"; -- 7
-  constant inital_cc1 : std_logic_vector(3 downto 0) := "0001"; -- 1
-  constant inital_cc2 : std_logic_vector(3 downto 0) := "0010"; -- 2
+  constant initial_cc1 : std_logic_vector(3 downto 0) := "0001"; -- 1
+  constant initial_cc2 : std_logic_vector(3 downto 0) := "0010"; -- 2
   
   -- Simple D flip-flops for storing the value of output signals
   -- over several states
@@ -326,7 +326,7 @@ begin
                  else TCC1_r_reg;
 
   CC2_r_next <= std_logic_vector(unsigned(TCC2_r_reg) + unsigned(CC2_r_reg))
-                when CC2_sel = '0' else cc2_initial;
+                when CC2_sel = '0' else initial_cc2;
   
   datapath: process(CC1_sel,CC2_sel,TCC1_r_reg,CC1_r_reg)
   begin
@@ -335,7 +335,7 @@ begin
       when "01" => CC1_r_next <= std_logic_vector(unsigned(CC1_r_reg)-1);
       when "10" => CC1_r_next <= std_logic_vector(unsigned(TCC1_r_reg) +
                                                   unsigned(CC1_r_reg));
-      when "11" => CC1_r_next <= inital_cc1;
+      when "11" => CC1_r_next <= initial_cc1;
       when others => CC1_r_next <= CC1_r_reg;
     end case;
   end process;
@@ -352,7 +352,7 @@ begin
         -- manual state encoding
         case state_reg is
           when s_reset =>
-            display(3 downto 0) <= X"0"
+            display(3 downto 0) <= X"0";
           when init =>
             display(3 downto 0) <= X"1";
           when purchase =>
