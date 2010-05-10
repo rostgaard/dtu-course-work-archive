@@ -1,12 +1,59 @@
+\subsection{Requirements analysis}
+By first doing a step-by-step analysis of the requirements, it becomes easier to implement every one of them in smaller steps.
+\subsubsection*{Requirement 1}
+The first requirement is that the machine should only be able to sell one type of product.\\
+This is a requirement that actually simplifies the design, as it limits the user input we have to account for.
+
+\subsubsection*{Requirement 2}
+The machine dispenses one can at a time and dispenses as soon as the correct amount has been inserted.\\
+This implies that we should do a transition to a dispense state if our amount is greater than or equal to the cost of one can.
+
+\subsubsection*{Requirement 3}
+The price must be changeable, though initially 7 kr.\\
+By loading the cost into a register we could supply the cost via a bus. If the processor is implemented with an FPGA, it could also be specified in the VHDL code and then changed by rebuilding and reloading.
+
+\subsubsection*{Requirement 4}
+System accepts 1 and 2 Kr coins.\\
+This can be implemented either by having a generic add state that does addition based on what coin was inserted, or by having separate states for adding 1 kr and adding 2 kr.
+
+\subsubsection*{Requirement 5}
+A display should show the total amount inserted.\\
+This is solved by informal requirement described in section~\ref{sec:debug}. 
+
+\subsubsection*{Requirement 6}
+A LED should indicate if change is available.\\
+In conjunction with requirement 4, this effectively becomes; the system should at least hold one 1 kr coin. 
+
+\subsubsection*{Requirement 7}
+The machine should close the coin slot until the product is removed. The original requirement is a bit ambiguous, as it state that the coin slot should be closed until the \emph{last} can has been removed. This contradicts requirement 1.\\
+One way or the other, this gives us a wait state where we patiently wait for the user to remove the product.
+
+\subsubsection*{Requirement 8}
+The machine should be able to return change.\\
+To detect if a user should receive change we need to able to detect if the amount of money inserted into the machine is more than cost of a product.
+
+\subsubsection*{Requirement 9}
+The user should at any time be able to cancel the purchase at any time up till the cost has been reached.\\
+
+
+\subsubsection*{Requirement 10}
+If change is not available, the machine should only accept purchases with the right amount.\\
+
+\subsubsection*{Debug - informal requirement}
+\label{sec:debug}
+
+\subsection{Implementation}
+
 The solution is done by dividing the state machine into a FSMD as shown in figure~\ref{fig:fsmd} in appendix~\ref{app:figures} and attaching a datapath
 
 \subsection{The individual states}
-we are using nine different states for our logic, each of them implemented in order to fulfill the requirements.
+we are using nine different states for our logic, each of them implemented in order to fulfil the requirements.
 \subsubsection{reset}
 The first one is the reset state, where we start from on power on and go to on a hard reset. This state takes care of setting the up the cost and
-then "count up" the internal coin counters CC1 and CC2. In a real machine this could be done by a seperate processor or circuit (weighing all coins
-and deviding by the weight of one coin) outputting this count on a bus. This processor/circuit could also be shut down in all other states but the 
-reset state to preserve power. This state automatically jumps to init on the next clock rising edge.
+then "count up" the internal coin counters CC1 and CC2. In a real machine this could be done by a separate processor or circuit (weighing all coins
+and deciding by the weight of one coin) outputting this count on a bus. This processor/circuit could also be shut down in all other states but the 
+reset state to preserve power. This state automatically jumps to init on the next clock rising edge.\\
+Note that the VHDL code differs slightly from the FSM in the this state, as it does not use a register. This was not prioritized, but can be added relatively simple later on.
 
 \subsubsection{init}
 This is the initialization state that takes care of everything that has to be done prior to a purchase. This goes directly to the purchase state on the next clock.
@@ -47,9 +94,10 @@ This state releases the can and closes the coin slot. These are both D-flip-flop
 
 \subsubsection{wait\_for\_user}
 Here we just wait for the user to take the item. Otherwise the machine would go back to init, and purchase too fast for the user too see on a fast clock.\\
-This state goes to init, and the process can start again.
+This state eventually goes to back init, and the process can start again.
 
 \subsection{Datapath}
+By putting some of the logic into a datapath we can distinguish the state logic from the calculations. By doing this we were also also able to trim down on our design.
 \subsubsection{Cutting the fat}
 In a early implementation we had a amount register. This was trivial and involved a lot of housekeeping on it. When designing the datapath we realized that we could do without, as the only things we were really interested in could be calculated on the fly using our TCC1 and TCC2 registers. By left shifting the TCC2 register and adding it with the TCC1 register we now had a bus containing the current amount. Getting the amount\_gt\_cost and amount\_eq\_cost was now just a matter of doing simple comparisons on the bus and the cost register.
 
@@ -74,51 +122,4 @@ The cocke-can is the only product our vending machine can offer. This make the p
 \end{lstlisting}
 
 
-\paragraph{Req.4 System accepts 1 and 2 Kr coins.}
-lalala
-\begin{lstlisting}[caption={[VHDL]eks. text }]
-
-\end{lstlisting}
- 
-
-\paragraph{Req.5 A display should show the total amount inserted.}
-lalala
-\begin{lstlisting}[caption={[VHDL]eks. text }]
-
-\end{lstlisting}
-  
-
-\paragraph{Req.6 A LED should indicate if change is avaliable (min 1 kr coin available).}
-lalala
-\begin{lstlisting}[caption={[VHDL]eks. text }]
-
-\end{lstlisting}
- 
-
-\paragraph{Req.7 Remove product sensor, will close the the coin slot and turn on indicating LED until product is removed.}
-lalala
-\begin{lstlisting}[caption={[VHDL]eks. text }]
-
-\end{lstlisting}  
-
-
-\paragraph{Req.8 Return Change.}
-lalala
-\begin{lstlisting}[caption={[VHDL]eks. text }]
-
-\end{lstlisting}
- 
-
-\paragraph{Req.9 Return Coins.}
-lalala
-\begin{lstlisting}[caption={[VHDL]eks. text }]
-
-\end{lstlisting}
-
-
-\paragraph{Req.10 If change is not available, the machine should only accept purchases with the right amount.}
-lalala
-\begin{lstlisting}[caption={[VHDL]eks. text }]
-
-\end{lstlisting}
 
