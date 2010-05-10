@@ -170,7 +170,7 @@ begin
       when s_reset =>
         CC1_en <= '1';
         CC2_en <= '1';
-        CC1_sel <= "00";
+        CC1_sel <= "11";
         CC2_sel <= '1'; 
 
       when init =>
@@ -182,7 +182,7 @@ begin
         returned_change_reset <= '1';
         slot_closed_reset <= '1';
         item_released_reset <= '1';
-		  
+
       when add1 =>
         TCC1_en <= '1';
         

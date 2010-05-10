@@ -15,10 +15,10 @@ USE ieee.std_logic_1164.ALL;
 USE ieee.std_logic_unsigned.all;
 USE ieee.numeric_std.ALL;
 
-ENTITY vm_processor_tb IS
-END vm_processor_tb;
+ENTITY vm_processor_tb3 IS
+END vm_processor_tb3;
 
-ARCHITECTURE behavior OF vm_processor_tb IS 
+ARCHITECTURE behavior OF vm_processor_tb3 IS 
   
   -- Component Declaration for the Unit Under Test (UUT)
   
@@ -139,16 +139,16 @@ BEGIN
     kr2 <='1' ;
     wait for clk_period;
     kr2 <= '0';         
-	 wait for clk_period*5;
-	 
-	 	 --Purchase finished
+    wait for clk_period*5;
+	  
+	 --Purchase finished
 	 purchase_finished <='1' ;
-    wait for clk_period*5;
+    wait for clk_period;
     purchase_finished <= '0';
-    wait for clk_period*5;
+    wait for clk_period;
 	 
 	 -- new purchace now with no change ( can we go strait to this ? )
-	 wait for clk_period;
+	 wait for clk_period*2;
 	 
 	 --Insert a 2 kr coin
     kr2 <='1' ;
@@ -178,13 +178,13 @@ BEGIN
     kr2 <='1' ;
     wait for clk_period;
     kr2 <= '0';         
-	 wait for clk_period*5;
-
+    wait for clk_period*5;
+	  
 	 --Purchase finished
 	 purchase_finished <='1' ;
-    wait for clk_period*5;
+    wait for clk_period;
     purchase_finished <= '0';
-    wait for clk_period*5;
+    wait for clk_period*4;
     
 	--Test4 insert 6 kr and use return all coins - Return all coins
 	--Test5 insert 8 kr in order 1kr+1kr+2kr+2kr+2kr with no change avaliable - dispence, 1kr change

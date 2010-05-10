@@ -15,10 +15,10 @@ USE ieee.std_logic_1164.ALL;
 USE ieee.std_logic_unsigned.all;
 USE ieee.numeric_std.ALL;
 
-ENTITY vm_processor_tb IS
-END vm_processor_tb;
+ENTITY vm_processor_tb1 IS
+END vm_processor_tb1;
 
-ARCHITECTURE behavior OF vm_processor_tb IS 
+ARCHITECTURE behavior OF vm_processor_tb1 IS 
   
   -- Component Declaration for the Unit Under Test (UUT)
   
@@ -106,7 +106,7 @@ BEGIN
 	 reset <= '1';
     wait for clk_period;	
     reset <= '0';
-    wait for clk_period;
+    wait for clk_period*3;
 
 	--Test1 insert 7 kr with change avaliable - dispense
 
@@ -136,9 +136,9 @@ BEGIN
 	  
 	 --Purchase finished
 	 purchase_finished <='1' ;
-    wait for clk_period*5;
+    wait for clk_period;
     purchase_finished <= '0';
-    wait for clk_period*5;
+    wait for clk_period*4;
 	 
 	--Test2 insert 8 kr in 2kr coins with change avaliable - Dispense, 1kr change
 	--Test3 insert 8 kr in 2kr coins with no change avaliable - Return all coins

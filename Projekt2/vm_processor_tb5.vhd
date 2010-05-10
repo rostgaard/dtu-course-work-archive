@@ -15,10 +15,10 @@ USE ieee.std_logic_1164.ALL;
 USE ieee.std_logic_unsigned.all;
 USE ieee.numeric_std.ALL;
 
-ENTITY vm_processor_tb IS
-END vm_processor_tb;
+ENTITY vm_processor_tb5 IS
+END vm_processor_tb5;
 
-ARCHITECTURE behavior OF vm_processor_tb IS 
+ARCHITECTURE behavior OF vm_processor_tb5 IS 
   
   -- Component Declaration for the Unit Under Test (UUT)
   
@@ -141,13 +141,13 @@ BEGIN
     kr2 <='1' ;
     wait for clk_period;
     kr2 <= '0';         
-    wait for clk_period*5;	 
-
+    wait for clk_period*5;
+	  
 	 --Purchase finished
 	 purchase_finished <='1' ;
-    wait for clk_period*5;
+    wait for clk_period;
     purchase_finished <= '0';
-    wait for clk_period*5;
+    wait for clk_period*4;
 
     assert false
       report "Simulation completed"
