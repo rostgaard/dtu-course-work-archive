@@ -1,36 +1,40 @@
-In the development and testing phase of the VM several test benches has been made to follow the data flow and help locate errors.
-Five of these test benches scenarios will show the main functionality's of the VM and these has been included in this test chapter.   
+thoroughly testing the VM will help identifying the correctness, completeness and quality of the system. Testing can never completely establish the correctness of a system but its a good indication. Testing is mainly a comparison of the actual output and the expected output.
+In the development and testing phase of the VM several test benches has been made to follow the data flow. Five of these test benches scenarios will show the required functionality's of the VM.   
 
+\subsection{Test Cases}
 \begin{enumerate}
 
-\item Test 1:  insert 7 kr with change available %mabye also finish_purhance input in this test?
-Precondition: none
-Expected result: VM will dispense a coke and wait in the _______ state.
-Actual result: 
+\item Test 1:  Dispense one coke with the amount 7 kr 
+Precondition: Power on
+Expected result: VM will dispense a coke and become available to the next purchase.
+Actual result: One coke was dispensed and the system became available for the next purchase.
 reference til Wave diagram i appendix
 
-\item Test 2 insert 8 kr in 2kr coins with change available %mabye also finish_purhance input in this test?
-Precondition:  none
-Expected result:  VM will dispense a coke, return 1kr change and wait in the _______ state.
-Actual result: 
+\item Test 2 Return change from purchase with the amount 8kr.
+Precondition:  Power on, Change available 
+Expected result:  VM will dispense one coke, return 1kr change and become available for next purchase.
+Actual result: One coke was dispensed, 1kr in change and ready for next purchase.
 reference til Wave diagram i appendix
 
-\item Test 3 insert 8 kr in 2kr coins with no change available %mabye also finish_purhance input in this test?
-Precondition:  none
+\item Test 3 Return all insert 8 kr in 2kr coins.
+Precondition:  Power on, No change avaliable.
 Expected result: VM will return all coins and wait in the _______ state.
 Actual result: 
 reference til Wave diagram i appendix
 
-\item Test 4 insert 6 kr and return all coins %mabye also finish_purhance input in this test?
-Precondition:  none
+\item Test 4 insert 6 kr and return all coins. 
+Precondition:  Power on
 Expected result: VM will return all coins and wait in the _______ state.
 Actual result: 
 reference til Wave diagram i appendix
 
-\item Test 5 insert 8 kr in order 1kr+1kr+2kr+2kr+2kr with no change avaliable %mabye also finish_purhance input in this test?
-Precondition:  none
+\item Test 5 insert 8 kr in order 1kr+1kr+2kr+2kr+2kr with no change avaliable.
+Precondition:  Power on, No change avaliable.
 Expected result: VM will dispense one coke, give 1kr change and wait in the _______ state. 
 Actual result: 
 reference til Wave diagram i appendix
 
 \end{enumerate}
+
+\subsection{Test Conclusion}
+All tests has given the desired output. The differed testing scenarios has given a clear indication that the VM works properly and has the desired functionalists given by the requirements.
