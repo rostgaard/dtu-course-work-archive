@@ -1,7 +1,3 @@
-
-
-
-\subsection{Task B1 - system calls}
 Task B1 is to implement a system call. This is a pretty fundamental feature in operating systems.\\
 
 When designing an operating system you will soon run into thoughts about security. How would you secure that only system related activities
@@ -20,7 +16,7 @@ When a syscall is invoked, the cpu registers is pushed on the stack and the OS s
 \label{fig:kernel_mode}
 \end{figure}
 
-\subsubsection{Reflections}
+\subsection{Reflections}
 
 \subsubsection*{What kind of operating system is it?}
 Tanenbaum and Woodhull describes three major types of operating system kernel types; monolithic, mico and exo.\\
@@ -34,7 +30,7 @@ characteristics of an exokernel.
 %Draw a figure of the organization of the system. Relate the organization of the system to the different types of operation systems discussed in the text book by Tanenbaum and Woodhull. What kind of operating system is it?  Why?
 
 \subsubsection*{Which portion execute in kernel mode? Which portions in user mode? What is the difference between user and kernel mode?}
-All system calls i run in kernel mode. The kernel mode has access to system resources user mode doesn't
+All system calls is run in kernel mode. The kernel mode has access to system resources user mode doesn't
 
 \subsubsection*{How is the kernel invoked from the user-level program? Explain and elaborate!}
 The kernel is invoked through system calls. When a syscall is invoked, the cpu registers is pushed on the stack and switches to kernel mode. The kernel uses a macro that calls some low-level assembler code.
@@ -43,3 +39,6 @@ The kernel is invoked through system calls. When a syscall is invoked, the cpu r
 
 When the syscall returns, the stack is pushed back into the registers and the computer returns to user mode and continues the execution of the
 program that did the system call.
+
+\subsection{Test}
+The executing program is to make the system call “SYSCALL\_VERSION” where the kernel version should be printed to the bochs console. This desired result was achieved as defined in task definition, and the test was a success.

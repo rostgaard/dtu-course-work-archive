@@ -1,49 +1,51 @@
 Handling more than one process at a time, and giving the opportunity to pause a program execution at \emph{any} time introduces a new problem; race conditions.\\
 \subsection{Race conditions}
-%A race condition is anomalous behavior caused by the unexpected dependence on the relative timing of events. In other words, a programmer incorrectly %assumed that a particular event would always happen before another.
+When a operating system has multiple threads running at arbitrary times, sometimes they clash in ways that leads to data curruption or deadlocks.\\
+For example if thread a reads the value of a balance with the intent of increasing it, and becomes pre-empted by thread b in the following order:
+\begin{verbatim}
+thread a reads balance 100
+thread b pre-empts a
+b reads and updates balance=100+10
+thread a eventually updates balance=100+5
+\end{verbatim}
+The final value should be 115, but due to the fact that the methods are not atomically, thread a updates the old value of balance (100) and the final values becomes 105. This is definitely not what we wanted. We need a way to make sure that no two threads inter a critical region at the same time.
 
-%Some of the common causes of race conditions are signals, access checks, and file opens. Signals are asynchronous events by nature so special care must be taken in dealing with them. Checking access with access(2) then open(2) is clearly non-atomic. Users can move files in between the two calls. %Instead, privileged applications should seteuid() and then call open() directly. Along the same lines, an application should always set a proper umask before open() to obviate the need for spurious chmod() calls.
-
-\subsection{Reflections}
-Explain what mutual exclusion means. How can semaphores be used to achieve
-mutual exclusion? How can mutexes be used? How can monitors be used?\\
-
+\subsubsection{Mutual exclusion}
 Mutual exclusion means that no two thread can access the same shared resource at the same time. This could be a block of memory or a device like a hard drive, where an non-atomic write could lead to data corruption. It makes good sense to provide this mechanism along with the ability to run multiple threads in a pre-emptive scheduler, as these are logically connected.\\
 Mutexes are used protecting the entry to a single point (a function or block). They could also be used to protect a global.\\
-Semaphores are similar to mutexes, although they provide access to the shared resource to any limited number of threads. This number is specified upon creation of the semaphore. Creation of a semaphore with a limit of one is in principle a mutex, as it provides mutual exclusion to the threads using it.\\
 Mutexes are used by wrapping the critical region with lock and an a unlock primitive. Written in pseudo code, it looks something like this:
 \begin{lstlisting}[basicstyle={\small}]
 lock(myMutex);
 critical_region_stuff();
 unlock(myMutex);
 \end{lstlisting}
+\subsubsection{Semaphores and mutual exclusion}
+Semaphores are similar to mutexes, although they provide access to the shared resource to any limited number of threads. This number is specified upon creation of the semaphore. Creation of a semaphore with a limit of one is in principle a mutex, as it provides mutual exclusion to the threads using it.\\  Semaphores allow access to a limited, but usually plural, number of connections to some resource; for example IO channels.
 
 
-1) Semaphores involve counting, so they are typically used for 
-controlling
-   access to a limited, but plural, number of connections to some 
-resource.
-   Some good examples are audio channels or IO channels.
+\subsubsection{Atomic actions on multiprocessor systems}
+As disabling interrupts do not give you atomicity on multiprocessor systems - due to the fact that the two processors excute in parallel, another method is needed. This calls for a hardware assistance.\\
+On most modern processesors there is an instruction called test-and-set, (TSL). This instruction works in the following way
+\begin{verbatim}
+spinlock:
+ tsl reg, flag ; copy the value of flag to reg, and set 
+               ; flag to 1 if it is zero (the test)
+ cmp reg, #0   ; Was flag zero before TSL?
+ jnz spinlock  ; if not, try to acquire lock again
+ ret           ; else return
+\end{verbatim}
+This is a typical example of a spin lock, where we keep trying a lock until it becomes available to us. Another approach to this is to use another instruction called compare-and-swap (CAS).
 
-2) Monitors are an OO construct and work well with controlling 
-concurrent
-   access to the multiple entry points in an object. A good example 
-might
-   be a shared queue object, on which the enqueue and dequeue operations
-   are protected.
+CMPSWP compares the value of a first compare operand to the value of a second compare operand. If they are equal, the swap operand is stored in the second compare operand's location. If they are unequal, the second compare operand is stored into the first compare operand's location. This instruction takes three operands. A memory location, an old value, and a new value. When the value at memory location equals the old value, swap the new value into the memory location. This asserts that a new value is written to a variable only if it matches what it should be.\\
+Both of these instructions are executed atomically.
 
-
-
- In the example kernel and when running in kernel mode, interrupts are disabled. This
-makes it very easy to implement atomic actions. How would you implement atomic
-actions if interrupts were enabled? How would you implement atomic actions if you
-have multiple processors?
-
-\subsection{Condition variables}
+\subsubsection{Condition variables}
 Condition variables is a primitive used to signal threads when certain events has occured.
 \subsubsection{monitors}
+Monitors is an abstract concept used primarily in object oriented languages for controlling concurrent access to the multiple entry points in an object. A typical usage is a shared, on which the enqueue and dequeue operations must be atomically
 
-\subsection{implementation}
+\subsubsection{implementation}
+For implementing semaphores, mutexes, and condition variables, a number of new system calls are added.
 \subsubsection*{createsemaphore}
 The semaphores handles are stored just like our threads - in an array. Not much to this primitive other than finding the first available (the first one with owner member value -1 and pass the handle. The semaphore is created with an initial count passed in the rdi register.
 \subsubsection*{semaphoreup}
@@ -52,19 +54,22 @@ When calling this method simply checks if there are free slots (the count is abo
 This primitive will do a check on whether we have any threads waiting to enter the semaphore. If this is the case, release one of them and enqueue it in the running queue. When there are no blocked threads, it simply release a slot by adding one to the count variable;
 
 \subsubsection*{createmutex}
-The mutex bla bla
-
-added a holding thread member
-
-locked/unlocked
+The mutex is similar to the semaphore, only it has a state instead of a count, and we have also added a holding\_thread field to assert that only 
+the thread that locked the thread is able to unlock it. In all other aspects this call is identical to the createsemaphore.
 
 \subsubsection*{mutexlock}
+This primitive locks the mutex. It puts the thread into a waiting queue if the mutex is already locked.
 \subsubsection*{mutexunlock}
+This primitive unlocks the mutex and passes the lock to a blocked thread waiting for the mutex. In practise, the mutex is never unlocked if a thread is waiting for it, it just releases the thread, enqueues in the ready queue, and changes the holding\_thread value.\\
+A mutex is not unlocked if the calling thread is not holding the thread.
 
 \subsubsection*{createconditionvariable}
+When this is called, a handle to a new condition variable is returned in the rax register. A condition variable holds an owner field and a mutex\_handle field. This is to have a reference to mutex being waited on.
 This is corresponding to the pthreads' \emph{pthread\_cond\_init} call
 \subsubsection*{conditionvariablewait}
+This primitive needs a mutex supplied along with the condition variable as argument. It does a unlock on the mutex (with the same checks) and blocks the calling thread in the condition variables blocked queue.
 \subsubsection*{conditionvariablesignal}
+When the condition variable is signalled, it releases every thread blocked in its blocked queue and enqueues them in the blocked queue of the mutex. Then lock mutex is performed.
 
 
 

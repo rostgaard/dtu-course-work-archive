@@ -26,7 +26,7 @@ Processes are executed invoking this system call by executing a piece of assembl
 When a program finishes the terminate system call is invoked. This does cleanup by of course cleaning up references to the process 
 and the threads of the process, but also do a context switch. We switch back to the thread of the parent of the process just terminated.
 
-\subsubsection{Reflections}
+\subsection{Reflections}
 
 \subsubsection*{How is the system booted?}
 Our virtual pc starts a BIOS that searches for a bootloader (in our case Grub), that then loads the kernel image to memory from a harddisk - or in our case a disk image. The virtual pc is an AMD64 architecture.
@@ -36,3 +36,6 @@ The kernel finds all executable files and loads them to memory, storing a pointe
 
 \subsubsection*{How does a daemon (process) differ from processes studied in this task?}
 Our processes runs ``interactively'' and daemons traditionally runs in the background. Otherwise they share the fact that they are started at bootup by the operating system.
+
+\section{Test}
+This task needs to have implemented the system calls ``createprocess'' and ``terminate'' so that the two executables are able to create process as stored in the executable\_table. After the executables have reached the end of their code they will make the system call to terminate. This desired result was achieved as defined in task definition, and the test was a success.

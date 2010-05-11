@@ -7,7 +7,7 @@
 
 \title{02333 Parallel and Real-time Systems F10}
 \subtitle{[Report on the work done in this course]
-\titlenote{This report should also be available online at \texttt{www.notyetdecided.tld/report}}}
+\titlenote{This report should also be available online at \texttt{www.retrospekt.dk/02333report}}}
 
 \numberofauthors{4} %  in this sample file, there are a *total*
 \author{
@@ -33,6 +33,7 @@ Kim Rostgaard Christensen\\
 }
 
 \maketitle
+
 \begin{abstract}
 %Abstract; A brief summary of all of the report including the conclusion section
 %but excluding the acknowledgements, references and any appendixes.
@@ -50,43 +51,56 @@ The purpose of this report is to describe in detail how we implemented the tasks
 %\keywords{ACM proceedings, \LaTeX, text tagging} % NOT required for Proceedings
 
 
-
 \section{Introduction}
 \input{introduction.tex}
 
-\section{Related work}
-\input{related_work.tex}
+%\section{Related work}
+%\input{related_work.tex}
 
-\section{Body}
+
 This section holds the main part of the report.
 %Body; A number of sections describing the work done.
 
+\section{System calls}
 \input{task1.tex}
 
-\subsection{Task B2 - processes}
+\section{Processes}
 \input{task2.tex}
 
-\subsection{Task B3 - scheduling}
+\section{Scheduling}
 \input{task3.tex}
 
+\section{Memory management}
+\input{task4.tex}
+
+\section{Interprocess communication}
+\input{task5.tex}
+
 % Task 6 - Thread synchronization
-\subsection{Thread synchronization}
+\section{Thread synchronization}
 \input{task6.tex}
+
+\section{Device driver}
+\input{task7.tex}
+
+\section{A practical approach}
+\input{task8.tex}
+
 
 \section{Conclusions}
 %Conclusions; All experiences and conclusions drawn from the work.
 \input{conclusions.tex}
 
 %ACKNOWLEDGMENTS are optional
-\section{Acknowledgments}
-\input{acknowledgements.tex}
+%\section{Acknowledgments}
+%\input{acknowledgements.tex}
 %Acknowledgments; Acknowledge any persons important to the work.
 
 %References; A list of reference material used. All material must be cited in the
 %text.
 
 
-
+\appendix
 % The following two commands are all you need in the
 % initial runs of your .tex file to
 % produce the bibliography for the citations in your paper.
