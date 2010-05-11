@@ -350,12 +350,22 @@
 	col = SYSCALL_ARGUMENTS.rsi;
 	afc = (char*) SYSCALL_ARGUMENTS.rdx;
 
-	while (*afc != '\0' && *afc != '\n') {
+	while (1) {
+	
+		if (*afc == '\0') { break; SYSCALL_ARGUMENTS.rax = ALL_OK; } else {
+			if (*afc == '\n') { 
+				row++;
+				col = 0;
+				afc++; 
+			} else if (col == MAX_COLS) {
+				row++;
+				col = 0;
+			}
+			screen_pointer->positions[row][col].character=*afc;
+			afc++;
+			col++;
+		}
 
-		screen_pointer->positions[row][col].character=*afc;
-
-		afc++;
-		col++;
 	}
 
 	break;
