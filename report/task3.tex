@@ -2,7 +2,7 @@
 Task B3 was to implement a non-premptive scheduler. We will first look into at what a scheduler is and what it does.
 
 \subsection{The scheduler}
-A conservative definition of a CPU says that it executes code in a linear form, meaning that all program code needs to be written/executed sequentially. Therefore there can only be executed one program at once, using up all of the CPU's processing power, which often is in abundance. It the program is waiting for an I/O device, letting it execute would lower the overall performance of the system. This is one of the main reasons for using scheduling. Today most operating systems have the ability to run many programs simultaneously without significant loss of performance or user experience.\\
+A conservative definition of a CPU says that it executes code in a linear form, meaning that all program code needs to be written/executed sequentially. Therefore there can only be executed one program at once, using up all of the CPU's processing power, which often is in abundance. If the program is waiting for an I/O device, letting it execute would lower the overall performance of the system. This is one of the main reasons for using scheduling. Today most operating systems have the ability to run many programs simultaneously without significant loss of performance or user experience.\\
 \\
 This is made possible by the scheduler, whose job is to divide the processing power of the CPU to the many processes and threads that may require it. The "simple" CPU still only manages to run its assigned code sequentially, but the scheduler can assign what code to run - That's its job. Scheduling can be done using various different algorithms.
 
@@ -32,7 +32,7 @@ When running multiple threads with the help of a scheduler, the CPU processing t
 Another reason for halting execution is when some kind of data is missing, which is vital for continue execution. This could be that an application is waiting for I/O data, and a time delay is on that operation. Instead of having the application check for incoming data at timed intervals, we could have the operating system handle the I/O call, and block the thread until the data is available.
 \\
 \\
-Threads can be in one of three states; running state, ready state or blocked state.
+Threads can be in one of three states; running state, ready state or blocked state. 
 When a thread is in the running state, it is being executed by the CPU. It can from this state go to block or ready, depending on the circumstances. The ready state is for threads that are waiting for CPU time. It is then up to the scheduler which threads with ready state are executed by putting them in running state. Threads that already are in the blocked state and are designated to be run are returned to the ready state, and the scheduler takes over, as with all other threads in ready state.
 \\
 \\
@@ -49,19 +49,18 @@ The non-preemptive scheduler is implemented in the scheduler.c file, which is th
 We make use of the variable schedule to indicate whether we want to force a rescheduling or not. If it's set to one, we don't add the currently running thread to the ready queue, i.e. the thread is in blocked state. Otherwise we enqueue the thread in the ready queue.
 
 \subsubsection*{pscheduler.c}
-At each interrupt the kernel decrements the tickets left for the current thread. If the ticks have decremented to 0 or below, then it is time to change to another thread. So the current thread is placed at the back of the running queue so that the next thread can be de-queued and set to run. Once the thread\_index variable has been set, the predefined timeslice ticker is reset and the whole procedure repeats itself on the next timed interrupt.
-
-
+When using a pre-emptive scheduler, the concept of time-slices are introduced.
+At each interrupt the kernel decrements the tickets left for the current thread. If the ticks have decremented to 0 or below, then it is time to change to another thread. So the current thread is placed at the back of the running queue so that the next thread can be de-queued and set to run. Once the thread\_index variable has been set, the predefined time-slice ticker is reset and the whole procedure repeats itself on the next timed interrupt.
 
 \subsection{Reflections}
 
 \subsubsection*{What is a scheduler? What does it do and how does it work?}
-A scheduler is a piece of software that shares cpu time to threads in some way. It works by keeping track of the currently running and all ready threads. If the current threads timeslot is up or it blocks, it schedules a new thread.
+A scheduler is a piece of software that shares CPU time to threads in some way. It works by keeping track of the currently running and all ready threads. If the current threads timeslot is up or it blocks, it schedules a new thread.
 \subsubsection*{Assume a thread can be in three different states: running, blocked, ready. Between the states, there are various transitions. Relate the states and transitions to the code and actions in the system.}
 Transition 1: The thread goes into blocked state. This is handled by the system call pause. When we call pause the thread will be inserted into the timer queue, which is a linked list of the currently paused threads, based on how many ticks it is paused for.  The head of the timer queue is the thread that has the least amount of ticks left.\\
 Transition 2: The thread goes from running state to ready state. This is handled by the scheduler. The thread is enqueued into the ready queue.\\
 Transition 3: The thread goes into running state. This is again handled by the scheduler. The head of the ready queue is dequeued and set to execute.\\
-Transition 4: The thread goes from blocked to ready state. This is handled in the interrupt handler. It checks if there are any threads that should be woken up. If there are, it removes them from the timer queue and inserts them into the ready queue.
+Transition 4: The thread goes from blocked to ready state. This is handled in the interrupt handler. It checks if there are any threads that should be woken up. If there are, it removes them from the timer queue and inserts them into the ready queue. This process is illustrated in  figure~\ref{fig:process_states}.
 
 \subsubsection*{How does the thread queue data type work?}
 The thread queue data type has a head and tail. These correspond to a thread index. It uses the next field in the thread union to construct a linked list. This linked list can then be manipulated with the functions defined in threadqueue.h.\\

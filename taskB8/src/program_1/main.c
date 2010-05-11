@@ -84,13 +84,13 @@ main(int argc, char* argv[]) {
     if (ALL_OK != createthread(IPC_handler_thread, ipc_thread_stack + 4096) ||
             ALL_OK != createthread(timer_thread, timer_thread_stack + 4096) ||
             ALL_OK != createthread(release_policy_thread,
-                                   release_policy_thread_stack + 4096)) {
+            release_policy_thread_stack + 4096)) {
         printat(MAIN_DEBUG_LINE, 0, "Light Control: createthreads failed!\n");
         return;
     }
     printat(MAIN_DEBUG_LINE, 0, "Light Control: Online\n");
     while (1) {
-    printat(MAIN_DEBUG_LINE, 0, "Light Control: Online\n");
+        printat(MAIN_DEBUG_LINE, 0, "Light Control: Online\n");
 
     }
     printat(MAIN_DEBUG_LINE, 0, "Light Control: Offline\n");
@@ -214,26 +214,24 @@ void release_policy_thread() {
         pause(MINIMUM_TICKS);
         time_passed = time_passed + MINIMUM_TICKS;
         car_has_arrived = rnd()&1;
-        
+
 
 
         /* If the timeout has expired, release the lock */
 
-        if(time_passed >= MAXIMUM_TICKS) {
+        if (time_passed >= MAXIMUM_TICKS) {
             release_lock = 1;
             time_passed = 0;
-        }
-        else {
+        } else {
             if (car_has_arrived) {
                 release_lock = 0;
-            }
-            else {
+            } else {
                 release_lock = 1;
             }
         }
 
 
-        if(release_lock)
+        if (release_lock)
             printat(POLICY_DEBUG_LINE, 0, "Light Control Policy: releaselock = 1");
         else
             printat(POLICY_DEBUG_LINE, 0, "Light Control Policy: releaselock = 0");

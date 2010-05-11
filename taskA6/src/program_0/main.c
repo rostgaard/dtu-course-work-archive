@@ -81,18 +81,18 @@ main(int argc, char* argv[]) {
             prints("Main: locked mutex\n");
         }
 
+        if (count == 2) {
+            conditionvariablesignal(condition);
+            count=0;
+            prints("Main: signal condition\n");
+        }
+        
         prints("Main: Trying to unlock mutex\n");
         if (ALL_OK != mutex_unlock(mutex_handle)) {
             prints("Main: mutex_unlock failed!\n");
             break;
         } else {
             prints("Main: unlocked mutex\n");
-        }
-
-        if (count == 2) {
-            conditionvariablesignal(condition);
-            count=0;
-            prints("Main: signal condition\n");
         }
 
         count++;

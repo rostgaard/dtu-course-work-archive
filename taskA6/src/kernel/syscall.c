@@ -7,7 +7,6 @@
  */
 
 #include "threadqueue.h"
-#include "semaphore.h"
 #include "sync.h"
 
 
@@ -267,14 +266,12 @@
     case SYSCALL_SEMAPHOREDOWN:
     {
         SYSCALL_ARGUMENTS.rax = ERROR;
-
+        /* The semaphore handle */
         int s_index = SYSCALL_ARGUMENTS.rdi;
-
 
         // Check if the calling thread's process owns the semaphore
         if(semaphore_table[s_index].calling_process == thread_table[cpu_private_data.thread_index].data.owner &&
            s_index >= 0 && s_index < MAX_NUMBER_OF_SEMAPHORES ) {
-
 
             if (semaphore_table[s_index].count > 0) {
                 semaphore_table[s_index].count--;
@@ -282,8 +279,6 @@
             else
             {
                 // block the current thread
-
-
                 thread_queue_enqueue(&semaphore_table[s_index].blocked_threads,
                                      cpu_private_data.thread_index);
                 // Force reschedule
@@ -452,7 +447,6 @@
                 mutex_table[mutex_handle].state = FREE;
             }
         }
-        
         break;
     }
 
@@ -480,10 +474,10 @@
        mutex (if owned by calling thread) and blocks, waiting on condition signal*/
     case SYSCALL_CONDITIONVARIABLEWAIT: {
         SYSCALL_ARGUMENTS.rax = ALL_OK;
-        /*The handle to the condition variable */
+        /* The handle to the condition variable */
         int condition_variable_handle = SYSCALL_ARGUMENTS.rdi;
 
-        /*The handle to the mutex */
+        /* The handle to the mutex */
         int mutex_handle = SYSCALL_ARGUMENTS.rsi;
         int c_thread = cpu_private_data.thread_index;
 
@@ -513,7 +507,7 @@
             int thread = thread_queue_dequeue(&mutex_table[mutex_handle].blocked_threads);
             thread_queue_enqueue(&ready_queue,thread);
             mutex_table[mutex_handle].holding_thread = thread;
-            mutex_table[mutex_handle].state = FREE;
+            mutex_table[mutex_handle].state = TAKEN;
  
         } else {
             kprints("Kernel.condwait: mutex_table empty - no threads wanted the mutex\n" );
@@ -549,12 +543,9 @@
             mutex_table[mutex].state = TAKEN;
             mutex_table[mutex].holding_thread = thread;
 
-
             kprints("Kernel.condsignal: mutex was free, now owned by thread:");
             kprinthex(thread);
             kprints(" \n");
         }
-
-
         break;
     }

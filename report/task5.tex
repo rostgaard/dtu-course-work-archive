@@ -1,0 +1,40 @@
+Interprocess communication is, as the name implies, a way for processes to communicate. But why is that even necessary? First of all there is an immediate limitation by the fact that two processes has separate address spaces and does not have any tools to get in touch with one another. This is however not a problem unless you want to synchronize or share certain information in between the processes. That’s where IPC comes in handy.\\
+\\
+IPC uses mailboxes in which you can deliver your message to the process. When a process is created a port is automatically opened allowing the process to receive messages right from the start. The receiving process will however have to poll for a message and will therefore not know if a message is waiting until it checks its ``inbox''.
+
+\subsection{Implementation}
+We use two kernel system calls to implement IPC.
+\subsubsection*{send}
+When a process wants to send a message it makes a system call to find a port with a specified ID and process number. You can compare this to a lookup in a phone book where you find a phone number to a person knowing the company that he/she works for and the persons name.\\
+\\
+The findport() system call passes the id and process number into some assembly code that invokes the FIND\_PORT in the kernel. This method sanity checks the process number and invokes a find\_port method in sync.c that loops through a table of ports to find the desired port. If a port is found the entry of the port table is returned. If there is no such port -1 is returned to the calling application.\\
+\\
+When the port has been found you will be able to send a message using the acquired handle. The system call send takes two arguments: the entry in the port table and a pointer to a message struct containing the message. The call is then handled in syscall.c where the arguments are checked. If there's a receiver present (receiver\_thread!=-1) then the message will be transferred right away using the context variables of the receiving thread.\\
+When the message has been queued, it is time to unblock the receiver by enqueueing the thread in the ready\_queue and removing the thread as receiver on the port.\\
+If a receiver is not present at the time of the send-call then the current thread (sending thread) is enqueued in a sender\_queue of the receiving process to wait until the intended receiver performs a receive system call. After that we reschedule is set to 1. Fortunately the thread is not lost as it will be re-inserted in the ready queue when the receiver has gotten the message.
+
+\subsubsection*{receive}
+The send and receive system calls can be called independently from each other meaning that even though a message has not arrived, a thread can poll for a message. This leads to the thread being blocked until the message arrives.\\
+\\
+The receive system call takes four parameters: the port number, a place to save the message, a pointer to the sender and a pointer to the message type.
+The first thing the method does is to make a sanity check on the type of the message.\\
+After that it checks if there is a sender present by checking if the sender\_queue is empty. If there is a sender ready then the message is copied over in the context of the receiving thread and finally the sending thread is enqueued in the ready\_queue. This means that this thread is being unblocked.
+If there is no sender ready then the receiver will be blocked by setting the scheduler to pick another thread, but before doing that the receiver thread id is saved in the port table such that it will be woken up when a message arrives.\\
+\\
+An example of IPC usage con be found in section~\ref{fig:practical}.
+
+
+\subsection{Test}
+A test of the implementation results in the following print:
+\begin{verbatim}
+process 0: main loop
+process 1: sending ping
+process 2: sending ping
+process 0: received ping
+process 1: received pong
+process 0: sent pong
+\end{verbatim}
+When looking at the test cases we are satisfied with the result. The programmer is able to use IPC with the short-message type. As you can see from the last two lines of the test it looks as if it receives a message before it is sent. This is however not the case as the thread in process 0 is just blocked until process 1 receives the pont. That is the reason that the “sent” messages comes after the “received”.
+No further tests have been made.\\
+\\
+We have implemented the system calls findport, send and receive. We are only able to use short messages and we have therefore only implemented task B5. We have in addition to the formal requirements, implemented a few sanity checks as decried in the text above. We are satisfied with the result as we are able to do simple IPC meaning that the processes can communicate.
