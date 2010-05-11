@@ -361,6 +361,9 @@
 				row++;
 				col = 0;
 			}
+			if (row == MAX_ROWS) {
+				row = 0;
+			}
 			screen_pointer->positions[row][col].character=*afc;
 			afc++;
 			col++;
