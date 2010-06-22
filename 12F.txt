@@ -1,0 +1,35 @@
+Øvelse 1
+
+3480*5870
+Area = 20,43m2
+
+MOdullinjer er placeret i midten
+
+Øvelse 2
+
+2*3480+2*5870
+
+Perimeter = 18700.000*Højden (2500 = 2520-20) = 46750000
+
+Arealet af vinduerne trækkes fra. De er målt til at være 1210
+
+Der er et vindue af 1210x2700 (3267000) og to af 610x610 (372100)
+
+Der er desuden to døre af 2100x910 (1911000)
+
+46750000 - (3267000 + 2*(372100+1911000))
+
+46750000 - (3267000 + 4566200)
+
+46750000 - 7833200
+
+38916800 = 40m2
+
+Øvelse 3
+
+De fire hjørner bryder modulmålet. Muligvis også alle moduler ved vinduer
+
+Hjørneelementerne vil nok altid bryde idealet, og elementer med vinduer og døre i bryder som sådan ikke, men resulterer i
+at man skal skære i elementet
+
+2520+120
