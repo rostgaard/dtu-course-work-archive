@@ -42,14 +42,20 @@ begin
    begin
       if reset='1' then
          tx_buffer_reg <= X"41";
-      elsif (clk'event and clk='1') and (tx_buffer_reg <= X"7b" ) then
-			tx_buffer_reg <= tx_buffer_reg_next;
+      elsif (clk'event and clk='1') then
+			if tx_full = '0' then
+				tx_buffer_reg <= tx_buffer_reg_next;
+			end if;
+			
+			if (tx_buffer_reg_next = X"7c" ) then
+				tx_buffer_reg <= X"41";
+			end if;
 			
       end if;
 	end process;
   	tx_buffer_reg_next <= std_logic_vector(unsigned(tx_buffer_reg)+1);
-	rec_data1 <= tx_buffer_reg when tx_full = '0';
-	wr <= '1' when tx_full = '0' else '1';
+	rec_data1 <= tx_buffer_reg;
+	wr <= '1' when tx_full = '0' else '0';
 	
 	
    --  led display
