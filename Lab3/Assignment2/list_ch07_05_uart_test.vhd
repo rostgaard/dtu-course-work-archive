@@ -29,7 +29,7 @@ begin
    -- instantiate uart
    uart_unit: entity work.uart(str_arch)
       port map(clk=>clk, reset=>reset, rd_uart=>btn_tick,
-               wr_uart=>hat, rx=>rx, w_data=>rec_data1,
+               wr_uart=>wr, rx=>rx, w_data=>rec_data1,
                tx_full=>tx_full, rx_empty=>rx_empty,
                r_data=>rec_data, tx=>tx);
    -- instantiate debounce circuit
@@ -44,11 +44,12 @@ begin
          tx_buffer_reg <= X"41";
       elsif (clk'event and clk='1') and (tx_buffer_reg <= X"7b" ) then
 			tx_buffer_reg <= tx_buffer_reg_next;
-			wr <= '1';
+			
       end if;
 	end process;
   	tx_buffer_reg_next <= std_logic_vector(unsigned(tx_buffer_reg)+1);
 	rec_data1 <= tx_buffer_reg when tx_full = '0';
+	wr <= '1' when tx_full = '0' else '1';
 	
 	
    --  led display
