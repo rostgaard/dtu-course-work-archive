@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 entity uart_test is
    port(
       clk, reset: in std_logic;
-		LEDG: out std_logic;
+		--LEDG: out std_logic;
       btn: std_logic_vector (2 downto 0);
       rx: in std_logic;
       tx: out std_logic;
@@ -25,7 +25,7 @@ architecture arch of uart_test is
 	
 	signal wr: std_logic;
 begin
-	LEDG <= '1';
+--	LEDG <= '1';
    -- instantiate uart
    uart_unit: entity work.uart(str_arch)
       port map(clk=>clk, reset=>reset, rd_uart=>btn_tick,
