@@ -1,0 +1,23 @@
+The Worst Case Execution Time is the maximum time a given task can take up the cpu. It has a complimentary brother called Best Case Execution Time.
+
+%TODO nicer introduction
+
+\subsection{Obtaining WCET}
+To be able to obtain the exact WCET it is essential that the hardware is known, and all post an preconditions.
+%TODO More on this
+
+Modern processors tend to try and make things run faster by utilizing pipelines, instruction caches and branch prediction.
+
+\subsubsection{Branch prediction}
+When a branch in the program is reached (for example an if statement), the processor will try to predict which route the software will take. This saves cpu cycles, when guessed correctly, but costs extra cycles when an incorrect prediction is made, due to the fact that all the instructions that was lined up, now has to be replaced.
+
+\subsubsection{Pipelining}
+%TODO
+
+\subsubsection{Instruction cache}
+%TODO
+
+\subsubsection{Virtual memory}
+%TODO Virtual memory and why it sould not be used in RTOS
+A few suppliers of real-time operating systems gives the programmer the option of using virtual memory, giving the benefit of being able to extend the application. QNX for example has this feature.
+The majority of suppliers does not implement virtual memory though, so in most cases this is not an issue.

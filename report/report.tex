@@ -1,0 +1,96 @@
+% This is the main report file
+
+\documentclass{acm_proc_article-sp}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\begin{document}
+
+\title{02223 Fundamental models for modern embedded systems E10}
+\subtitle{[Scheduling deterministic]
+\titlenote{This report should also be available online at \texttt{www.retrospekt.dk/02223report}}}
+
+\numberofauthors{1}
+\author{
+\alignauthor 
+Kim Rostgaard Christensen\\
+       \email{s084283@student.dtu.dk}
+}
+
+\maketitle
+
+\begin{abstract}
+%Abstract; A brief summary of all of the report including the conclusion section
+%but excluding the acknowledgements, references and any appendixes.
+\end{abstract}
+% XXX Should this be here? 
+% A category with the (minimum) three required fields
+%\category{H.4}{Information Systems Applications}{Miscellaneous}
+%A category including the fourth, optional field follows...
+%\category{D.2.8}{Software Engineering}{Metrics}[complexity measures, performance measures]
+
+%\terms{Report}
+
+%\keywords{ACM proceedings, \LaTeX, text tagging} % NOT required for Proceedings
+
+
+\section{Introduction}
+\input{introduction.tex}
+
+
+\section{The WCET}
+\input{wcet.tex}
+
+
+\section{Very Simple Simulator}
+\input{very_simple_simulator.tex}
+
+
+\section{Response-Time Analysis}
+\input{response-time_analysis.tex}
+
+
+\section{Something advanced}
+%\input{very_simple_simulator.tex}
+
+
+%Body; A number of sections describing the work done.
+
+\section{Conclusion}
+\label{sec:conclusion}
+%Conclusions; All experiences and conclusions drawn from the work.
+%\input{conclusions.tex}
+
+%ACKNOWLEDGMENTS are optional
+%\section{Acknowledgments}
+%\input{acknowledgements.tex}
+%Acknowledgments; Acknowledge any persons important to the work.
+
+%References; A list of reference material used. All material must be cited in the
+%text.
+
+
+\appendix
+
+
+% The following two commands are all you need in the
+% initial runs of your .tex file to
+% produce the bibliography for the citations in your paper.
+\bibliographystyle{plain}
+\nocite{*}
+\bibliography{sigproc}  % sigproc.bib is the name of the Bibliography in this case
+% You must have a proper ".bib" file
+%  and remember to run:
+% latex bibtex latex latex
+% to resolve all references
+%
+% ACM needs 'a single self-contained file'!
+%
+%APPENDICES are optional
+
+
+%Appendixes; Appendixes holds, for example, results or figures that are not
+%relevant to place in the body of the report. Appendixes should generally be
+%avoided and might not be read by the course staff.
+
+
+\end{document}
