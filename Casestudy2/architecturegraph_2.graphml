@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+
+  <graph id="ArchitectureGraph" edgedefault="undirected">
+
+    <node id="1" Name="Proc1"/>
+    <node id="2" Name="Proc2"/>
+    <node id="3" Name="Proc3"/>
+    <node id="4" Name="Bus0"/>	
+
+    <edge source="1" target="4" cost="0"/>
+    <edge source="2" target="4" cost="0"/>
+    <edge source="3" target="4" cost="0"/>
+
+  </graph>
+</graphml>

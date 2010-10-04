@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+
+  <graph id="TaskGraph" edgedefault="directed">
+
+
+<node id="1"   Name="deliver_cpu1"   WCET="150"  BCET="150"  Period="800"  Deadline="800"  MappedTo="Proc1" />
+<node id="2"   Name="task1"   WCET="2277"  BCET="1270"  Period="200000"  Deadline="5000"  MappedTo="Proc1" />
+<node id="3"   Name="deliver_air_fuse_data"   WCET="420"  BCET="420"  Period="40000"  Deadline="15000"  MappedTo="Proc1" />
+<node id="4"   Name="deliver_air_data_update"   WCET="552"  BCET="552"  Period="20000"  Deadline="20000"  MappedTo="Proc1" />
+<node id="5"   Name="deliver_air_data"   WCET="496"  BCET="496"  Period="20000"  Deadline="20000"  MappedTo="Proc1" />
+<node id="6"   Name="task3"   WCET="1423"  BCET="1220"  Period="25000"  Deadline="12000"  MappedTo="Proc1" />
+<node id="7"   Name="task5"   WCET="3096"  BCET="3096"  Period="50000"  Deadline="50000"  MappedTo="Proc1" />
+<node id="8"   Name="task7"   WCET="7880"  BCET="7880"  Period="59000"  Deadline="59000"  MappedTo="Proc1" />
+<node id="9"   Name="task9"   WCET="1996"  BCET="1566"  Period="50000"  Deadline="50000"  MappedTo="Proc1" />
+<node id="10"   Name="deliver_radar"   WCET="3220"  BCET="3220"  Period="100000"  Deadline="100000"  MappedTo="Proc1" />
+<node id="11"   Name="deliver_radar_update"   WCET="3220"  BCET="3220"  Period="100000"  Deadline="100000"  MappedTo="Proc1" />
+<node id="12"   Name="client1"   WCET="520"  BCET="500"  Period="200000"  Deadline="100000"  MappedTo="Proc1" />
+<node id="13"   Name="client2"   WCET="1120"  BCET="1120"  Period="200000"  Deadline="200000"  MappedTo="Proc1" />
+<node id="14"   Name="task11"   WCET="954"  BCET="954"  Period="1000000"  Deadline="200000"  MappedTo="Proc1" />
+<node id="15"   Name="task13"   WCET="1124"  BCET="1004"  Period="200000"  Deadline="200000"  MappedTo="Proc1" />
+<node id="16"   Name="task15"   WCET="3345"  BCET="3345"  Period="200000"  Deadline="200000"  MappedTo="Proc1" />
+<node id="17"   Name="task17"   WCET="1990"  BCET="1680"  Period="1000000"  Deadline="1000000"  MappedTo="Proc1" />
+<node id="18"   Name="deliver_cpu2"   WCET="150"  BCET="150"  Period="800"  Deadline="800"  MappedTo="Proc2" />
+<node id="19"   Name="task4"   WCET="996"  BCET="696"  Period="40000"  Deadline="14000"  MappedTo="Proc2" />
+<node id="20"   Name="deliver_health"   WCET="550"  BCET="550"  Period="100000"  Deadline="20000"  MappedTo="Proc2" />
+<node id="21"   Name="task2"   WCET="689"  BCET="689"  Period="25000"  Deadline="5000"  MappedTo="Proc2" />
+<node id="22"   Name="task6"   WCET="4967"  BCET="4567"  Period="50000"  Deadline="50000"  MappedTo="Proc2" />
+<node id="23"   Name="server"   WCET="2342"  BCET="2342"  Period="200000"  Deadline="200000"  MappedTo="Proc2" />
+<node id="24"   Name="task8"   WCET="9125"  BCET="8725"  Period="80000"  Deadline="80000"  MappedTo="Proc2" />
+<node id="25"   Name="task10"   WCET="5120"  BCET="5120"  Period="100000"  Deadline="115000"  MappedTo="Proc2" />
+<node id="26"   Name="deliver_actr"   WCET="654"  BCET="654"  Period="200000"  Deadline="200000"  MappedTo="Proc2" />
+<node id="27"   Name="task12"   WCET="3145"  BCET="3040"  Period="1000000"  Deadline="200000"  MappedTo="Proc2" />
+<node id="28"   Name="task14"   WCET="2325"  BCET="2025"  Period="25000"  Deadline="200000"  MappedTo="Proc2" />
+<node id="29"   Name="task16"   WCET="1455"  BCET="1455"  Period="1000000"  Deadline="1000000"  MappedTo="Proc2" />
+<node id="30"   Name="send_air"   WCET="2245"  BCET="2045"  Period="20000"  Deadline="20000"  MappedTo="Proc3" />
+<node id="31"   Name="send_health"   WCET="2322"  BCET="1920"  Period="100000"  Deadline="100000"  MappedTo="Proc3" />
+<node id="32"   Name="send_radar"   WCET="12224"  BCET="8924"  Period="100000"  Deadline="100000"  MappedTo="Proc3" />
+
+
+  <edge source="30" target="5" Name="air_data" Cost="220" Period="20000" MappedTo="Bus0"/>
+  <edge source="30" target="4" Name="air_data_update" Cost="550" Period="2500" MappedTo="Bus0"/>
+  <edge source="31" target="20" Name="health_data" Cost="2230" Period="100000" MappedTo="Bus0"/>
+  <edge source="32" target="10" Name="radar_data" Cost="2048" Period="100000" MappedTo="Bus0"/>
+  <edge source="32" target="11" Name="radar_data_update" Cost="16384" Period="12500" MappedTo="Bus0"/>
+  <edge source="17" target="29" Name="message1" Cost="500" Period="1000000" MappedTo="Bus0"/>
+  <edge source="15" target="26" Name="message2" Cost="800" Period="1000000" MappedTo="Bus0"/>
+  <edge source="19" target="3" Name="message3" Cost="779" Period="40000" MappedTo="Bus0"/>
+  <edge source="7" target="9" Name="message4" Cost="225" Period="50000" MappedTo="Bus0"/>
+  <edge source="17" target="27" Name="message5" Cost="1255" Period="500000" MappedTo="Bus0"/>
+  <edge source="6" target="28" Name="message6" Cost="1255" Period="3570" MappedTo="Bus0"/>
+  <edge source="27" target="11" Name="message7" Cost="800" Period="1000000" MappedTo="Bus0"/>
+  <edge source="12" target="23" Name="toserver" Cost="500" Period="100000" MappedTo="Bus0"/>
+  <edge source="23" target="13" Name="fromserver" Cost="1500" Period="200000" MappedTo="Bus0"/>
+
+
+
+  </graph>
+</graphml>
