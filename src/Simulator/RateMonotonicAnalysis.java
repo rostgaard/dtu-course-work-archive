@@ -74,7 +74,8 @@ public class RateMonotonicAnalysis {
             }
         }
         /* Sort jobqueue on start time and priority */
-        Collections.sort(jobQueue, new JobComparator(num_cycles));
+        //Collections.sort(jobQueue, new JobComparator(num_cycles));
+        jobQueue.sort();
 
         /* The simulation itself starts here */
         for(int cycle= 1; cycle <= num_cycles; cycle++) {

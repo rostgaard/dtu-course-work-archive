@@ -36,8 +36,7 @@ public class TaskList extends ArrayList<Task>{
 
     public int getLCMofPeriods() {
         int lcm = 0;
-        for (Iterator<Task> iter = this.iterator(); iter.hasNext();) {
-            Task t = iter.next();
+        for (Task t: this) {
             if(lcm == 0) {
                 lcm = t.getPeriod();
                 continue;
