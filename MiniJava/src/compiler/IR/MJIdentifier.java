@@ -11,11 +11,13 @@ public class MJIdentifier extends MJExpression {
 	private String name;
 	private MJVariable decl;
 	
+	
 	public MJIdentifier() {}
 
 	public MJIdentifier(String name) {
 		this.name = name;
 	}
+	
 
 	public String getName() {
 		return name;
