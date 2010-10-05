@@ -1,0 +1,29 @@
+<project name="assign2" basedir="." default="antlr">
+	<property environment="env"/>
+	<property name="src" value="${basedir}/src"/>
+	<property name="package" value="mjava"/>
+	<property name="grammar" value="MJava.g"/>
+	<property name="parser" value="MJavaParser"/>
+	
+	<path  id="antlr.cpath">  
+		<pathelement path="${env.CLASSPATH}"/>
+		<pathelement path="antlrworks-1.4.jar"/>  
+	</path> 
+	
+	<target name="antlr" depends="gen">
+		<echo>build done</echo>
+	</target>
+	
+	<target name="parser.check"> 
+		<uptodate property="parser.uptodate" srcfile="${src}/${package}/${grammar}" targetfile="${src}/${package}/${parser}.java" />
+	</target>
+	
+	<target name="gen" depends="parser.check" unless="parser.uptodate">
+		<echo>Generating while lexer/parser</echo>
+		<java classpathref="antlr.cpath" classname="org.antlr.Tool">
+			<arg value="-o"/>
+			<arg value="${src}/${package}"/>
+			<arg value="${src}/${package}/${grammar}"/>
+		</java>
+	</target>
+</project>
