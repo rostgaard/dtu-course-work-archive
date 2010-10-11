@@ -30,7 +30,7 @@ public class MJVariable extends IR {
 	
 	public MJType typeCheck() throws TypeCheckerException {
 		this.getType().typeCheck();
-		return MJType.Tnone;
+		return MJType.Tvoid;
 	}
 	
 	public void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {

@@ -34,7 +34,8 @@ public final class MJType extends IR {
 	// create some static object to be used for standard types
 	public static MJType Tint = new MJType(TypeEnum.INT, "int");
 	public static MJType Tboolean = new MJType(TypeEnum.BOOLEAN, "boolean");
-	public static MJType Tnone = new MJType(TypeEnum.NONE, "void");
+	public static MJType Tvoid = new MJType(TypeEnum.NONE, "void");
+	public static MJType TintArray = new MJType(TypeEnum.ARRAY, "int");
 
 	// check whether two types are the same
 	
@@ -110,7 +111,7 @@ public final class MJType extends IR {
 			}
 		}
 		
-		return MJType.Tnone;
+		return MJType.Tvoid;
 
 	}
 }

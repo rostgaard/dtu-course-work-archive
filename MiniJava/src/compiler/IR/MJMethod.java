@@ -105,7 +105,7 @@ public class MJMethod extends IR {
 		
 		IR.stack.leaveScope();
 		
-		return MJType.Tnone;
+		return MJType.Tvoid;
 	}
 
 	public void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {

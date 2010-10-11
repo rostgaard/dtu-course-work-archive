@@ -18,7 +18,10 @@ public class MJIdentifier extends MJExpression {
 		this.name = name;
 	}
 	
-
+	public void setName(String n) {
+		 this.name = n;
+	}
+	
 	public String getName() {
 		return name;
 	}

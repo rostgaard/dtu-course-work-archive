@@ -14,13 +14,14 @@ grammar MiniJava;
 @parser::members {
 }
 
+//program : mainClass ( classDeclaration)*
 program returns [MJProgram p]:
   { LinkedList<MJClass> cdl = new LinkedList<MJClass>(); }
   mc = mainClass { cdl.add(mc); p = new MJProgram(cdl); }
   (cd = classDeclaration {cdl.add(cd);})*
   ;
   
-  // program : mainClass ( classDeclaration)*
+
 
 mainClass returns [MJClass c]
   : 'class' cname = IDENT '{' 
@@ -29,7 +30,7 @@ mainClass returns [MJClass c]
     MJType partype = new MJType(new MJType("String"));
     MJVariable par = new MJVariable( partype, $parname.text);
      
-    MJMethod md = new MJMethod(MJType.Tnone, "main", par, b, true, true);
+    MJMethod md = new MJMethod(MJType.Tvoid, "main", par, b, true, true);
     c = new MJClass($cname.text, md);
   }
   ;
@@ -70,11 +71,13 @@ id returns [MJIdentifier i]
   {
     i = t;
   }
-  | t=thisid '.' IDENT 
+  | t=thisid '.' IDENT  
   {
-   i = new MJSelector();
-   i.setName($IDENT.text);
-   i.setParent(t);
+   
+   MJSelector mjs = new MJSelector();
+   mjs.setName($IDENT.text);
+   mjs.setParent(t);
+   i = mjs;
   }
   ;
   
@@ -103,9 +106,11 @@ type returns [MJType t]
   | 'boolean'
   { t = MJType.Tboolean; }
   | 'int' '[' ']' 
-  {t = MJType.TintArray}
+  {t = MJType.TintArray;}
   | IDENT 
-  {t = IDENT}
+  {
+    t = new MJType($IDENT.text);
+  }
   ;
   
 block returns [MJBlock b] 
@@ -136,11 +141,11 @@ statement returns [MJStatement s]
   }
   | b = block   //Block 
   { 
-    s = b
+    s = b;
   }
-  | 'if' '(' expression ')' block ('else' block)? // If-then-else statement
+  | 'if' '(' cond = expression ')' (ifblock = block) ('else' elseblock = block)? // If-then-else statement
   {
-    //TODO
+    s = new MJIfElse(cond,ifblock,elseBlock);
   }
   | 'while' '(' expression ')' statement // Assignment
   {
@@ -155,7 +160,7 @@ statement returns [MJStatement s]
   
 expression returns [MJExpression e]
   : level1 ('&&' level1)*
-  {}
+  {e = new MJAnd();}
   ;
 
 level1 returns [MJExpression e]
@@ -201,14 +206,33 @@ level5 returns [MJExpression e]
   | INT 
   { e = new MJInteger($INT.text); }
   | STRING 
-  { e = new MJString($STRING.text }
+  { e = new MJString($STRING.text); }
   ;
 
+/*
+ * Strings are sequences of characters, enclosed in double quotes. 
+ * Characters in a string can be
+ *
+ *  * "regular" ASCII characters (ASCII code between 32 and 126)
+ *     other than quote (") or backslash(\).
+ *
+ *  * escape sequences to denote a quote (\") or a backslash (\\)
+ *
+ *  * escape sequences to denote a tab (\t) or a newline (\n)
+ *
+ */
+
+//TODO change this
 STRING : '"' IDENT '"'; 
+
+// Comments
+COMMENT :  '/*' .* '*/' | '//' .* NEWLINE;
 
 fragment LOWER : ('a'..'z');
 fragment UPPER : ('A'..'Z');
 fragment NONNULL : ('1'..'9');
+// Numbers are represented as integer literals, 
+// which are a sequence of digits. Non-zero numbers have no leading zeroes.
 fragment NUMBER : ('0' | NONNULL);
 IDENT : ( LOWER | UPPER ) ( LOWER | UPPER | NUMBER | '_' )*;
 fragment NEWLINE:'\r'? '\n';
