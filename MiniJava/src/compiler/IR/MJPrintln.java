@@ -27,7 +27,7 @@ public class MJPrintln extends MJStatement {
 
 		this.getParameter().typeCheck();
 
-		return MJType.Tnone;
+		return MJType.Tvoid;
 	}
 	
 	public void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {

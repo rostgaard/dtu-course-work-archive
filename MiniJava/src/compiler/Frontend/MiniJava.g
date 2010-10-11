@@ -14,14 +14,24 @@ grammar MiniJava;
 @parser::members {
 }
 
-//program : mainClass ( classDeclaration)*
+
+ //----------------------------------------------//
+ //                Program
+ // ---------------------------------------------//
+
+/*
+ * A valid program must begin with a class containing only the main method, potentially 
+ * followed by a list of classes.
+ */
 program returns [MJProgram p]:
   { LinkedList<MJClass> cdl = new LinkedList<MJClass>(); }
   mc = mainClass { cdl.add(mc); p = new MJProgram(cdl); }
   (cd = classDeclaration {cdl.add(cd);})*
   ;
   
-
+ //----------------------------------------------//
+ //                Classes
+ // ---------------------------------------------//
 
 mainClass returns [MJClass c]
   : 'class' cname = IDENT '{' 
@@ -46,12 +56,26 @@ classDeclaration returns [MJClass c]
   }
   ;
   
-methodDeclaration returns [MJMethod m]
-  : ('public')? ('static')? procType IDENT '(' (type IDENT(',' type IDENT)*)? ')' '{'
-                  (varDeclaration)* (statement)*  'return' optExpression ';' '}' 
+block returns [MJBlock b] 
+    : 
+    {  LinkedList<MJVariable> vdl = new LinkedList<MJVariable>();
+       LinkedList<MJStatement> sdl = new LinkedList<MJStatement>();
+       
+    }
+    '{' ( vd = varDeclaration
+    { vdl.add(vd); } 
+    )* ( sd = statement
+    { sdl.add(sd); } 
+    )*
+    '}'
+    {
+       b = new MJBlock(vdl, sdl);
+    }
+    ;  
   
-  {
-  };
+ //----------------------------------------------//
+ //                Declarations
+ // ---------------------------------------------//
   
 varDeclaration returns [MJVariable vd]
   : t = type n = IDENT ';'
@@ -59,13 +83,160 @@ varDeclaration returns [MJVariable vd]
     vd = new MJVariable(t,n.getText());
   }
   ;
+
+type returns [MJType t] 
+  : 'int' 
+  { t = MJType.Tint; }
+  | 'boolean'
+  { t = MJType.Tboolean; }
+  | 'int' '[' ']' 
+  {t = MJType.TintArray;}
+  | IDENT 
+  {
+    t = new MJType($IDENT.text);
+  }
+  ;
+   
+methodDeclaration returns [MJMethod m]
+  : ('public')? ('static')? procType IDENT '(' (type IDENT(',' type IDENT)*)? ')' '{'
+                  (varDeclaration)* (statement)*  'return' optExpression ';' '}' 
   
-optExpression returns [MJExpression e]
-  : expression {}
-  | // empty
-  {}
+  {
+  };
+  
+procType returns [MJType t]
+  : 'void' 
+  { t = MJType.Tvoid; }
+  | type 
   ;
   
+ //----------------------------------------------//
+ //                Statements
+ // ---------------------------------------------// 
+  
+statement returns [MJStatement s]
+  : 'System.out.println' '(' ep = expression ')' ';' // Println I/O
+  {
+    s = new MJPrintln(ep);
+  }
+  | va = IDENT '=' ea = expression ';' // Assignment 
+  {
+    s = new MJAssign(new MJIdentifier($va.text), ea);
+  }
+  | b = block   //Block 
+  { 
+    s = b;
+  }
+  | 'if' '(' cond = expression ')' (ifblock = block) ('else' elseblock = block)? // If-then-else statement
+  {
+    //TODO - figure out what happens when no else block i present
+    s = new MJIfElse(cond,ifblock,elseblock);
+  }
+  | 'while' '(' expr = expression ')' stmt = statement // Assignment
+  {
+    s = new MJWhile(expr,stmt);
+  }
+  | IDENT '(' (expression ( ',' expression)*)? ')' ';' // Method call
+  {
+    //TODO
+  }
+  ;  
+  
+ //----------------------------------------------//
+ //                Expressions
+ // ---------------------------------------------// 
+  
+/* AND */
+expression returns [MJExpression e]
+  : level1 ('&&' level1)*
+  {e = new MJAnd();}
+  ;
+
+/* Equals */
+level1 returns [MJExpression e]
+  : level2 ('==' level2)*
+  {}
+  ;  
+
+/* Less */
+level2 returns [MJExpression e]
+  : level3 ('<' level3)*
+  {}
+  ;
+
+/* Plus and minus */
+level3 returns [MJExpression e]
+  : level4 (('+' | '-') level4)*
+  {}
+  ;
+
+/* Multiplication */
+level4 returns [MJExpression e]
+  : level5 ('*' level5)*
+  {}
+  ;
+
+
+level5 returns [MJExpression e]
+  /* Unary minus */
+  : '-' level5
+  {//TODO
+  }
+  /* New integer array */
+  | 'new' 'int' '[' ex = expression ']'
+  {
+    // TODO - figure out this one, should it be MJType or MJIdent ?
+    //e = new MJArray(MJType.TintArray,ex);
+  }
+  /* New object */
+  | 'new' IDENT '(' ')'
+  {//TODO - new mjobject ?
+  }
+  /* identifier */
+  | i = id
+  {
+   //TODO - What is the effect of this ?
+    e = i;
+  }
+  /* Array access */
+  | id '[' expression ']'
+  {
+    //TODO
+  }
+  /* Method call */
+  | 
+  { LinkedList<MJExpression> plist = new LinkedList<MJExpression>(); } 
+    i = id '(' (expr = expression {plist.add(expr);} (','expr = expression)* {plist.add(expr);} )? ')'
+  {
+    e = new MJMethodCallExpr(i,plist);
+  }
+  /* Parenteses - up evaluation priority */
+  | '(' expr = expression ')'
+  { e = expr; }
+  /* Boolean value */
+  | 'true'
+  {
+    e = new MJBoolean(true);
+  }
+  /* Boolean value */ 
+  | 'false' 
+  {
+    e = new MJBoolean(false);
+  } 
+  /* Integer value */
+  | INT 
+  { e = new MJInteger($INT.text); }
+  
+  /* String value */
+  | STRING 
+  { e = new MJString($STRING.text); }
+  ;
+  
+  /*
+   * To specify identifiers, we need to consider several special cases, 
+   * namely that we may use a normal identifier, "this", or a selector such 
+   * as "x.y" or "this.y":
+   */
 id returns [MJIdentifier i]
   : t=thisid
   {
@@ -92,122 +263,23 @@ thisid returns [MJIdentifier ti]
     ti = new MJIdentifier($IDENT.text);
   }
   ; 
-
-
-procType returns [MJType t]
-  : 'void' 
-  { t = MJType.Tvoid; }
-  | type 
-  ;
-
-type returns [MJType t] 
-  : 'int' 
-  { t = MJType.Tint; }
-  | 'boolean'
-  { t = MJType.Tboolean; }
-  | 'int' '[' ']' 
-  {t = MJType.TintArray;}
-  | IDENT 
-  {
-    t = new MJType($IDENT.text);
-  }
+  
+optExpression returns [MJExpression e]
+  : expression {}
+  | // empty
+  {}
   ;
   
-block returns [MJBlock b] 
-    : 
-    {  LinkedList<MJVariable> vdl = new LinkedList<MJVariable>();
-       LinkedList<MJStatement> sdl = new LinkedList<MJStatement>();
-       
-    }
-    '{' ( vd = varDeclaration
-    { vdl.add(vd); } 
-    )* ( sd = statement
-    { sdl.add(sd); } 
-    )*
-    '}'
-    {
-       b = new MJBlock(vdl, sdl);
-    }
-    ;
+  
+
+
+  
+ //----------------------------------------------//
+ //                Types
+ // ---------------------------------------------// 
     
-statement returns [MJStatement s]
-  : 'System.out.println' '(' ep = expression ')' ';' // Println I/O
-  {
-    s = new MJPrintln(ep);
-  }
-  | va = IDENT '=' ea = expression ';' // Assignment 
-  {
-    s = new MJAssign(new MJIdentifier($va.text), ea);
-  }
-  | b = block   //Block 
-  { 
-    s = b;
-  }
-  | 'if' '(' cond = expression ')' (ifblock = block) ('else' elseblock = block)? // If-then-else statement
-  {
-    s = new MJIfElse(cond,ifblock,elseBlock);
-  }
-  | 'while' '(' expression ')' statement // Assignment
-  {
-    //TODO
-  }
-  | IDENT '(' (expression ( ',' expression)*)? ')' ';' // Method call
-  {
-    //TODO
-  }
+
   
-  ;
-  
-expression returns [MJExpression e]
-  : level1 ('&&' level1)*
-  {e = new MJAnd();}
-  ;
-
-level1 returns [MJExpression e]
-  : level2 ('==' level2)*
-  {}
-  ;  
-
-level2 returns [MJExpression e]
-  : level3 ('<' level3)*
-  {}
-  ;
-
-level3 returns [MJExpression e]
-  : level4 (('+' | '-') level4)*
-  {}
-  ;
-
-
-level4 returns [MJExpression e]
-  : level5 ('*' level5)*
-  {}
-  ;
-
-level5 returns [MJExpression e]
-  : '-' level5
-  {//TODO
-  }
-  | 'new' 'int' '[' ex = expression ']'
-  {//TODO
-  }
-  | 'new' IDENT '(' ')'
-  {//TODO
-  }
-  | id
-  {//TODO
-  }
-  | id '[' expression ']'
-  {}
-  | id '(' (expression (',' expression)*)? ')'
-  {}
-  | '(' e1 = expression ')'
-  { e = e1; }
-  | INT 
-  { e = new MJInteger($INT.text); }
-  | STRING 
-  { e = new MJString($STRING.text); }
-  ;
 
 /*
  * Strings are sequences of characters, enclosed in double quotes. 

@@ -1,8 +1,17 @@
 package compiler.IR;
+/**
+ * Rules:
+ *  1. No two fields may have the same name,
+ *  2. No combination of method name and parameter types may exist more than once, 
+ *  3. Each method must type check.
+ */
 
 import java.util.HashSet;
 import java.util.LinkedList;
 import compiler.PrettyPrinter;
+import compiler.Exceptions.ClassAlreadyDeclared;
+import compiler.Exceptions.FieldAlreadyDeclared;
+import compiler.Exceptions.MethodAlreadyDeclared;
 import compiler.Exceptions.TypeCheckerException;
 
 public class MJClass extends IR {
@@ -20,6 +29,27 @@ public class MJClass extends IR {
 		methodList.addFirst(md);
 		this.methodList = methodList;
 		this.superClass = new MJType("Object");
+	}
+
+	public void declarationCheck(MJVariable v ) throws FieldAlreadyDeclared {
+		for(MJVariable decVar : fieldList){
+			if (decVar.getName() == v.getName()) {
+				// Rule 1
+				throw new FieldAlreadyDeclared(v.getName() + " Already declared in "
+						+ this.getName());
+			}
+		}
+	}
+	
+	public void declarationCheck(MJMethod m ) throws MethodAlreadyDeclared {
+		for(MJVariable decMet : fieldList){
+			// Rule 2, first the names must match.
+			if (decMet.getName() == m.getName()) {
+				//TODO Then all parameters
+				throw new MethodAlreadyDeclared(m.getName() + " Already declared in "
+						+ this.getName());
+			}
+		}
 	}
 
 	// and this is for the general case
@@ -79,7 +109,7 @@ public class MJClass extends IR {
 			m.typeCheck();
 		}
 		
-		return MJType.Tnone;
+		return MJType.Tvoid;
 	}
 
 	public void variableInit() throws TypeCheckerException {

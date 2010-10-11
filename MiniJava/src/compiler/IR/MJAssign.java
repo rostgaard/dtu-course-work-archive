@@ -46,7 +46,7 @@ public class MJAssign extends MJStatement {
 			throw new TypeCheckerException("Incompatible types in assignment");
 		}
 
-		return MJType.Tnone;
+		return MJType.Tvoid;
 	}
 	
 	public void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {

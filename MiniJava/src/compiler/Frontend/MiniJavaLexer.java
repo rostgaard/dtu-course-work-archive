@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g 2010-10-11 09:43:15
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g 2010-10-11 13:40:56
 
   package compiler.Frontend;
 
@@ -32,6 +32,8 @@ public class MiniJavaLexer extends Lexer {
     public static final int T__43=43;
     public static final int T__40=40;
     public static final int T__41=41;
+    public static final int T__46=46;
+    public static final int T__47=47;
     public static final int T__44=44;
     public static final int T__45=45;
     public static final int NUMBER=12;
@@ -338,10 +340,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__27;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:20:7: ( ',' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:20:9: ','
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:20:7: ( ';' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:20:9: ';'
             {
-            match(','); 
+            match(';'); 
 
             }
 
@@ -358,10 +360,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__28;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:21:7: ( 'return' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:21:9: 'return'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:21:7: ( 'int' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:21:9: 'int'
             {
-            match("return"); 
+            match("int"); 
 
 
             }
@@ -379,10 +381,11 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__29;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:22:7: ( ';' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:22:9: ';'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:22:7: ( 'boolean' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:22:9: 'boolean'
             {
-            match(';'); 
+            match("boolean"); 
+
 
             }
 
@@ -399,10 +402,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__30;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:23:7: ( '.' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:23:9: '.'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:23:7: ( ',' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:23:9: ','
             {
-            match('.'); 
+            match(','); 
 
             }
 
@@ -419,10 +422,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__31;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:24:7: ( 'this' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:24:9: 'this'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:24:7: ( 'return' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:24:9: 'return'
             {
-            match("this"); 
+            match("return"); 
 
 
             }
@@ -440,10 +443,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__32;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:25:7: ( 'int' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:25:9: 'int'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:25:7: ( 'System.out.println' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:25:9: 'System.out.println'
             {
-            match("int"); 
+            match("System.out.println"); 
 
 
             }
@@ -461,11 +464,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__33;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:26:7: ( 'boolean' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:26:9: 'boolean'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:26:7: ( '=' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:26:9: '='
             {
-            match("boolean"); 
-
+            match('='); 
 
             }
 
@@ -482,10 +484,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__34;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:27:7: ( 'System.out.println' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:27:9: 'System.out.println'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:27:7: ( 'if' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:27:9: 'if'
             {
-            match("System.out.println"); 
+            match("if"); 
 
 
             }
@@ -503,10 +505,11 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__35;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:28:7: ( '=' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:28:9: '='
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:28:7: ( 'else' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:28:9: 'else'
             {
-            match('='); 
+            match("else"); 
+
 
             }
 
@@ -523,10 +526,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__36;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:29:7: ( 'if' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:29:9: 'if'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:29:7: ( 'while' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:29:9: 'while'
             {
-            match("if"); 
+            match("while"); 
 
 
             }
@@ -544,10 +547,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__37;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:30:7: ( 'else' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:30:9: 'else'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:30:7: ( '&&' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:30:9: '&&'
             {
-            match("else"); 
+            match("&&"); 
 
 
             }
@@ -565,10 +568,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__38;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:31:7: ( 'while' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:31:9: 'while'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:31:7: ( '==' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:31:9: '=='
             {
-            match("while"); 
+            match("=="); 
 
 
             }
@@ -586,11 +589,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__39;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:32:7: ( '&&' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:32:9: '&&'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:32:7: ( '<' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:32:9: '<'
             {
-            match("&&"); 
-
+            match('<'); 
 
             }
 
@@ -607,11 +609,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__40;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:33:7: ( '==' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:33:9: '=='
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:33:7: ( '+' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:33:9: '+'
             {
-            match("=="); 
-
+            match('+'); 
 
             }
 
@@ -628,10 +629,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__41;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:34:7: ( '<' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:34:9: '<'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:34:7: ( '-' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:34:9: '-'
             {
-            match('<'); 
+            match('-'); 
 
             }
 
@@ -648,10 +649,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__42;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:35:7: ( '+' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:35:9: '+'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:35:7: ( '*' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:35:9: '*'
             {
-            match('+'); 
+            match('*'); 
 
             }
 
@@ -668,10 +669,11 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__43;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:36:7: ( '-' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:36:9: '-'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:36:7: ( 'new' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:36:9: 'new'
             {
-            match('-'); 
+            match("new"); 
+
 
             }
 
@@ -688,10 +690,11 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__44;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:37:7: ( '*' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:37:9: '*'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:37:7: ( 'true' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:37:9: 'true'
             {
-            match('*'); 
+            match("true"); 
+
 
             }
 
@@ -708,10 +711,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = T__45;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:38:7: ( 'new' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:38:9: 'new'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:38:7: ( 'false' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:38:9: 'false'
             {
-            match("new"); 
+            match("false"); 
 
 
             }
@@ -724,13 +727,54 @@ public class MiniJavaLexer extends Lexer {
     }
     // $ANTLR end "T__45"
 
+    // $ANTLR start "T__46"
+    public final void mT__46() throws RecognitionException {
+        try {
+            int _type = T__46;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:39:7: ( '.' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:39:9: '.'
+            {
+            match('.'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__46"
+
+    // $ANTLR start "T__47"
+    public final void mT__47() throws RecognitionException {
+        try {
+            int _type = T__47;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:40:7: ( 'this' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:40:9: 'this'
+            {
+            match("this"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__47"
+
     // $ANTLR start "STRING"
     public final void mSTRING() throws RecognitionException {
         try {
             int _type = STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:226:8: ( '\"' IDENT '\"' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:226:10: '\"' IDENT '\"'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:298:8: ( '\"' IDENT '\"' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:298:10: '\"' IDENT '\"'
             {
             match('\"'); 
             mIDENT(); 
@@ -751,7 +795,7 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:229:9: ( '/*' ( . )* '*/' | '//' ( . )* NEWLINE )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:301:9: ( '/*' ( . )* '*/' | '//' ( . )* NEWLINE )
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -779,11 +823,11 @@ public class MiniJavaLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:229:12: '/*' ( . )* '*/'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:301:12: '/*' ( . )* '*/'
                     {
                     match("/*"); 
 
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:229:17: ( . )*
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:301:17: ( . )*
                     loop1:
                     do {
                         int alt1=2;
@@ -808,7 +852,7 @@ public class MiniJavaLexer extends Lexer {
 
                         switch (alt1) {
                     	case 1 :
-                    	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:229:17: .
+                    	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:301:17: .
                     	    {
                     	    matchAny(); 
 
@@ -826,11 +870,11 @@ public class MiniJavaLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:229:27: '//' ( . )* NEWLINE
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:301:27: '//' ( . )* NEWLINE
                     {
                     match("//"); 
 
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:229:32: ( . )*
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:301:32: ( . )*
                     loop2:
                     do {
                         int alt2=2;
@@ -849,7 +893,7 @@ public class MiniJavaLexer extends Lexer {
 
                         switch (alt2) {
                     	case 1 :
-                    	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:229:32: .
+                    	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:301:32: .
                     	    {
                     	    matchAny(); 
 
@@ -878,11 +922,11 @@ public class MiniJavaLexer extends Lexer {
     // $ANTLR start "LOWER"
     public final void mLOWER() throws RecognitionException {
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:231:16: ( ( 'a' .. 'z' ) )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:231:18: ( 'a' .. 'z' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:303:16: ( ( 'a' .. 'z' ) )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:303:18: ( 'a' .. 'z' )
             {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:231:18: ( 'a' .. 'z' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:231:19: 'a' .. 'z'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:303:18: ( 'a' .. 'z' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:303:19: 'a' .. 'z'
             {
             matchRange('a','z'); 
 
@@ -900,11 +944,11 @@ public class MiniJavaLexer extends Lexer {
     // $ANTLR start "UPPER"
     public final void mUPPER() throws RecognitionException {
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:232:16: ( ( 'A' .. 'Z' ) )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:232:18: ( 'A' .. 'Z' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:304:16: ( ( 'A' .. 'Z' ) )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:304:18: ( 'A' .. 'Z' )
             {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:232:18: ( 'A' .. 'Z' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:232:19: 'A' .. 'Z'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:304:18: ( 'A' .. 'Z' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:304:19: 'A' .. 'Z'
             {
             matchRange('A','Z'); 
 
@@ -922,11 +966,11 @@ public class MiniJavaLexer extends Lexer {
     // $ANTLR start "NONNULL"
     public final void mNONNULL() throws RecognitionException {
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:233:18: ( ( '1' .. '9' ) )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:233:20: ( '1' .. '9' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:305:18: ( ( '1' .. '9' ) )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:305:20: ( '1' .. '9' )
             {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:233:20: ( '1' .. '9' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:233:21: '1' .. '9'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:305:20: ( '1' .. '9' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:305:21: '1' .. '9'
             {
             matchRange('1','9'); 
 
@@ -944,10 +988,10 @@ public class MiniJavaLexer extends Lexer {
     // $ANTLR start "NUMBER"
     public final void mNUMBER() throws RecognitionException {
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:236:17: ( ( '0' | NONNULL ) )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:236:19: ( '0' | NONNULL )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:308:17: ( ( '0' | NONNULL ) )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:308:19: ( '0' | NONNULL )
             {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:236:19: ( '0' | NONNULL )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:308:19: ( '0' | NONNULL )
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -965,14 +1009,14 @@ public class MiniJavaLexer extends Lexer {
             }
             switch (alt4) {
                 case 1 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:236:20: '0'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:308:20: '0'
                     {
                     match('0'); 
 
                     }
                     break;
                 case 2 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:236:26: NONNULL
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:308:26: NONNULL
                     {
                     mNONNULL(); 
 
@@ -995,10 +1039,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = IDENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:237:7: ( ( LOWER | UPPER ) ( LOWER | UPPER | NUMBER | '_' )* )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:237:9: ( LOWER | UPPER ) ( LOWER | UPPER | NUMBER | '_' )*
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:309:7: ( ( LOWER | UPPER ) ( LOWER | UPPER | NUMBER | '_' )* )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:309:9: ( LOWER | UPPER ) ( LOWER | UPPER | NUMBER | '_' )*
             {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:237:9: ( LOWER | UPPER )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:309:9: ( LOWER | UPPER )
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -1016,14 +1060,14 @@ public class MiniJavaLexer extends Lexer {
             }
             switch (alt5) {
                 case 1 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:237:11: LOWER
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:309:11: LOWER
                     {
                     mLOWER(); 
 
                     }
                     break;
                 case 2 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:237:19: UPPER
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:309:19: UPPER
                     {
                     mUPPER(); 
 
@@ -1032,7 +1076,7 @@ public class MiniJavaLexer extends Lexer {
 
             }
 
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:237:27: ( LOWER | UPPER | NUMBER | '_' )*
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:309:27: ( LOWER | UPPER | NUMBER | '_' )*
             loop6:
             do {
                 int alt6=5;
@@ -1121,28 +1165,28 @@ public class MiniJavaLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:237:29: LOWER
+            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:309:29: LOWER
             	    {
             	    mLOWER(); 
 
             	    }
             	    break;
             	case 2 :
-            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:237:37: UPPER
+            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:309:37: UPPER
             	    {
             	    mUPPER(); 
 
             	    }
             	    break;
             	case 3 :
-            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:237:45: NUMBER
+            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:309:45: NUMBER
             	    {
             	    mNUMBER(); 
 
             	    }
             	    break;
             	case 4 :
-            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:237:54: '_'
+            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:309:54: '_'
             	    {
             	    match('_'); 
 
@@ -1168,10 +1212,10 @@ public class MiniJavaLexer extends Lexer {
     // $ANTLR start "NEWLINE"
     public final void mNEWLINE() throws RecognitionException {
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:238:17: ( ( '\\r' )? '\\n' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:238:18: ( '\\r' )? '\\n'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:310:17: ( ( '\\r' )? '\\n' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:310:18: ( '\\r' )? '\\n'
             {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:238:18: ( '\\r' )?
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:310:18: ( '\\r' )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -1180,7 +1224,7 @@ public class MiniJavaLexer extends Lexer {
             }
             switch (alt7) {
                 case 1 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:238:18: '\\r'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:310:18: '\\r'
                     {
                     match('\r'); 
 
@@ -1204,7 +1248,7 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:239:5: ( '0' | ( NONNULL ( NUMBER )* ) )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:311:5: ( '0' | ( NONNULL ( NUMBER )* ) )
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -1222,20 +1266,20 @@ public class MiniJavaLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:239:7: '0'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:311:7: '0'
                     {
                     match('0'); 
 
                     }
                     break;
                 case 2 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:239:13: ( NONNULL ( NUMBER )* )
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:311:13: ( NONNULL ( NUMBER )* )
                     {
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:239:13: ( NONNULL ( NUMBER )* )
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:239:15: NONNULL ( NUMBER )*
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:311:13: ( NONNULL ( NUMBER )* )
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:311:15: NONNULL ( NUMBER )*
                     {
                     mNONNULL(); 
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:239:23: ( NUMBER )*
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:311:23: ( NUMBER )*
                     loop8:
                     do {
                         int alt8=2;
@@ -1248,7 +1292,7 @@ public class MiniJavaLexer extends Lexer {
 
                         switch (alt8) {
                     	case 1 :
-                    	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:239:23: NUMBER
+                    	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:311:23: NUMBER
                     	    {
                     	    mNUMBER(); 
 
@@ -1281,10 +1325,10 @@ public class MiniJavaLexer extends Lexer {
         try {
             int _type = WHITESPACE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:240:13: ( ( ' ' | '\\t' | NEWLINE )+ )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:240:17: ( ' ' | '\\t' | NEWLINE )+
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:312:13: ( ( ' ' | '\\t' | NEWLINE )+ )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:312:17: ( ' ' | '\\t' | NEWLINE )+
             {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:240:17: ( ' ' | '\\t' | NEWLINE )+
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:312:17: ( ' ' | '\\t' | NEWLINE )+
             int cnt10=0;
             loop10:
             do {
@@ -1311,21 +1355,21 @@ public class MiniJavaLexer extends Lexer {
 
                 switch (alt10) {
             	case 1 :
-            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:240:19: ' '
+            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:312:19: ' '
             	    {
             	    match(' '); 
 
             	    }
             	    break;
             	case 2 :
-            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:240:25: '\\t'
+            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:312:25: '\\t'
             	    {
             	    match('\t'); 
 
             	    }
             	    break;
             	case 3 :
-            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:240:32: NEWLINE
+            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:312:32: NEWLINE
             	    {
             	    mNEWLINE(); 
 
@@ -1354,8 +1398,8 @@ public class MiniJavaLexer extends Lexer {
     // $ANTLR end "WHITESPACE"
 
     public void mTokens() throws RecognitionException {
-        // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:1:8: ( T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | STRING | COMMENT | IDENT | INT | WHITESPACE )
-        int alt11=37;
+        // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:1:8: ( T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | STRING | COMMENT | IDENT | INT | WHITESPACE )
+        int alt11=39;
         alt11 = dfa11.predict(input);
         switch (alt11) {
             case 1 :
@@ -1583,35 +1627,49 @@ public class MiniJavaLexer extends Lexer {
                 }
                 break;
             case 33 :
-                // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:1:202: STRING
+                // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:1:202: T__46
+                {
+                mT__46(); 
+
+                }
+                break;
+            case 34 :
+                // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:1:208: T__47
+                {
+                mT__47(); 
+
+                }
+                break;
+            case 35 :
+                // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:1:214: STRING
                 {
                 mSTRING(); 
 
                 }
                 break;
-            case 34 :
-                // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:1:209: COMMENT
+            case 36 :
+                // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:1:221: COMMENT
                 {
                 mCOMMENT(); 
 
                 }
                 break;
-            case 35 :
-                // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:1:217: IDENT
+            case 37 :
+                // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:1:229: IDENT
                 {
                 mIDENT(); 
 
                 }
                 break;
-            case 36 :
-                // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:1:223: INT
+            case 38 :
+                // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:1:235: INT
                 {
                 mINT(); 
 
                 }
                 break;
-            case 37 :
-                // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:1:227: WHITESPACE
+            case 39 :
+                // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:1:239: WHITESPACE
                 {
                 mWHITESPACE(); 
 
@@ -1625,68 +1683,67 @@ public class MiniJavaLexer extends Lexer {
 
     protected DFA11 dfa11 = new DFA11(this);
     static final String DFA11_eotS =
-        "\1\uffff\1\37\1\uffff\4\37\1\uffff\1\37\3\uffff\1\37\2\uffff\1\37"+
-        "\2\uffff\3\37\1\61\1\37\5\uffff\1\37\5\uffff\14\37\1\100\1\37\2"+
-        "\uffff\15\37\1\117\1\uffff\2\37\1\122\3\37\1\126\1\127\3\37\1\133"+
-        "\1\37\1\135\1\uffff\2\37\1\uffff\1\140\2\37\2\uffff\3\37\1\uffff"+
-        "\1\37\1\uffff\1\37\1\150\1\uffff\1\151\1\152\1\153\2\37\1\156\1"+
-        "\37\5\uffff\1\160\1\uffff\1\161\2\uffff";
+        "\1\uffff\1\40\1\uffff\4\40\1\uffff\1\40\3\uffff\1\40\2\uffff\2\40"+
+        "\1\uffff\1\40\1\61\1\40\5\uffff\3\40\6\uffff\12\40\1\101\2\40\2"+
+        "\uffff\16\40\1\122\1\uffff\3\40\1\126\6\40\1\135\1\136\3\40\1\142"+
+        "\1\uffff\3\40\1\uffff\1\146\1\147\1\40\1\151\2\40\2\uffff\3\40\1"+
+        "\uffff\2\40\1\161\2\uffff\1\162\1\uffff\1\163\1\164\1\165\3\40\1"+
+        "\171\6\uffff\1\172\1\173\3\uffff";
     static final String DFA11_eofS =
-        "\162\uffff";
+        "\174\uffff";
     static final String DFA11_minS =
         "\1\11\1\154\1\uffff\1\165\1\164\1\157\1\141\1\uffff\1\164\3\uffff"+
-        "\1\154\2\uffff\1\145\2\uffff\1\150\1\146\1\157\1\75\1\150\5\uffff"+
-        "\1\145\5\uffff\1\141\1\142\1\141\2\151\1\162\1\163\1\164\1\163\1"+
-        "\164\1\151\1\164\1\60\1\157\2\uffff\1\151\1\167\1\163\1\154\1\164"+
-        "\1\144\1\156\1\151\1\164\2\145\1\165\1\163\1\60\1\uffff\2\154\1"+
-        "\60\1\163\2\151\2\60\1\156\1\145\1\156\1\60\1\162\1\60\1\uffff\2"+
-        "\145\1\uffff\1\60\2\143\2\uffff\1\147\1\155\1\144\1\uffff\1\156"+
-        "\1\uffff\1\141\1\60\1\uffff\3\60\1\56\1\163\1\60\1\156\5\uffff\1"+
-        "\60\1\uffff\1\60\2\uffff";
+        "\1\154\2\uffff\1\146\1\157\1\uffff\1\145\1\75\1\150\5\uffff\1\145"+
+        "\1\150\1\141\6\uffff\1\141\1\142\1\141\2\151\1\162\1\163\1\164\1"+
+        "\163\1\164\1\60\1\157\1\164\2\uffff\1\151\1\167\1\165\1\151\1\154"+
+        "\1\163\1\154\1\164\1\144\1\156\1\151\1\164\2\145\1\60\1\uffff\1"+
+        "\154\1\165\1\154\1\60\1\145\3\163\2\151\2\60\1\156\1\145\1\156\1"+
+        "\60\1\uffff\1\145\1\162\1\145\1\uffff\2\60\1\145\1\60\2\143\2\uffff"+
+        "\1\147\1\155\1\144\1\uffff\1\141\1\156\1\60\2\uffff\1\60\1\uffff"+
+        "\3\60\1\56\1\163\1\156\1\60\6\uffff\2\60\3\uffff";
     static final String DFA11_maxS =
         "\1\175\1\154\1\uffff\1\165\1\164\1\157\1\141\1\uffff\1\171\3\uffff"+
-        "\1\170\2\uffff\1\145\2\uffff\1\150\1\156\1\157\1\75\1\150\5\uffff"+
-        "\1\145\5\uffff\1\141\1\142\1\141\2\151\1\162\1\163\1\164\1\163\1"+
-        "\164\1\151\1\164\1\172\1\157\2\uffff\1\151\1\167\1\163\1\154\1\164"+
-        "\1\144\1\156\1\151\1\164\2\145\1\165\1\163\1\172\1\uffff\2\154\1"+
-        "\172\1\163\2\151\2\172\1\156\1\145\1\156\1\172\1\162\1\172\1\uffff"+
-        "\2\145\1\uffff\1\172\2\143\2\uffff\1\147\1\155\1\144\1\uffff\1\156"+
-        "\1\uffff\1\141\1\172\1\uffff\3\172\1\56\1\163\1\172\1\156\5\uffff"+
-        "\1\172\1\uffff\1\172\2\uffff";
+        "\1\170\2\uffff\1\156\1\157\1\uffff\1\145\1\75\1\150\5\uffff\1\145"+
+        "\1\162\1\141\6\uffff\1\141\1\142\1\141\2\151\1\162\1\163\1\164\1"+
+        "\163\1\164\1\172\1\157\1\164\2\uffff\1\151\1\167\1\165\1\151\1\154"+
+        "\1\163\1\154\1\164\1\144\1\156\1\151\1\164\2\145\1\172\1\uffff\1"+
+        "\154\1\165\1\154\1\172\1\145\3\163\2\151\2\172\1\156\1\145\1\156"+
+        "\1\172\1\uffff\1\145\1\162\1\145\1\uffff\2\172\1\145\1\172\2\143"+
+        "\2\uffff\1\147\1\155\1\144\1\uffff\1\141\1\156\1\172\2\uffff\1\172"+
+        "\1\uffff\3\172\1\56\1\163\1\156\1\172\6\uffff\2\172\3\uffff";
     static final String DFA11_acceptS =
         "\2\uffff\1\2\4\uffff\1\7\1\uffff\1\11\1\12\1\13\1\uffff\1\15\1\16"+
-        "\1\uffff\1\20\1\21\5\uffff\1\32\1\34\1\35\1\36\1\37\1\uffff\1\41"+
-        "\1\42\1\43\1\44\1\45\16\uffff\1\33\1\26\16\uffff\1\27\16\uffff\1"+
-        "\23\2\uffff\1\40\3\uffff\1\5\1\6\3\uffff\1\30\1\uffff\1\22\2\uffff"+
-        "\1\1\7\uffff\1\31\1\3\1\4\1\10\1\25\1\uffff\1\17\1\uffff\1\14\1"+
-        "\24";
+        "\2\uffff\1\21\3\uffff\1\30\1\32\1\33\1\34\1\35\3\uffff\1\41\1\43"+
+        "\1\44\1\45\1\46\1\47\15\uffff\1\31\1\24\17\uffff\1\25\20\uffff\1"+
+        "\17\3\uffff\1\36\6\uffff\1\5\1\6\3\uffff\1\26\3\uffff\1\37\1\42"+
+        "\1\uffff\1\1\7\uffff\1\27\1\40\1\3\1\4\1\10\1\23\2\uffff\1\22\1"+
+        "\14\1\20";
     static final String DFA11_specialS =
-        "\162\uffff}>";
+        "\174\uffff}>";
     static final String[] DFA11_transitionS = {
-            "\2\41\2\uffff\1\41\22\uffff\1\41\1\uffff\1\35\3\uffff\1\27\1"+
-            "\uffff\1\7\1\13\1\33\1\31\1\16\1\32\1\21\1\36\12\40\1\uffff"+
-            "\1\20\1\30\1\25\3\uffff\22\37\1\10\7\37\1\11\1\uffff\1\12\3"+
-            "\uffff\1\37\1\24\1\1\1\37\1\14\3\37\1\23\3\37\1\6\1\34\1\37"+
-            "\1\3\1\37\1\17\1\4\1\22\1\37\1\5\1\26\3\37\1\2\1\uffff\1\15",
-            "\1\42",
-            "",
+            "\2\42\2\uffff\1\42\22\uffff\1\42\1\uffff\1\36\3\uffff\1\25\1"+
+            "\uffff\1\7\1\13\1\31\1\27\1\21\1\30\1\35\1\37\12\41\1\uffff"+
+            "\1\16\1\26\1\23\3\uffff\22\40\1\10\7\40\1\11\1\uffff\1\12\3"+
+            "\uffff\1\40\1\20\1\1\1\40\1\14\1\34\2\40\1\17\3\40\1\6\1\32"+
+            "\1\40\1\3\1\40\1\22\1\4\1\33\1\40\1\5\1\24\3\40\1\2\1\uffff"+
+            "\1\15",
             "\1\43",
+            "",
             "\1\44",
             "\1\45",
             "\1\46",
+            "\1\47",
             "",
-            "\1\47\4\uffff\1\50",
-            "",
-            "",
-            "",
-            "\1\52\13\uffff\1\51",
+            "\1\50\4\uffff\1\51",
             "",
             "",
-            "\1\53",
+            "",
+            "\1\53\13\uffff\1\52",
             "",
             "",
-            "\1\54",
-            "\1\56\7\uffff\1\55",
+            "\1\55\7\uffff\1\54",
+            "\1\56",
+            "",
             "\1\57",
             "\1\60",
             "\1\62",
@@ -1696,14 +1753,14 @@ public class MiniJavaLexer extends Lexer {
             "",
             "",
             "\1\63",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\64",
-            "\1\65",
+            "\1\65\11\uffff\1\64",
             "\1\66",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\1\67",
             "\1\70",
             "\1\71",
@@ -1713,12 +1770,12 @@ public class MiniJavaLexer extends Lexer {
             "\1\75",
             "\1\76",
             "\1\77",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
-            "\1\101",
-            "",
-            "",
+            "\1\100",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
             "\1\102",
             "\1\103",
+            "",
+            "",
             "\1\104",
             "\1\105",
             "\1\106",
@@ -1730,55 +1787,67 @@ public class MiniJavaLexer extends Lexer {
             "\1\114",
             "\1\115",
             "\1\116",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
-            "",
+            "\1\117",
             "\1\120",
             "\1\121",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "",
             "\1\123",
             "\1\124",
             "\1\125",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\1\127",
             "\1\130",
             "\1\131",
             "\1\132",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\1\133",
             "\1\134",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
-            "",
-            "\1\136",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
             "\1\137",
-            "",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\1\140",
             "\1\141",
-            "\1\142",
-            "",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
             "",
             "\1\143",
             "\1\144",
             "\1\145",
             "",
-            "\1\146",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\1\150",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\1\152",
+            "\1\153",
             "",
-            "\1\147",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
             "",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
             "\1\154",
             "\1\155",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\1\156",
+            "",
             "\1\157",
+            "\1\160",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "",
+            "",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\1\166",
+            "\1\167",
+            "\1\170",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
             "",
             "",
             "",
             "",
             "",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
             "",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "\12\40\7\uffff\32\40\4\uffff\1\40\1\uffff\32\40",
+            "",
             "",
             ""
     };
@@ -1813,7 +1882,7 @@ public class MiniJavaLexer extends Lexer {
             this.transition = DFA11_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | STRING | COMMENT | IDENT | INT | WHITESPACE );";
+            return "1:1: Tokens : ( T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | STRING | COMMENT | IDENT | INT | WHITESPACE );";
         }
     }
  

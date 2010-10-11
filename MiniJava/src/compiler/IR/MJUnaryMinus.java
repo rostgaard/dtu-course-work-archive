@@ -3,12 +3,9 @@ package compiler.IR;
 import compiler.PrettyPrinter;
 
 public class MJUnaryMinus extends MJUnaryOp {
-	MJExpression operand;
-	
 
 	public MJUnaryMinus(MJExpression operand) {
-		super();
-		this.operand = operand;
+		super(operand);
 	}
 
 	public void prettyPrint(PrettyPrinter prepri) {

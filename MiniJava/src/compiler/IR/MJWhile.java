@@ -4,11 +4,11 @@ import compiler.PrettyPrinter;
 
 public class MJWhile extends MJStatement {
 	private MJExpression condition;
-	private MJBlock body;
+	private MJStatement body;
 
 	
 
-	public MJWhile(MJExpression condition, MJBlock body) {
+	public MJWhile(MJExpression condition, MJStatement body) {
 		super();
 		this.condition = condition;
 		this.body = body;
@@ -28,13 +28,13 @@ public class MJWhile extends MJStatement {
 
 
 
-	public MJBlock getBody() {
+	public MJStatement getBody() {
 		return body;
 	}
 
 
 
-	public void setBody(MJBlock body) {
+	public void setBody(MJStatement body) {
 		this.body = body;
 	}
 

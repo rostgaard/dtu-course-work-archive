@@ -56,7 +56,7 @@ public class MJProgram extends IR {
 			c.typeCheck();
 		}
 
-		return MJType.Tnone;
+		return MJType.Tvoid;
 	}
 	
 	public void variableInit() throws TypeCheckerException {

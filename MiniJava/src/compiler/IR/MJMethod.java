@@ -82,6 +82,16 @@ public class MJMethod extends IR {
 		body.prettyPrint(prepri);
 		prepri.println("");
 	}
+	/**
+	 * For a method to type check:
+     *  - the method's return type and the parameter types must type check, the return type 
+     *    may be void,
+     *  - the block of statements must type check,
+     *  - if the method has not return type void then the method’s return statements 
+     *    must return an expression with the correct type, and
+     *  - if the method has return type void then the return statements may not have an 
+     *    argument.
+ 	 */
 	
 	public MJType typeCheck() throws TypeCheckerException {
 		
