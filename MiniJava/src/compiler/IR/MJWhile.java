@@ -40,9 +40,9 @@ public class MJWhile extends MJStatement {
 
 	public void prettyPrint(PrettyPrinter prepri) {
 		prepri.print("while (");
-		condition.prettyPrint();
+		condition.prettyPrint(prepri);
 		prepri.print(")");
-		body.prettyPrint();
+		body.prettyPrint(prepri);
 		
 	}
 	

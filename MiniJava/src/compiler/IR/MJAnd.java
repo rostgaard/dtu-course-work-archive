@@ -14,14 +14,13 @@ public class MJAnd extends MJBinaryOp {
 	
 	public MJAnd(MJExpression lhs, LinkedList<MJExpression> rhslist) {
 		this.setLhs(lhs);
-		this.setRhsList(rhslist);
+		this.setRhs(rhs);
 	}
 
 	public void prettyPrint(PrettyPrinter prepri) {
-		//TODO
 		this.getLhs().prettyPrint(prepri);
-		
 		prepri.print(" && ");
+		this.getRhs().prettyPrint(prepri);
 	}
 
 	// Logical negation !, the type must be boolean.
@@ -31,8 +30,8 @@ public class MJAnd extends MJBinaryOp {
 			throw new TypeCheckerException(this.getLhs().toString() + " Not of type boolean");
 
 		//TODO
-//		if (this.getRhs().getType() != MJType.Tboolean )
-//				throw new TypeCheckerException(this.getRhs().toString() + " Not of type boolean");
+		if (this.getRhs().getType() != MJType.Tboolean )
+				throw new TypeCheckerException(this.getRhs().toString() + " Not of type boolean");
 			
 		
 		

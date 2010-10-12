@@ -13,6 +13,9 @@ operator + is also used to concatenate strings.
 public class MJPlus extends MJBinaryOp {
 
 	public void prettyPrint(PrettyPrinter prepri) {
+		this.getLhs().prettyPrint(prepri);
+		prepri.print("+");
+		this.getRhs().prettyPrint(prepri);
 	}
 
 }
