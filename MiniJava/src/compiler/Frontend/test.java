@@ -2,9 +2,14 @@ class mainClass {
 
     public static void main(String[] args) {
 	int i;
-	test2 t2;
-	t2 = new test2();
-	t2.test(2);
+	i = -2;
+	if(i == 1) {
+		int j;
+	}
+	else {
+		int j;
+	}
+	i = 5;
     }
 }
 

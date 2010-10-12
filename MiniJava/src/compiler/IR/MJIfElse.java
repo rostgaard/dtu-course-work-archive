@@ -62,12 +62,14 @@ public class MJIfElse extends MJStatement {
 
 	public void prettyPrint(PrettyPrinter prepri) {
 		prepri.print("if (");
-		prepri.print(Condition.toString() +")");
 
-		ifTrueBlock.prettyPrint();
+		this.Condition.prettyPrint(prepri);
+		prepri.print(")");
+		
+		this.ifTrueBlock.prettyPrint(prepri);
 
 		prepri.print("else");
-		ifFalseBlock.prettyPrint();
+		ifFalseBlock.prettyPrint(prepri);
 	}
 
 }

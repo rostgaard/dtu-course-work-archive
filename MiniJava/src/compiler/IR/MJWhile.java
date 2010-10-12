@@ -14,8 +14,6 @@ public class MJWhile extends MJStatement {
 		this.body = body;
 	}
 
-
-
 	public MJExpression getCondition() {
 		return condition;
 	}

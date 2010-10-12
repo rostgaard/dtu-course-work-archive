@@ -129,16 +129,17 @@ statement returns [MJStatement s]
   }
   | 'if' '(' cond = expression ')' (ifblock = block) ('else' elseblock = block)? // If-then-else statement
   {
-    //TODO - figure out what happens when no else block i present
+    //TODO - figure out what happens when no else block is present
     s = new MJIfElse(cond,ifblock,elseblock);
   }
-  | 'while' '(' expr = expression ')' stmt = statement // Assignment
+  | 'while' '(' expr = expression ')' stmt = statement // While loop
   {
     s = new MJWhile(expr,stmt);
   }
-  | IDENT '(' (expression ( ',' expression)*)? ')' ';' // Method call
+  | {LinkedList<MJExpression> pml = new LinkedList<MJExpression>();} 
+   va = IDENT '(' (expr = expression {pml.add(expr);} ( ',' expr = expression)* {pml.add(expr);} )? ')' ';' // Method call
   {
-    //TODO
+    s = new MJMethodCallStmt(new MJIdentifier($va.text),pml);
   }
   ;  
   
@@ -148,54 +149,59 @@ statement returns [MJStatement s]
   
 /* AND */
 expression returns [MJExpression e]
-  : level1 ('&&' level1)*
-  {e = new MJAnd();}
+  : {LinkedList<MJExpression> exprlist = new LinkedList<MJExpression>(); } 
+  lhs = level1 ('&&' l1 = level1 {exprlist.add(l1);} )*
+  {e = new MJAnd(lhs,exprlist);}
   ;
 
 /* Equals */
 level1 returns [MJExpression e]
-  : level2 ('==' level2)*
-  {}
+  : {LinkedList<MJExpression> exprlist = new LinkedList<MJExpression>(); } 
+  lhs = level2 ('==' l2 = level2 {exprlist.add(l2);})*
+  {e = new MJEqual(lhs, exprlist);}
   ;  
 
 /* Less */
 level2 returns [MJExpression e]
-  : level3 ('<' level3)*
-  {}
+  : {LinkedList<MJExpression> exprlist = new LinkedList<MJExpression>(); } 
+  level3 ('<' level3)*
+  {e = new MJLess();}
   ;
 
 /* Plus and minus */
 level3 returns [MJExpression e]
-  : level4 (('+' | '-') level4)*
-  {}
+  : {LinkedList<MJExpression> exprlist = new LinkedList<MJExpression>(); } 
+  level4 (('+' | '-') level4)*
+  {e = new MJPlus();}
   ;
 
 /* Multiplication */
 level4 returns [MJExpression e]
-  : level5 ('*' level5)*
+  : {LinkedList<MJExpression> exprlist = new LinkedList<MJExpression>(); } 
+  level5 ('*' level5)*
   {}
   ;
 
 
 level5 returns [MJExpression e]
   /* Unary minus */
-  : '-' level5
-  {//TODO
+  : '-' l5 = level5
+  {
+    e = new MJUnaryMinus(l5);
   }
   /* New integer array */
   | 'new' 'int' '[' ex = expression ']'
   {
     // TODO - figure out this one, should it be MJType or MJIdent ?
-    //e = new MJArray(MJType.TintArray,ex);
+    e = new MJArray(MJType.TintArray,ex);
   }
   /* New object */
   | 'new' IDENT '(' ')'
-  {//TODO - new mjobject ?
+  {//TODO - MJNew
   }
   /* identifier */
   | i = id
   {
-   //TODO - What is the effect of this ?
     e = i;
   }
   /* Array access */
@@ -295,10 +301,12 @@ optExpression returns [MJExpression e]
  */
 
 //TODO change this
-STRING : '"' IDENT '"'; 
+QUOTE : '"' ;
+CHAR : '\u0020'..'\u007E';
+STRING : QUOTE CHAR* QUOTE; 
 
 // Comments
-COMMENT :  '/*' .* '*/' | '//' .* NEWLINE;
+COMMENT :  '/*' (CHAR)* '*/' | '//' CHAR* NEWLINE;
 
 fragment LOWER : ('a'..'z');
 fragment UPPER : ('A'..'Z');

@@ -5,26 +5,41 @@ package compiler.IR;
 
  */
 
+import java.util.LinkedList;
+
 import compiler.PrettyPrinter;
 import compiler.Exceptions.TypeCheckerException;
 import compiler.Exceptions.VariableAlreadyDeclared;
 
 public class MJEqual extends MJBinaryOp {
+	
+	public MJEqual(MJExpression lhs, LinkedList<MJExpression> rhslist) {
+		this.setLhs(lhs);
+		this.setRhsList(rhslist);
+	}
 
 	public void prettyPrint(PrettyPrinter prepri) {
 		prepri.print(this.toString());
 	}
 
 	public MJType typeCheck() throws TypeCheckerException {
+		for(MJExpression e: this.getRhsList()) {
+				if(this.getLhs().getType() != e.getType())
+					throw new TypeCheckerException("Lhs and Rhs not of same type in expression " +
+							this.toString());				
+		}
 		
-		if(this.getLhs().getType() != this.getRhs().getType())
-			throw new TypeCheckerException("Lhs and Rhs not of same type in expression " +
-					this);
+
 		return MJType.Tvoid;
 	}
 	
 	public String toString() {
-		return this.getLhs().toString() +" == "+this.getRhs().toString();
+		String retString = this.getLhs().toString();
+		
+			for(MJExpression e: this.getRhsList()) {
+				retString += e.toString();
+			}
+		return retString;
 	}
-	
+	 
 }

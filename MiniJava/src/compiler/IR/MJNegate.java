@@ -18,6 +18,6 @@ public class MJNegate extends MJUnaryOp {
 	
 	public void prettyPrint(PrettyPrinter prepri) {
 		prepri.print("!");
-		operand.prettyPrint();
+		operand.prettyPrint(prepri);
 	}
 }
