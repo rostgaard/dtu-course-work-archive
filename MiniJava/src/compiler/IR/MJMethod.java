@@ -26,12 +26,13 @@ public class MJMethod extends IR {
 	}
 
 	public MJMethod(MJType type, String name, LinkedList<MJVariable> parlist,
-			MJBlock b, boolean isStatic) {
+			MJBlock b, boolean isStatic, boolean isPublic) {
 		this.type = type;
 		this.name = name;
 		this.parameters = parlist;
 		this.body = b;
 		this.isStatic = isStatic;
+		this.isPublic = isPublic;
 	}
 
 	public String getName() {

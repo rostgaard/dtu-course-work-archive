@@ -92,7 +92,6 @@ public class MJClass extends IR {
 		prepri.out();
 		prepri.println("}");
 		
-		//TODO print out other classes
 	}
 	
 	public MJType typeCheck() throws TypeCheckerException {

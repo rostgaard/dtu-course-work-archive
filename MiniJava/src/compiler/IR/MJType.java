@@ -1,5 +1,6 @@
 package compiler.IR;
 
+import compiler.PrettyPrinter;
 import compiler.Exceptions.ClassNotFound;
 import compiler.Exceptions.TypeCheckerException;
 
@@ -114,4 +115,8 @@ public final class MJType extends IR {
 		return MJType.Tvoid;
 
 	}
-}
+	
+	public void prettyPrint(PrettyPrinter prepri) {
+		prepri.print(this.getName());
+	}
+ }

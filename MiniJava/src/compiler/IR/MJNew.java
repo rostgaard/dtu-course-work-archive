@@ -4,15 +4,17 @@ import compiler.PrettyPrinter;
 
 public class MJNew extends MJExpression {
 
+	MJExpression expr;
 	MJType type;
 
-	MJNew (MJType type){
-		this.type = type;
+	public MJNew (MJType t){
+		this.type = t;
 		
 	}
 	public void prettyPrint(PrettyPrinter prepri) {
-		prepri.print("new");
+		prepri.print("new ");
 		type.prettyPrint(prepri);
+		prepri.print("()");
 	}
 
 }

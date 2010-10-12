@@ -15,7 +15,7 @@ public abstract class MJBinaryOp extends MJExpression {
 		return rhs;
 	}
 
-	public void setRhsList(MJExpression rhs) {
+	public void setRhs(MJExpression rhs) {
 		this.rhs = rhs;
 	}
 	

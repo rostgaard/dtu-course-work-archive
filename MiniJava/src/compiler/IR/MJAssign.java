@@ -27,7 +27,7 @@ public class MJAssign extends MJStatement {
 	public void prettyPrint(PrettyPrinter prepri) {
 		this.lhs.prettyPrint(prepri);
 		prepri.print(" = ");
-		this.rhs.prettyPrint(prepri);
+		this.getRhs().prettyPrint(prepri);
 		prepri.println(";");
 	}
 

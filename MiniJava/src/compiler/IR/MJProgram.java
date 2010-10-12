@@ -26,6 +26,7 @@ public class MJProgram extends IR {
 		for (MJClass c : classes) {
 			c.prettyPrint(prettyPrinter);
 		}
+		System.out.println("Program contains: " + this.classes.size() + " classes");
 	}
 	
 	public MJType typeCheck() throws TypeCheckerException {

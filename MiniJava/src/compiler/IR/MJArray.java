@@ -4,17 +4,17 @@ import compiler.PrettyPrinter;
 
 public class MJArray extends MJIdentifier {
 	
-	MJType type;
+	MJIdentifier ident;
 	MJExpression idx;
 
-	public MJArray(MJType type, MJExpression idx) {
-		this.type = type;
+	public MJArray(MJIdentifier ident, MJExpression idx) {
+		this.ident = ident;
 		this.idx = idx;
 		
 	}
 	
 	public void prettyPrint(PrettyPrinter prepri) {
-		type.prettyPrint(prepri);
+		ident.prettyPrint(prepri);
 		prepri.print("[");
 		idx.prettyPrint(prepri);
 		prepri.print("]");
