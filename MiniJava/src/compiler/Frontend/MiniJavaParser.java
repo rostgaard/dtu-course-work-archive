@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g 2010-10-12 15:02:04
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g 2010-10-12 17:00:48
 
   package compiler.Frontend;
   
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class MiniJavaParser extends Parser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "IDENT", "INT", "STRING", "QUOTE", "CHAR", "NEWLINE", "COMMENT", "LOWER", "UPPER", "NONNULL", "NUMBER", "WHITESPACE", "'class'", "'{'", "'public'", "'static'", "'void'", "'main'", "'('", "'String'", "'['", "']'", "')'", "'extends'", "'}'", "';'", "'int'", "'boolean'", "','", "'return'", "'System.out.println'", "'='", "'if'", "'else'", "'while'", "'&&'", "'=='", "'<'", "'+'", "'-'", "'*'", "'new'", "'true'", "'false'", "'.'", "'this'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "IDENT", "INT", "STRING", "QUOTE", "SPECIALCHAR", "NUMBER", "LOWER", "UPPER", "CHAR", "NEWLINE", "COMMENT", "NONNULL", "WHITESPACE", "'class'", "'{'", "'public'", "'static'", "'void'", "'main'", "'('", "'String'", "'['", "']'", "')'", "'extends'", "'}'", "';'", "'int'", "'boolean'", "','", "'return'", "'System.out.println'", "'='", "'if'", "'else'", "'while'", "'&&'", "'=='", "'<'", "'+'", "'-'", "'*'", "'new'", "'true'", "'false'", "'.'", "'this'"
     };
     public static final int T__29=29;
     public static final int T__28=28;
@@ -25,15 +25,15 @@ public class MiniJavaParser extends Parser {
     public static final int T__22=22;
     public static final int T__21=21;
     public static final int T__20=20;
-    public static final int CHAR=8;
+    public static final int CHAR=12;
     public static final int EOF=-1;
     public static final int T__19=19;
     public static final int QUOTE=7;
-    public static final int T__16=16;
     public static final int T__18=18;
     public static final int T__17=17;
     public static final int IDENT=4;
-    public static final int COMMENT=10;
+    public static final int COMMENT=14;
+    public static final int T__50=50;
     public static final int T__42=42;
     public static final int T__43=43;
     public static final int T__40=40;
@@ -44,23 +44,24 @@ public class MiniJavaParser extends Parser {
     public static final int T__45=45;
     public static final int T__48=48;
     public static final int T__49=49;
-    public static final int NUMBER=14;
-    public static final int WHITESPACE=15;
+    public static final int NUMBER=9;
+    public static final int WHITESPACE=16;
     public static final int INT=5;
-    public static final int NONNULL=13;
+    public static final int NONNULL=15;
     public static final int T__30=30;
     public static final int T__31=31;
     public static final int T__32=32;
     public static final int T__33=33;
     public static final int T__34=34;
+    public static final int NEWLINE=13;
     public static final int T__35=35;
-    public static final int NEWLINE=9;
     public static final int T__36=36;
     public static final int T__37=37;
+    public static final int SPECIALCHAR=8;
     public static final int T__38=38;
     public static final int T__39=39;
-    public static final int LOWER=11;
-    public static final int UPPER=12;
+    public static final int LOWER=10;
+    public static final int UPPER=11;
     public static final int STRING=6;
 
     // delegates
@@ -110,7 +111,7 @@ public class MiniJavaParser extends Parser {
                 int alt1=2;
                 int LA1_0 = input.LA(1);
 
-                if ( (LA1_0==16) ) {
+                if ( (LA1_0==17) ) {
                     alt1=1;
                 }
 
@@ -163,19 +164,19 @@ public class MiniJavaParser extends Parser {
             // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:37:3: ( 'class' cname= IDENT '{' 'public' 'static' 'void' 'main' '(' 'String' '[' ']' parname= IDENT ')' b= block )
             // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:37:5: 'class' cname= IDENT '{' 'public' 'static' 'void' 'main' '(' 'String' '[' ']' parname= IDENT ')' b= block
             {
-            match(input,16,FOLLOW_16_in_mainClass100); 
+            match(input,17,FOLLOW_17_in_mainClass100); 
             cname=(Token)match(input,IDENT,FOLLOW_IDENT_in_mainClass106); 
-            match(input,17,FOLLOW_17_in_mainClass108); 
-            match(input,18,FOLLOW_18_in_mainClass115); 
-            match(input,19,FOLLOW_19_in_mainClass117); 
-            match(input,20,FOLLOW_20_in_mainClass119); 
-            match(input,21,FOLLOW_21_in_mainClass121); 
-            match(input,22,FOLLOW_22_in_mainClass123); 
-            match(input,23,FOLLOW_23_in_mainClass125); 
-            match(input,24,FOLLOW_24_in_mainClass127); 
-            match(input,25,FOLLOW_25_in_mainClass129); 
+            match(input,18,FOLLOW_18_in_mainClass108); 
+            match(input,19,FOLLOW_19_in_mainClass115); 
+            match(input,20,FOLLOW_20_in_mainClass117); 
+            match(input,21,FOLLOW_21_in_mainClass119); 
+            match(input,22,FOLLOW_22_in_mainClass121); 
+            match(input,23,FOLLOW_23_in_mainClass123); 
+            match(input,24,FOLLOW_24_in_mainClass125); 
+            match(input,25,FOLLOW_25_in_mainClass127); 
+            match(input,26,FOLLOW_26_in_mainClass129); 
             parname=(Token)match(input,IDENT,FOLLOW_IDENT_in_mainClass135); 
-            match(input,26,FOLLOW_26_in_mainClass137); 
+            match(input,27,FOLLOW_27_in_mainClass137); 
             pushFollow(FOLLOW_block_in_mainClass143);
             b=block();
 
@@ -223,20 +224,20 @@ public class MiniJavaParser extends Parser {
                 LinkedList<MJVariable> vdl = new LinkedList<MJVariable>();
                 LinkedList<MJMethod> mdl = new LinkedList<MJMethod>();
               
-            match(input,16,FOLLOW_16_in_classDeclaration174); 
+            match(input,17,FOLLOW_17_in_classDeclaration174); 
             cname=(Token)match(input,IDENT,FOLLOW_IDENT_in_classDeclaration180); 
             // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:54:25: ( 'extends' sc= IDENT )?
             int alt2=2;
             int LA2_0 = input.LA(1);
 
-            if ( (LA2_0==27) ) {
+            if ( (LA2_0==28) ) {
                 alt2=1;
             }
             switch (alt2) {
                 case 1 :
                     // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:54:26: 'extends' sc= IDENT
                     {
-                    match(input,27,FOLLOW_27_in_classDeclaration183); 
+                    match(input,28,FOLLOW_28_in_classDeclaration183); 
                     sc=(Token)match(input,IDENT,FOLLOW_IDENT_in_classDeclaration189); 
 
                     }
@@ -244,26 +245,26 @@ public class MiniJavaParser extends Parser {
 
             }
 
-            match(input,17,FOLLOW_17_in_classDeclaration193); 
+            match(input,18,FOLLOW_18_in_classDeclaration193); 
             // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:54:53: (v= varDeclaration )*
             loop3:
             do {
                 int alt3=2;
                 switch ( input.LA(1) ) {
-                case 30:
+                case 31:
                     {
                     int LA3_2 = input.LA(2);
 
-                    if ( (LA3_2==24) ) {
+                    if ( (LA3_2==25) ) {
                         int LA3_5 = input.LA(3);
 
-                        if ( (LA3_5==25) ) {
+                        if ( (LA3_5==26) ) {
                             int LA3_7 = input.LA(4);
 
                             if ( (LA3_7==IDENT) ) {
                                 int LA3_6 = input.LA(5);
 
-                                if ( (LA3_6==29) ) {
+                                if ( (LA3_6==30) ) {
                                     alt3=1;
                                 }
 
@@ -278,7 +279,7 @@ public class MiniJavaParser extends Parser {
                     else if ( (LA3_2==IDENT) ) {
                         int LA3_6 = input.LA(3);
 
-                        if ( (LA3_6==29) ) {
+                        if ( (LA3_6==30) ) {
                             alt3=1;
                         }
 
@@ -288,14 +289,14 @@ public class MiniJavaParser extends Parser {
 
                     }
                     break;
-                case 31:
+                case 32:
                     {
                     int LA3_3 = input.LA(2);
 
                     if ( (LA3_3==IDENT) ) {
                         int LA3_6 = input.LA(3);
 
-                        if ( (LA3_6==29) ) {
+                        if ( (LA3_6==30) ) {
                             alt3=1;
                         }
 
@@ -312,7 +313,7 @@ public class MiniJavaParser extends Parser {
                     if ( (LA3_4==IDENT) ) {
                         int LA3_6 = input.LA(3);
 
-                        if ( (LA3_6==29) ) {
+                        if ( (LA3_6==30) ) {
                             alt3=1;
                         }
 
@@ -350,7 +351,7 @@ public class MiniJavaParser extends Parser {
                 int alt4=2;
                 int LA4_0 = input.LA(1);
 
-                if ( (LA4_0==IDENT||(LA4_0>=18 && LA4_0<=20)||(LA4_0>=30 && LA4_0<=31)) ) {
+                if ( (LA4_0==IDENT||(LA4_0>=19 && LA4_0<=21)||(LA4_0>=31 && LA4_0<=32)) ) {
                     alt4=1;
                 }
 
@@ -374,7 +375,7 @@ public class MiniJavaParser extends Parser {
                 }
             } while (true);
 
-            match(input,28,FOLLOW_28_in_classDeclaration220); 
+            match(input,29,FOLLOW_29_in_classDeclaration220); 
 
                 c = new MJClass((cname!=null?cname.getText():null),(sc!=null?sc.getText():null),vdl,mdl);
               
@@ -411,7 +412,7 @@ public class MiniJavaParser extends Parser {
                    LinkedList<MJStatement> sdl = new LinkedList<MJStatement>();
                    
                 
-            match(input,17,FOLLOW_17_in_block255); 
+            match(input,18,FOLLOW_18_in_block255); 
             // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:65:9: (vd= varDeclaration )*
             loop5:
             do {
@@ -427,7 +428,7 @@ public class MiniJavaParser extends Parser {
 
 
                 }
-                else if ( ((LA5_0>=30 && LA5_0<=31)) ) {
+                else if ( ((LA5_0>=31 && LA5_0<=32)) ) {
                     alt5=1;
                 }
 
@@ -457,7 +458,7 @@ public class MiniJavaParser extends Parser {
                 int alt6=2;
                 int LA6_0 = input.LA(1);
 
-                if ( (LA6_0==IDENT||LA6_0==17||LA6_0==34||LA6_0==36||LA6_0==38) ) {
+                if ( (LA6_0==IDENT||LA6_0==18||LA6_0==35||LA6_0==37||LA6_0==39) ) {
                     alt6=1;
                 }
 
@@ -481,7 +482,7 @@ public class MiniJavaParser extends Parser {
                 }
             } while (true);
 
-            match(input,28,FOLLOW_28_in_block305); 
+            match(input,29,FOLLOW_29_in_block305); 
 
                    b = new MJBlock(vdl, sdl);
                 
@@ -519,7 +520,7 @@ public class MiniJavaParser extends Parser {
             state._fsp--;
 
             n=(Token)match(input,IDENT,FOLLOW_IDENT_in_varDeclaration353); 
-            match(input,29,FOLLOW_29_in_varDeclaration355); 
+            match(input,30,FOLLOW_30_in_varDeclaration355); 
 
                 vd = new MJVariable(t,n.getText());
               
@@ -549,11 +550,11 @@ public class MiniJavaParser extends Parser {
             // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:88:3: ( 'int' | 'boolean' | 'int' '[' ']' | IDENT )
             int alt7=4;
             switch ( input.LA(1) ) {
-            case 30:
+            case 31:
                 {
                 int LA7_1 = input.LA(2);
 
-                if ( (LA7_1==24) ) {
+                if ( (LA7_1==25) ) {
                     alt7=3;
                 }
                 else if ( (LA7_1==IDENT) ) {
@@ -567,7 +568,7 @@ public class MiniJavaParser extends Parser {
                 }
                 }
                 break;
-            case 31:
+            case 32:
                 {
                 alt7=2;
                 }
@@ -588,7 +589,7 @@ public class MiniJavaParser extends Parser {
                 case 1 :
                     // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:88:5: 'int'
                     {
-                    match(input,30,FOLLOW_30_in_type377); 
+                    match(input,31,FOLLOW_31_in_type377); 
                      t = MJType.Tint; 
 
                     }
@@ -596,7 +597,7 @@ public class MiniJavaParser extends Parser {
                 case 2 :
                     // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:90:5: 'boolean'
                     {
-                    match(input,31,FOLLOW_31_in_type388); 
+                    match(input,32,FOLLOW_32_in_type388); 
                      t = MJType.Tboolean; 
 
                     }
@@ -604,9 +605,9 @@ public class MiniJavaParser extends Parser {
                 case 3 :
                     // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:92:5: 'int' '[' ']'
                     {
-                    match(input,30,FOLLOW_30_in_type398); 
-                    match(input,24,FOLLOW_24_in_type400); 
-                    match(input,25,FOLLOW_25_in_type402); 
+                    match(input,31,FOLLOW_31_in_type398); 
+                    match(input,25,FOLLOW_25_in_type400); 
+                    match(input,26,FOLLOW_26_in_type402); 
                     t = MJType.TintArray;
 
                     }
@@ -636,96 +637,110 @@ public class MiniJavaParser extends Parser {
 
 
     // $ANTLR start "methodDeclaration"
-    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:100:1: methodDeclaration returns [MJMethod m] : ( 'public' )? ( 'static' )? procType IDENT '(' ( type IDENT ( ',' type IDENT )* )? ')' '{' ( varDeclaration )* ( statement )* 'return' optExpression ';' '}' ;
+    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:100:1: methodDeclaration returns [MJMethod m] : ( 'public' )? ( 'static' )? procType name= IDENT '(' ( type par= IDENT ( ',' type par= IDENT )* )? ')' '{' ( varDeclaration )* ( statement )* 'return' optExpression ';' '}' ;
     public final MJMethod methodDeclaration() throws RecognitionException {
         MJMethod m = null;
 
+        Token name=null;
+        Token par=null;
+
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:101:3: ( ( 'public' )? ( 'static' )? procType IDENT '(' ( type IDENT ( ',' type IDENT )* )? ')' '{' ( varDeclaration )* ( statement )* 'return' optExpression ';' '}' )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:101:5: ( 'public' )? ( 'static' )? procType IDENT '(' ( type IDENT ( ',' type IDENT )* )? ')' '{' ( varDeclaration )* ( statement )* 'return' optExpression ';' '}'
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:101:3: ( ( 'public' )? ( 'static' )? procType name= IDENT '(' ( type par= IDENT ( ',' type par= IDENT )* )? ')' '{' ( varDeclaration )* ( statement )* 'return' optExpression ';' '}' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:101:5: ( 'public' )? ( 'static' )? procType name= IDENT '(' ( type par= IDENT ( ',' type par= IDENT )* )? ')' '{' ( varDeclaration )* ( statement )* 'return' optExpression ';' '}'
             {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:101:5: ( 'public' )?
+
+                 LinkedList<MJVariable> parList = new LinkedList<MJVariable>();
+                 LinkedList<MJVariable> vdl   = new LinkedList<MJVariable>();
+                 LinkedList<MJStatement> sdl   = new LinkedList<MJStatement>();
+                 MJBlock b = new MJBlock(vdl,sdl);
+                 boolean isStatic,isPublic = false;
+              
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:108:3: ( 'public' )?
             int alt8=2;
             int LA8_0 = input.LA(1);
 
-            if ( (LA8_0==18) ) {
+            if ( (LA8_0==19) ) {
                 alt8=1;
             }
             switch (alt8) {
                 case 1 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:101:6: 'public'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:108:4: 'public'
                     {
-                    match(input,18,FOLLOW_18_in_methodDeclaration439); 
+                    match(input,19,FOLLOW_19_in_methodDeclaration443); 
+                    isPublic = true;
 
                     }
                     break;
 
             }
 
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:101:17: ( 'static' )?
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:108:34: ( 'static' )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
-            if ( (LA9_0==19) ) {
+            if ( (LA9_0==20) ) {
                 alt9=1;
             }
             switch (alt9) {
                 case 1 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:101:18: 'static'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:108:35: 'static'
                     {
-                    match(input,19,FOLLOW_19_in_methodDeclaration444); 
+                    match(input,20,FOLLOW_20_in_methodDeclaration450); 
+                    isStatic = true;
 
                     }
                     break;
 
             }
 
-            pushFollow(FOLLOW_procType_in_methodDeclaration448);
+            pushFollow(FOLLOW_procType_in_methodDeclaration456);
             procType();
 
             state._fsp--;
 
-            match(input,IDENT,FOLLOW_IDENT_in_methodDeclaration450); 
-            match(input,22,FOLLOW_22_in_methodDeclaration452); 
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:101:48: ( type IDENT ( ',' type IDENT )* )?
+            name=(Token)match(input,IDENT,FOLLOW_IDENT_in_methodDeclaration462); 
+            match(input,23,FOLLOW_23_in_methodDeclaration464); 
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:108:91: ( type par= IDENT ( ',' type par= IDENT )* )?
             int alt11=2;
             int LA11_0 = input.LA(1);
 
-            if ( (LA11_0==IDENT||(LA11_0>=30 && LA11_0<=31)) ) {
+            if ( (LA11_0==IDENT||(LA11_0>=31 && LA11_0<=32)) ) {
                 alt11=1;
             }
             switch (alt11) {
                 case 1 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:101:49: type IDENT ( ',' type IDENT )*
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:108:92: type par= IDENT ( ',' type par= IDENT )*
                     {
-                    pushFollow(FOLLOW_type_in_methodDeclaration455);
+                    pushFollow(FOLLOW_type_in_methodDeclaration467);
                     type();
 
                     state._fsp--;
 
-                    match(input,IDENT,FOLLOW_IDENT_in_methodDeclaration457); 
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:101:59: ( ',' type IDENT )*
+                    par=(Token)match(input,IDENT,FOLLOW_IDENT_in_methodDeclaration473); 
+                    parList.add(par);
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:108:129: ( ',' type par= IDENT )*
                     loop10:
                     do {
                         int alt10=2;
                         int LA10_0 = input.LA(1);
 
-                        if ( (LA10_0==32) ) {
+                        if ( (LA10_0==33) ) {
                             alt10=1;
                         }
 
 
                         switch (alt10) {
                     	case 1 :
-                    	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:101:60: ',' type IDENT
+                    	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:108:130: ',' type par= IDENT
                     	    {
-                    	    match(input,32,FOLLOW_32_in_methodDeclaration459); 
-                    	    pushFollow(FOLLOW_type_in_methodDeclaration461);
+                    	    match(input,33,FOLLOW_33_in_methodDeclaration478); 
+                    	    pushFollow(FOLLOW_type_in_methodDeclaration480);
                     	    type();
 
                     	    state._fsp--;
 
-                    	    match(input,IDENT,FOLLOW_IDENT_in_methodDeclaration463); 
+                    	    par=(Token)match(input,IDENT,FOLLOW_IDENT_in_methodDeclaration486); 
+                    	    parList.add(par);
 
                     	    }
                     	    break;
@@ -741,9 +756,9 @@ public class MiniJavaParser extends Parser {
 
             }
 
-            match(input,26,FOLLOW_26_in_methodDeclaration469); 
-            match(input,17,FOLLOW_17_in_methodDeclaration471); 
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:102:19: ( varDeclaration )*
+            match(input,27,FOLLOW_27_in_methodDeclaration495); 
+            match(input,18,FOLLOW_18_in_methodDeclaration497); 
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:109:19: ( varDeclaration )*
             loop12:
             do {
                 int alt12=2;
@@ -758,20 +773,21 @@ public class MiniJavaParser extends Parser {
 
 
                 }
-                else if ( ((LA12_0>=30 && LA12_0<=31)) ) {
+                else if ( ((LA12_0>=31 && LA12_0<=32)) ) {
                     alt12=1;
                 }
 
 
                 switch (alt12) {
             	case 1 :
-            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:102:20: varDeclaration
+            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:109:20: varDeclaration
             	    {
-            	    pushFollow(FOLLOW_varDeclaration_in_methodDeclaration492);
+            	    pushFollow(FOLLOW_varDeclaration_in_methodDeclaration518);
             	    varDeclaration();
 
             	    state._fsp--;
 
+            	    vdl.add(varDeclaration);
 
             	    }
             	    break;
@@ -781,26 +797,27 @@ public class MiniJavaParser extends Parser {
                 }
             } while (true);
 
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:102:37: ( statement )*
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:109:65: ( statement )*
             loop13:
             do {
                 int alt13=2;
                 int LA13_0 = input.LA(1);
 
-                if ( (LA13_0==IDENT||LA13_0==17||LA13_0==34||LA13_0==36||LA13_0==38) ) {
+                if ( (LA13_0==IDENT||LA13_0==18||LA13_0==35||LA13_0==37||LA13_0==39) ) {
                     alt13=1;
                 }
 
 
                 switch (alt13) {
             	case 1 :
-            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:102:38: statement
+            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:109:66: statement
             	    {
-            	    pushFollow(FOLLOW_statement_in_methodDeclaration497);
+            	    pushFollow(FOLLOW_statement_in_methodDeclaration526);
             	    statement();
 
             	    state._fsp--;
 
+            	    sdl.add(statement);
 
             	    }
             	    break;
@@ -810,15 +827,16 @@ public class MiniJavaParser extends Parser {
                 }
             } while (true);
 
-            match(input,33,FOLLOW_33_in_methodDeclaration502); 
-            pushFollow(FOLLOW_optExpression_in_methodDeclaration504);
+            match(input,34,FOLLOW_34_in_methodDeclaration533); 
+            pushFollow(FOLLOW_optExpression_in_methodDeclaration535);
             optExpression();
 
             state._fsp--;
 
-            match(input,29,FOLLOW_29_in_methodDeclaration506); 
-            match(input,28,FOLLOW_28_in_methodDeclaration508); 
+            match(input,30,FOLLOW_30_in_methodDeclaration537); 
+            match(input,29,FOLLOW_29_in_methodDeclaration539); 
 
+                m = new MJMethod(procType, (name!=null?name.getText():null), parList, b, isStatic, isPublic); 
               
 
             }
@@ -836,19 +854,19 @@ public class MiniJavaParser extends Parser {
 
 
     // $ANTLR start "procType"
-    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:107:1: procType returns [MJType t] : ( 'void' | type );
+    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:115:1: procType returns [MJType t] : ( 'void' | type );
     public final MJType procType() throws RecognitionException {
         MJType t = null;
 
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:108:3: ( 'void' | type )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:116:3: ( 'void' | type )
             int alt14=2;
             int LA14_0 = input.LA(1);
 
-            if ( (LA14_0==20) ) {
+            if ( (LA14_0==21) ) {
                 alt14=1;
             }
-            else if ( (LA14_0==IDENT||(LA14_0>=30 && LA14_0<=31)) ) {
+            else if ( (LA14_0==IDENT||(LA14_0>=31 && LA14_0<=32)) ) {
                 alt14=2;
             }
             else {
@@ -859,17 +877,17 @@ public class MiniJavaParser extends Parser {
             }
             switch (alt14) {
                 case 1 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:108:5: 'void'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:116:5: 'void'
                     {
-                    match(input,20,FOLLOW_20_in_procType532); 
+                    match(input,21,FOLLOW_21_in_procType563); 
                      t = MJType.Tvoid; 
 
                     }
                     break;
                 case 2 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:110:5: type
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:118:5: type
                     {
-                    pushFollow(FOLLOW_type_in_procType543);
+                    pushFollow(FOLLOW_type_in_procType574);
                     type();
 
                     state._fsp--;
@@ -892,7 +910,7 @@ public class MiniJavaParser extends Parser {
 
 
     // $ANTLR start "statement"
-    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:117:1: statement returns [MJStatement s] : ( 'System.out.println' '(' ep= expression ')' ';' | va= IDENT '=' ea= expression ';' | b= block | 'if' '(' cond= expression ')' (ifblock= block ) ( 'else' elseblock= block )? | 'while' '(' expr= expression ')' stmt= statement | va= IDENT '(' (expr= expression ( ',' expr= expression )* )? ')' ';' );
+    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:125:1: statement returns [MJStatement s] : ( 'System.out.println' '(' ep= expression ')' ';' | va= IDENT '=' ea= expression ';' | b= block | 'if' '(' cond= expression ')' (ifblock= block ) ( 'else' elseblock= block )? | 'while' '(' expr= expression ')' stmt= statement | va= IDENT '(' (expr= expression ( ',' expr= expression )* )? ')' ';' );
     public final MJStatement statement() throws RecognitionException {
         MJStatement s = null;
 
@@ -915,10 +933,10 @@ public class MiniJavaParser extends Parser {
 
 
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:118:3: ( 'System.out.println' '(' ep= expression ')' ';' | va= IDENT '=' ea= expression ';' | b= block | 'if' '(' cond= expression ')' (ifblock= block ) ( 'else' elseblock= block )? | 'while' '(' expr= expression ')' stmt= statement | va= IDENT '(' (expr= expression ( ',' expr= expression )* )? ')' ';' )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:126:3: ( 'System.out.println' '(' ep= expression ')' ';' | va= IDENT '=' ea= expression ';' | b= block | 'if' '(' cond= expression ')' (ifblock= block ) ( 'else' elseblock= block )? | 'while' '(' expr= expression ')' stmt= statement | va= IDENT '(' (expr= expression ( ',' expr= expression )* )? ')' ';' )
             int alt18=6;
             switch ( input.LA(1) ) {
-            case 34:
+            case 35:
                 {
                 alt18=1;
                 }
@@ -927,10 +945,10 @@ public class MiniJavaParser extends Parser {
                 {
                 int LA18_2 = input.LA(2);
 
-                if ( (LA18_2==35) ) {
+                if ( (LA18_2==36) ) {
                     alt18=2;
                 }
-                else if ( (LA18_2==22) ) {
+                else if ( (LA18_2==23) ) {
                     alt18=6;
                 }
                 else {
@@ -941,17 +959,17 @@ public class MiniJavaParser extends Parser {
                 }
                 }
                 break;
-            case 17:
+            case 18:
                 {
                 alt18=3;
                 }
                 break;
-            case 36:
+            case 37:
                 {
                 alt18=4;
                 }
                 break;
-            case 38:
+            case 39:
                 {
                 alt18=5;
                 }
@@ -965,17 +983,17 @@ public class MiniJavaParser extends Parser {
 
             switch (alt18) {
                 case 1 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:118:5: 'System.out.println' '(' ep= expression ')' ';'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:126:5: 'System.out.println' '(' ep= expression ')' ';'
                     {
-                    match(input,34,FOLLOW_34_in_statement572); 
-                    match(input,22,FOLLOW_22_in_statement574); 
-                    pushFollow(FOLLOW_expression_in_statement580);
+                    match(input,35,FOLLOW_35_in_statement603); 
+                    match(input,23,FOLLOW_23_in_statement605); 
+                    pushFollow(FOLLOW_expression_in_statement611);
                     ep=expression();
 
                     state._fsp--;
 
-                    match(input,26,FOLLOW_26_in_statement582); 
-                    match(input,29,FOLLOW_29_in_statement584); 
+                    match(input,27,FOLLOW_27_in_statement613); 
+                    match(input,30,FOLLOW_30_in_statement615); 
 
                         s = new MJPrintln(ep);
                       
@@ -983,16 +1001,16 @@ public class MiniJavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:122:5: va= IDENT '=' ea= expression ';'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:130:5: va= IDENT '=' ea= expression ';'
                     {
-                    va=(Token)match(input,IDENT,FOLLOW_IDENT_in_statement599); 
-                    match(input,35,FOLLOW_35_in_statement601); 
-                    pushFollow(FOLLOW_expression_in_statement607);
+                    va=(Token)match(input,IDENT,FOLLOW_IDENT_in_statement630); 
+                    match(input,36,FOLLOW_36_in_statement632); 
+                    pushFollow(FOLLOW_expression_in_statement638);
                     ea=expression();
 
                     state._fsp--;
 
-                    match(input,29,FOLLOW_29_in_statement609); 
+                    match(input,30,FOLLOW_30_in_statement640); 
 
                         s = new MJAssign(new MJIdentifier((va!=null?va.getText():null)), ea);
                       
@@ -1000,9 +1018,9 @@ public class MiniJavaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:126:5: b= block
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:134:5: b= block
                     {
-                    pushFollow(FOLLOW_block_in_statement624);
+                    pushFollow(FOLLOW_block_in_statement655);
                     b=block();
 
                     state._fsp--;
@@ -1014,20 +1032,20 @@ public class MiniJavaParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:130:5: 'if' '(' cond= expression ')' (ifblock= block ) ( 'else' elseblock= block )?
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:138:5: 'if' '(' cond= expression ')' (ifblock= block ) ( 'else' elseblock= block )?
                     {
-                    match(input,36,FOLLOW_36_in_statement637); 
-                    match(input,22,FOLLOW_22_in_statement639); 
-                    pushFollow(FOLLOW_expression_in_statement645);
+                    match(input,37,FOLLOW_37_in_statement668); 
+                    match(input,23,FOLLOW_23_in_statement670); 
+                    pushFollow(FOLLOW_expression_in_statement676);
                     cond=expression();
 
                     state._fsp--;
 
-                    match(input,26,FOLLOW_26_in_statement647); 
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:130:36: (ifblock= block )
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:130:37: ifblock= block
+                    match(input,27,FOLLOW_27_in_statement678); 
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:138:36: (ifblock= block )
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:138:37: ifblock= block
                     {
-                    pushFollow(FOLLOW_block_in_statement654);
+                    pushFollow(FOLLOW_block_in_statement685);
                     ifblock=block();
 
                     state._fsp--;
@@ -1035,19 +1053,19 @@ public class MiniJavaParser extends Parser {
 
                     }
 
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:130:54: ( 'else' elseblock= block )?
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:138:54: ( 'else' elseblock= block )?
                     int alt15=2;
                     int LA15_0 = input.LA(1);
 
-                    if ( (LA15_0==37) ) {
+                    if ( (LA15_0==38) ) {
                         alt15=1;
                     }
                     switch (alt15) {
                         case 1 :
-                            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:130:55: 'else' elseblock= block
+                            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:138:55: 'else' elseblock= block
                             {
-                            match(input,37,FOLLOW_37_in_statement658); 
-                            pushFollow(FOLLOW_block_in_statement664);
+                            match(input,38,FOLLOW_38_in_statement689); 
+                            pushFollow(FOLLOW_block_in_statement695);
                             elseblock=block();
 
                             state._fsp--;
@@ -1066,17 +1084,17 @@ public class MiniJavaParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:135:5: 'while' '(' expr= expression ')' stmt= statement
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:143:5: 'while' '(' expr= expression ')' stmt= statement
                     {
-                    match(input,38,FOLLOW_38_in_statement677); 
-                    match(input,22,FOLLOW_22_in_statement679); 
-                    pushFollow(FOLLOW_expression_in_statement685);
+                    match(input,39,FOLLOW_39_in_statement708); 
+                    match(input,23,FOLLOW_23_in_statement710); 
+                    pushFollow(FOLLOW_expression_in_statement716);
                     expr=expression();
 
                     state._fsp--;
 
-                    match(input,26,FOLLOW_26_in_statement687); 
-                    pushFollow(FOLLOW_statement_in_statement693);
+                    match(input,27,FOLLOW_27_in_statement718); 
+                    pushFollow(FOLLOW_statement_in_statement724);
                     stmt=statement();
 
                     state._fsp--;
@@ -1088,45 +1106,45 @@ public class MiniJavaParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:139:5: va= IDENT '(' (expr= expression ( ',' expr= expression )* )? ')' ';'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:147:5: va= IDENT '(' (expr= expression ( ',' expr= expression )* )? ')' ';'
                     {
                     LinkedList<MJExpression> pml = new LinkedList<MJExpression>();
-                    va=(Token)match(input,IDENT,FOLLOW_IDENT_in_statement714); 
-                    match(input,22,FOLLOW_22_in_statement716); 
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:140:19: (expr= expression ( ',' expr= expression )* )?
+                    va=(Token)match(input,IDENT,FOLLOW_IDENT_in_statement745); 
+                    match(input,23,FOLLOW_23_in_statement747); 
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:148:19: (expr= expression ( ',' expr= expression )* )?
                     int alt17=2;
                     int LA17_0 = input.LA(1);
 
-                    if ( ((LA17_0>=IDENT && LA17_0<=STRING)||LA17_0==22||LA17_0==43||(LA17_0>=45 && LA17_0<=47)||LA17_0==49) ) {
+                    if ( ((LA17_0>=IDENT && LA17_0<=STRING)||LA17_0==23||LA17_0==44||(LA17_0>=46 && LA17_0<=48)||LA17_0==50) ) {
                         alt17=1;
                     }
                     switch (alt17) {
                         case 1 :
-                            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:140:20: expr= expression ( ',' expr= expression )*
+                            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:148:20: expr= expression ( ',' expr= expression )*
                             {
-                            pushFollow(FOLLOW_expression_in_statement723);
+                            pushFollow(FOLLOW_expression_in_statement754);
                             expr=expression();
 
                             state._fsp--;
 
                             pml.add(expr);
-                            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:140:55: ( ',' expr= expression )*
+                            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:148:55: ( ',' expr= expression )*
                             loop16:
                             do {
                                 int alt16=2;
                                 int LA16_0 = input.LA(1);
 
-                                if ( (LA16_0==32) ) {
+                                if ( (LA16_0==33) ) {
                                     alt16=1;
                                 }
 
 
                                 switch (alt16) {
                             	case 1 :
-                            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:140:57: ',' expr= expression
+                            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:148:57: ',' expr= expression
                             	    {
-                            	    match(input,32,FOLLOW_32_in_statement729); 
-                            	    pushFollow(FOLLOW_expression_in_statement735);
+                            	    match(input,33,FOLLOW_33_in_statement760); 
+                            	    pushFollow(FOLLOW_expression_in_statement766);
                             	    expr=expression();
 
                             	    state._fsp--;
@@ -1147,8 +1165,8 @@ public class MiniJavaParser extends Parser {
 
                     }
 
-                    match(input,26,FOLLOW_26_in_statement744); 
-                    match(input,29,FOLLOW_29_in_statement746); 
+                    match(input,27,FOLLOW_27_in_statement775); 
+                    match(input,30,FOLLOW_30_in_statement777); 
 
                         s = new MJMethodCallStmt(new MJIdentifier((va!=null?va.getText():null)),pml);
                       
@@ -1170,47 +1188,53 @@ public class MiniJavaParser extends Parser {
 
 
     // $ANTLR start "expression"
-    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:151:1: expression returns [MJExpression e] : lhs= level1 ( '&&' l1= level1 )* ;
+    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:159:1: expression returns [MJExpression e] : l1= level1 ( '&&' rhs= level1 )* ;
     public final MJExpression expression() throws RecognitionException {
         MJExpression e = null;
 
-        MJExpression lhs = null;
-
         MJExpression l1 = null;
+
+        MJExpression rhs = null;
 
 
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:152:3: (lhs= level1 ( '&&' l1= level1 )* )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:152:5: lhs= level1 ( '&&' l1= level1 )*
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:160:3: (l1= level1 ( '&&' rhs= level1 )* )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:160:5: l1= level1 ( '&&' rhs= level1 )*
             {
-            LinkedList<MJExpression> exprlist = new LinkedList<MJExpression>(); 
-            pushFollow(FOLLOW_level1_in_expression792);
-            lhs=level1();
+             MJExpression lhs = null; 
+            pushFollow(FOLLOW_level1_in_expression822);
+            l1=level1();
 
             state._fsp--;
 
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:153:16: ( '&&' l1= level1 )*
+            lhs = l1; e = l1;
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:163:3: ( '&&' rhs= level1 )*
             loop19:
             do {
                 int alt19=2;
                 int LA19_0 = input.LA(1);
 
-                if ( (LA19_0==39) ) {
+                if ( (LA19_0==40) ) {
                     alt19=1;
                 }
 
 
                 switch (alt19) {
             	case 1 :
-            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:153:17: '&&' l1= level1
+            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:163:4: '&&' rhs= level1
             	    {
-            	    match(input,39,FOLLOW_39_in_expression795); 
-            	    pushFollow(FOLLOW_level1_in_expression801);
-            	    l1=level1();
+            	    match(input,40,FOLLOW_40_in_expression834); 
+            	    pushFollow(FOLLOW_level1_in_expression840);
+            	    rhs=level1();
 
             	    state._fsp--;
 
-            	    exprlist.add(l1);
+            	     MJAnd op = new MJAnd();
+            	       op.setLhs(lhs);
+            	       op.seRLhs(rhs);
+            	       lhs = op;
+            	       e = op;
+            	       
 
             	    }
             	    break;
@@ -1220,7 +1244,6 @@ public class MiniJavaParser extends Parser {
                 }
             } while (true);
 
-            e = new MJAnd(lhs,exprlist);
 
             }
 
@@ -1237,47 +1260,53 @@ public class MiniJavaParser extends Parser {
 
 
     // $ANTLR start "level1"
-    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:158:1: level1 returns [MJExpression e] : lhs= level2 ( '==' l2= level2 )* ;
+    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:174:1: level1 returns [MJExpression e] : l2= level2 ( '==' rhs= level2 )* ;
     public final MJExpression level1() throws RecognitionException {
         MJExpression e = null;
 
-        MJExpression lhs = null;
-
         MJExpression l2 = null;
+
+        MJExpression rhs = null;
 
 
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:159:3: (lhs= level2 ( '==' l2= level2 )* )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:159:5: lhs= level2 ( '==' l2= level2 )*
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:175:3: (l2= level2 ( '==' rhs= level2 )* )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:175:5: l2= level2 ( '==' rhs= level2 )*
             {
-            LinkedList<MJExpression> exprlist = new LinkedList<MJExpression>(); 
-            pushFollow(FOLLOW_level2_in_level1838);
-            lhs=level2();
+             MJExpression lhs = null; 
+            pushFollow(FOLLOW_level2_in_level1879);
+            l2=level2();
 
             state._fsp--;
 
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:160:16: ( '==' l2= level2 )*
+            lhs = l2; e = l2;
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:178:3: ( '==' rhs= level2 )*
             loop20:
             do {
                 int alt20=2;
                 int LA20_0 = input.LA(1);
 
-                if ( (LA20_0==40) ) {
+                if ( (LA20_0==41) ) {
                     alt20=1;
                 }
 
 
                 switch (alt20) {
             	case 1 :
-            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:160:17: '==' l2= level2
+            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:178:4: '==' rhs= level2
             	    {
-            	    match(input,40,FOLLOW_40_in_level1841); 
-            	    pushFollow(FOLLOW_level2_in_level1847);
-            	    l2=level2();
+            	    match(input,41,FOLLOW_41_in_level1891); 
+            	    pushFollow(FOLLOW_level2_in_level1897);
+            	    rhs=level2();
 
             	    state._fsp--;
 
-            	    exprlist.add(l2);
+            	     MJEqual op = new MJEqual();
+            	       op.setLhs(lhs);
+            	       op.seRLhs(rhs);
+            	       lhs = op;
+            	       e = op;
+            	       
 
             	    }
             	    break;
@@ -1287,7 +1316,6 @@ public class MiniJavaParser extends Parser {
                 }
             } while (true);
 
-            e = new MJEqual(lhs, exprlist);
 
             }
 
@@ -1304,41 +1332,53 @@ public class MiniJavaParser extends Parser {
 
 
     // $ANTLR start "level2"
-    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:165:1: level2 returns [MJExpression e] : level3 ( '<' level3 )* ;
+    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:189:1: level2 returns [MJExpression e] : l3= level3 ( '<' rhs= level3 )* ;
     public final MJExpression level2() throws RecognitionException {
         MJExpression e = null;
 
+        MJExpression l3 = null;
+
+        MJExpression rhs = null;
+
+
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:166:3: ( level3 ( '<' level3 )* )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:166:5: level3 ( '<' level3 )*
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:190:3: (l3= level3 ( '<' rhs= level3 )* )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:190:5: l3= level3 ( '<' rhs= level3 )*
             {
-            LinkedList<MJExpression> exprlist = new LinkedList<MJExpression>(); 
-            pushFollow(FOLLOW_level3_in_level2881);
-            level3();
+             MJExpression lhs = null; 
+            pushFollow(FOLLOW_level3_in_level2936);
+            l3=level3();
 
             state._fsp--;
 
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:167:10: ( '<' level3 )*
+            lhs = l3; e = l3;
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:193:3: ( '<' rhs= level3 )*
             loop21:
             do {
                 int alt21=2;
                 int LA21_0 = input.LA(1);
 
-                if ( (LA21_0==41) ) {
+                if ( (LA21_0==42) ) {
                     alt21=1;
                 }
 
 
                 switch (alt21) {
             	case 1 :
-            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:167:11: '<' level3
+            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:193:4: '<' rhs= level3
             	    {
-            	    match(input,41,FOLLOW_41_in_level2884); 
-            	    pushFollow(FOLLOW_level3_in_level2886);
-            	    level3();
+            	    match(input,42,FOLLOW_42_in_level2948); 
+            	    pushFollow(FOLLOW_level3_in_level2954);
+            	    rhs=level3();
 
             	    state._fsp--;
 
+            	     MJLess op = new MJLess();
+            	       op.setLhs(lhs);
+            	       op.seRLhs(rhs);
+            	       lhs = op;
+            	       e = op;
+            	       
 
             	    }
             	    break;
@@ -1348,7 +1388,6 @@ public class MiniJavaParser extends Parser {
                 }
             } while (true);
 
-            e = new MJLess();
 
             }
 
@@ -1365,59 +1404,98 @@ public class MiniJavaParser extends Parser {
 
 
     // $ANTLR start "level3"
-    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:172:1: level3 returns [MJExpression e] : level4 ( ( '+' | '-' ) level4 )* ;
+    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:204:1: level3 returns [MJExpression e] : l4= level4 ( ( '+' | '-' ) rhs= level4 )* ;
     public final MJExpression level3() throws RecognitionException {
         MJExpression e = null;
 
+        MJExpression l4 = null;
+
+        MJExpression rhs = null;
+
+
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:173:3: ( level4 ( ( '+' | '-' ) level4 )* )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:173:5: level4 ( ( '+' | '-' ) level4 )*
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:205:3: (l4= level4 ( ( '+' | '-' ) rhs= level4 )* )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:205:5: l4= level4 ( ( '+' | '-' ) rhs= level4 )*
             {
-            LinkedList<MJExpression> exprlist = new LinkedList<MJExpression>(); 
-            pushFollow(FOLLOW_level4_in_level3916);
-            level4();
+             MJExpression lhs = null; 
+            pushFollow(FOLLOW_level4_in_level3993);
+            l4=level4();
 
             state._fsp--;
 
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:174:10: ( ( '+' | '-' ) level4 )*
-            loop22:
+            lhs = l4; e = l4;
+            MJBinaryOp op = null
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:209:3: ( ( '+' | '-' ) rhs= level4 )*
+            loop23:
             do {
-                int alt22=2;
-                int LA22_0 = input.LA(1);
+                int alt23=2;
+                int LA23_0 = input.LA(1);
 
-                if ( ((LA22_0>=42 && LA22_0<=43)) ) {
-                    alt22=1;
+                if ( ((LA23_0>=43 && LA23_0<=44)) ) {
+                    alt23=1;
                 }
 
 
-                switch (alt22) {
+                switch (alt23) {
             	case 1 :
-            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:174:11: ( '+' | '-' ) level4
+            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:209:4: ( '+' | '-' ) rhs= level4
             	    {
-            	    if ( (input.LA(1)>=42 && input.LA(1)<=43) ) {
-            	        input.consume();
-            	        state.errorRecovery=false;
+            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:209:4: ( '+' | '-' )
+            	    int alt22=2;
+            	    int LA22_0 = input.LA(1);
+
+            	    if ( (LA22_0==43) ) {
+            	        alt22=1;
+            	    }
+            	    else if ( (LA22_0==44) ) {
+            	        alt22=2;
             	    }
             	    else {
-            	        MismatchedSetException mse = new MismatchedSetException(null,input);
-            	        throw mse;
+            	        NoViableAltException nvae =
+            	            new NoViableAltException("", 22, 0, input);
+
+            	        throw nvae;
+            	    }
+            	    switch (alt22) {
+            	        case 1 :
+            	            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:209:5: '+'
+            	            {
+            	            match(input,43,FOLLOW_43_in_level31015); 
+            	            op = new MJPlus();
+
+            	            }
+            	            break;
+            	        case 2 :
+            	            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:211:5: '-'
+            	            {
+            	            match(input,44,FOLLOW_44_in_level31030); 
+            	            op = new MJMinus();
+
+            	            }
+            	            break;
+
             	    }
 
-            	    pushFollow(FOLLOW_level4_in_level3927);
-            	    level4();
+            	    pushFollow(FOLLOW_level4_in_level31051);
+            	    rhs=level4();
 
             	    state._fsp--;
 
+
+            	       op.setLhs(lhs);
+            	       op.seRLhs(rhs);
+            	       lhs = op;
+            	       e = op;
+            	       
 
             	    }
             	    break;
 
             	default :
-            	    break loop22;
+            	    break loop23;
                 }
             } while (true);
 
-            e = new MJPlus();
 
             }
 
@@ -1434,50 +1512,61 @@ public class MiniJavaParser extends Parser {
 
 
     // $ANTLR start "level4"
-    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:179:1: level4 returns [MJExpression e] : level5 ( '*' level5 )* ;
+    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:223:1: level4 returns [MJExpression e] : l5= level5 ( '*' rhs= level5 )* ;
     public final MJExpression level4() throws RecognitionException {
         MJExpression e = null;
 
+        MJExpression l5 = null;
+
+        MJExpression rhs = null;
+
+
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:180:3: ( level5 ( '*' level5 )* )
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:180:5: level5 ( '*' level5 )*
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:224:3: (l5= level5 ( '*' rhs= level5 )* )
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:224:5: l5= level5 ( '*' rhs= level5 )*
             {
-            LinkedList<MJExpression> exprlist = new LinkedList<MJExpression>(); 
-            pushFollow(FOLLOW_level5_in_level4957);
-            level5();
+             MJExpression lhs = null; 
+            pushFollow(FOLLOW_level5_in_level41085);
+            l5=level5();
 
             state._fsp--;
 
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:181:10: ( '*' level5 )*
-            loop23:
+            lhs = l5; e = l5;
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:227:3: ( '*' rhs= level5 )*
+            loop24:
             do {
-                int alt23=2;
-                int LA23_0 = input.LA(1);
+                int alt24=2;
+                int LA24_0 = input.LA(1);
 
-                if ( (LA23_0==44) ) {
-                    alt23=1;
+                if ( (LA24_0==45) ) {
+                    alt24=1;
                 }
 
 
-                switch (alt23) {
+                switch (alt24) {
             	case 1 :
-            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:181:11: '*' level5
+            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:227:4: '*' rhs= level5
             	    {
-            	    match(input,44,FOLLOW_44_in_level4960); 
-            	    pushFollow(FOLLOW_level5_in_level4962);
-            	    level5();
+            	    match(input,45,FOLLOW_45_in_level41095); 
+            	    pushFollow(FOLLOW_level5_in_level41101);
+            	    rhs=level5();
 
             	    state._fsp--;
 
+            	     MJMult op = new MJMult();
+            	       op.setLhs(lhs);
+            	       op.seRLhs(rhs);
+            	       lhs = op;
+            	       e = op;
+            	       
 
             	    }
             	    break;
 
             	default :
-            	    break loop23;
+            	    break loop24;
                 }
             } while (true);
-
 
 
             }
@@ -1495,7 +1584,7 @@ public class MiniJavaParser extends Parser {
 
 
     // $ANTLR start "level5"
-    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:186:1: level5 returns [MJExpression e] : ( '-' l5= level5 | 'new' 'int' '[' ex= expression ']' | 'new' IDENT '(' ')' | i= id | id '[' expression ']' | i= id '(' (expr= expression ( ',' expr= expression )* )? ')' | '(' expr= expression ')' | 'true' | 'false' | INT | STRING );
+    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:238:1: level5 returns [MJExpression e] : ( '-' l5= level5 | 'new' 'int' '[' ex= expression ']' | 'new' IDENT '(' ')' | i= id | id '[' expr= expression ']' | i= id '(' (expr= expression ( ',' expr= expression )* )? ')' | '(' expr= expression ')' | 'true' | 'false' | INT | STRING );
     public final MJExpression level5() throws RecognitionException {
         MJExpression e = null;
 
@@ -1511,15 +1600,15 @@ public class MiniJavaParser extends Parser {
 
 
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:188:3: ( '-' l5= level5 | 'new' 'int' '[' ex= expression ']' | 'new' IDENT '(' ')' | i= id | id '[' expression ']' | i= id '(' (expr= expression ( ',' expr= expression )* )? ')' | '(' expr= expression ')' | 'true' | 'false' | INT | STRING )
-            int alt26=11;
-            alt26 = dfa26.predict(input);
-            switch (alt26) {
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:240:3: ( '-' l5= level5 | 'new' 'int' '[' ex= expression ']' | 'new' IDENT '(' ')' | i= id | id '[' expr= expression ']' | i= id '(' (expr= expression ( ',' expr= expression )* )? ')' | '(' expr= expression ')' | 'true' | 'false' | INT | STRING )
+            int alt27=11;
+            alt27 = dfa27.predict(input);
+            switch (alt27) {
                 case 1 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:188:5: '-' l5= level5
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:240:5: '-' l5= level5
                     {
-                    match(input,43,FOLLOW_43_in_level5990); 
-                    pushFollow(FOLLOW_level5_in_level5996);
+                    match(input,44,FOLLOW_44_in_level51136); 
+                    pushFollow(FOLLOW_level5_in_level51142);
                     l5=level5();
 
                     state._fsp--;
@@ -1531,40 +1620,40 @@ public class MiniJavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:193:5: 'new' 'int' '[' ex= expression ']'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:245:5: 'new' 'int' '[' ex= expression ']'
                     {
-                    match(input,45,FOLLOW_45_in_level51010); 
-                    match(input,30,FOLLOW_30_in_level51012); 
-                    match(input,24,FOLLOW_24_in_level51014); 
-                    pushFollow(FOLLOW_expression_in_level51020);
+                    match(input,46,FOLLOW_46_in_level51156); 
+                    match(input,31,FOLLOW_31_in_level51158); 
+                    match(input,25,FOLLOW_25_in_level51160); 
+                    pushFollow(FOLLOW_expression_in_level51166);
                     ex=expression();
 
                     state._fsp--;
 
-                    match(input,25,FOLLOW_25_in_level51022); 
+                    match(input,26,FOLLOW_26_in_level51168); 
 
-                        // TODO - figure out this one, should it be MJType or MJIdent ?
-                        e = new MJArray(MJType.TintArray,ex);
+                        e = new MJNewArray(MJType.TintArray,ex);
                       
 
                     }
                     break;
                 case 3 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:199:5: 'new' IDENT '(' ')'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:250:5: 'new' IDENT '(' ')'
                     {
-                    match(input,45,FOLLOW_45_in_level51036); 
-                    match(input,IDENT,FOLLOW_IDENT_in_level51038); 
-                    match(input,22,FOLLOW_22_in_level51040); 
-                    match(input,26,FOLLOW_26_in_level51042); 
-                    //TODO - MJNew
+                    match(input,46,FOLLOW_46_in_level51182); 
+                    match(input,IDENT,FOLLOW_IDENT_in_level51184); 
+                    match(input,23,FOLLOW_23_in_level51186); 
+                    match(input,27,FOLLOW_27_in_level51188); 
+
+                        e = MJNew(IDENT);
                       
 
                     }
                     break;
                 case 4 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:203:5: i= id
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:255:5: i= id
                     {
-                    pushFollow(FOLLOW_id_in_level51060);
+                    pushFollow(FOLLOW_id_in_level51206);
                     i=id();
 
                     state._fsp--;
@@ -1576,70 +1665,70 @@ public class MiniJavaParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:208:5: id '[' expression ']'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:260:5: id '[' expr= expression ']'
                     {
-                    pushFollow(FOLLOW_id_in_level51074);
+                    pushFollow(FOLLOW_id_in_level51220);
                     id();
 
                     state._fsp--;
 
-                    match(input,24,FOLLOW_24_in_level51076); 
-                    pushFollow(FOLLOW_expression_in_level51078);
-                    expression();
+                    match(input,25,FOLLOW_25_in_level51222); 
+                    pushFollow(FOLLOW_expression_in_level51228);
+                    expr=expression();
 
                     state._fsp--;
 
-                    match(input,25,FOLLOW_25_in_level51080); 
+                    match(input,26,FOLLOW_26_in_level51230); 
 
-                        //TODO
+                        e = new MJArray(id,expr);
                       
 
                     }
                     break;
                 case 6 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:214:3: i= id '(' (expr= expression ( ',' expr= expression )* )? ')'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:266:3: i= id '(' (expr= expression ( ',' expr= expression )* )? ')'
                     {
                      LinkedList<MJExpression> plist = new LinkedList<MJExpression>(); 
-                    pushFollow(FOLLOW_id_in_level51108);
+                    pushFollow(FOLLOW_id_in_level51258);
                     i=id();
 
                     state._fsp--;
 
-                    match(input,22,FOLLOW_22_in_level51110); 
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:215:16: (expr= expression ( ',' expr= expression )* )?
-                    int alt25=2;
-                    int LA25_0 = input.LA(1);
+                    match(input,23,FOLLOW_23_in_level51260); 
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:267:16: (expr= expression ( ',' expr= expression )* )?
+                    int alt26=2;
+                    int LA26_0 = input.LA(1);
 
-                    if ( ((LA25_0>=IDENT && LA25_0<=STRING)||LA25_0==22||LA25_0==43||(LA25_0>=45 && LA25_0<=47)||LA25_0==49) ) {
-                        alt25=1;
+                    if ( ((LA26_0>=IDENT && LA26_0<=STRING)||LA26_0==23||LA26_0==44||(LA26_0>=46 && LA26_0<=48)||LA26_0==50) ) {
+                        alt26=1;
                     }
-                    switch (alt25) {
+                    switch (alt26) {
                         case 1 :
-                            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:215:17: expr= expression ( ',' expr= expression )*
+                            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:267:17: expr= expression ( ',' expr= expression )*
                             {
-                            pushFollow(FOLLOW_expression_in_level51117);
+                            pushFollow(FOLLOW_expression_in_level51267);
                             expr=expression();
 
                             state._fsp--;
 
                             plist.add(expr);
-                            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:215:54: ( ',' expr= expression )*
-                            loop24:
+                            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:267:54: ( ',' expr= expression )*
+                            loop25:
                             do {
-                                int alt24=2;
-                                int LA24_0 = input.LA(1);
+                                int alt25=2;
+                                int LA25_0 = input.LA(1);
 
-                                if ( (LA24_0==32) ) {
-                                    alt24=1;
+                                if ( (LA25_0==33) ) {
+                                    alt25=1;
                                 }
 
 
-                                switch (alt24) {
+                                switch (alt25) {
                             	case 1 :
-                            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:215:55: ',' expr= expression
+                            	    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:267:55: ',' expr= expression
                             	    {
-                            	    match(input,32,FOLLOW_32_in_level51122); 
-                            	    pushFollow(FOLLOW_expression_in_level51127);
+                            	    match(input,33,FOLLOW_33_in_level51272); 
+                            	    pushFollow(FOLLOW_expression_in_level51277);
                             	    expr=expression();
 
                             	    state._fsp--;
@@ -1649,7 +1738,7 @@ public class MiniJavaParser extends Parser {
                             	    break;
 
                             	default :
-                            	    break loop24;
+                            	    break loop25;
                                 }
                             } while (true);
 
@@ -1660,7 +1749,7 @@ public class MiniJavaParser extends Parser {
 
                     }
 
-                    match(input,26,FOLLOW_26_in_level51136); 
+                    match(input,27,FOLLOW_27_in_level51286); 
 
                         e = new MJMethodCallExpr(i,plist);
                       
@@ -1668,23 +1757,23 @@ public class MiniJavaParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:220:5: '(' expr= expression ')'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:272:5: '(' expr= expression ')'
                     {
-                    match(input,22,FOLLOW_22_in_level51150); 
-                    pushFollow(FOLLOW_expression_in_level51156);
+                    match(input,23,FOLLOW_23_in_level51300); 
+                    pushFollow(FOLLOW_expression_in_level51306);
                     expr=expression();
 
                     state._fsp--;
 
-                    match(input,26,FOLLOW_26_in_level51158); 
-                     e = expr; 
+                    match(input,27,FOLLOW_27_in_level51308); 
+                     e = new MJParanteses(expr); 
 
                     }
                     break;
                 case 8 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:223:5: 'true'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:275:5: 'true'
                     {
-                    match(input,46,FOLLOW_46_in_level51172); 
+                    match(input,47,FOLLOW_47_in_level51322); 
 
                         e = new MJBoolean(true);
                       
@@ -1692,9 +1781,9 @@ public class MiniJavaParser extends Parser {
                     }
                     break;
                 case 9 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:228:5: 'false'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:280:5: 'false'
                     {
-                    match(input,47,FOLLOW_47_in_level51187); 
+                    match(input,48,FOLLOW_48_in_level51337); 
 
                         e = new MJBoolean(false);
                       
@@ -1702,17 +1791,17 @@ public class MiniJavaParser extends Parser {
                     }
                     break;
                 case 10 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:233:5: INT
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:285:5: INT
                     {
-                    INT2=(Token)match(input,INT,FOLLOW_INT_in_level51203); 
+                    INT2=(Token)match(input,INT,FOLLOW_INT_in_level51353); 
                      e = new MJInteger((INT2!=null?INT2.getText():null)); 
 
                     }
                     break;
                 case 11 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:237:5: STRING
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:289:5: STRING
                     {
-                    STRING3=(Token)match(input,STRING,FOLLOW_STRING_in_level51221); 
+                    STRING3=(Token)match(input,STRING,FOLLOW_STRING_in_level51371); 
                      e = new MJString((STRING3!=null?STRING3.getText():null)); 
 
                     }
@@ -1732,7 +1821,7 @@ public class MiniJavaParser extends Parser {
 
 
     // $ANTLR start "id"
-    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:246:1: id returns [MJIdentifier i] : (t= thisid | t= thisid '.' IDENT );
+    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:298:1: id returns [MJIdentifier i] : (t= thisid | t= thisid '.' IDENT );
     public final MJIdentifier id() throws RecognitionException {
         MJIdentifier i = null;
 
@@ -1741,53 +1830,53 @@ public class MiniJavaParser extends Parser {
 
 
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:247:3: (t= thisid | t= thisid '.' IDENT )
-            int alt27=2;
-            int LA27_0 = input.LA(1);
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:299:3: (t= thisid | t= thisid '.' IDENT )
+            int alt28=2;
+            int LA28_0 = input.LA(1);
 
-            if ( (LA27_0==49) ) {
-                int LA27_1 = input.LA(2);
+            if ( (LA28_0==50) ) {
+                int LA28_1 = input.LA(2);
 
-                if ( (LA27_1==48) ) {
-                    alt27=2;
+                if ( (LA28_1==23||(LA28_1>=25 && LA28_1<=27)||LA28_1==30||LA28_1==33||(LA28_1>=40 && LA28_1<=45)) ) {
+                    alt28=1;
                 }
-                else if ( (LA27_1==22||(LA27_1>=24 && LA27_1<=26)||LA27_1==29||LA27_1==32||(LA27_1>=39 && LA27_1<=44)) ) {
-                    alt27=1;
+                else if ( (LA28_1==49) ) {
+                    alt28=2;
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("", 27, 1, input);
+                        new NoViableAltException("", 28, 1, input);
 
                     throw nvae;
                 }
             }
-            else if ( (LA27_0==IDENT) ) {
-                int LA27_2 = input.LA(2);
+            else if ( (LA28_0==IDENT) ) {
+                int LA28_2 = input.LA(2);
 
-                if ( (LA27_2==48) ) {
-                    alt27=2;
+                if ( (LA28_2==23||(LA28_2>=25 && LA28_2<=27)||LA28_2==30||LA28_2==33||(LA28_2>=40 && LA28_2<=45)) ) {
+                    alt28=1;
                 }
-                else if ( (LA27_2==22||(LA27_2>=24 && LA27_2<=26)||LA27_2==29||LA27_2==32||(LA27_2>=39 && LA27_2<=44)) ) {
-                    alt27=1;
+                else if ( (LA28_2==49) ) {
+                    alt28=2;
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("", 27, 2, input);
+                        new NoViableAltException("", 28, 2, input);
 
                     throw nvae;
                 }
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 27, 0, input);
+                    new NoViableAltException("", 28, 0, input);
 
                 throw nvae;
             }
-            switch (alt27) {
+            switch (alt28) {
                 case 1 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:247:5: t= thisid
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:299:5: t= thisid
                     {
-                    pushFollow(FOLLOW_thisid_in_id1251);
+                    pushFollow(FOLLOW_thisid_in_id1401);
                     t=thisid();
 
                     state._fsp--;
@@ -1799,15 +1888,15 @@ public class MiniJavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:251:5: t= thisid '.' IDENT
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:303:5: t= thisid '.' IDENT
                     {
-                    pushFollow(FOLLOW_thisid_in_id1263);
+                    pushFollow(FOLLOW_thisid_in_id1413);
                     t=thisid();
 
                     state._fsp--;
 
-                    match(input,48,FOLLOW_48_in_id1265); 
-                    IDENT4=(Token)match(input,IDENT,FOLLOW_IDENT_in_id1267); 
+                    match(input,49,FOLLOW_49_in_id1415); 
+                    IDENT4=(Token)match(input,IDENT,FOLLOW_IDENT_in_id1417); 
 
                        
                        MJSelector mjs = new MJSelector();
@@ -1833,34 +1922,34 @@ public class MiniJavaParser extends Parser {
 
 
     // $ANTLR start "thisid"
-    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:261:1: thisid returns [MJIdentifier ti] : ( 'this' | IDENT );
+    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:313:1: thisid returns [MJIdentifier ti] : ( 'this' | IDENT );
     public final MJIdentifier thisid() throws RecognitionException {
         MJIdentifier ti = null;
 
         Token IDENT5=null;
 
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:262:3: ( 'this' | IDENT )
-            int alt28=2;
-            int LA28_0 = input.LA(1);
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:314:3: ( 'this' | IDENT )
+            int alt29=2;
+            int LA29_0 = input.LA(1);
 
-            if ( (LA28_0==49) ) {
-                alt28=1;
+            if ( (LA29_0==50) ) {
+                alt29=1;
             }
-            else if ( (LA28_0==IDENT) ) {
-                alt28=2;
+            else if ( (LA29_0==IDENT) ) {
+                alt29=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 28, 0, input);
+                    new NoViableAltException("", 29, 0, input);
 
                 throw nvae;
             }
-            switch (alt28) {
+            switch (alt29) {
                 case 1 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:262:5: 'this'
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:314:5: 'this'
                     {
-                    match(input,49,FOLLOW_49_in_thisid1292); 
+                    match(input,50,FOLLOW_50_in_thisid1442); 
 
                         ti =  new MJIdentifier("this");
                       
@@ -1868,9 +1957,9 @@ public class MiniJavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:267:3: IDENT
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:319:3: IDENT
                     {
-                    IDENT5=(Token)match(input,IDENT,FOLLOW_IDENT_in_thisid1305); 
+                    IDENT5=(Token)match(input,IDENT,FOLLOW_IDENT_in_thisid1455); 
 
                         ti = new MJIdentifier((IDENT5!=null?IDENT5.getText():null));
                       
@@ -1892,32 +1981,32 @@ public class MiniJavaParser extends Parser {
 
 
     // $ANTLR start "optExpression"
-    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:273:1: optExpression returns [MJExpression e] : ( expression | );
+    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:325:1: optExpression returns [MJExpression e] : ( expression | );
     public final MJExpression optExpression() throws RecognitionException {
         MJExpression e = null;
 
         try {
-            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:274:3: ( expression | )
-            int alt29=2;
-            int LA29_0 = input.LA(1);
+            // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:326:3: ( expression | )
+            int alt30=2;
+            int LA30_0 = input.LA(1);
 
-            if ( ((LA29_0>=IDENT && LA29_0<=STRING)||LA29_0==22||LA29_0==43||(LA29_0>=45 && LA29_0<=47)||LA29_0==49) ) {
-                alt29=1;
+            if ( ((LA30_0>=IDENT && LA30_0<=STRING)||LA30_0==23||LA30_0==44||(LA30_0>=46 && LA30_0<=48)||LA30_0==50) ) {
+                alt30=1;
             }
-            else if ( (LA29_0==29) ) {
-                alt29=2;
+            else if ( (LA30_0==30) ) {
+                alt30=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 29, 0, input);
+                    new NoViableAltException("", 30, 0, input);
 
                 throw nvae;
             }
-            switch (alt29) {
+            switch (alt30) {
                 case 1 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:274:5: expression
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:326:5: expression
                     {
-                    pushFollow(FOLLOW_expression_in_optExpression1329);
+                    pushFollow(FOLLOW_expression_in_optExpression1479);
                     expression();
 
                     state._fsp--;
@@ -1927,9 +2016,9 @@ public class MiniJavaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:276:3: 
+                    // /home/krc/workspace/MiniJava/src/compiler/Frontend/MiniJava.g:328:3: 
                     {
-
+                    e = new MJNoExpression();
 
                     }
                     break;
@@ -1949,29 +2038,29 @@ public class MiniJavaParser extends Parser {
     // Delegated rules
 
 
-    protected DFA26 dfa26 = new DFA26(this);
-    static final String DFA26_eotS =
+    protected DFA27 dfa27 = new DFA27(this);
+    static final String DFA27_eotS =
         "\21\uffff";
-    static final String DFA26_eofS =
+    static final String DFA27_eofS =
         "\21\uffff";
-    static final String DFA26_minS =
-        "\1\4\1\uffff\1\4\2\26\10\uffff\1\4\2\uffff\1\26";
-    static final String DFA26_maxS =
-        "\1\61\1\uffff\1\36\2\60\10\uffff\1\4\2\uffff\1\54";
-    static final String DFA26_acceptS =
-        "\1\uffff\1\1\3\uffff\1\7\1\10\1\11\1\12\1\13\1\2\1\3\1\5\1\uffff"+
-        "\1\6\1\4\1\uffff";
-    static final String DFA26_specialS =
+    static final String DFA27_minS =
+        "\1\4\1\uffff\1\4\2\27\10\uffff\1\4\2\uffff\1\27";
+    static final String DFA27_maxS =
+        "\1\62\1\uffff\1\37\2\61\10\uffff\1\4\2\uffff\1\55";
+    static final String DFA27_acceptS =
+        "\1\uffff\1\1\3\uffff\1\7\1\10\1\11\1\12\1\13\1\2\1\3\1\4\1\uffff"+
+        "\1\5\1\6\1\uffff";
+    static final String DFA27_specialS =
         "\21\uffff}>";
-    static final String[] DFA26_transitionS = {
-            "\1\4\1\10\1\11\17\uffff\1\5\24\uffff\1\1\1\uffff\1\2\1\6\1\7"+
+    static final String[] DFA27_transitionS = {
+            "\1\4\1\10\1\11\20\uffff\1\5\24\uffff\1\1\1\uffff\1\2\1\6\1\7"+
             "\1\uffff\1\3",
             "",
-            "\1\13\31\uffff\1\12",
-            "\1\16\1\uffff\1\14\2\17\2\uffff\1\17\2\uffff\1\17\6\uffff\6"+
-            "\17\3\uffff\1\15",
-            "\1\16\1\uffff\1\14\2\17\2\uffff\1\17\2\uffff\1\17\6\uffff\6"+
-            "\17\3\uffff\1\15",
+            "\1\13\32\uffff\1\12",
+            "\1\17\1\uffff\1\16\2\14\2\uffff\1\14\2\uffff\1\14\6\uffff\6"+
+            "\14\3\uffff\1\15",
+            "\1\17\1\uffff\1\16\2\14\2\uffff\1\14\2\uffff\1\14\6\uffff\6"+
+            "\14\3\uffff\1\15",
             "",
             "",
             "",
@@ -1983,181 +2072,182 @@ public class MiniJavaParser extends Parser {
             "\1\20",
             "",
             "",
-            "\1\16\1\uffff\1\14\2\17\2\uffff\1\17\2\uffff\1\17\6\uffff\6"+
-            "\17"
+            "\1\17\1\uffff\1\16\2\14\2\uffff\1\14\2\uffff\1\14\6\uffff\6"+
+            "\14"
     };
 
-    static final short[] DFA26_eot = DFA.unpackEncodedString(DFA26_eotS);
-    static final short[] DFA26_eof = DFA.unpackEncodedString(DFA26_eofS);
-    static final char[] DFA26_min = DFA.unpackEncodedStringToUnsignedChars(DFA26_minS);
-    static final char[] DFA26_max = DFA.unpackEncodedStringToUnsignedChars(DFA26_maxS);
-    static final short[] DFA26_accept = DFA.unpackEncodedString(DFA26_acceptS);
-    static final short[] DFA26_special = DFA.unpackEncodedString(DFA26_specialS);
-    static final short[][] DFA26_transition;
+    static final short[] DFA27_eot = DFA.unpackEncodedString(DFA27_eotS);
+    static final short[] DFA27_eof = DFA.unpackEncodedString(DFA27_eofS);
+    static final char[] DFA27_min = DFA.unpackEncodedStringToUnsignedChars(DFA27_minS);
+    static final char[] DFA27_max = DFA.unpackEncodedStringToUnsignedChars(DFA27_maxS);
+    static final short[] DFA27_accept = DFA.unpackEncodedString(DFA27_acceptS);
+    static final short[] DFA27_special = DFA.unpackEncodedString(DFA27_specialS);
+    static final short[][] DFA27_transition;
 
     static {
-        int numStates = DFA26_transitionS.length;
-        DFA26_transition = new short[numStates][];
+        int numStates = DFA27_transitionS.length;
+        DFA27_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA26_transition[i] = DFA.unpackEncodedString(DFA26_transitionS[i]);
+            DFA27_transition[i] = DFA.unpackEncodedString(DFA27_transitionS[i]);
         }
     }
 
-    class DFA26 extends DFA {
+    class DFA27 extends DFA {
 
-        public DFA26(BaseRecognizer recognizer) {
+        public DFA27(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 26;
-            this.eot = DFA26_eot;
-            this.eof = DFA26_eof;
-            this.min = DFA26_min;
-            this.max = DFA26_max;
-            this.accept = DFA26_accept;
-            this.special = DFA26_special;
-            this.transition = DFA26_transition;
+            this.decisionNumber = 27;
+            this.eot = DFA27_eot;
+            this.eof = DFA27_eof;
+            this.min = DFA27_min;
+            this.max = DFA27_max;
+            this.accept = DFA27_accept;
+            this.special = DFA27_special;
+            this.transition = DFA27_transition;
         }
         public String getDescription() {
-            return "186:1: level5 returns [MJExpression e] : ( '-' l5= level5 | 'new' 'int' '[' ex= expression ']' | 'new' IDENT '(' ')' | i= id | id '[' expression ']' | i= id '(' (expr= expression ( ',' expr= expression )* )? ')' | '(' expr= expression ')' | 'true' | 'false' | INT | STRING );";
+            return "238:1: level5 returns [MJExpression e] : ( '-' l5= level5 | 'new' 'int' '[' ex= expression ']' | 'new' IDENT '(' ')' | i= id | id '[' expr= expression ']' | i= id '(' (expr= expression ( ',' expr= expression )* )? ')' | '(' expr= expression ')' | 'true' | 'false' | INT | STRING );";
         }
     }
  
 
-    public static final BitSet FOLLOW_mainClass_in_program59 = new BitSet(new long[]{0x0000000000010002L});
-    public static final BitSet FOLLOW_classDeclaration_in_program70 = new BitSet(new long[]{0x0000000000010002L});
-    public static final BitSet FOLLOW_16_in_mainClass100 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_IDENT_in_mainClass106 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_mainClass108 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_mainClass115 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_19_in_mainClass117 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_20_in_mainClass119 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_mainClass121 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_22_in_mainClass123 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_mainClass125 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_24_in_mainClass127 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_25_in_mainClass129 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_IDENT_in_mainClass135 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_26_in_mainClass137 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_mainClass_in_program59 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_classDeclaration_in_program70 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_17_in_mainClass100 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_IDENT_in_mainClass106 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_mainClass108 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_19_in_mainClass115 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_20_in_mainClass117 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_mainClass119 = new BitSet(new long[]{0x0000000000400000L});
+    public static final BitSet FOLLOW_22_in_mainClass121 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_mainClass123 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_24_in_mainClass125 = new BitSet(new long[]{0x0000000002000000L});
+    public static final BitSet FOLLOW_25_in_mainClass127 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_26_in_mainClass129 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_IDENT_in_mainClass135 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_27_in_mainClass137 = new BitSet(new long[]{0x0000000000040000L});
     public static final BitSet FOLLOW_block_in_mainClass143 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_classDeclaration174 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_IDENT_in_classDeclaration180 = new BitSet(new long[]{0x0000000008020000L});
-    public static final BitSet FOLLOW_27_in_classDeclaration183 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_IDENT_in_classDeclaration189 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_classDeclaration193 = new BitSet(new long[]{0x00000000D01C0010L});
-    public static final BitSet FOLLOW_varDeclaration_in_classDeclaration200 = new BitSet(new long[]{0x00000000D01C0010L});
-    public static final BitSet FOLLOW_methodDeclaration_in_classDeclaration214 = new BitSet(new long[]{0x00000000D01C0010L});
-    public static final BitSet FOLLOW_28_in_classDeclaration220 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_17_in_block255 = new BitSet(new long[]{0x00000054D0020010L});
-    public static final BitSet FOLLOW_varDeclaration_in_block263 = new BitSet(new long[]{0x00000054D0020010L});
-    public static final BitSet FOLLOW_statement_in_block285 = new BitSet(new long[]{0x0000005410020010L});
-    public static final BitSet FOLLOW_28_in_block305 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_17_in_classDeclaration174 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_IDENT_in_classDeclaration180 = new BitSet(new long[]{0x0000000010040000L});
+    public static final BitSet FOLLOW_28_in_classDeclaration183 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_IDENT_in_classDeclaration189 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_classDeclaration193 = new BitSet(new long[]{0x00000001A0380010L});
+    public static final BitSet FOLLOW_varDeclaration_in_classDeclaration200 = new BitSet(new long[]{0x00000001A0380010L});
+    public static final BitSet FOLLOW_methodDeclaration_in_classDeclaration214 = new BitSet(new long[]{0x00000001A0380010L});
+    public static final BitSet FOLLOW_29_in_classDeclaration220 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_18_in_block255 = new BitSet(new long[]{0x000000A9A0040010L});
+    public static final BitSet FOLLOW_varDeclaration_in_block263 = new BitSet(new long[]{0x000000A9A0040010L});
+    public static final BitSet FOLLOW_statement_in_block285 = new BitSet(new long[]{0x000000A820040010L});
+    public static final BitSet FOLLOW_29_in_block305 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_type_in_varDeclaration347 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_IDENT_in_varDeclaration353 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_29_in_varDeclaration355 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_type377 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_type388 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_type398 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_24_in_type400 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_25_in_type402 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENT_in_varDeclaration353 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_30_in_varDeclaration355 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_31_in_type377 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_type388 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_31_in_type398 = new BitSet(new long[]{0x0000000002000000L});
+    public static final BitSet FOLLOW_25_in_type400 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_26_in_type402 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_IDENT_in_type413 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_18_in_methodDeclaration439 = new BitSet(new long[]{0x00000000C01C0010L});
-    public static final BitSet FOLLOW_19_in_methodDeclaration444 = new BitSet(new long[]{0x00000000C01C0010L});
-    public static final BitSet FOLLOW_procType_in_methodDeclaration448 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_IDENT_in_methodDeclaration450 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_22_in_methodDeclaration452 = new BitSet(new long[]{0x00000000C4000010L});
-    public static final BitSet FOLLOW_type_in_methodDeclaration455 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_IDENT_in_methodDeclaration457 = new BitSet(new long[]{0x0000000104000000L});
-    public static final BitSet FOLLOW_32_in_methodDeclaration459 = new BitSet(new long[]{0x00000000C0000010L});
-    public static final BitSet FOLLOW_type_in_methodDeclaration461 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_IDENT_in_methodDeclaration463 = new BitSet(new long[]{0x0000000104000000L});
-    public static final BitSet FOLLOW_26_in_methodDeclaration469 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_methodDeclaration471 = new BitSet(new long[]{0x00000056C0020010L});
-    public static final BitSet FOLLOW_varDeclaration_in_methodDeclaration492 = new BitSet(new long[]{0x00000056C0020010L});
-    public static final BitSet FOLLOW_statement_in_methodDeclaration497 = new BitSet(new long[]{0x0000005600020010L});
-    public static final BitSet FOLLOW_33_in_methodDeclaration502 = new BitSet(new long[]{0x0002E80020400070L});
-    public static final BitSet FOLLOW_optExpression_in_methodDeclaration504 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_29_in_methodDeclaration506 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_methodDeclaration508 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_20_in_procType532 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_type_in_procType543 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_34_in_statement572 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_22_in_statement574 = new BitSet(new long[]{0x0002E80000400070L});
-    public static final BitSet FOLLOW_expression_in_statement580 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_26_in_statement582 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_29_in_statement584 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IDENT_in_statement599 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_35_in_statement601 = new BitSet(new long[]{0x0002E80000400070L});
-    public static final BitSet FOLLOW_expression_in_statement607 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_29_in_statement609 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_block_in_statement624 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_statement637 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_22_in_statement639 = new BitSet(new long[]{0x0002E80000400070L});
-    public static final BitSet FOLLOW_expression_in_statement645 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_26_in_statement647 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_block_in_statement654 = new BitSet(new long[]{0x0000002000000002L});
-    public static final BitSet FOLLOW_37_in_statement658 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_block_in_statement664 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_38_in_statement677 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_22_in_statement679 = new BitSet(new long[]{0x0002E80000400070L});
-    public static final BitSet FOLLOW_expression_in_statement685 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_26_in_statement687 = new BitSet(new long[]{0x0000005400020010L});
-    public static final BitSet FOLLOW_statement_in_statement693 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IDENT_in_statement714 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_22_in_statement716 = new BitSet(new long[]{0x0002E80004400070L});
-    public static final BitSet FOLLOW_expression_in_statement723 = new BitSet(new long[]{0x0000000104000000L});
-    public static final BitSet FOLLOW_32_in_statement729 = new BitSet(new long[]{0x0002E80000400070L});
-    public static final BitSet FOLLOW_expression_in_statement735 = new BitSet(new long[]{0x0000000104000000L});
-    public static final BitSet FOLLOW_26_in_statement744 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_29_in_statement746 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_level1_in_expression792 = new BitSet(new long[]{0x0000008000000002L});
-    public static final BitSet FOLLOW_39_in_expression795 = new BitSet(new long[]{0x0002E80000400070L});
-    public static final BitSet FOLLOW_level1_in_expression801 = new BitSet(new long[]{0x0000008000000002L});
-    public static final BitSet FOLLOW_level2_in_level1838 = new BitSet(new long[]{0x0000010000000002L});
-    public static final BitSet FOLLOW_40_in_level1841 = new BitSet(new long[]{0x0002E80000400070L});
-    public static final BitSet FOLLOW_level2_in_level1847 = new BitSet(new long[]{0x0000010000000002L});
-    public static final BitSet FOLLOW_level3_in_level2881 = new BitSet(new long[]{0x0000020000000002L});
-    public static final BitSet FOLLOW_41_in_level2884 = new BitSet(new long[]{0x0002E80000400070L});
-    public static final BitSet FOLLOW_level3_in_level2886 = new BitSet(new long[]{0x0000020000000002L});
-    public static final BitSet FOLLOW_level4_in_level3916 = new BitSet(new long[]{0x00000C0000000002L});
-    public static final BitSet FOLLOW_set_in_level3919 = new BitSet(new long[]{0x0002E80000400070L});
-    public static final BitSet FOLLOW_level4_in_level3927 = new BitSet(new long[]{0x00000C0000000002L});
-    public static final BitSet FOLLOW_level5_in_level4957 = new BitSet(new long[]{0x0000100000000002L});
-    public static final BitSet FOLLOW_44_in_level4960 = new BitSet(new long[]{0x0002E80000400070L});
-    public static final BitSet FOLLOW_level5_in_level4962 = new BitSet(new long[]{0x0000100000000002L});
-    public static final BitSet FOLLOW_43_in_level5990 = new BitSet(new long[]{0x0002E80000400070L});
-    public static final BitSet FOLLOW_level5_in_level5996 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_45_in_level51010 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_30_in_level51012 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_24_in_level51014 = new BitSet(new long[]{0x0002E80000400070L});
-    public static final BitSet FOLLOW_expression_in_level51020 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_25_in_level51022 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_45_in_level51036 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_IDENT_in_level51038 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_22_in_level51040 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_26_in_level51042 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_id_in_level51060 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_id_in_level51074 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_24_in_level51076 = new BitSet(new long[]{0x0002E80000400070L});
-    public static final BitSet FOLLOW_expression_in_level51078 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_25_in_level51080 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_id_in_level51108 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_22_in_level51110 = new BitSet(new long[]{0x0002E80004400070L});
-    public static final BitSet FOLLOW_expression_in_level51117 = new BitSet(new long[]{0x0000000104000000L});
-    public static final BitSet FOLLOW_32_in_level51122 = new BitSet(new long[]{0x0002E80000400070L});
-    public static final BitSet FOLLOW_expression_in_level51127 = new BitSet(new long[]{0x0000000104000000L});
-    public static final BitSet FOLLOW_26_in_level51136 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_22_in_level51150 = new BitSet(new long[]{0x0002E80000400070L});
-    public static final BitSet FOLLOW_expression_in_level51156 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_26_in_level51158 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_level51172 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_level51187 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INT_in_level51203 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_STRING_in_level51221 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_thisid_in_id1251 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_thisid_in_id1263 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_id1265 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_IDENT_in_id1267 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_49_in_thisid1292 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IDENT_in_thisid1305 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expression_in_optExpression1329 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_19_in_methodDeclaration443 = new BitSet(new long[]{0x0000000180380010L});
+    public static final BitSet FOLLOW_20_in_methodDeclaration450 = new BitSet(new long[]{0x0000000180380010L});
+    public static final BitSet FOLLOW_procType_in_methodDeclaration456 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_IDENT_in_methodDeclaration462 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_methodDeclaration464 = new BitSet(new long[]{0x0000000188000010L});
+    public static final BitSet FOLLOW_type_in_methodDeclaration467 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_IDENT_in_methodDeclaration473 = new BitSet(new long[]{0x0000000208000000L});
+    public static final BitSet FOLLOW_33_in_methodDeclaration478 = new BitSet(new long[]{0x0000000180000010L});
+    public static final BitSet FOLLOW_type_in_methodDeclaration480 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_IDENT_in_methodDeclaration486 = new BitSet(new long[]{0x0000000208000000L});
+    public static final BitSet FOLLOW_27_in_methodDeclaration495 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_methodDeclaration497 = new BitSet(new long[]{0x000000AD80040010L});
+    public static final BitSet FOLLOW_varDeclaration_in_methodDeclaration518 = new BitSet(new long[]{0x000000AD80040010L});
+    public static final BitSet FOLLOW_statement_in_methodDeclaration526 = new BitSet(new long[]{0x000000AC00040010L});
+    public static final BitSet FOLLOW_34_in_methodDeclaration533 = new BitSet(new long[]{0x0005D00040800070L});
+    public static final BitSet FOLLOW_optExpression_in_methodDeclaration535 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_30_in_methodDeclaration537 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_29_in_methodDeclaration539 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_21_in_procType563 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_type_in_procType574 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_35_in_statement603 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_statement605 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_expression_in_statement611 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_27_in_statement613 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_30_in_statement615 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENT_in_statement630 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_36_in_statement632 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_expression_in_statement638 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_30_in_statement640 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_block_in_statement655 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_37_in_statement668 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_statement670 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_expression_in_statement676 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_27_in_statement678 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_block_in_statement685 = new BitSet(new long[]{0x0000004000000002L});
+    public static final BitSet FOLLOW_38_in_statement689 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_block_in_statement695 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_39_in_statement708 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_statement710 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_expression_in_statement716 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_27_in_statement718 = new BitSet(new long[]{0x000000A800040010L});
+    public static final BitSet FOLLOW_statement_in_statement724 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENT_in_statement745 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_statement747 = new BitSet(new long[]{0x0005D00008800070L});
+    public static final BitSet FOLLOW_expression_in_statement754 = new BitSet(new long[]{0x0000000208000000L});
+    public static final BitSet FOLLOW_33_in_statement760 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_expression_in_statement766 = new BitSet(new long[]{0x0000000208000000L});
+    public static final BitSet FOLLOW_27_in_statement775 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_30_in_statement777 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_level1_in_expression822 = new BitSet(new long[]{0x0000010000000002L});
+    public static final BitSet FOLLOW_40_in_expression834 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_level1_in_expression840 = new BitSet(new long[]{0x0000010000000002L});
+    public static final BitSet FOLLOW_level2_in_level1879 = new BitSet(new long[]{0x0000020000000002L});
+    public static final BitSet FOLLOW_41_in_level1891 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_level2_in_level1897 = new BitSet(new long[]{0x0000020000000002L});
+    public static final BitSet FOLLOW_level3_in_level2936 = new BitSet(new long[]{0x0000040000000002L});
+    public static final BitSet FOLLOW_42_in_level2948 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_level3_in_level2954 = new BitSet(new long[]{0x0000040000000002L});
+    public static final BitSet FOLLOW_level4_in_level3993 = new BitSet(new long[]{0x0000180000000002L});
+    public static final BitSet FOLLOW_43_in_level31015 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_44_in_level31030 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_level4_in_level31051 = new BitSet(new long[]{0x0000180000000002L});
+    public static final BitSet FOLLOW_level5_in_level41085 = new BitSet(new long[]{0x0000200000000002L});
+    public static final BitSet FOLLOW_45_in_level41095 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_level5_in_level41101 = new BitSet(new long[]{0x0000200000000002L});
+    public static final BitSet FOLLOW_44_in_level51136 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_level5_in_level51142 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_level51156 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_31_in_level51158 = new BitSet(new long[]{0x0000000002000000L});
+    public static final BitSet FOLLOW_25_in_level51160 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_expression_in_level51166 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_26_in_level51168 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_level51182 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_IDENT_in_level51184 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_level51186 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_27_in_level51188 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_id_in_level51206 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_id_in_level51220 = new BitSet(new long[]{0x0000000002000000L});
+    public static final BitSet FOLLOW_25_in_level51222 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_expression_in_level51228 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_26_in_level51230 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_id_in_level51258 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_level51260 = new BitSet(new long[]{0x0005D00008800070L});
+    public static final BitSet FOLLOW_expression_in_level51267 = new BitSet(new long[]{0x0000000208000000L});
+    public static final BitSet FOLLOW_33_in_level51272 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_expression_in_level51277 = new BitSet(new long[]{0x0000000208000000L});
+    public static final BitSet FOLLOW_27_in_level51286 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_23_in_level51300 = new BitSet(new long[]{0x0005D00000800070L});
+    public static final BitSet FOLLOW_expression_in_level51306 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_27_in_level51308 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_level51322 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_48_in_level51337 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INT_in_level51353 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_STRING_in_level51371 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_thisid_in_id1401 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_thisid_in_id1413 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_id1415 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_IDENT_in_id1417 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_50_in_thisid1442 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENT_in_thisid1455 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expression_in_optExpression1479 = new BitSet(new long[]{0x0000000000000002L});
 
 }

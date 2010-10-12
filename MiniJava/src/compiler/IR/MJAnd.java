@@ -5,16 +5,12 @@ package compiler.IR;
  * false, its second operand is not evaluated. 
  */
 
-import java.util.LinkedList;
-
 import compiler.PrettyPrinter;
 import compiler.Exceptions.TypeCheckerException;
 
 public class MJAnd extends MJBinaryOp {
 	
-	public MJAnd(MJExpression lhs, LinkedList<MJExpression> rhslist) {
-		this.setLhs(lhs);
-		this.setRhs(rhs);
+	public MJAnd() {
 	}
 
 	public void prettyPrint(PrettyPrinter prepri) {
@@ -32,9 +28,6 @@ public class MJAnd extends MJBinaryOp {
 		//TODO
 		if (this.getRhs().getType() != MJType.Tboolean )
 				throw new TypeCheckerException(this.getRhs().toString() + " Not of type boolean");
-			
-		
-		
 
 		return MJType.Tvoid;
 	}	

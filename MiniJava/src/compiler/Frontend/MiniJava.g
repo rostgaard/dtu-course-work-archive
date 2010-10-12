@@ -98,10 +98,18 @@ type returns [MJType t]
   ;
    
 methodDeclaration returns [MJMethod m]
-  : ('public')? ('static')? procType IDENT '(' (type IDENT(',' type IDENT)*)? ')' '{'
-                  (varDeclaration)* (statement)*  'return' optExpression ';' '}' 
+  : {
+     LinkedList<MJVariable> parList = new LinkedList<MJVariable>();
+     LinkedList<MJVariable> vdl   = new LinkedList<MJVariable>();
+     LinkedList<MJStatement> sdl   = new LinkedList<MJStatement>();
+     MJBlock b = new MJBlock(vdl,sdl);
+     boolean isStatic,isPublic = false;
+  }
+  ('public' {isPublic = true;})? ('static' {isStatic = true;})? procType name = IDENT '(' (type par = IDENT {parList.add(par);} (',' type par = IDENT {parList.add(par);})* )? ')' '{'
+                  (varDeclaration {vdl.add(varDeclaration);} )* (statement {sdl.add(statement);})*  'return' optExpression ';' '}' 
   
   {
+    m = new MJMethod(procType, $name.text, parList, b, isStatic, isPublic); 
   };
   
 procType returns [MJType t]
@@ -149,37 +157,81 @@ statement returns [MJStatement s]
   
 /* AND */
 expression returns [MJExpression e]
-  : {LinkedList<MJExpression> exprlist = new LinkedList<MJExpression>(); } 
-  lhs = level1 ('&&' l1 = level1 {exprlist.add(l1);} )*
-  {e = new MJAnd(lhs,exprlist);}
+  : { MJExpression lhs = null; }
+  l1 = level1
+    {lhs = l1; e = l1;} 
+  ('&&' rhs = level1 
+   { MJAnd op = new MJAnd();
+   op.setLhs(lhs);
+   op.seRLhs(rhs);
+   lhs = op;
+   e = op;
+   } 
+  )*
   ;
 
 /* Equals */
 level1 returns [MJExpression e]
-  : {LinkedList<MJExpression> exprlist = new LinkedList<MJExpression>(); } 
-  lhs = level2 ('==' l2 = level2 {exprlist.add(l2);})*
-  {e = new MJEqual(lhs, exprlist);}
-  ;  
+  : { MJExpression lhs = null; }
+  l2 = level2
+    {lhs = l2; e = l2;} 
+  ('==' rhs = level2 
+   { MJEqual op = new MJEqual();
+   op.setLhs(lhs);
+   op.seRLhs(rhs);
+   lhs = op;
+   e = op;
+   } 
+  )*
+  ;
 
 /* Less */
 level2 returns [MJExpression e]
-  : {LinkedList<MJExpression> exprlist = new LinkedList<MJExpression>(); } 
-  level3 ('<' level3)*
-  {e = new MJLess();}
+  : { MJExpression lhs = null; }
+  l3 = level3
+    {lhs = l3; e = l3;} 
+  ('<' rhs = level3 
+   { MJLess op = new MJLess();
+   op.setLhs(lhs);
+   op.seRLhs(rhs);
+   lhs = op;
+   e = op;
+   } 
+  )*
   ;
 
 /* Plus and minus */
 level3 returns [MJExpression e]
-  : {LinkedList<MJExpression> exprlist = new LinkedList<MJExpression>(); } 
-  level4 (('+' | '-') level4)*
-  {e = new MJPlus();}
+  : { MJExpression lhs = null; }
+  l4 = level4 
+    {lhs = l4; e = l4;}
+    {MJBinaryOp op = null}   
+  (('+' 
+     {op = new MJPlus();} 
+  | '-'
+    {op = new MJMinus();}  
+     ) rhs = level4 {
+   op.setLhs(lhs);
+   op.seRLhs(rhs);
+   lhs = op;
+   e = op;
+   }
+  )*
   ;
 
 /* Multiplication */
 level4 returns [MJExpression e]
-  : {LinkedList<MJExpression> exprlist = new LinkedList<MJExpression>(); } 
-  level5 ('*' level5)*
-  {}
+  : { MJExpression lhs = null; }
+  l5 = level5
+  {lhs = l5; e = l5;} 
+  ('*' rhs = level5   
+  { MJMult op = new MJMult();
+   op.setLhs(lhs);
+   op.seRLhs(rhs);
+   lhs = op;
+   e = op;
+   } 
+  )*
   ;
 
 
@@ -192,12 +244,12 @@ level5 returns [MJExpression e]
   /* New integer array */
   | 'new' 'int' '[' ex = expression ']'
   {
-    // TODO - figure out this one, should it be MJType or MJIdent ?
-    e = new MJArray(MJType.TintArray,ex);
+    e = new MJNewArray(MJType.TintArray,ex);
   }
   /* New object */
   | 'new' IDENT '(' ')'
-  {//TODO - MJNew
+  {
+    e = MJNew(IDENT);
   }
   /* identifier */
   | i = id
@@ -205,9 +257,9 @@ level5 returns [MJExpression e]
     e = i;
   }
   /* Array access */
-  | id '[' expression ']'
+  | id '[' expr = expression ']'
   {
-    //TODO
+    e = new MJArray(id,expr);
   }
   /* Method call */
   | 
@@ -218,7 +270,7 @@ level5 returns [MJExpression e]
   }
   /* Parenteses - up evaluation priority */
   | '(' expr = expression ')'
-  { e = expr; }
+  { e = new MJParanteses(expr); }
   /* Boolean value */
   | 'true'
   {
@@ -272,8 +324,8 @@ thisid returns [MJIdentifier ti]
   
 optExpression returns [MJExpression e]
   : expression {}
-  | // empty
-  {}
+  | // intentionally empty
+  {e = new MJNoExpression();}
   ;
   
   
@@ -302,7 +354,11 @@ optExpression returns [MJExpression e]
 
 //TODO change this
 QUOTE : '"' ;
-CHAR : '\u0020'..'\u007E';
+fragment SPECIALCHAR : ( ' ' | '!' | QUOTE | '#' | '$' | '%' | '&' | '\'' | '(' | ')' 
+                       | '*' | '+' | '´' | '-' | '.' | '/' | ':' | ';' | '<' | '=' 
+                       | '>' | '?' | '@' | '[' | '\\'| ']' | '^' | '_' | '`' | '{' 
+                       | '|' | '}' | '~' ) ;
+fragment CHAR : (NUMBER|LOWER|UPPER|SPECIALCHAR) ;
 STRING : QUOTE CHAR* QUOTE; 
 
 // Comments

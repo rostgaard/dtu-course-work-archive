@@ -1,12 +1,7 @@
 package compiler.IR;
 
-import java.util.LinkedList;
-
-import compiler.PrettyPrinter;
-
 public abstract class MJBinaryOp extends MJExpression {
-	private MJExpression lhs;
-	private LinkedList<MJExpression> rhslist;
+	private MJExpression lhs,rhs;
 
 	public MJExpression getLhs() {
 		return lhs;
@@ -16,12 +11,12 @@ public abstract class MJBinaryOp extends MJExpression {
 		this.lhs = lhs;
 	}
 
-	public LinkedList<MJExpression> getRhsList() {
-		return rhslist;
+	public MJExpression getRhs() {
+		return rhs;
 	}
 
-	public void setRhsList(LinkedList<MJExpression> rhslist) {
-		this.rhslist = rhslist;
+	public void setRhsList(MJExpression rhs) {
+		this.rhs = rhs;
 	}
 	
 }
