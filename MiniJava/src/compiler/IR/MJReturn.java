@@ -5,6 +5,7 @@ import compiler.PrettyPrinter;
 public class MJReturn extends MJStatement {
 
 	public void prettyPrint(PrettyPrinter prepri) {
+		prepri.print("return");
 	}
 
 }

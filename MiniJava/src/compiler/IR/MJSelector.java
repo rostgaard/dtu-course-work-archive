@@ -14,6 +14,8 @@ public class MJSelector extends MJIdentifier {
 	}
 	
 	public void prettyPrint(PrettyPrinter prepri) {
+		parent.prettyPrint(prepri);
+		prepri.print(".");
 	}
 
 }
