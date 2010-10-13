@@ -1,0 +1,108 @@
+%% LyX 1.6.5 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[10pt,english]{article}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+
+\usepackage[latin9]{inputenc}
+\usepackage[letterpaper]{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
+\usepackage{amsthm}
+\usepackage{amsmath}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+\makeatother
+
+\usepackage{babel}
+
+\begin{document}
+\begin{center}
+\textsf{\textsc{02321 Hardware/Software Programmering (E10)}}
+\par\end{center}
+
+\begin{center}
+{\Large Home assignment 6}
+\par\end{center}{\Large \par}
+
+\begin{center}
+Morten Hillebo (s072923)\\
+Kim Rostgaard Christensen (s084283)\\
+
+\par\end{center}
+
+
+\subsection*{Problem 7.6 }
+
+\begin{tabular}{|c|c|}
+\hline 
+A & x300A\tabularnewline
+\hline
+B & x3005\tabularnewline
+\hline 
+C & x300B\tabularnewline
+\hline 
+D & x3001\tabularnewline
+\hline 
+E & x3004\tabularnewline
+\hline 
+F & x3007\tabularnewline
+\hline
+\end{tabular}\\
+\\
+\begin{tabular}{|c|r|c|}
+\hline 
+Label & Asm & Bin\tabularnewline
+\hline
+\hline 
+D & LD R1,+8 & 0010 001 000001000\tabularnewline
+\hline 
+E & ADD R1,R1,\#-1 & 0001 001 001 1 11111\tabularnewline
+\hline 
+F & BRp -3 & 0000 001 111111101\tabularnewline
+\hline
+\end{tabular}
+
+
+\subsection*{Problem 8.2 }
+
+Why is a ready bit not needed if synchronous I/O is used?\\
+\\
+In synchronous I/O we assume that data is always available, at
+the predefined monotonic rate. If the keyboard skipped a cycle, the
+char from the last cycle would be read - assuming that the register
+is not cleared.
+
+
+\subsection*{Problem 8.6 }
+
+What problem could occur if a program does not check the Ready bit
+of the KBSR before reading the KBDR?\\
+\\
+The result would be that you effectively did synchronous I/O, as
+you assume data is always available. The problem would be that you
+would not be able to distinguish a press on 'a' and then 'a' from
+one press on 'a' for example.
+
+
+\subsection*{Problem 8.10 }
+
+What problem could occur if the display hardware does not check the
+DSR before writing to the DDR?\\
+\\
+The DSR indicates that the display is done updating from the DDR.
+If you write to DDR while it is being read by the display, the data
+could be corrupted.
+
+\newpage
+\subsection*{Memory mapped IO with polling}
+\lstinputlisting[language={[x86masm]Assembler},numbers=left]{Assignment_6_2.asm}
+\end{document}
