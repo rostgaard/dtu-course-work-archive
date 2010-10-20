@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * TODO Identify methods that should be synchronized
  */
 
 package Simulator;
@@ -8,7 +7,6 @@ package Simulator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 
 /**
  *
@@ -127,7 +125,6 @@ public class TaskList extends ArrayList<Task>{
         }
         return ret;
     }
-
 }
 
 class TaskNameComparator implements Comparator{

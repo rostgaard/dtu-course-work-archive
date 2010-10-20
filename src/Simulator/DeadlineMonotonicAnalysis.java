@@ -4,6 +4,8 @@
 
 package Simulator;
 
+import Simulator.Types.Schedulability;
+
 /**
  *
  * @author Kim Rostgaard Christensen
@@ -27,7 +29,7 @@ public class DeadlineMonotonicAnalysis {
 
     // Note that the algorithm assumes that the tasks are sorted based on their priority
 
-    public boolean analyse() {
+    public Schedulability analyse() {
         // Sort the task set
         tasklist.sortByPriority();
 
@@ -54,7 +56,7 @@ public class DeadlineMonotonicAnalysis {
                 //if R > Di then
                     
                 if (task.getResponseTime() > task.getDeadline()) {
-                    return UNSCHEDULABLE;
+                    return Schedulability.UNSCHEDULABLE;
                 }
                 // I = SUM(J=1 to i-1| ceiling(R/taskJ)*J.WCET)
                 I = 0;
@@ -78,6 +80,6 @@ public class DeadlineMonotonicAnalysis {
               //System.out.println("  Ending responsetime: " +task.getResponseTime() + " and I+wect: " + I + " " +task.getWCET() );
             } while(I + task.getWCET() != task.getResponseTime());
         }
-        return SCHEDULABLE;
+        return Schedulability.SCHEDULABLE;
     }
 }

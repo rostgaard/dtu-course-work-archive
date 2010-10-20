@@ -1,11 +1,12 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Rate monotonic analysis
+ *
  */
 
 package Simulator;
 
-import java.util.Collections;
+import Simulator.Types.ProbabliltyDistribution;
+import Simulator.Types.Schedulability;
 import java.util.Random;
 
 /**
@@ -13,30 +14,38 @@ import java.util.Random;
  * @author krc
  */
 public class RateMonotonicAnalysis {
-    public static final boolean UNSCHEDULABLE = false;
-    public static final boolean SCHEDULABLE = true;
-    
+
     private TaskList tasklist = null;
     private int LCMMultiplier = 1;
-    private boolean randomize = false;
+    private ProbabliltyDistribution distribution =
+            ProbabliltyDistribution.UNIFORM;
 
     /**
      * Creates a new RM analysis object
      * 
-     * @param lcmm Is the number of cylcles to run the simuation
+     * @param lcmm The number of cycles to run the simuation
      * @param tl The tasklist to run the analysis on
      * @param rand Should the executiont times be randomized or just assume
      *        WCET?
      */
-    public RateMonotonicAnalysis(int lcmm, TaskList tl, boolean rand) {
+    public RateMonotonicAnalysis(int lcmm, TaskList tl, ProbabliltyDistribution dist) {
         this.tasklist = tl;
         this.LCMMultiplier = lcmm;
-        this.randomize = rand;
+        this.distribution = dist;
     }
+
+    public ProbabliltyDistribution getDistribution() {
+        return distribution;
+    }
+
+    public void setDistribution(ProbabliltyDistribution distribution) {
+        this.distribution = distribution;
+    }
+
 
     /**
      * Method for initializing the priorities. Redundant as this is also done on
-     * every analyse() call.
+     * every analyse() call. Provided for possible extentions
      */
     private void initializePriorities() {
         for (Task t: tasklist) {
@@ -44,9 +53,14 @@ public class RateMonotonicAnalysis {
         }
     }
 
-    public boolean analyse() {
+    /**
+     *
+     * @return
+     */
+    public Schedulability analyse() {
         Random rng  = new Random();
         Timeline timeline = new Timeline();
+        
 
         JobList jobQueue = new JobList();
         /* We run the simulation for a LCM of periods number of cycles */
@@ -67,8 +81,15 @@ public class RateMonotonicAnalysis {
                 if ((t.getWCET()-t.getBCET()) <=0) { // The random function complains when range is 0
                     job.setTime(t.getWCET());
                 } else {
-                    //job.setTime(t.getBCET()+rng.nextInt(t.getWCET()+1-t.getBCET()));
-                    job.setTime(t.getWCET());
+                    if (this.getDistribution() == ProbabliltyDistribution.UNIFORM ) {
+                        job.setTime(t.getBCET()+rng.nextInt(t.getWCET()+1-t.getBCET()));
+                    }
+                    else if (this.getDistribution() == ProbabliltyDistribution.GAUSSIAN ){
+                        //TODO
+                    }
+                    else if (this.getDistribution() == ProbabliltyDistribution.NONE) {
+                        job.setTime(t.getWCET());
+                    }
                 }
                 jobQueue.add(job);
             }
@@ -78,7 +99,7 @@ public class RateMonotonicAnalysis {
         jobQueue.sort();
 
         /* The simulation itself starts here */
-        for(int cycle= 1; cycle <= num_cycles; cycle++) {
+        for(int cycle= 1; cycle <= num_cycles*this.getLCMMultiplier(); cycle++) {
             /* The readylist gets generated at every cycle, this eliminates the
                need to explicitly remove the jobs, on the cost more resources */
             JobList readyList = jobQueue.getReadyJobs(cycle);
@@ -112,39 +133,49 @@ public class RateMonotonicAnalysis {
         for (Task t : tasklist) {
             //TODO find the case of the WCRT that broke the camels back so to speak
             if(!t.schedulable())
-                return UNSCHEDULABLE;
+                return  Schedulability.UNSCHEDULABLE;
         }
-        return SCHEDULABLE;
+        return Schedulability.SCHEDULABLE;
 
     }
 
+    /**
+     *
+     * @return The current LCM multiplier
+     */
     public int getLCMMultiplier() {
         return LCMMultiplier;
     }
 
+    /**
+     *
+     * @param LCMMultiplier The new multiplier
+     */
     public void setLCMMultiplier(int LCMMultiplier) {
         this.LCMMultiplier = LCMMultiplier;
     }
 
-    public boolean isRandomize() {
-        return randomize;
-    }
 
-    public void setRandomize(boolean randomize) {
-        this.randomize = randomize;
-    }
-
+    /**
+     *
+     * @return
+     */
     public TaskList getTaskList() {
         return tasklist;
     }
 
+    /**
+     *
+     * @param taskList
+     */
     public void setTaskList(TaskList taskList) {
         this.tasklist = taskList;
     }
 
-
-
-
+    /**
+     *
+     * @return
+     */
     public String getSVGGraph() {
         return "";
     }

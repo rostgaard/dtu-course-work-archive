@@ -4,29 +4,29 @@ package Simulator;
  * Simulator.java
  * This program, reads the task description of the
  * periodic tasks from the given graphml files and then performs a simple
- * Liu & Layland Utilization test
+ * schedulability test
+ *
+ * TODO: Add JUNG library
  *
  * @author Kim Christensen
  *
  * @created 9 September, 10
- *
- *
- *
  */
+import Simulator.Types.ProbabliltyDistribution;
+import Simulator.Types.Schedulability;
 import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
 public class Simulator {
-    public static final boolean UNSCHEDULABLE = false;
-    public static final boolean SCHEDULABLE = true;
     public static int exitStatus = 0;
 
     public static void main(String[] args) throws IOException {
-        TaskList tasklist = new graphML().load("Casestudy1/taskgraph_1.graphml");
-        RateMonotonicAnalysis RMA = new RateMonotonicAnalysis(1, tasklist, false);
+        TaskList tasklist = new graphML().load("Casestudy2/taskgraph_2.graphml");
+        RateMonotonicAnalysis RMA = new RateMonotonicAnalysis(1, tasklist,
+                ProbabliltyDistribution.UNIFORM);
         
-        if (RMA.analyse() == SCHEDULABLE) {
+        if (RMA.analyse() == Schedulability.SCHEDULABLE) {
             System.out.println(RMA.getClass().getName() + " Reports Schedulable");
         } else {
             System.out.println(RMA.getClass().getName() + " Reports Unschedulable");
@@ -35,7 +35,7 @@ public class Simulator {
             
 
         DeadlineMonotonicAnalysis DMA = new DeadlineMonotonicAnalysis(tasklist);
-        if (DMA.analyse() == SCHEDULABLE) {
+        if (DMA.analyse() == Schedulability.SCHEDULABLE) {
             System.out.println(DMA.getClass().getName() + " Reports Schedulable");
         } else {
             exitStatus = 1;

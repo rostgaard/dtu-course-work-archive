@@ -19,6 +19,17 @@ public class JobList extends ArrayList<Job>{
         Collections.sort(this, new JobComparator());
     }
 
+    public Job getWorstCaseResponseTimeJob() {
+        Job j1 = new Job();
+        for(Job j2: this) {
+            if(j1.getResponsetime() < j2.getResponsetime()) {
+                j1 = j2;
+            }
+        }
+        return j1;
+    }
+
+
     public JobList getReadyJobs(int cycle) {
         JobList readyQueue = new JobList();
         for (Job j : this) {

@@ -65,9 +65,6 @@ public class Job {
     }
 
     public void timeTick(int cycle) {
-        if(this.getParentTask() == null)
-            System.out.println("nooo");
-        else
         this.getParentTask().timeSlotList.add(cycle);
         this.time = this.time-1;
     }
