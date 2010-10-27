@@ -23,8 +23,8 @@ readS	LEA R0, Prompt
 			; Output the char
 
 	JSR toDEC
-	JSR toASCII
-	JSR PUTCh
+;	JSR toASCII
+;	JSR PUTCh
 
 	HALT
 Prompt .STRINGZ "Input a 2 digit decimal number: "
