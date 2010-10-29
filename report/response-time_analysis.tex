@@ -1,0 +1,27 @@
+Response-time analysis, in this case, involves the Deadline Monotonic feasibility test. It is based around the assumption that you know you critical instant (see section \ref{sec:critical_instant}) and from this point determines the worst-case response time of each task. Deadline monotonic is optimal for fixed task priority, and falls under the same assumptions as rate monotonic scheduling, with the one exception that deadlines can be less than the period.
+
+\subsection{Analysis}
+The analysis is based around the calculation of worst-case interference of a task. Interference of a task is defined as this:
+\begin{equation}
+I_{i}= \displaystyle\sum\limits_{j=1}^{i-1} \left\lceil \frac{R_{i}^{k}}{T_{j}}\right\rceil C_{j}
+\end{equation}
+Meaning that the worst-case interference a task can experience is the response time of all previous tasks. Hence the total response time of the task becomes:
+\begin{equation}
+R_{i}=C_{i} + \displaystyle\sum\limits_{j=1}^{i-1} \left\lceil \frac{R_{i}^{k}}{T_{j}}\right\rceil C_{j}
+\end{equation}
+I order to calculate this, we need to iterate through all the tasks with higher priority than the one we are currently examining, add up all the response times to the current task and record previously calculated response times.\\
+Only the task with the lowest priority needs to be analysed in order to guarantee schedulability.
+\subsection{Implementation details}
+This response time analysis (deadline monotonic) is extended from an abstract analysis class, that has some properties general for all analysis's. This enables modularity and extensibility.\\
+The implementation gives roughly the same textual output as the Very Simple Simulator, obviously without the svg timeline.
+\subsubsection{Comparison of RTA response times}
+%How do the worst-case response times you get with RTA compare to those you get with VSS?
+The worst case response times are the same as the ones in the Very Simple Simulator when $T_i = D_i$.
+This is due to the fact, that the algorithms are very similar in effect. This hold specifically when $C_i=WCET_i $.
+
+%How many simulation runs do you need to run VSS to get the same numbers? 
+\subsubsection{Comparison with Very Simple Simulator}
+In order to get the same numbers as with the VSS, you would need to run the simulation once with $C_i=WCET_i$, or infinite with random values, due to:
+\begin{equation}
+\underset{n\rightarrow \infty }{\lim}C_i=WCET_i\end{equation}
+%Can you modify the algorithm to determine what situation created the worst-case response time for a particular task? - no

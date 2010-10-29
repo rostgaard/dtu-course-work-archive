@@ -40,17 +40,43 @@ Kim Rostgaard Christensen\\
 \section{The WCET}
 \input{wcet.tex}
 
+%\subsubsection{Jitter}
+
+
+\section{Schedulabilty test}
+In order to determine if a task set is schedulable with a scheduling algorithm a schedulability test is perfomed.
+Schedulability tests falls into three categories; sufficient, exact or necessary
+\subsubsection*{Sufficient}
+A sufficient test means that a when the test passes, the task set i definitely schedulable. A fail provides no additional information.	
+\subsubsection*{Exact}
+An exact test guarantees schedulability on a pass. On fail it means the task set could fail to meet deadline, but not in all cases.
+\subsubsection*{Necessary}
+If a task set fails a necessary schedulabilty test, then the task set will always fail.
+
+
 
 \section{Very Simple Simulator}
 \input{very_simple_simulator.tex}
 
-
 \section{Response-Time Analysis}
+\label{sec:rta}
 \input{response-time_analysis.tex}
 
 
-\section{Something advanced}
-%\input{very_simple_simulator.tex}
+\section{Resources}
+%Definition of a resource
+In the tests studied so far, we have neglected to take into account the access to shared resources, and especially exclusive resources. If we were not able to provide secure and consistent access to resources, our deployment scenarios would very limited.\\
+There exists a number of schedulability test that takes into account the usage of shared resources. These are based on the following protocols
+\begin{itemize}
+\item Priority inversion protocol
+\item Priority ceiling protocol
+\item Stack resource policy
+\end{itemize}
+The protocols are more or less extensions of each other from to to bottom. In this project, they will be implemented the same order, effectively giving them implementation priorities in the same order.
+
+\subsection{Priority inversion}
+
+\subsection{Deadlock}
 
 
 %Body; A number of sections describing the work done.
