@@ -1,0 +1,2 @@
+readIO 				;use wait
+
