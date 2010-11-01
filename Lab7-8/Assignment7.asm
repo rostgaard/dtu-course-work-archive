@@ -1,0 +1,14 @@
+resultIO	ADD R0,R0,#0
+	BRz zero
+	AND R1,R1,#2
+	STI R1, LEDDR
+	RET
+
+zero	STI R1, LEDDR
+	AND R1,R1,#1
+	RET
+
+LEDDR	-FILL xfe16
+
+
+

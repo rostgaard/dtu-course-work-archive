@@ -1,2 +1,11 @@
-readIO 				;use wait
+readIO 				
+	;use wait
+	LDI R0, SWDR
+	STI R0, SSEGDR
+	AND R1,R1,#0
+	STI R1, LEDDR
+	
 
+SWDR	.FILL xfe0a
+SSEGDR	.FILL xfe12
+LEDDR	-FILL xfe16
