@@ -18,7 +18,17 @@ public class MJAnd extends MJBinaryOp {
 	}
 
 
-	MJType typeCheck() throws TypeCheckerException { return this.type; } 
+	/**
+	 * The operands must be booleans 
+	 */
+	MJType typeCheck() throws TypeCheckerException { 
+		if (!this.lhs.typeCheck().isBoolean())
+			throw new TypeCheckerException("Variable " + this.lhs.toString() + " is not of the type: Boolean");
+		
+		if (!this.rhs.typeCheck().isBoolean())
+			throw new TypeCheckerException("Variable " + this.lhs.toString() + " is not of the type: Boolean");		
+
+		return this.type; } 
 
 
         void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}

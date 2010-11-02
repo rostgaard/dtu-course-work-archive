@@ -30,7 +30,7 @@ public class MJProgram extends IR {
 
 
 	public MJType typeCheck() throws TypeCheckerException {
-		
+		//TODO change to include checks for main method
 		for (MJClass c : this.getClasses()) {
 			try {
 				IR.classes.add(c);

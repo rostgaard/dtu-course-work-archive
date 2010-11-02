@@ -46,7 +46,7 @@ public class MJBlock extends MJStatement {
 
 	MJType typeCheck() throws TypeCheckerException { return MJType.Tnone; } 
 
-
-        void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
+	
+	void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
 
 }
