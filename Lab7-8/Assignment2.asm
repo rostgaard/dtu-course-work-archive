@@ -1,4 +1,3 @@
-.ORIG 	x3000
 ; isPrime
 isPrime	ST R7,SaveR7primes	; provide a way back
 	LEA R2, primes 		; prime_ptr
@@ -48,4 +47,3 @@ primes	.FILL #2	; Array of primes
 	.FILL #101
 
 SaveR7primes	.FILL 0
-.END

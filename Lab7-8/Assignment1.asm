@@ -6,7 +6,6 @@
 ;  R1 - Digit 1
 ;  R2 - Digit 2
 	
-.ORIG x3000
 ;; readS
 readS	ST R7,SaveR7readS	; provide a way back
 	LEA R0, Prompt    
@@ -49,4 +48,3 @@ Prompt .STRINGZ " \nInput a 2 digit decimal number: "
 ASCII	.FILL xFFD0
 DSR     .FILL   xFE04
 DDR     .FILL   xFE06
-.END
