@@ -7,19 +7,62 @@
 ;  R2 - Digit 2
 	
 .ORIG x3000
-main	JSR readIO
+mainloop	JSR readIO
 	JSR isPrime
 	JSR resultIO
-	BRnzp main
+	BRnzp mainloop
 
 ;; readIO
-TODO
+readIO 	ST R7,SaveR7readIO 		
+	JSR wait
+	LDI R0, SWDR
+	STI R0, SSEGDR
+	AND R1,R1,#0
+	STI R1, LEDDR
+	LD R7,SaveR7readIO
+	RET
+
+SaveR7readIO .FILL 0
+SWDR	.FILL xfe0a
+SSEGDR	.FILL xfe12
+LEDDR	.FILL xfe16
+
+
+;; wait for button release
+wait	ST R7,SaveR7wait
+	ST R3, SaveR3
+pressed	 LDI R3,btnptr
+	 AND R3,R3,#1
+	 BRz pressed
+released LDI R3,btnptr
+	 ADD R3,R3,#0
+	 BRp released
+
+	 LD R3, SaveR3
+	 LD R7, SaveR7wait
+	 RET
+
+SaveR7wait .FILL 0
+SaveR3 .FILL 0
+btnptr	.FILL xfe0e
 
 ;; resultIO
-TODO
+resultIO	ST R7,SaveR7resultIO
+	ADD R0,R0,#1
+	STI R0, LEDDR
+	BRnzp return
+
+zero	ADD R0,R0,#1
+	STI R0, LEDDR
+	
+return	LD R7,SaveR7resultIO
+	RET
+
+SaveR7resultIO .FILL 0
+
 
 ; isPrime
-isPrime	ST R7,SaveR7
+isPrime	ST R7,SaveR7primes
 	LEA R2, primes 	; prime_ptr
 	NOT R0,R0
 	ADD R0,R0,#1
@@ -31,12 +74,12 @@ again	LDR R1,R2,#0
 	BRnzp again
 
 notok	AND R0,R0,#0
-	LD R7,SaveR7
+	LD R7,SaveR7primes
 	RET
 
 ok	AND R0,R0,#0
 	ADD R0,R0,#1
-	LD R7,SaveR7
+	LD R7,SaveR7primes
 	RET
 
 
@@ -67,7 +110,6 @@ primes	.FILL #2
 	.FILL #97
 	.FILL #101
 
-
-SaveR7	.FILL 0
+SaveR7primes	.FILL 0
 
 .END

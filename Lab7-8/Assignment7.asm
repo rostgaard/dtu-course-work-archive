@@ -1,14 +1,16 @@
-resultIO	ADD R0,R0,#0
-	BRz zero
-	AND R1,R1,#2
-	STI R1, LEDDR
+;; resultIO
+resultIO	ST R7,SaveR7resultIO
+	ADD R0,R0,#1
+	STI R0, LEDDR
+	BRnzp return
+
+zero	ADD R0,R0,#1
+	STI R0, LEDDR
+	
+return	LD R7,SaveR7resultIO
 	RET
 
-zero	STI R1, LEDDR
-	AND R1,R1,#1
-	RET
-
-LEDDR	-FILL xfe16
+SaveR7resultIO .FILL 0
 
 
 
