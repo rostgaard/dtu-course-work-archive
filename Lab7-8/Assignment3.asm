@@ -1,19 +1,23 @@
 .ORIG x3000
-resultS	ADD R0,R0,#0
-	BRz noPrime
-	BRp prime
-	BRn STOP
+;; resultS
+resultS	ST R7,SaveR7results	; provide a way back
+	ADD R0,R0,#0		; Raise zero flag, on zero
+	BRz zero
+	BRp pos
+	BRnzp retres
 
-prime	LEA R0, isPrimeZ
+	; This is a prime
+pos	LEA R0, isPrimeZ
 	PUTS
-	BRnzp STOP
+	BRnzp retres
 
-noPrime LEA R0, isNotPrimeZ
+	; This is not a prime
+zero LEA R0, isNotPrimeZ
 	PUTS
-	BRnzp STOP
+retres	LD R7,SaveR7results
+	RET
 
-isPrimeZ  .STRINGZ "The number is prime"
-isNotPrimeZ  .STRINGZ "The number is not prime"
-
-STOP	.FILL 0
+SaveR7results	.FILL 0
+isPrimeZ  .STRINGZ "\nThe number is prime"
+isNotPrimeZ  .STRINGZ "\nThe number is not prime"
 .END
