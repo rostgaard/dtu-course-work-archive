@@ -1,3 +1,6 @@
+;;; Authors: Morten Hillebo (s072923) and Kim Rostgaard Christensen (s084283)
+;;; 		Group 2
+
 resultIO	ST R7,SaveR7resultIO	; provide a way back
 	ADD R0,R0,#0
 	BRz zero

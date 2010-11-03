@@ -1,3 +1,6 @@
+;;; Authors: Morten Hillebo (s072923) and Kim Rostgaard Christensen (s084283)
+;;; 		Group 2
+
 readIO 	ST R7,SaveR7readIO	; provide a way back
 	JSR wait
 	LDI R0, SWDR		; sample bitpattern in switches

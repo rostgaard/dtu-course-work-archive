@@ -1,4 +1,7 @@
-; isPrime
+;;; Authors: Morten Hillebo (s072923) and Kim Rostgaard Christensen (s084283)
+;;; 		Group 2
+
+;isPrime
 isPrime	ST R7,SaveR7primes	; provide a way back
 	LEA R2, primes 		; prime_ptr
 	NOT R0,R0

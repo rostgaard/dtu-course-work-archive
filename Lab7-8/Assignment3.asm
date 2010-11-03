@@ -1,3 +1,6 @@
+;;; Authors: Morten Hillebo (s072923) and Kim Rostgaard Christensen (s084283)
+;;; 		Group 2
+
 ;; resultS
 resultS	ST R7,SaveR7results	; provide a way back
 	ADD R0,R0,#0		; Raise zero flag, on zero

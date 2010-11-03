@@ -1,10 +1,10 @@
-; Reads two digit decimal number from the console and returns the value
-; in register R0
-;
-; Usage list:
-;  R0 - Return value
-;  R1 - Digit 1
-;  R2 - Digit 2
+;;; Authors: Morten Hillebo (s072923) and Kim Rostgaard Christensen (s084283)
+;;; 		Group 2
+
+;;; This program takes a two digit number input from the terminal and
+;;  displays if it is a prime or not.
+;;
+;; There is a bug in the prompt, that outputs a null char before the string.
 	
 .ORIG x3000
 main	JSR readS	; Call subroutine readS

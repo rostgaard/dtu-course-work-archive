@@ -1,10 +1,5 @@
-; Reads two digit decimal number from the console and returns the value
-; in register R0
-;
-; Usage list:
-;  R0 - Return value
-;  R1 - Digit 1
-;  R2 - Digit 2
+;;; Authors: Morten Hillebo (s072923) and Kim Rostgaard Christensen (s084283)
+;;; 		Group 2
 	
 .ORIG x3000
 ;Main program calls three subprocedures in an inifinte loop
