@@ -25,14 +25,21 @@ public class MJInteger extends MJExpression {
 		prepri.print(Integer.toString(this.value));
 	}
 
+	public String toString() {
+		return new Integer(this.value).toString();
+	}
 
-	MJType typeCheck() throws TypeCheckerException { 
-		
-		//Always Int, due to the local variable "int value"
-		
-		return MJType.Tint ; } 
+	/*
+	 * int type checks and has the type integer.
+	 * 
+	 * @return MJType.Tint
+	 */
+	MJType typeCheck() throws TypeCheckerException {
+		return MJType.Tint;
+	}
 
-
-        void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
+	void variableInit(HashSet<MJVariable> initialized)
+			throws TypeCheckerException {
+	}
 
 }

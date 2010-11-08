@@ -12,7 +12,11 @@ public class MJMinus extends MJBinaryOp {
 		prepri.print(" - ");
 		this.rhs.prettyPrint(prepri);
 	}
-
+	
+	public String toString() {
+		return this.lhs.toString() +" - " +this.rhs.toString();
+	}
+	
 	/*
 	 * The − operator type checks if both arguments type check and have type
 	 * integer. The expression has the type integer.
@@ -21,13 +25,9 @@ public class MJMinus extends MJBinaryOp {
 	 */
 	MJType typeCheck() throws TypeCheckerException {
 
-		if (!this.lhs.typeCheck().isInt())
-			throw new TypeCheckerException("Variable " + this.lhs.toString()
-					+ " is not of the type: Integer");
-
-		if (!this.rhs.typeCheck().isInt())
-			throw new TypeCheckerException("Variable " + this.lhs.toString()
-					+ " is not of the type: Integer");
+		if (!this.lhs.typeCheck().isInt() || !this.rhs.typeCheck().isInt())
+			throw new TypeCheckerException(this.getClass().getSimpleName() 
+					+": operands not of type int in expression " + this);
 
 		return MJType.Tint;
 	}

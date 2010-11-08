@@ -48,9 +48,14 @@ public class MJClassTable {
 		
 		MJSymbolTable map = fieldmap.get(decl);
 		MJClass superclass = null;
-		MJVariable v;
+		MJVariable v = null;
 		
+		if(map == null) {
+			System.out.println("map is null, no use in looking up a field");
+			throw new ClassErrorField("Field "+name+" not found in class "+decl.getName()+".");
+		} else {
 		try {
+
 			v = map.lookup(name);
 			return v;
 		} catch (VariableNotFound e) {
@@ -65,6 +70,7 @@ public class MJClassTable {
 			// this should not happen
 		}
 		v = lookupField(superclass, name);
+		}
 		return v;
 	}
 

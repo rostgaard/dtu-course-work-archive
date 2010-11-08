@@ -21,16 +21,29 @@ public class MJIfElse extends MJStatement {
 		prepri.print("if (");
 		this.condition.prettyPrint(prepri);
 		prepri.println(")");
-			this.thenblock.prettyPrint(prepri);
+		this.thenblock.prettyPrint(prepri);
 		if (this.elseblock != null) {
 			prepri.println("else");
 			this.elseblock.prettyPrint(prepri);
 		}
 	}
 
-	MJType typeCheck() throws TypeCheckerException { return MJType.Tnone; } 
+	/*
+	 * An if-then-else statement type checks if the expression has type boolean
+	 * and the then and the else block type check.
+	 */
+	MJType typeCheck() throws TypeCheckerException {
+		if(!this.condition.typeCheck().isBoolean())
+			throw new TypeCheckerException(this.getClass().getName() +": condition not of type boolean");
+			
+		this.thenblock.typeCheck();
+		if (this.elseblock != null)
+			this.elseblock.typeCheck();
+		return MJType.Tnone;
+	}
 
-
-        void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
+	void variableInit(HashSet<MJVariable> initialized)
+			throws TypeCheckerException {
+	}
 
 }

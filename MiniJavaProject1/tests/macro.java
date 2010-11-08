@@ -3,8 +3,10 @@ class testmain {
 		int i;
 		String j;
 		A a;
-		j=1+(a-b.x)*a[1];
-		i=j;
+		j= "hat";
+//		j= 1;
+//		j=1+(a-b.x)*a[1];
+//		i=j;
 		System.out.println(j);
 		if (-a[i]<q+a && 17=="asdasdasdas\"") {
 			o.m(o.m,o.m,o.m);

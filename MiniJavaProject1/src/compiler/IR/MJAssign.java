@@ -24,23 +24,36 @@ public class MJAssign extends MJStatement {
 	}
 
 	public void prettyPrint(PrettyPrinter prepri) {
-		if(compiler.config.DEBUG) {
+		if (compiler.config.DEBUG) {
 			System.out.println("Checking assignment: ");
 		}
-		
+
 		this.lhs.prettyPrint(prepri);
 		prepri.print(" = ");
 		this.rhs.prettyPrint(prepri);
 		prepri.println(";");
 	}
 
-	MJType typeCheck() throws TypeCheckerException { 
-		if(this.lhs.typeCheck() != this.rhs.typeCheck()) {
-			throw new TypeCheckerException("Wrong");
+	public String toString() {
+		return this.lhs.toString() + " = " + this.rhs.toString();
+	}
+
+	/*
+	 * An assignment type checks if the variable is declared, the right hand
+	 * side type checks, and both have the same type.
+	 */
+	MJType typeCheck() throws TypeCheckerException {
+		if (!this.lhs.typeCheck().isSame(this.rhs.typeCheck()) ) {
+			throw new TypeCheckerException(this.getClass().getSimpleName()
+					+ ": lhs (" + this.lhs.typeCheck().getName()
+					+ ") is not of same type as rhs ("+ this.rhs.typeCheck().getName() +") in expression\n\t"
+					+ this);
 		}
-		return MJType.Tnone; } 
+		return MJType.Tnone;
+	}
 
-
-        void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
+	void variableInit(HashSet<MJVariable> initialized)
+			throws TypeCheckerException {
+	}
 
 }

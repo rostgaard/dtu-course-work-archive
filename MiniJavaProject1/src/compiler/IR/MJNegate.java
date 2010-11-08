@@ -16,14 +16,23 @@ public class MJNegate extends MJUnaryOp {
 		this.arg.prettyPrint(prepri);
 	}
 
+	/*
+	 * The logical negation type checks if the argument type checks and has type
+	 * boolean. The expression has type boolean.
+	 * 
+	 * @return MJType.Tboolean on success
+	 */
 	MJType typeCheck() throws TypeCheckerException {
-		
-		if (!this.arg.typeCheck().isInt())
-			throw new TypeCheckerException("Expression " + this.arg.toString() + " is not of the type: Integer");
-		
-		return this.type; } 
 
+		if (this.arg.typeCheck().isInt())
+			return MJType.Tboolean;
+		else
+			throw new TypeCheckerException("Expression " + this.arg.toString()
+					+ " is not of the type: Integer");
+	}
 
-        void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
+	void variableInit(HashSet<MJVariable> initialized)
+			throws TypeCheckerException {
+	}
 
 }

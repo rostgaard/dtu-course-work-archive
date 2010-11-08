@@ -8,7 +8,7 @@ import compiler.Exceptions.TypeCheckerException;
 public class MJString extends MJExpression {
 
 	private String string;
-	
+
 	public MJString(String string) {
 		this.string = string;
 	}
@@ -17,9 +17,20 @@ public class MJString extends MJExpression {
 		prepri.print(this.string);
 	}
 
-	MJType typeCheck() throws TypeCheckerException { return this.type; } 
+	public String toString() {
+		return this.string;
+	}
+	/*
+	 * String type checks and has the class type String.
+	 * 
+	 * @return MJType.TString
+	 */
+	MJType typeCheck() throws TypeCheckerException {
+		return MJType.TString;
+	}
 
-
-        void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
+	void variableInit(HashSet<MJVariable> initialized)
+			throws TypeCheckerException {
+	}
 
 }

@@ -16,8 +16,20 @@ public class MJNew extends MJExpression {
 	public void prettyPrint(PrettyPrinter prepri) {
 		prepri.print("new "+ this.type + "()");
 	}
-
-	MJType typeCheck() throws TypeCheckerException { return this.type; } 
+	
+	public String toString() {
+		return "new "+ this.type + "()";
+	}
+	
+	/*
+	 * The creation of a new object type checks if the identifier type checks as a type. 
+	 * The expression has class type with the name of the identifier.
+	 * 
+	 * @return MJType of the class 
+	 */
+	MJType typeCheck() throws TypeCheckerException {
+		return type.typeCheck(); 
+		} 
 
 
         void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}

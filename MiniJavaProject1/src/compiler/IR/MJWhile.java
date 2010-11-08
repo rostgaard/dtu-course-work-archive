@@ -22,7 +22,16 @@ public class MJWhile extends MJStatement {
 		this.body.prettyPrint(prepri);
 	}
 	
-	MJType typeCheck() throws TypeCheckerException { return MJType.Tnone; } 
+	/*
+	 * A while statement type checks if the expression has type boolean and the body type checks.
+	 */
+	MJType typeCheck() throws TypeCheckerException { 
+		if(!this.condition.typeCheck().isBoolean())
+			throw new TypeCheckerException(this.getClass().getName() +": condition not of type boolean");
+
+		this.body.typeCheck();
+
+		return MJType.Tnone; } 
 
 
         void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}

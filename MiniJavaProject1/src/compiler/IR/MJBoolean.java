@@ -7,13 +7,15 @@ import compiler.Exceptions.TypeCheckerException;
 
 public class MJBoolean extends MJExpression {
 
-	private enum MJBooleanValues { True, False } ;
-	
+	private enum MJBooleanValues {
+		True, False
+	};
+
 	private MJBooleanValues value;
-	
+
 	public static MJBoolean False = new MJBoolean(MJBooleanValues.False);
 	public static MJBoolean True = new MJBoolean(MJBooleanValues.True);
-	
+
 	public MJBoolean(MJBooleanValues value) {
 		this.value = value;
 	}
@@ -34,10 +36,21 @@ public class MJBoolean extends MJExpression {
 		}
 	}
 
+	/*
+	 * true and false type check and have the type boolean.
+	 * @return MJType.Tboolean
+	 */
+	MJType typeCheck() throws TypeCheckerException {
+		if (this.value == MJBooleanValues.True
+				|| this.value == MJBooleanValues.False)
+			return MJType.Tboolean;
+		else
+			throw new TypeCheckerException(this.getClass().getName()
+					+ ": Invalid boolean expression");
+	}
 
-	MJType typeCheck() throws TypeCheckerException { return MJType.Tboolean; } 
-
-
-        void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
+	void variableInit(HashSet<MJVariable> initialized)
+			throws TypeCheckerException {
+	}
 
 }

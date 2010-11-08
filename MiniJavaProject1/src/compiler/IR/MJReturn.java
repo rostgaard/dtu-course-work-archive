@@ -15,18 +15,33 @@ public class MJReturn extends MJStatement {
 
 	public void prettyPrint(PrettyPrinter prepri) {
 		prepri.print("return");
-		
-		if ( !(this.retExp instanceof MJNoExpression) ) {
+
+		if (!(this.retExp instanceof MJNoExpression)) {
 			prepri.print(" ");
 			this.retExp.prettyPrint(prepri);
 		}
-		
+
 		prepri.println(";");
 	}
 
-	MJType typeCheck() throws TypeCheckerException { return MJType.Tnone; } 
+	/*
+	 * if the method has not return type void then the method's return
+	 * statements must return an expression with the correct type, and
+	 * 
+	 * if the method has return type void then the return statements may not
+	 * have an argument.
+	 */
+	MJType typeCheck() throws TypeCheckerException {
+		if (this.retExp instanceof MJNoExpression)
+			return MJType.Tnone;
 
+		else 
+			return this.retExp.typeCheck();
+		
+	}
 
-        void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
+	void variableInit(HashSet<MJVariable> initialized)
+			throws TypeCheckerException {
+	}
 
 }

@@ -14,7 +14,7 @@ public class MJClass extends IR {
 	private LinkedList<MJVariable> fieldList = new LinkedList<MJVariable>();
 
 	// this we have just for the main class
-	
+
 	public MJClass(String name, MJMethod md) {
 		this.name = name;
 		LinkedList<MJMethod> methodList = new LinkedList<MJMethod>();
@@ -24,9 +24,9 @@ public class MJClass extends IR {
 	}
 
 	// and this is for the general case
-	
-	public MJClass(String name, String superClassName, LinkedList<MJVariable> vdl,
-			LinkedList<MJMethod> mdl) {
+
+	public MJClass(String name, String superClassName,
+			LinkedList<MJVariable> vdl, LinkedList<MJMethod> mdl) {
 		this.name = name;
 		this.fieldList = vdl;
 		this.methodList = mdl;
@@ -54,43 +54,48 @@ public class MJClass extends IR {
 	}
 
 	public void prettyPrint(PrettyPrinter prepri) {
-		prepri.println("class "+this.getName()+" extends "+this.getSuperClass()+" {");
+		prepri.println("class " + this.getName() + " extends "
+				+ this.getSuperClass() + " {");
 		prepri.in();
 
 		for (MJVariable v : this.fieldList) {
 			v.prettyPrint(prepri);
 			prepri.println(";");
 		}
-		
+
 		prepri.println("");
-		
+
 		for (MJMethod m : this.methodList) {
 			m.prettyPrint(prepri);
 		}
-		
+
 		prepri.out();
 		prepri.println("}");
 	}
 
+	/*
+	 * For a field declaration to type check its type must type check and there
+	 * may not be another field in the class with the same name.
+	 */
 	public MJType typeCheck() throws TypeCheckerException {
-		if(compiler.config.DEBUG) {
+		if (compiler.config.DEBUG) {
 			System.out.println("Typechecking class " + this.getName());
 		}
-		
+
 		IR.currentClass = this;
-		
+
 		// check fields
-		
+
 		for (MJVariable f : this.getFieldList()) {
 			f.typeCheck();
 		}
-		
-		//methods
-		
+
+		// methods
+
 		for (MJMethod m : this.getMethodList()) {
 			m.typeCheck();
 		}
-		
+
 		return MJType.Tnone;
 	}
 

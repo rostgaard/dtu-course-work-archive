@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import compiler.PrettyPrinter;
 import compiler.Exceptions.TypeCheckerException;
+import compiler.Exceptions.VariableAlreadyDeclared;
 
 public class MJBlock extends MJStatement {
 
@@ -16,45 +17,63 @@ public class MJBlock extends MJStatement {
 		this.statements = sdl;
 	}
 
-	public LinkedList<MJVariable>  getVariables() {
+	public LinkedList<MJVariable> getVariables() {
 		return this.variables;
 	}
 
-	public LinkedList<MJStatement>  getStatements() {
+	public LinkedList<MJStatement> getStatements() {
 		return this.statements;
 	}
 
 	public void prettyPrint(PrettyPrinter prepri) {
 		prepri.println("{");
 		prepri.in();
-		
+
 		for (MJVariable v : this.variables) {
 			v.prettyPrint(prepri);
 			prepri.println(";");
 		}
 
-		if (this.variables.size()>0)
+		if (this.variables.size() > 0)
 			prepri.println("");
-		
+
 		for (MJStatement s : this.statements) {
 			s.prettyPrint(prepri);
 		}
-		
+
 		prepri.out();
-		prepri.println("}");		
+		prepri.println("}");
 	}
 
+	/*
+	 * A block type checks if the variable declaration list and the statement
+	 * list type checks.
+	 */
 	MJType typeCheck() throws TypeCheckerException {
-		if(compiler.config.DEBUG) 
-			System.out.println(" Typechecking "+ this.statements.size() + " statemets");
-		for(MJStatement stmt : this.statements) {
-			if(compiler.config.DEBUG) 
+		IR.stack.enterScope();
+		for (MJVariable v : this.variables) {
+			try {
+				IR.stack.add(v);
+			} catch (VariableAlreadyDeclared e) {
+				throw new TypeCheckerException(v.getName()
+						+ " already declared in scope");
+			}
+		}
+
+		if (compiler.config.DEBUG)
+			System.out.println(" Typechecking " + this.statements.size()
+					+ " statements");
+		for (MJStatement stmt : this.statements) {
+			if (compiler.config.DEBUG)
 				System.out.println(" Typechecking ");
 			stmt.typeCheck();
 		}
-		return MJType.Tnone; } 
+		IR.stack.leaveScope();
+		return MJType.Tnone;
+	}
 
-	
-	void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
+	void variableInit(HashSet<MJVariable> initialized)
+			throws TypeCheckerException {
+	}
 
 }

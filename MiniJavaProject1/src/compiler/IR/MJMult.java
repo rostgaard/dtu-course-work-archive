@@ -17,15 +17,21 @@ public class MJMult extends MJBinaryOp {
 		this.rhs.prettyPrint(prepri);
 	}
 
+	/*
+	 * The ∗ operator type checks if both arguments type check and have type integer. 
+	 * The expression has type integer.
+	 * 
+	 * @return MJType.Tint on success 
+	 */
 	MJType typeCheck() throws TypeCheckerException {
 		
 		if (!this.lhs.typeCheck().isInt())
-			throw new TypeCheckerException("Variable " + this.lhs.toString() + " is not of the type: Integer");
+			throw new TypeCheckerException(this.getClass().getName()+": lhs " + this.lhs.toString() + " is not of the type: Integer");
 		
 		if (!this.rhs.typeCheck().isInt())
-			throw new TypeCheckerException("Variable " + this.lhs.toString() + " is not of the type: Integer");
+			throw new TypeCheckerException(this.getClass().getName()+": rhs " + this.rhs.toString() + " is not of the type: Integer");
 		
-		return this.type; } 
+		return MJType.Tint; } 
 
 
         void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}

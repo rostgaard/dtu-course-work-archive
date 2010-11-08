@@ -8,7 +8,7 @@ import compiler.Exceptions.TypeCheckerException;
 public class MJParentheses extends MJExpression {
 
 	private MJExpression exp;
-	
+
 	public MJParentheses(MJExpression e) {
 		this.exp = e;
 	}
@@ -18,14 +18,18 @@ public class MJParentheses extends MJExpression {
 		this.exp.prettyPrint(prepri);
 		prepri.print(" )");
 	}
+	
+	public String toString() {
+		return "( " + this.exp.toString() + " )";
+	}
 
-	MJType typeCheck() throws TypeCheckerException { 
-		
-			
-		
-		return this.type; } 
+	MJType typeCheck() throws TypeCheckerException {
+		exp.typeCheck();
+		return exp.type;
+	}
 
-
-        void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
+	void variableInit(HashSet<MJVariable> initialized)
+			throws TypeCheckerException {
+	}
 
 }

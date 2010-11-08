@@ -16,9 +16,21 @@ public class MJUnaryMinus extends MJUnaryOp {
 		this.arg.prettyPrint(prepri);
 	}
 
-	MJType typeCheck() throws TypeCheckerException { return this.type; } 
+	/*
+	 * The unary minus type checks if the argument type checks and has type
+	 * integer. The expression has type integer.
+	 * 
+	 * @return MJType.Tint on success
+	 */
+	MJType typeCheck() throws TypeCheckerException {
+		if(this.arg.typeCheck().isInt())
+			return MJType.Tint;
+		else
+			throw new TypeCheckerException("Unary minus expect argumet of type integer");
+	}
 
-
-        void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
+	void variableInit(HashSet<MJVariable> initialized)
+			throws TypeCheckerException {
+	}
 
 }

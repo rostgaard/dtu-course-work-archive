@@ -20,7 +20,18 @@ public class MJNewArray extends MJNew {
 		prepri.print("]");
 	}
 
-	MJType typeCheck() throws TypeCheckerException { return this.type; } 
+	/*
+	 * The creation of a new integer array type checks if the expression type checks 
+	 * and has type integer.
+	 * The expression has type array of integers.
+	 * @return MJ
+	 */
+	MJType typeCheck() throws TypeCheckerException {
+		if(this.size.typeCheck().isInt())
+			return MJType.TintArray;
+		else 
+			throw new TypeCheckerException("Array size not of type integer");
+} 
 
 
         void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
