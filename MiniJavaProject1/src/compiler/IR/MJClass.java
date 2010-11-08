@@ -73,6 +73,9 @@ public class MJClass extends IR {
 	}
 
 	public MJType typeCheck() throws TypeCheckerException {
+		if(compiler.config.DEBUG) {
+			System.out.println("Typechecking class " + this.getName());
+		}
 		
 		IR.currentClass = this;
 		

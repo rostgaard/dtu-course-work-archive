@@ -35,9 +35,9 @@ public class MJProgram extends IR {
 			try {
 				IR.classes.add(c);
 			} catch (ClassAlreadyDeclared e1) {
-				throw new TypeCheckerException("Class "+e1.getMessage()+" already declared.");
+				throw new TypeCheckerException(this.getClass().toString()+ ": Class "+e1.getMessage()+" already declared.");
 			} catch (ClassErrorField e1) {
-				throw new TypeCheckerException("Class "+c.getName()+" has two fields with name "+e1.getMessage());
+				throw new TypeCheckerException(this.getClass().toString()+": Class "+c.getName()+" has two fields with name "+e1.getMessage());
 			}
 		}
 		
@@ -45,11 +45,11 @@ public class MJProgram extends IR {
 				try {
 					IR.classes.addMethods(c);
 				} catch (ClassErrorMethod e1) {
-					throw new TypeCheckerException("Class "+e1.getMessage()+" already declared.");
+					throw new TypeCheckerException(this.getClass().toString()+": Method "+e1.getMessage()+" already declared in " + c.getName());
 				} catch (ClassNotFound e1) {
-					throw new TypeCheckerException("Class "+e1.getMessage()+" not found.");
+					throw new TypeCheckerException(this.getClass().toString()+": Class "+e1.getMessage()+" not found.");
 				} catch (InheritanceError e1) {
-					throw new TypeCheckerException("Class "+c.getName()+" overwrites a method.");
+					throw new TypeCheckerException(this.getClass().toString()+": Class "+c.getName()+" overwrites a method.");
 				}
 		}
 		

@@ -68,7 +68,7 @@ public class MJClassTable {
 		return v;
 	}
 
-	// when adding methods we need to make sure that non of the super classes
+	// when adding methods we need to make sure that none of the super classes
 	// implements a method with the same name or types either 
 	
 	public void addMethods(MJClass decl) throws ClassErrorMethod, ClassNotFound, InheritanceError {

@@ -21,7 +21,7 @@ public class MJSelector extends MJIdentifier {
 		this.field.prettyPrint(prepri);
 	}
 
-	MJType typeCheck() throws TypeCheckerException { return this.type; } 
+	MJType typeCheck() throws TypeCheckerException { return this.object.getType(); } 
 
 
         void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}

@@ -28,9 +28,9 @@ public class MJInteger extends MJExpression {
 
 	MJType typeCheck() throws TypeCheckerException { 
 		
-		//Always Int, due to the local varaible "int value"
+		//Always Int, due to the local variable "int value"
 		
-		return this.type; } 
+		return MJType.Tint ; } 
 
 
         void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}

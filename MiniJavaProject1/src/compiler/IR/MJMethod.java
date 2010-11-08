@@ -75,7 +75,12 @@ public class MJMethod extends IR {
 		prepri.println("");
 	}
 	
-	MJType typeCheck() throws TypeCheckerException { return MJType.Tnone; } 
+	MJType typeCheck() throws TypeCheckerException {
+		if(compiler.config.DEBUG) 
+			System.out.println(" Typechecking "+ this.getName()+ " body");
+		body.typeCheck();
+		
+		return MJType.Tnone; } 
 
 
         void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}

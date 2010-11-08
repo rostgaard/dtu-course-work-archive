@@ -44,7 +44,15 @@ public class MJBlock extends MJStatement {
 		prepri.println("}");		
 	}
 
-	MJType typeCheck() throws TypeCheckerException { return MJType.Tnone; } 
+	MJType typeCheck() throws TypeCheckerException {
+		if(compiler.config.DEBUG) 
+			System.out.println(" Typechecking "+ this.statements.size() + " statemets");
+		for(MJStatement stmt : this.statements) {
+			if(compiler.config.DEBUG) 
+				System.out.println(" Typechecking ");
+			stmt.typeCheck();
+		}
+		return MJType.Tnone; } 
 
 	
 	void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}

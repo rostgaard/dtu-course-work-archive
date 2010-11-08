@@ -307,4 +307,4 @@ INT : '0' | ( NONNULL NUMBER* );
 fragment CHAR : ' ' | '!' | ('\u0023'..'\u005B') | ('\u005D'..'\u007E') | '\\"' | '\\\\' | '\\t' | '\\n';
 STRING : '"' CHAR* '"' ;
 COMMENT : '//' .* NEWLINE | '/*' .* '*/' ;
-WHITESPACE  :   ( ' ' | '\t' | NEWLINE )+ { $channel=HIDDEN; };
+WHITESPACE  :   ( ' ' | '\t' | NEWLINE | COMMENT)+ { $channel=HIDDEN; };

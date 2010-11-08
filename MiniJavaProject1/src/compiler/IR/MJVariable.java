@@ -43,7 +43,7 @@ public class MJVariable extends IR {
 
 	public MJType typeCheck() throws TypeCheckerException {
 		this.getType().typeCheck();
-		return MJType.Tnone;
+		return this.getType();
 	}
 	
 	public void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {

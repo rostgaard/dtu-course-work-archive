@@ -16,8 +16,8 @@ class testmain {
 
 class A {
 	public void test() { int i = 3; return i; }
-/*	public static void test() { int j; int x; return; } */
-//	static C test() { C tmp; tmp = new C(); tmp.f = new A(); return tmp; }
+//	public static void test() { int j; int x; return; }
+	static C test() { C tmp; tmp = new C(); tmp.f = new A(); return tmp; }
 }
 
 class B extends A {
