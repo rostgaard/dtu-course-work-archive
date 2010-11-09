@@ -39,12 +39,6 @@ public class IR {
 			decl = IR.stack.find(name);
 		} catch (VariableNotFound e) {
 			try {
-				if(compiler.config.DEBUG) {
-					if(currentClass == null)
-						System.out.println("currentClass is null");
-					else
-						System.out.println("currentClass is "+ currentClass.getName());	
-				}
 				decl = IR.classes.lookupField(currentClass, name);
 			} catch (ClassErrorField e2) {
 				throw new VariableNotFound(name);

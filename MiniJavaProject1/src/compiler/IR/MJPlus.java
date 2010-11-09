@@ -12,6 +12,10 @@ public class MJPlus extends MJBinaryOp {
 		prepri.print(" + ");
 		this.rhs.prettyPrint(prepri);
 	}
+	
+	public String toString() {
+		return this.lhs +" + "+this.rhs; 
+	}
 
 	/*
 	 * The + operator type checks if both arguments type check and both have the

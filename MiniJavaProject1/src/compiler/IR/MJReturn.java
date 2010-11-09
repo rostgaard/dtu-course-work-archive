@@ -23,6 +23,14 @@ public class MJReturn extends MJStatement {
 
 		prepri.println(";");
 	}
+	
+	public String toString() {
+		String ret = "return";
+		if (!(this.retExp instanceof MJNoExpression)) {
+			ret += " " +this.retExp;
+		}		
+		return  ret + ";";
+	}
 
 	/*
 	 * if the method has not return type void then the method's return

@@ -21,11 +21,28 @@ public class MJArray extends MJIdentifier {
 		this.index.prettyPrint(prepri);
 		prepri.print("]");
 	}
+	
+	public String toString() {
+		return this.array.getName() + "[" + index.toString() + "]";
+	}
 
+	/*
+	 * An array assignment type checks if the variable is declared and has array
+	 * type, both expressions type check, the index expression has type integer,
+	 * and the right hand side has the same type as the array’s base type.
+	 */
+	MJType typeCheck() throws TypeCheckerException {
+		//check if the variable is declared
+		if(!array.typeCheck().isArray()) 
+			throw new TypeCheckerException(this.getClass().getSimpleName()+": Identifier "+ this.array.getName() + " not of type array");
+		if(!this.index.typeCheck().isInt())
+			throw new TypeCheckerException(this.getClass().getSimpleName()+": bad index of "+ this.array.getName() + " not of type integer");
 
-	MJType typeCheck() throws TypeCheckerException { return this.type; } 
+		return this.array.getType();
+	}
 
-
-        void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
+	void variableInit(HashSet<MJVariable> initialized)
+			throws TypeCheckerException {
+	}
 
 }

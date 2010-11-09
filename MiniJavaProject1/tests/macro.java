@@ -4,25 +4,30 @@ class testmain {
 		String j;
 		A a;
 		j= "hat";
-//		j= 1;
+		i=-1+1;
+		a.a = 2;
 //		j=1+(a-b.x)*a[1];
 //		i=j;
-		System.out.println(j);
-		if (-a[i]<q+a && 17=="asdasdasdas\"") {
-			o.m(o.m,o.m,o.m);
-		} else {
-		  x.m = o.m()+m(x.o)*this.m();
-		}
+//		System.out.println(j);
+//		if (-a[i]<q+a && 17=="asdasdasdas\"") {
+//			o.m(o.m,o.m,o.m);
+//		} else {
+//		  x.m = o.m()+m(x.o)*this.m();
+//		}
 	}
 }
 
 class A {
-	public void test() { int i = 3; return i; }
+	int a = 1;
+	int b = 1;
+	public void test() { 
+int i = 3; 
+return i; }
 /*	public static void test() { int j; int x; return; } */
 //	static C test() { C tmp; tmp = new C(); tmp.f = new A(); return tmp; }
 }
 
-class B extends A {
+/*class B extends A {
 	public static String testwhile(int i) {
 		int x=0;
 		while (x<i) {
@@ -31,3 +36,4 @@ class B extends A {
 		return new String();
 	}
 }
+*/

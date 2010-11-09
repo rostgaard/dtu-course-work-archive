@@ -42,15 +42,18 @@ public class MJIdentifier extends MJExpression {
 		if (this.name == "this") {
 			return new MJType(IR.currentClass.getName());
 		}
-		MJVariable v= null;
+		MJVariable v = null;
 
+		// Try to find the variable in a declaration
 		try {
-			v = IR.find(name);
+			v = IR.find(this.name);
 		} catch (VariableNotFound e) {
-			throw new TypeCheckerException(this.getClass().getSimpleName()+": unknown identifier: " + this);
+			throw new TypeCheckerException(this.getClass().getSimpleName()
+					+ ": unknown identifier: " + this);
 
 		}
-		return v.getType();
+		this.type = v.typeCheck();
+		return this.type;
 	}
 
 	void variableInit(HashSet<MJVariable> initialized)

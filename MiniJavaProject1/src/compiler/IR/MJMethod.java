@@ -99,7 +99,12 @@ public class MJMethod extends IR {
 				throw new TypeCheckerException(this.getClass().getName()
 						+ ": method " + this.getName()
 						+ " return statement does not match declaration");
-		} else
+		}
+		else if(this.getName().equals("main")) {
+			return MJType.Tnone;
+		}
+
+		else
 			throw new TypeCheckerException(this.getClass().getName()
 					+ ": method " + this.getName()
 					+ " does not have a return statement");

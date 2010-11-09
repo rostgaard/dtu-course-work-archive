@@ -5,6 +5,7 @@ import java.util.HashSet;
 import compiler.PrettyPrinter;
 import compiler.Exceptions.TypeCheckerException;
 import compiler.Exceptions.VariableAlreadyDeclared;
+import compiler.Exceptions.VariableNotFound;
 
 public class MJVariable extends IR {
 
@@ -47,7 +48,11 @@ public class MJVariable extends IR {
 	 * method body.
 	 */
 	public MJType typeCheck() throws TypeCheckerException {
-		this.getType().typeCheck();
+		try {
+			return IR.find(this.name).getType();
+		} catch (VariableNotFound e) {
+			e.printStackTrace();
+		}
 		return this.getType();
 	}
 

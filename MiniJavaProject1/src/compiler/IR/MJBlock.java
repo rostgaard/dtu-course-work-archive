@@ -52,6 +52,7 @@ public class MJBlock extends MJStatement {
 	MJType typeCheck() throws TypeCheckerException {
 		IR.stack.enterScope();
 		for (MJVariable v : this.variables) {
+			System.out.println("Found variable "+ v.getName());
 			try {
 				IR.stack.add(v);
 			} catch (VariableAlreadyDeclared e) {
@@ -61,11 +62,11 @@ public class MJBlock extends MJStatement {
 		}
 
 		if (compiler.config.DEBUG)
-			System.out.println(" Typechecking " + this.statements.size()
+			System.out.println(this.getClass().getSimpleName()+": Typechecking " + this.statements.size()
 					+ " statements");
 		for (MJStatement stmt : this.statements) {
 			if (compiler.config.DEBUG)
-				System.out.println(" Typechecking ");
+				System.out.println(this.getClass().getSimpleName()+": Typechecking "+ stmt);
 			stmt.typeCheck();
 		}
 		IR.stack.leaveScope();

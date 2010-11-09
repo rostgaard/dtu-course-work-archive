@@ -15,6 +15,11 @@ public class MJUnaryMinus extends MJUnaryOp {
 		prepri.print("-");
 		this.arg.prettyPrint(prepri);
 	}
+	
+	public String toString() {
+		return "-"+this.arg;
+		
+	}
 
 	/*
 	 * The unary minus type checks if the argument type checks and has type
