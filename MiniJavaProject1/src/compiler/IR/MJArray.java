@@ -38,7 +38,8 @@ public class MJArray extends MJIdentifier {
 		if(!this.index.typeCheck().isInt())
 			throw new TypeCheckerException(this.getClass().getSimpleName()+": bad index of "+ this.array.getName() + " not of type integer");
 
-		return this.array.getType();
+		this.type = MJType.TintArray;
+		return this.type;
 	}
 
 	void variableInit(HashSet<MJVariable> initialized)

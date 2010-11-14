@@ -52,7 +52,7 @@ public class MJIdentifier extends MJExpression {
 					+ ": unknown identifier: " + this);
 
 		}
-		this.type = v.typeCheck();
+		this.type = v.getType();
 		return this.type;
 	}
 

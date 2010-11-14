@@ -28,9 +28,10 @@ public class MJNewArray extends MJNew {
 	 */
 	MJType typeCheck() throws TypeCheckerException {
 		if(this.size.typeCheck().isInt())
-			return MJType.TintArray;
+			this.type = MJType.TintArray;
 		else 
 			throw new TypeCheckerException("Array size not of type integer");
+		return this.type;
 } 
 
 

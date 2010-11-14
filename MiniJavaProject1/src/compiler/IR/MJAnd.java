@@ -8,7 +8,7 @@ import compiler.Exceptions.TypeCheckerException;
 public class MJAnd extends MJBinaryOp {
 
 	public MJAnd(MJExpression a, MJExpression b) {
-		super(a,b);
+		super(a, b);
 	}
 
 	public void prettyPrint(PrettyPrinter prepri) {
@@ -16,22 +16,31 @@ public class MJAnd extends MJBinaryOp {
 		prepri.print(" && ");
 		this.rhs.prettyPrint(prepri);
 	}
-
+	
+	public String toString() {
+		return this.lhs + " && " + this.rhs;
+		
+	}
 
 	/**
-	 * The && operator type checks if both arguments type check and have type boolean. 
-	 * The expression has also the type boolean.
+	 * The && operator type checks if both arguments type check and have type
+	 * boolean. The expression has also the type boolean.
 	 */
-	MJType typeCheck() throws TypeCheckerException { 
+	MJType typeCheck() throws TypeCheckerException {
 		if (!this.lhs.typeCheck().isBoolean())
-			throw new TypeCheckerException("Variable " + this.lhs.toString() + " is not of the type: Boolean");
-		
+			throw new TypeCheckerException(this.getClass().getSimpleName()+": lhs ("+this.lhs.getType()+") " + this.lhs.toString()
+					+ " is not of the type: Boolean");
+
 		if (!this.rhs.typeCheck().isBoolean())
-			throw new TypeCheckerException("Variable " + this.lhs.toString() + " is not of the type: Boolean");		
+			throw new TypeCheckerException(this.getClass().getSimpleName()+": rhs ("+this.rhs.getType()+") " + this.rhs.toString()
+					+ " is not of the type: Boolean");
 
-		return MJType.Tboolean; } 
+		this.type = MJType.Tboolean; 
+		return this.type;
+	}
 
-
-        void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
+	void variableInit(HashSet<MJVariable> initialized)
+			throws TypeCheckerException {
+	}
 
 }

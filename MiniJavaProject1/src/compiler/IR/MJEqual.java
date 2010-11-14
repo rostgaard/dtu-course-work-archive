@@ -8,7 +8,7 @@ import compiler.Exceptions.TypeCheckerException;
 public class MJEqual extends MJBinaryOp {
 
 	public MJEqual(MJExpression a, MJExpression b) {
-		super(a,b);
+		super(a, b);
 	}
 
 	public void prettyPrint(PrettyPrinter prepri) {
@@ -17,20 +17,24 @@ public class MJEqual extends MJBinaryOp {
 		this.rhs.prettyPrint(prepri);
 	}
 
-
 	/*
-	 * The == operator type checks if both arguments type check and have the same type. 
-	 * The expression has the type boolean.
+	 * The == operator type checks if both arguments type check and have the
+	 * same type. The expression has the type boolean.
+	 * 
 	 * @return MJType.Tboolean on success
 	 */
-	MJType typeCheck() throws TypeCheckerException { 
-		
-		if(!this.lhs.getType().isSame(this.rhs.getType()))
-			throw new TypeCheckerException("Varaibles " + this.lhs.toString() + " and" + this.rhs.toString() + " are not of the same type");
-		
-		return MJType.Tboolean; } 
+	MJType typeCheck() throws TypeCheckerException {
 
+		if (!this.lhs.getType().isSame(this.rhs.getType()))
+			throw new TypeCheckerException("Varaibles " + this.lhs.toString()
+					+ " and" + this.rhs.toString()
+					+ " are not of the same type");
 
-        void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}
+		return MJType.Tboolean;
+	}
+
+	void variableInit(HashSet<MJVariable> initialized)
+			throws TypeCheckerException {
+	}
 
 }

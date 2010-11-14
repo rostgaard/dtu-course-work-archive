@@ -46,11 +46,11 @@ public class MJAssign extends MJStatement {
 		if(compiler.config.DEBUG && this.rhs.typeCheck() == null) 
 			System.out.println("rhs.typeCheck() is null");
 		
-		
-		if (!this.lhs.typeCheck().isSame(this.rhs.typeCheck()) ) {
+	
+		if (!this.lhs.type.isSame(this.rhs.type) ) {
 			throw new TypeCheckerException(this.getClass().getSimpleName()
-					+ ": lhs (" + this.lhs.typeCheck().getName()
-					+ ") is not of same type as rhs ("+ this.rhs.typeCheck().getName() +") in expression\n\t"
+					+ ": lhs (" + this.lhs.type.getName()
+					+ ") is not of same type as rhs ("+ this.rhs.type.getName() +") in expression "
 					+ this);
 		}
 		

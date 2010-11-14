@@ -28,16 +28,17 @@ public class MJPlus extends MJBinaryOp {
 
 		// If there is two integers we have a logical add
 		if (this.lhs.typeCheck().isInt() && this.rhs.typeCheck().isInt()) {
-			return MJType.Tint;
+			this.type = MJType.Tint;
 		} else if (this.lhs.typeCheck().getName().equals("String")
 				&& this.rhs.typeCheck().getName().equals("String")) {
-			return new MJType("String");
+			this.type = MJType.TString;
 		}
 
 		else {
 			throw new TypeCheckerException("Variable " + this.lhs.toString()
 					+ " is not of the type: Integer or String");
 		}
+		return this.type;
 
 	}
 

@@ -83,31 +83,9 @@ public class MJMethod extends IR {
 	 * - the block of statements must type check,
 	 */
 	MJType typeCheck() throws TypeCheckerException {
+		IR.currentMethod = this;
 		body.typeCheck();
-
-		MJReturn returnstmt = null;
-		// The last statement in a body is the return statement
-		if (this.body.getStatements().getLast() instanceof MJReturn) {
-			returnstmt = (MJReturn) this.body.getStatements().getLast();
-
-			MJType returnedType = returnstmt.typeCheck();
-
-			
-			if (returnedType == this.getType())
-				return returnedType;
-			else
-				throw new TypeCheckerException(this.getClass().getName()
-						+ ": method " + this.getName()
-						+ " return statement does not match declaration");
-		}
-		else if(this.getName().equals("main")) {
-			return MJType.Tnone;
-		}
-
-		else
-			throw new TypeCheckerException(this.getClass().getName()
-					+ ": method " + this.getName()
-					+ " does not have a return statement");
+		return this.type;
 	}
 
 	void variableInit(HashSet<MJVariable> initialized)

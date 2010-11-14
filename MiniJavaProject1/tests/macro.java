@@ -1,11 +1,16 @@
 class testmain {
 	public static void main(String[] args) { 
 		int i;
+		int[] intarray;
 		String j;
+		boolean bool;
 		A a;
 		j= "hat";
+		i=1-100;
 		i=-1+1;
 		a.a = 2;
+		bool=(true && false) && false;
+		intarray = new int[10];
 //		j=1+(a-b.x)*a[1];
 //		i=j;
 //		System.out.println(j);
@@ -20,7 +25,7 @@ class testmain {
 class A {
 	int a = 1;
 	int b = 1;
-	public void test() { 
+	public int test() { 
 int i = 3; 
 return i; }
 /*	public static void test() { int j; int x; return; } */

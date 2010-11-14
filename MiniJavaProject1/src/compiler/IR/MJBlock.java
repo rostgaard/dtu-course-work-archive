@@ -52,7 +52,8 @@ public class MJBlock extends MJStatement {
 	MJType typeCheck() throws TypeCheckerException {
 		IR.stack.enterScope();
 		for (MJVariable v : this.variables) {
-			System.out.println("Found variable "+ v.getName());
+			if(compiler.config.DEBUG)
+				System.out.println(this.getClass().getSimpleName()+": Found variable "+ v.getName());
 			try {
 				IR.stack.add(v);
 			} catch (VariableAlreadyDeclared e) {

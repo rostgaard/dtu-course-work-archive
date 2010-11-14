@@ -24,8 +24,8 @@ public class MJParentheses extends MJExpression {
 	}
 
 	MJType typeCheck() throws TypeCheckerException {
-		exp.typeCheck();
-		return exp.type;
+		this.type = exp.typeCheck();
+		return this.type;
 	}
 
 	void variableInit(HashSet<MJVariable> initialized)

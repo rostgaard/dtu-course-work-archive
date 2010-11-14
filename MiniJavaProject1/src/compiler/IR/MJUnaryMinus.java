@@ -29,9 +29,10 @@ public class MJUnaryMinus extends MJUnaryOp {
 	 */
 	MJType typeCheck() throws TypeCheckerException {
 		if(this.arg.typeCheck().isInt())
-			return MJType.Tint;
+			this.type = MJType.Tint;
 		else
 			throw new TypeCheckerException("Unary minus expect argumet of type integer");
+		return this.type;
 	}
 
 	void variableInit(HashSet<MJVariable> initialized)

@@ -26,7 +26,8 @@ public class MJString extends MJExpression {
 	 * @return MJType.TString
 	 */
 	MJType typeCheck() throws TypeCheckerException {
-		return MJType.TString;
+		this.type = MJType.TString; 
+		return this.type;
 	}
 
 	void variableInit(HashSet<MJVariable> initialized)

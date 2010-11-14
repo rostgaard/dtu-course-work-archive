@@ -35,7 +35,8 @@ public class MJInteger extends MJExpression {
 	 * @return MJType.Tint
 	 */
 	MJType typeCheck() throws TypeCheckerException {
-		return MJType.Tint;
+		this.type = MJType.Tint; 
+		return this.type;
 	}
 
 	void variableInit(HashSet<MJVariable> initialized)

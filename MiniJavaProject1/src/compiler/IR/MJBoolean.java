@@ -35,6 +35,14 @@ public class MJBoolean extends MJExpression {
 			prepri.print("true");
 		}
 	}
+	
+	public String toString() {
+		if (this.isFalse()) {
+			return "false";
+		} else {
+			return "true";
+		}
+	}
 
 	/*
 	 * true and false type check and have the type boolean.
@@ -43,10 +51,11 @@ public class MJBoolean extends MJExpression {
 	MJType typeCheck() throws TypeCheckerException {
 		if (this.value == MJBooleanValues.True
 				|| this.value == MJBooleanValues.False)
-			return MJType.Tboolean;
+			this.type = MJType.Tboolean;
 		else
 			throw new TypeCheckerException(this.getClass().getName()
 					+ ": Invalid boolean expression");
+		return this.type;
 	}
 
 	void variableInit(HashSet<MJVariable> initialized)

@@ -23,13 +23,13 @@ public class MJReturn extends MJStatement {
 
 		prepri.println(";");
 	}
-	
+
 	public String toString() {
 		String ret = "return";
 		if (!(this.retExp instanceof MJNoExpression)) {
-			ret += " " +this.retExp;
-		}		
-		return  ret + ";";
+			ret += " " + this.retExp;
+		}
+		return ret + ";";
 	}
 
 	/*
@@ -43,9 +43,14 @@ public class MJReturn extends MJStatement {
 		if (this.retExp instanceof MJNoExpression)
 			return MJType.Tnone;
 
-		else 
-			return this.retExp.typeCheck();
-		
+		else
+			this.retExp.type = this.retExp.typeCheck();
+		if (!this.retExp.type.isSame(IR.currentMethod.getType()))
+			throw new TypeCheckerException(this.getClass().getName()
+					+ ": method " + IR.currentMethod.getName()
+					+ " return statement does not match declaration in expression: " +this);
+		return this.retExp.type;
+
 	}
 
 	void variableInit(HashSet<MJVariable> initialized)
