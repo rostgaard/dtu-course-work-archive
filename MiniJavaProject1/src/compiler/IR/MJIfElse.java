@@ -36,9 +36,14 @@ public class MJIfElse extends MJStatement {
 		if(!this.condition.typeCheck().isBoolean())
 			throw new TypeCheckerException(this.getClass().getName() +": condition not of type boolean");
 			
+		IR.stack.enterScope();
 		this.thenblock.typeCheck();
+		IR.stack.leaveScope();
+		
 		if (this.elseblock != null)
+			IR.stack.enterScope();
 			this.elseblock.typeCheck();
+			IR.stack.leaveScope();
 		return MJType.Tnone;
 	}
 

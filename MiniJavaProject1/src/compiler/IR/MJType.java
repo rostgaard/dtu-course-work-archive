@@ -102,7 +102,7 @@ public final class MJType extends IR {
 	// local getter functions
 
 	public TypeEnum getType() {
-		return type;
+		return this.type;
 	}
 
 	public String getName() {

@@ -7,6 +7,7 @@ public class Analysis {
 
 	public static void analyse(IR ir) throws TypeCheckerException {
 		ir.getProgram().typeCheck();
+		//ir.getProgram().variableInit();
 		
 	}
 }

@@ -48,11 +48,14 @@ public class MJVariable extends IR {
 	 * method body.
 	 */
 	public MJType typeCheck() throws TypeCheckerException {
+		System.out.println(this.getClass().getSimpleName() +": Searching for " + this.name);
 		try {
-			return IR.find(this.name).getType();
+			this.type = IR.find(this.name).getType();
 		} catch (VariableNotFound e) {
 			e.printStackTrace();
 		}
+
+		
 		return this.getType();
 	}
 

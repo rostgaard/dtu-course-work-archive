@@ -27,7 +27,7 @@ public class MJSelector extends MJIdentifier {
 	public String toString() {
 		return object +"."+ field;
 	}
-
+	
 	/*
 	 * A selector type checks if a declaration of the first identifier is
 	 * visible in the current scope, has a class type, and the class defines a

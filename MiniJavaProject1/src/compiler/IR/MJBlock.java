@@ -50,7 +50,7 @@ public class MJBlock extends MJStatement {
 	 * list type checks.
 	 */
 	MJType typeCheck() throws TypeCheckerException {
-		IR.stack.enterScope();
+		//IR.stack.enterScope();
 		for (MJVariable v : this.variables) {
 			if(compiler.config.DEBUG)
 				System.out.println(this.getClass().getSimpleName()+": Found variable "+ v.getName());
@@ -70,7 +70,7 @@ public class MJBlock extends MJStatement {
 				System.out.println(this.getClass().getSimpleName()+": Typechecking "+ stmt);
 			stmt.typeCheck();
 		}
-		IR.stack.leaveScope();
+		//IR.stack.leaveScope();
 		return MJType.Tnone;
 	}
 

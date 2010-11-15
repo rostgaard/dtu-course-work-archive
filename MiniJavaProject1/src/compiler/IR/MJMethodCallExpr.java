@@ -34,7 +34,13 @@ public class MJMethodCallExpr extends MJExpression {
 		prepri.print(")");
 	}
 
-	MJType typeCheck() throws TypeCheckerException { return this.type; } 
+	/**
+	 * This should be the same as the corresponding statement
+	 */
+	MJType typeCheck() throws TypeCheckerException { 
+		
+		
+		return this.type; } 
 
 
         void variableInit(HashSet<MJVariable> initialized) throws TypeCheckerException {}

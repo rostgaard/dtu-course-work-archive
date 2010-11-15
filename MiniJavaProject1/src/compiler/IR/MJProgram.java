@@ -30,6 +30,9 @@ public class MJProgram extends IR {
 
 
 	public MJType typeCheck() throws TypeCheckerException {
+		MJClass objectClass = new MJClass("Object", "Object", new LinkedList<MJVariable>(), new LinkedList<MJMethod>());
+		this.getClasses().add(objectClass);
+		
 		//TODO change to include checks for main method
 		for (MJClass c : this.getClasses()) {
 			try {
@@ -54,6 +57,7 @@ public class MJProgram extends IR {
 		}
 		
 		for (MJClass c : this.getClasses()) {
+			
 			c.typeCheck();
 		}
 

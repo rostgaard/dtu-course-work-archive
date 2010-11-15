@@ -38,7 +38,7 @@ public class MJClass extends IR {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public LinkedList<MJVariable> getFieldList() {
@@ -83,6 +83,7 @@ public class MJClass extends IR {
 		}
 
 		IR.currentClass = this;
+	
 
 		// check fields
 

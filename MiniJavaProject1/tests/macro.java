@@ -10,7 +10,7 @@ class testmain {
 		i=-1+1;
 		a.a = 2;
 		bool=(true && false) && false;
-		intarray = new int[10];
+//		intarray = new int[10];
 //		j=1+(a-b.x)*a[1];
 //		i=j;
 //		System.out.println(j);

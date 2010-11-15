@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import compiler.PrettyPrinter;
 import compiler.Exceptions.TypeCheckerException;
+import compiler.Exceptions.VariableAlreadyDeclared;
 
 public class MJMethod extends IR {
 
@@ -84,7 +85,18 @@ public class MJMethod extends IR {
 	 */
 	MJType typeCheck() throws TypeCheckerException {
 		IR.currentMethod = this;
+		IR.stack.enterScope();
+		for (MJVariable v : this.parameters) {
+			try {
+				IR.stack.add(v);
+			} catch (VariableAlreadyDeclared e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		body.typeCheck();
+		IR.stack.leaveScope();
 		return this.type;
 	}
 

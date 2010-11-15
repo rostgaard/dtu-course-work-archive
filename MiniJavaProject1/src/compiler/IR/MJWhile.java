@@ -29,7 +29,9 @@ public class MJWhile extends MJStatement {
 		if(!this.condition.typeCheck().isBoolean())
 			throw new TypeCheckerException(this.getClass().getName() +": condition not of type boolean");
 
+		IR.stack.enterScope();
 		this.body.typeCheck();
+		IR.stack.leaveScope();
 
 		return MJType.Tnone; } 
 
