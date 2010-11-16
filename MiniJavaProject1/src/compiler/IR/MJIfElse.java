@@ -4,6 +4,7 @@ import java.util.HashSet;
 
 import compiler.PrettyPrinter;
 import compiler.Exceptions.TypeCheckerException;
+import compiler.Exceptions.VariableNotFound;
 
 public class MJIfElse extends MJStatement {
 
@@ -49,6 +50,14 @@ public class MJIfElse extends MJStatement {
 
 	void variableInit(HashSet<MJVariable> initialized)
 			throws TypeCheckerException {
+		try {
+			IR.find(condition.getType().getName()).variableInit(initialized);
+			thenblock.variableInit(initialized);
+			elseblock.variableInit(initialized);
+		} catch (VariableNotFound e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

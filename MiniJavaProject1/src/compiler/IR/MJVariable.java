@@ -61,6 +61,10 @@ public class MJVariable extends IR {
 
 	public void variableInit(HashSet<MJVariable> initialized)
 			throws TypeCheckerException {
+		if(this.init instanceof MJExpression)
+		{
+			initialized.add(this);
+		}
 
 		try {
 			IR.stack.add(this);

@@ -3,6 +3,8 @@ package compiler.IR;
 import java.util.HashSet;
 import java.util.LinkedList;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 import compiler.PrettyPrinter;
 import compiler.Exceptions.TypeCheckerException;
 import compiler.Exceptions.VariableAlreadyDeclared;
@@ -76,6 +78,15 @@ public class MJBlock extends MJStatement {
 
 	void variableInit(HashSet<MJVariable> initialized)
 			throws TypeCheckerException {
+		for(MJVariable temp : variables)
+		{
+			temp.variableInit(initialized);
+		}
+		
+		for(MJStatement temp : statements)
+		{
+			temp.variableInit(initialized);
+		}
 	}
 
 }

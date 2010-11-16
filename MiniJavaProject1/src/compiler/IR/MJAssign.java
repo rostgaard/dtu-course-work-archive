@@ -4,6 +4,7 @@ import java.util.HashSet;
 
 import compiler.PrettyPrinter;
 import compiler.Exceptions.TypeCheckerException;
+import compiler.Exceptions.VariableNotFound;
 
 public class MJAssign extends MJStatement {
 
@@ -59,6 +60,16 @@ public class MJAssign extends MJStatement {
 
 	void variableInit(HashSet<MJVariable> initialized)
 			throws TypeCheckerException {
+		MJVariable var=null;
+		try {
+			var = IR.find(rhs.getType().getName());
+		} catch (VariableNotFound e) {	
+			e.printStackTrace();
+		}
+		
+		if(initialized.contains(var))
+			lhs.variableInit(initialized);
+		
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import compiler.PrettyPrinter;
 import compiler.Exceptions.TypeCheckerException;
+import compiler.Exceptions.VariableNotFound;
 
 public class MJClass extends IR {
 
@@ -101,8 +102,18 @@ public class MJClass extends IR {
 	}
 
 	public void variableInit() throws TypeCheckerException {
+
 		for (MJMethod m : this.getMethodList()) {
-			m.variableInit(new HashSet<MJVariable>());
+			HashSet<MJVariable> set = new HashSet<MJVariable>();
+			set.addAll(fieldList);
+
+			try {
+				set.add(IR.find("this"));
+			} catch (VariableNotFound e) {
+				e.printStackTrace();
+			}
+
+			m.variableInit(set);
 		}
 	}
 

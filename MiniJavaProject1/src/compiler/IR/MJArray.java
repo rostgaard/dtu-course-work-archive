@@ -44,6 +44,7 @@ public class MJArray extends MJIdentifier {
 
 	void variableInit(HashSet<MJVariable> initialized)
 			throws TypeCheckerException {
+		array.variableInit(initialized);
 	}
 
 }

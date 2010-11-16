@@ -102,6 +102,12 @@ public class MJMethod extends IR {
 
 	void variableInit(HashSet<MJVariable> initialized)
 			throws TypeCheckerException {
+		for(MJVariable temp : parameters)
+		{
+			initialized.add(temp);
+			body.variableInit(initialized);
+		}
+		
 	}
 
 }

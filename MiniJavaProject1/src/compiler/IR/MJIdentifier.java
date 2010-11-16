@@ -58,6 +58,14 @@ public class MJIdentifier extends MJExpression {
 
 	void variableInit(HashSet<MJVariable> initialized)
 			throws TypeCheckerException {
+		try {
+			MJVariable var = IR.find(name);
+			if(!initialized.contains(var))
+				throw new TypeCheckerException(var.getName() + " is not initialised.");
+				
+		} catch (VariableNotFound e) {
+			e.printStackTrace();
+		}
 	}
 
 }
