@@ -1,0 +1,419 @@
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 2.5cm
+\topmargin 2.5cm
+\rightmargin 2.5cm
+\bottommargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\align center
+
+\family sans
+\shape smallcaps
+02321 Hardware/Software Programmering (E10)
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size larger
+Home assignment 7
+\end_layout
+
+\begin_layout Standard
+\align center
+Morten Hillebo (s072923)
+\begin_inset Newline newline
+\end_inset
+
+Kim Rostgaard Christensen (s084283)
+\end_layout
+
+\begin_layout Standard
+\align center
+Group 2
+\end_layout
+
+\begin_layout Subsection*
+Problem 11.10
+\end_layout
+
+\begin_layout Subsubsection*
+(a)
+\end_layout
+
+\begin_layout Standard
+The line will printout the char value of counter plus the char value of
+ 'A' (65)
+\end_layout
+
+\begin_layout Subsubsection*
+(b) 
+\end_layout
+
+\begin_layout Standard
+The line will printout the decimal value of counter, a new line and decimal
+ value of counter + startPoint.
+\end_layout
+
+\begin_layout Subsubsection*
+(c) 
+\end_layout
+
+\begin_layout Standard
+This line prints the hexadecimal value of counter.
+\end_layout
+
+\begin_layout Subsection*
+Problem 11.12
+\end_layout
+
+\begin_layout Standard
+The first line prints out the char 'a'
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The second line prints out the hexadecimal value of 12288 - x3000
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The last line will printout $123.10
+\end_layout
+
+\begin_layout Subsection*
+Problem 12.18
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=C,numbers=left"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+#include <stdio.h> 
+\end_layout
+
+\begin_layout Plain Layout
+
+#define STOP 32 //Last printable ascii char
+\end_layout
+
+\begin_layout Plain Layout
+
+int main() {
+\end_layout
+
+\begin_layout Plain Layout
+
+    char counter;
+\end_layout
+
+\begin_layout Plain Layout
+
+    char startpoint;
+\end_layout
+
+\begin_layout Plain Layout
+
+    printf("=====Countdown program=====
+\backslash
+n");
+\end_layout
+
+\begin_layout Plain Layout
+
+        printf("Enter a character: ");
+\end_layout
+
+\begin_layout Plain Layout
+
+         scanf("%c",&startpoint);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    for(counter = startpoint;counter >= STOP; counter--) {
+\end_layout
+
+\begin_layout Plain Layout
+
+      printf("char #%d: %c
+\backslash
+n",counter,counter);
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+}    
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Problem 13.4
+\end_layout
+
+\begin_layout Subsubsection*
+(a)
+\end_layout
+
+\begin_layout Standard
+The condition of the if is an assingment which returns the value of the
+ assignment - which is always 0.
+\begin_inset Newline newline
+\end_inset
+
+This gives the resut of false - the else, not matter the value of initial
+ x;
+\end_layout
+
+\begin_layout Subsubsection*
+(b) 
+\end_layout
+
+\begin_layout Standard
+This one print out 
+\begin_inset Quotes eld
+\end_inset
+
+x equal 0
+\begin_inset Quotes erd
+\end_inset
+
+ if it is x is 0 and 
+\begin_inset Quotes eld
+\end_inset
+
+x does not equal 0
+\begin_inset Quotes erd
+\end_inset
+
+ if it is not.
+\end_layout
+
+\begin_layout Subsubsection*
+(c) 
+\end_layout
+
+\begin_layout Standard
+This one prints 
+\begin_inset Quotes eld
+\end_inset
+
+A
+\begin_inset Quotes erd
+\end_inset
+
+ if x is 0 and 
+\begin_inset Quotes eld
+\end_inset
+
+D
+\begin_inset Quotes erd
+\end_inset
+
+ if x is not 1, on other values it will print 
+\begin_inset Quotes eld
+\end_inset
+
+B
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+(d)
+\end_layout
+
+\begin_layout Standard
+The value of y is assgned to 4 if x is 0 or 1 (due to the missing break
+ statement).
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+(e)
+\end_layout
+
+\begin_layout Standard
+On other values of x in (d), y is assigned to 5.
+\end_layout
+
+\begin_layout Subsection*
+Problem 13.8
+\end_layout
+
+\begin_layout Subsubsection*
+(a)
+\end_layout
+
+\begin_layout Standard
+If the condition is initially true, the while loop will execute.
+ If it is not, then loopBody will never execute.
+\end_layout
+
+\begin_layout Subsubsection*
+(b)
+\end_layout
+
+\begin_layout Standard
+If the condition is initially true, the while loop will execute.
+ If it is not, then loopBody will execute once.
+\end_layout
+
+\begin_layout Subsubsection*
+(c)
+\end_layout
+
+\begin_layout Standard
+The for loop executes reinit and evaluates condition on entry, and only
+ enters if loopBody condition is true.
+\end_layout
+
+\begin_layout Subsubsection*
+(d)
+\end_layout
+
+\begin_layout Standard
+The loopBody only enters, if condition1, at least once, is true.
+ And then if condition2 is true.
+\end_layout
+
+\begin_layout Subsubsection*
+(e)
+\end_layout
+
+\begin_layout Standard
+The loopBody reenters as long as condition2 is true.
+ When condtion1 is false, it still enters loopBody.
+ When both values are false, the loopBody enters once.
+ When condition2 is false, and condition1 is true loopBody reenters as long
+ as condition1 is true.
+\end_layout
+
+\begin_layout Subsection*
+Problem 13.18
+\end_layout
+
+\begin_layout Subsubsection*
+(a)
+\end_layout
+
+\begin_layout Standard
+******
+\begin_inset Newline newline
+\end_inset
+
+The loop exits when y becomes 16, due to 16 & 15 = 0.
+\end_layout
+
+\begin_layout Subsubsection*
+(b) 
+\end_layout
+
+\begin_layout Standard
+**********
+\begin_inset Newline newline
+\end_inset
+
+The loop exits when x becomes 0.
+\end_layout
+
+\begin_layout Subsubsection*
+(c) 
+\end_layout
+
+\begin_layout Standard
+*****
+\begin_inset Newline newline
+\end_inset
+
+The loop runs 10 times, but only prints out a * if x is not a multiple of
+ 2.
+\end_layout
+
+\begin_layout Subsubsection*
+(d)
+\end_layout
+
+\begin_layout Standard
+Prints out nothing, as the first while loop condition evaluates to false
+ 
+\begin_inset Formula $(0>10)$
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

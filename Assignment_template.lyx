@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -73,10 +73,11 @@ Morten Hillebo (s072923)
 \end_inset
 
 Kim Rostgaard Christensen (s084283)
-\begin_inset Newline newline
-\end_inset
+\end_layout
 
-
+\begin_layout Standard
+\align center
+Group 2
 \end_layout
 
 \begin_layout Subsection*

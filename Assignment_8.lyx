@@ -1,0 +1,243 @@
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 2.5cm
+\topmargin 2.5cm
+\rightmargin 2.5cm
+\bottommargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\align center
+
+\family sans
+\shape smallcaps
+02321 Hardware/Software Programmering (E10)
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size larger
+Home assignment 8
+\end_layout
+
+\begin_layout Standard
+\align center
+Morten Hillebo (s072923)
+\begin_inset Newline newline
+\end_inset
+
+Kim Rostgaard Christensen (s084283)
+\end_layout
+
+\begin_layout Standard
+\align center
+Group 2
+\end_layout
+
+\begin_layout Subsection*
+Problem 14.2
+\end_layout
+
+\begin_layout Subsubsection*
+(a)
+\end_layout
+
+\begin_layout Subsubsection*
+(b) 
+\end_layout
+
+\begin_layout Subsubsection*
+(c) 
+\end_layout
+
+\begin_layout Subsection*
+Problem 14.4
+\end_layout
+
+\begin_layout Subsubsection*
+(a)
+\end_layout
+
+\begin_layout Subsubsection*
+(b) 
+\end_layout
+
+\begin_layout Subsubsection*
+(c) 
+\end_layout
+
+\begin_layout Subsubsection*
+(d)
+\end_layout
+
+\begin_layout Subsection*
+Problem 14.8
+\end_layout
+
+\begin_layout Standard
+The code outputs: 
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+x = 1  y = 2
+\end_layout
+
+\end_inset
+
+Which is the unaltered values.
+ This is due to the fact that the function swap only swap the values in
+ the parameter scope.
+ When the function returns the paramter values x and y of Swap is abandoned.
+\end_layout
+
+\begin_layout Subsection*
+Problem 14.10
+\end_layout
+
+\begin_layout Subsubsection*
+(a)
+\end_layout
+
+\begin_layout Subsubsection*
+(b) 
+\end_layout
+
+\begin_layout Subsection*
+Problem 14.14
+\end_layout
+
+\begin_layout Standard
+See attached code.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Problem 15.6
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+a:75, b:60, c:72 
+\end_layout
+
+\begin_layout Plain Layout
+
+a:57, b:46, c:50 
+\end_layout
+
+\begin_layout Plain Layout
+
+a:55, b:45, c:97 
+\end_layout
+
+\begin_layout Plain Layout
+
+a:53, b:43, c:55 
+\end_layout
+
+\begin_layout Plain Layout
+
+a:44, b:36, c:44 
+\end_layout
+
+\begin_layout Plain Layout
+
+a:37, b:31, c:63 
+\end_layout
+
+\begin_layout Plain Layout
+
+a:36, b:30, c:48 
+\end_layout
+
+\begin_layout Plain Layout
+
+a:35, b:30, c:92 
+\end_layout
+
+\begin_layout Plain Layout
+
+a:33, b:28, c:62 
+\end_layout
+
+\begin_layout Plain Layout
+
+a:24, b:21, c:45 
+\end_layout
+
+\begin_layout Plain Layout
+
+a:21, b:20, c:90 
+\end_layout
+
+\begin_layout Plain Layout
+
+a:17, b:16, c:46 
+\end_layout
+
+\begin_layout Plain Layout
+
+a:16, b:15, c:37 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
