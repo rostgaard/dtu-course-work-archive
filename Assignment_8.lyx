@@ -88,32 +88,73 @@ Problem 14.2
 (a)
 \end_layout
 
+\begin_layout Standard
+The dynamic link is a copy of the frame pointer of the calling function.
+ This copy is needed for the caller function to be able to access its own
+ variables after end of function call.
+\end_layout
+
 \begin_layout Subsubsection*
 (b) 
 \end_layout
 
+\begin_layout Standard
+The purpose of the return address is to provide a way back to the caller
+ function, even if the callee calls another function.
+\end_layout
+
+\begin_layout Standard
+The return address is pushed on the stack by the caller.
+ When the callee finishes, it pops the return address off the stack .
+ Puts it into R7, and does RET.
+\end_layout
+
 \begin_layout Subsubsection*
-(c) 
+(c)
+\end_layout
+
+\begin_layout Standard
+a) The return value is modified by the callee and saved in the Activation
+ Record of the caller.
+ The purpose of the return value is to give back a result from the callee
+ to the caller.
 \end_layout
 
 \begin_layout Subsection*
-Problem 14.4
+Problem 14.4 - caller or callee action
 \end_layout
 
 \begin_layout Subsubsection*
-(a)
+(a) Writing arguments into the activation record
+\end_layout
+
+\begin_layout Standard
+Caller
 \end_layout
 
 \begin_layout Subsubsection*
-(b) 
+(b) Writing the return value
+\end_layout
+
+\begin_layout Standard
+Callee
 \end_layout
 
 \begin_layout Subsubsection*
-(c) 
+(c) Writing the dynamic link
+\end_layout
+
+\begin_layout Standard
+Callee
 \end_layout
 
 \begin_layout Subsubsection*
-(d)
+(d) Modifying the value in R5 to point within the called function's activation
+ record
+\end_layout
+
+\begin_layout Standard
+Callee
 \end_layout
 
 \begin_layout Subsection*
@@ -134,9 +175,10 @@ x = 1  y = 2
 \end_inset
 
 Which is the unaltered values.
- This is due to the fact that the function swap only swap the values in
+ This is due to the fact that the function Swap only swaps the values in
  the parameter scope.
  When the function returns the paramter values x and y of Swap is abandoned.
+ This can be solved by using pointers instead.
 \end_layout
 
 \begin_layout Subsection*
@@ -147,8 +189,75 @@ Problem 14.10
 (a)
 \end_layout
 
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={[x86masm]Assembler}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+ADD R6, R6, #-2 ; Allocate space for the return value
+\end_layout
+
+\begin_layout Plain Layout
+
+STR R7, R6, #0  ; Push the return address
+\end_layout
+
+\begin_layout Plain Layout
+
+ADD R6, R6, #-1 ; Allocate space for the dynamic link
+\end_layout
+
+\begin_layout Plain Layout
+
+STR R5, R6, #0  ; Push the dynamic link
+\end_layout
+
+\begin_layout Plain Layout
+
+ADD R5, R6, #-1 ; Set new frame pointer
+\end_layout
+
+\begin_layout Plain Layout
+
+ADD R6, R6, #-4 ; This is allocation for local variables
+\end_layout
+
+\end_inset
+
+Short answer; 4.
+\end_layout
+
 \begin_layout Subsubsection*
 (b) 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={[x86masm]Assembler}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+LDR R0, R5, #4  ; Load x
+\end_layout
+
+\begin_layout Plain Layout
+
+LDR R1, R5, #5  ; Load y
+\end_layout
+
+\begin_layout Plain Layout
+
+ADD R0, R0, R1  ; Add them, and store in R0 (x + y)
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection*
