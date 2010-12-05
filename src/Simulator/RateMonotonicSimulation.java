@@ -13,7 +13,7 @@ import java.util.Random;
  *
  * @author krc
  */
-public class RateMonotonicAnalysis {
+public class RateMonotonicSimulation {
 
     private TaskList tasklist = null;
     private int LCMMultiplier = 1;
@@ -25,10 +25,9 @@ public class RateMonotonicAnalysis {
      * 
      * @param lcmm The number of cycles to run the simuation
      * @param tl The tasklist to run the analysis on
-     * @param rand Should the executiont times be randomized or just assume
-     *        WCET?
+     * @param dist The probability distribution used in generating execution times
      */
-    public RateMonotonicAnalysis(int lcmm, TaskList tl, ProbabliltyDistribution dist) {
+    public RateMonotonicSimulation(int lcmm, TaskList tl, ProbabliltyDistribution dist) {
         this.tasklist = tl;
         this.LCMMultiplier = lcmm;
         this.distribution = dist;

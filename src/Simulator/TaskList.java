@@ -87,7 +87,11 @@ public class TaskList extends ArrayList<Task>{
             "<svg xmlns=\"http://www.w3.org/2000/svg\" " +
             "xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" >\n";
         this.add(idleTask);
+
         for (Task task : this) {
+            String timeSlotColor= "red";
+            if(task.getName().equals("idle"))
+                timeSlotColor = "blue";
 
             int Yoffset = 20*(this.indexOf(task)+1);
             int timeslotOffset = 30;
@@ -105,7 +109,7 @@ public class TaskList extends ArrayList<Task>{
 
             for (Integer i: task.getTimeSlotList()) {
             timeline += "<rect x=\""+((10*i)+timeslotOffset) +"\" y=\"" + Yoffset +
-                    "\" width=\"10\" height=\"10\" fill=\"red\" />\n";
+                    "\" width=\"10\" height=\"10\" fill=\""+timeSlotColor+"\" />\n";
             }
 
             // TODO plot releasetimes and deadlines;
@@ -115,6 +119,21 @@ public class TaskList extends ArrayList<Task>{
         this.remove(idleTask);
         
         return timeline.concat("</svg>");
+    }
+
+    public Task find(String name) {
+        Task found = null;
+        for(Task t : this) {
+            if(t.getName().equals(name)) {
+                found = t;
+                break;
+            }
+        }
+        if(found == null)
+            System.out.println(name + " - not found");
+        else
+            System.out.println(found.getName() + " - found");
+        return found;
     }
 
     @Override

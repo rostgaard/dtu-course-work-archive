@@ -16,6 +16,10 @@ public class Task {
     String name, mappedTo = null;
     ArrayList<Job> jobList = new ArrayList<Job>();
     ArrayList<Integer> timeSlotList = new ArrayList<Integer>();
+    Resource semaphor;
+    ResourceList resourceList = new ResourceList();
+    ArrayList<Integer> Critical_time_slots  = new ArrayList<Integer>();
+    public int critical;
     
     public Task(String name, int period, int WCET, int BCET) {
         this.name = name;
@@ -27,6 +31,32 @@ public class Task {
     public Task() {
         
     }
+
+    public Resource getSemaphor() {
+        return semaphor;
+    }
+
+    public void setSemaphor(Resource semaphor) {
+        this.semaphor = semaphor;
+    }
+
+
+    public ArrayList<Integer> getCritical_time_slots() {
+        return Critical_time_slots;
+    }
+
+    public void setCritical_time_slots(ArrayList<Integer> Critical_time_slots) {
+        this.Critical_time_slots = Critical_time_slots;
+    }
+
+    public ResourceList getResourceList() {
+        return resourceList;
+    }
+
+    public void setResourceList(ResourceList resourceList) {
+        this.resourceList = resourceList;
+    }
+
 
     public int getPhase() {
         return phase;

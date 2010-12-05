@@ -19,20 +19,24 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 
 public class Simulator {
+
     public static int exitStatus = 0;
 
     public static void main(String[] args) throws IOException {
-        TaskList tasklist = new graphML().load("Casestudy2/taskgraph_2.graphml");
-        RateMonotonicAnalysis RMA = new RateMonotonicAnalysis(1, tasklist,
+        TaskList tasklist = graphML.loadTasklist("pathfinder/taskgraph_1.graphml");
+        ResourceList resourceList = graphML.loadResourceList("pathfinder/resourcegraph_1.graphml");
+        UsageList usagelist = graphML.loadUsageList("pathfinder/usagegraph_1.graphml");
+        RateMonotonicSimulation RMS = new RateMonotonicSimulation(1, tasklist,
                 ProbabliltyDistribution.UNIFORM);
-        
-        if (RMA.analyse() == Schedulability.SCHEDULABLE) {
-            System.out.println(RMA.getClass().getName() + " Reports Schedulable");
+
+
+        if (RMS.analyse() == Schedulability.SCHEDULABLE) {
+            System.out.println(RMS.getClass().getName() + " Reports Schedulable");
         } else {
-            System.out.println(RMA.getClass().getName() + " Reports Unschedulable");
+            System.out.println(RMS.getClass().getName() + " Reports Unschedulable");
             exitStatus = 1;
         }
-            
+
 
         DeadlineMonotonicAnalysis DMA = new DeadlineMonotonicAnalysis(tasklist);
         if (DMA.analyse() == Schedulability.SCHEDULABLE) {
@@ -41,11 +45,14 @@ public class Simulator {
             exitStatus = 1;
             System.out.println(DMA.getClass().getName() + " Reports Unschedulable");
         }
-            
+
 
         tasklist.sortByName();
-        System.out.println(tasklist);
+        //System.out.println(tasklist);
 
+
+        System.out.println("Semaphors: " + resourceList );
+        System.out.println("Usages:\n" + usagelist );
 
 
         // Write out SVG
@@ -53,7 +60,7 @@ public class Simulator {
             // Create file
             FileWriter fstream = new FileWriter("/home/krc/test.svg");
             BufferedWriter out = new BufferedWriter(fstream);
-            out.write(tasklist.timelineToSVG(1, tasklist.getLCMofPeriods() * RMA.getLCMMultiplier()));
+            out.write(tasklist.timelineToSVG(1, tasklist.getLCMofPeriods() * RMS.getLCMMultiplier()));
             //Close the output stream
             out.close();
         } catch (Exception e) {//Catch exception if any
@@ -67,5 +74,8 @@ public class Simulator {
 
         //TODO return 0 if schedulable, 1 otherwise
     }
-}
 
+    static class Config {
+        public static ReadyQueue getCurrentReadyQueue;
+    }
+}
