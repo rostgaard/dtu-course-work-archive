@@ -157,7 +157,7 @@ public class Task {
      * Get formatted information
      * @return A string containing formatted information about the task
      */
-    public String finfo() {
+    public String fullinfo() {
         return "Task Name  " + this.getName() +
                "\tWCET  " + this.getWCET() +
                "\tBCET  " + this.getBCET() +

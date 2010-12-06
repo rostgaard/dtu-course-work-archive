@@ -89,12 +89,12 @@ public class TaskList extends ArrayList<Task>{
         this.add(idleTask);
 
         for (Task task : this) {
-            String timeSlotColor= "red";
+            String timeSlotColor= "green";
             if(task.getName().equals("idle"))
                 timeSlotColor = "blue";
 
             int Yoffset = 20*(this.indexOf(task)+1);
-            int timeslotOffset = 30;
+            int timeslotOffset = 120;
             int lineY= Yoffset+10;
             int lineX2 = to*10+10+timeslotOffset;
 
@@ -112,7 +112,7 @@ public class TaskList extends ArrayList<Task>{
                     "\" width=\"10\" height=\"10\" fill=\""+timeSlotColor+"\" />\n";
             }
 
-            // TODO plot releasetimes and deadlines;
+            // TODO plot releasetimes, timeticks(line) and deadlines;
 
             
         }
@@ -141,6 +141,14 @@ public class TaskList extends ArrayList<Task>{
         String ret = "";
         for(Task t: this) {
             ret += t + "\n";
+        }
+        return ret;
+    }
+
+    public String fullinfo() {
+        String ret = "";
+        for(Task t: this) {
+            ret += t.fullinfo() + "\n";
         }
         return ret;
     }

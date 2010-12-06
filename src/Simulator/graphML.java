@@ -36,6 +36,8 @@ public final class graphML {
                 //t.getResourceList().add(new Semaphor((String)v.getUserDatum("Resource")));
                 t.setDeadline(getDeadlineValue(v));
                 t.setMappedTo(getMappedToProc(v));
+                t.setPriority(getPriorityValue(v));
+                System.out.println("task: "+t.getName() + " priority: " + t.getPriority());
             }
 
         } catch (IOException ex) {
@@ -127,6 +129,17 @@ public final class graphML {
      */
     private static int getPeriodValue(Vertex v) {
         return Integer.parseInt((v.getUserDatum("Period")).toString());
+    }
+
+    /**
+     * Returns the static priority Value of the Task Node.
+     *
+     * It converts the exisiting UserDatum Value to integer
+     *
+     * @return An Int
+     */
+    private static int getPriorityValue(Vertex v) {
+        return Integer.parseInt((v.getUserDatum("Priority")).toString());
     }
 
     /**

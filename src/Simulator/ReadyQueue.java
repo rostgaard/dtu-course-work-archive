@@ -5,20 +5,34 @@
 
 package Simulator;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
+import java.util.ArrayList;
 
 /**
  *
  * @author krc
  */
-public class ReadyQueue extends LinkedList<Job> implements Queue<Job> {
-    public boolean enqueue(Job j){
-        return this.offer(j);
+public class ReadyQueue extends ArrayList<Job> {
+
+    public Job getHighestPriorityJob() {
+        Job highestPriorityJob = null;
+        for (Job j : this) {
+            if (highestPriorityJob ==  null ) {
+                highestPriorityJob = j;
+            }
+            if(j.getParentTask().getPriority() >=
+                       highestPriorityJob.getParentTask().getPriority())
+                   highestPriorityJob = j;
+
+        }
+        return highestPriorityJob;
     }
 
-    public Job dequeue() {
-        return this.remove();
+    @Override
+    public String toString() {
+        String retstr = "";
+        for(Job j : this) {
+            retstr += j;
+        }
+        return retstr;
     }
 }

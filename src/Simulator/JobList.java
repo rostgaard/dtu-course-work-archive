@@ -19,29 +19,26 @@ public class JobList extends ArrayList<Job>{
         Collections.sort(this, new JobComparator());
     }
 
-    public Job getWorstCaseResponseTimeJob() {
-        Job j1 = new Job();
-        for(Job j2: this) {
-            if(j1.getResponsetime() < j2.getResponsetime()) {
-                j1 = j2;
-            }
-        }
-        return j1;
-    }
-
-
-    public JobList getReadyJobs(int cycle) {
-        JobList readyQueue = new JobList();
+    public ReadyQueue getReadyJobs(ReadyQueue rq, int cycle) {
         for (Job j : this) {
-            if (j.time !=  0 && j.getRelease() < cycle) {
-                readyQueue.add(j);
+            if (j.time !=  0 && j.getRelease() <= cycle) {
+                rq.add(j);
+            }
+            // The JobQueue is sorted, so at this point we can abort
+            else if (j.getRelease() > cycle) {
+                break;
             }
             else {
                 continue;
             }
         }
-
-        return readyQueue;
+        // This is a workaround that can be solved by moving the method out of
+        // the class
+        for(Job j : rq ){
+            this.remove(j);
+        }
+                
+        return rq;
     }
 
     public Job highestPriority(int num_cycles) {

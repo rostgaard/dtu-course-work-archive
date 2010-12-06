@@ -13,7 +13,7 @@ import java.util.Random;
  *
  * @author krc
  */
-public class RateMonotonicSimulation {
+public class RateMonotonicSimulationWithResources {
 
     private TaskList tasklist = null;
     private int LCMMultiplier = 1;
@@ -27,7 +27,7 @@ public class RateMonotonicSimulation {
      * @param tl The tasklist to run the analysis on
      * @param dist The probability distribution used in generating execution times
      */
-    public RateMonotonicSimulation(int lcmm, TaskList tl, ProbabililtyDistribution dist) {
+    public RateMonotonicSimulationWithResources(int lcmm, TaskList tl, ProbabililtyDistribution dist) {
         this.tasklist = tl;
         this.LCMMultiplier = lcmm;
         this.distribution = dist;
@@ -67,14 +67,18 @@ public class RateMonotonicSimulation {
 
         /* Initialize jobs */
         for ( Task t:tasklist) {
-            /* Initialize priorities */
-            t.setPriority(num_cycles/t.getPeriod());
+            /* Initialize priorities, if no static priority is set */
+            if(t.getPriority() == 0)
+                t.setPriority(num_cycles/t.getPeriod());
 
             for (int j=1; j<= (num_cycles/t.getPeriod());j++) {
                 Job job = new Job();
                 t.jobList.add(job);
                 job.parentTask = t;
+                // Map the critical duration
+                job.setResourceUsage(Main.Config.usagelist.find(t.getName()));
 
+                // Caculate the release time
                 job.setRelease(t.getPeriod()*(j-1));
 
                 if ((t.getWCET()-t.getBCET()) <=0) { // The random function complains when range is 0
@@ -101,11 +105,20 @@ public class RateMonotonicSimulation {
 
         /* The simulation itself starts here */
         for(int cycle= 0; cycle < num_cycles*this.getLCMMultiplier(); cycle++) {
+
             /* */
             readyList = jobList.getReadyJobs(readyList, cycle);
 
             /* Pick up the highest priority job */
             Job currentJob = readyList.getHighestPriorityJob();
+
+            if(Main.Config.debug) {
+                System.out.print(this.getClass().getSimpleName()+ " cycle : " + cycle + " task: ");
+                if (currentJob == null)
+                    System.out.println("idle");
+                else
+                    System.out.println(currentJob.getParentTask().getName());
+            }
 
             /* We account for idle cycle, by skipping them */
             if (currentJob == null) {
@@ -113,8 +126,14 @@ public class RateMonotonicSimulation {
                 continue;
             }
 
-            /* Current job time decrement */
-            currentJob.timeTick(cycle);
+            /* Current job time decrement. If the job blocks, reschedule */
+            if(!currentJob.timeTick(cycle)) {
+                if(Main.Config.debug)
+                    System.out.print(this.getClass().getSimpleName()+ ": Rescheduling");
+                cycle--;
+                continue;
+            }
+
             timeline.execute(currentJob.getParentTask());
 
             /* When the current job has finished, some information is harvested */

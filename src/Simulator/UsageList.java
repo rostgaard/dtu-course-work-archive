@@ -13,6 +13,15 @@ import java.util.ArrayList;
  */
 class UsageList extends ArrayList<Usage> {
 
+    public Usage find(String name) {
+        Usage found = null;
+        for(Usage u: this) {
+            if(u.task.getName().equals(name))
+                found = u;
+        }
+        return found;
+    }
+
     @Override
     public String toString() {
         String retString = "";

@@ -1,43 +1,46 @@
 package Simulator;
 
 /**
- * Simulator.java
+ * Main.java
  * This program, reads the task description of the
  * periodic tasks from the given graphml files and then performs a simple
  * schedulability test
  *
- * TODO: Add JUNG library
  *
  * @author Kim Christensen
  *
  * @created 9 September, 10
  */
-import Simulator.Types.ProbabliltyDistribution;
+import Simulator.Types.ProbabililtyDistribution;
 import Simulator.Types.Schedulability;
 import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
-public class Simulator {
+public class Main {
 
     public static int exitStatus = 0;
 
     public static void main(String[] args) throws IOException {
         TaskList tasklist = graphML.loadTasklist("pathfinder/taskgraph_1.graphml");
-        ResourceList resourceList = graphML.loadResourceList("pathfinder/resourcegraph_1.graphml");
-        UsageList usagelist = graphML.loadUsageList("pathfinder/usagegraph_1.graphml");
-        RateMonotonicSimulation RMS = new RateMonotonicSimulation(1, tasklist,
-                ProbabliltyDistribution.UNIFORM);
+        Main.Config.resourceList = graphML.loadResourceList("pathfinder/resourcegraph_1.graphml");
+        Main.Config.usagelist = graphML.loadUsageList("pathfinder/usagegraph_1.graphml");
+//        RateMonotonicSimulation RMS = new RateMonotonicSimulation(1, tasklist,
+//                ProbabililtyDistribution.NONE);
+        RateMonotonicSimulationWithResources RMS = new RateMonotonicSimulationWithResources(1, tasklist,
+                ProbabililtyDistribution.NONE);
 
-
-        if (RMS.analyse() == Schedulability.SCHEDULABLE) {
+        //System.out.println("Semaphors: " + Main.Config.resourceList );
+        //System.out.println("Usages:\n" + Main.Config.usagelist );
+        
+        if (RMS.simulate() == Schedulability.SCHEDULABLE) {
             System.out.println(RMS.getClass().getName() + " Reports Schedulable");
         } else {
             System.out.println(RMS.getClass().getName() + " Reports Unschedulable");
             exitStatus = 1;
         }
 
-
+/*
         DeadlineMonotonicAnalysis DMA = new DeadlineMonotonicAnalysis(tasklist);
         if (DMA.analyse() == Schedulability.SCHEDULABLE) {
             System.out.println(DMA.getClass().getName() + " Reports Schedulable");
@@ -45,14 +48,14 @@ public class Simulator {
             exitStatus = 1;
             System.out.println(DMA.getClass().getName() + " Reports Unschedulable");
         }
-
+*/
 
         tasklist.sortByName();
-        //System.out.println(tasklist);
+        tasklist.sortByPriority();
+        //System.out.println(tasklist.fullinfo());
 
 
-        System.out.println("Semaphors: " + resourceList );
-        System.out.println("Usages:\n" + usagelist );
+
 
 
         // Write out SVG
@@ -76,6 +79,9 @@ public class Simulator {
     }
 
     static class Config {
-        public static ReadyQueue getCurrentReadyQueue;
+        public static ReadyQueue currentReadyQueue = new ReadyQueue();
+        public static ResourceList resourceList = null;
+        public static UsageList usagelist = null;
+        public static boolean debug = true;
     }
 }
