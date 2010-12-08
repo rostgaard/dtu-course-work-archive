@@ -1,13 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Simulator;
 
 /**
- *
- * @author krc
+ * Class for identifying various flags set by a executing job
+ * @author Kim Rostgaard Christensen
  */
 public class TimeSlot {
     private boolean isCritical;

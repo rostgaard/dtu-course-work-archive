@@ -1,18 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package Simulator;
+package Simulator.Model;
 
 import java.util.ArrayList;
 
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 public class ResourceList extends ArrayList<Resource>{
     
+    /**
+     *
+     * @param name
+     * @return
+     */
     public Resource find(String name) {
         Resource found = null;
         for(Resource r: this) {
@@ -22,14 +22,19 @@ public class ResourceList extends ArrayList<Resource>{
         return found;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         String retstr = "";
         for(Resource r: this) {
-            retstr += r.getName();
+            retstr += r.getName() + "(" + r.ceiling() +")";
             if(this.indexOf(r) != this.size())
                 retstr += ", ";
-        };
+
+        }
         return retstr;
     }
 

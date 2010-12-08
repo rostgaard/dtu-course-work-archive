@@ -1,6 +1,6 @@
-package Simulator;
+package Simulator.Model;
 
-import java.util.ArrayList;
+import Simulator.Main;
 
 /*
  * To change this template, choose Tools | Templates
@@ -8,13 +8,14 @@ import java.util.ArrayList;
  */
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 public class Job {
 
-    int release, time, ctime, responsetime, C, occurence = 0;
-    Task parentTask;
+    private int release, time, ctime, responsetime, C = 0;
+    private Task parentTask;
     private Usage resourceUsage;
+
 
     /**
      * Get the absolute deadline of a job the relative deadline is defined as
@@ -27,10 +28,18 @@ public class Job {
         return this.getRelease() + this.getRelativeDeadline();
     }
 
+    /**
+     *
+     * @return
+     */
     public Usage getResourceUsage() {
         return resourceUsage;
     }
 
+    /**
+     *
+     * @param resourceUsage
+     */
     public void setResourceUsage(Usage resourceUsage) {
         this.resourceUsage = resourceUsage;
         if (!(resourceUsage == null)) {
@@ -38,55 +47,99 @@ public class Job {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCtime() {
         return ctime;
     }
 
+    /**
+     *
+     * @param ctime
+     */
     public void setCtime(int ctime) {
         this.ctime = ctime;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getRelativeDeadline() {
         return this.getParentTask().getDeadline();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getC() {
         return C;
     }
 
+    /**
+     *
+     * @param C
+     */
     public void setC(int C) {
         this.C = C;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getResponsetime() {
         return responsetime;
     }
 
+    /**
+     *
+     * @param responsetime
+     */
     public void setResponsetime(int responsetime) {
         this.responsetime = responsetime;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getRelease() {
         return release;
     }
 
+    /**
+     *
+     * @param release
+     */
     public void setRelease(int release) {
         this.release = release;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTime() {
         return time;
     }
 
+    /**
+     *
+     * @param time
+     */
     public void setTime(int time) {
         this.time = time;
         this.C = time;
     }
 
     /**
-     * 
-     * @param cycle The current simulation cycle
-     * @return
+     * Try to execute the job
+     * @param cycle The current simulation cycle, needed in order to create a timeline
+     * @return True if the job was executed, and false otherwise
      */
     public boolean timeTick(int cycle) {
         // We don't need a resource, just execute
@@ -129,19 +182,26 @@ public class Job {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     public Task getParentTask() {
         return parentTask;
     }
 
+    /**
+     *
+     * @param parentTask
+     */
     public void setParentTask(Task parentTask) {
         this.parentTask = parentTask;
     }
 
-    public boolean isCritical() {
-
-        return true;
-    }
-
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Job: " + this.getParentTask().getName()

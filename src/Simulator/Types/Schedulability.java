@@ -1,15 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Simulator.Types;
 
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 public enum Schedulability {
-    SCHEDULABLE, UNSCHEDULABLE
+
+    /**
+     * The task set is schedulable
+     */
+    SCHEDULABLE,
+    /**
+     * The task set is not schedulable
+     */
+    UNSCHEDULABLE
 
 }

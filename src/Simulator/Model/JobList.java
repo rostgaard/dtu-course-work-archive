@@ -1,9 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package Simulator;
+package Simulator.Model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,17 +6,26 @@ import java.util.Iterator;
 
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 public class JobList extends ArrayList<Job>{
 
+    /**
+     *
+     */
     public void sort() {
         Collections.sort(this, new JobComparator());
     }
 
+    /**
+     *
+     * @param rq
+     * @param cycle
+     * @return
+     */
     public ReadyQueue getReadyJobs(ReadyQueue rq, int cycle) {
         for (Job j : this) {
-            if (j.time !=  0 && j.getRelease() <= cycle) {
+            if (j.getTime() !=  0 && j.getRelease() <= cycle) {
                 rq.add(j);
             }
             // The JobQueue is sorted, so at this point we can abort
@@ -41,6 +45,11 @@ public class JobList extends ArrayList<Job>{
         return rq;
     }
 
+    /**
+     *
+     * @param num_cycles
+     * @return
+     */
     public Job highestPriority(int num_cycles) {
         Job highestPriorityJob = null;
         for (Job j : this) {
@@ -56,6 +65,10 @@ public class JobList extends ArrayList<Job>{
         return highestPriorityJob;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString (){
         String retString = "";

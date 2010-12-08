@@ -1,29 +1,39 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package Simulator;
+package Simulator.Utils;
 
+import Simulator.Model.Resource;
+import Simulator.Model.ResourceList;
+import Simulator.Model.Task;
+import Simulator.TaskList;
+import Simulator.Model.Usage;
+import Simulator.Model.UsageList;
 import java.io.IOException;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.Vertex;
 import edu.uci.ics.jung.io.GraphMLFile;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author krc
+ * Utililty class for loading GraphML files into the simulator tool.
+ * @author Kim Rostgaard Christensen
  */
-public final class graphML {
+public final class GraphML {
+
     private static TaskList currentTasklist;
     private static ResourceList currentResourcelist;
 
-    public static TaskList loadTasklist(String filename) {
+    /**
+     * Convenience metod for loading in a tasklist
+     * @param modelname The name of the folder to be loaded
+     * @return A tasklist for use in schedulability simulations and analysis
+     */
+    private static TaskList loadTasklist(String modelname) {
         TaskList tl = new TaskList();
         try {
-            Graph g = graphML.getTaskGraph(filename);
+            Graph g = GraphML.getTaskGraph(modelname);
 
             //int n = g.numVertices(); // number of tasks
             for (Iterator<Object> iter = g.getVertices().iterator(); iter.hasNext();) {
@@ -35,61 +45,82 @@ public final class graphML {
                 //t.setSemaphor(new Semaphor((String) v.getUserDatum("Resource"), true));
                 //t.getResourceList().add(new Semaphor((String)v.getUserDatum("Resource")));
                 t.setDeadline(getDeadlineValue(v));
-                t.setMappedTo(getMappedToProc(v));
                 t.setPriority(getPriorityValue(v));
-                System.out.println("task: "+t.getName() + " priority: " + t.getPriority());
             }
 
         } catch (IOException ex) {
-            Logger.getLogger(graphML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GraphML.class.getName()).log(Level.SEVERE, null, ex);
         }
         currentTasklist = tl;
         return currentTasklist;
     }
-    
-    public static ResourceList loadResourceList(String filename) {
+
+    /**
+     * Convenience method for loading an entire model
+     * @param modelname The name of the model to be loaded
+     * @throws FileNotFoundException If the model folder is not found
+     */
+    public static void LoadModel(String modelname) throws FileNotFoundException {
+        if ((new File(modelname + "/taskgraph.graphml")).exists()) {
+            Simulator.Main.Config.tasklist = GraphML.loadTasklist(modelname + "/taskgraph.graphml");
+        } else {
+            throw new FileNotFoundException();
+        }
+
+        if ((new File(modelname + "/resourcegraph.graphml")).exists()) {
+            Simulator.Main.Config.resourceList = GraphML.loadResourceList(modelname + "/resourcegraph.graphml");
+        }
+        if ((new File(modelname + "/usagegraph.graphml")).exists()) {
+            Simulator.Main.Config.usagelist = GraphML.loadUsageList(modelname + "/usagegraph.graphml");
+        }
+    }
+
+    /**
+     * Convenience method for loading a resource list
+     * @param filename The name of the file to load
+     * @return A resource list
+     */
+    private static ResourceList loadResourceList(String filename) {
         ResourceList rl = new ResourceList();
         try {
-            Graph g = graphML.getTaskGraph(filename);
+            Graph g = GraphML.getTaskGraph(filename);
             for (Iterator<Object> iter = g.getVertices().iterator(); iter.hasNext();) {
                 Vertex v = (Vertex) iter.next();
                 Resource s = new Resource((String) v.getUserDatum("Name"));
                 rl.add(s);
             }
         } catch (IOException ex) {
-            Logger.getLogger(graphML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GraphML.class.getName()).log(Level.SEVERE, null, ex);
         }
         currentResourcelist = rl;
         return currentResourcelist;
     }
 
-    public static UsageList loadUsageList(String filename) {
+    /**
+     * Convenience method for loading a usagelist
+     * @param filename The name of the file
+     * @return A usagelist
+     */
+    private static UsageList loadUsageList(String filename) {
         UsageList ul = new UsageList();
         try {
-            Graph g = graphML.getTaskGraph(filename);
+            Graph g = GraphML.getTaskGraph(filename);
             for (Iterator<Object> iter = g.getVertices().iterator(); iter.hasNext();) {
                 Vertex v = (Vertex) iter.next();
-                String task = (String)v.getUserDatum("Task");
-                String resource = (String)v.getUserDatum("Resource");
+                String task = (String) v.getUserDatum("Task");
+                String resource = (String) v.getUserDatum("Resource");
                 int cduration = Integer.parseInt((v.getUserDatum("Duration")).toString());
                 Task t = currentTasklist.find(task);
-                Resource r =  currentResourcelist.find(resource);
-                ul.add(new Usage(t,r,cduration));
-                System.out.println(graphML.class.getSimpleName() + ": " + task);
-                
-                //Usage u = new Usage();
-
-
-                //ul.add(u);
+                Resource r = currentResourcelist.find(resource);
+                Usage u = new Usage(t, r, cduration);
+                ul.add(u);
+                r.getUsageList().add(u);
             }
         } catch (IOException ex) {
-            Logger.getLogger(graphML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GraphML.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ul;
     }
-
-
-
 
     /**
      * Reads a task: in this case, reads it from the file "taskgraph.graphml"

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" 
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" >
+<text style="fill:black; text-anchor:right;" x="10" y="28">T1</text><line x1="10" y1="30" x2="640" y2= "30" stroke="grey"  /><rect x="100" y="20" width="10" height="10" fill="red" />
+<rect x="160" y="20" width="10" height="10" fill="red" />
+<rect x="220" y="20" width="10" height="10" fill="red" />
+<rect x="340" y="20" width="10" height="10" fill="red" />
+<rect x="400" y="20" width="10" height="10" fill="red" />
+<rect x="460" y="20" width="10" height="10" fill="red" />
+<rect x="520" y="20" width="10" height="10" fill="red" />
+<text style="fill:black; text-anchor:right;" x="10" y="48">T2</text><line x1="10" y1="50" x2="640" y2= "50" stroke="grey"  /><rect x="200" y="40" width="10" height="10" fill="red" />
+<rect x="210" y="40" width="10" height="10" fill="red" />
+<rect x="230" y="40" width="10" height="10" fill="red" />
+<rect x="260" y="40" width="10" height="10" fill="red" />
+<text style="fill:black; text-anchor:right;" x="10" y="68">T3</text><line x1="10" y1="70" x2="640" y2= "70" stroke="grey"  /><rect x="40" y="60" width="10" height="10" fill="red" />
+<rect x="140" y="60" width="10" height="10" fill="red" />
+<rect x="240" y="60" width="10" height="10" fill="red" />
+<rect x="350" y="60" width="10" height="10" fill="red" />
+<rect x="440" y="60" width="10" height="10" fill="red" />
+<rect x="540" y="60" width="10" height="10" fill="red" />
+<text style="fill:black; text-anchor:right;" x="10" y="88">T4</text><line x1="10" y1="90" x2="640" y2= "90" stroke="grey"  /><rect x="50" y="80" width="10" height="10" fill="red" />
+<rect x="60" y="80" width="10" height="10" fill="red" />
+<rect x="170" y="80" width="10" height="10" fill="red" />
+<rect x="180" y="80" width="10" height="10" fill="red" />
+<rect x="280" y="80" width="10" height="10" fill="red" />
+<rect x="410" y="80" width="10" height="10" fill="red" />
+<rect x="530" y="80" width="10" height="10" fill="red" />
+<text style="fill:black; text-anchor:right;" x="10" y="108">T5</text><line x1="10" y1="110" x2="640" y2= "110" stroke="grey"  /><rect x="70" y="100" width="10" height="10" fill="red" />
+<rect x="80" y="100" width="10" height="10" fill="red" />
+<rect x="190" y="100" width="10" height="10" fill="red" />
+<rect x="360" y="100" width="10" height="10" fill="red" />
+<rect x="490" y="100" width="10" height="10" fill="red" />
+<rect x="500" y="100" width="10" height="10" fill="red" />
+<text style="fill:black; text-anchor:right;" x="10" y="128">T6</text><line x1="10" y1="130" x2="640" y2= "130" stroke="grey"  /><rect x="90" y="120" width="10" height="10" fill="red" />
+<rect x="110" y="120" width="10" height="10" fill="red" />
+<rect x="250" y="120" width="10" height="10" fill="red" />
+<rect x="450" y="120" width="10" height="10" fill="red" />
+<rect x="470" y="120" width="10" height="10" fill="red" />
+<rect x="480" y="120" width="10" height="10" fill="red" />
+<text style="fill:black; text-anchor:right;" x="10" y="148">T7</text><line x1="10" y1="150" x2="640" y2= "150" stroke="grey"  /><rect x="120" y="140" width="10" height="10" fill="red" />
+<rect x="130" y="140" width="10" height="10" fill="red" />
+<rect x="150" y="140" width="10" height="10" fill="red" />
+<rect x="370" y="140" width="10" height="10" fill="red" />
+<rect x="380" y="140" width="10" height="10" fill="red" />
+<rect x="390" y="140" width="10" height="10" fill="red" />
+<text style="fill:black; text-anchor:right;" x="10" y="168">idle</text><line x1="10" y1="170" x2="640" y2= "170" stroke="grey"  /><rect x="270" y="160" width="10" height="10" fill="red" />
+<rect x="290" y="160" width="10" height="10" fill="red" />
+<rect x="300" y="160" width="10" height="10" fill="red" />
+<rect x="310" y="160" width="10" height="10" fill="red" />
+<rect x="320" y="160" width="10" height="10" fill="red" />
+<rect x="330" y="160" width="10" height="10" fill="red" />
+<rect x="420" y="160" width="10" height="10" fill="red" />
+<rect x="430" y="160" width="10" height="10" fill="red" />
+<rect x="510" y="160" width="10" height="10" fill="red" />
+<rect x="550" y="160" width="10" height="10" fill="red" />
+<rect x="560" y="160" width="10" height="10" fill="red" />
+<rect x="570" y="160" width="10" height="10" fill="red" />
+<rect x="580" y="160" width="10" height="10" fill="red" />
+<rect x="590" y="160" width="10" height="10" fill="red" />
+<rect x="600" y="160" width="10" height="10" fill="red" />
+<rect x="610" y="160" width="10" height="10" fill="red" />
+<rect x="620" y="160" width="10" height="10" fill="red" />
+<rect x="630" y="160" width="10" height="10" fill="red" />
+</svg>

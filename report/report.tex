@@ -19,6 +19,8 @@ Kim Rostgaard Christensen\\
 \maketitle
 
 \begin{abstract}
+TODO - this section
+
 %Abstract; A brief summary of all of the report including the conclusion section
 %but excluding the acknowledgements, references and any appendixes.
 \end{abstract}
@@ -36,7 +38,11 @@ Kim Rostgaard Christensen\\
 \section{Introduction}
 \input{introduction.tex}
 
+The application is built up of two approaches to schedule verification: simulation and analysis.
 
+the concept of validation is to make a schedule that always meets all deadlines and utilizes maximum cpu
+
+%explain terminology (used)
 \section{The WCET}
 \input{wcet.tex}
 
@@ -55,8 +61,91 @@ If a task set fails a necessary schedulabilty test, then the task set will alway
 
 
 
-\section{Very Simple Simulator}
-\input{very_simple_simulator.tex}
+\section{The simulator}
+\subsection{Rate monotonic scheduling}
+Rate monotonic scheduling (RMS) is a preemptive scheduling algorithm used when you have set of strictly periodic tasks with deadlines equal to their periods. A number of other assumptions are also required. All of them are listed here.
+\begin{itemize}
+\item Single processor
+\item Task deadlines are equal to their periods
+\item Periodic tasks
+\item All tasks are released as soon as they arrive
+\item All tasks start at the same time
+\item All tasks are independent
+\item No precedence or resource constraints
+\item No task can suspend itself
+\item All overheads in the kernel are assumed to be zero
+\end{itemize}
+
+\subsection{Schedulability}
+To determine schedulability of a task set, a utilization test is applied. The formal version of the test is determined by Liu and Leyland and explained in \cite{CoDeKaMa2002} as follows:
+%Todo explain this - remember this is a usability test NOT a simulation
+\begin{equation}
+\displaystyle\sum\limits_{i=1}^{n} \frac{C_i}{T_i} \leq n \left( 2^{\frac{1}{n}} - 1 \right) 
+\end{equation}
+Or, in other words: The cpu usage represented on the left hand side by the sum of all the individual tasks utilization of the cpu in their period must be less that $n \left( 2^{\frac{1}{n}} - 1 \right) $, where $n$ is the number of tasks.\\
+This is a sufficient test, and task sets that fail this test are not necessarily unschedulable.\\\\
+Futhermore, it holds that:
+\begin{equation}
+\underset{y\rightarrow0}{\lim}U_{lub}(n)=\ln2
+\end{equation}
+
+\subsection{The model}
+The input model to the simulator is a set of tasks. A task has the attributes Name, BCET, WCET, Period, Deadline and Priority. Deadline and priority attributes will be ignored in this version of the simulator.
+
+\subsection{Simulation}
+%REMEBER! THIS IS A SIMULATOR - Simulate the running of an embedded application on a single processor system using preemtive fixed-priority scheduling.
+For simulating a task set under rate monotonic scheduling, we first have to find a LCM of all the periods for the tasks in the set. This is also known as the hyperperiod. As $C_i$ needs to be randomized, the simulation should run for a number multiples of the hyperperiod. The multiple of LCM will be denoted $n$
+\subsubsection*{Priority assignment}
+The priorities is in RMS defined as the inverse of the period. In this implementation, the priority is relative to the hyperperiod and defined as $P_i = \frac{LCM}{T_i}$, where $P_i$ is the priority of the taks $i$. This is done to avoid rounding errors and floating point arithmetic in simulation.
+\subsubsection*{Job initialization}
+To initialize the jobs we insert them into a job queue with release time equal to $\tau_{i}.period \cdot (j - 1)$ where $\tau_i$ is the task of the job, and $j$ is j'th occurrence of the task. The job's time  (remaining execution time) is also randomized in this step.
+\subsubsection*{Simulation}
+The jobs are sorted on start time and priority, and the simulation runs by going through each cycle from 1 to $n$. In each cycle, a list of ready jobs are generated and the job with the highest priority is picked to execute. Ready jobs are jobs that have time > 0 and release < current cycle.\\
+Execution is done by a tick method call to the job that decreases time.\\
+When the job terminates (time = 0), the response time is recorded and compared to the overall worst-case response time of the task, recording if it is worse that any previous.
+
+\subsection{Output}
+
+In addition the simulator also produces a graphical output in the form of a timeline in svg format. An example is shown i figure \ref{fig:example_timeline_output}
+
+
+Schedulability is determined by asserting $D_i \geq WCRT_i$ for each task:
+
+\begin{figure}[h]
+\centering
+\epsfig{file=fig/example_timeline.eps, height=0.8in}
+\caption{Example timeline}
+\label{fig:example_timeline_output}
+\end{figure}\subsection{Implementation details}
+
+\subsubsection{GraphML}
+The task model is stored in GraphML, which is an xml based modeling language.
+\subsubsection{Generation of the random numbers}
+In order to perform a simulation having both a BCET and WCET, a randomization is needed. For this simulators purpose, either uniform or Gaussian distribution is used, depending on the configuration parameters. On an implementation note, Java's is used java.util.Random class is used for generating the random numbers. When using the uniform distribution the following should be taken into account:
+
+\begin{quotation}
+... Returns a pseudorandom, uniformly distributed int value between 0 (inclusive) and the specified value (exclusive) ... All n possible int values are produced with (approximately) equal probability\cite{javadoc16}
+\end{quotation}
+%TODO set qoute origin
+
+As the upper value is exclusive, we need a value in the range $[BCET:WCET+1[$ when using a uniform distribution.\\
+Future improvement could also include to possibility to use a seed, to be able to recreate the random numbers generated.
+
+\subsubsection{Traceability}
+To be able to determine the situation of the first time overflow, a timeline is maintained, raising a global flag when the overflow occurs, and record the cycle.\\
+%Can you determine what situation created the worst-case response time for a particular task (what other tasks interrupted it, when, and for how long)?
+To be able to trace what other task interrupted it, we can go back to the point where the overflown task last stopped (in time) and record the tasks between them.
+
+\subsubsection{Response time guarantee}
+%Can you guarantee that the response time will not be larger than the worst-case numbers you get from the simulator?
+When using random execution times are used for simulation, no guarantee can be provided. Although if you have a random distribution that is similar to the one in the actual application, then you are able give a better estimate.\\
+
+% What happens if you simulate using the execution time equal to WCET?
+When the execution time is always set to WCET, You end up with a very pessimistic estimate on the response time - although guaranteed to be accurate. In praxis, a lot of CPU time will be wasted, especially if the execution time is much larger than the typical execution and only happens in very rare or perhaps even in theoretical cases.\\
+Effectively you get the same figures as the response time analysis explained in section \ref{sec:rta}.
+\subsection{Final thoughts}
+Although one of the assumptions is that tasks must be independent, it is not guaranteed that task are statistically independent - meaning that a higher execution time on one task can be due to an external effect, that affects other tasks as well.\\
+This eventually leads to a cascade of higher response times on all tasks that depend on, for example, some external input. Due to, that in the real world variables are not always independent.
 
 \section{Response-Time Analysis}
 \label{sec:rta}
@@ -78,13 +167,49 @@ The protocols are more or less extensions of each other from to to bottom. In th
 
 \subsection{Deadlock}
 
+\subsection{Extending the simulator}
+To extend the simulator to include resource constraints, additional objects has to be introduced.
+\subsubsection{Resource mapping}
+We introduce two new entities; resource and usage. The resource entity is used to model an exclusive in an application and the usage entity is used to map them together with tasks.
 
-%Body; A number of sections describing the work done.
+
+
+\subsubsection{Implementation}
+The two new entities resource and usage is modelled in GraphML as well as the tasks, and introduce two new files in order to provide the additional input information. One to model the resources, and one to map them. The directory structure is explained in section \ref{sec:overview}.
+\section{Overview and usage}
+\label{sec:overview}
+tasks must be stored in a directory along with its resources and usages. The input to the application is the casename.
+\begin{figure}[h]
+\centering
+\epsfig{file=fig/directory_structure.eps, height=0.8in}
+\caption{Directory structure}
+\label{fig:directory_structure}
+\end{figure}
+In order to extend the simulator to have a notion of resources, a few changes were needed.
+
+With the new resource object, we needed to store references to the tasks using it in order to determine the priority of highest-priority task using the resource - the ceiling.
+%TODO - extend
+
+The resource is implemented as a binary semaphore. It provides a wait an signal primitive in the same way a normal operating system does. The resource also has a flag to indicate whether priority inheritance is enabled.
+%TODO -extend
+
+
+\subsubsection{Discussion}
+The model is a bit primitive in the sense that it assumes that a task aquires a resource at the start of its execution, and frees it only at the end end of its execution. A possible extension would be to include critical ranges instead of an absolute critical duration
+
+
+\subsection{Running the simulator}
+The application is built as a command line tool, that takes an analysis case as input and outputs the worst case response time for each task in the following form:\\ <name> <Worst-case~response~time> newline.\\ An example is shown below:
+\lstinputlisting[breaklines=false]{output_example}
+
+
+The documentation is in the form of Javadoc and supplied with the code in the folder javadoc. To view the documentation, navigate to the folder and open the index.html file in a web browser.
 
 \section{Conclusion}
 \label{sec:conclusion}
 %Conclusions; All experiences and conclusions drawn from the work.
 %\input{conclusions.tex}
+TODO - this
 
 %ACKNOWLEDGMENTS are optional
 %\section{Acknowledgments}
@@ -102,7 +227,7 @@ The protocols are more or less extensions of each other from to to bottom. In th
 % initial runs of your .tex file to
 % produce the bibliography for the citations in your paper.
 \bibliographystyle{plain}
-\nocite{*}
+%\nocite{*} %show all citations - no matter the use.
 \bibliography{sigproc}  % sigproc.bib is the name of the Bibliography in this case
 % You must have a proper ".bib" file
 %  and remember to run:

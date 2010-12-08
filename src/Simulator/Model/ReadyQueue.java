@@ -1,18 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package Simulator;
+package Simulator.Model;
 
 import java.util.ArrayList;
 
 /**
- *
- * @author krc
+ * The readyqueue dispatches jobs based on a static priority. This can be
+ * extended to include dispatching of dynamical priority tasks.
+ * @author Kim Rostgaard Christensen
  */
 public class ReadyQueue extends ArrayList<Job> {
 
+    /**
+     *
+     * @return
+     */
     public Job getHighestPriorityJob() {
         Job highestPriorityJob = null;
         for (Job j : this) {
@@ -27,6 +27,10 @@ public class ReadyQueue extends ArrayList<Job> {
         return highestPriorityJob;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         String retstr = "";

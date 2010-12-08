@@ -1,18 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package Simulator;
+package Simulator.Model;
 
 import java.util.ArrayList;
 
 /**
- *
- * @author krc
+ * Class provided in order to keep track usages read from GraphML file.
+ * @author Kim Rostgaard Christensen
  */
-class UsageList extends ArrayList<Usage> {
+public class UsageList extends ArrayList<Usage> {
 
+    /**
+     * Lookup a usage of a task
+     * @param name The name of the task
+     * @return The usage object of the task or null
+     */
     public Usage find(String name) {
         Usage found = null;
         for(Usage u: this) {
@@ -22,6 +22,10 @@ class UsageList extends ArrayList<Usage> {
         return found;
     }
 
+    /**
+     * Prettyprint method
+     * @return Formatted string
+     */
     @Override
     public String toString() {
         String retString = "";
