@@ -1,6 +1,6 @@
-package Simulator;
+package Schedtool;
 
-import Simulator.Model.Task;
+import Schedtool.Model.Task;
 import java.util.ArrayList;
 
 /**

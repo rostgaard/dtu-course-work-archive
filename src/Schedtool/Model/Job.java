@@ -1,6 +1,6 @@
-package Simulator.Model;
+package Schedtool.Model;
 
-import Simulator.Main;
+import Schedtool.Main;
 
 /*
  * To change this template, choose Tools | Templates

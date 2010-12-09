@@ -1,4 +1,4 @@
-package Simulator;
+package Schedtool;
 
 /**
  * Main.java
@@ -11,11 +11,11 @@ package Simulator;
  *
  * @created 9 September, 2010
  */
-import Simulator.Model.UsageList;
-import Simulator.Model.ResourceList;
-import Simulator.Model.JobList;
-import Simulator.Model.ReadyQueue;
-import Simulator.Types.*;
+import Schedtool.Model.UsageList;
+import Schedtool.Model.ResourceList;
+import Schedtool.Model.JobList;
+import Schedtool.Model.ReadyQueue;
+import Schedtool.Types.*;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -81,7 +81,7 @@ public class Main {
 
 
         try {
-            Simulator.Utils.GraphML.LoadModel(model);
+            Schedtool.Utils.GraphML.LoadModel(model);
         } catch (FileNotFoundException ex) {
             System.out.println("Model not found");
             System.exit(-1);

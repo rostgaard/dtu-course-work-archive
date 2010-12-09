@@ -1,7 +1,7 @@
-package Simulator.Model;
+package Schedtool.Model;
 
-import Simulator.Main;
-import Simulator.Types.LockingPolicy;
+import Schedtool.Main;
+import Schedtool.Types.LockingPolicy;
 
 /**
  * Class to model of a resource. The model supports semahor primitives and

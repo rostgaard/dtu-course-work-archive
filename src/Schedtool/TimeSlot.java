@@ -1,4 +1,4 @@
-package Simulator;
+package Schedtool;
 
 /**
  * Class for identifying various flags set by a executing job

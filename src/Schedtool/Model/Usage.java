@@ -1,4 +1,4 @@
-package Simulator.Model;
+package Schedtool.Model;
 
 /**
  * A mapping class for modeling the relationship between resources and tasks

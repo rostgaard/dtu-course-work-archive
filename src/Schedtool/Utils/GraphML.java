@@ -1,11 +1,11 @@
-package Simulator.Utils;
+package Schedtool.Utils;
 
-import Simulator.Model.Resource;
-import Simulator.Model.ResourceList;
-import Simulator.Model.Task;
-import Simulator.TaskList;
-import Simulator.Model.Usage;
-import Simulator.Model.UsageList;
+import Schedtool.Model.Resource;
+import Schedtool.Model.ResourceList;
+import Schedtool.Model.Task;
+import Schedtool.TaskList;
+import Schedtool.Model.Usage;
+import Schedtool.Model.UsageList;
 import java.io.IOException;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.Vertex;
@@ -62,16 +62,16 @@ public final class GraphML {
      */
     public static void LoadModel(String modelname) throws FileNotFoundException {
         if ((new File(modelname + "/taskgraph.graphml")).exists()) {
-            Simulator.Main.Config.tasklist = GraphML.loadTasklist(modelname + "/taskgraph.graphml");
+            Schedtool.Main.Config.tasklist = GraphML.loadTasklist(modelname + "/taskgraph.graphml");
         } else {
             throw new FileNotFoundException();
         }
 
         if ((new File(modelname + "/resourcegraph.graphml")).exists()) {
-            Simulator.Main.Config.resourceList = GraphML.loadResourceList(modelname + "/resourcegraph.graphml");
+            Schedtool.Main.Config.resourceList = GraphML.loadResourceList(modelname + "/resourcegraph.graphml");
         }
         if ((new File(modelname + "/usagegraph.graphml")).exists()) {
-            Simulator.Main.Config.usagelist = GraphML.loadUsageList(modelname + "/usagegraph.graphml");
+            Schedtool.Main.Config.usagelist = GraphML.loadUsageList(modelname + "/usagegraph.graphml");
         }
     }
 

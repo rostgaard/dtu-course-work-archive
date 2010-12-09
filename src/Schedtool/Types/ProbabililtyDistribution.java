@@ -1,4 +1,4 @@
-package Simulator.Types;
+package Schedtool.Types;
 
 /**
  * Enumeration to type the different distributions

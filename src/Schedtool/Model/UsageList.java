@@ -1,4 +1,4 @@
-package Simulator.Model;
+package Schedtool.Model;
 
 import java.util.ArrayList;
 

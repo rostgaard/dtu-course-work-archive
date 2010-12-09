@@ -1,4 +1,4 @@
-package Simulator.Model;
+package Schedtool.Model;
 
 import java.util.ArrayList;
 
@@ -283,14 +283,14 @@ public class Task {
         int B_i = 0;
         int B_l_i = 0; // Sum the duration of the longest critical sections in each set of all critical sections of the lower-priority job
 
-        for (Task j : Simulator.Main.Config.tasklist) {
+        for (Task j : Schedtool.Main.Config.tasklist) {
             if (j.getPriority() >= this.getPriority()) //Job_j = i+1 to n{    /* for each Job_j having priority less than Job_i */
             {
                 continue;
             }
 
             int D_max = 0; // maximum delay
-            for (Resource k : Simulator.Main.Config.resourceList) // for k = 1 to m { /* for all semaphores */
+            for (Resource k : Schedtool.Main.Config.resourceList) // for k = 1 to m { /* for all semaphores */
             {
                 //System.out.print(" k=" + (this.resourcelist.indexOf(k)+1));
                 // System.out.println(" k.durationOf(j) =" + k.durationOf(j));
@@ -308,11 +308,11 @@ public class Task {
         }
 
         int B_s_i = 0;
-        for (Resource k : Simulator.Main.Config.resourceList) //for k = 1 to m { /* For all semaphores */
+        for (Resource k : Schedtool.Main.Config.resourceList) //for k = 1 to m { /* For all semaphores */
         {
             int D_max = 0;
 
-            for (Task j : Simulator.Main.Config.tasklist) // for j = i+1 to n { // for each J_j : P_j < P_i
+            for (Task j : Schedtool.Main.Config.tasklist) // for j = i+1 to n { // for each J_j : P_j < P_i
             {
                 if (j.getPriority() >= this.getPriority()) //Job_j = i+1 to n{    /* for each Job_j having priority less than Job_i */
                 {

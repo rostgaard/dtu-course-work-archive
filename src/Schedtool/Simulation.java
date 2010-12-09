@@ -1,11 +1,11 @@
-package Simulator;
+package Schedtool;
 
-import Simulator.Model.JobList;
-import Simulator.Model.Task;
-import Simulator.Model.Job;
-import Simulator.Model.ReadyQueue;
-import Simulator.Types.ProbabililtyDistribution;
-import Simulator.Types.Schedulability;
+import Schedtool.Model.JobList;
+import Schedtool.Model.Task;
+import Schedtool.Model.Job;
+import Schedtool.Model.ReadyQueue;
+import Schedtool.Types.ProbabililtyDistribution;
+import Schedtool.Types.Schedulability;
 import java.util.Random;
 
 /**

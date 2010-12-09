@@ -1,7 +1,7 @@
-package Simulator;
+package Schedtool;
 
-import Simulator.Model.Task;
-import Simulator.Utils.LCMutils;
+import Schedtool.Model.Task;
+import Schedtool.Utils.LCMutils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
