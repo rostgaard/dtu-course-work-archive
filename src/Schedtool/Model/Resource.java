@@ -38,7 +38,7 @@ public class Resource {
      * Returns the critical duration of the task supplied, in the resource
      * @param t The task object
      * @return The critical duration. If the task does not use the resource.
-     *         This dureation is 0
+     *         This duration is 0
      */
     public int durationOf(Task t) {
         int duration = 0;
@@ -46,10 +46,7 @@ public class Resource {
             return 0;
         }
         for (Usage u : this.usagelist) {
-            if (!u.task.equals(t)) {
-                continue;
-            }
-            if (u.criticalDuration > duration) {
+            if (u.task.equals(t)) {
                 duration = u.criticalDuration;
             }
         }

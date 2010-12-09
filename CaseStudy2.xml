@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<times>
+<system>
+<declarations/>
+</system>
+<tasktable>
+<task C="1" D="15" T="15" behaviour="P" name="task1"/>
+<task C="2" D="20" T="20" behaviour="P" name="task2"/>
+<task C="3" D="25" T="25" behaviour="P" name="task3"/>
+<task C="4" D="30" T="30" behaviour="P" name="task4"/>
+<task C="5" D="50" T="50" behaviour="P" name="task5"/>
+<task C="5" D="60" T="60" behaviour="P" name="task6"/>
+<task C="6" D="75" T="75" behaviour="P" name="task7"/>
+<task C="9" D="100" T="100" behaviour="P" name="task8"/>
+<task C="12" D="120" T="120" behaviour="P" name="task9"/>
+<task C="11" D="150" T="150" behaviour="P" name="task10"/>
+<task C="15" D="300" T="300" behaviour="P" name="task11"/>
+</tasktable>
+</times>

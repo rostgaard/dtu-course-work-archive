@@ -1,5 +1,6 @@
 package Schedtool;
 
+import Schedtool.Model.TaskList;
 import Schedtool.Model.Task;
 import java.util.ArrayList;
 

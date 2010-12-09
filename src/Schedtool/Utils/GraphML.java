@@ -3,7 +3,7 @@ package Schedtool.Utils;
 import Schedtool.Model.Resource;
 import Schedtool.Model.ResourceList;
 import Schedtool.Model.Task;
-import Schedtool.TaskList;
+import Schedtool.Model.TaskList;
 import Schedtool.Model.Usage;
 import Schedtool.Model.UsageList;
 import java.io.IOException;

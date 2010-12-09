@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2010.10.28)  8 DEC 2010 14:37
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2010.10.28)  9 DEC 2010 23:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -461,8 +461,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 21--21
 [][]\T1/aer/m/n/9 This re-port should also be avail-able on-line at
  []
 
-(./introduction.tex) (./wcet.tex)
-Overfull \hbox (9.59154pt too wide) in paragraph at lines 53--55
+(./introduction.tex)
+
+LaTeX Warning: Citation `CoDeKaMa2002' on page 1 undefined on input line 89.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 93--97
+
+ []
+
+
+Overfull \hbox (9.59154pt too wide) in paragraph at lines 101--103
 \T1/aer/m/n/9 schedul-ing al-go-rithm a schedu-la-bil-ity test is per-fomed. Sc
 hedu-
  []
@@ -471,40 +480,68 @@ hedu-
 
 
 ]
-
-LaTeX Warning: Citation `CoDeKaMa2002' on page 2 undefined on input line 80.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 84--88
-
- []
-
 File: fig/example_timeline.eps Graphic file (type eps)
-<fig/example_timeline.eps>
-Overfull \hbox (0.81802pt too wide) in paragraph at lines 116--117
+ <fig/example_timeline.eps>
+Overfull \hbox (0.81802pt too wide) in paragraph at lines 139--140
  [][] 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 141--142
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 169--170
 
  []
 
-[2] (./response-time_analysis.tex
 
 LaTeX Warning: Reference `sec:critical_instant' on page 3 undefined on input li
-ne 1.
+ne 180.
 
 
-Overfull \hbox (1.30309pt too wide) in paragraph at lines 15--17
+Overfull \hbox (1.30309pt too wide) in paragraph at lines 195--197
 \T1/aer/m/n/9 This re-sponse time anal-y-sis (dead-line mono-tonic) is ex-tende
 d
  []
 
-)
+
+LaTeX Warning: Citation `buttazzo1997hard' on page 3 undefined on input line 24
+1.
+
+[3]
 File: fig/directory_structure.eps Graphic file (type eps)
- <fig/directory_structure.eps> [3] (./output_example.tex) (./report.bbl)
-[4
+ <fig/directory_structure.eps>
+
+LaTeX Warning: Citation `buttazzo1997hard' on page 4 undefined on input line 27
+6.
+
+
+Overfull \hbox (15.40373pt too wide) in paragraph at lines 276--277
+\T1/aer/m/n/9 Three test mod-els are pro-vided: re-source_case1, pathfinder_goo
+d
+ []
+
+
+LaTeX Warning: Citation `CoDeKaMa2002.1' on page 4 undefined on input line 280.
+
+
+(/usr/share/texmf-texlive/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2004/09/05 1.3 listings language file
+)
+Underfull \hbox (badness 10000) in paragraph at lines 295--297
+
+ []
+
+(./simulator.java)
+Overfull \hbox (11.74332pt too wide) in paragraph at lines 298--301
+\T1/aer/m/n/9 This is done by ex-tend-ing the nor-mal wait and sig-nal semaphor
+e
+ []
+
+
+Overfull \hbox (16.54933pt too wide) in paragraph at lines 302--303
+\T1/aer/m/n/9 mits its pri-or-ity to the job cur-rently hold-ing the semaphore,
+
+ []
+
+[4] (./output_example.tex) (./report.bbl) [5
 
 ] (./report.aux)
 
@@ -512,12 +549,12 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 3658 strings out of 495062
- 43211 string characters out of 1182643
- 98512 words of memory out of 3000000
- 6782 multiletter control sequences out of 15000+50000
+ 3771 strings out of 495062
+ 44619 string characters out of 1182643
+ 125635 words of memory out of 3000000
+ 6893 multiletter control sequences out of 15000+50000
  38350 words of font info for 51 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 39i,10n,32p,531b,962s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,10n,43p,496b,1081s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on report.dvi (4 pages, 19732 bytes).
+Output written on report.dvi (5 pages, 28484 bytes).

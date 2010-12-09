@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class Task {
 
-    int blockingTime, period, WCET, BCET, WCRT, Deadline, phase, 
+    int blockingTime, period, WCET, BCET, WCRT, Deadline, phase,
             responseTime, priority = 0;
     private int originalPriority;
     String name = null;
@@ -39,8 +39,6 @@ public class Task {
     public ArrayList<Job> getJobList() {
         return jobList;
     }
-
-    
 
     /**
      *
@@ -93,7 +91,7 @@ public class Task {
      * @return Worst-case response time
      */
     public int getResponseTime() {
-        return this.responseTime + this.blockingTime;
+        return this.responseTime;
     }
 
     /**
@@ -232,7 +230,7 @@ public class Task {
     @Override
     public String toString() {
         return this.getName()
-                + " " + this.getResponseTime();
+                + " " + (this.getResponseTime() + this.getBlockingtime());
     }
 
     /**
@@ -271,7 +269,7 @@ public class Task {
      * The blocking time of a task is the worst case blocking the task can experience
      * @return The calculated blocking time the task
      */
-    public int getBlockingtime(){
+    public int getBlockingtime() {
         return this.blockingTime;
     }
 
@@ -292,19 +290,15 @@ public class Task {
             int D_max = 0; // maximum delay
             for (Resource k : Schedtool.Main.Config.resourceList) // for k = 1 to m { /* for all semaphores */
             {
-                //System.out.print(" k=" + (this.resourcelist.indexOf(k)+1));
-                // System.out.println(" k.durationOf(j) =" + k.durationOf(j));
+
                 if ((k.ceiling() >= this.getPriority()) && (k.durationOf(j) > D_max)) //if(C(S_k) >= P_i) &&  D_j_k  > D_max {
                 {
                     D_max = k.durationOf(j);
-                    //System.out.println(" D_max := " + k.durationOf(j));
                 }
 
 
             }
             B_l_i = B_l_i + D_max;
-            //System.out.println("B_l_i:" +B_l_i);
-
         }
 
         int B_s_i = 0;
@@ -330,5 +324,4 @@ public class Task {
 
         this.blockingTime = B_i;
     }
-
 }

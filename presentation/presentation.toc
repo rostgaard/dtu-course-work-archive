@@ -1,0 +1,8 @@
+\beamer@endinputifotherversion {3.07pt}
+\beamer@sectionintoc {1}{Correctness by construction}{3}{0}{1}
+\beamer@sectionintoc {2}{Design-by-contract}{6}{0}{2}
+\beamer@sectionintoc {3}{Example}{7}{0}{3}
+\beamer@sectionintoc {4}{Proving correctness}{10}{0}{4}
+\beamer@sectionintoc {5}{Gains}{13}{0}{5}
+\beamer@sectionintoc {6}{Challenges}{14}{0}{6}
+\beamer@sectionintoc {7}{Final words}{15}{0}{7}

@@ -1,5 +1,6 @@
 package Schedtool;
 
+import Schedtool.Model.TaskList;
 import Schedtool.Model.Task;
 import Schedtool.Types.LockingPolicy;
 import Schedtool.Types.Schedulability;
@@ -73,45 +74,43 @@ public class ShedulabiltyTest {
 
         // Sort the task set
         tasklist.sortByPriority();
-        //System.out.println(tasklist.fullinfo());
 
-        for (int i = 0; i < tasklist.size(); i++) {
-            Task task = tasklist.get(i);
+        for (Task t : this.tasklist) {
+            t.calculateBlockingTime();
+        }
+
+        for (Task i : this.tasklist) {
+
+            Task task = i;
             int I = 0;
             //repeat
             do {
                 //R = I + Ci;
-
                 task.setResponseTime(I + task.getWCET());
 
-                //System.out.println( " Responsetime: " + task.getResponseTime() +
-                //           " Deadline: " + task.getDeadline() +
-                //          " i: " + i);
-                //if R > Di then
-
-                if (task.getResponseTime() > task.getDeadline()) {
-                    return Schedulability.UNSCHEDULABLE;
-                }
-                // I = SUM(J=1 to i-1| ceiling(R/taskJ)*J.WCET)
+                //System.out.println("Task: " + task.getName()+ " Responsetime: " + task.getResponseTime());
                 I = 0;
-                for (int j = 0; j < i; j++) {
-                    /*System.out.println("  Adding Task:" + tasklist.get(j).getName() +"  j: " +j + " i: " +i
+                for (Task j : this.tasklist) {
+                    if (j.getPriority() <= task.getPriority()) {
+                        continue;
+                    }
+                    /* System.out.println("  Adding Task:" + j.getName() +"  j: " +j + " i: " +i
                     +" ciel(" +task.getResponseTime() + " / "
-                    + tasklist.get(j).getPeriod() + ") * "
-                    + tasklist.get(j).getWCET() + " = "
+                    + j.getPeriod() + ") * "
+                    + j.getWCET() + " = "
                     + Math.ceil(
                     (double)task.getResponseTime()/
-                    (double)tasklist.get(j).getPeriod())
-                     *tasklist.get(j).getWCET()
+                    (double)j.getPeriod())
+                     *j.getWCET()
                     );*/
                     I += Math.ceil(
                             (double) task.getResponseTime()
-                            / (double) tasklist.get(j).getPeriod())
-                            * tasklist.get(j).getWCET();
+                            / (double) j.getPeriod())
+                            * j.getWCET();
                 }
 
                 // until I + Ci = R
-                //System.out.println("  Ending responsetime: " +task.getResponseTime() + " and I+wect: " + I + " " +task.getWCET() );
+                //System.out.println("  Ending responsetime: " + task.getResponseTime() + " and I+wect: " + I + " " + task.getWCET());
             } while (I + task.getWCET() != task.getResponseTime());
         }
 
@@ -119,13 +118,18 @@ public class ShedulabiltyTest {
             case NONE:
                 // Only guarantee schedulability if no resources is in use
                 if (Main.Config.usagelist.isEmpty()) {
+                    for (Task t : tasklist) {
+                        if (!t.schedulable()) {
+                            return Schedulability.UNSCHEDULABLE;
+                        }
+                    }
                     return Schedulability.SCHEDULABLE;
                 }
                 break;
 
             case PRIORITY_INHERITANCE:
                 for (Task t : this.tasklist) {
-                    t.calculateBlockingTime();
+                    //t.calculateBlockingTime();
                     if (!t.schedulable()) {
                         return Schedulability.UNSCHEDULABLE;
                     }

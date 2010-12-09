@@ -11,6 +11,7 @@ package Schedtool;
  *
  * @created 9 September, 2010
  */
+import Schedtool.Model.TaskList;
 import Schedtool.Model.UsageList;
 import Schedtool.Model.ResourceList;
 import Schedtool.Model.JobList;
@@ -111,7 +112,7 @@ public class Main {
             }
 
         } else if (mode == 2) {
-            if(!Main.Config.usagelist.isEmpty() && Main.Config.lockingPolicy == LockingPolicy.NONE ) {
+            if (!Main.Config.usagelist.isEmpty() && Main.Config.lockingPolicy == LockingPolicy.NONE) {
                 System.out.println("Analysis must specify a locking policy when resources are in use");
                 System.exit(exitStatus);
             }
@@ -125,7 +126,16 @@ public class Main {
         }
 
         Main.Config.tasklist.sortByName();
-        System.out.println(Main.Config.tasklist.fullinfo());
+        try {
+            // Create file
+            FileWriter fstream = new FileWriter(model + ".a1.out");
+            BufferedWriter out = new BufferedWriter(fstream);
+            out.write(Main.Config.tasklist.toString());
+            //Close the output stream
+            out.close();
+        } catch (Exception e) {//Catch exception if any
+            System.err.println("Error: " + e.getMessage());
+        }
 
         System.exit(exitStatus);
     }

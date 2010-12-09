@@ -1,5 +1,6 @@
 package Schedtool;
 
+import Schedtool.Model.TaskList;
 import Schedtool.Model.JobList;
 import Schedtool.Model.Task;
 import Schedtool.Model.Job;

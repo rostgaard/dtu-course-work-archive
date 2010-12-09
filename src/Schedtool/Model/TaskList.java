@@ -1,4 +1,4 @@
-package Schedtool;
+package Schedtool.Model;
 
 import Schedtool.Model.Task;
 import Schedtool.Utils.LCMutils;
