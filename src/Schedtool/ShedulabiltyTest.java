@@ -73,13 +73,8 @@ public class ShedulabiltyTest {
 
         // Sort the task set
         tasklist.sortByPriority();
+        //System.out.println(tasklist.fullinfo());
 
-        //DM guarantee(Γ)
-        //for all τi ∈ Γ do
-        /*
-         * By running through the task set reverse, we start with the task
-         * having the lowest priority
-         */
         for (int i = 0; i < tasklist.size(); i++) {
             Task task = tasklist.get(i);
             int I = 0;

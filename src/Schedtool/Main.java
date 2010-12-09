@@ -90,7 +90,7 @@ public class Main {
         Main.Config.tasklist.sortByPriority();
 
         if (mode == 1) {
-            Simulation S = new Simulation(1, Main.Config.tasklist,
+            Simulator S = new Simulator(1, Main.Config.tasklist,
                     Main.Config.probabilityDistribution);
             if (S.simulate() == Schedulability.SCHEDULABLE) {
                 exitStatus = 0;
@@ -125,7 +125,7 @@ public class Main {
         }
 
         Main.Config.tasklist.sortByName();
-        System.out.println(Main.Config.tasklist);
+        System.out.println(Main.Config.tasklist.fullinfo());
 
         System.exit(exitStatus);
     }

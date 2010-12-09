@@ -12,7 +12,7 @@ import java.util.Random;
  * Provides mechanism for doing a simulation - with or without resources
  * @author Kim Rostgaard Christensen
  */
-public class Simulation {
+public class Simulator {
 
     private TaskList tasklist = null;
     private int LCMMultiplier = 1;
@@ -26,7 +26,7 @@ public class Simulation {
      * @param tl The tasklist to run the analysis on
      * @param dist The probability distribution used in generating execution times
      */
-    public Simulation(int lcmm, TaskList tl, ProbabililtyDistribution dist) {
+    public Simulator(int lcmm, TaskList tl, ProbabililtyDistribution dist) {
         this.tasklist = tl;
         this.LCMMultiplier = lcmm;
         this.distribution = dist;
