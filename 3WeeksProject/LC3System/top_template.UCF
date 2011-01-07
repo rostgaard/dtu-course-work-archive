@@ -2,10 +2,10 @@
 ##	System clock 
 ##	To correctly enable the system clock you should uncoment all 4 lines that describe the clock!
 #######################################
-#NET "clk" LOC = "AJ15";
-#NET "clk" IOSTANDARD = LVCMOS25;
-#NET "clk" TNM_NET = "clk";
-#TIMESPEC "TS_clk" = PERIOD "clk" 10.00 ns HIGH 50 %;
+NET "clk100" LOC = "AJ15";		#Understående er blevet rettet fra clk til clk100  
+NET "clk100" IOSTANDARD = LVCMOS25;
+NET "clk100" TNM_NET = "clk100";
+TIMESPEC "TS_clk" = PERIOD "clk100" 10.00 ns HIGH 50 %;
 
 
 #***********************************************************************************#
@@ -20,27 +20,27 @@
 ##	Switches on DIO4
 #######################################
 # Defined as a vector called SW
-NET "SW_i<0>"	LOC = "N6";	
-NET "SW_i<1>"	LOC = "L5";
-NET "SW_i<2>"	LOC = "M2";
-NET "SW_i<3>"	LOC = "P9";
-NET "SW_i<4>"	LOC = "M4";
-NET "SW_i<5>"	LOC = "N1";
-NET "SW_i<6>"	LOC = "P8";
-NET "SW_i<7>"	LOC = "N4";
+NET "sw_i<0>"	LOC = "N6";	
+NET "sw_i<1>"	LOC = "L5";
+NET "sw_i<2>"	LOC = "M2";
+NET "sw_i<3>"	LOC = "P9";
+NET "sw_i<4>"	LOC = "M4";
+NET "sw_i<5>"	LOC = "N1";
+NET "sw_i<6>"	LOC = "P8";
+NET "sw_i<7>"	LOC = "N4";
 
-NET "SW_i<*>" IOSTANDARD = LVTTL;
+NET "sw_i<*>" IOSTANDARD = LVTTL;
 
 #######################################
 #	Buttons on DIO4
 #######################################
 # Defined as a vector called BTN
-NET "BTN_i<0>"	LOC = "P3";
-NET "BTN_i<1>"	LOC = "P2";
-NET "BTN_i<2>"	LOC = "W3";
-NET "BTN_i<3>"	LOC = "V8";
-NET "BTN_i<4>"	LOC = "AA1";
-NET "BTN_i<*>" IOSTANDARD = LVTTL;
+NET "btn_i<0>"	LOC = "P3";
+NET "btn_i<1>"	LOC = "P2";
+NET "btn_i<2>"	LOC = "W3";
+NET "btn_i<3>"	LOC = "V8";
+NET "btn_i<4>"	LOC = "AA1";
+NET "btn_i<*>" IOSTANDARD = LVTTL;
 
 
 #######################################
@@ -48,39 +48,39 @@ NET "BTN_i<*>" IOSTANDARD = LVTTL;
 #######################################
 # Defined as a vector called LED
 # and enable bit called LEDG
-NET "LED<0>"	LOC = "T8";
-NET "LED<1>"	LOC = "U5";
-NET "LED<2>"	LOC = "W2";
-NET "LED<3>"	LOC = "U9";
-NET "LED<4>"	LOC = "V4";
-NET "LED<5>"	LOC = "Y1";
-NET "LED<6>"	LOC = "U8";
-NET "LED<7>"	LOC = "V6";
+NET "led<0>"	LOC = "T8";
+NET "led<1>"	LOC = "U5";
+NET "led<2>"	LOC = "W2";
+NET "led<3>"	LOC = "U9";
+NET "led<4>"	LOC = "V4";
+NET "led<5>"	LOC = "Y1";
+NET "led<6>"	LOC = "U8";
+NET "led<7>"	LOC = "V6";
 
-NET "LEDG"	LOC = "V7";
+NET "ledg"	LOC = "V7";
 
-NET "LED*" IOSTANDARD = LVTTL;
+NET "led*" IOSTANDARD = LVTTL;
 
 
 #######################################
 #	7 Segment on DIO4
 #######################################
-NET "SEG<0>"	LOC = "N5";	# A
-NET "SEG<1>"	LOC = "L4";	# B
-NET "SEG<2>"	LOC = "N2";	# C
-NET "SEG<3>"	LOC = "R9";	# D
-NET "SEG<4>"	LOC = "M3";	# E
-NET "SEG<5>"	LOC = "P1";	# F
-NET "SEG<6>"	LOC = "P7";	# G
-NET "SEG<7>"	LOC = "N3"; # Dot
-NET "SEG<*>" IOSTANDARD = LVTTL;
+NET "seg<6>"	LOC = "N5";	# A #MHI Understående er blevet rettet ved at flytte dem en plads så de passer til vores display og ikke edgars.
+NET "seg<5>"	LOC = "L4";	# B
+NET "seg<4>"	LOC = "N2";	# C
+NET "seg<3>"	LOC = "R9";	# D
+NET "seg<2>"	LOC = "M3";	# E
+NET "seg<1>"	LOC = "P1";	# F
+NET "seg<0>"	LOC = "P7";	# G
+NET "seg<7>"	LOC = "N3"; # Dot
+NET "seg<*>" IOSTANDARD = LVTTL;
 #
-NET "AN<3>"	LOC = "W4";
-NET "AN<2>"	LOC = "W5";
-NET "AN<1>"	LOC = "AB1";
-NET "AN<0>"	LOC = "Y4";
+NET "an<3>"	LOC = "W4";
+NET "an<2>"	LOC = "W5";
+NET "an<1>"	LOC = "AB1";
+NET "an<0>"	LOC = "Y4";
 
-NET "AN<*>" IOSTANDARD = LVTTL;
+NET "an<*>" IOSTANDARD = LVTTL;
 
 
 
@@ -114,10 +114,10 @@ NET "rx" LOC = "AJ8" | IOSTANDARD = LVCMOS25 | DRIVE = 8 | SLEW = SLOW;
 #	Main Board switches/leds/buttons
 #######################################
 
-NET "MB_LED_o<0>" LOC = "AC4" | IOSTANDARD = LVTTL | DRIVE = 12 | SLEW = SLOW;
-NET "MB_LED_o<1>" LOC = "AC3" | IOSTANDARD = LVTTL | DRIVE = 12 | SLEW = SLOW;
-NET "MB_LED_o<2>" LOC = "AA6" | IOSTANDARD = LVTTL | DRIVE = 12 | SLEW = SLOW;
-NET "MB_LED_o<3>" LOC = "AA5" | IOSTANDARD = LVTTL | DRIVE = 12 | SLEW = SLOW;
+NET "mb_led_o<0>" LOC = "AC4" | IOSTANDARD = LVTTL | DRIVE = 12 | SLEW = SLOW;
+NET "mb_led_o<1>" LOC = "AC3" | IOSTANDARD = LVTTL | DRIVE = 12 | SLEW = SLOW;
+NET "mb_led_o<2>" LOC = "AA6" | IOSTANDARD = LVTTL | DRIVE = 12 | SLEW = SLOW;
+NET "mb_led_o<3>" LOC = "AA5" | IOSTANDARD = LVTTL | DRIVE = 12 | SLEW = SLOW;
 
 #NET "MB_BTN_RESET" LOC = "AG5" | IOSTANDARD = LVTTL;
 #NET "MB_BTN_LEFT" LOC = "AH1" | IOSTANDARD = LVTTL;
@@ -125,17 +125,17 @@ NET "MB_LED_o<3>" LOC = "AA5" | IOSTANDARD = LVTTL | DRIVE = 12 | SLEW = SLOW;
 #NET "MB_BTN_RIGHT" LOC = "AH2" | IOSTANDARD = LVTTL;
 #NET "MB_BTN_UP" LOC = "AH4" | IOSTANDARD = LVTTL;
 
-NET "MB_BTN_i<4>" LOC = "AG5" | IOSTANDARD = LVTTL;
-NET "MB_BTN_i<3>" LOC = "AH1" | IOSTANDARD = LVTTL;
-NET "MB_BTN_i<2>" LOC = "AG3" | IOSTANDARD = LVTTL;
-NET "MB_BTN_i<1>" LOC = "AH2" | IOSTANDARD = LVTTL;
-NET "MB_BTN_i<0>" LOC = "AH4" | IOSTANDARD = LVTTL;
+NET "mb_btn_i<4>" LOC = "AG5" | IOSTANDARD = LVTTL;
+NET "mb_btn_i<3>" LOC = "AH1" | IOSTANDARD = LVTTL;
+NET "mb_btn_i<2>" LOC = "AG3" | IOSTANDARD = LVTTL;
+NET "mb_btn_i<1>" LOC = "AH2" | IOSTANDARD = LVTTL;
+NET "mb_btn_i<0>" LOC = "AH4" | IOSTANDARD = LVTTL;
 
 
-NET "MB_SW_i<0>" LOC = "AC11" | IOSTANDARD = LVCMOS25;
-NET "MB_SW_i<1>" LOC = "AD11" | IOSTANDARD = LVCMOS25;
-NET "MB_SW_i<2>" LOC = "AF8"  | IOSTANDARD = LVCMOS25;
-NET "MB_SW_i<3>" LOC = "AF9"  | IOSTANDARD = LVCMOS25;
+NET "mb_sw_i<0>" LOC = "AC11" | IOSTANDARD = LVCMOS25;
+NET "mb_sw_i<1>" LOC = "AD11" | IOSTANDARD = LVCMOS25;
+NET "mb_sw_i<2>" LOC = "AF8"  | IOSTANDARD = LVCMOS25;
+NET "mb_sw_i<3>" LOC = "AF9"  | IOSTANDARD = LVCMOS25;
 
 
 

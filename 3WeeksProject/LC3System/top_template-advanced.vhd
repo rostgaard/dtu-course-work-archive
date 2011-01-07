@@ -220,11 +220,18 @@ lc3_memory: entity work.lc3_mem
 		DATA_WIDTH => 16
 	)
 	port map (
+	   reset => sys_reset,
 	   clk  => cpu_clk,
+	   rx => rx,
+	   tx => tx,
       we   => bus_WE,
+		re   => bus_RE,
       addr => bus_address,
-      din  => bus_data,
-      dout => bus_data
+      data  => bus_data,
+	   sw => sw_i,
+	   sseg_reg => sseg_reg,
+	   leds_reg => leds_reg,
+		btn => btn_i
    );
 
 -------------------------------------------------------------------------------
@@ -256,7 +263,22 @@ begin
 end process;
 
 -------------------------------------------------------------------------------
--- On chip debugging controll
+-- 7Seg Display Logic - MHI
+	
+	 display: entity work.disp_hex_mux(arch)
+		port map( clk=>cpu_clk,
+					 
+					 hex3=> sseg_out(15 downto 12),
+					 hex2=> sseg_out(11 downto 8),
+					 hex1=> sseg_out(7 downto 4),
+					 hex0=> sseg_out(3 downto 0),
+					 
+					 reset=>sys_reset,
+					 dp_in=> "1111",
+					 an => an,
+					 sseg => seg);
+-------------------------------------------------------------------------------
+-- On chip debugging control
 -- <<< Remove if not needed >>>
 
 sseg_out <= sseg_reg when sys_halted='0' else
@@ -277,7 +299,7 @@ mb_sw <= not mb_sw_i;             -- active low
 
 -- set values for unused ports
 ledg <= '1';
-seg(7) <= '1';
+--seg(7) <= '1';
 
 
 end Behavioral;
