@@ -1,0 +1,90 @@
+% This is the main report file
+
+\documentclass{acm_proc_article-sp}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\begin{document}
+
+\title{02321 Hardware/Software programming Jan 11}
+\subtitle{[Technical University of Denmark]
+%\titlenote{This report should also be available online at \texttt{www.retrospekt.dk/02228report}}
+}
+
+\numberofauthors{2}
+\author{
+\alignauthor 
+Kim Rostgaard Christensen\\
+       \email{s084283@student.dtu.dk}
+\alignauthor 
+Morten Hillebo (s072923)
+       \email{s072923@student.dtu.dk}
+}
+
+
+\maketitle
+
+\begin{abstract}
+%Abstract; A brief summary of all of the report including the conclusion section
+%but excluding the acknowledgements, references and any appendixes.
+
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+
+%ACKNOWLEDGMENTS are optional
+%\section{Acknowledgments}
+%\input{acknowledgements.tex}
+%Acknowledgments; Acknowledge any persons important to the work.
+
+%References; A list of reference material used. All material must be cited in the
+%text.
+
+\section{Memory mapping}
+In order to provide access to the various I/O devices available to the processor, an interface is needed. This is in the form of a memory map, where certain areas of the memory is significant - or reserved. As the name would suggest, these areas are mapped onto the registers of the corresponding devices. A list of the I/O mappings can be found in table \ref{table:io_mappings}
+
+\begin{table}[h]
+\centering
+    \begin{tabular}{ | l | l | l |}
+    \hline
+     Register & Memory address \\ \hline 
+    \hline
+    Stdin Status Register  & xFE00  \\ \hline
+    Stdin Data Register    & xFE02  \\ \hline
+    Stdout Status Register & xFE04  \\ \hline
+    Stdout Data Register   & xFE06  \\ \hline
+    Switches Data Register & xFE0A  \\ \hline
+    Buttons Data Register  & xFE0E  \\ \hline
+    7SegDisplay Data Register  & xFE12  \\ \hline
+    Leds Data Register  & xFE16  \\ \hline
+    \end{tabular}
+\caption{I/O mappings of the LC3}
+\label{table:io_mappings}
+\end{table}
+
+Citations: \cite{patt2000introduction} \cite{chu2008fpga}
+
+\appendix
+
+% The following two commands are all you need in the
+% initial runs of your .tex file to
+% produce the bibliography for the citations in your paper.
+\bibliographystyle{plain}
+%\nocite{*}
+\bibliography{sigproc}  % sigproc.bib is the name of the Bibliography in this case
+% You must have a proper ".bib" file
+%  and remember to run:
+% latex bibtex latex latex
+% to resolve all references
+%
+% ACM needs 'a single self-contained file'!
+%
+%APPENDICES are optional
+
+
+%Appendixes; Appendixes holds, for example, results or figures that are not
+%relevant to place in the body of the report. Appendixes should generally be
+%avoided and might not be read by the course staff.
+
+
+\end{document}
