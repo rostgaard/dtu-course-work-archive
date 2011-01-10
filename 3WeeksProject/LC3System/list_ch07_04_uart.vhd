@@ -5,13 +5,13 @@ use ieee.numeric_std.all;
 entity uart is
    generic(
      -- Default setting:
-     -- 57,600 baud, 8 data bits, 1 stop its, 2^2 FIFO
+     -- 19200 baud, 8 data bits, 1 stop its, 2^2 FIFO
      DBIT: integer:=8;     -- # data bits
       SB_TICK: integer:=16; -- # ticks for stop bits, 16/24/32
                             --   for 1/1.5/2 stop bits
-      DVSR: integer:= 54;  -- baud rate divisor
+      DVSR: integer:= 326;  -- baud rate divisor
                             -- DVSR = 50M/(16*baud rate)
-      DVSR_BIT: integer:=8; -- # bits of DVSR
+      DVSR_BIT: integer:=9; -- # bits of DVSR (2^DVSR_BIT >= DVSR)
       FIFO_W: integer:=3    -- # addr bits of FIFO
                             -- # words in FIFO=2^FIFO_W
    );

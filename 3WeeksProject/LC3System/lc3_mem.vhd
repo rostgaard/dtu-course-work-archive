@@ -28,7 +28,7 @@ architecture beh_arch of lc3_mem is
   type ram_type is array (0 to 2**ADDR_WIDTH-1)
     of std_logic_vector (DATA_WIDTH-1 downto 0);
   signal ram: ram_type := (
-  -- Empty Traps/Interrupt Tables
+-- Empty Traps/Interrupt Tables
 X"0000", X"0000", X"0000", X"0000", X"0000", X"0000", X"0000", X"0000",  -- addr 0 - 7
 X"0000", X"0000", X"0000", X"0000", X"0000", X"0000", X"0000", X"0000",  -- addr 8 - 15
 X"0000", X"0000", X"0000", X"0000", X"0000", X"0000", X"0000", X"0000",  -- addr 16 - 23
@@ -193,29 +193,28 @@ X"0000", X"0000", X"0000", X"0000", X"0000", X"0000", X"0000", X"0000",  -- addr
 -- Start of user program         (1280-...)
 X"2405", X"608a", X"7092", X"608e", X"7096", X"0ffb", X"fe00",  -- addr 1280 - 1286
  others => X"0000"
+
 );
   signal addr_reg: std_logic_vector(ADDR_WIDTH-1 downto 0);
-  
-  signal data_in: std_logic_vector(ADDR_WIDTH-1 downto 0);
-  signal data_out: std_logic_vector(ADDR_WIDTH-1 downto 0);
 
-  signal ram_signal: std_logic_vector(ADDR_WIDTH-1 downto 0);
-  signal memory_map: std_logic_vector(ADDR_WIDTH-1 downto 0); 
+--  signal data_in: std_logic_vector(ADDR_WIDTH-1 downto 0);
+--  signal data_out: std_logic_vector(ADDR_WIDTH-1 downto 0);
+
+--  signal ram_signal: std_logic_vector(ADDR_WIDTH-1 downto 0);
+--  signal memory_map: std_logic_vector(ADDR_WIDTH-1 downto 0); 
   
+  -- Chip selector signals
   signal cs_mem: std_logic;
-  
   signal cs_stdin_status: std_logic;
   signal cs_stdin_data: std_logic;
-  
   signal cs_stdout_status: std_logic;
   signal cs_stdout_data: std_logic;
-  
   signal cs_switch_data: std_logic;
   signal cs_btn_data: std_logic;
   signal cs_sseg: std_logic;
   signal cs_led: std_logic;
   
-  --uart specific
+  -- uart specific signals
   signal uart_w_data: std_logic_vector(7 downto 0);
   signal uart_r_data: std_logic_vector(7 downto 0);
   signal tx_full, rx_empty: std_logic;
@@ -226,8 +225,8 @@ begin
    uart_unit: entity work.uart(str_arch)
       port map(clk=>clk, 
 					reset=>reset, 
-					rd_uart=> cs_stdin_status,
-               wr_uart=> cs_stdout_status,
+					rd_uart=> cs_stdin_data,
+               wr_uart=> cs_stdout_data,
 					rx=>rx, 
 					w_data=>uart_w_data,
                tx_full=>tx_full, 
@@ -235,9 +234,7 @@ begin
                r_data=>uart_r_data, 
 					tx=>tx);
 
-
-
-  process (addr_reg)
+  process (addr,we,re)
   begin
     cs_mem <= '0';
 	 cs_stdin_status <= '0';
@@ -249,50 +246,45 @@ begin
 	 cs_sseg <= '0';
 	 cs_led <= '0';
    
-	 if addr_reg >= X"0000" AND addr_reg <= X"DFFF" then --reserved space in software memory, rest is for I/O
+	 
+	 if addr >= X"0000" AND addr <= X"DFFF" then --reserved space in software memory, rest is for I/O
 	   cs_mem <= '1';
+	 end if;
 		-- xFE00 Stdin Status Register
-    elsif addr_reg = X"FE00" then
+    if addr = X"FE00" then
 	   cs_stdin_status <= '1';
-		-- xFE02 Stdin Data Register
-    elsif addr_reg = X"FE02" then
+	 end if;
+	 -- xFE02 Stdin Data Register
+    if  addr = X"FE02" and re = '1' then
 		cs_stdin_data <= '1';
-		-- xFE04 Stdout Status Register
-	 elsif addr_reg = X"FE04" then
+	 end if;
+	 -- xFE04 Stdout Status Register
+	 if  addr = X"FE04" then
 		cs_stdout_status <= '1';
-		 -- xFE06 Stdout Data Register
-	 elsif addr_reg = X"FE06" then
+	 end if;
+	 -- xFE06 Stdout Data Register
+	 if  addr = X"FE06" and we = '1' then
 		cs_stdout_data <= '1';
-		-- xFE0A Switches Data Register
-	 elsif addr_reg = X"FE0A" then
+	 end if;
+	 -- xFE0A Switches Data Register
+	 if  addr = X"FE0A" then
 		cs_switch_data <= '1';
-		-- xFE0E Buttons Data Register
-	 elsif addr_reg = X"FE0E" then
+	 end if;
+	 -- xFE0E Buttons Data Register
+	 if  addr = X"FE0E" then
 		cs_btn_data <= '1';
-		-- xFE12 7SegDisplay Data Register
-	 elsif addr_reg = X"FE12" then
+	 end if;
+	 -- xFE12 7SegDisplay Data Register
+	 if  addr = X"FE12" then
 		cs_sseg <= '1';
-		 -- xFE16 Leds Data Register
-	 elsif addr_reg = X"FE16" then
+	 end if;
+	 -- xFE16 Leds Data Register
+	 if  addr = X"FE16" then
 		cs_led <= '1';
     end if;
   end process;
  
-  -- RAM template
-  --data <= ram(to_integer(unsigned(addr_reg))) when re = '1' and cs_mem = '1' 
-    --else (others => 'Z');
-  
-  --process (clk)
-  --begin
-    --if (clk'event and clk = '1') then
-     --if (we='1') and cs_mem = '1' then
-       --ram(to_integer(unsigned(addr))) <= data;
-     --end if;
-    -- addr_reg <= addr;
-   --end if;
- -- end process;
-  
-  	-- cs_mem is In/Out
+  -- cs_mem is In/Out. This is the main memory
   data <= ram(to_integer(unsigned(addr_reg))) when re = '1' and cs_mem = '1' 
     else (others => 'Z');
 	 
@@ -319,14 +311,8 @@ begin
     else (others => 'Z');
 	 
 	-- cs_stout_data is in 
-  process (clk)
-  begin
-    if (clk'event and clk = '1') then
-      if (we='1') and cs_stdout_data = '1' then
-        uart_w_data <= data;
-      end if;
-    end if;
-  end process;
+   uart_w_data <= data(7 downto 0);
+
   
   --cs_switch_data  is out
   data <= sw when re = '1' and cs_switch_data = '1' 
@@ -351,7 +337,7 @@ begin
   begin
     if (clk'event and clk = '1') then
       if (we='1') and cs_led = '1' then
-        leds_reg <= data;
+        leds_reg <= data (7 downto 0);
       end if;
     end if;
   end process;
