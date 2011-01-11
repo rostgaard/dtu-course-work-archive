@@ -9,9 +9,9 @@ entity uart is
      DBIT: integer:=8;     -- # data bits
       SB_TICK: integer:=16; -- # ticks for stop bits, 16/24/32
                             --   for 1/1.5/2 stop bits
-      DVSR: integer:= 326;  -- baud rate divisor
+      DVSR: integer:= 54;  -- baud rate divisor
                             -- DVSR = 50M/(16*baud rate)
-      DVSR_BIT: integer:=9; -- # bits of DVSR (2^DVSR_BIT >= DVSR)
+      DVSR_BIT: integer:=6; -- # bits of DVSR (2^DVSR_BIT >= DVSR)
       FIFO_W: integer:=3    -- # addr bits of FIFO
                             -- # words in FIFO=2^FIFO_W
    );
