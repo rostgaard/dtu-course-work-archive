@@ -29,6 +29,21 @@ Main	LEA R0, Prompt
    LEA R0, IOTest 
    PUTS		; output prompt
 
+; Test display
+   AND R0, R0, #0
+   ADD R0, R0, #1 ; This should be a smiley face
+   LD R3, DISPLAY
+   STR R0, R3, x00
+   ADD R0, R0, #1
+   STR R0, R3, x00
+   ADD R0, R0, #1
+   STR R0, R3, x00
+   ADD R0, R0, #1
+   STR R0, R3, x00
+
+
+
+
    IOAgain:  
 	LDR R0, R2, x0a              ; Read Switches
 	STR R0, R2, x12              ; Write 7Seg
@@ -42,6 +57,7 @@ Error	LEA R0, Testfail
 	BRnzp IOAgain
 
 IO_BASE	.FILL xFE00
+DISPLAY	.FILL xFE18
 MEM_BASE .FILL x5000
 
 Prompt .STRINGZ "LC3 test program: \n"

@@ -96,11 +96,11 @@ NET "an<*>" IOSTANDARD = LVTTL;
 #######################################
 ## VGA on the DIO board (recommended)
 #######################################
-#NET "HS" LOC = "R6";   #HS
-#NET "VS" LOC = "T2";   #VS
-#NET "R"  LOC = "R2";   #R
-#NET "G"  LOC = "P4";   #G
-#NET "B"  LOC = "P5";   #B
+NET "hsync" LOC = "R6" |  IOSTANDARD = LVTTL;   #HS
+NET "vsync" LOC = "T2"  |  IOSTANDARD = LVTTL;   #VS
+NET "rgb<2>"  LOC = "R2"  |  IOSTANDARD = LVTTL;   #R
+NET "rgb<1>"  LOC = "P4"  |  IOSTANDARD = LVTTL;   #G
+NET "rgb<0>"  LOC = "P5"  |  IOSTANDARD = LVTTL;   #B
 
 #######################################
 ##	Serial port (on the DIO4 board)

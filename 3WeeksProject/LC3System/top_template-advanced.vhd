@@ -38,7 +38,9 @@ entity system_complete is
       -- main board buttons/switches/leds (These are active LOW: enabled is '0')
       mb_sw_i : in std_logic_vector (3 downto 0);
       mb_btn_i : in std_logic_vector (4 downto 0);
-      mb_led_o : out std_logic_vector (3 downto 0)
+      mb_led_o : out std_logic_vector (3 downto 0);
+      hsync, vsync: out  std_logic;
+      rgb: out std_logic_vector(2 downto 0)
    );
 end system_complete;
 
@@ -231,7 +233,10 @@ lc3_memory: entity work.lc3_mem
 	   sw => sw_i,
 	   sseg_reg => sseg_reg,
 	   leds_reg => leds_reg,
-		btn => btn_i
+		btn => btn_i,
+		hsync => hsync,
+		vsync => vsync,
+		rgb => rgb
    );
 
 -------------------------------------------------------------------------------
