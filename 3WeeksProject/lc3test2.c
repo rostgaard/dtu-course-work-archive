@@ -1,7 +1,22 @@
 #include <stdio.h>
 #define SCREEN_WIDTH 128
-#define GAME_SCREEN_WIDTH 80
-#define GAME_SCREEN_HEIGHT 30
+#define GAME_SCREEN_WIDTH 20
+#define GAME_SCREEN_HEIGHT 40
+
+//Macro Direction
+#define LEFT 1
+#define RIGHT 2
+#define UP 3
+#define DOWN 4
+//Macro Boolean
+#define TRUE 1
+#define FALSE 0
+
+//Pre Init Functions
+
+//int RandomPositionY();
+//int RandomPositionX();
+
 
 short *vid_mem_base = (short *) 0xe000u;
 short *sw_reg = (short *) 0xfe0au;
@@ -26,30 +41,72 @@ void symbol_at(short x, short y, short c) {
 	*(vid_mem_base+(SCREEN_WIDTH*y)+x) = c;
 }
 
-void main() {
-	short x,tick = 0;
-	int y = 0;
-	short c;
-
-	short row = 0;
-	short colum = 0;	
-	short i = 0;
-	short offset;
-	clear_screen();
-while(1) {	
-	//scanf("%c",&c);
-	*led_reg = c;
-	
-
-	if(!(tick% 0xFFFFu)){
-		symbol_at(i,i,1);
-		tick=0;
-		i++;
-		if(i == 100) {
-			i=0;
+void InitialiseArrayWithWall(short Array[GAME_SCREEN_HEIGHT][GAME_SCREEN_WIDTH])
+{
+	int x,y;
+	for(x = 0; x < GAME_SCREEN_HEIGHT;x++)//Maby "=" is wrong syntax...
+	{
+		for(y = 0; y < GAME_SCREEN_WIDTH;y++)//Maby "=" is wrong syntax...
+		{
+			if(x==0||x==GAME_SCREEN_HEIGHT-1||y==0||y==GAME_SCREEN_WIDTH-1)
+			{
+				Array[x][y] = 2;
+			}
+			else
+			{
+				Array[x][y] = 0;
+			}
 		}
 	}
+}
 
-	tick++;
+void PrintArray(short Array[GAME_SCREEN_HEIGHT][GAME_SCREEN_WIDTH])
+{
+	int x,y;
+	for(x = 0; x < GAME_SCREEN_HEIGHT;x++)//Maby "=" is wrong syntax...
+	{
+		for(y = 0; y < GAME_SCREEN_WIDTH;y++)//Maby "=" is wrong syntax...
+		{
+			int value = Array[x][y];
+			printf("%d",value);
+			symbol_at(x,y,value);
+		}
+	}
+}
+
+void main() {
+	short y = 10;
+	short x = 10;
+	short TiltleArray[GAME_SCREEN_HEIGHT][GAME_SCREEN_WIDTH];
+	short c;
+	short old_tile;
+
+	clear_screen();
+	InitialiseArrayWithWall(TiltleArray);
+	PrintArray(TiltleArray);	
+	while(1) {
+
+		*sseg_reg = c;
+	
+		scanf("%c",&c);
+		//delete old tile
+		symbol_at(x,y,0);
+		//up
+		if(c == 'w') {
+			y--;
+		}
+		//down
+		if(c == 's') {
+			y++;
+		}
+		//left
+		if(c == 'a') {
+			x--;
+		}
+		//right
+		if(c == 'd') {
+			x++;
+		}
+		symbol_at(x,y,3);
 	}
 }
