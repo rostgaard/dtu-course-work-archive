@@ -4,12 +4,11 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 entity text_screen_gen is
    port(
-      clk, reset: std_logic;
-      input_reg: std_logic_vector(15 downto 0);
+      clk, reset, cs: std_logic;
+		bus_data, addr: std_logic_vector(15 downto 0);
       video_on: in std_logic;
       pixel_x, pixel_y: in std_logic_vector(9 downto 0);
-      text_rgb: out std_logic_vector(2 downto 0);
-		cs: std_logic
+      text_rgb: out std_logic_vector(2 downto 0)
    );
 end text_screen_gen;
 
@@ -31,7 +30,7 @@ architecture arch of text_screen_gen is
    -- cursor
    signal cur_x_reg, cur_x_next: unsigned(6 downto 0);
    signal cur_y_reg, cur_y_next: unsigned(4 downto 0);
-   signal move_x_tick, move_y_tick: std_logic;
+--   signal move_x_tick, move_y_tick: std_logic;
    signal cursor_on: std_logic;
    -- delayed pixel count
    signal pix_x1_reg, pix_y1_reg: unsigned(9 downto 0);
@@ -39,19 +38,24 @@ architecture arch of text_screen_gen is
    -- object output signals
    signal font_rgb, font_rev_rgb:
             std_logic_vector(2 downto 0);
+				
+   signal addr_ram_in : std_logic_vector(11 downto 0);
+				
 begin
-
    -- instantiate font ROM
    font_unit: entity work.font_rom
       port map(clk=>clk, addr=>rom_addr, data=>font_word);
-		
+	 
    -- instantiate dual port tile RAM (2^12-by-7)
    video_ram: entity work.xilinx_dual_port_ram_sync
       generic map(ADDR_WIDTH=>12, DATA_WIDTH=>7)
       port map(clk=>clk, we=>we,
-               addr_a=>addr_w, addr_b=>addr_r,
+               addr_a=>addr_ram_in, addr_b=>addr_r,
                din_a=>din, dout_a=>open, dout_b=>dout);
 					
+	addr_ram_in <= addr(11 downto 0);
+
+
    -- registers
    process (clk)
    begin
@@ -66,37 +70,36 @@ begin
    end process;
 	
    -- tile RAM write
-   addr_w <= std_logic_vector(cur_y_reg & cur_x_reg);
+   --addr_w <=std_logic_vector(cur_y_reg & cur_x_reg);
    we <= cs;
-   --din <= input_reg(6 downto 0);
-   din <= "0000011";
-	
+   din <= bus_data (6 downto 0);
+	 
    -- tile RAM read
    -- use non-delayed coordinates to form tile RAM address
    addr_r <=pixel_y(8 downto 4) & pixel_x(9 downto 3);
    char_addr <= dout;
 	
    -- font ROM
-   row_addr <= pixel_y(3 downto 0);
+   row_addr<=pixel_y(3 downto 0);
    rom_addr <= char_addr & row_addr;
 	
    -- use delayed coordinate to select a bit
-   bit_addr <= pix_x2_reg(2 downto 0);
+   bit_addr<=pix_x2_reg(2 downto 0);
    font_bit <= font_word(to_integer(not bit_addr));
 	
    -- new cursor position
-   cur_x_next <= unsigned(input_reg(11 downto 5))-1;
-   cur_y_next <= unsigned(input_reg(4 downto 0))-1;
+   cur_x_next <= unsigned(addr(6 downto 0));
+   cur_y_next <= unsigned(addr(11 downto 7));
 		
    -- object signals
    -- green over black and reversed video for courser
-   font_rgb <="001" when font_bit='1' else "000";
-   font_rev_rgb <="000" when font_bit='1' else "010";
+   font_rgb <="110" when font_bit='1' else "000";
+   font_rev_rgb <="110" when font_bit='1' else "000";
    -- use delayed coordinates for comparison
    cursor_on <='1' when pix_y2_reg(8 downto 4)=cur_y_reg and
                         pix_x2_reg(9 downto 3)=cur_x_reg else
                '0';
-					
+
    -- rgb multiplexing circuit
    process(video_on,cursor_on,font_rgb,font_rev_rgb)
    begin
