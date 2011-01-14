@@ -407,7 +407,8 @@ begin
 
   -- Display chip select
   cs_display <= '1' when addr >= X"E000" and addr < X"FE00" else '0';
-  vga_bus_data <= data when cs_display = '1' and we = '1' else X"0000";
+  vga_bus_data <= data when cs_display = '1' and we = '1' else X"FFFF";
+  
   vga_addr <= addr when cs_display = '1' else X"0000";
   
   data <= vga_bus_data when re = '1' and cs_display = '1' 
