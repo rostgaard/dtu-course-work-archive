@@ -5,7 +5,8 @@ use ieee.numeric_std.all;
 entity text_screen_gen is
    port(
       clk, reset, cs: std_logic;
-		bus_data, addr: std_logic_vector(15 downto 0);
+		bus_data: inout std_logic_vector(15 downto 0);
+		addr: in std_logic_vector(15 downto 0);
       video_on: in std_logic;
       pixel_x, pixel_y: in std_logic_vector(9 downto 0);
       text_rgb: out std_logic_vector(2 downto 0)
@@ -40,6 +41,7 @@ architecture arch of text_screen_gen is
             std_logic_vector(2 downto 0);
 				
    signal addr_ram_in : std_logic_vector(11 downto 0);
+	signal ram_data_out : std_logic_vector(6 downto 0);
 				
 begin
    -- instantiate font ROM
@@ -47,13 +49,14 @@ begin
       port map(clk=>clk, addr=>rom_addr, data=>font_word);
 	 
    -- instantiate dual port tile RAM (2^12-by-7)
-   video_ram: entity work.xilinx_dual_port_ram_sync
+   video_ram: entity work.xilinx_dual_port_ram_async
       generic map(ADDR_WIDTH=>12, DATA_WIDTH=>7)
       port map(clk=>clk, we=>we,
                addr_a=>addr_ram_in, addr_b=>addr_r,
-               din_a=>din, dout_a=>open, dout_b=>dout);
+               din_a=>din, dout_a=>ram_data_out, dout_b=>dout);
 					
 	addr_ram_in <= addr(11 downto 0);
+	ram_data_out <= bus_data(6 downto 0);
 
 
    -- registers

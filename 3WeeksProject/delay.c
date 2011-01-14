@@ -17,7 +17,6 @@ void main() {
   printf("%x%x \n",msb,lsb);
 
   msb=0;
-
   }
 }
 

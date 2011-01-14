@@ -8,13 +8,13 @@
 #define WEST  3
 
 
-struct snake_body_t {
+struct snake_body {
   int x;
   int y;
   struct *next;
 }
 
-typedef struct snake_body snake_body_t;
+typedef struct snake_body_t snake_body;
 
 
 struct snake {
