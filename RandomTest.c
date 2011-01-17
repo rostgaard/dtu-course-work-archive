@@ -1,22 +1,21 @@
 #include <stdio.h>
 
-short next = 12323;
+short next = 123;
 
-int main(void) {
+short rand(short limit)
+{
+	short i;
+	next = next * 13 + 7;
+	i = (next/63) % limit;
+	//printf("after limit: %d, next : %d i: %d; mod: %d\n", limit, next, i, i % limit);
+	return i;
+}
 
-	//srand(12323);
-	rand();
-	printf("Random value: %d",next);
+
+int main(void) 
+{
+	short limit = 80;
+	short result = rand(limit);
+	printf("Random value: %d", result);
 	return 0;
-}
-
-short rand(void)
-{
-	next = next * 11034 + 135;
-	return (short)(next/636)%328;
-}
-
-void srand(short seed)
-{
-	next = seed;
 }
