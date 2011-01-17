@@ -7,6 +7,7 @@ short *btn_reg = (short *) 0xfe0eu;
 short *sseg_reg = (short *) 0xfe12u;
 short *led_reg = (short *) 0xfe16u;
 
+
 void clear_screen() {
 	short row = 0;
 	short colum = 0;	
@@ -28,6 +29,7 @@ short get_symbol_at(short x, short y) {
 	return *(vid_mem_base+(SCREEN_WIDTH*y)+x);
 }
 
+
 void main () {
 
 	short disp = 0;
@@ -36,12 +38,13 @@ void main () {
 
 	while(1) {
 		//symbol_at(2, 2, *sw_reg);
-		*(vid_mem_base+1) = 1;
+		scanf("%c");
+		*(vid_mem_base) = *sw_reg;
 		
 		
 		//scanf("%c");
-		*sseg_reg = *(vid_mem_base+1);
+		*led_reg = *(vid_mem_base);
+		printf("%d",*(vid_mem_base));
 		//printf("%x",disp);
 	}
-
 }

@@ -108,8 +108,6 @@ begin
          text_rgb <= "000"; --blank
       else
          if cursor_on='1' then
-            text_rgb <= font_rev_rgb;
-         else
             text_rgb <= font_rgb;
          end if;
       end if;

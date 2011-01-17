@@ -12,10 +12,10 @@ entity vga_test is
   port(
   
     led: out std_logic_vector(7 downto 0);
-    clk: in std_logic;
+    clk,btn: in std_logic;
     LEDG: out std_logic;
 	 reset: in std_logic;
-    we: in std_logic; -- Write and read enable
+    --we: in std_logic; -- Write and read enable
 	 sw: in std_logic_vector(7 downto 0);
     hsync, vsync: out std_logic;
     rgb: out std_logic_vector(2 downto 0)
@@ -33,6 +33,7 @@ architecture beh_arch of vga_test is
    signal vga_addr: std_logic_vector(15 downto 0);
 
 	signal we_display: std_logic;
+	signal we: std_logic;
 begin
   -- Display specific
   -- When using a 100Mhz clock
@@ -55,7 +56,7 @@ begin
 		bus_data => vga_bus_data ,
                video_on=>video_on, pixel_x=>pixel_x,
                pixel_y=>pixel_y, text_rgb=>rgb_next);
-					
+
    -- rgb buffer
    process (clk)
    begin
@@ -67,14 +68,17 @@ begin
    end process;
    rgb <= rgb_reg;
 	
+	we <= sw(7);
 	
-	we_display <= sw(7);
+	
+	we_display <= btn;
 
   -- Display chip select
   vga_bus_data <= "000000000" & sw(6 downto 0) when we = '1';
-  vga_addr <= X"0001";
+  vga_addr <= X"0008";
   
-  led <= vga_bus_data(7 downto 0) when we = '0' else X"00";
+  led(7) <= btn;
+  led(6 downto 0) <= vga_bus_data(6 downto 0) when we = '0' else "000" & X"0";
 
   LEDG <= '1';
 end beh_arch;

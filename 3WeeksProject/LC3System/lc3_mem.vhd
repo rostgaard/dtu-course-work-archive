@@ -353,6 +353,7 @@ others => X"0000"
    signal scaled_clk: std_logic;
    signal vga_bus_data: std_logic_vector(15 downto 0);
    signal vga_addr: std_logic_vector(15 downto 0);
+	signal we_display: std_logic;
   
 begin
 
@@ -373,11 +374,11 @@ begin
 
 
   -- Display specific
-   -- When using a 100Mhz clock
-   clk_scaler: entity work.mod_m_counter(arch)
-      generic map(M=>2, N=>2)
-      port map(clk=>clk, reset=>reset,
-               q=>open, max_tick=>scaled_clk);
+  -- When using a 100Mhz clock
+  clk_scaler: entity work.mod_m_counter(arch)
+     generic map(M=>2, N=>2)
+     port map(clk=>clk, reset=>reset,
+              q=>open, max_tick=>scaled_clk);
 
    -- instantiate VGA sync circuit
    vga_sync_unit: entity work.vga_sync
@@ -389,11 +390,12 @@ begin
    -- instantiate full-screen text generator
    text_gen_unit: entity work.text_screen_gen
       port map(clk=>clk, reset=>reset, --btn=>btn, 
-		addr=>vga_addr, cs=>cs_display,
-		bus_data => vga_bus_data ,
+		addr=>addr, we=>we_display,
+		bus_data_in => data,
+		bus_data_out => vga_bus_data ,
                video_on=>video_on, pixel_x=>pixel_x,
                pixel_y=>pixel_y, text_rgb=>rgb_next);
-					
+
    -- rgb buffer
    process (clk)
    begin
@@ -404,13 +406,12 @@ begin
       end if;
    end process;
    rgb <= rgb_reg;
-
+	
   -- Display chip select
   cs_display <= '1' when addr >= X"E000" and addr < X"FE00" else '0';
-  vga_bus_data <= data when cs_display = '1' and we = '1' else X"FFFF";
-  
-  vga_addr <= addr when cs_display = '1' else X"0000";
-  
+  we_display <= '1' when cs_display = '1' and we = '1' else '0';
+
+  -- Tri state for display
   data <= vga_bus_data when re = '1' and cs_display = '1' 
     else (others => 'Z');
 
