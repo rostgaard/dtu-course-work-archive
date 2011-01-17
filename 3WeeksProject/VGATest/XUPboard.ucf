@@ -45,10 +45,10 @@ NET "sw<7>"	LOC = "N4";
 #	Buttons on DIO4
 #######################################
 # Defined as single scalars
-NET "btn<0>"	LOC = "P3"; #BTN1
-NET "btn<1>"	LOC = "P2";
-NET "btn<2>"	LOC = "W3";
-NET "btn<3>"	LOC = "V8";
+#NET "btn<0>"	LOC = "P3"; #BTN1
+#NET "btn<1>"	LOC = "P2";
+#NET "btn<2>"	LOC = "W3";
+#NET "btn<3>"	LOC = "V8";
 NET "reset"	LOC = "AA1";
 
 # Defined as a vector called BTN
@@ -73,16 +73,16 @@ NET "reset"	LOC = "AA1";
 #NET "LED8"	LOC = "V6";
 
 # Defined as a vector called LED
-#NET "LED<0>"	LOC = "T8";
-#NET "LED<1>"	LOC = "U5";
-#NET "LED<2>"	LOC = "W2";
-#NET "LED<3>"	LOC = "U9";
-#NET "LED<4>"	LOC = "V4";
-#NET "LED<5>"	LOC = "Y1";
-#NET "LED<6>"	LOC = "U8";
-#NET "LED<7>"	LOC = "V6";
+NET "led<0>"	LOC = "T8";
+NET "led<1>"	LOC = "U5";
+NET "led<2>"	LOC = "W2";
+NET "led<3>"	LOC = "U9";
+NET "led<4>"	LOC = "V4";
+NET "led<5>"	LOC = "Y1";
+NET "led<6>"	LOC = "U8";
+NET "led<7>"	LOC = "V6";
 
-#NET "LEDG"	LOC = "V7";
+NET "LEDG"	LOC = "V7";
 
 #######################################
 #	7 Segment on DIO4
