@@ -5,10 +5,12 @@
 #define NUM_ROWS 10
 
 //Macro Direction
+#define NONE 0x0000u
 #define RIGHT 0x0001u
 #define LEFT 0x0002u
 #define UP 0x0004u
 #define DOWN 0x0008u
+
 //Macro Boolean
 #define TRUE 1
 #define FALSE 0
@@ -44,7 +46,8 @@ struct tile_t;
 
 struct tile {
     short content;
-    struct tile *next;
+    //struct tile *next;
+    short previous_tile;
     short *vid_mem_ptr;
 };
 
@@ -89,8 +92,8 @@ void wait() {
 void initialize_snake(snake_t *snake) {
     //Snake->length = 1;
     snake->score = 0;
-    snake->x = 10;
-    snake->y = 10;
+    snake->x = 5;
+    snake->y = 5;
     snake->direction = RIGHT;
     snake->full = FALSE;
     snake->length = 3;
@@ -116,28 +119,72 @@ void place_food(tile_t lvl[NUM_ROWS][NUM_COLS]) {
  * @param snake The snake to be updated
  */
 void update_snake(snake_t *snake, tile_t lvl[NUM_ROWS][NUM_COLS]) {
+    tile_t *head_tile = &(lvl[snake->y][snake->x]);
+
     if (snake->direction == RIGHT) {
         if (snake->x == NUM_COLS - 2)
             snake->x = 1;
         else
             snake->x++;
+
+        lvl[snake->y][snake->x].previous_tile = LEFT;
+
     } else if (snake->direction == LEFT) {
         if (snake->x == 1)
             snake->x = NUM_COLS - 2;
         else
             snake->x--;
+
+        lvl[snake->y][snake->x].previous_tile = RIGHT;
+
     } else if (snake->direction == UP) {
         if (snake->y == 1)
             snake->y = NUM_ROWS - 2;
         else
             snake->y--;
+
+        lvl[snake->y][snake->x].previous_tile = DOWN;
+
     } else if (snake->direction == DOWN) {
         if (snake->y == NUM_ROWS - 2)
             snake->y = 2;
         else
             snake->y++;
+
+        lvl[snake->y][snake->x].previous_tile = UP;
     }
-    lvl->content = SNAKE_HEAD;
+    // Find the tail
+    int i;
+    for (i = 1; i <= snake->length; i++) {
+        // Last tile reached
+        if (head_tile->previous_tile != NONE) {
+            head_tile->content = SNAKE_BODY;
+            if (head_tile->previous_tile == UP) {
+                head_tile = &(lvl[snake->y + i][snake->x]);
+            }
+            if (head_tile->previous_tile == DOWN) {
+                head_tile = &(lvl[snake->y - i][snake->x]);
+            }
+            if (head_tile->previous_tile == LEFT) {
+                head_tile = &(lvl[snake->y][snake->x - i]);
+            }
+            if (head_tile->previous_tile == RIGHT) {
+                head_tile = &(lvl[snake->y + i][snake->x + i]);
+            }
+        }
+    }
+    if (snake->full) {
+        snake->full = FALSE;
+        snake->length++;
+    } else
+        head_tile->content = EMPTY;
+
+
+
+    lvl[snake->y][snake->x].content = SNAKE_HEAD;
+
+
+
 }
 
 void dump_level(tile_t lvl[NUM_ROWS][NUM_COLS]) {
@@ -160,26 +207,33 @@ void init_level(tile_t lvl[NUM_ROWS][NUM_COLS]) {
             else
                 lvl[row][col].content = EMPTY;
         }
+        lvl[row][col].previous_tile = NONE;
     }
 }
 
 void main() {
     snake_t snake;
     tile_t level[NUM_ROWS][NUM_COLS];
+    int rng = 0;
 
-    int x = 0;
-    int y = 0;
 
     init_level(level);
 
-    initialize_snake(&snake, level);
+    initialize_snake(&snake);
 
     while (1) {
+        rng++;
+        if (!(rng % 3)) {
+            rng = 0;
+            snake.full = TRUE;
+        }
+
+
         //If nothing is eaten, move the old tail
-        update_snake(&snake);
+        update_snake(&snake, level);
 
         dump_level(level);
-        sleep(2);
+        sleep(1);
 
     }
 
@@ -204,7 +258,7 @@ void main() {
 
     //Game update loop
     while (1) {
-        *sseg_reg = snake.direction;
+ *sseg_reg = snake.direction;
 
         old_x = snake.x;
         old_y = snake.y;
@@ -243,4 +297,4 @@ void main() {
         sleep(2);
     }
 }
-*/
+ */
