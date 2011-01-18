@@ -20,20 +20,22 @@ Morten Hillebo (s072923)
        \email{s072923@student.dtu.dk}
 }
 
-
 \maketitle
 
 \begin{abstract}
 %Abstract; A brief summary of all of the report including the conclusion section
 %but excluding the acknowledgements, references and any appendixes.
-
+This project will cover the implementations of the LC-3 computer and the classic video game Snake to a FPGA-board. 
+The goal though out the project has been to implement all aspects of the computer and the video game on the FPGA-board so no help was needed by additional computer resources.
 \end{abstract}
 
 \section{Introduction}
 \label{sec:introduction}
-This project is about making a snake game that runs on the LC3 processor.
-%TODO explain what the snake game is - briefly
 
+%TODO explain what the snake game is - briefly
+The video snake game was first released in the mid 1970's and has since become a true video game classic. The game play involves navigating a snake looking thing around on the screen in search for food, that will make the snake gain body length and increment the game score. 
+The walls and hurdles in the play area will cause the snake to die if they collide.
+This project is about developing and implementing the snake game on the LC3 processor. 
 %ACKNOWLEDGMENTS are optional
 %\section{Acknowledgments}
 %\input{acknowledgements.tex}
@@ -41,6 +43,28 @@ This project is about making a snake game that runs on the LC3 processor.
 
 %References; A list of reference material used. All material must be cited in the
 %text.
+\section{Requirement specification}
+The snake game requirement specification will be split in two sections, the minimal game implementation and the enhancements. 
+
+\subsection{Minimal implementation}
+The minimal implementation requirements was specified as below in arbitrary order.    
+\begin{itemize}
+\item Basic game logic (snake control, food consumption and growth)
+\item Snake control via serial console 
+\item Basic game display (level and snake by blocks) 
+\item Simple levels
+\end{itemize}
+
+\subsection{Enhancements}
+For the enhancements following improvement was specified also in arbitrary order.
+\begin{itemize}
+\item Control by the keyboard on the LC3 board 
+\item Enhanced game display (sprites instead of blocks) 
+\item Enhance game play various objects (power-ups)  
+\item Complex levels with obstacles
+\item Multi player functionality 
+\end{itemize}
+
 \section{Design}
 There are many different options when it comes to the implementation of the game. The game can, for instance, run partially on a PC or completely on the LC3 - we have aimed for the latter.
 \subsection{Memory mapping}
@@ -87,6 +111,16 @@ Citations: \cite{patt2000introduction} \cite{chu2008fpga}
 %
 %APPENDICES are optional
 
+\section{Report distribution}
+Kim Rostgaard Christensen
+\begin{itemize}
+\item stuff
+\end{itemize}
+
+Morten Hillebo
+\begin{itemize}
+\item stuff
+\end{itemize}
 
 %Appendixes; Appendixes holds, for example, results or figures that are not
 %relevant to place in the body of the report. Appendixes should generally be
