@@ -31,6 +31,8 @@ Morten Hillebo (s072923)
 
 \section{Introduction}
 \label{sec:introduction}
+This project is about making a snake game that runs on the LC3 processor.
+%TODO explain what the snake game is - briefly
 
 %ACKNOWLEDGMENTS are optional
 %\section{Acknowledgments}
@@ -39,8 +41,9 @@ Morten Hillebo (s072923)
 
 %References; A list of reference material used. All material must be cited in the
 %text.
-
-\section{Memory mapping}
+\section{Design}
+There are many different options when it comes to the implementation of the game. The game can, for instance, run partially on a PC or completely on the LC3 - we have aimed for the latter.
+\subsection{Memory mapping}
 In order to provide access to the various I/O devices available to the processor, an interface is needed. This is in the form of a memory map, where certain areas of the memory is significant - or reserved. As the name would suggest, these areas are mapped onto the registers of the corresponding devices. A list of the I/O mappings can be found in table \ref{table:io_mappings}
 
 \begin{table}[h]
@@ -49,6 +52,7 @@ In order to provide access to the various I/O devices available to the processor
     \hline
      Register & Memory address \\ \hline 
     \hline
+    Video memory           & xE000  \\ \hline
     Stdin Status Register  & xFE00  \\ \hline
     Stdin Data Register    & xFE02  \\ \hline
     Stdout Status Register & xFE04  \\ \hline
@@ -61,6 +65,8 @@ In order to provide access to the various I/O devices available to the processor
 \caption{I/O mappings of the LC3}
 \label{table:io_mappings}
 \end{table}
+Notice that the video memory is not a single address, but an address range. The first incarnation of the video memory used a classical write-only memory, but it became apparent when software was written that this was impractical in regards of house keeping. We realized that we could use the benefit of having complete control of the system to simply to software implementation. This became the birth of the hardware game model.
+\subsubsection{Hardware game model}
 
 Citations: \cite{patt2000introduction} \cite{chu2008fpga}
 
