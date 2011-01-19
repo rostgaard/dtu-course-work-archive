@@ -26,8 +26,6 @@
 #define btn_reg (short *) 0xfe0eu
 #define sseg_reg (short *) 0xfe12u
 #define led_reg (short *) 0xfe16u
-    static unsigned short tick_lsb = 0;
-    static unsigned short tick_msb = 0;
 
 typedef struct snake_body snake_body_t;
 struct tile_t;
@@ -56,6 +54,12 @@ struct tile {
 
 typedef struct tile tile_t;
 
+
+// Globals. Should really be local to wait() , but is here due to compiller
+static unsigned short tick_lsb = 0;
+static unsigned short tick_msb = 0;
+
+
 void clear_screen() {
     short row = 0;
     short colum = 0;
@@ -73,7 +77,9 @@ void symbol_at(short x, short y, short c) {
     *(vid_mem_base + (SCREEN_WIDTH * y) + x) = c;
 }
 
-
+void send_score(snake_t *snake) {
+	printf("%x\n",snake->score);
+}
 
 // Wait primitive that occupies the CPU for a fixed number of cycles - should be converted to assembler for better timing control
 
@@ -184,6 +190,8 @@ void update_snake(snake_t *snake, tile_t lvl[NUM_ROWS][NUM_COLS]) {
 	}
 		if(!snake->alive) {
 			*((lvl[snake->y][snake->x]).vid_mem_ptr) = SNAKE_HEAD_DEAD;
+			// Send the score
+			send_score(snake);
 		} else {
 			*((lvl[snake->y][snake->x]).vid_mem_ptr) = SNAKE_HEAD+snake->direction;
 		}
