@@ -67,6 +67,9 @@ For the enhancements following improvement was specified also in arbitrary order
 
 \section{Design}
 There are many different options when it comes to the implementation of the game. The game can, for instance, run partially on a PC or completely on the LC3 - we have aimed for the latter.
+\subsection{The game map}
+For the game map, a matrix, in the form of a two-dimensional array is suitable. Every element of the map can be looked up by an x and y coordinate corresponding to their array indexes. The single element of the map is modelled as a tile that holds the value of this tile and other information discussed later.
+
 \subsection{Memory mapping}
 In order to provide access to the various I/O devices available to the processor, an interface is needed. This is in the form of a memory map, where certain areas of the memory is significant - or reserved. As the name would suggest, these areas are mapped onto the registers of the corresponding devices. A list of the I/O mappings can be found in table \ref{table:io_mappings}
 
@@ -90,9 +93,26 @@ In order to provide access to the various I/O devices available to the processor
 \label{table:io_mappings}
 \end{table}
 Notice that the video memory is not a single address, but an address range. The first incarnation of the video memory used a classical write-only memory, but it became apparent when software was written that this was impractical in regards of house keeping. We realized that we could use the benefit of having complete control of the system to simply to software implementation. This became the birth of the hardware game model.
+
 \subsubsection{Hardware game model}
 
+\subsection{Dynamic snake growth}
+In order to keep track of the growth and location of the snake a clever design was found. For the snake, a linked list data structure would be used to keep track of the length and positions of the body elements. The update was now just a matter of going to the last element of the list and remove this.\\
+Unfortunately, this design had one major flaw - no dynamic memory allocation is available on the LC-3. This is a show stopper as the linked list data structure requires a malloc call to be present on the system.\\
+A different and more static approach was needed.
+\subsection{(Static) Dynamic snake growth}
+To emulate the behaviour of the linked list, every tile of the tilemap is equipped with a reference to the next element in a sequence, or null if no other element is linked to it. This takes up more memory (the size of a pointer multiplied by the number of elements in the map) but enables us to theoretically link every tile in the map to another tile.
+
 Citations: \cite{patt2000introduction} \cite{chu2008fpga}
+
+\section{Discussion}
+
+\subsection{Implementation issues}
+
+\subsection{Hardware game model}
+The use of the video ram for storing the hardware game model is a decision based on the fact that we are in complete control of the system, and no other processes or programs is run besides the game.\\\\
+Video memory is usually synchronized from a software model, which our first implementation also was. Video memory a usually considered more volatile than system ram, as these belong to you once you have allocated it - at least on most operating systems.
+
 
 \appendix
 
@@ -110,6 +130,7 @@ Citations: \cite{patt2000introduction} \cite{chu2008fpga}
 % ACM needs 'a single self-contained file'!
 %
 %APPENDICES are optional
+\section{Known bugs}
 
 \section{Report distribution}
 Kim Rostgaard Christensen
