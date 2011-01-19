@@ -14,10 +14,10 @@
 //Macro Boolean
 #define TRUE 1
 #define FALSE 0
-#define WALL 0x0008u
-#define FOOD 0x0007u
+#define WALL 0x0005u
+#define FOOD 0x0004u
 #define EMPTY 0x0000u
-#define SNAKE_HEAD 0x0001u
+#define SNAKE_HEAD 0x0006u
 #define SNAKE_BODY 0x0002u
 #define SNAKE_HEAD_DEAD 0x0003u
 
@@ -185,7 +185,7 @@ void update_snake(snake_t *snake, tile_t lvl[NUM_ROWS][NUM_COLS]) {
 		if(!snake->alive) {
 			*((lvl[snake->y][snake->x]).vid_mem_ptr) = SNAKE_HEAD_DEAD;
 		} else {
-			*((lvl[snake->y][snake->x]).vid_mem_ptr) = SNAKE_HEAD;
+			*((lvl[snake->y][snake->x]).vid_mem_ptr) = SNAKE_HEAD+snake->direction;
 		}
 	
 }
