@@ -1,7 +1,7 @@
 #include <stdio.h>
 #define SCREEN_WIDTH 128 // The number of chars on the screen (48 is offscreen)
-#define NUM_COLS 40      // The number of colums in the level (y coordinate)
-#define NUM_ROWS 20      // The number of rows in the level (x coordinate)
+#define NUM_COLS 60      // The number of colums in the level (y coordinate)
+#define NUM_ROWS 25      // The number of rows in the level (x coordinate)
 
 // The different directions
 #define NONE 0x0000u
@@ -39,7 +39,7 @@ struct snake {
     short direction; // Head Direction
     short alive;
     short score;
-    short full; //Has the snake eaten anything?
+    short full; //Has the snake eaten anything this round?
     short length;
 };
 
