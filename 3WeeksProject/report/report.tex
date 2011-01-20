@@ -68,10 +68,10 @@ For the enhancements following improvement was specified also in arbitrary order
 \section{Design}
 There are many different options when it comes to the implementation of the game. The game can, for instance, run partially on a PC or completely on the LC3 - we have aimed for the latter.
 \subsection{The game map}
-For the game map, a matrix, in the form of a two-dimensional array is suitable. Every element of the map can be looked up by an x and y coordinate corresponding to their array indexes. The single element of the map is modelled as a tile that holds the value of this tile and other information discussed later.
+For the game map a matrix, in the form of a two-dimensional array, is suitable. Every element of the map can be looked up by an x and y coordinate corresponding to their array indexes. The single element of the map is modelled as a tile that holds the value of this tile and other information which will be discussed later.
 
 \subsection{Memory mapping}
-In order to provide access to the various I/O devices available to the processor, an interface is needed. This is in the form of a memory map, where certain areas of the memory is significant - or reserved. As the name would suggest, these areas are mapped onto the registers of the corresponding devices. A list of the I/O mappings can be found in table \ref{table:io_mappings}
+In order to provide access from the programming language to the various I/O devices available, an interface is needed. This is in the form of a memory map, where certain areas of the memory is significant - or reserved. As the name would suggest, these memory areas are mapped onto the registers of the corresponding devices. A list of the I/O mappings can be found in table \ref{table:io_mappings} and \cite{patt2000introduction}
 
 \begin{table}[h]
 \centering
@@ -92,9 +92,14 @@ In order to provide access to the various I/O devices available to the processor
 \caption{I/O mappings of the LC3}
 \label{table:io_mappings}
 \end{table}
-Notice that the video memory is not a single address, but an address range. The first incarnation of the video memory used a classical write-only memory, but it became apparent when software was written that this was impractical in regards of house keeping. We realized that we could use the benefit of having complete control of the system to simply to software implementation. This became the birth of the hardware game model.
-
+Notice that the video memory is not a single address, but an address range up to the address before the stdin register.\\
+The first design of the video memory used a classical write-only memory, but it became apparent when software was written that this was impractical in regards of house keeping. We realized that we could use the benefit of having complete control of the system to simply to software implementation. This became the birth of the hardware game model.
 \subsubsection{Hardware game model}
+The hardware game model is a somewhat lazy approach that takes advantage of the fact that the game is the only thing running on the computer.\\
+It works by mapping the "content" of the tile to a memory location corresponding to the tile on the screen. It then changes from a value that has to be synced to video memory, to a pointer that has to have its value updated only once at every game update.\\\\
+This of course requires that we must be able to also read from video memory. For this purpose, dual ported asynchronous ram\cite{chu2008fpga} is used for video memory. There is no complications with using asynchronous memory, as we only either read or write at one cycle. On the other hand, synchronous memory should also be safe to use, as a processor read operation takes two cycles, effectively putting the data on the bus in time for the value to be read during the second cycle. The only real difference is that the asynchronous memory uses one less register on the FPGA.
+
+%Todo, drawing of the video memory
 
 \subsection{Dynamic snake growth}
 In order to keep track of the growth and location of the snake a clever design was found. For the snake, a linked list data structure would be used to keep track of the length and positions of the body elements. The update was now just a matter of going to the last element of the list and remove this.\\
@@ -102,8 +107,6 @@ Unfortunately, this design had one major flaw - no dynamic memory allocation is 
 A different and more static approach was needed.
 \subsection{(Static) Dynamic snake growth}
 To emulate the behaviour of the linked list, every tile of the tilemap is equipped with a reference to the next element in a sequence, or null if no other element is linked to it. This takes up more memory (the size of a pointer multiplied by the number of elements in the map) but enables us to theoretically link every tile in the map to another tile.
-
-Citations: \cite{patt2000introduction} \cite{chu2008fpga}
 
 \section{Discussion}
 
@@ -131,6 +134,18 @@ Video memory is usually synchronized from a software model, which our first impl
 %
 %APPENDICES are optional
 \section{Known bugs}
+This section contains the bugs that we have identified, their severity and their status.
+\subsection{Initial snake tail inconsistent}
+When starting a new game, either at machine reset or when the snake dies, the tail follows an inconsistent linking leaving blank spaces for the first few game cycles. This is probably due to a bug in the way the snake body is generated in the "initialize\_snake" function.\\
+The game works and renders fine after the first three cycles, and the bug does not affect gameplay.\\\\
+Severity: Negligible\\
+Status: Not fixed
+
+\subsection{Snake stops on invalid button input}
+When the user presses the btn5 or more than one button at once, the snake stops updating and the head becomes the tile rom index corresponding to the binary input on the buttons. The snake and the game continues if a valid button is pressed, but the graphics are incorrectly updated for the body elements.\\
+This bug affects gameplay and is more severe as players often by accident press more than one button.\\\\
+Severity: Important\\
+Status: Not fixed
 
 \section{Report distribution}
 Kim Rostgaard Christensen
