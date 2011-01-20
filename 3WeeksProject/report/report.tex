@@ -157,14 +157,15 @@ To emulate the behaviour of the linked list, every tile of the tilemap is equipp
 
 \section{Discussion}
 This section discusses some of the aspects of the design choices.
-\subsection{Game control}
-The LC-3 was implemented fully functional for the purpose of running the minimum implementation of the snake game.
-The Snake game itself is running functionally to its minimum requirements, but the game is not really that fun to play. 
-It's hard to navigate the snake on the DIO-4 board buttons, it has limitations in score, random food placement and max level.
-These inconvenient missing functionalities makes the game rather dull. More time, man power or focus on the game implementation instead of the LC-3 and these functionalities might have been implemented to heighten the game experience.
-The next enhancement planed for the LC-3 should be the possibility to use the keyboard, that would make it easier to navigate the snake.
-The next enhancement for the game logic should be increasing game speed, random food placement and a higher max score.
+
+\subsection{The game}
+The Snake game itself is running functionally to its minimum requirements. 
+It has some limitations in max score, random food placement and max level.
+More time, man power or focus on the game implementation instead of the LC-3 and these functionalities might have been implemented to heighten the game experience.
+%The next enhancement for the game logic should be increasing game speed, random food placement and a higher max score.
+
 \subsection{Hardware game model}
+The LC-3 was implemented fully functional for the purpose of running the minimum implementation of the snake game.
 The use of the video ram for storing the hardware game model is a decision based on the fact that we are in complete control of the system, and no other processes or programs is run besides the game.\\\\
 Video memory is usually synchronized from a software model, which our first implementation also was. Video memory a usually considered more volatile than system ram, as these belong to you once you have allocated it - at least on most operating systems.
 
