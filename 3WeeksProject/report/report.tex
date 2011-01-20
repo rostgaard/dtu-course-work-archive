@@ -52,18 +52,17 @@ This project is about developing and implementing the snake game on the LC3 proc
 The snake game requirement specification is split in two sections. The minimal implementations which is the logic needed to call the implementation a snake video game and enhancement implementations that is added visual or game logic to make the game play better. 
 
 \subsection{Minimal implementation}
-The minimal implementation requirements involves the basic elements and features of the game. The area where the snake can move around in will be contained within a perimeter marked with wall elements.  The Snake will have two basic elements a head and body elements, where the body elements must follow the snake's head. When the snake head collides with the wall or a snake body element the snake will die. Food elements will be placed within the wall perimeter and if the snake head is navigated to a food element the snake will "consume" the food element and it's body element is incremented resulting in an increment of the snake length. The navigation of the snake is done directly on the DIO4 button using button 1 to 4. 
+The minimal implementation requirements involves the basic elements and features of the game. The area where the snake can move around in will be contained within a perimeter marked with wall elements.  The Snake will have two basic elements a head and body elements, where the body elements must follow the snake's head. When the snake head collides with the wall or a snake body element the snake will die. Food elements will be placed within the wall perimeter and if the snake head is navigated to a food element the snake will "consume" the food element and it's body element is incremented resulting in an increment of the snake length and the game score. The navigation of the snake is done directly on the DIO4 button using button 1 to 4.  
 
- 
-\begin{itemize}
+%\begin{itemize}
 %\item Basic game logic (snake control, food consumption and growth)
-\item Snake control via serial console 
-\item Basic game display (level and snake by blocks) 
-\item Simple levels
-\end{itemize}
+%\item Basic game display (level and snake by blocks) 
+%\item Simple levels
+%\end{itemize}
 
 \subsection{Enhancements}
-For the enhancements following improvement was specified also in arbitrary order.
+For the game and LC-3 computer enhancement the following implementations was thought of. 
+
 \begin{itemize}
 \item Keyboard navigation on the board 
 \item Enhanced game display (sprites instead of blocks) 
