@@ -1,7 +1,6 @@
 %build with pdflatex to include frontpage
 
 % This is the main report file
-
 \documentclass{acm_proc_article-sp}
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
@@ -19,14 +18,14 @@
 Kim Rostgaard Christensen\\
        \email{s084283@student.dtu.dk}
 \alignauthor 
-Morten Hillebo (s072923)
+Morten Hillebo
        \email{s072923@student.dtu.dk}
 }
 
 %formal frontpage
 \includepdf{frontpage.pdf}
 
-\maketitle
+%\maketitle
 
 \begin{abstract}
 %Abstract; A brief summary of all of the report including the conclusion section
@@ -50,12 +49,14 @@ This project is about developing and implementing the snake game on the LC3 proc
 %References; A list of reference material used. All material must be cited in the
 %text.
 \section{Requirement specification}
-The snake game requirement specification will be split in two sections, the minimal game implementation and the enhancements. 
+The snake game requirement specification is split in two sections. The minimal implementations which is the logic needed to call the implementation a snake video game and enhancement implementations that is added visual or game logic to make the game play better. 
 
 \subsection{Minimal implementation}
-The minimal implementation requirements was specified as below in arbitrary order.    
+The minimal implementation requirements involves the basic elements and features of the game. The area where the snake can move around in will be contained within a perimeter marked with wall elements.  The Snake will have two basic elements a head and body elements, where the body elements must follow the snake's head. When the snake head collides with the wall or a snake body element the snake will die. Food elements will be placed within the wall perimeter and if the snake head is navigated to a food element the snake will "consume" the food element and it's body element is incremented resulting in an increment of the snake length. The navigation of the snake is done directly on the DIO4 button using button 1 to 4. 
+
+ 
 \begin{itemize}
-\item Basic game logic (snake control, food consumption and growth)
+%\item Basic game logic (snake control, food consumption and growth)
 \item Snake control via serial console 
 \item Basic game display (level and snake by blocks) 
 \item Simple levels
@@ -64,7 +65,7 @@ The minimal implementation requirements was specified as below in arbitrary orde
 \subsection{Enhancements}
 For the enhancements following improvement was specified also in arbitrary order.
 \begin{itemize}
-\item Control by the keyboard on the LC3 board 
+\item Keyboard navigation on the board 
 \item Enhanced game display (sprites instead of blocks) 
 \item Enhance game play various objects (power-ups)  
 \item Complex levels with obstacles
@@ -115,12 +116,29 @@ A different and more static approach was needed.
 To emulate the behaviour of the linked list, every tile of the tilemap is equipped with a reference to the next element in a sequence, or null if no other element is linked to it. This takes up more memory (the size of a pointer multiplied by the number of elements in the map) but enables us to theoretically link every tile in the map to another tile.
 
 \section{Discussion}
-
+The LC-3 was implemented fully functional for the purpose of running the minimum implementation of the snake game.
+The Snake game itself is running functionally to its minimum requirements, but the game is not really that fun to play. 
+It's hard to navigate the snake on the DIO-4 board buttons, it has limitations in score, random food placement and max level.
+These inconvenient missing functionalities makes the game rather dull. More time, man power or focus on the game implementation instead of the LC-3 and these functionalities might have been implemented to heighten the game experience.
+The next enhancement planed for the LC-3 should be the possibility to use the keyboard, that would make it easier to navigate the snake.
+The next enhancement for the game logic should be increasing game speed, random food placement and a higher max score.
 \subsection{Implementation issues}
 
 \subsection{Hardware game model}
 The use of the video ram for storing the hardware game model is a decision based on the fact that we are in complete control of the system, and no other processes or programs is run besides the game.\\\\
 Video memory is usually synchronized from a software model, which our first implementation also was. Video memory a usually considered more volatile than system ram, as these belong to you once you have allocated it - at least on most operating systems.
+
+\section{Conclusion}
+The Snake game and the LC-3 has been implemented successfully on the FPGA-board and the game can now be run on the board without help from additional computer resources. 
+The implementations of LC-3 I/O components in VHDL has been a hard learning curve but well worth the time.
+It would have been great with better debugging tools and maybe a bit more practise in bus and memory mapping related VHDL implementations.
+The Snake game logic has some flaws and could have been more graphically illustrative, but with the given time and the two man group size we feel good about our game implementation reaching its minimum implementation requirements and solely running on the FPGA. 
+
+
+%If you met the reader at a meeting six months from now, what do you want them to remember about your paper? 
+%Refer back to problem posed, and describe the conclusions that you reached from carrying out this investigation, summarize new observations, new interpretations, and new insights that have resulted from the present work.
+%Include the broader implications of your results. 
+%Do not repeat word for word the abstract, introduction or discussion.
 
 
 \appendix
@@ -139,6 +157,15 @@ Video memory is usually synchronized from a software model, which our first impl
 % ACM needs 'a single self-contained file'!
 %
 %APPENDICES are optional
+
+\section{User Manual}
+Navigate the snake to food to get points. The more points you get the longer your snake will become and the more difficult it will become to gather food.
+Colliding with the walls or snake body parts will result in death and reset of the game. The snake is navigated by the buttons on the DIO-4 board 
+\includegraphics[scale=0.064]{img/DIO4Buttons.png} 
+
+BTN1 is right, BTN2 left, BTN3 up, BTN4 down and the BTN5 will paus the game. Using pause will cause the snake lay still but when moving it again the snake will shed it tail like a Lizard and the tail will become a hurdle for you the next time you need to pas that area, so be causes in using the pause button.
+The game can be reset at any point by colliding with hurdles or pressing the enter button on the FPGA board.
+
 \section{Known bugs}
 This section contains the bugs that we have identified, their severity and their status.
 \subsection{Initial snake tail inconsistent}
