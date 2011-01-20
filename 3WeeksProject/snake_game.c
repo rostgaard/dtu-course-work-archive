@@ -54,8 +54,8 @@ typedef struct tile tile_t;
 
 
 // Globals. Should really be local to wait() , but is here due to compiller
-static unsigned short tick_lsb = 0;
-static unsigned short tick_msb = 0;
+//static unsigned short tick_lsb = 0;
+//static unsigned short tick_msb = 0;
 
 /**
  * Empties the entire screen - obviously
@@ -267,7 +267,6 @@ void init_level(tile_t lvl[NUM_ROWS][NUM_COLS]) {
         lvl[row][col].previous_tile_ptr = '\0';
     }
 }
-
 /**
  * Main function. Initialization, Input control, game update loop and game state
  * control

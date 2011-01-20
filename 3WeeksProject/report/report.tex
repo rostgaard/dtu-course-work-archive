@@ -1,8 +1,11 @@
+%build with pdflatex to include frontpage
+
 % This is the main report file
 
 \documentclass{acm_proc_article-sp}
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
+\usepackage{pdfpages}
 \begin{document}
 
 \title{02321 Hardware/Software programming Jan 11}
@@ -19,6 +22,9 @@ Kim Rostgaard Christensen\\
 Morten Hillebo (s072923)
        \email{s072923@student.dtu.dk}
 }
+
+%formal frontpage
+\includepdf{frontpage.pdf}
 
 \maketitle
 
