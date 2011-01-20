@@ -1,6 +1,6 @@
 #include <stdio.h>
 #define SCREEN_WIDTH 128 // The number of chars on the screen (48 is offscreen)
-#define NUM_COLS 60      // The number of colums in the level (y coordinate)
+#define NUM_COLS 50      // The number of colums in the level (y coordinate)
 #define NUM_ROWS 25      // The number of rows in the level (x coordinate)
 
 // The different directions
@@ -22,12 +22,17 @@
 #define SNAKE_BODY 0x0002u
 #define SNAKE_HEAD_DEAD 0x0003u
 
+// Frequency of game update
+#define BASE_FREQ 0x6Fffu
+
 // Various memory mappings
 #define vid_mem_base (short *) 0xe000u
 #define sw_reg (short *) 0xfe0au
 #define btn_reg (short *) 0xfe0eu
 #define sseg_reg (short *) 0xfe12u
 #define led_reg (short *) 0xfe16u
+#define uart_status_reg (short *) 0xfe00u
+#define uart_data_reg (short *) 0xfe02u
 
 typedef struct snake_body snake_body_t;
 struct tile_t;
@@ -54,8 +59,8 @@ typedef struct tile tile_t;
 
 
 // Globals. Should really be local to wait() , but is here due to compiller
-//static unsigned short tick_lsb = 0;
-//static unsigned short tick_msb = 0;
+static unsigned short tick_lsb = 0;
+static unsigned short tick_seed = 0xffffu;
 
 /**
  * Empties the entire screen - obviously
@@ -95,6 +100,7 @@ void send_score(snake_t *snake) {
  * Wait primitive that occupies the CPU for a fixed number of cycles.
  * It should be converted to assembler for better timing control
  */
+ /* Currently unused
 void wait() {
     unsigned short lsb = 0;
     unsigned short msb = 0;
@@ -107,7 +113,7 @@ void wait() {
         msb++;
     }
 }
-
+*/
 /**
  * Function for doing the snake initialization. Used upon new game start
  * @param snake The snake to initialize
@@ -152,11 +158,25 @@ void update_hud(snake_t *snake) {
  * @param lvl
  */
 void place_food(tile_t lvl[NUM_ROWS][NUM_COLS]) {
-    if (*(lvl[11][3].content_ptr) == EMPTY) {
-        *(lvl[11][3].content_ptr) = FOOD;
-    } else if (*(lvl[10][15].content_ptr) == EMPTY) {
-        *(lvl[10][15].content_ptr) = FOOD;
-    }
+	unsigned short row, colum;
+
+	do {
+		row = (rand(NUM_ROWS-2))+1;
+		colum = (rand(NUM_COLS-2))+1;
+		}
+	while(*(lvl[row][colum].content_ptr) != EMPTY );
+	
+	*(lvl[row][colum].content_ptr) = FOOD;
+	printf("Food at %x,%x\n",row,colum);
+}
+
+unsigned short rand(short limit)
+{
+	unsigned short i;
+	tick_seed = tick_seed * 13 + 7;
+	i = (tick_seed/63) % limit;
+//	printf("rand(): after limit: %d, tick_seed : %d i: %d; mod: %d\n", limit,tick_seed, i, i % limit);
+	return i;
 }
 
 /**
@@ -267,6 +287,17 @@ void init_level(tile_t lvl[NUM_ROWS][NUM_COLS]) {
         lvl[row][col].previous_tile_ptr = '\0';
     }
 }
+
+short tick () {
+  tick_lsb++;
+ // if(tick_lsb == 0xffffu) {
+  if(tick_lsb == BASE_FREQ) {
+      tick_lsb = 0;
+	  return 1;
+  }
+  return 0;
+}
+
 /**
  * Main function. Initialization, Input control, game update loop and game state
  * control
@@ -274,7 +305,8 @@ void init_level(tile_t lvl[NUM_ROWS][NUM_COLS]) {
 void main() {
     snake_t snake;
     tile_t level[NUM_ROWS][NUM_COLS];
-
+	short keypressed = FALSE;
+	volatile short new_direction;
     // Initialize
     clear_screen();
     init_level(level);
@@ -283,14 +315,52 @@ void main() {
 
     // Main game loop
     while (1) {
-        if (*btn_reg) {
-            snake.direction = *btn_reg;
+		tick_seed++;
+        if (*btn_reg ) {
+			
+			if(*btn_reg == LEFT) {
+				snake.direction = LEFT;
+			}
+			if(*btn_reg == RIGHT) {
+				snake.direction = RIGHT;
+			}
+			if(*btn_reg == UP) {
+				snake.direction = UP;
+			}
+			if(*btn_reg == DOWN) {
+				snake.direction = DOWN;
+			}
         }
 
-        // This is the actual game
-        update_game_state(&snake, level);
+        if (*uart_status_reg) {
+			new_direction = *uart_data_reg;
+			if(new_direction == 'a') {
+				keypressed = TRUE;
+				snake.direction = LEFT;
+			}
+			if(new_direction == 'd') {
+				keypressed = 1;
+				snake.direction = RIGHT;
+			}
+			if(new_direction == 'w') {
+				keypressed = 1;
+				snake.direction = UP;
+			}
+			if(new_direction == 's') {
+				keypressed = 1;
+				snake.direction = DOWN;
+			}
 
-        wait();
+		
+
+        }
+        // This is the actual game
+		if(tick()) {
+			update_game_state(&snake, level);
+			keypressed = FALSE;
+		}
+
+        //wait();
 
         //Restart game if the snake is dead
         if (!snake.alive) {
