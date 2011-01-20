@@ -31,15 +31,17 @@ Morten Hillebo
 %Abstract; A brief summary of all of the report including the conclusion section
 %but excluding the acknowledgements, references and any appendixes.
 This project will cover the implementations of the LC-3 computer and the classic video game Snake to a FPGA-board. 
-The goal though out the project has been to implement all aspects of the computer and the video game on the FPGA-board so no help was needed by additional computer resources.
+The goal has been to implement all aspects of the computer and the game on the FPGA-board so no help was needed by any additional computer resources.
 \end{abstract}
 
 \section{Introduction}
 \label{sec:introduction}
 
 %TODO explain what the snake game is - briefly
-The video snake game was first released in the mid 1970's and has since become a true video game classic. The game play involves navigating a snake looking thing around on the screen in search for food, that will make the snake gain body length and increment the game score. 
-The walls and hurdles in the play area will cause the snake to die if they collide.
+The video snake game was first released in the mid 1970's and has since become a true video game classic. 
+The game play involves navigating a snake around on the screen in search for food. 
+The food will make the snake gain body length and increment the game score. 
+The walls and eventual hurdles in the play area will cause the snake to die if collided.
 This project is about developing and implementing the snake game on the LC3 processor. 
 %ACKNOWLEDGMENTS are optional
 %\section{Acknowledgments}
@@ -47,7 +49,8 @@ This project is about developing and implementing the snake game on the LC3 proc
 %Acknowledgments; Acknowledge any persons important to the work.
 
 \section{Architecture}
-The overall Architecture of the system involves the FPGA that is the "computer" in the system, a PC for programming the FPGA and a monitor for visualising the game that runs on the FPGA. The game navigation controlled by using the buttons 1 to 4 on the DIO4 board connected to the FPGA.
+The overall architecture of the system involves the FPGA that implemented with the LC3 is the "computer" in the system, a PC for programming the FPGA and a monitor for visualising the game that runs on the FPGA. 
+The game navigation is controlled by using the buttons 1 to 4 on the DIO4 board connected to the FPGA.
 
 
 \begin{figure}[h]
@@ -63,10 +66,10 @@ The overall Architecture of the system involves the FPGA that is the "computer" 
 %References; A list of reference material used. All material must be cited in the
 %text.
 \section{Requirement specification}
-The snake game requirement specification is split in two sections. The minimal implementations which is the logic needed to call the implementation a snake video game and enhancement implementations that is added visual or game logic to make the game play better. 
+The snake game requirement specification is split in two sections. The minimal implementations which is the logic needed to call the implementation a snake game and enhancement implementations that  adds visual or game logic to make better game play. 
 
 \subsection{Minimal implementation}
-The minimal implementation requirements involves the basic elements and features of the game. The area where the snake can move around in will be contained within a perimeter marked with wall elements.  The Snake will have two basic elements a head and body elements, where the body elements must follow the snake's head. When the snake head collides with the wall or a snake body element the snake will die. Food elements will be placed within the wall perimeter and if the snake head is navigated to a food element the snake will "consume" the food element and it's body element is incremented resulting in an increment of the snake length and the game score. The navigation of the snake is done directly on the DIO4 button using button 1 to 4.  
+The minimal implementation requirements involves the basic elements and features of the game. The area where the snake can move around will be contained within a perimeter marked with wall elements. The Snake will have two basic elements, a head and body elements, where the body elements must follow the snake's head. When the snake head collides with the wall or its own body elements the snake will die. Food elements will be placed within the wall perimeter and if the snake is navigated to a food element the snake will "consume" the food element and it's body elements is incremented resulting in an longer snake length and points added to the game score. The navigation of the snake is done directly on the DIO4 button using button 1 to 4.  
 
 %\begin{itemize}
 %\item Basic game logic (snake control, food consumption and growth)
@@ -76,7 +79,8 @@ The minimal implementation requirements involves the basic elements and features
 
 \subsection{Enhancements}
 An enhancement could be to implement a keyboard as the navigation device in the game logic and in the underlying implementation of the LC-3. 
-Visual game enhancements by implementing advanced graphics with more colors, animated sprints and updating the snake and game environment. More complex game levels, snake speed increment and maybe even multi player possibilities. 
+Additional visual game enhancements by implementing advanced graphics with more colors, animated sprints and updating graphic elements of the snake and game environment. 
+More complex game levels, snake speed increment and maybe even multi player possibilities. 
 
 %\begin{itemize}
 %\item Keyboard navigation on the board 
@@ -166,7 +170,7 @@ Video memory is usually synchronized from a software model, which our first impl
 
 
 \section{Conclusion}
-The Snake game and the LC-3 has been implemented successfully on the FPGA-board and the game can now be run on the board without help from additional computer resources. 
+The Snake game and the LC-3 has been implemented successfully on the FPGA-board and the game runs on the board without help from additional computer resources. 
 The implementations of LC-3 I/O components in VHDL has been a hard learning curve but well worth the time.
 It would have been great with better debugging tools and maybe a bit more practise in bus and memory mapping related VHDL implementations.
 The Snake game logic has some flaws and could have been more graphically illustrative, but with the given time and the two man group size we feel good about our game implementation reaching its minimum implementation requirements and solely running on the FPGA. 
