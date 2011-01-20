@@ -49,7 +49,16 @@ This project is about developing and implementing the snake game on the LC3 proc
 \section{Architecture}
 The overall Architecture of the system involves the FPGA that is the "computer" in the system, a PC for programming the FPGA and a monitor for visualising the game that runs on the FPGA. The game navigation controlled by using the buttons 1 to 4 on the DIO4 board connected to the FPGA.
 
-\includegraphics[scale=1]{img/FPGAForRepport.pdf} 
+
+\begin{figure}[h]
+\centering
+%\epsfig{file=fig/system.eps, width=3.0in}
+\includegraphics[scale=0.2]{img/FPGAForRepport.jpg} 
+\caption{System architecture}
+\label{fig:architecture}
+\end{figure}
+
+
 
 %References; A list of reference material used. All material must be cited in the
 %text.
@@ -78,11 +87,31 @@ Visual game enhancements by implementing advanced graphics with more colors, ani
 %\end{itemize}
 
 \section{Design}
-There are many different options when it comes to the implementation of the game. The game can, for instance, run partially on a PC or completely on the LC3 - we have aimed for the latter.
-\subsection{The game map}
-For the game map a matrix, in the form of a two-dimensional array, is suitable. Every element of the map can be looked up by an x and y coordinate corresponding to their array indexes. The single element of the map is modelled as a tile that holds the value of this tile and other information which will be discussed later.
+There are many different options when it comes to the implementation of the game. The game can, for instance, run partially on a PC or completely on the LC3 - we have aimed for the latter.\\\\
+There are two parts of the design; the hardware and the software.
+\subsection{Hardware design}
+The hardware part of the system consists of a black box processor that is connected to a system bus. This bus is then connected to the individual components as shown in figure \ref{fig:system}. 
+\begin{figure}[h]
+\centering
+%\epsfig{file=fig/system.eps, width=3.0in}
+\includegraphics[width=3.5in]{fig/system.pdf}
+\caption{Part of the system design}
+\label{fig:system}
+\end{figure}
+Every individual component connected to the bus has its out port separated from the bus by a tri-state buffer that removes the data from the bus when the enable signal is not asserted.\\\\
 
-\subsection{Memory mapping}
+The devices connected to the bus is currently the following
+\begin{itemize}
+	\item UART
+	\item Main memory
+	\item Custom tile video memory
+	\item Led
+	\item Push buttons
+	\item Input switches
+\end{itemize}
+The tile video memory is the template from \cite{chu2008fpga} with a modified ROM for generating the characters.
+
+\subsubsection{Memory mapping}
 In order to provide access from the programming language to the various I/O devices available, an interface is needed. This is in the form of a memory map, where certain areas of the memory is significant - or reserved. As the name would suggest, these memory areas are mapped onto the registers of the corresponding devices. A list of the I/O mappings can be found in table \ref{table:io_mappings} and \cite{patt2000introduction}
 
 \begin{table}[h]
@@ -105,33 +134,36 @@ In order to provide access from the programming language to the various I/O devi
 \label{table:io_mappings}
 \end{table}
 Notice that the video memory is not a single address, but an address range up to the address before the stdin register.\\
-The first design of the video memory used a classical write-only memory, but it became apparent when software was written that this was impractical in regards of house keeping. We realized that we could use the benefit of having complete control of the system to simply to software implementation. This became the birth of the hardware game model.
+The first design of the video memory used a classical write-only memory, but it became apparent when software was written that this was impractical in regards of house keeping. We realized that we could use the benefit of having complete control of the system to simply to software implementation. This led to the the idea of the hardware game model.
 \subsubsection{Hardware game model}
 The hardware game model is a somewhat lazy approach that takes advantage of the fact that the game is the only thing running on the computer.\\
 It works by mapping the "content" of the tile to a memory location corresponding to the tile on the screen. It then changes from a value that has to be synced to video memory, to a pointer that has to have its value updated only once at every game update.\\\\
 This of course requires that we must be able to also read from video memory. For this purpose, dual ported asynchronous ram\cite{chu2008fpga} is used for video memory. There is no complications with using asynchronous memory, as we only either read or write at one cycle. On the other hand, synchronous memory should also be safe to use, as a processor read operation takes two cycles, effectively putting the data on the bus in time for the value to be read during the second cycle. The only real difference is that the asynchronous memory uses one less register on the FPGA.
 
-%Todo, drawing of the video memory
+\subsection{Software design}
+\subsubsection{The game map}
+For the game map a matrix, in the form of a two-dimensional array, is suitable. Every element of the map can be looked up by an x and y coordinate corresponding to their array indexes. The single element of the map is modelled as a tile that holds the value of this tile and a pointer to a another tile.
 
-\subsection{Dynamic snake growth}
+\subsubsection{Dynamic snake growth}
 In order to keep track of the growth and location of the snake a clever design was found. For the snake, a linked list data structure would be used to keep track of the length and positions of the body elements. The update was now just a matter of going to the last element of the list and remove this.\\
 Unfortunately, this design had one major flaw - no dynamic memory allocation is available on the LC-3. This is a show stopper as the linked list data structure requires a malloc call to be present on the system.\\
 A different and more static approach was needed.
-\subsection{(Static) Dynamic snake growth}
+\subsubsection{(Static) Dynamic snake growth}
 To emulate the behaviour of the linked list, every tile of the tilemap is equipped with a reference to the next element in a sequence, or null if no other element is linked to it. This takes up more memory (the size of a pointer multiplied by the number of elements in the map) but enables us to theoretically link every tile in the map to another tile.
 
 \section{Discussion}
+This section discusses some of the aspects of the design choices.
+\subsection{Game control}
 The LC-3 was implemented fully functional for the purpose of running the minimum implementation of the snake game.
 The Snake game itself is running functionally to its minimum requirements, but the game is not really that fun to play. 
 It's hard to navigate the snake on the DIO-4 board buttons, it has limitations in score, random food placement and max level.
 These inconvenient missing functionalities makes the game rather dull. More time, man power or focus on the game implementation instead of the LC-3 and these functionalities might have been implemented to heighten the game experience.
 The next enhancement planed for the LC-3 should be the possibility to use the keyboard, that would make it easier to navigate the snake.
 The next enhancement for the game logic should be increasing game speed, random food placement and a higher max score.
-\subsection{Implementation issues}
-
 \subsection{Hardware game model}
 The use of the video ram for storing the hardware game model is a decision based on the fact that we are in complete control of the system, and no other processes or programs is run besides the game.\\\\
 Video memory is usually synchronized from a software model, which our first implementation also was. Video memory a usually considered more volatile than system ram, as these belong to you once you have allocated it - at least on most operating systems.
+
 
 \section{Conclusion}
 The Snake game and the LC-3 has been implemented successfully on the FPGA-board and the game can now be run on the board without help from additional computer resources. 
@@ -166,7 +198,7 @@ The Snake game logic has some flaws and could have been more graphically illustr
 \section{User Manual}
 Navigate the snake to food to get points. The more points you get the longer your snake will become and the more difficult it will become to gather food.
 Colliding with the walls or snake body parts will result in death and reset of the game. The snake is navigated by the buttons on the DIO-4 board 
-\includegraphics[scale=0.064]{img/DIO4Buttons.png} 
+\includegraphics[scale=0.064]{img/DIO4Buttons.jpg} 
 
 BTN1 is right, BTN2 left, BTN3 up, BTN4 down and the BTN5 will paus the game. Using pause will cause the snake lay still but when moving it again the snake will shed it tail like a Lizard and the tail will become a hurdle for you the next time you need to pas that area, so be causes in using the pause button.
 The game can be reset at any point by colliding with hurdles or pressing the enter button on the FPGA board.
