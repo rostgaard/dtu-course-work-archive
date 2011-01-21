@@ -23,7 +23,8 @@
 #define SNAKE_HEAD_DEAD 0x0003u
 
 // Frequency of game update
-#define BASE_FREQ 0x6Fffu
+#define BASE_FREQ 0x7fffu
+#define FOOD_GEN_FREQ 0x000fu
 
 // Various memory mappings
 #define vid_mem_base (short *) 0xe000u
@@ -46,6 +47,7 @@ struct snake {
     short score;
     short full; //Has the snake eaten anything this round?
     short length;
+	short level;
 };
 
 typedef struct snake snake_t;
@@ -60,7 +62,10 @@ typedef struct tile tile_t;
 
 // Globals. Should really be local to wait() , but is here due to compiller
 static unsigned short tick_lsb = 0;
-static unsigned short tick_seed = 0xffffu;
+static unsigned short tick_seed = 123;
+static unsigned short food_gen = 0;
+static unsigned short game_speed = BASE_FREQ;
+static unsigned short high_score = 0;
 
 /**
  * Empties the entire screen - obviously
@@ -76,6 +81,26 @@ void clear_screen() {
         }
         row++;
     }
+}
+
+void update_high_score(short score) {
+	short hex_to_dec_score = 0;
+	
+	high_score = score;
+	
+	if(high_score > 99) {
+		short rem;
+		rem = (high_score%100);
+		hex_to_dec_score += (high_score/100)<<8;
+		printf("high_score/100 = %d\n",hex_to_dec_score);
+		hex_to_dec_score += (rem/10)<<4;
+	}
+	else if(high_score > 9)
+		hex_to_dec_score += (high_score/10)<<4;
+	hex_to_dec_score += high_score%10;
+	
+	*sseg_reg = hex_to_dec_score;
+	
 }
 
 /**
@@ -96,11 +121,11 @@ void send_score(snake_t *snake) {
     printf("%x\n", snake->score);
 }
 
+#ifdef USE_DELAY
 /**
  * Wait primitive that occupies the CPU for a fixed number of cycles.
  * It should be converted to assembler for better timing control
  */
- /* Currently unused
 void wait() {
     unsigned short lsb = 0;
     unsigned short msb = 0;
@@ -113,7 +138,8 @@ void wait() {
         msb++;
     }
 }
-*/
+#endif
+
 /**
  * Function for doing the snake initialization. Used upon new game start
  * @param snake The snake to initialize
@@ -129,6 +155,7 @@ void initialize_snake(snake_t *snake, tile_t lvl[NUM_ROWS][NUM_COLS]) {
     snake->full = FALSE;
     snake->length = 3;
     snake->alive = TRUE;
+	snake->level = 1;
 
     // Draw the snake head
     *((lvl[snake->y][snake->x]).content_ptr) = SNAKE_HEAD;
@@ -147,7 +174,53 @@ void initialize_snake(snake_t *snake, tile_t lvl[NUM_ROWS][NUM_COLS]) {
  * @param snake The snake
  */
 void update_hud(snake_t *snake) {
-    set_tile(NUM_COLS + 2, 1, (snake->score) + 0x0030u);
+
+	set_tile(NUM_COLS + 3, 1, 'S');
+	set_tile(NUM_COLS + 4, 1, 'c');
+	set_tile(NUM_COLS + 5, 1, 'o');
+	set_tile(NUM_COLS + 6, 1, 'r');
+	set_tile(NUM_COLS + 7, 1, 'e');
+	set_tile(NUM_COLS + 8, 1, ':');
+	set_tile(NUM_COLS + 9, 1, ' ');
+    // The score
+	
+	if(snake->score > 9) {
+		set_tile(NUM_COLS + 10, 1, ((snake->score)/10) + 0x0030u);
+		set_tile(NUM_COLS + 11, 1, ((snake->score)%10) + 0x0030u);
+	}
+	else
+		set_tile(NUM_COLS + 10, 1, ((snake->score) + 0x0030u));
+	
+	set_tile(NUM_COLS + 2, 3, 'L');
+	set_tile(NUM_COLS + 3, 3, 'e');
+	set_tile(NUM_COLS + 4, 3, 'n');
+	set_tile(NUM_COLS + 5, 3, 'g');
+	set_tile(NUM_COLS + 6, 3, 't');
+	set_tile(NUM_COLS + 7, 3, 'h');
+	set_tile(NUM_COLS + 8, 3, ':');
+	set_tile(NUM_COLS + 9, 3, ' ');
+	
+	if(snake->length > 9) {
+		set_tile(NUM_COLS + 10, 3, ((snake->length)/10) + 0x0030u);
+		set_tile(NUM_COLS + 11, 3, ((snake->length)%10) + 0x0030u);
+	} else
+		set_tile(NUM_COLS + 10, 3, (snake->length) + 0x0030u);
+
+
+	set_tile(NUM_COLS + 3, 5, 'L');
+	set_tile(NUM_COLS + 4, 5, 'e');
+	set_tile(NUM_COLS + 5, 5, 'v');
+	set_tile(NUM_COLS + 6, 5, 'e');
+	set_tile(NUM_COLS + 7, 5, 'l');
+	set_tile(NUM_COLS + 8, 5, ':');
+	set_tile(NUM_COLS + 9, 5, ' ');
+	
+	if(snake->level > 9) {
+		set_tile(NUM_COLS + 10, 5, ((snake->level)/10) + 0x0030u);
+		set_tile(NUM_COLS + 11, 5, ((snake->level)%10) + 0x0030u);
+	} else
+		set_tile(NUM_COLS + 10, 5, (snake->level) + 0x0030u);		
+		
 }
 
 /**
@@ -164,17 +237,22 @@ void place_food(tile_t lvl[NUM_ROWS][NUM_COLS]) {
 		row = (rand(NUM_ROWS-2))+1;
 		colum = (rand(NUM_COLS-2))+1;
 		}
-	while(*(lvl[row][colum].content_ptr) != EMPTY );
+	while(*(lvl[row][colum].content_ptr) != EMPTY);
 	
 	*(lvl[row][colum].content_ptr) = FOOD;
-	printf("Food at %x,%x\n",row,colum);
 }
+
+int remove_sign(a)
+{
+	return a& (0x7FFF);
+}
+
 
 unsigned short rand(short limit)
 {
 	unsigned short i;
-	tick_seed = tick_seed * 13 + 7;
-	i = (tick_seed/63) % limit;
+	tick_seed = tick_seed * 0x000du + 0x0007u;
+	i = (remove_sign(tick_seed/0x003fu)) % limit;
 //	printf("rand(): after limit: %d, tick_seed : %d i: %d; mod: %d\n", limit,tick_seed, i, i % limit);
 	return i;
 }
@@ -188,6 +266,20 @@ void update_game_state(snake_t *snake, tile_t lvl[NUM_ROWS][NUM_COLS]) {
     short i;
     tile_t *new_tail, *head_tile = &(lvl[snake->y][snake->x]);
 
+	// Snake level, minimum 1
+	snake->level = (snake->length / 10)+1;
+	
+	//Update game speed
+	game_speed = BASE_FREQ - (snake->length*0x0100u);
+	
+	//new food generation
+	food_gen++;
+	if(food_gen == FOOD_GEN_FREQ) {
+		food_gen = 0;
+		place_food(lvl);
+	}
+		
+	
     // Set the new coordinate of the snake
     if (snake->direction == RIGHT) {
         snake->x++;
@@ -207,7 +299,6 @@ void update_game_state(snake_t *snake, tile_t lvl[NUM_ROWS][NUM_COLS]) {
     } else if (*((lvl[snake->y][snake->x]).content_ptr) == FOOD) {
         snake->length++;
         snake->score++;
-        place_food(lvl);
     }
 
 
@@ -227,18 +318,17 @@ void update_game_state(snake_t *snake, tile_t lvl[NUM_ROWS][NUM_COLS]) {
         }
     }
 
+	/*
     // The snake has eaten something, skip tail update
     if (snake->full) {
         snake->full = FALSE;
-        snake->length++;
-        place_food(lvl);
-    }
+    }*/
         // The snake has not eaten anything, update tail
-    else {
+  //  else {
         // Remove the reference to the next element, making this the new tail
         new_tail->previous_tile_ptr = '\0';
         *(head_tile->content_ptr) = EMPTY;
-    }
+   // }
 
     // Graphic update
     if (!snake->alive) {
@@ -286,17 +376,29 @@ void init_level(tile_t lvl[NUM_ROWS][NUM_COLS]) {
         }
         lvl[row][col].previous_tile_ptr = '\0';
     }
+	//draw_snake_logo();
 }
 
 short tick () {
   tick_lsb++;
  // if(tick_lsb == 0xffffu) {
-  if(tick_lsb == BASE_FREQ) {
+  if(tick_lsb == game_speed) {
       tick_lsb = 0;
 	  return 1;
   }
   return 0;
 }
+
+draw_snake_logo() {
+	set_tile(5, NUM_ROWS+2, 'S');
+	set_tile(6, NUM_ROWS+2, 'n');
+	set_tile(7, NUM_ROWS+2, 'a');
+	set_tile(8, NUM_ROWS+2, 'k');
+	set_tile(9, NUM_ROWS+2, 'e');
+//	set_tile(NUM_ROWS + 3, 10, 'S');
+//	set_tile(NUM_ROWS + 3, 11, 'S');
+}
+
 
 /**
  * Main function. Initialization, Input control, game update loop and game state
@@ -312,16 +414,16 @@ void main() {
     init_level(level);
     initialize_snake(&snake, level);
     place_food(level);
-
+	
     // Main game loop
     while (1) {
-		tick_seed++;
+
         if (*btn_reg ) {
 			
 			if(*btn_reg == LEFT) {
 				snake.direction = LEFT;
 			}
-			if(*btn_reg == RIGHT) {
+			if(*btn_reg == RIGHT ) {
 				snake.direction = RIGHT;
 			}
 			if(*btn_reg == UP) {
@@ -334,36 +436,30 @@ void main() {
 
         if (*uart_status_reg) {
 			new_direction = *uart_data_reg;
-			if(new_direction == 'a') {
-				keypressed = TRUE;
+			if(new_direction == 'a' || new_direction == 0x4b) {
 				snake.direction = LEFT;
 			}
-			if(new_direction == 'd') {
-				keypressed = 1;
+			if(new_direction == 'd' || new_direction == 0x4d) {
 				snake.direction = RIGHT;
 			}
-			if(new_direction == 'w') {
-				keypressed = 1;
+			if(new_direction == 'w' || new_direction == 0x48) {
 				snake.direction = UP;
 			}
-			if(new_direction == 's') {
-				keypressed = 1;
+			if(new_direction == 's' || new_direction == 0x50) {
 				snake.direction = DOWN;
 			}
-
-		
-
         }
         // This is the actual game
 		if(tick()) {
 			update_game_state(&snake, level);
-			keypressed = FALSE;
 		}
 
         //wait();
 
         //Restart game if the snake is dead
         if (!snake.alive) {
+			if(snake.score > high_score)
+				update_high_score(snake.score);
             clear_screen();
             init_level(level);
             place_food(level);

@@ -1,3 +1,7 @@
+-- This is the memory and memory map. It would have been better to have 
+-- had it in several files, but once it worked, we went with "why fix it if ain't broken"
+
+
 -- Listing 11.1
 -- Single-port RAM with synchronous read
 -- Modified from XST 8.1i rams_07
@@ -26,6 +30,8 @@ entity lc3_mem is
     );
 end lc3_mem;
 
+
+-- The memory and the contents (operating system)
 architecture beh_arch of lc3_mem is
   type ram_type is array (0 to 2**ADDR_WIDTH-1)
     of std_logic_vector (DATA_WIDTH-1 downto 0);
@@ -432,7 +438,7 @@ begin
   end process;
 
 
-  -- xFE00 Stdin Status Register
+  -- xFE00 Stdin Status Register and tri state
   cs_stdin_status <= '1' when addr = X"FE00" and re = '1' else '0';
   data <= not rx_empty & "000" & X"000" when cs_stdin_status = '1' 
     else (others => 'Z');
@@ -443,18 +449,18 @@ begin
   data <= uart_r_data when uart_rd_en = '1' 
     else (others => 'Z');
 
-  -- xFE04 Stdout Status Register
+  -- xFE04 Stdout Status Register and tri state
   cs_stdout_status <= '1' when re = '1' and addr = X"FE04" else '0';
 	-- cs_stdout_status  is out
   data <= not tx_full & "000" & X"000" when cs_stdout_status = '1' 
     else (others => 'Z');		
 
-  -- xFE06 Stdout Data Register
+  -- xFE06 Stdout Data Register, only out is defined
   uart_wr_en <= '1' when addr = X"FE06" and we = '1' else '0';
  	-- cs_stout_data is in 
   uart_w_data <= data(7 downto 0);
-
-  -- xFE0A Switches Data Register
+ 
+  -- xFE0A Switches Data Register and tri state
   cs_switch_data <= '1' when addr = X"FE0A" and re = '1' else '0';
   --cs_switch_data  is out
   data <= sw when re = '1' and cs_switch_data = '1' 
@@ -490,4 +496,6 @@ begin
     end if;
   end process;
       
+		
+  -- TODO, operating system read-only memory
 end beh_arch;
