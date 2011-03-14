@@ -4,11 +4,14 @@
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
 \usepackage{hyperref}
-\begin{document}
+\usepackage{fancyhdr}
 
+\lhead{\includegraphics[scale=1.0]{img/header.eps}} \lfoot{\includegraphics[scale=0.5]{img/footer.eps}}
+\begin{document}
+\thispagestyle{fancy}% sets the current page style to 'fancy' -- must 
 \title{Android based audience response system}
-\subtitle{[Technical documentation - Draft]
-\titlenote{Authors list is available in the appendix}
+\subtitle{[Technical documentation - version 1.1]
+\titlenote{Authors list is available in appendix \ref{app:authors}}
 }
 
 \numberofauthors{1}
@@ -20,6 +23,7 @@
 \maketitle
 
 \begin{abstract}
+The purpose of this document is provide the needed information in order to implement a working prototype within two working weeks.
 %Abstract; A brief summary of all of the report including the conclusion section
 %but excluding the acknowledgements, references and any appendixes.
 \end{abstract}
@@ -44,15 +48,17 @@ Every clicker device has a wireless connection to the receiver device, connected
 
 
 \section{Use cases}
+\thispagestyle{fancy}% sets the current page style to 'fancy' -- must 
+
 %TODO multipicities - ex. class diagram
-For our usage, two actors has been identified; a student and an instructor.
+For our usage, two actors has been identified; a student and an teacher.
 \begin{figure}[h]
 \centering
 \epsfig{file=fig/use_cases.eps, height=2.0in}
 \caption{Use cases}
 \label{fig:use_cases}
 \end{figure}
-The student has access to the intended usage of the system and is considered the normal end-user. The Instructor has the administrator role in the sense that he/she is responsible for the back-office operations. For further reference, see figure \ref{fig:use_cases};
+The student has access to the intended usage of the system and is considered the normal end-user. The teacher has the administrator role in the sense that he/she is responsible for the back-office operations. For further reference, see figure \ref{fig:use_cases};\\\\
 
 \section{Requirements}
 For the system, the following requirements has been identified to support the basic usage of the system
@@ -75,7 +81,7 @@ The system is a basic multiple-choice poll. One question, several answers. Once 
 %TODO Check op on this and what the conclusion on the multiple users discussion was.
 
 \subsubsection*{Persistent storage}
-The polls and the results must be stored until explicitly removed by the instructor.
+The polls and the results must be stored until explicitly removed by the teacher.
 
 \subsubsection*{No live view}
 There is no live view option for showing the results before the poll closes. This is due to the fact early poll estimates can have effect on the result.
@@ -104,17 +110,13 @@ Think webcasts - no physical presense should be required
 \subsubsection*{Shared devices}
 More than one user has access to polls on single device
 \subsubsection*{Real questions}
-Use a string for answer for inputting real values.
+Use a string for answer for inputting string values other than predefined values.
 
 \subsubsection*{Optional user login}
-
-
-%TODO
-Tools used:
-% - github, for revisioning og wiki
- - eclipse
+There could be a real login for users (teachers) letting them have an actual account to keep track of their polls.
 
 \section{Infrastructure}
+\thispagestyle{fancy}% sets the current page style to 'fancy' -- must 
 
 \begin{figure}[h]
 \centering
@@ -148,6 +150,8 @@ The GUI is in three parts:
 A poll, consisting of one or more questions and their answers, is associated with a poll ID and a domain name (for the web interface only).
 
 \subsubsection{Web interface for teachers}
+\thispagestyle{fancy}% sets the current page style to 'fancy' -- must 
+
 Both the teacher and student enter the same front page for the web interface by entering the domain name in their browser.
 
 \begin{figure}[h]
@@ -225,25 +229,15 @@ When the student starts up the application, he sees a screen where he can enter 
 
 Once he has entered the poll id, the rest of the interface is the same as the web interface for students.
 
-\begin{figure}[h]
-\centering
-\epsfig{file=fig/web_service.eps, height=1.4in}
-\caption{Web service}
-\label{fig:web_service}
-\end{figure}
-Basically we want to do two interfaces
 
 \begin{itemize}
   \item A client coded in AJAX that can be accesses via HTTP
   \item A client interface coded in Java for native android phones (an app)
 \end{itemize}
 
-\subsection{Protocol}
-
-\subsection{API}
-
-
 \section{Technical Requirements}
+\thispagestyle{fancy}% sets the current page style to 'fancy' -- must 
+
 \begin{itemize}
   \item Web server with java
   \item Web server with email sending capabilities
@@ -296,6 +290,8 @@ Based on the descriptions above we recommend using the Play framework. We do not
 
 
 \subsection{JSON}
+\thispagestyle{fancy}% sets the current page style to 'fancy' -- must 
+
 JSON stands for JavaScript Object Notation, and can be compared to a mix between XML and serialization, understood as JSON being a de-facto standard in many modern webservices, but at the same time, it's a direct way to serialize and deserialize objects without loosing the state. JSON has the advantages of being more lightweight than XML, as well as the possibilities of serializing, sending and then deserializing java objects using the JSON format, rather than having to parse XML. An example of a JSON string could be:
 
 \begin{verbatim}
@@ -342,8 +338,100 @@ Note that it becomes slightly more complicated when dealing with collections or 
 \balancecolumns
 % That's all folks!
  
-\section{Discussion}
+\section{MessageFlow and Protecol Messages} 
+\thispagestyle{fancy}% sets the current page style to 'fancy' -- must 
+
+This section describes the messageflow in the system as well as a description of the messages.
+It is adviceable to look at \ref{fig:Messageflow} and \ref{fig:ProtocolMessages} while reading as it will ease understanding.
+The client of the system, it being a phone or laptop, it referred to as a "responder". The user using the responder is called a student
+The server is referred to as a pollprovider and the person controlling it is a "teacher".
+
+Note: when looking at the diagrams, be aware that there is a difference between \subsection{QuestionAnswer} and \subsection{QuestionResult}
+The first is the answer the students sends to a question, and the second the factual results given by the teacher to the student. 
+
+\begin{figure}[h]
+\centering
+\epsfig{file=fig/Messageflow.eps, width=250px}
+\caption{Message flow}
+\label{fig:Messageflow}
+\end{figure}
+
+
+All interaction in the system is initiated by the responder
+A poll consists of a several questions and possibly some answers. Each poll has an id.
+
+In effect, the responder polls the the server to see if there is new questions/answers available.
+It does this by polling the pollprovider with a \emph{RequestNew} request. If there is nothing new, it will simple get a null value back.
+
+If there is a new question available, the responder will get a \emph{Question} back.
+This package contains all the info that the responder need to present the question for the student
+
+When the student has filled out the \emph{Question Answer}, the responder returns it to the pollprovider.
+He thereafter returns to sending \emph{RequestNew} requests to the server.
+
+At some point the question is closed by the teacher and the \emph{QuestionAnswer} is released.
+When the responder polls again with \emph{RequestNew} it will get the \emph{QuestionAnswer} which is displayed to the student.
+
+When the student has looked over the \emph{QuestionAnswer} he dismisses it and his responder returns to polling with
+\emph{RequestNew} requests. At some point the next \emph{Question} is released by the teacher and the process repeats.
+
+
+\begin{figure}[h]
+\centering
+\epsfig{file=fig/ProtocolMessages.eps, width=250px}
+\caption{Protocol Messages}
+\label{fig:ProtocolMessages}
+\end{figure}
+
+\subsection{RequestNew}
+This request is sent by the responder in hope of getting updates. It only has two attributes.
+It will return a \emph{Question}, a \emph{QuestionResult} or null value if there is no new updates.
+
+\begin{itemize}
+\item PollId: The id that the teacher has assigned a specific poll. He has given this id to all students so that they may connect to the correct poll.
+\item ResponderId: A unique id for the responder. The pollprovider uses this id to make sure no responder gets the same question twice.
+\end{itemize}
+
+
+\subsection{Question}
+This package is sent as a response to a \emph{RequestNew} request. It contains a question ready for the student to answer.
+
+\begin{itemize}
+\item PollId: Id to make sure that the responder is in the right poll. Teacher might have two polls simultaneously
+\item  QuestionId: a number that is incremented. Used by the responder to make sure that it the answer is sent to the right question.
+\item  Quesiton: Human readable question given by the teacher.
+\item  Answers[]: An array of possible answers. Forinstance [1,2,6,10] or [a,b,c,d]
+\item MultipleAllowed: Attribute is set when student is allowed to check several answers (check all that applies)
+\end{itemize}
+
+\emph{QuestionAnswer}
+The resquest send by the responder to the pollprovider to answer a given *Question*
+\begin{itemize}
+\item PollId: Identifies the poll.
+\item QuestionId: Identifies the Question in the poll we are answering.
+\item Answers[]: Array containing the answers. If there is only one answer, it is simply an array of one.
+\item ResponderId: Id to make sure the pollprovider does not recieve answers from responders that has not retrieved the question - and to make sure no responder mistakenly answers twice.
+\end{itemize}
+
+
+\subsection{QuestionResult}
+This package is sent as a responce to a \emph{RequestNew} request. It contains the answer to the previous \emph{Questions}
+
+\begin{itemize}
+\item PollId: The poll we are in
+\item Question: The same text as in the \emph{Question} that the student answered.
+\item QuestionId: Id of the \emph{Question} that this result is in relation to.
+\item Answers[]: The array of answerspossibilities. that a responder could choose in the *Question*
+\item Numbers[]: The array of students-that-answered-what-to-each-valid-answerpossibility
+\end{itemize} 
+Example: If the answerpossibilities was {a,b,c,d} and
+2 students answered a, 5 answered b, 0 answered c and 1337 answered d - the Answers[] and Numbers[] attribute would have the form:
+Answers{a,b,c,d}
+Numbers{2,5,0,1337}
  
+\section{Discussion}
+\thispagestyle{fancy}% sets the current page style to 'fancy' -- must 
+
 Security concerns/login considerations:
 
 Student authentication is based around a unique poll ID. This ID gets generated at poll creation time. Polls can optionally be protected by a password.
@@ -360,7 +448,14 @@ The are fuzzy thoughts about whether a device is able to vote twice, and how thi
 \section{Thoughs}
 Test different screen sizes
 
+\section{Revision history}
+\subsection{Version 1.0}
+Initial document release
+\subsection{Version 1.1}
+Added "MessageFlow and Protecol Messages" section
+
 \section{Authors}
+\label{app:authors}
 %TODO
 \begin{itemize}
 \item Kim Rostgaard Christensen  s084283@student.dtu.dk
@@ -371,6 +466,8 @@ Test different screen sizes
 \item Mikko Berggren Ettienne s070168@student.dtu.dk
 \item Søren Juhl Vind s062428@student.dtu.dk
 \item Peter Gammelgaard Poulsen s093263@student.dtu.dk
+\item Bo Visfeldt s101985@student.dtu.dk
+\item Rabie Khodr Jradi s072470@student.dtu.dk
 \end{itemize}
 
 
