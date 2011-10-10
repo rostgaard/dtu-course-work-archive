@@ -2,15 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
-import java.util.*;
-import javax.persistence.*;
-
-import play.db.jpa.*;
+package controllers;
+import play.*;
+import play.mvc.*;
 /**
  *
  * @author Kim Rostgaard Christensen
  */
-public class InternalDocument extends models.Document {
+@With(Secure.class)
+public class DocumentRevisions extends CRUD {
     
 }

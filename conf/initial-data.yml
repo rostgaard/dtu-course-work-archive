@@ -1,13 +1,24 @@
 # Test data
 
-Document(test1):
-    title:          Test document 1
-    revision:        draft
-
-Document(test2):
-    title:          Test WP-224411.doc
-    revision:        20055
+Document(doc1):
+    title:          Internal1.xsl
  
+
+Document(doc2):
+    title:          WP-224411.doc
+
+DocumentRevision(rev1):
+  originDocument: doc1
+  name:        draft
+   
+DocumentRevision(rev2):
+    originDocument: doc2
+    name:        20055
+
+Issue(1):
+    description:     Bad text, bad text!
+    documentRevision: rev1
+
 User(u1):
     email:          krc@gir.dk
     password:       123
@@ -39,3 +50,33 @@ En50126Phase(6251d):
     
 En50126Phase(6251ez):
     name:           6.2.5.1e
+
+IssueType(a):
+    name:           Issue for conditional acceptance
+    description:    Some elaboration/help text
+    severity:       A
+    
+IssueType(b):
+    name:           Issue to correct
+    description:    Some elaboration/help text
+    severity:       B
+    
+IssueType(c):
+    name:           Issue for consideration
+    description:    Some elaboration/help text
+    severity:       C
+    
+IssueStatus(raised):
+    name:           Raised
+    
+IssueStatus(actioned):
+    name:           Actioned
+    
+IssueStatus(replied):
+    name:           Replied
+    
+IssueStatus(accepted):
+    name:           Accepted
+    
+IssueStatus(closed):
+    name:           Closed

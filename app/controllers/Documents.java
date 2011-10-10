@@ -9,7 +9,7 @@ import play.mvc.*;
  *
  * @author Kim Rostgaard Christensen
  */
-@With(Secure.class) 
+@With(Secure.class)
 public class Documents extends CRUD {
     
 }
