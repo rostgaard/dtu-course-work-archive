@@ -1,0 +1,11 @@
+# You can specialize this file for each language.
+# For example, for French create a messages.fr file
+#
+title=Title
+revision=Revision
+authors=Authors
+QACertificates=Relevant QA certificates
+initiationDate=Date
+projectPhase=Project phase
+en50126Phases=Relevant EN 50126 Phases (if any)
+internalDocument=Internal V&V document reference

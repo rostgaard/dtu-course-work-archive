@@ -1,0 +1,13 @@
+#{extends 'main.html' /}
+#{set title:document.title /}
+ 
+                <div class="post">
+                    <h2 class="post-title">
+                         <a href="@{Application.show(document.id)}">${document.title}</a>
+                    </h2>
+                    <div class="post-metadata">
+                        <span class="post-author">
+                            Revision: ${document.revision}
+                        </span>
+                    </div>
+                </div>

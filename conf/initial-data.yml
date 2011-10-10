@@ -1,0 +1,41 @@
+# Test data
+
+Document(test1):
+    title:          Test document 1
+    revision:        draft
+
+Document(test2):
+    title:          Test WP-224411.doc
+    revision:        20055
+ 
+User(u1):
+    email:          krc@gir.dk
+    password:       123
+    fullname:       Kim
+    isAdmin:        true
+    
+User(u2):
+    email:          test@test.dk
+    password:       123
+    fullname:       Jeff
+    
+ProjectPhase(1):
+    phaseName:      Proposal design
+    
+ProjectPhase(2):
+    phaseName:      Conceptual design
+    
+En50126Phase(6251a):
+    name:           6.2.5.1a
+    
+En50126Phase(6251b):
+    name:           6.2.5.1b    
+    
+En50126Phase(6251c):
+    name:           6.2.5.1c
+    
+En50126Phase(6251d):
+    name:           6.2.5.1d
+    
+En50126Phase(6251ez):
+    name:           6.2.5.1e
