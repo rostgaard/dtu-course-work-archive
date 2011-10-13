@@ -15,23 +15,28 @@ import play.db.jpa.*;
 @Entity
 public class Issue extends Model {
     @Required
+    public String briefDescription;
+    @Required
     public String description;
     @Required
     @OneToOne
     public DocumentRevision documentRevision;
     
-    @Required
-    @OneToMany
-    public List<User> assignees;
+//    @Required
+//    @ManyToMany
+//    public List<User> assignees;
 
     @Required
-    @OneToMany
-    public List<User> QAResponsibles;
-
-    @OneToMany
-    public List<Resolution> proposedResolutions;
+    @ManyToMany(cascade=CascadeType.PERSIST)
+    public Set<User> QAResponsibles;
+//
+//    @OneToMany
+//    public List<Resolution> proposedResolutions;
     
     public Resolution acceptedResolution;
+
+    
+    
     
     public String toString() {
         return this.description;
