@@ -9,3 +9,6 @@ initiationDate=Date
 projectPhase=Project phase
 en50126Phases=Relevant EN 50126 Phases (if any)
 internalDocument=Internal V&V document reference
+secure.username=Your email:
+secure.password=Your password:
+secure.signin=Log in now
