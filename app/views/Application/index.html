@@ -1,21 +1,22 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
  
-
-#{if documents}
-
-            #{list documents, as:'doc'}
-                <div class="post">
-                    <h2 class="post-title">
-                         <a href="@{Application.show(doc.id)}">${doc.title}</a>
-                    </h2>
-                    <div class="post-metadata">
-                        <span class="post-author">
-                            Revision: ${doc.revision}
-                        </span>
-                    </div>
-                </div>
+#{if frontPost}
+    
+    #{display post:frontPost, as:'home' /}
+    
+    #{if olderPosts.size()}
+    
+        <div class="older-posts">
+            <h3>Older posts <span class="from">from this blog</span></h3>
+        
+            #{list items:olderPosts, as:'oldPost'}
+                #{display post:oldPost, as:'teaser' /}
             #{/list}
+        </div>
+        
+    #{/if}
+    
 #{/if}
  
 #{else}

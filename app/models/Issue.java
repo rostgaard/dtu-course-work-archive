@@ -22,23 +22,34 @@ public class Issue extends Model {
     @OneToOne
     public DocumentRevision documentRevision;
     
+    public Date createdAt;
 //    @Required
 //    @ManyToMany
-//    public List<User> assignees;
+ //   public List<User> assignees;
 
     @Required
     @ManyToMany(cascade=CascadeType.PERSIST)
-    public Set<User> QAResponsibles;
+    public Set<User> assignees;
 //
-//    @OneToMany
-//    public List<Resolution> proposedResolutions;
+    @OneToMany
+    public List<Resolution> proposedResolutions;
     
     public Resolution acceptedResolution;
+
+    public Issue(String briefDescription, String description, DocumentRevision documentRevision) {
+        this.briefDescription = briefDescription;
+        this.description = description;
+        this.documentRevision = documentRevision;
+        this.assignees = new TreeSet<User>();
+        this.createdAt = new Date();
+        this.proposedResolutions = new ArrayList<Resolution>();
+        //this.assignees = new ArrayList<User>();
+    }
 
     
     
     
     public String toString() {
-        return this.description;
+        return this.briefDescription;
     }
 }
