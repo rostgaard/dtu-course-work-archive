@@ -23,11 +23,19 @@ This report used the EN-50126 standard for railways as the formal process to imp
 I was noted that the challenges of the development process of a larger software project, and the challenges
 
 
-\subsection{Terminology of EN-50126}
-The EN-50126 defines a number of phases and activities
+\subsection{Terminology}
+The terminologies within a RAMS process is largely company-culture dependant. In this report we will use the term issue describing a non-conformity with a given requirement.
 
 \subsubsection{Hazard log}
+The hazard log is where all identified hazards go. Once identified, they go through the life cycle illustrated in figure \ref{fig:hazard_log_life_cycle}
 
+\begin{figure}[h]
+\centering
+%\epsfig{file=fig/system.eps, width=3.0in}
+\includegraphics[scale=0.45]{fig/Hazard_log_Entry_Lifecycle.png} 
+\caption{Life cycle hazard log entry}
+\label{fig:hazard_log_life_cycle}
+\end{figure}
 
 \subsection{Terminology of software project management}
 Typically you have a hierarchy consisting of projects, subprojects and components. The structure is illustrated in figure \ref{fig:project_structure}.
@@ -108,6 +116,11 @@ The following URI scheme could be considered:
 
 This will give an easy and homogenous method of referring to a specific revision of a document – while also making it accessible. Individuals with the proper authorization will be able to request a document without pre-requisitioning it.
 
+
+\section{RPC API}
+To be able to support external BMS's, an API\footnote{Application Programming Interface} can be supplied.
+
+An API is a way to 
 
 \section{Design}
 %TODO insert figure
