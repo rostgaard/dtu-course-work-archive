@@ -1,0 +1,8 @@
+#{extends 'admin.html' /}
+
+#{list items:activities, as:'activity'}
+    <p class="post ${activity_parity}"> 
+        <a href="@{Issues.show(activity.id)}">${activity.description}</a>
+    </p>
+#{/list}
+ 

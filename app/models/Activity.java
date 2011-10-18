@@ -20,12 +20,14 @@ public class Activity extends Model {
     @ManyToMany
     public List<En50126Phase> en50126Phases;
     
-    InternalDocument internalDocument;
-
+    public String internalDocument;
+    public ActivityStatus activityStatus;
+    
     public Activity(String description, String en50126Phase, User Responsible) {
         this.description = description;
         this.en50126Phases = new ArrayList<En50126Phase>();
         this.internalDocument = null;
+        this.activityStatus = null;
     }
     
     public String toString() {
