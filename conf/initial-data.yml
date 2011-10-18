@@ -1,7 +1,23 @@
 # Test data
 
+ProjectPhase(1):
+    phaseName:      Proposal design
+    
+ProjectPhase(2):
+    phaseName:      Conceptual design
+
+Company(sc):
+    name:           Safety Consultant
+    
+Company(fbas):
+    name:           FBAS
+
+Company(re):
+    name:           Railway Engineering
+    
 Document(doc1):
     title:          Internal1.xsl
+    projectPhase:   1
  
 
 Document(doc2):
@@ -16,7 +32,7 @@ DocumentRevision(rev2):
     name:        20055
 
 Issue(1):
-    description:     Bad text, bad text!
+    description:     Not enough information about authors
     documentRevision: rev1
 
 User(u1):
@@ -24,6 +40,7 @@ User(u1):
     password:       123
     fullname:       Kim
     isAdmin:        true
+    employedAt:     sc
     
 User(u2):
     email:          test@test.dk
@@ -41,12 +58,32 @@ User(jeff):
     password:       secret
     fullname:       Jeff   
     
-ProjectPhase(1):
-    phaseName:      Proposal design
+
+En50126Phase(615a):
+    name:           6.1.5a
+    description:    Assesment of the adequacy of the information, and where appropriate, data and other statistics, used as input to RAMS tasks with this phase.
+    phase:          1
+
+En50126Phase(615b):
+    name:           6.1.5b
+    description:    Assessment of the adequacy of the system environment statement defined under Requirement 1.
+    phase:          1
+
+En50126Phase(615c):
+    name:           6.1.5c
+    description:    
+    phase:          1
     
-ProjectPhase(2):
-    phaseName:      Conceptual design
+En50126Phase(615d):
+    name:           6.1.5d
+    description:    
+    phase:          1
     
+En50126Phase(615e):
+    name:           6.1.5e
+    description:    
+    phase:          1
+
 En50126Phase(6251a):
     name:           6.2.5.1a
     
@@ -61,6 +98,27 @@ En50126Phase(6251d):
     
 En50126Phase(6251ez):
     name:           6.2.5.1e
+
+Activity(1):
+  description:      Identify source of hazards
+  responsible:      sc
+  en50126Phases:    
+                    - 615a
+                    - 615b
+                    - 615c
+                    - 615d
+                    - 615e
+                    
+Activity(2):
+  description:      Obtain information about previous RAMS performance
+  responsible:      sc
+  en50126Phases:    
+                    - 615a
+                    - 615b
+                    - 615c
+                    - 615d
+                    - 615e
+
 
 IssueType(a):
     name:           Issue for conditional acceptance
@@ -166,3 +224,4 @@ Post(jeffPost):
                     This pattern splits the application into separate layers: the Presentation 
                     layer and the Model layer. The Presentation layer is further split into a 
                     View and a Controller layer.
+                    

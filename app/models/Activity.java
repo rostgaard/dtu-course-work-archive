@@ -13,17 +13,23 @@ import play.db.jpa.*;
  */
 @Entity
 public class Activity extends Model {
-    String description;
-    String en50126Phase;
-    User Responsible;
-    InternalDocument internalDocument = null;
+    public String description;
+   
+    @OneToOne
+    public Company responsible;
+    @ManyToMany
+    public List<En50126Phase> en50126Phases;
+    
+    InternalDocument internalDocument;
 
     public Activity(String description, String en50126Phase, User Responsible) {
         this.description = description;
-        this.en50126Phase = en50126Phase;
-        this.Responsible = Responsible;
+        this.en50126Phases = new ArrayList<En50126Phase>();
+        this.internalDocument = null;
     }
     
-    
+    public String toString() {
+        return this.description;
+    }
     
 }

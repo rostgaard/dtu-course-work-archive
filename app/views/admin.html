@@ -2,7 +2,7 @@
  
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <title>Administration</title>		
+        <title>Document handling</title>		
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         #{get 'moreStyles' /}	
         <link rel="stylesheet" type="text/css" media="screen" 
@@ -16,23 +16,53 @@
         
         <div id="header">
             <div id="logo">
-                yabe. <span>administration</span>
+                DocReg <span>administration</span>
             </div>
             <ul id="tools">
                 <li>
+                    Logged in as ${user} (${company})
                     <a href="@{Secure.logout()}">Log out</a>
                 </li>
             </ul>
         </div>
+            <ul id="adminMenu">
+        #{secure.check 'admin'}
+            <li class="${request.controller == 'Activities' ? 'selected' : ''}">
+                <a href="@{Activities.list()}">Activities</a>
+            </li>
+            <li class="${request.controller == 'Documents' ? 'selected' : ''}">
+                <a href="@{Documents.listAll()}">Documents</a>
+            </li>
+            <li class="${request.controller == 'Certificates' ? 'selected' : ''}">
+                <a href="@{Certificates.list()}">Certificates</a>
+            </li>
+             <li class="${request.controller == 'Companies' ? 'selected' : ''}">
+                <a href="@{Companies.list()}">Companies</a>
+            </li>
+            <li class="${request.controller == 'DocumentRevisions' ? 'selected' : ''}">
+                <a href="@{DocumentRevisions.list()}">Document Revisions</a>
+            </li>
+            <li class="${request.controller == 'ProjectPhases' ? 'selected' : ''}">
+                <a href="@{ProjectPhases.list()}">ProjectPhases</a>
+            </li>
+            <li class="${request.controller == 'Users' ? 'selected' : ''}">
+                <a href="@{Users.list()}">Users</a>
+            </li>
+            <li class="${request.controller == 'Issues' ? 'selected' : ''}">
+                <a href="@{Issues.listAll()}">Issues</a>
+            </li>        
+            <li class="${request.controller == 'Resolutions' ? 'selected' : ''}">
+                <a href="@{Resolutions.list()}">Resolutions</a>
+            </li>            
+        #{/secure.check}
+    </ul>
         
         <div id="main">
             #{doLayout /} 
         </div>
         
         <p id="footer">
-            Yabe is a (not so) powerful blog engine built with the 
-            <a href="http://www.playframework.org">play framework</a>
-            as a tutorial application.
+            General copyright notice
         </p>
         
     </body>

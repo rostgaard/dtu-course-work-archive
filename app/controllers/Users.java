@@ -12,5 +12,12 @@ import models.User;
  */
 @With(Secure.class) 
 public class Users extends CRUD {
-    
+    @Before
+    static void setConnectedUser() {
+        if(Security.isConnected()) {
+            User user = User.find("byEmail", Security.connected()).first();
+            renderArgs.put("user", user.fullname);
+            renderArgs.put("company", user.employedAt);
+        }
+    }
 }

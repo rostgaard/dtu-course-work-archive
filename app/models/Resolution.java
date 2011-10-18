@@ -14,6 +14,9 @@ import play.db.jpa.*;
 @Entity
 public class Resolution extends Model {
     public String name;
+    
+    @ManyToOne
+    public Issue solutionFor;
    
     public String toString() {
         return this.name;

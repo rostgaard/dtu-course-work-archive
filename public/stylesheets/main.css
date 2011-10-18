@@ -1,7 +1,8 @@
 /** Main layout **/
 
 html, body {
-    background: #364B66 !important;
+   /* background: #364B66 !important;*/
+    background: #ccc !important;
     font-family: Helvetica, Arial, Sans !important;
 }
 
@@ -95,7 +96,7 @@ body {
 
 #main {
     background: #314660;
-    background: -webkit-gradient(linear, left top, left 30%, from(#314660), to(#364B66));
+    background: -webkit-gradient(linear, left top, left 30%, from(#aaa), to(#ccc));
     -webkit-border-radius: 16px;
     -moz-border-radius: 16px;
     padding: 20px;
@@ -109,12 +110,12 @@ body {
 
 .post .post-title a {
     font-size: 36px;
-    color: #F5C2CC;
+    /*color: #F5C2CC; */
     text-decoration: none;
 }
 
 .post .post-metadata {
-    color: #BAC36E;
+    /* color: #BAC36E; */
     display: block;
     font-size: 70%;
     display: inline-block;
@@ -394,11 +395,11 @@ form label {
 }
 
 #crudContent {
-    color: #8B98AD;
+   /*color: #8B98AD; */
 }
 
 #crudContent h2 {
-    color: #EDC3CD !important;
+ /*  color: #EDC3CD !important; */
 }
 
 #crudContent thead tr {
@@ -433,7 +434,8 @@ tr.odd {
 }
 
 .crudField label {
-    color: #B8FA5C;
+     /* color: #B8FA5C; */
+     color: black;
 }
 
 .crudHelp {

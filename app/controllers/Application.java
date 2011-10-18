@@ -34,18 +34,18 @@ public class Application extends Controller {
         render(post);
     }
 
-public static void postComment(Long postId, @Required String author, @Required String content) {
-    Post post = Post.findById(postId);
-    if(validation.hasErrors()) {
-        render("Application/show.html", post);
+    public static void postComment(Long postId, @Required String author, @Required String content) {
+        Post post = Post.findById(postId);
+        if (validation.hasErrors()) {
+            render("Application/show.html", post);
+        }
+        post.addComment(author, content);
+        flash.success("Thanks for posting %s", author);
+        show(postId);
     }
-    post.addComment(author, content);
-    flash.success("Thanks for posting %s", author);
-    show(postId);
-}
 
-public static void listTagged(String tag) {
-    List<Post> posts = Post.findTaggedWith(tag);
-    render(tag, posts);
-}
+    public static void listTagged(String tag) {
+        List<Post> posts = Post.findTaggedWith(tag);
+        render(tag, posts);
+    }
 }

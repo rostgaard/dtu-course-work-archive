@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package models;
-import java.util.*;
 import javax.persistence.*;
 
 import play.db.jpa.*;
@@ -11,6 +10,8 @@ import play.db.jpa.*;
  *
  * @author Kim Rostgaard Christensen
  */
-public class InternalDocument extends models.Document {
-    
+@Entity
+public class InternalDocument extends Model{
+    String name;
+    String revision;
 }

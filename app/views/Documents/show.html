@@ -1,0 +1,20 @@
+#{extends 'admin.html' /}
+
+ <p id="newDocument" >
+	<a href="@{add()}"><span>+</span> Add a new document</a>
+</p>
+<h2>   ${document.title}</h2>
+<h3>Revisions</h3> 
+
+#{list items:revisions, as:'revision'}
+    <p class="post ${revision_parity}">
+        ${revision.name}
+    </p>
+#{/list}
+
+<h3>Issues</h3> 
+#{list items:issues, as:'issue'}
+    <p class="post ${issue_parity}">
+        ${issue.briefDescription}
+    </p>
+#{/list}

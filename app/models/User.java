@@ -26,13 +26,17 @@ public class User extends Model implements Comparable<User> {
     public String initials;
     public boolean isAdmin;
 
+    @Required
+    @ManyToOne
+    public Company employedAt;
     
     
-    
-    public User(String email, String password, String fullname) {
+    public User(String email, String password, 
+                String fullname, Company employedAt) {
         this.email = email;
         this.password = password;
         this.fullname = fullname;
+        this.employedAt = employedAt;
     }
     
     

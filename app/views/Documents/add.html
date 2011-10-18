@@ -1,0 +1,40 @@
+#{extends 'admin.html' /}
+<h3>Add <span>a new document</span></h3>
+ 
+#{form @save()}
+ 
+    #{ifErrors}
+        <p class="error">
+            Please correct these errors.
+        </p>
+    #{/ifErrors}
+     
+    <p>
+        #{field 'title'}
+        <label>Document title</label>
+        <input type="text" name="${field.name}" 
+            value="${document?.title}" class="${field.errorClass}" />
+        #{/field}
+    </p>
+ 
+    <p>
+        #{field 'authors'}
+        <label>Authors</label>
+        <input type="text" name="${field.name}" 
+            value="${document?.authors}" class="${field.errorClass}" />
+        #{/field}
+    </p>
+
+    <p>
+        #{field 'projectPhase'}
+        <label>Project Phase</label>
+        <input type="text" name="${field.name}" 
+            value="${document?.projectPhase}" class="${field.errorClass}" />
+        #{/field}
+    </p>
+    
+    <p>
+        <input type="submit" value="Update" />
+    </p>
+    
+#{/form}

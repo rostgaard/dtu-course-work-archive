@@ -13,5 +13,5 @@ import play.db.jpa.*;
  */
 @Entity
 public class Author extends Model {
-    
+    public String name;
 }

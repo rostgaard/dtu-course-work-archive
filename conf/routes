@@ -19,6 +19,9 @@ GET     /posts/{<[0-9]+>id}             Application.show
 GET     /posts/{tag}                    Application.listTagged
 POST    /posts/{postId}/comments                Application.postComment
 
+GET     /documents/byphase/{phase} Documents.byPhase
+GET     /documents/show/{<[0-9]+>id} Documents.show
+
 # Import CRUD routes
 GET     /admin/?                                Admin.index
 *       /admin                                  module:crud

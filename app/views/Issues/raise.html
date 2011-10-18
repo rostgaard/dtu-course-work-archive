@@ -1,0 +1,45 @@
+#{extends 'admin.html' /}
+ 
+#{ifnot issue?.id}
+    <h3>Raise, <span>a new issue against ${documentRevision.originDocument.title} (revision ${documentRevision.name})</span></h3>
+#{/ifnot}
+#{else}
+    <h3>Edit, <span>this issue</span></h3>
+#{/else}
+ 
+#{form @save(issue?.id)}
+ 
+    #{ifErrors}
+        <p class="error">
+            Please correct these errors.
+        </p>
+    #{/ifErrors}
+     
+    <p>
+        #{field 'briefDescription'}
+        <label>Brief Description <span class="help_text">This is the overall topic for the issue</span></label>
+        <input type="text" name="${field.name}" 
+            value="${issue?.briefDescription}" class="${field.errorClass}" />
+        #{/field}
+    </p>
+ 
+    <p>
+        #{field 'description'}
+        <label>Desciption:<span class="help_text"></span></label>
+        <textarea name="${field.name}" 
+            class="${field.errorClass}">${issue?.description}</textarea>
+        #{/field}
+    </p>
+ 
+    <p>
+        #{field 'documentRevisionId'}
+        <input type="hidden" name="${field.name}" 
+            value="${documentRevision?.id}"/>
+        #{/field}
+    </p>
+    
+    <p>
+        <input type="submit" value="Raise this issue" />
+    </p>
+    
+#{/form}

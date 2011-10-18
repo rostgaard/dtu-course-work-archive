@@ -19,6 +19,14 @@ public class DocumentRevision extends Model{
     @OneToOne
     public Document originDocument;
     public String name;
+    public User revisedBy;
+
+    public DocumentRevision(Document originDocument, String name) {
+        this.originDocument = originDocument;
+        this.name = name;
+    }
+    
+    
     
     public String toString() {
         return this.originDocument.title + " revision: "+this.name;

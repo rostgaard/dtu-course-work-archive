@@ -23,7 +23,8 @@ public class Admin extends Controller {
             renderArgs.put("user", user.fullname);
         }
     }
- 
+
+        
 public static void index() {
     List<Post> posts = Post.find("author.email", Security.connected()).fetch();
     render(posts);
@@ -33,6 +34,14 @@ public static void form(Long id) {
     if(id != null) {
         Post post = Post.findById(id);
         render(post);
+    }
+    render();
+}
+
+public static void certificateForm(Long id) {
+    if(id != null) {
+        Certificate certificate = Certificate.findById(id);
+        render(certificate);
     }
     render();
 }
@@ -66,4 +75,28 @@ public static void save(Long id, String title, String content, String tags) {
     post.save();
     index();
 }
+    public static void saveCertificate(Long id, String type, String number, Date expirationDate) {
+        Certificate certificate;
+        if (id == null) {
+            // Create post
+            User addedBy = User.find("byEmail", Security.connected()).first();
+            certificate = new Certificate(type, expirationDate, number, addedBy);
+        } else {
+            // Retrieve post
+            certificate = Certificate.findById(id);
+            // Edit
+            certificate.type = type;
+            certificate.expirationDate = expirationDate;
+            certificate.lastModifedBy = User.find("byEmail", Security.connected()).first();
+        }
+    
+        // Validate
+        validation.valid(certificate);
+        if (validation.hasErrors()) {
+            render("@certificateForm", certificate);
+        }
+        // Save
+        certificate.save();
+        index();
+    }
 }

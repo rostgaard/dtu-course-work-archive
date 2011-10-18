@@ -1,0 +1,11 @@
+#{extends 'admin.html' /}
+
+ <p id="newDocument" >
+	<a href="@{add()}"><span>+</span> Add a new document, phase = ${phase}</a>
+</p>
+#{list items:documents, as:'document'}
+    <p class="post ${document_parity}">
+        <a href="@{Documents.show(document.id)}">${document.title}</a>
+    </p>
+#{/list}
+ 

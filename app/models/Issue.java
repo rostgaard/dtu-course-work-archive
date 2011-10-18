@@ -22,12 +22,15 @@ public class Issue extends Model {
     @OneToOne
     public DocumentRevision documentRevision;
     
+    @Required
+    public IssueStatus status;
+    
     public Date createdAt;
 //    @Required
 //    @ManyToMany
  //   public List<User> assignees;
 
-    @Required
+   // @Required
     @ManyToMany(cascade=CascadeType.PERSIST)
     public Set<User> assignees;
 //
@@ -43,11 +46,9 @@ public class Issue extends Model {
         this.assignees = new TreeSet<User>();
         this.createdAt = new Date();
         this.proposedResolutions = new ArrayList<Resolution>();
+        this.status = IssueStatus.findOrCreateByName("New");
         //this.assignees = new ArrayList<User>();
     }
-
-    
-    
     
     public String toString() {
         return this.briefDescription;

@@ -19,7 +19,8 @@ public class Document extends Model{
     @Required
     public String title;
     @Required
-    public String authors; // TODO make multiple
+    @OneToMany
+    public Set<Author> authors; // TODO make multiple
     //public String QACertificates;
     public String internalDocument;   
     @Required
@@ -27,16 +28,23 @@ public class Document extends Model{
     @Required
     @OneToOne
     public ProjectPhase projectPhase;
-    
+   
     @OneToOne
     public DocumentStatus documentStatus;
 
-    @OneToMany
-    public List<En50126Phase> en50126Phases;
+    public Document(String title, Set<String> authors, String internalDocument, ProjectPhase projectPhase, DocumentStatus documentStatus) {
+        this.title = title;
+        this.authors = new TreeSet<Author>();
+        this.internalDocument = internalDocument;
+        this.projectPhase = projectPhase;
+        this.documentStatus = documentStatus;
+        this.initiationDate = new Date();
+    }
 
-    
-   
+    @Override
     public String toString() {
         return this.title;
     }
+
+
 }

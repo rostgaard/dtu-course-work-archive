@@ -5,14 +5,16 @@
 package controllers;
 import play.*;
 import play.mvc.*;
-import models.ProjectPhase;
+
+import models.Company;
 import models.User;
 /**
  *
  * @author Kim Rostgaard Christensen
  */
-@With(Secure.class) 
-public class ProjectPhases extends CRUD {
+@With(Secure.class)
+@CRUD.For(Company.class)
+public class Companies extends CRUD {
     @Before
     static void setConnectedUser() {
         if(Security.isConnected()) {
