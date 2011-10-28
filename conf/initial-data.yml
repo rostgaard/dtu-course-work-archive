@@ -18,14 +18,18 @@ Company(re):
 Document(doc1):
     title:          Internal1.xsl
     projectPhase:   1
+    owner:          sc
  
 
 Document(doc2):
     title:          WP-224411.doc
+    projectPhase:   1
+    owner:          re    
 
 DocumentRevision(rev1):
   originDocument: doc1
   name:        draft
+  
    
 DocumentRevision(rev2):
     originDocument: doc2

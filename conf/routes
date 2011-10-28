@@ -21,6 +21,8 @@ POST    /posts/{postId}/comments                Application.postComment
 
 GET     /documents/byphase/{phase} Documents.byPhase
 GET     /documents/show/{<[0-9]+>id} Documents.show
+GET     /certificate/add/               Certificates.blank
+GET     /issues                         issues.listall  
 
 # Import CRUD routes
 GET     /admin/?                                Admin.index

@@ -1,26 +1,47 @@
-#{extends 'main.html' /}
+#{extends 'admin.html' /}
 #{set title:'Home' /}
  
-#{if frontPost}
-    
-    #{display post:frontPost, as:'home' /}
-    
-    #{if olderPosts.size()}
-    
-        <div class="older-posts">
-            <h3>Older posts <span class="from">from this blog</span></h3>
-        
-            #{list items:olderPosts, as:'oldPost'}
-                #{display post:oldPost, as:'teaser' /}
-            #{/list}
-        </div>
-        
+<div style="width=100%; background-color: white;">
+    <div id="box_right" style="float: right; width: 30%;">
+        <h4>Latest document revisions</h4>
+        #{if documents}
+    #{list items:documents, as:'document'}
+    <p class="post ${document_parity}">
+        <a href="@{Documents.list(document.id)}">${document}</a>
+    </p>
+    #{/list}
     #{/if}
+    <a href="@{Documents.listAll()}">Show all documents</a>
     
-#{/if}
- 
-#{else}
-    <div class="empty">
-        There is currently nothing to read here.
     </div>
-#{/else}
+    <h2>Tasks</h2>
+    <h4>Certificates</h4>
+    #{if certificates}
+    #{list items:certificates, as:'certificate'}
+    <p class="certificate ${certificate_parity}">
+        <a href="@{Certificates.list(certificate.id)}">${certificate}</a>
+    </p>
+    #{/list}
+    #{/if}
+    #{else}
+    <p>
+        <em>You have not yet provided any certificate information; please add it by clicking <a href="@{Certificates.blank()}">here</a></em>
+    </p>
+    #{/else}
+</div>
+
+<div style="width=100%; background-color: #ddd;">
+    <h3>Pending activites</h3>
+    #{if activities}
+    #{list items:activities, as:'activity'}
+    <p class="post ${activity_parity}">
+        <a href="@{Activities.show(activity.id)}">${activity}</a>
+    </p>
+    #{/list}
+    #{/if}
+</div>
+
+<div style="width=100%; background-color: #ddd;">
+    <h3>Recently resolved activities</h3>
+    
+</div>

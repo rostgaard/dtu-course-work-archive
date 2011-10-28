@@ -28,6 +28,9 @@ public class Document extends Model{
     @Required
     @OneToOne
     public ProjectPhase projectPhase;
+    
+    @Required
+    public Company owner;
    
     @OneToOne
     public DocumentStatus documentStatus;

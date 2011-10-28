@@ -23,7 +23,6 @@ public class Admin extends Controller {
             renderArgs.put("user", user.fullname);
         }
     }
-
         
 public static void index() {
     List<Post> posts = Post.find("author.email", Security.connected()).fetch();

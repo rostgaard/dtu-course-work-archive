@@ -9,7 +9,19 @@ import models.*;
 import play.data.validation.Required;
 import play.data.validation.Validation;
 
+@With(Secure.class)
 public class Application extends Controller {
+
+//    @Before
+//    static void setConnectedUser() {
+//        if (Security.isConnected()) {
+//            User user = User.find("byEmail", Security.connected()).first();
+//            renderArgs.put("user", user.fullname);
+//            renderArgs.put("company", user.employedAt);
+//            renderArgs.put("title", Play.configuration.getProperty("site.title"));
+//            renderArgs.put("baseline", Play.configuration.getProperty("site.baseline"));
+//        }
+//    }
 
     public static void documents() {
         List<Document> documents = Document.findAll();
@@ -17,16 +29,23 @@ public class Application extends Controller {
     }
 
     public static void index() {
-        Post frontPost = Post.find("order by postedAt desc").first();
-        List<Post> olderPosts = Post.find(
-                "order by postedAt desc").from(1).fetch(10);
-        render(frontPost, olderPosts);
-    }
+        if (Security.isConnected()) {
+            User user = User.find("byEmail", Security.connected()).first();
+            List<Certificate> certificates = Certificate.find("byBelongsTo", user.employedAt).fetch();
+            List<Document> documents = Document.find("byOwner", user.employedAt).fetch();
+            List<Activity> activities = Activity.find("byResponsible", user.employedAt).fetch();
 
-    @Before
-    static void addDefaults() {
-        renderArgs.put("title", Play.configuration.getProperty("site.title"));
-        renderArgs.put("baseline", Play.configuration.getProperty("site.baseline"));
+            //            List<Document> documents = Document.all().fetch();
+            
+            renderArgs.put("user", user.fullname);
+            renderArgs.put("company", user.employedAt);
+            renderArgs.put("title", Play.configuration.getProperty("site.title"));
+            renderArgs.put("baseline", Play.configuration.getProperty("site.baseline"));
+
+            render(certificates,documents,activities);
+
+        }
+        
     }
 
     public static void show(Long id) {

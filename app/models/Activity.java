@@ -18,14 +18,14 @@ public class Activity extends Model {
     @OneToOne
     public Company responsible;
     @ManyToMany
-    public List<En50126Phase> en50126Phases;
+    public List<Requirement> requirements;
     
     public String internalDocument;
     public ActivityStatus activityStatus;
     
     public Activity(String description, String en50126Phase, User Responsible) {
         this.description = description;
-        this.en50126Phases = new ArrayList<En50126Phase>();
+        this.requirements = new ArrayList<Requirement>();
         this.internalDocument = null;
         this.activityStatus = null;
     }
