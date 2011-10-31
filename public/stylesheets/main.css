@@ -2,12 +2,12 @@
 
 html, body {
    /* background: #364B66 !important;*/
-    background: #ccc !important;
+    background: #eee !important;
     font-family: Helvetica, Arial, Sans !important;
 }
 
 body {
-    width: 900px;
+    width: 960px;
     padding: 0 30px;
     margin: auto;
 }
@@ -96,7 +96,7 @@ body {
 
 #main {
     background: #314660;
-    background: -webkit-gradient(linear, left top, left 30%, from(#aaa), to(#ccc));
+    background: -webkit-gradient(linear, left top, left 30%, from(#aaa), to(#ddd));
     -webkit-border-radius: 16px;
     -moz-border-radius: 16px;
     padding: 20px;
@@ -546,4 +546,33 @@ tr.odd {
 
 .hasError {
     background: pink;
+}
+
+.compliant {
+    background-color: green; 
+        padding: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;  
+}
+
+.nonCompliant {
+    background-color: Red;
+    padding: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;  
+    font-color: white;
+}
+
+.minorObservation {
+    background-color: yellow; 
+    padding: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;    
+}
+
+.majorObservation {
+    background-color: orange; 
+    padding: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;      
 }

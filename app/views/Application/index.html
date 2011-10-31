@@ -1,7 +1,7 @@
 #{extends 'admin.html' /}
 #{set title:'Home' /}
  
-<div style="width=100%; background-color: white;">
+<div style="width=100%;">
     <div id="box_right" style="float: right; width: 30%;">
         <h4>Latest document revisions</h4>
         #{if documents}
@@ -30,18 +30,29 @@
     #{/else}
 </div>
 
-<div style="width=100%; background-color: #ddd;">
+<div style="width=100%;">
     <h3>Pending activites</h3>
     #{if activities}
+    <ul>
     #{list items:activities, as:'activity'}
-    <p class="post ${activity_parity}">
-        <a href="@{Activities.show(activity.id)}">${activity}</a>
+    <li>
+    <p>
+    <h4>${activity}</h4>
+        #{if activity.requirements}
+        <ul>        
+        #{list items:activity.requirements, as:'requirement'}
+        <li><a href="@{Requirements.show(requirement.id)}">${requirement}</a> <span class="${requirement?.status.css_class}">${requirement.status}</span></li>
+        #{/list}
+        </ul>
+        #{/if}
     </p>
+    </li>
     #{/list}
+    </ul>
     #{/if}
 </div>
 
-<div style="width=100%; background-color: #ddd;">
+<div style="width=100%;">
     <h3>Recently resolved activities</h3>
     
 </div>

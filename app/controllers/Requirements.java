@@ -3,18 +3,22 @@
  * and open the template in the editor.
  */
 package controllers;
+
 import java.util.List;
 import models.Activity;
 import models.Document;
+import models.Requirement;
 import models.User;
 import play.*;
 import play.db.jpa.GenericModel;
 import play.mvc.*;
+
 /**
  *
  * @author Kim Rostgaard Christensen
  */
-public class Requirements extends Controller{
+public class Requirements extends CRUD {
+
     @Before
     static void setConnectedUser() {
         if (Security.isConnected()) {
@@ -23,15 +27,15 @@ public class Requirements extends Controller{
             renderArgs.put("company", user.employedAt);
         }
     }
+
     
-    public static void listAll() {
-        List<Activity> activities = Activity.all().fetch();
+   
+    public static void add(long id) {
+        Activity activity = Activity.findById(id);
+        Requirement object = new Requirement();
+        object.activity = activity;
+                
         
-        render("@list",activities);
-    }
-    
-    public static void list() {
-        List<Document> documents;
-    
+        render(object,activity);
     }
 }

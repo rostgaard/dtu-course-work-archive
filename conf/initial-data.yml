@@ -139,21 +139,23 @@ IssueType(c):
     description:    Some elaboration/help text
     severity:       C
     
-IssueStatus(raised):
-    name:           Raised
+RequirementStatus(nc):
+    name:           Non-compliant
+    css_class:      nonCompliant
     
-IssueStatus(actioned):
-    name:           Actioned
+RequirementStatus(c):
+    name:           Compliant
+    css_class:      compliant
     
-IssueStatus(replied):
-    name:           Replied
+RequirementStatus(mao):
+    name:           Major observation
+    css_class:      majorObservation
     
-IssueStatus(accepted):
-    name:           Accepted
+RequirementStatus(mio):
+    name:           Minor observation
+    css_class:      minorObservation
     
-IssueStatus(closed):
-    name:           Closed
-    
+   
     
 Post(firstBobPost):
     title:          About the model layer

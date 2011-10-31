@@ -4,6 +4,7 @@
  */
 package models;
 
+import java.awt.Color;
 import javax.persistence.*;
 
 import play.data.validation.Required;
@@ -14,12 +15,12 @@ import play.db.jpa.*;
  * @author Kim Rostgaard Christensen
  */
 @Entity
-public class IssueStatus extends Model {
+public class RequirementStatus extends Model {
 
-    
+    public String css_class;
     public String name;
 
-    private IssueStatus(IssueStatus status) {
+    private RequirementStatus(RequirementStatus status) {
         this.name = name;
     }
 
@@ -34,10 +35,10 @@ public class IssueStatus extends Model {
      * @param name The name of the IssueType to lookup
      * @return The found, or a new object with the name.
      */
-    public static IssueStatus findOrCreateByName(String name) {
-        IssueStatus status = IssueStatus.find("byName", name).first();
+    public static RequirementStatus findOrCreateByName(String name) {
+        RequirementStatus status = RequirementStatus.find("byName", name).first();
         if (status == null) {
-            status = new IssueStatus(status);
+            status = new RequirementStatus(status);
         }
         return status;
     }

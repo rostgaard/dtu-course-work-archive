@@ -6,6 +6,7 @@ package models;
 import java.util.*;
 import javax.persistence.*;
 
+import play.data.validation.Required;
 import play.db.jpa.*;
 /**
  *
@@ -13,7 +14,19 @@ import play.db.jpa.*;
  */
 @Entity
 public class Requirement extends Model{
+    @Required
+    @ManyToOne
     public En50126Phase en50126Phase;
-    public String description;
-    public boolean isDone;
+    //public String description;
+    @ManyToOne
+    public RequirementStatus status;
+    @Required
+    @ManyToOne
+    public Activity activity;
+    
+    
+    @Override
+    public String toString() {
+        return "("+this.en50126Phase +")";
+    }
 }

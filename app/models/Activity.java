@@ -17,21 +17,25 @@ public class Activity extends Model {
    
     @OneToOne
     public Company responsible;
-    @ManyToMany
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
     public List<Requirement> requirements;
     
-    public String internalDocument;
-    public ActivityStatus activityStatus;
+    //public String internalDocument;
     
     public Activity(String description, String en50126Phase, User Responsible) {
         this.description = description;
         this.requirements = new ArrayList<Requirement>();
-        this.internalDocument = null;
-        this.activityStatus = null;
+       // this.internalDocument = null;
+        //this.activityStatus = null;
     }
     
     public String toString() {
         return this.description;
     }
+
     
+    public ActivityStatus status() {
+        // TODO Loop through every requirement to determine the status
+        return new ActivityStatus();
+    }
 }

@@ -1,8 +1,24 @@
-#{extends 'admin.html' /}
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.list.title', type.name) /}
 
-#{list items:activities, as:'activity'}
-    <p class="post ${activity_parity}"> 
-        <a href="@{Issues.show(activity.id)}">${activity.description}</a>
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
+
+    <div id="crudListSearch">
+        #{crud.search /}
+    </div>
+
+    <div id="crudListTable">
+        #{crud.table fields:['activity', 'en50126Phase', 'status']/}
+    </div>
+
+    <div id="crudListPagination">
+        #{crud.pagination /}
+    </div>
+
+    <p id="crudListAdd">
+        <a href="@{blank()}">&{'crud.add', type.modelName}</a>
     </p>
-#{/list}
- 
+
+</div>
