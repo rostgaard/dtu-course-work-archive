@@ -3,6 +3,8 @@
  * and open the template in the editor.
  */
 package controllers;
+import models.Requirement;
+import models.Resolution;
 import play.*;
 import play.mvc.*;
 import models.User;
@@ -19,5 +21,16 @@ public class Resolutions extends CRUD {
             renderArgs.put("user", user.fullname);
             renderArgs.put("company", user.employedAt);
         }
+    }
+    
+    public static void propose(long req_id) {
+        Requirement requirement = Requirement.findById(req_id);
+        Resolution resolution = new Resolution("");
+        resolution.solutionFor = requirement;
+        render(requirement, resolution);
+    }
+    
+    public static void add() {
+        
     }
 }

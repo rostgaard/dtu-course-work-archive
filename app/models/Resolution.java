@@ -13,12 +13,19 @@ import play.db.jpa.*;
  */
 @Entity
 public class Resolution extends Model {
-    public String name;
+    public String description;
     
     @ManyToOne
-    public Issue solutionFor;
+    public Requirement solutionFor;
    
+    @Override
     public String toString() {
-        return this.name;
+        return this.description;
     }
+
+    public Resolution(String description) {
+        this.description = description;
+    }
+    
+
 }

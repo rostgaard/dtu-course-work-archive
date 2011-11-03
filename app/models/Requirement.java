@@ -23,7 +23,7 @@ public class Requirement extends Model{
     @Required
     @ManyToOne
     public Activity activity;
-    
+    public Resolution acceptedResolution;
     
     @Override
     public String toString() {

@@ -41,7 +41,9 @@
         #{if activity.requirements}
         <ul>        
         #{list items:activity.requirements, as:'requirement'}
-        <li><a href="@{Requirements.show(requirement.id)}">${requirement}</a> <span class="${requirement?.status.css_class}">${requirement.status}</span></li>
+        <li><a href="@{Requirements.show(requirement.id)}">${requirement}</a> <span class="${requirement?.status?.css_class}">${requirement.status}</span>
+            <a href="@{Resolutions.propose(requirement.id)}">Propose resolution</a>
+        </li>
         #{/list}
         </ul>
         #{/if}

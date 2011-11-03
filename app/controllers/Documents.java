@@ -69,8 +69,9 @@ public class Documents extends CRUD{
     }
     
         
-    public static void save(Long id, String briefDescription, String description, Long documentRevisionId) {
-        description = null;
+    public static void save(Long id, String briefDescription, String title, Long documentRevisionId) {
+        System.out.println(title);
+        title = null;
     }
     
 }
