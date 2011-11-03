@@ -4,7 +4,7 @@
 \usepackage{listings}
 
 \author{Kim Rostgaard Christensen}
-\title{Tool-assisted verification and validation}
+\title{Information-oriented verification and validation}
 
 
 \begin{document}
@@ -16,15 +16,16 @@
 \newpage
 
 \section{Introduction}
-This report used the EN-50126 standard for railways as the formal process to implement. As the EN-50126 contains a very general approach to V\&V, the methods discussed here should be applicable elsewhere.
+This report used the EN-50126 standard for railways as the formal process to implement. As the EN-50126 contains a very general approach to V\&V, the methods discussed here could be applied more generally.
 
-%Unified Modelling Language (UML) is discussed in this report. Version 1 of UML is implied, but the current version is 2.0.
+When unified Modelling Language (UML) is discussed in this report. Version 1 of UML is implied, although the latest version is 2.0.
 \subsection{Background}
-I was noted that the challenges of the development process of a larger software project, and the challenges
+I noted that the QA challenges faced during the development process of a larger software project, and the QA challenges faced when producing V\&V documentation were quite similar.
+%TODO
 
 
 \subsection{Terminology}
-The terminologies within a RAMS process is largely company-culture dependant. In this report we will use the term issue describing a non-conformity with a given requirement.
+The terminologies within a safety management process is largely company-culture dependant. In this report we will use the term issue describing a non-conformity with a given requirement. Whenever a requirement, or sub-requirement is anything else than conformant - it is considered an issue.
 
 \subsubsection{Hazard log}
 The hazard log is where all identified hazards go. Once identified, they go through the life cycle illustrated in figure \ref{fig:hazard_log_life_cycle}
@@ -36,6 +37,9 @@ The hazard log is where all identified hazards go. Once identified, they go thro
 \caption{Life cycle hazard log entry}
 \label{fig:hazard_log_life_cycle}
 \end{figure}
+
+\subsubsection{Traceabilty}
+Traceabilty is one of the cornerstones of safety management. Each change and decision or must be tracked during the life-cycle of the entire project. This requirement is typically solved by ad-hoc document naming procedures, and similar manual procedures.
 
 \subsection{Terminology of software project management}
 Typically you have a hierarchy consisting of projects, subprojects and components. The structure is illustrated in figure \ref{fig:project_structure}.
@@ -52,7 +56,7 @@ TODO: The need for
 
 
 \subsubsection{Issues}
-Issue tracking is one the critical functionalities of the tool. Figure \ref{fig:software_issue_life_cycle} illustrates the process of eliminating a software bug (a bug is ambiguous to an issue) from identification to resolution.
+Issue tracking is one the critical functionalities of the tool. Figure \ref{fig:software_issue_life_cycle} illustrates the process of eliminating a software bug in a software system (a bug is ambiguous to an issue) from identification to resolution.
 
 
 \begin{figure}[h]
@@ -73,8 +77,7 @@ The main motivation and goal for using a tool in the V\&V process must be to eli
 The tasks can include an automatic header generator filling out the revision log with the information provided by the validator.
 
 What it is not:
-It is not a strict system that decides what format your document must be written in.
-
+It is not a strict system that decides what format your document must be written in. It is meant as a service to keep track of the tedious information - mainly traceabilty.
 \section{Events}
 \subsection{Quality assurance}
 
@@ -118,11 +121,25 @@ This will give an easy and homogenous method of referring to a specific revision
 
 
 \section{RPC API}
-To be able to support external BMS's, an API\footnote{Application Programming Interface} can be supplied.
+To be able to support external BMS/SMS/QMS an API\footnote{Application Programming Interface} can be supplied.
 
-An API is a way to 
+An API is a way to give external access to the internals of the system. It can be thought of as a protocol, but is typically more specific.
 
 \section{Design}
+
+\subsection{Actors}
+For the system, the following actors has been identified:
+\begin{itemize}
+  \item Verificator
+  \item System responsible
+  \item Auditor
+\end{itemize}
+There is also the question on, whether an assessor is part of system or not. This should not be the case, as the system is meant to produce final reports suitable for archiving and assessing.
+
+An auditor on the other hand, could have an interest in gathering more specific information on who did and changed what - and when they did it.
+
+This is information that would be very simple to collect in an automated system, but very trivial to include in a full report.
+
 %TODO insert figure
 
 
