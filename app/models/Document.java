@@ -21,8 +21,11 @@ public class Document extends Model{
     @Required
     @OneToMany
     public Set<Author> authors; // TODO make multiple
+    
+    @Required
+    public String documentReference;
     //public String QACertificates;
-    public String internalDocument;   
+    public String internalDocument;
     @Required
     public Date initiationDate;
     @Required

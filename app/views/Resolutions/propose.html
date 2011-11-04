@@ -8,13 +8,8 @@
     <div class="objectForm">
 
        
-    #{form action:@create(), enctype:'multipart/form-data'}
+    #{form action:@add(resolution.solutionFor.id), enctype:'multipart/form-data'}
 
-       #{field 'requirement'}
-<p>
-  <input type="hidden" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}"/>
-</p>
-#{/}
 #{field 'resolution'}
 <p>
   <label>Proposal</label>

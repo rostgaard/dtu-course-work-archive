@@ -17,7 +17,7 @@ public class Resolution extends Model {
     
     @ManyToOne
     public Requirement solutionFor;
-   
+
     @Override
     public String toString() {
         return this.description;

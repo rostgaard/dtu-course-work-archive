@@ -23,6 +23,10 @@ public class Resolutions extends CRUD {
         }
     }
     
+    /**
+     * TODO refactor this to only use the id. The resolution lookup is pointless
+     * @param req_id 
+     */
     public static void propose(long req_id) {
         Requirement requirement = Requirement.findById(req_id);
         Resolution resolution = new Resolution("");
@@ -30,7 +34,12 @@ public class Resolutions extends CRUD {
         render(requirement, resolution);
     }
     
-    public static void add() {
-        
+    public static void add(Long requirement, String resolution) {
+        Resolution r = new Resolution(resolution);
+        r.description = resolution;
+        r.solutionFor = Requirement.findById(requirement);
+       
+        r.save();
+        redirect("Resolutions.list");
     }
 }
