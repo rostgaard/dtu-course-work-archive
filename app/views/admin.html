@@ -25,15 +25,13 @@
                 </li>
             </ul>
         </div>
-        <div class="buttons">
-          <ul id="adminMenu">
-	   
+        <div class="buttons" style="width: 960px; margin-left: 30px">
+          <div style=" margin: 10px auto;" id="adminMenu">
 	
-                
         #{secure.check 'admin'}
-                <a class="button left" href="@{Activities.list()}">Activities</a><a class="button middle" href="@{Documents.listAll()}">Documents</a><a class="button middle"  href="@{Certificates.list()}">Certificates</a><a class="button middle"  href="@{Companies.list()}">Companies</a><a class="button middle"  href="@{DocumentRevisions.list()}">Document Revisions</a><a class="button middle" href="@{ProjectPhases.list()}">ProjectPhases</a><a class="button middle" href="@{Users.list()}">Users</a><a class="button middle" href="@{Requirements.list()}">Requirements</a><a class="button right" href="@{Resolutions.list()}">Resolutions</a>
+                <a class="button left" href="@{Activities.list()}">Activities</a><a class="button middle" href="@{Documents.listAll()}">Documents</a><a class="button middle"  href="@{LogEntries.list()}">Backlog</a><a class="button middle"  href="@{DocumentRevisions.list()}">Document Revisions</a><a class="button middle" href="@{ProjectPhases.list()}">ProjectPhases</a><a class="button middle" href="@{Users.list()}">Users</a><a class="button middle" href="@{Requirements.list()}">Requirements</a><a class="button right" href="@{Resolutions.list()}">Resolutions</a>
         #{/secure.check}
-           </ul>
+           </div>
           </div>               
         
         <div id="main">

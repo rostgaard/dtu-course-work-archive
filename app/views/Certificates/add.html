@@ -1,0 +1,30 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.blank.title', type.modelName) /}
+
+<div id="crudBlank" class="${type.name}">
+
+    <h2 id="crudBlankTitle">&{'crud.blank.title', type.modelName}</h2>
+
+    <div class="objectForm">
+    #{form action:@addNew(), enctype:'multipart/form-data'}
+<p>
+  <label>Certificate type</label>
+  <input type="text" id="certificateType" name="certificateType" value="" class="" size="50"/>
+</p>
+<p>
+  <label>Certificate serial number</label>
+  <input type="text" id="certificateSerial" name="certificateSerial" value="" class="" />
+</p>
+
+<p>
+  <label>Expiration date</label>
+  <input type="text" id="certificateExpr" name="certificateExpr" value="" class="" />
+</p>
+
+        <p>
+            <input class="button green" type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+</div>

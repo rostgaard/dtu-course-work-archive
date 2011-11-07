@@ -23,10 +23,20 @@ public class Requirement extends Model{
     @Required
     @ManyToOne
     public Activity activity;
+    
+    @ManyToOne
     public Resolution acceptedResolution;
+
+    @OneToMany(mappedBy = "solutionFor", cascade = CascadeType.ALL)
+    public List<Resolution> resolutions;    
     
     @Override
     public String toString() {
         return "("+this.en50126Phase +")";
+    }
+
+    public void Accept(Resolution resolution) {
+        this.acceptedResolution = resolution;
+        this.status = RequirementStatus.findOrCreateByName("Compliant");
     }
 }

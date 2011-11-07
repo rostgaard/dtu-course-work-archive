@@ -21,13 +21,13 @@ public class Activity extends Model {
     public List<Requirement> requirements;
     
     //public String internalDocument;
-    
-    public Activity(String description, String en50126Phase, User Responsible) {
+
+    public Activity(String description, Company responsible, List<Requirement> requirements) {
         this.description = description;
-        this.requirements = new ArrayList<Requirement>();
-       // this.internalDocument = null;
-        //this.activityStatus = null;
+        this.responsible = responsible;
+        this.requirements = requirements;
     }
+    
     
     public String toString() {
         return this.description;

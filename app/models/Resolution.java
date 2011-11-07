@@ -27,5 +27,8 @@ public class Resolution extends Model {
         this.description = description;
     }
     
+    public void Accept() {
+        this.solutionFor.Accept(this);
+    }
 
 }

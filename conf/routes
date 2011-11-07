@@ -28,10 +28,7 @@ GET     /issues                         issues.listall
 GET     /admin/?                                Admin.index
 *       /admin                                  module:crud
 *       /crud/index                        Admin.index
-GET     /admin/new                          Admin.form
-POST    /admin/myPosts/{id}                  Admin.save
-POST    /admin/new                          Admin.save
-GET     /admin/myPosts/{id}                 Admin.form
+
 
 # Import Secure routes
 *       /                                       module:secure

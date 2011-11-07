@@ -13,6 +13,10 @@ body {
     margin: auto;
 }
 
+li {
+    min-height: 30px;
+}
+
 /** Blog header **/
 
 #header {

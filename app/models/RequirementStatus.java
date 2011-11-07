@@ -18,10 +18,10 @@ import play.db.jpa.*;
 public class RequirementStatus extends Model {
 
     public String css_class;
-    public String name;
+    public String name = "";
 
     private RequirementStatus(RequirementStatus status) {
-        this.name = name;
+        this.name = "";
     }
 
     public String toString() {

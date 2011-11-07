@@ -1,0 +1,35 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.show.title', type.modelName) /}
+
+<div id="crudShow" class="${type.name}">
+
+    <h2 id="crudShowTitle">${type.modelName} overview</h2>
+
+    <div class="objectForm">
+    #{form action:@save(requirement._key()), enctype:'multipart/form-data'}
+    <!-- Show a list of all resolutions, and the accepted resolution - if any -->
+    
+    <h3>Accepted resolution:</h3>
+    <p>${requirement.acceptedResolution}</p>
+
+    
+    #{if !requirement.resolutions.isEmpty() }
+    <h3>Proposed resolutions</h3>
+    <table>
+    #{list items:requirement.resolutions, as:'resolution'}
+    <tr class="post ${resolution_parity}">
+        <td>${resolution}</td>
+        <td><a class="button green "href="@{Resolutions.accept(resolution.id)}">Accept this resolution</a></td>
+    </tr>
+    #{/list}
+    </table>
+    #{/if}
+    
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+
+</div>

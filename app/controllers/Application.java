@@ -22,7 +22,6 @@ public class Application extends Controller {
 //            renderArgs.put("baseline", Play.configuration.getProperty("site.baseline"));
 //        }
 //    }
-
     public static void documents() {
         List<Document> documents = Document.findAll();
         render(documents);
@@ -35,17 +34,30 @@ public class Application extends Controller {
             List<Document> documents = Document.find("byOwner", user.employedAt).fetch();
             List<Activity> activities = Activity.find("byResponsible", user.employedAt).fetch();
 
-            //            List<Document> documents = Document.all().fetch();
+            Stats stats = new Stats();
             
+            // Statistics
+            for (Activity a : activities) {
+                for (Requirement r : a.requirements) {
+                    if (r.status.name.equals("Compliant")) {
+                        stats.numCompliant++;
+                    }
+                    else {
+                        stats.numNonCompliant++;
+                    }
+
+                }
+            }
+
             renderArgs.put("user", user.fullname);
             renderArgs.put("company", user.employedAt);
             renderArgs.put("title", Play.configuration.getProperty("site.title"));
             renderArgs.put("baseline", Play.configuration.getProperty("site.baseline"));
 
-            render(certificates,documents,activities);
+            render(certificates, documents, activities, stats);
 
         }
-        
+
     }
 
     public static void show(Long id) {

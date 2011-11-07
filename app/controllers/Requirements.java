@@ -38,4 +38,10 @@ public class Requirements extends CRUD {
         
         render(object,activity);
     }
+    
+    public static void view(long id) {
+        Requirement requirement = Requirement.findById(id);
+        render(requirement);
+    }
+    
 }

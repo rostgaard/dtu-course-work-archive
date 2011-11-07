@@ -19,42 +19,58 @@
     #{if certificates}
     #{list items:certificates, as:'certificate'}
     <p class="certificate ${certificate_parity}">
-        <a href="@{Certificates.list(certificate.id)}">${certificate}</a>
+        <a href="@{Certificates.show(certificate.id)}">${certificate}</a>
     </p>
     #{/list}
+    <a class="button green" href="@{Certificates.add()}">Add another</a>
     #{/if}
     #{else}
     <p>
-        <em>You have not yet provided any certificate information; please add it by clicking <a href="@{Certificates.blank()}">here</a></em>
+        <em>You have not yet provided any certificate information; please add it by clicking <a href="@{Certificates.add()}">here</a></em>
     </p>
+    <h3>Statistics</h3>
+    <ul>
+        <li>Compliant: ${stats.numCompliant}</li>
+        <li>Non-Compliant: ${stats.numNonCompliant}</li>
+        <li>Major observations: ${stats.numMajorObservations}</li>
+        <li>Minor observations: ${stats.numMinorObservations}</li>
+    </ul>
     #{/else}
 </div>
 
 <div style="width=100%;">
-    <h3>Pending activites</h3>
+
     #{if activities}
-    <ul>
+    <h3>Pending activites</h3>    
     #{list items:activities, as:'activity'}
-    <li>
-    <p>
-    <h4>${activity}</h4>
+    
+    <table>
+        <thead><td> ${activity}</td></thead>
         #{if activity.requirements}
-        <ul>        
+        
         #{list items:activity.requirements, as:'requirement'}
-        <li><a href="@{Requirements.show(requirement.id)}">${requirement}</a> <span class="${requirement?.status?.css_class}">${requirement.status}</span>
-            <a href="@{Resolutions.propose(requirement.id)}">Propose resolution</a>
-        </li>
+        <tr class="post ${requirement_parity}">
+            <td><span class="${requirement?.status?.css_class}">${requirement.status}</span></td>
+            <td>
+                <a class="button" href="@{Requirements.view(requirement.id)}"><strong>${requirement}</strong></a>
+          </td>
+          
+          <td><a  class="button" href="@{Resolutions.propose(requirement.id)}">Propose resolution</a></td>
+          <td><a  class="button" href="#">Add oberservation</a></td>
+        </tr>
         #{/list}
-        </ul>
+        
         #{/if}
-    </p>
-    </li>
+    
+    
     #{/list}
-    </ul>
+    </table>
     #{/if}
+    
 </div>
 
+
 <div style="width=100%;">
-    <h3>Recently resolved activities</h3>
+
     
 </div>
