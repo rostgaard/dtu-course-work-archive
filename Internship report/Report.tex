@@ -12,9 +12,7 @@
 %Ønsker du at referere til resultater fra praktikperioden, skal det gøres ved at etablere re-sultater fra praktikperioden som rapporter, artikler eller andre former for afsluttede do-kumenter der har dig som forfatter. Disse dokumenter kan du så referere til som bilag til eksamensprojektet.
 
 
-
-
-\documentclass[11pt,a4paper,UKenglish]{memoir}
+\documentclass[11pt,a4paper,UKenglish]{article}
 % Template by DTU LaTeX support group, v20090423
 
 \usepackage[latin1]{inputenc} % Must correspond to the input encoding used by the editor
@@ -28,10 +26,10 @@
 
 \usepackage{xcolor}
 \usepackage[plainpages=false,pdfpagelabels,pageanchor=false]{hyperref} % active links
-\hypersetup{%
-  pdfauthor={<your name>},
-  pdftitle={title},
-  pdfsubject={<subject>},
+\hypersetup{
+  pdfauthor={Kim Rostgaard Christensen},
+  pdftitle={Internship report},
+  pdfsubject={Internship report},
   citebordercolor={1 1 1}, % The color of the box around citations (change to 1 1 1 to remove)
   linkbordercolor={1 1 1}, % The color of the box around normal links
   pagebordercolor={1 1 1}, % The color of the box around links to pages
@@ -40,36 +38,128 @@
 \usepackage{memhfixc}% fixes for hyperref
 
 % The following can be used if not using custom frontpage
-\title{<document title>}
-\author{<name>\\
+\title{Internship report}
+\author{Kim Rostgaard Christensen\\
         \\
-        <student id>
+        s084283
 }
 \date{\today}
 
-% \includeonly{preface,testing} % Only compile those files you are working in (to save compile time, and power)
+
+% \includeonly{preface,assignments,testing} % Only compile those files you are working in (to save compile time, and power)
 
 \begin{document}
-\frontmatter % roman page numbering
-%\maketitle  % use this if not using custom frontpage
-\include{frontpage}
+%\frontmatter % roman page numbering
+\maketitle  % use this if not using custom frontpage
+%\include{frontpage}
 
-\include{abstract}
+\begin{abstract}
+This report document my three-months internship with Atkins Denmark. The overall goal of the internship period was to learn about the railway industry with a focus on safety engineering.
+\end{abstract}
+
 \tableofcontents
 \listoffigures
 \listoftables
 
-\mainmatter % arabic page numbering
-\include{preface}
-\include{assignments}
-\include{testing}
-\include{conclusion}
+%\mainmatter % arabic page numbering
+\section*{Introduction} 
+As part of my engineers degree, it is mandatory for me to have an internship period of 20 weeks.
+
+My internship period is reduced from 20 weeks to 3 (rounded from 10 weeks months due to received merits.\\\\
+The defined purpose of the stay was for me to study the theory behind 
+
+
+
+\section{Atkins Denmark}
+This section contains a brief description of Atkins Denmark, its role in the Atkins Global corporation and the Risk Management department where I was located.
+
+
+Atkins Denmark is an advisory company that operates within the following areas of expertise:
+
+\begin{itemize}
+  \item Transportation - mainly railway
+  \item Climate and environment
+  \item GIS \& IT
+  \item Surveying
+  \item Risk Management
+  \item Energy
+  \item Architecture \& Design
+  \item Bridges \& Construction
+\end{itemize}
+\subsection{Risk Department}
+The risk department where I worked is again split into two branches; RAMS and Validation.\\\\
+The RAMS department is not surprisingly doing RAMS\footnote{Reliability Availability Maintainability Safety} tasks. Furthermore they do risk assessment, qualitative and quantitative analyses and modelling, including methods design. Last, but not least the also do Human Factors analysis\\\\
+The validation department is in charge of validating technical systems, primarily interlocking systems. The department has approved in-house validators.\\\\
+Both branches work primarily with railway safety, which is also considered their core competence.
+
+
+\section{Assignments}
+
+\subsection{Railway theory and business management}
+Although technically not an assignment, I have decided to include this as part of my internship report. This i mainly due to the fact, that I have spent i great deal of time studying the concepts and application of railway technology and application.
+
+I have taken the following two courses during my stay at Atkins.
+
+\begin{itemize}
+  \item Introductory railway concepts
+  \item Introduction to Business management system
+\end{itemize}
+
+
+\subsection{Document and technical drawing archiving}
+but was planned to be a holistic digital archiving solution for paper documents and drawings.
+
+The concept was to have a three-phase storage process
+\begin{itemize}
+  \item Scan the document
+  \item Archive the document on a net share
+  \item Use OCR to auto-tag documents - or provide fulltext search indexes.
+\end{itemize}
+This project never left the theoretical discussion stage, unfortunately.
+
+\subsection{Defining and documenting a V\&V process}
+This project was the main time-consumer of my time. It is a large project, already in progress, which meant that there was a vast quantity of documentation to read through.
+
+This task involved reading though the existing documentation - which was extensive. And Modelling. See section \ref{sec:vandv} for more details
+
+
+\subsection{Learn concepts and application of FRAM}
+The Functional Resonance Analysis Method - or FRAM - is a method developed by Erik Hollnagel. It is a radically different approach to resilience engineering, taking into account human factors as functions in a system.
+
+
+\section{V\&V application}
+\subsection{Screenshots}
+Always have images/figures in \emph{both} EPS and PDF/PNG/JPG format! (unless you know you only will be using pdfLaTeX)
+
+
+\begin{figure}[!tbh]
+	\centering
+	\includegraphics[width=1.0\textwidth]{img/login.png}
+	\caption{Main login screen}
+	\label{fig:login}
+\end{figure}
+
+\begin{figure}[!tbh]
+	\centering
+	\includegraphics[width=1.0\textwidth]{img/frontpage.png}
+	\caption{Main login screen}
+	\label{fig:login}
+\end{figure}
+
+
+\section{Conclusion}
+
+
+\subsection{Criticism}
+13 weeks has bee too short of a period for an internship. It took me about 5 weeks to get comfortable enough with the internal work flows, to be able to have a complete working day.
 
 \include{biblio/bib}
 
 \appendix % Alphabetic chapter numbering
-\renewcommand{\appendixtocname}{Appendix} % Change appendix name for the table od contents
-\addappheadtotoc % 'Appendix' to the table of contents
-\include{appendix-code}
-\backmatter % for glossary, index, back page
+%\renewcommand{\appendixtocname}{Appendix} % Change appendix name for the table od contents
+%\addappheadtotoc % 'Appendix' to the table of contents
+
+
+
+%\backmatter % for glossary, index, back page
 \end{document}
