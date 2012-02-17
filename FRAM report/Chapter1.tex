@@ -70,32 +70,58 @@ A special-purpose piece of computer software exists to visualize the FRAM models
 
 \begin{figure}[h]
  \centering
-   \includegraphics[width=300pt]{figures/FRAM_node.pdf}
+   \includegraphics[width=200pt]{figures/FRAM_node.pdf}
  \caption{FRAM node}
  \label{fig:logbog}
 \end{figure}
-\end{document}
 
 
+Each node consists of a number of edge connection points  which model
+
+\begin{itemize}
+  %Time available: This can be a constraint but can also be considered as a special kind of resource
+  \item Time: Time constraints. When a function is dependant on a time input, this connects to and output port of another node.
+
+%Precondition: System conditions that must be fulfilled before a function can be carried out.
+  \item Precondition: A connected function must supply output to this input before the function can start.
+
+% Control: That which supervises or adjusts a function. Can be plans, procedures, guidelines or other functions.
+  \item Control: Implies "controlled by", and specifies input from supervising function
+  
+%Input: That which is used or transformed to produce the output. Constitutes Input the link to previous functions.
+  \item Input: That which is used or transformed to produce the output. Constitutes the link to previous functions.
+
+%Output: That which is produced by function. Constitute Output links to subsequent functions.
+  \item Output: The product of this function
+%Resource: That which is needed or consumed by function to process input (e.g.,matter, energy, hardware, software, manpower).
+  \item Resource: Resources consumed by this function (e.g.,matter, energy, hardware, software, manpower)
+\end{itemize} 
+
+
+FRAM analysis consists of four steps:
+
+\begin{enumerate}
+  \item Identify essential system functions, and characterise each function by the six basic aspects specified in \ref{}. This can be done in a table, and converted to hexagonal objects later on.
+or parameters
+%TODO
+  \item Step 2: Characterize the context dependent variability of each node.
+\end{enumerate}
 **Stolen
-The functional resonance accident model (FRAM; Hollnagel, 2004) describes system failure
-in terms of the resonance of normal performance variability. This provides a convenient way
+
+
+
+
+
+
+The functional resonance accident model (FRAM; Hollnagel, 2004) describes system failure in terms of the resonance of normal performance variability. This provides a convenient way
 of representing the non-linear propagation of events and also makes it possible to account for
-adverse outcomes in cases where there were no manifest malfunctions or failures. The
-principle of FRAM is to characterise individual system functions independently of how they
-may be connected in a specific situation. The characterisation of each function ­ or node ­ is
-done in terms of six aspects and the values of these aspects determine how nodes may be
+%adverse outcomes in cases where there were no manifest malfunctions or failures. The principle of FRAM is to characterise individual system functions independently of how they may be connected in a specific situation. The characterisation of each function ­ or node ­ is done in terms of six aspects and the values of these aspects determine how nodes may be
 coupled under given conditions. To produce a description of functional variability and
 potential resonance, and to determine recommendations for damping unwanted variability, a
 FRAM analysis consists of four steps:
 
-Step 1: Identify essential system functions, and characterise each function by six basic aspects
-or parameters. The six aspects are input (I, that which the function uses or transforms), output
-(O, that which the function produces), preconditions (P, conditions that must be fulfilled to
-perform a function), resources (R, that which the function needs or consumes), time (T, that
-which affects time availability), and control (C, that which supervises or adjusts the function).
-Nodes and their aspects may be described in a table and can subsequently visualized in a
-hexagonal representation (cf. Figure 2 and 4 below).
+%Step 1: Identify essential system functions, and characterise each function by six basic aspects or parameters. The six aspects are input (I, that which the function uses or transforms), output (O, that which the function produces), preconditions (P, conditions that must be fulfilled to perform a function), resources (R, that which the function needs or consumes), time (T, that which affects time availability), and control (C, that which supervises or adjusts the function). Nodes and their aspects may be described in a table and can subsequently visualized in a hexagonal representation (cf. Figure 2 and 4 below).
+
 Step 2: Characterize the context dependent variability of each node. For an accident analysis,
 the variability is known from the investigation data. In this case the analysis focuses on
 comparing the observed and the normal performance. For risk assessment, the variability may
