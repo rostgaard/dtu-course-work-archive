@@ -13,7 +13,7 @@
 %==================================================================================================
 % DOCUMENT SETUP
 %==================================================================================================
-\documentclass[10pt,twoside]{book}                  %Official DTU-IMM Thesis document setup
+\documentclass[10pt,oneside]{book}                  %Official DTU-IMM Thesis document setup
 %
 %Set to 'print' for printed version, use 'net' for online version
 \def\thesisversion{print} 			
@@ -28,7 +28,7 @@
 % THESIS PROPERTIES (Modifiy these fields with your details)
 %==================================================================================================
 \def\thesisauthor{Kim Rostgaard Christensen}                     %Author
-\def\thesistitle{Applied FRAM}		          %Title
+\def\thesistitle{Risk analysis involving human factors}		          %Title
 \def\thesishandin{01-April}					          %Submission date (Day-Month}
 \def\thesisyear{2012} 							          %Submission year 
 \def\thesisnumber{????}  						          %DTU-IMM Serial number (do not include year)
@@ -82,11 +82,13 @@
 \include{Chapter1}								          %Chapter 1
 \include{Accident_model}								          %Chapter 2
 \appendix
-\include{Appendix1}							             %Appendix A
+%\include{Appendix1}							             %Appendix A
 %-----------
 % Backmatter
 %-----------
 \backmatter
+\chaptermark{List of figures}
+\listoffigures
 \chaptermark{Bibliography}
 \renewcommand{\sectionmark}[1]{\markright{#1}}
 \sectionmark{Bibliography}
