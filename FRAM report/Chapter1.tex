@@ -3,6 +3,15 @@
 TODO: Something about the dispatchers and about what happen when things go right (near-miss)
 
 
+%Each of them creates a representation of the system using the state of its components, which can be bi-modal (functioning / failure) or multi-modal (several degraded modes and failure modes).
+
+%Variability of performance in humans and organizations comes from their capacity to adapt themselves to working conditions and from the irregularity in activities (perception, cognition, action and communication).
+
+
+%The second step is determining the potential variability of each operational unit. FRAM classifies operational units into three categories: Human (H), Technical (T) and Organizational (O). The operational unit’s poten tial variability is determined by the respective weights of eleven common performance conditions (CPC), acting as context factors on the operational unit, according to its category. The CPC used in FRAM are based on Hollnagel’s CREAM (Cognitive Reliability and Error Analysis Method) method for studying human reliability; see [9] for a detailed presentation.
+
+
+
 Traditionally, safety systems are modelled as complex linear system, rather than non-linear.
 
 \chapter{Terminology}
@@ -14,6 +23,15 @@ TODO: explain risk matrix
 
 \section{Near miss}
 %A near miss is an unplanned event that did not result in injury, illness, or damage – but had the potential to do so. Only a fortunate break in the chain of events prevented an injury, fatality or damage; in other words, a miss that was nonetheless very near. Although the label of 'human error' is commonly applied to an initiating event, a faulty process or system invariably permits or compounds the harm, and should be the focus of improvement. Other familiar terms for these events is a "close call", or in the case of moving objects, "near collision".
+
+\section{Accident investigation}
+
+\section{Moving up the abstraction ladder}
+When deploying systems for controlling physical processes, there is a large risk of alienating the people working with the process. Especially if the have not been in touch with the actual process itself, but only with the abstract representation.
+
+A number of unintended constraints will inevitably appear when trying to represent a real system from a model. Especially those of symbols and display screen real estate. Whereas when you are present at the machine itself, you can actually see what is going on.
+
+\cite{hollnagel2005joint}%page 40
 
 \section{Resonance}
 
@@ -46,6 +64,8 @@ Traditionally, railways are divided into a number of fixed blocks with entry and
 \end{itemize}
 Whereas the maximum speed and geological conditions can be modelled linear - the response time of the driver cannot. And on a line without ATC (see section \ref{sec:atc}) failure to observe a non-go signal will effectively cancel out all other factors in the model.
 
+
+\section{Cognition}
 
 %Ideally, block interlocking policy should be set to match something like
 
@@ -111,6 +131,18 @@ Basically it cuts down to the the following question: "If this component breaks 
 %Resilience Engineering looks for ways to enhance the aility of organisations to create processes that are robust yet flexible, to monitor and revise risk models, and to use resources proactively in the face of disruptions or ongoing production and economic pressures. 
 %In Resilience Engineering failures do not stand for a breakdown or malfunctioning of normal system functions, but rather represent the converse of the adaptations necessary to cope with the real world complexity. Individuals and organisations must always adjust their performance to the current conditions; and because resources and time are finite it is inevitable that such adjustments are approximate. Success has been ascribed to the ability of groups, individuals, and organisations to anticipate the changing shape of risk before damage occurs; failure is simply the temporary or permanent absence of that.
 %/Stolen
+
+\section{The complexity paradox}
+As technology advances, systems become more complex, and as their complexity increased, so does their ability to fail in unpredictable ways. This is mainly caused by the incomprehensible size of the entire system as a whole and the number of components used and their inter-dependency.
+A singe component can fail and propagate through the system undetected and be a contributing factor along with others (e.g. environmental or organizational) to the failure of the entire system.\\
+\\
+As these failure are detected, remedial actions are taken - leading to increasing complexity of the system - effectively amplifying the unpredictability.\\
+\\
+Computer software is a very good example of a complex system that respond poorly to remedial actions, as resilience is not normally a design goal. A large number of assumptions about values and parameters in a software system can lead to very unpredictable behaviour.\\
+\\
+Assume the following: a number in a computer system is represented binary form with a fixed size, e.g. 8 places (bits). When representing a negative number the leftmost bit is `1' - or `logic high' which leaves only the remaining 7 bits to represent the actual number. The largest signed number we can represent with 8 bits is $2^8 - 1 = 127$. Due to the nature of computer hardware, the number will "wrap around" - much like in a trip meter in an automobile. The problem with the signed representation is at that for an 8 bit representation, the following holds $(2^8-1)+1 = -128$ which is very inaccurate if you expect a positive value.\\
+\\
+This is a trivial error, but unfortunately still very common - and will most certainly result in unpredictable behaviour in most systems if not detected.
 
 
 \section{Human factors}
@@ -195,13 +227,38 @@ The objective of the first step is to identify essential system functions, and c
 \subsubsection*{Step 2}
 %Step 2: Characterize the context dependent variability of each node. For an accident analysis, the variability is known from the investigation data. In this case the analysis focuses on comparing the observed and the normal performance. For risk assessment, the variability may be derived from a characterisation of the common performance conditions (CPCs), of which there currently are eleven. These CPCs address the combined human, technological, and organizational aspects of each function. After identifying the CPCs, the variability must be determined in a qualitative way in terms of stability, predictability, sufficiency, and boundaries of performance. 
 The next step is to characterize the context dependent variability of each node from a list of common performance conditions - or CPCs. 
+
+%The CPC are shown in Table 1, according to operational unit category.
+%These context factors can have positive or negative impacts on performance.
+
 %TODO list the eleven CPCs
-\begin{itemize}
-  \item CPC 1
-  \item CPC 2  
-\end{itemize}
+
+\begin{table}[h]
+\centering
+    \begin{tabular}{ | l | r | }
+    \hline
+    CPC                                                      & Category \\ \hline \hline
+    Resource availability                                    &     H-T  \\ \hline
+    Training and experience                                  &       H  \\ \hline
+    Quality of communications                                &     H-T  \\ \hline
+    Quality of human-machine interfaces                      &       T  \\ \hline
+    Accessibility and availability of methods and procedures &       H  \\ \hline
+    Working conditions                                       &     H-T  \\ \hline
+    Number of simultaneous objectives                        &     H-O  \\ \hline
+    Time available                                           &       H  \\ \hline
+    Circadian rhythm                                         &       H  \\ \hline
+    Quality of team collaboration                            &       H  \\ \hline
+    Quality of organizational support                        &       O  \\ \hline
+    \end{tabular}
+\caption{Different CPC's and their category context}
+\label{table:cpcs}
+\end{table}
 
 After identifying the CPCs, the variability must be determined in a qualitative way in terms of stability, predictability, sufficiency, and boundaries of performance. 
+
+%The quality of each CPC takes one of three possible values: (1) stable or variable but adequate, (2) stable or variable but inadequate, (3) unpredictable. The aim is to determine the set of applicable CPCs for each operational unit and to evaluate their quality.
+
+
 
 When applied on an accident analysis, the analysis focuses on comparing the observed and the normal performance.
 
