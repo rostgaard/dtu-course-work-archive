@@ -1,7 +1,6 @@
 % notes/todo
 
 %TODO: Something about the dispatchers and about what happen when things go right (near-miss)
-%TODO: Find Leveson (1995) Safeware - system safety and computers
 
 
 %The bureaucracy problem: When people do not sympathize or understand rules and regulation - they tend to bypass them every chance they get. They may even make local modifications to the system to make it fit their need or work flow better.
@@ -32,6 +31,7 @@ Safety: freedom from unacceptable risk
 \subsubsection*{Accident}
 
 \subsubsection*{Near miss}
+\label{sec:near_miss}
 A near miss is often described as "an unplanned event that did not result in injury, illness, or damage - but had the potential to do so". This is also referred to as "Close call" or "Near Collision" when moving objects are involved.\\
 \\
 Near misses are not, as a rule, taken into consideration as an accident. Whether or not the event should examined and treated as an accident depends largely on how close it was to evolve into a real accident.\\
@@ -42,6 +42,10 @@ A recent incident with the Danish IC4 trains resulted in a near miss situation, 
 A widely spread rule of thumb extrapolates the (Bird, 1974; from Heinrich et Al., 1980) 1:10:30:600 figures giving 1 accident for every 300 near-miss.
 
 A problem with near-misses is they are rarely reported and unsafe acts are considered never reported.
+
+\subsubsection*{Barrier}
+\label{sec:barrier}
+Barriers are hindrances that may either prevent an unwanted event from taking place, or protect against the consequences (Hollnagel, 2004)
 
 \section{Resonance}
 
@@ -123,9 +127,11 @@ Accidents are, in classic safety literature, depicted as a series of sequential 
 \\
 This reasoning is very easy to follow and makes a lot of sense in simple systems. It is easily depiction and hereby easily communicated. There is also a tendency that people think in linear and sequential systems, rather than in complex intercouplings - as these are far easier to comprehend.\\
 \\
-But, in general it is not recommended to say that a specific event (X) causes another (Y). This implies that X is a precondition to Y, and by eliminating X, Y will no longer happen.\footnote{Methods for accident investigation}
+But, in general it is not recommended to say that a specific event (X) causes another (Y). This implies that X is a precondition to Y, and by eliminating X, Y will no longer happen\cite{sklet2002methods}.\\
+\\
+Lundberg et al. also makes a point of this in \cite{lundberg2009you}, as it is titled ``What-You-Look-For-Is-What-You-Find - The consequences of underlying accident models in eight accident investigation manuals''
 
-\cite{hollnagel2004barriers} note that the 
+
 \subsection{Swiss Cheese Model}
 
 %http://en.wikipedia.org/wiki/Swiss_cheese_model
@@ -180,7 +186,7 @@ To be able to represent and integrate humans as a part of complex larger system,
 \subsection{ETTO principle}
 The ETTO is short for Effectiveness-Thoroughness-Trade-Off, and the ETTO principle formalizes the balancing issue in having conflicting requirements or goals. The stop-rule (\ref{sec:rca}) is an example of the ETTO principle, as it is usually not 
 
-\subsection{Feedforward}
+\subsection{Feedforward loop}
 \subsection{Cognition}
 
 \subsection{Circadian rhythm}
@@ -234,12 +240,111 @@ Sharp and blunt end
 %TODO General on RCA
 Before starting a RCA, a stop rule is usually defined. A stop rule is the point where you do no dig any further. An analogy from \cite{hollnagel2004barriers} shows a RCA as a tree where the single leaf can be considered an event. The cause is then traced back to the roots of the tree to the root, but usually not any further. A root event can typically be traced further back, and fans out to a number of contributing factors.
 
+
+\section{Fault tree analysis}
+
 \section{FMEA}
+Failure Mode and Effect Analysis
+%A failure modes and effects analysis (FMEA) is a procedure in product development and operations management for analysis of potential failure modes within a system for classification by the severity and likelihood of the failures. A successful FMEA activity helps a team to identify potential failure modes based on past experience with similar products or processes, enabling the team to design those failures out of the system with the minimum of effort and resource expenditure, thereby reducing development time and costs. It is widely used in manufacturing industries in various phases of the product life cycle and is now increasingly finding use in the service industry. Failure modes are any errors or defects in a process, design, or item, especially those that affect the customer, and can be potential or actual. Effects analysis refers to studying the consequences of those failures.
+
+
+The analysis consists of three steps
+\subsection*{Step 1: Occurrence}
+
+%In this step it is necessary to look at the cause of a failure mode and the number of times it occurs. This can be done by looking at similar products or processes and the failure modes that have been documented for them in the past. A failure cause is looked upon as a design weakness. All the potential causes for a failure mode should be identified and documented. Again this should be in technical terms. Examples of causes are: erroneous algorithms, excessive voltage or improper operating conditions. A failure mode is given an occurrence ranking (O), again 1–10. Actions need to be determined if the occurrence is high (meaning > 4 for non-safety failure modes and > 1 when the severity-number from step 2 is 9 or 10). This step is called the detailed development section of the FMEA process. Occurrence also can be defined as %. If a non-safety issue happened less than 1%, we can give 1 to it. It is based on your product and customer specification.
+
+\begin{table}[h]
+\centering
+    \begin{tabular}{ | l | r | }
+    \hline
+    Rating & Meaning \\ \hline \hline
+    1      & No known occurrences on similar products or processes  \\ \hline
+    2-3    & Low (relatively few failures) \\ \hline
+    4-6    & Moderate (occasional failures) \\ \hline
+    7-8    & High (repeated failures) \\ \hline
+    9-10   & Very high (failure is almost inevitable) \\ \hline
+    \end{tabular}
+\caption{FMEA occurrence categories}
+\label{table:fmea_occurrence}
+\end{table}
+
+\subsection*{Step 2: Severity}
+%Determine all failure modes based on the functional requirements and their effects. Examples of failure modes are: Electrical short-circuiting, corrosion or deformation. A failure mode in one component can lead to a failure mode in another component, therefore each failure mode should be listed in technical terms and for function. Hereafter the ultimate effect of each failure mode needs to be considered. A failure effect is defined as the result of a failure mode on the function of the system as perceived by the user. In this way it is convenient to write these effects down in terms of what the user might see or experience. Examples of failure effects are: degraded performance, noise or even injury to a user. Each effect is given a severity number (S) from 1 (no danger) to 10 (critical). These numbers help an engineer to prioritize the failure modes and their effects. If the sensitivity of an effect has a number 9 or 10, actions are considered to change the design by eliminating the failure mode, if possible, or protecting the user from the effect. A severity rating of 9 or 10 is generally reserved for those effects which would cause injury to a user or otherwise result in litigation.
+
+\begin{table}[h]
+\centering
+    \begin{tabular}{ | l | r | }
+    \hline
+    Rating & Meaning \\ \hline \hline
+    1      & No effect  \\ \hline
+    2      & Very minor \\ \hline
+    3      & Minor \\ \hline
+    4-6    & Moderate \\ \hline
+    7-8    & High \\ \hline
+    9-10   & Very high and hazardous \\ \hline
+    \end{tabular}
+\caption{FMEA severity categories}
+\label{table:fmea_severities}
+\end{table}
+
+
+\subsection*{Step 3: Detection}
+%When appropriate actions are determined, it is necessary to test their efficiency. In addition, design verification is needed. The proper inspection methods need to be chosen. First, an engineer should look at the current controls of the system, that prevent failure modes from occurring or which detect the failure before it reaches the customer. Hereafter one should identify testing, analysis, monitoring and other techniques that can be or have been used on similar systems to detect failures. From these controls an engineer can learn how likely it is for a failure to be identified or detected. Each combination from the previous 2 steps receives a detection number (D). This ranks the ability of planned tests and inspections to remove defects or detect failure modes in time. The assigned detection number measures the risk that the failure will escape detection. A high detection number indicates that the chances are high that the failure will escape detection, or in other words, that the chances of detection are low.
+
+%TODO verify these tables
+\begin{table}[h]
+\centering
+    \begin{tabular}{ | l | r | }
+    \hline
+    Rating & Meaning \\ \hline \hline
+    1      & Certain - fault will be caught on test  \\ \hline
+    2      & Almost Certain \\ \hline
+    3      & High \\ \hline
+    4-6    & Moderate \\ \hline
+    7-8    & Low \\ \hline
+    9-10   & Fault will be passed to customer undetected \\ \hline
+    \end{tabular}
+\caption{FMEA detectability categories}
+\label{table:fmea_detectability}
+\end{table}
+
+
+
+
+\subsection*{Risk priority number (RPN)}
+When the previous three steps are completed, a worksheet is typically produced, which serves as a basis for calculating risk priority numbers - or RPN. It is calculated in with the following formula.
+
+\begin{equation}
+RPN = O \cdot S \cdot D
+\end{equation}
+
+Where $O$ is the occurrence frequency factor determined in step 1, $S$ is the severity factor determined in step 2 and $D$ is the detectability factor determined in step 3.
+
+%RPN play an important part in the choice of an action against failure modes. They are threshold values in the evaluation of these actions.
+
+%After ranking the severity, occurrence and detectability the RPN can be easily calculated by multiplying these three numbers: RPN = S × O × D
+
+%This has to be done for the entire process and/or design. Once this is done it is easy to determine the areas of greatest concern. The failure modes that have the highest RPN should be given the highest priority for corrective action. This means it is not always the failure modes with the highest severity numbers that should be treated first. There could be less severe failures, but which occur more often and are less detectable.
+
+%After these values are allocated, recommended actions with targets, responsibility and dates of implementation are noted. These actions can include specific inspection, testing or quality procedures, redesign (such as selection of new components), adding more redundancy and limiting environmental stresses or operating range. Once the actions have been implemented in the design/process, the new RPN should be checked, to confirm the improvements. These tests are often put in graphs, for easy visualization. Whenever a design or a process changes, an FMEA should be updated.
+
+%A few logical but important thoughts come in mind:
+
+%Try to eliminate the failure mode (some failures are more preventable than others)
+%Minimize the severity of the failure
+%Reduce the occurrence of the failure mode
+%Improve the detection
 
 \section{HAZOP}
 
 \section{STAMP}
 System-Theoretic Accident Model and Process
+
+\section{Other models}
+MORT, SCAT, STEP, MTO, AEB, TRIPOD, change analysis are covered in-depth by \cite{Sklet200429}.
+
+
+CREAM
 \section{Functional Resonance Analytic Model}
 %The functional resonance accident model (FRAM; Hollnagel, 2004) describes system failure in terms of the resonance of normal performance variability. This provides a convenient way of representing the non-linear propagation of events and also makes it possible to account for adverse outcomes in cases where there were no manifest malfunctions or failures. The principle of FRAM is to characterise individual system functions independently of how they may be connected in a specific situation. The characterisation of each function ­ or node ­ is done in terms of six aspects and the values of these aspects determine how nodes may be coupled under given conditions. To produce a description of functional variability and potential resonance, and to determine recommendations for damping unwanted variability, a FRAM analysis consists of four steps:
 
@@ -339,9 +444,7 @@ The third step will link the functions and define the functional resonance. The 
 \subsection*{Sted 4}
 The final step will be be the remedial one, where identification of variability barriers - or damping factors - will take place. For a more in-depth description on barriers see section \ref{sec:barriers}.
 
-\subsection{Barrier}
-\section{sec:barrier}
-Barriers are hindrances that may either prevent an unwanted event from taking place, or protect against the consequences (Hollnagel, 2004)
+
 
 \subsection{Fram Visualizer}
 

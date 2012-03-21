@@ -6,3 +6,5 @@ thesis:
 
 draft:
 	pdflatex Draft.tex
+references:
+	bibtex Thesis
