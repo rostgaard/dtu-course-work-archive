@@ -1,7 +1,10 @@
 % notes/todo
 
-TODO: Something about the dispatchers and about what happen when things go right (near-miss)
+%TODO: Something about the dispatchers and about what happen when things go right (near-miss)
+%TODO: Find Leveson (1995) Safeware - system safety and computers
 
+
+%The bureaucracy problem: When people do not sympathize or understand rules and regulation - they tend to bypass them every chance they get. They may even make local modifications to the system to make it fit their need or work flow better.
 
 %Each of them creates a representation of the system using the state of its components, which can be bi-modal (functioning / failure) or multi-modal (several degraded modes and failure modes).
 
@@ -12,38 +15,37 @@ TODO: Something about the dispatchers and about what happen when things go right
 
 
 
-Traditionally, safety systems are modelled as complex linear system, rather than non-linear.
+%Traditionally, safety systems are modelled as complex linear system, rather than non-linear.
 
-\chapter{Terminology}
-In general it is not recommended to say that a specific event (X) causes another (Y). This implies that X is a precondition to Y, and by eliminating X\footnote{Methods for accident investigation}
-
-Safety: freedom from unacceptable risk
-
-TODO: explain risk matrix
-
-\section{Near miss}
-%A near miss is an unplanned event that did not result in injury, illness, or damage – but had the potential to do so. Only a fortunate break in the chain of events prevented an injury, fatality or damage; in other words, a miss that was nonetheless very near. Although the label of 'human error' is commonly applied to an initiating event, a faulty process or system invariably permits or compounds the harm, and should be the focus of improvement. Other familiar terms for these events is a "close call", or in the case of moving objects, "near collision".
+\chapter{Introduction}
 
 \section{Accident investigation}
 
-\section{Moving up the abstraction ladder}
-When deploying systems for controlling physical processes, there is a large risk of alienating the people working with the process. Especially if the have not been in touch with the actual process itself, but only with the abstract representation.
 
-A number of unintended constraints will inevitably appear when trying to represent a real system from a model. Especially those of symbols and display screen real estate. Whereas when you are present at the machine itself, you can actually see what is going on.
+\section{Terminology}
+Safety: freedom from unacceptable risk
 
-\cite{hollnagel2005joint}%page 40
+%TODO: explain risk matrix
+
+\section{General definitions}
+
+\subsubsection*{Accident}
+
+\subsubsection*{Near miss}
+A near miss is often described as "an unplanned event that did not result in injury, illness, or damage - but had the potential to do so". This is also referred to as "Close call" or "Near Collision" when moving objects are involved.\\
+\\
+Near misses are not, as a rule, taken into consideration as an accident. Whether or not the event should examined and treated as an accident depends largely on how close it was to evolve into a real accident.\\
+\\
+A recent incident with the Danish IC4 trains resulted in a near miss situation, due to a brake failure. An accident investigation was committed, largely due to the inexplicably of the failure - and the relative young age of the trains.
+%A near miss is an unplanned event that did not result in injury, illness, or damage – but had the potential to do so. Only a fortunate break in the chain of events prevented an injury, fatality or damage; in other words, a miss that was nonetheless very near. Although the label of 'human error' is commonly applied to an initiating event, a faulty process or system invariably permits or compounds the harm, and should be the focus of improvement. Other familiar terms for these events is a "close call", or in the case of moving objects, "near collision".
+
+A widely spread rule of thumb extrapolates the (Bird, 1974; from Heinrich et Al., 1980) 1:10:30:600 figures giving 1 accident for every 300 near-miss.
+
+A problem with near-misses is they are rarely reported and unsafe acts are considered never reported.
 
 \section{Resonance}
 
 Resonance is a phenomenon in physics making a system oscillate at a higher amplitude when a force is applied.
-
-\section{ATC}
-\label{sec:atc}
-ATC, or Automatic Train Control is a mechanism that allows automatic interlocking of railway blocks.
-
-Barrier in safety engineering
-
-general safety en resilience engineering terminology
 
 \section{Railway}
 
@@ -54,18 +56,6 @@ A block is a distance of railway that, at any point in time can only be occupied
 
 Traditionally, railways are divided into a number of fixed blocks with entry and exit signals. These signals will represent train movement along the block based on a predefined policy. The policy is again determined from a number of parameters:
 
-
-\begin{itemize}
-  \item The permitted maximum speed on the line
-  \item The maximum speed and braking characteristics of the different trains occupying the track
-  \item Geological conditions, such as gradients, as these could lead to increase in breaking time.
-  \item Line-of-sight. Being that the signal is optical, the train driver must be able to see it before acting on it.
-  \item The reaction time of the driver
-\end{itemize}
-Whereas the maximum speed and geological conditions can be modelled linear - the response time of the driver cannot. And on a line without ATC (see section \ref{sec:atc}) failure to observe a non-go signal will effectively cancel out all other factors in the model.
-
-
-\section{Cognition}
 
 %Ideally, block interlocking policy should be set to match something like
 
@@ -90,21 +80,54 @@ Safety has always been a high priority in railway engineering and deployment, an
 
 Railway safety is largely dependant on supervision systems, and dispatchers.
 
+\begin{itemize}
+  \item The permitted maximum speed on the line
+  \item The maximum speed and braking characteristics of the different trains occupying the track
+  \item Geological conditions, such as gradients, as these could lead to increase in breaking time.
+  \item Line-of-sight. Being that the signal is optical, the train driver must be able to see it before acting on it.
+  \item The reaction time of the driver
+\end{itemize}
+Whereas the maximum speed and geological conditions can be modelled linear - the response time of the driver cannot. And on a line without ATC (see section \ref{sec:atc}) failure to observe a non-go signal will effectively cancel out all other factors in the model.
+
+\subsection{ATC}
+\label{sec:atc}
+ATC, or Automatic Train Control is a mechanism that allows automatic interlocking of railway blocks.
+
+Barrier in safety engineering
+
+general safety en resilience engineering terminology
+
+
+
+
 \subsection{Timetable}
 The primary barrier to provide safety in railway operation is the timetable. It specifies which trains are supposed at a certain location at a certain point in time.
 
 \subsection{Dispatcher}
+%Maybe deprecate this section
 A train dispatcher can be considered the safety net for when the static timetable needs to altered mid-deployment.
 Dispatchers act on
 
 
 
-\cite{belmonte2008dispatcher}
+%\cite{belmonte2008dispatcher}
 
+
+\section{Notes}
+Beyond Design-Base Accidents are accidents that occurs as a reaction to unanticipated usage or capacity load. In other words, it's what was no taken into account when the system was designed.
 
 \section{Safety systems}
 
 \section{Classic model on safety}
+Accidents are, in classic safety literature, depicted as a series of sequential events - each one is the causing factor of the next. Stopping the event chain from propagating before it ultimately leads to an injury (or damage), will prevent it. This model is also known as the domino model, due to its close resemblance to a series of dominoes and the way they fall sequential.\\
+\\
+This reasoning is very easy to follow and makes a lot of sense in simple systems. It is easily depiction and hereby easily communicated. There is also a tendency that people think in linear and sequential systems, rather than in complex intercouplings - as these are far easier to comprehend.\\
+\\
+But, in general it is not recommended to say that a specific event (X) causes another (Y). This implies that X is a precondition to Y, and by eliminating X, Y will no longer happen.\footnote{Methods for accident investigation}
+
+\cite{hollnagel2004barriers} note that the 
+\subsection{Swiss Cheese Model}
+
 %http://en.wikipedia.org/wiki/Swiss_cheese_model
 Barriers are depicted as layers of swiss cheese with holes in them. 
 
@@ -116,6 +139,8 @@ There has been a paradigm shift in the view on accidents in the later years. Now
 %Cognitive Reliability and Error Analysis (CREAM) [5]. CREAM allows to highlight the dependence of human performance on the context and provides an useful cognitive model for both retrospective and prospective acci-dent analysis. The specificity of CREAM is that human errors are shaped more bythe context than by a stochastic process.
 %/stolen
 
+
+Current formal requirements on safety measures in systems engineering, usually focus on the robustness and integrity of single components, rather than on the coupling of these and the system as a whole.
 \section{Resilience Engineering}
 \label{sec:resilience_engineering}
 Resilience engineering can be considered the complimentary to safety engineering; where as safety engineering seeks to build a better and safer system, resilience engineering embraces the fact that errors arise within a system - and tries to limit the impact of these.
@@ -144,14 +169,21 @@ Assume the following: a number in a computer system is represented binary form w
 \\
 This is a trivial error, but unfortunately still very common - and will most certainly result in unpredictable behaviour in most systems if not detected.
 
+\chapter{Human factors}
+The variability of is system is becoming more and more dependent on individual and/or collective performance of humans, and the need for a model that takes these into account, has arisen.\\
+\\
+As previously discussed, linear and strongly intercoupled systems are no longer the reality in which we live in anymore. Technological advances has created a self-reinforcing closed loop circuit in which complexity continues to nourish itself (\ref{sec:complexity_loop}).\\
+\\
+To be able to represent and integrate humans as a part of complex larger system, it is neccesary to idenfity and ultimately accept the behaviours and limits of them.
+\section{Human performance}
 
-\section{Human factors}
-The variability of is system is becoming more and more dependent on individual and/or collective performance of humans.
+\subsection{ETTO principle}
+The ETTO is short for Effectiveness-Thoroughness-Trade-Off, and the ETTO principle formalizes the balancing issue in having conflicting requirements or goals. The stop-rule (\ref{sec:rca}) is an example of the ETTO principle, as it is usually not 
 
-Historically, this has not always been so.
-%TODO
+\subsection{Feedforward}
+\subsection{Cognition}
 
-\subsubsection{Circadian rhythm}
+\subsection{Circadian rhythm}
 The circadian rhythm is a the natural daily rhythm that is found in, humans, plants, other mammals alike. It has tremendous impact on the performance of an individual and is thus non-negligible when discussing human factors in a system.
 
 Circadian rhythm has a large impact on, for example aeroplane pilots flying across time zones, and thus loses their natural sense of daylight. This leads to fatigue, decreased responsiveness and performance (\cite{mallis2010aircrew}).
@@ -159,12 +191,12 @@ Circadian rhythm has a large impact on, for example aeroplane pilots flying acro
 \begin{figure}[h]
  \centering
    \includegraphics[width=360pt]{figures/biological_clock_human.pdf}
- \caption{Human biological clock \\(Licence: GFDL)}
+ \caption{Human biological clock (Licence: GFDL)}
  \label{fig:human_biological_clock}
 \end{figure}
 
+\section{Joint Cognitive Systems}
 
-\subsection{•}
 %**Stolen
 % The understanding of the human role in accidents has gone through three stages. In the classical view, humans were seen as error prone or as fallible machines. The purpose of an accident investigation was therefore often to find the "human error" that either was the primary (or even "root") cause or the initiating event.
 %When it became clear, in the 1990s, that the "human error" view was not tenable, explanations changed to look for how performance shaping factors or performance conditions could make people fail, in the sense of "forcing" errors. This did not remove the concept of a "human error", but saw these as a product of the working conditions and work pressures, rather than as a result of built-in human error tendencies.
@@ -176,7 +208,39 @@ Circadian rhythm has a large impact on, for example aeroplane pilots flying acro
 %Define the functional resonance based on possible dependencies / couplings among functions and the potential for functional variability.
 %Identify barriers for variability (damping factors) and specify required performance monitoring.
 %/Stolen
-\subsection{Functional Resonance Analytic Model}
+
+
+\chapter{Accident modelling}
+
+\cite{hollnagel2004barriers} discusses a number of accident models in detail, and finds - among other things - the following:
+
+\begin{itemize}
+\item Graphical representation is a big challenge. Both when it comes to communicating the findings, but also when the cause of the accident has to be traced. Boxes and sequential also models tends to lead to boxed and sequential thinking.
+\item Complex models are not easily represented graphically, nor are they easy to communicate without loss of information quality, or correctness.
+\item Organizational structure is often overlooked and neglected in 
+\end{itemize}
+
+Historically, this has not always been so.
+%TODO
+\section{Moving up the abstraction ladder}
+When deploying systems for controlling physical processes, there is a large risk of alienating the people working with the process. Especially if the have not been in touch with the actual process itself, but only with the abstract representation.
+
+A number of unintended constraints will inevitably appear when trying to represent a real system from a model. Especially those of symbols and display screen real estate. Whereas when you are present at the machine itself, you can actually see what is going on.
+
+\cite{hollnagel2005joint}%page 40
+
+\section{Root Cause Analysis}
+Sharp and blunt end
+%TODO General on RCA
+Before starting a RCA, a stop rule is usually defined. A stop rule is the point where you do no dig any further. An analogy from \cite{hollnagel2004barriers} shows a RCA as a tree where the single leaf can be considered an event. The cause is then traced back to the roots of the tree to the root, but usually not any further. A root event can typically be traced further back, and fans out to a number of contributing factors.
+
+\section{FMEA}
+
+\section{HAZOP}
+
+\section{STAMP}
+System-Theoretic Accident Model and Process
+\section{Functional Resonance Analytic Model}
 %The functional resonance accident model (FRAM; Hollnagel, 2004) describes system failure in terms of the resonance of normal performance variability. This provides a convenient way of representing the non-linear propagation of events and also makes it possible to account for adverse outcomes in cases where there were no manifest malfunctions or failures. The principle of FRAM is to characterise individual system functions independently of how they may be connected in a specific situation. The characterisation of each function ­ or node ­ is done in terms of six aspects and the values of these aspects determine how nodes may be coupled under given conditions. To produce a description of functional variability and potential resonance, and to determine recommendations for damping unwanted variability, a FRAM analysis consists of four steps:
 
 
@@ -196,26 +260,28 @@ A special-purpose piece of computer software exists to visualize the FRAM models
 \end{figure}
 
 
-Each node consists of a number of edge connection points  which model
+Each node consists of a six edge connection points - one output and five inputs. These are aspects and model how functions are inter-coupled. A brief explanation of each connector follows.
 
 \begin{itemize}
   %Time available: This can be a constraint but can also be considered as a special kind of resource
-  \item Time: Time constraints. When a function is dependant on a time input, this connects to and output port of another node.
+  \item Time: Time constraints. Can be real-time or schedule constraints.
 
 %Precondition: System conditions that must be fulfilled before a function can be carried out.
   \item Precondition: A connected function must supply output to this input before the function can start.
 
 % Control: That which supervises or adjusts a function. Can be plans, procedures, guidelines or other functions.
-  \item Control: Implies "controlled by", and specifies input from supervising function
+  \item Control: Implies "controlled by", and specifies input from supervising function. Can be plans, procedures, guidelines or other functions.
   
 %Input: That which is used or transformed to produce the output. Constitutes Input the link to previous functions.
-  \item Input: That which is used or transformed to produce the output. Constitutes the link to previous functions.
+  \item Input: That which is used or transformed to produce the output. Links to previous functions.
 
 %Output: That which is produced by function. Constitute Output links to subsequent functions.
-  \item Output: The product of this function
+  \item Output: The basic output of this function - or what it produces. Connects to input of other nodes.
 %Resource: That which is needed or consumed by function to process input (e.g.,matter, energy, hardware, software, manpower).
-  \item Resource: Resources consumed by this function (e.g.,matter, energy, hardware, software, manpower)
+  \item Resource: Resources consumed by this function (examples are; matter, energy, hardware, software, manpower, information)
 \end{itemize} 
+Unused connectors can explicitly be marked as Not Applicable (N/A).
+
 
 
 FRAM analysis basically consists of four steps:
@@ -266,15 +332,15 @@ When applied on an accident analysis, the analysis focuses on comparing the obse
 
 \subsubsection*{Step 3}
 %Step 3: Defining the functional resonance based on possible dependencies/couplings among functions and the potential for functional variability. The output of the functional description of step 1 is a characterisation of functions and their aspects. The aspects provides the basis for identifying how functions may be coupled. For example, the output of one function may be an input to another function, or produce a resource, fulfil a pre-condition, or enforce a control or time constraint. When the couplings between functions are found, this is combined with the characterization of performance variability from Step 2. In this way the analysis will show how the variability of one function may have an impact on others. This analysis thus determines how resonance, and ultimately adverse outcomes, can result from variability across functions in the system. For example, if the output of a function is unpredictably variable, another function that depends on this output as a resource may be performed unpredictably. Many such occurrences and propagations of variability may have an effect like resonance.
-The third step will link the functions and define the functional resonance
+The third step will link the functions and define the functional resonance. The purpose of the couplings between the nodes is to determine the potential for functional variability.
 
 
 %Step 4: Identify barriers for variability (damping factors) and specify required performance monitoring. Barriers are hindrances that may either prevent an unwanted event from taking place, or protect against the consequences (Hollnagel, 2004). Barriers can be described in terms of barrier systems (the organizational and/or physical structure of the barrier) and barrier functions (the manner by which the barrier achieves its purpose). In FRAM, four categories of barrier systems are identified (each with their potential barrier functions, see Hollnagel, 2004). In addition to recommendations for barriers, FRAM can also be used to specify recommendations for the monitoring of performance and variability, as a way to detect and manage undesired variability. Performance indicators may thus be developed for every function and every link between functions.
 \subsection*{Sted 4}
-The final step will be be the remedial one, where identification of variability barriers - or damping factors - will take place.
-
+The final step will be be the remedial one, where identification of variability barriers - or damping factors - will take place. For a more in-depth description on barriers see section \ref{sec:barriers}.
 
 \subsection{Barrier}
+\section{sec:barrier}
 Barriers are hindrances that may either prevent an unwanted event from taking place, or protect against the consequences (Hollnagel, 2004)
 
 \subsection{Fram Visualizer}
@@ -288,7 +354,7 @@ Barriers are hindrances that may either prevent an unwanted event from taking pl
 \end{figure}
 
 \section{Retrospective FRAM}
-Although FRAM is intended to be used as a design-phase tool to enhance the recilience of a system (or sub-system), its modeling characteristics enables it to be applied retrospective on an accident or near-miss event.
+Although FRAM is intended to be used as a design-phase tool to enhance the resilience of a system (or sub-system), its modeling characteristics enables it to be applied retrospective on an accident or near-miss event.
 
 %**Stolen
 %How to use FRAM for event analysis (retrospective)
@@ -299,6 +365,5 @@ Although FRAM is intended to be used as a design-phase tool to enhance the recil
 %Define functional resonance based on potential  / actual dependencies (couplings) among functions.
 %Propose ways to monitor and dampen performance variability (indicators, barriers, design / modification, etc.)
 %/Stolen
-
 
 

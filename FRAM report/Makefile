@@ -3,3 +3,6 @@ wordcount: thesis
 	./thesis.gnuplot # Update the graph
 thesis:
 	pdflatex Thesis.tex
+
+draft:
+	pdflatex Draft.tex
