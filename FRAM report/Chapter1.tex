@@ -1,11 +1,13 @@
 % notes/todo
-
-%TODO - Something about the dispatchers and about what happen when things go right (near-miss)
-%TODO - People rarely work alone
-%TODO - Something about context and environment
 %TODO - Clean up the entire railway section
 %TODO - Most standards require an experienced team-member in a given methodogy
-%TODO - Organizational structure matters, it is referenced a lot in litterature
+
+
+%TODO Basic structure of the report overall: human factors are intercoupled in complex systems, and the system models does not take the complexity into account. One must first be able to model the systems and remove the causality box-thinking. Something on how human performance are affected - and the action cycle.
+
+
+
+%TODO Types of problems identified: Deprecation problem, Complexity problem, Abstraction problen
 
 %The bureaucracy problem: When people do not sympathize or understand rules and regulation - they tend to bypass them every chance they get. They may even make local modifications to the system to make it fit their need or work flow better.
 
@@ -18,19 +20,34 @@
 
 
 
-%Traditionally, safety systems are modelled as complex linear system, rather than non-linear.
-
 \chapter{Introduction}
-
-\section{Accident investigation}
-
+Accidents have been a part of our world for as long as we have been around, and as technology has progressed and given us the potential to build better and more powerful systems, so has the scale and impact of the accidents. From early day accidents with fire to modern day nuclear power plant incidents.\\
+\\
+Risk is a part of our everyday life, as we use trains, aeroplanes or even cross the road. Applying new technology usually involves venturing into uncharted waters - so to speak. And a lot of new lessons are learned; the hard way.\\
+\\
+For the past century, process and productivity has gone from simple linear assembly-line, single purpose work to complex changing tasks. This is also highly reflected in the scope/paradigm of the models used to describe the accidents through this century, and a brief overview on the evolution of these can be found in chapter \ref{ch:accident_modelling}.\\
+\\
+Systems have also evolved from simple linear controlled systems to complex intercoupled systems. A lot of organizational structure have been built around them, and as safety requirements has gotten more strict the complexity increases (see section \ref{sec:complexity_problem}).\\
+\\
+In retrospect, most technological progress has had a few common straightforward goal; to simplify and eliminate tedious and repetitive tasks, increase productivity, and ensure safety of the people using it.\\
+An example could be some factory with an assembly line, that has been automated. This automation now becomes a representation of the previous manual process, that has to be managed from higher level of abstraction, and at some point, a human is controlling the process - or more accurate - a model of the process.\\
+\\
+This abstraction and increasing complexity is posing a problem for the human operators of the systems. The details are almost infinite, so only a portion of is can be presented to operators before they experience ``information overload''. This puts heavy constraints on the requirements towards the user interface presented to the operators.\\
+\\
+But still, this assumes that human performance is constant, which is rarely the case. A lot of factors affect the performance of human operators (see section \ref{sec:human_performance}), and are the most error-prone component in complex socio-technical systems today.\\
+\\
+This thesis will look into the challenges faced when the human factor has to be assessed in a safety-critical system. It will present some of the currently used accident/system modelling methods, and a relative new method that tries to take into account, the human performance variability issue. The latter method is presented along with an example of its usage.\\
+\\
+As this thesis extends an internship at risk department dealing with (mostly) railway safety, and the accident modelled in the thesis is a railway incident, there is a few introductory chapters containing a brief introduction to relevant railway concepts and terminology.
 
 \section{Terminology}
 Safety: freedom from unacceptable risk
 
 %TODO: explain risk matrix
 
+\subsection{Artefact}
 \section{General definitions}
+
 
 \subsubsection*{Accident}
 
@@ -58,6 +75,7 @@ Resonance can be used to model how large changes in variability can affect and p
 %TODO Graph on resonance
 
 \section{Railway}
+Safety has always been a high priority in railway engineering and deployment, and it has thus been a largely contributing industry to safety critical research.
 
 %Single-track and dual track operation
 
@@ -65,31 +83,6 @@ Resonance can be used to model how large changes in variability can affect and p
 A block is a distance of railway that, at any point in time can only be occupied by one train. There are two types of blocks; fixed and moving.
 
 Traditionally, railways are divided into a number of fixed blocks with entry and exit signals. These signals will represent train movement along the block based on a predefined policy. The policy is again determined from a number of parameters:
-
-
-%Ideally, block interlocking policy should be set to match something like
-
-%TODO - change this formula
-
-%$T_{blocking} = 2*WCGF*(WCBT + WCRT)$
-
-%Where
-
-%\begin{itemize}
-%  \item $T_{blocking}$ is the amount of time a 
-%  \item $WCGF$ is the worst case gradient factor
-%  \item $WCBT$ is the worst case braking time
-%  \item $WCRT$ is the worst case response time of the driver
-%\end{itemize}
-Fixed blocks wastes a lot of capacity, as most blocks go largely unused for most of their distance, plus there is a lot of overhead on stopping times.
-
-Moving block address this issue. Instead of having the line divided into a number of fixed blocks, a "safe distance" is defined dynamically based on the current speed and location of the train.
-This greatly increases the requirement for the technological infrastructure, and the dependability of it.
-
-Safety has always been a high priority in railway engineering and deployment, and it has thus been a largely contributing industry to safety critical research.
-
-Railway safety is largely dependant on supervision systems, and dispatchers.
-
 \begin{itemize}
   \item The permitted maximum speed on the line
   \item The maximum speed and braking characteristics of the different trains occupying the track
@@ -97,20 +90,24 @@ Railway safety is largely dependant on supervision systems, and dispatchers.
   \item Line-of-sight. Being that the signal is optical, the train driver must be able to see it before acting on it.
   \item The reaction time of the driver
 \end{itemize}
-Whereas the maximum speed and geological conditions can be modelled linear - the response time of the driver cannot. And on a line without ATC (see section \ref{sec:atc}) failure to observe a non-go signal will effectively cancel out all other factors in the model.
+Whereas the maximum speed and geological conditions can be modelled linear - the response time of the driver cannot. And on a line without ATC (see section \ref{sec:atc}) failure to observe a non-go signal will effectively cancel out all other factors in the model.\\
+\\
+Fixed blocks wastes a lot of capacity, as most blocks go largely unused for most of their distance, plus there is a lot of overhead on stopping times.\\
+\\
+Moving block address this issue. Instead of having the line divided into a number of fixed blocks, a "safe distance" is defined dynamically based on the current speed and location of the train.
+This greatly increases the requirement for the technological infrastructure, and the dependability of it.
 
+\subsection{Interlock}
+
+\begin{quote}
+Interlocks are commonly used to enforce correct sequencing or to isolate two events in time.
+\end{quote}\cite{leveson1995safeware}
 \subsection{ATC}
 \label{sec:atc}
-ATC, or Automatic Train Control is a mechanism that allows automatic interlocking of railway blocks.
-
-Barrier in safety engineering
-
-general safety en resilience engineering terminology
-
-
+ATC, or Automatic Train Control is a mechanism that allows automatic breaking of trains as the pass a signal at danger. It will signal the train driver that a signal has been passed, and automatically brake the train based on a calculated braking curve.
 
 \subsection{Level crossing}
-%A level crossing (a primarily British term; usually called a "railroad crossing" in the United States) occurs where a railway line is intersected by a road or path on one level, without recourse to a bridge or tunnel. It is a type of at-grade intersection. The term also applies when a light rail line with separate right-of-way or reserved track crosses a road in the same fashion. Other names include railway crossing, grade crossing, road through railroad, or train crossing.
+A level crossing, railway/railroad crossing is an intersection between road, designed for regular traffic, and railway tracks. In modern track planning, they are usually avoided as they are a source of both delays and hazards. Instead, bridges are built.
 
 \subsection{Timetable}
 The primary barrier to provide safety in railway operation is the timetable. It specifies which trains are supposed at a certain location at a certain point in time. It is considered the first safety measure in railway operation - and thus required all employees to be in possession of a pocket or wrist watch in order for them to be hired.
@@ -126,11 +123,12 @@ The primary barrier to provide safety in railway operation is the timetable. It 
 %Beyond Design-Base Accidents are accidents that occurs as a reaction to unanticipated usage or capacity load. In other words, it's what was no taken into account when the system was designed.
 
 \section{Safety engineering}
+%TODO - Organizational structure matters, it is referenced a lot in litterature
 Malicious acts, such as sabotage or terrorism, are considered of the scope of safety engineering - but is instead treated by a separate field called security engineering. Natural disasters, such as earthquakes and tsunamis, are also typically left out. These are commonly referred to as "Acts of God" as a unified description.
 
 \section{Barriers}
 \label{sec:barriers}
-%TODO list the barriers
+%TODO list the barriers, and finish this section
 Depending on the view, domain or application there may be more than one way of categorizing barriers.\cite{hollnagel2004barriers} defines a barrier as:
 \begin{quote}
 Barriers are hindrances that may either prevent an unwanted event from taking place, or protect against the consequences
@@ -145,9 +143,8 @@ and also defines four categories of barriers; Physical, functional, symbolic and
 \end{itemize}
 
 
-
-
-\section{Safety Engineering}
+\section{Accidents}
+%TODO Definition of accident
 Accidents are, in classic safety literature, depicted as a series of sequential events - each one is the causing factor of the next. Stopping the event chain from propagating before it ultimately leads to an injury (or damage), will prevent it. This model is also known as the domino model, due to its close resemblance to a series of dominoes and the way they fall sequential.\\
 \\
 This reasoning is very easy to follow and makes a lot of sense in simple systems. It is easily depiction and hereby easily communicated. There is also a tendency that people think in linear and sequential systems, rather than in complex intercouplings - as these are far easier to comprehend.\\
@@ -156,6 +153,8 @@ But, in general it is not recommended to say that a specific event (X) causes an
 \\
 Lundberg et al. also makes a point of this in \cite{lundberg2009you}, as it is titled ``What-You-Look-For-Is-What-You-Find - The consequences of underlying accident models in eight accident investigation manuals''
 
+\section{Accident modelling}
+%TODO - Something about context and environment
 
 \subsection{Swiss Cheese Model}
 
@@ -189,6 +188,7 @@ Basically it cuts down to the the following question: "If this component breaks 
 %/Stolen
 
 \section{The complexity paradox}
+\label{sec:complexity_problem}
 As technology advances, systems become more complex, and as their complexity increased, so does their ability to fail in unpredictable ways. This is mainly caused by the incomprehensible size of the entire system as a whole and the number of components used and their inter-dependency.
 A singe component can fail and propagate through the system undetected and be a contributing factor along with others (e.g. environmental or organizational) to the failure of the entire system.\\
 \\
@@ -207,12 +207,15 @@ As previously discussed, linear and strongly intercoupled systems are no longer 
 \\
 To be able to represent and integrate humans as a part of complex larger system, it is neccesary to idenfity and ultimately accept the behaviours and limits of them.
 
-\section{Human performance}
+Until recently, humans have been regarded and modelled as machines - and usually as a primitive feedback loop. But studies and empiric data shows that this model is not optimal, as humans acts as feed-forward systems (\ref{sec:feed_forward}).
 
+\section{Human performance}
+\label{sec:human_performance}
 
 
 
 \subsection{ETTO principle}
+\label{sec:etto_principle	}
 The ETTO is short for Effectiveness-Thoroughness-Trade-Off, and the ETTO principle formalizes the balancing issue in having conflicting requirements or goals. The stop-rule (\ref{sec:root_cause_analysis}) is an example of the ETTO principle, as it is usually not possible to do a more in-depth investigation than what time or financial resources allows.\\
 \\
 ETTO is something most people do every day without giving it much thought. Cooking for instance, may be subject to a time constraint (dinner time), and thus flavouring the food may become under-prioritized in order to meet the deadline. The saying, I've heard in software engineering circles;
@@ -224,6 +227,7 @@ Seems appropriate here.\\
 ETTO is also commonly applied when insufficient information or knowledge is available; sometimes people fail to acknowledge or follow rules simply because they do not comprehend or know the purpose. This is common in layered management systems, where higher layers of management may enforce procedure rules on workers, in order to control, monitor or optimize processes.
 
 \subsection{Feed-forward}
+\label{sec:feed_forward}
 Human behaviour can be regarded as a feed-forward loop, rather than a feed-back loop. In a feed-back loop, you basically respond to the changes and/or information presented to you at the time of their arrival. In feed-forward systems, however, there is a expectation on what will happen next and responses to action are based on the expected effect among a set of responses.\\
 \\
 A good example is driving a car. Minor corrections are done to the direction of the car, sometimes at a very high frequency of several times a second. This has become second nature to regular drivers, but anyone who has observed another person driving a car would have noticed these minor corrections.\\
@@ -302,8 +306,8 @@ In the recent years, as both cognitive psychology and technical progress has adv
 Usability engineering is a field in growth
 
 \section{Joint Cognitive Systems}
+%TODO - People rarely work alone
 \cite{hollnagel1983cognitive}
-People rarely work alone.
 %**Stolen
 % The understanding of the human role in accidents has gone through three stages. In the classical view, humans were seen as error prone or as fallible machines. The purpose of an accident investigation was therefore often to find the "human error" that either was the primary (or even "root") cause or the initiating event.
 %When it became clear, in the 1990s, that the "human error" view was not tenable, explanations changed to look for how performance shaping factors or performance conditions could make people fail, in the sense of "forcing" errors. This did not remove the concept of a "human error", but saw these as a product of the working conditions and work pressures, rather than as a result of built-in human error tendencies.
@@ -325,6 +329,7 @@ A market where dynamic in-field reconfiguration is widely used, is the growing m
 But by enabling their system to be reconfigured in-field, they will be able to fix errors in their product, that have been identified by the users.
 
 \chapter{Accident modelling}
+\label{ch:accident_modelling}
 
 \cite{hollnagel2004barriers} discusses a number of accident models in detail, and finds - among other things - the following:
 
@@ -350,7 +355,9 @@ Before starting a RCA, a stop rule is usually defined. A stop rule is the point 
 
 
 \section{Fault tree analysis}
+%TODO
 \label{sec:fault_tree_analysis}
+Often referred to as FTA, uses a graphical representation distinquising between events, gates and transfers. It uses the common set of logic gates (AND, OR, NOT, XOR) as well a few specialized additions.
 
 \section{FMEA}
 %A failure modes and effects analysis (FMEA) is a procedure in product development and operations management for analysis of potential failure modes within a system for classification by the severity and likelihood of the failures. A successful FMEA activity helps a team to identify potential failure modes based on past experience with similar products or processes, enabling the team to design those failures out of the system with the minimum of effort and resource expenditure, thereby reducing development time and costs. It is widely used in manufacturing industries in various phases of the product life cycle and is now increasingly finding use in the service industry. Failure modes are any errors or defects in a process, design, or item, especially those that affect the customer, and can be potential or actual. Effects analysis refers to studying the consequences of those failures.

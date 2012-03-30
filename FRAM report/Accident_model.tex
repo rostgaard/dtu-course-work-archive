@@ -1,6 +1,6 @@
 \chapter{Example accident model}
 \label{ch:accident_model}
-Using FRAM restrospectively will, hopefully, identify some of the critically constrained couplings between functions in a system. Appling this knowlegde, it will be possible not only to build safer, but also more resillient system.\\
+Using FRAM retrospectively will, hopefully, identify some of the critically constrained couplings between functions in a system. Applying this knowledge, it will be possible not only to build safer, but also more resilient system.\\
 \\
 This chapter will take a relevant near-miss and model it with the procedure suggested by FRAM. 
 
@@ -10,7 +10,7 @@ Modelling a near miss incident is not very common, though very rewarding in term
 %Previous studies\cite{belmonte2011interdisciplinary}
 
 \subsection{Background}
-At Grenåbanen tuesday the 26th of March 2010, at 14:40, an ambulance was intentionally led over railway crossing that should have been secured. This situation led to a near-miss, and luckily no one was harmed.
+At Grenåbanen on tuesday the 26th of March 2010, at 14:40, an ambulance was intentionally led over railway crossing that should have been secured. This situation led to a near-miss, and luckily no one was harmed.
 
 \subsubsection{Official accident report}
 Train RV 4940 in transit from Grenå towards Aarhus was signalled that crossing 128a was secured.
@@ -32,12 +32,21 @@ As there are only crossing bars in the driving direction - it is assumed that th
 \begin{figure}
  \centering
    \includegraphics[width=150pt]{figures/accident_overview.pdf}
- \caption{Assumed ambulance path}
+ \caption{Assumed ambulance path (train approaching from the north)}
  \label{fig:ambulance_path}
 \end{figure}
+The path taken by the ambulance indicates that it had to slow down, maybe even significantly. This adds to the total variability of the pseudo-barrier which here is time.
 
 \subsubsection{FRAM model}
 TODO
+%It is assumed that the two employees manually secured the tracks
+
+
+% 1. Define the purpose of the analysis: The purpose here is to look at what happended and discuss the variability of the system in total
+
+% 2. Identify and describe the relevant system functions.
+
+% 
 
 Functions: 
 Signal
@@ -46,21 +55,42 @@ Signal
 
 
 \subsubsection{Functions}
+It is assumed that the two employees manually initiated the securing of the crossing. The function/activity is represented in table \ref{table:function_initiate_securing}. To initiate the securing, the car drivers must first be notified of the pending closing of crossing bars. This must be done some time prior to the train arrival, as response time on clearing is relativity high.
+\begin{table}[h]
+\centering
+    \begin{tabular}{ | l | r | }
+    \hline
+    Function     &  Initiate securing of crossing\\ \hline \hline
+    Input        &  \\ \hline
+    Output       &  Signal the car drivers\\ \hline
+    Precondition &  Incoming train\\ \hline
+    Resource     &  \\ \hline
+    Time         &  Safe time before train arrives\\ \hline
+    Control      &  Regulations\\ \hline
+    \end{tabular}
+\caption{FRAM table of the initiating activity}
+\label{table:function_initiate_securing}
+\end{table}
+
+When the road side is cleared, the crossing bars are lowered - effectively blocking it. It is essential that the cars have left the crossing. This function is modelled in table \ref{table:function_block_from_road_side}.
+
 \begin{table}[h]
 \centering
     \begin{tabular}{ | l | r | }
     \hline
     Function     &  Block passage from road side\\ \hline \hline
-    Input        &  \\ \hline
+    Input        &  Signal the car drivers\\ \hline
     Output       &  Lower the crossing bars\\ \hline
-    Precondition &  Signal the car drivers\\ \hline
+    Precondition &  \\ \hline
     Resource     &  \\ \hline
-    Time         &  Drivers have been notified\\ \hline
-    Control      &  Train has passed\\ \hline
+    Time         &  Time sufficient to clear crossing\\ \hline
+    Control      &  \\ \hline
     \end{tabular}
-\caption{Function 1}
-\label{table:function}
+\caption{FRAM table of the blocking function}
+\label{table:function_block_from_road_side}
 \end{table}
+
+Table \ref{table:function_allow_passage_from_train_side} models the function that allows train passage. As the crossing is interlocked, it must be secured for train passage before the train will be able to enter it. This is usually enforced by both a signal, and ATC (\ref{sec:atc}).
 
 \begin{table}[h]
 \centering
@@ -69,47 +99,30 @@ Signal
     Function     &  Allow passage from train side \\ \hline \hline
     Input        &  Train has enters crossing\\ \hline
     Output       &  Train has left crossing\\ \hline
-    Precondition &  Crossing bars a lowered\\ \hline
+    Precondition &  Crossing bars lowered\\ \hline
     Resource     &  \\ \hline
     Time         &  Must pass within blocking-time window\\ \hline
-    Control      &  Road side passage blocked\\ \hline
+    Control      &  ATC\\ \hline
     \end{tabular}
-\caption{Function 1}
-\label{table:function0}
+\caption{FRAM table representing the activity of allowing train passage}
+\label{table:function_allow_passage_from_train_side}
 \end{table}
-
-\begin{table}[h]
-\centering
-    \begin{tabular}{ | l | r | }
-    \hline
-    Function     &  Signal train allowed passage \\ \hline \hline
-    Input        &  \\ \hline
-    Output       &  \\ \hline
-    Precondition &  \\ \hline
-    Resource     &  \\ \hline
-    Time         &  \\ \hline
-    Control      &  \\ \hline
-    \end{tabular}
-\caption{Function 1}
-\label{table:function1}
-\end{table}
-
+When the train has passed, the crossing will be able to unblock the road side after a safety delay. Some crossings will automatically open after a timeout has occurred, even if no train has passed - of course while blocking the railway. Table \ref{table:function_unblock_road_side}.
 \begin{table}[h]
 \centering
     \begin{tabular}{ | l | r | }
     \hline
     Function     &  Unblock road side \\ \hline \hline
     Input        &  Train has left crossing\\ \hline
-    Output       &  \\ \hline
+    Output       &  Unblock road side passage\\ \hline
     Precondition &  \\ \hline
     Resource     &  \\ \hline
-    Time         &  \\ \hline
-    Control      &  \\ \hline
+    Time         &  Safety delay\\ \hline
+    Control      &  Timeout\\ \hline
     \end{tabular}
-\caption{Function 1}
-\label{table:function2}
+\caption{FRAM table representing the function of unblocking the road side}
+\label{table:function_unblock_road_side}
 \end{table}
-
 
 \begin{figure}[h]
  \centering
@@ -118,16 +131,24 @@ Signal
  \label{fig:fram_graphical}
 \end{figure}
 
-This approach treats the train as the product input and outputs.
+This graphical representation shows quite clearly that time is an essential aspect of every activity and function - hence every small variability in a function will resonate and propagate onto the next.
 
 \subsection{Barriers}
-There is a physical barrier that is intercoupled with a incorporeal barrier; the crossing bars that depend on driving in the right side of the road (following traffic laws).
-There are two overall incorporeal barriers in place here; ``udrykningsbekendtgørelsen'' and the railway legislation.
+There are a number of barriers in place here:
+\begin{itemize}
+  \item A physical barrier that is intercoupled with a incorporeal barrier; the crossing bars that depend on driving in the right side of the road (following traffic laws).
+  \item Time - the essential barrier. Safety functions depend largely on having the time to complete their cycle.
+  \item Two incorporeal barriers; ``udrykningsbekendtgørelsen'' and the railway legislation.
+
+\end{itemize}
+
 \section{Discussion}
 %TODO In general, like in statistics, Corrolation does not imply causation.
 
-The near-miss her is beyond the scope of the intended operation/design of ATC(\ref{sec:atc}). This is a perfect example of high variability in a system. Everything works as intended, until the railway workers are affected by a disturbance that ultimately leads to two time constraint pressures; one from the Ambulance, and one from the approaching train.
+The near-miss her is beyond the scope of the intended operation/design of ATC(\ref{sec:atc}) and is a perfect example of high variability in a system. Everything works as intended, until the railway workers are affected by a disturbance that ultimately leads to two time constraint pressures; one from the Ambulance, and one from the approaching train.
 
-On the remedial side, there could be a gain by adding a second set of barriers, meaning that both driving lanes of the road will be blocked. This will prevent this barrier to be overridden entirely.
+On the remedial side, there could be a gain by adding a second set of crossing bars, meaning that both driving lanes of the road will be blocked. This will prevent this barrier to be overridden entirely. Adding a second set of bars would introduce the hazard of ``trapping'' cars inside the secured crossing, but could be avoided by delaying the lowering of the second set of bars for a short time after the first set.
 
 %TODO The fields usabilty engineering and safety enginering are closely related in terms of clear communication.
+
+\chapter{Conclusion}
