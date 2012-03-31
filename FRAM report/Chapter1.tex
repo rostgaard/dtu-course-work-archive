@@ -46,12 +46,10 @@ Safety: freedom from unacceptable risk
 %TODO: explain risk matrix
 
 \subsection{Artefact}
-\section{General definitions}
+An artefact is a human made object, or an object with human-applied usage. Artefacts play an important role in everyday life. Most artefacts are created for a specific function or to solve a specific problem, but as they evolve 
+\subsubsection{Accident}
 
-
-\subsubsection*{Accident}
-
-\subsubsection*{Near miss}
+\subsubsection{Near miss}
 \label{sec:near_miss}
 A near miss is often described as "an unplanned event that did not result in injury, illness, or damage - but had the potential to do so". This is also referred to as "Close call" or "Near Collision" when moving objects are involved.\\
 \\
@@ -60,13 +58,12 @@ Near misses are not, as a rule, taken into consideration as an accident. Whether
 A recent incident with the Danish IC4 trains resulted in a near miss situation, due to a brake failure. An accident investigation was committed, largely due to the inexplicably of the failure - and the relative young age of the trains.
 %A near miss is an unplanned event that did not result in injury, illness, or damage – but had the potential to do so. Only a fortunate break in the chain of events prevented an injury, fatality or damage; in other words, a miss that was nonetheless very near. Although the label of 'human error' is commonly applied to an initiating event, a faulty process or system invariably permits or compounds the harm, and should be the focus of improvement. Other familiar terms for these events is a "close call", or in the case of moving objects, "near collision".
 
-%Find them
+%TODO Find these references
 A widely spread rule of thumb extrapolates the (Bird, 1974; from Heinrich et Al., 1980) 1:10:30:600 figures giving 1 accident for every 300 near-miss.
 
 A problem with near-misses is they are rarely reported and unsafe acts are considered never reported.
 
 \section{Resonance}
-
 Resonance is a phenomenon in physics making a system oscillate at a higher amplitude when a force is applied. In physics, this is often depicted as a pendulum in motion, where the applied force is the initial push.\\
 \\
 \cite{hollnagel2004barriers} uses the example of a swing set found on playgrounds. When these are set into motion, one can apply force at just the right time, to increase the amplitude of the oscillating function, that represents the swing. Similarly, you can decrease the amplitude by applying force a bit earlier - hereby damping the kinetic energy of the swing.\\
@@ -153,6 +150,8 @@ But, in general it is not recommended to say that a specific event (X) causes an
 \\
 Lundberg et al. also makes a point of this in \cite{lundberg2009you}, as it is titled ``What-You-Look-For-Is-What-You-Find - The consequences of underlying accident models in eight accident investigation manuals''
 
+Accidents can be defined as unplanned and undesired release of energy that result in losses (either financial, human or ecological).
+
 \section{Accident modelling}
 %TODO - Something about context and environment
 
@@ -163,12 +162,6 @@ Barriers are depicted as layers of swiss cheese with holes in them.
 
 
 There has been a paradigm shift in the view on accidents in the later years. Now, accidents are not considered a linear succession events, but rather a complex combination of events.
-
-
-%**Stolen
-%Cognitive Reliability and Error Analysis (CREAM) [5]. CREAM allows to highlight the dependence of human performance on the context and provides an useful cognitive model for both retrospective and prospective acci-dent analysis. The specificity of CREAM is that human errors are shaped more bythe context than by a stochastic process.
-%/stolen
-
 
 Current formal requirements on safety measures in systems engineering, usually focus on the robustness and integrity of single components, rather than on the coupling of these and the system as a whole.
 \section{Resilience Engineering}
@@ -209,10 +202,10 @@ To be able to represent and integrate humans as a part of complex larger system,
 
 Until recently, humans have been regarded and modelled as machines - and usually as a primitive feedback loop. But studies and empiric data shows that this model is not optimal, as humans acts as feed-forward systems (\ref{sec:feed_forward}).
 
+During the 1930s and 1940s, behaviourism reduced humans to black box systems and observed response to stimuli, much like how micro-organisms are studied. The problem with this is that human response is largely dependant on current performance, and more importantly, context and environment.
+
 \section{Human performance}
 \label{sec:human_performance}
-
-
 
 \subsection{ETTO principle}
 \label{sec:etto_principle	}
@@ -521,21 +514,24 @@ The data in table \ref{table:hazop_guide_words} is based on the similar table fo
 \subsection{Discussion}
 HAZOP is a strong and formalized method for doing systematic assessment of a complete system. However, it focuses primarily on the couplings between components, and thus fails to capture any propagation there may arise. This can be remedied by the use of fault trees (\ref{sec:fault_tree_analysis})
 
-
 \section{STAMP}
-System-Theoretic Accident Model and Process
+%TODO classic view: chain of events
+System-Theoretic Accident Model and Process regards the safety problem as a control problem (define and enforce safety constraints)
 
+Maps control structure through controlling entities
+
+Models the control structure and tries to captures the individual cotributiuon of each level (technical, managerial, organizational and regulatory)
+\cite{leveson2012engineering}
+
+STAMP seeks to complete accident reports
 \section{Other models}
 MORT, SCAT, STEP, MTO, AEB, TRIPOD, change analysis are covered in-depth by \cite{Sklet200429}.
 
-
-CREAM
 \section{Functional Resonance Analytic Model}
 %The functional resonance accident model (FRAM; Hollnagel, 2004) describes system failure in terms of the resonance of normal performance variability. This provides a convenient way of representing the non-linear propagation of events and also makes it possible to account for adverse outcomes in cases where there were no manifest malfunctions or failures. The principle of FRAM is to characterise individual system functions independently of how they may be connected in a specific situation. The characterisation of each function ­ or node ­ is done in terms of six aspects and the values of these aspects determine how nodes may be coupled under given conditions. To produce a description of functional variability and potential resonance, and to determine recommendations for damping unwanted variability, a FRAM analysis consists of four steps:
 
 
 FRAM is designed for systems which both include human and organizational factors. It seeks to avoid the unintended effects of (sequential thinking) other graphical representations. It represents a system as a set of interconnected functions. Each function is represented as a FRAM node - or as the creator informally states; a hexagonal snowflake. An example is shown i figure \ref{fig:fram_node}.
-
 
 \begin{figure}[h]
  \centering
@@ -546,7 +542,7 @@ FRAM is designed for systems which both include human and organizational factors
 
 Each of these nodes consists of a six edge connection points - one output and five inputs. These  model how functions are inter-coupled. A brief explanation of each connector follows.
 
-%Focus on what went right
+%TODO Focus on what went right
 
 \begin{itemize}
   %Time available: This can be a constraint but can also be considered as a special kind of resource
@@ -570,13 +566,13 @@ Unused connectors can explicitly be marked as Not Applicable (N/A).
 
 
 
-FRAM analysis basically consists of four steps:
+FRAM analysis consists of four basic steps:
 
-\subsubsection*{Step 1}
+\subsection{Identify essential system functions}
 %Step 1: Identify essential system functions, and characterise each function by six basic aspects or parameters. The six aspects are input (I, that which the function uses or transforms), output (O, that which the function produces), preconditions (P, conditions that must be fulfilled to perform a function), resources (R, that which the function needs or consumes), time (T, that which affects time availability), and control (C, that which supervises or adjusts the function). Nodes and their aspects may be described in a table and can subsequently visualized in a hexagonal representation (cf. Figure 2 and 4 below).
 The objective of the first step is to identify essential system functions, and characterise each of them by the six basic aspects specified in figure \ref{fig:fram_node}. This can be done in a table, and converted to hexagonal objects later on.
 %TODO
-\subsubsection*{Step 2}
+\subsection{Characterize the context dependent variability of each node}
 %Step 2: Characterize the context dependent variability of each node. For an accident analysis, the variability is known from the investigation data. In this case the analysis focuses on comparing the observed and the normal performance. For risk assessment, the variability may be derived from a characterisation of the common performance conditions (CPCs), of which there currently are eleven. These CPCs address the combined human, technological, and organizational aspects of each function. After identifying the CPCs, the variability must be determined in a qualitative way in terms of stability, predictability, sufficiency, and boundaries of performance. 
 The next step is to characterize the context dependent variability of each node from a list of common performance conditions - or CPCs. 
 
@@ -616,13 +612,12 @@ When applied on an accident analysis, the analysis focuses on comparing the obse
 
 %**Stolen
 
-\subsubsection*{Step 3}
+\subsection{Define functional resonance between nodes}
 %Step 3: Defining the functional resonance based on possible dependencies/couplings among functions and the potential for functional variability. The output of the functional description of step 1 is a characterisation of functions and their aspects. The aspects provides the basis for identifying how functions may be coupled. For example, the output of one function may be an input to another function, or produce a resource, fulfil a pre-condition, or enforce a control or time constraint. When the couplings between functions are found, this is combined with the characterization of performance variability from Step 2. In this way the analysis will show how the variability of one function may have an impact on others. This analysis thus determines how resonance, and ultimately adverse outcomes, can result from variability across functions in the system. For example, if the output of a function is unpredictably variable, another function that depends on this output as a resource may be performed unpredictably. Many such occurrences and propagations of variability may have an effect like resonance.
 The third step will link the functions and define the functional resonance. The purpose of the couplings between the nodes is to determine the potential for functional variability.
-
-
+\subsection{Identify damping factors}
 %Step 4: Identify barriers for variability (damping factors) and specify required performance monitoring. Barriers are hindrances that may either prevent an unwanted event from taking place, or protect against the consequences (Hollnagel, 2004). Barriers can be described in terms of barrier systems (the organizational and/or physical structure of the barrier) and barrier functions (the manner by which the barrier achieves its purpose). In FRAM, four categories of barrier systems are identified (each with their potential barrier functions, see Hollnagel, 2004). In addition to recommendations for barriers, FRAM can also be used to specify recommendations for the monitoring of performance and variability, as a way to detect and manage undesired variability. Performance indicators may thus be developed for every function and every link between functions.
-\subsection*{Sted 4}
+
 The final step will be be the remedial one, where identification of variability barriers - or damping factors - will take place. For a more in-depth description on barriers see section \ref{sec:barriers}.\\
 \\
 Usually one or more of these four classes of barriers are deployed;
