@@ -16,7 +16,7 @@
 \documentclass[10pt,oneside]{book}                  %Official DTU-IMM Thesis document setup
 %
 %Set to 'print' for printed version, use 'net' for online version
-\def\thesisversion{print} 			
+\def\thesisversion{net} 			
 %
 %==================================================================================================
 % PACKAGES
@@ -62,15 +62,15 @@
 \pagenumbering{roman}                               %Set frontmatter numbering style
 
 \chapter{Summary (English)}
-Identifying and determining the significance of human factors in complex safety-critical systems is a area with a lot uncertainty as humans are themselves complex systems.
+Identifying and determining the significance of human factors in complex safety-critical systems is an area with a lot of uncertainty as humans are themselves complex systems.
 
 Most established methods have proved themselves too crude for use in resilience engineering, and more sophisticated methods are starting to show.
 
-This purpose of this report is to document, discuss and apply modern methods for determining human factors in a safety system.
+This purpose of this report is to document, discuss and apply modern methods for determining human factors in a safety system, using a real-world accident as an example.
 
 %purpose is to find out how it happened, as it is usually very clear \emph{what} happened
 
-The supervisor on this thesis is Paul Pop (Paul.Pop@imm.dtu.dk)
+The supervisor on this thesis is Paul Pop (paul.pop@imm.dtu.dk)
 
 \markboth{}{}                                       %Set headings (left)(right)
 \chapter{Summary (Danish)}
@@ -83,38 +83,34 @@ Målet for denne afhandling er at ...
 
 \chapter{Preface}
 
-This thesis was prepared at the department of Informatics and Mathematical Modelling at the Technical University of Denmark in fulfilment of the requirements for acquiring an BSc. in Informatics. 
+This thesis was prepared at the department of Informatics and Mathematical Modelling at the Technical University of Denmark in fulfilment of the requirements for acquiring a BSc. in Informatics. 
 
-The thesis deals with the aspect of human factors in accident models.
-
-The thesis consists of an introduction to different accident model as they have evolved throughout time - from the early linear models to the modern non-linear complex models.\\
+It deals with the aspect of human factors in accident models and consists of an introduction to different accident model as they have evolved throughout time - from the early linear models to the modern non-linear complex models.\\
 For the latter, a simple accident will be modelled to help illustrate the usage, and strengthen the discussion of its validity and application.
 
 As the accident being modelled is railway associated, some terminology about railway safety is provided, in the scope it was found necessary.
+
 
 %TODO - maybe this, somewhat fun. story.
 %I've been interested in philosophy for about as long as I've lived, of course I didn't know what my reflecting thoughts were called until later in the education system.
 %My second big interest is software - on the more close hardware level. This passion led eventually led me to DTU, that led me back to philosophy. Imagine my surprise over this wierd completion of a circle.
 
-%==================================================================================================
-%TODO SIGNATURE AREA - Uncomment for real delivery
-%==================================================================================================
-%\vspace{20mm}
-%\begin{center}
-%	\hspace{20mm} Lyngby, \thesishandin-\thesisyear 
-%	\vspace{5mm}
-%	\newline
-  %Update signature image file in line below
-%	\includegraphics[scale=0.5]{figures/signature.pdf}
-%\end{center}
-%\begin{flushright}
-%	\thesisauthor
-%\end{flushright}
-% % % EOF % % %
+\vspace{20mm}
+\begin{center}
+	\hspace{20mm} Lyngby, \thesishandin-\thesisyear 
+	\vspace{5mm}
+	\newline
+ %Update signature image file in line below
+	\includegraphics[scale=0.5]{figures/signature.pdf}
+\end{center}
+\begin{flushright}
+	\thesisauthor
+\end{flushright}
+ % % EOF % % %
 \markboth{}{}                                       %Set headings (left)(right)
 
 \chapter{Acknowledgements}
-First, would like to thank Erik Hollnagel, among others, for all the very useful literature he have had published.
+First, I would like to thank Erik Hollnagel, among others, for all the very useful literature he has published.
 
 I would also like to thank my supervisor at Atkins Denmark; Per Stolze which is, quite frankly, a human encyclopedia on train and railway safety - and has been used as such during the writing of this thesis.
 
@@ -156,8 +152,7 @@ Last, but certainly not least, I would like to thank my lovely girlfriend - who 
 
 %The second step is determining the potential variability of each operational unit. FRAM classifies operational units into three categories: Human (H), Technical (T) and Organizational (O). The operational unit’s poten tial variability is determined by the respective weights of eleven common performance conditions (CPC), acting as context factors on the operational unit, according to its category. The CPC used in FRAM are based on Hollnagel’s CREAM (Cognitive Reliability and Error Analysis Method) method for studying human reliability; see [9] for a detailed presentation.
 
-
-
+\markboth{}{}
 \chapter{Introduction}
 Accidents have been a part of our world for as long as we have been around, and as technology has progressed and given us the potential to build better and more powerful systems, so has the scale and impact of the accidents. From early day accidents with fire to modern day nuclear power plant incidents.\\
 \\
@@ -305,6 +300,7 @@ There has been a paradigm shift in the view on accidents in the later years. Now
 
 Current formal requirements on safety measures in systems engineering, usually focus on the robustness and integrity of single components, rather than on the coupling of these and the system as a whole. But as single technical and organizational components become more robust and resilient, they also tend to get more complex - increasing the requirements to the humans in the system.
 
+\markboth{}{}
 \chapter{Human factors}
 The variability of is system is becoming more and more dependent on individual and/or collective performance of humans, and the need for a model that takes these into account, has arisen.\\
 \\
@@ -369,16 +365,16 @@ As people rarely work alone, it makes sense to treat a complete system that invo
 \\
 Joint cognitives systems are treated by the relative new cognitive systems engineering field, and distance itself from the classic human-machine interface (HMI). It regards the entire system, including the operator, as a whole - rather than two separate isolated systems.
 \subsection{Circadian rhythm}
-The circadian rhythm is a the natural daily rhythm that is found in, humans, plants, other mammals alike. It has tremendous impact on the performance of an individual and is thus non-negligible when discussing human factors in a system.
-
-Circadian rhythm has a large impact on, for example aeroplane pilots flying across time zones, and thus loses their natural sense of daylight. This leads to fatigue, decreased responsiveness and performance (\cite{mallis2010aircrew}).
-%TODO - Add licenseing
 \begin{figure}[h]
  \centering
    \includegraphics[width=360pt]{figures/biological_clock_human.pdf}
  \caption{Human biological clock (Licence: GFDL)}
  \label{fig:human_biological_clock}
 \end{figure}
+The circadian rhythm is a the natural daily rhythm that is found in, humans, plants, other mammals alike. It has tremendous impact on the performance of an individual and is thus non-negligible when discussing human factors in a system. See figure \ref{fig:human_biological_clock}, for a visual presentation of the human biological clock.\\
+\\
+Circadian rhythm has a large impact on, for example aeroplane pilots flying across time zones, and thus loses their natural sense of daylight. This leads to fatigue, decreased responsiveness and performance (\cite{mallis2010aircrew}).
+
 
 \section{User interfaces}
 In the recent years, as both cognitive psychology and technical progress has advanced, user interfaces is beginning to receive more attention. 
@@ -421,24 +417,8 @@ In the recent years, as both cognitive psychology and technical progress has adv
 
 \end{enumerate}
 
-
 %The door push/pull usability example
-Usability engineering is a field in growth
-
-\section{Joint Cognitive Systems}
-%TODO - People rarely work alone
-\cite{hollnagel1983cognitive}
-%**Stolen
-% The understanding of the human role in accidents has gone through three stages. In the classical view, humans were seen as error prone or as fallible machines. The purpose of an accident investigation was therefore often to find the "human error" that either was the primary (or even "root") cause or the initiating event.
-%When it became clear, in the 1990s, that the "human error" view was not tenable, explanations changed to look for how performance shaping factors or performance conditions could make people fail, in the sense of "forcing" errors. This did not remove the concept of a "human error", but saw these as a product of the working conditions and work pressures, rather than as a result of built-in human error tendencies.
-%Although this development enabled people to understand accidents of a more complex nature for a while, it still fell short in a number of situations. This led to the recognition, strongly supported by resilience engineering, that failures and successes have the same source, and that they metaphorically speaking are two sides of the same coin.
-%The functional resonance model (Hollnagel, 2004) describes system failure as a resonance of the normal variability of functions. To arrive at a description of functional variability and resonance, and to determine recommendations for damping unwanted variability, a FRAM analysis consists of four steps:
-
-%Identify and describe essential system functions, and characterise each function by six basic parameters.
-%Characterise the (context dependent) potential variability through common performance conditions.
-%Define the functional resonance based on possible dependencies / couplings among functions and the potential for functional variability.
-%Identify barriers for variability (damping factors) and specify required performance monitoring.
-%/Stolen
+Usability engineering is a field in growth, and has been given a great deal of attention the last five years. A lot the psychological data and lessons learned could be of very high use the design of human-machine interfaces for safety-critical applications.
 
 \section{Dynamic reconfiguration}
 One of the thing human do very differently, and much better, than machines is adapt. Humans are able to learn from experience and apply new knowledge. Machines however, are usually only designed for one purpose, and reconfiguration is usually not an option, unless it is really necessary - e.g. when situation of emergency arises.
@@ -448,15 +428,16 @@ Modern end-user consumer products are usually designed with a dynamic reconfigur
 A market where dynamic in-field reconfiguration is widely used, is the growing market for smart phones. These are typically cellular phones with additional functionality, such as being able to install third party software. The makers of these products have acknowledged the fact that their system, due to increasing constraints on time-to-market window, will have to be shipped before extensive testing has been performed.\\
 But by enabling their system to be reconfigured in-field, they will be able to fix errors in their product, that have been identified by the users.
 
+\markboth{}{}
 \chapter{Accident modelling}
 \label{ch:accident_modelling}
-
+Accident models seek to explain the unexplainable and introduce a formalism into the accident reporting.
 \cite{hollnagel2004barriers} discusses a number of accident models in detail, and finds - among other things - the following:
 
 \begin{itemize}
 \item Graphical representation is a big challenge. Both when it comes to communicating the findings, but also when the cause of the accident has to be traced. Boxes and sequential also models tends to lead to boxed and sequential thinking.
 \item Complex models are not easily represented graphically, nor are they easy to communicate without loss of information quality, or correctness.
-\item Organizational structure is often overlooked and neglected in 
+\item Organizational structure is often overlooked and neglected in accident models
 \end{itemize}
 
 Historically, this has not always been so.
@@ -469,7 +450,7 @@ A number of unintended constraints will inevitably appear when trying to represe
 \cite{hollnagel2005joint}%page 40
 
 \section{Root Cause Analysis}
-Sharp and blunt end
+%Sharp and blunt end
 %TODO General on RCA
 Before starting a RCA, a stop rule is usually defined. A stop rule is the point where you do no dig any further. An analogy from \cite{hollnagel2004barriers} shows a RCA as a tree where the single leaf can be considered an event. The cause is then traced back to the roots of the tree to the root, but usually not any further. A root event can typically be traced further back, and fans out to a number of contributing factors.
 
@@ -477,7 +458,7 @@ Before starting a RCA, a stop rule is usually defined. A stop rule is the point 
 \section{Fault tree analysis}
 %TODO
 \label{sec:fault_tree_analysis}
-Often referred to as FTA, uses a graphical representation distinquising between events, gates and transfers. It uses the common set of logic gates (AND, OR, NOT, XOR) as well a few specialized additions.
+Often referred to as FTA, uses a graphical representation distinguishing between events, gates and transfers. It uses the common set of logic gates (AND, OR, NOT, XOR) as well a few specialized additions.
 
 \section{FMEA}
 %A failure modes and effects analysis (FMEA) is a procedure in product development and operations management for analysis of potential failure modes within a system for classification by the severity and likelihood of the failures. A successful FMEA activity helps a team to identify potential failure modes based on past experience with similar products or processes, enabling the team to design those failures out of the system with the minimum of effort and resource expenditure, thereby reducing development time and costs. It is widely used in manufacturing industries in various phases of the product life cycle and is now increasingly finding use in the service industry. Failure modes are any errors or defects in a process, design, or item, especially those that affect the customer, and can be potential or actual. Effects analysis refers to studying the consequences of those failures.
@@ -531,10 +512,7 @@ If on the other hand, it causes injury to the users it is considered hazardous a
 
 \subsection{Detection}
 \label{sec:fmea_detection}
-%TODO
-%When appropriate actions are determined, it is necessary to test their efficiency. In addition, design verification is needed. The proper inspection methods need to be chosen. First, an engineer should look at the current controls of the system, that prevent failure modes from occurring or which detect the failure before it reaches the customer. Hereafter one should identify testing, analysis, monitoring and other techniques that can be or have been used on similar systems to detect failures. From these controls an engineer can learn how likely it is for a failure to be identified or detected. Each combination from the previous 2 steps receives a detection number (D). This ranks the ability of planned tests and inspections to remove defects or detect failure modes in time. The assigned detection number measures the risk that the failure will escape detection. A high detection number indicates that the chances are high that the failure will escape detection, or in other words, that the chances of detection are low.
-
-%TODO verify these tables
+The next step is to identify how detectable the failure mode is.
 \begin{table}[h]
 \centering
     \begin{tabular}{ | l | r | }
@@ -551,9 +529,6 @@ If on the other hand, it causes injury to the users it is considered hazardous a
 \label{table:fmea_detectability}
 \end{table}
 
-
-
-
 \subsection{Risk priority number (RPN)}
 When the previous three steps are completed, a worksheet is typically produced, which serves as a basis for calculating risk priority numbers - or RPN. It is calculated in with the following formula.
 
@@ -561,33 +536,15 @@ When the previous three steps are completed, a worksheet is typically produced, 
 RPN = O \cdot S \cdot D
 \end{equation}
 
-Where $O$ is the occurrence frequency factor, $S$ is the severity factor and $D$ is the detectability factor.
+Where $O$ is the occurrence frequency factor, $S$ is the severity factor and $D$ is the detectability factor.\\
+The activities for FMEA is covered in extensive detail in \cite{MILSTD1629A}.\\
+\\
+FMEA has a ``Big brother'' method that includes criticality in the analysis. It is called FMCEA - or Failure Mode Criticality and Effect Analysis.
 
-The activities for FMEA is covered in extensive detail in \cite{MILSTD1629A}.
-
-% Big brother FMCEA
-%RPN play an important part in the choice of an action against failure modes. They are threshold values in the evaluation of these actions.
-
-%After ranking the severity, occurrence and detectability the RPN can be easily calculated by multiplying these three numbers: RPN = S × O × D
-
-%This has to be done for the entire process and/or design. Once this is done it is easy to determine the areas of greatest concern. The failure modes that have the highest RPN should be given the highest priority for corrective action. This means it is not always the failure modes with the highest severity numbers that should be treated first. There could be less severe failures, but which occur more often and are less detectable.
-
-%After these values are allocated, recommended actions with targets, responsibility and dates of implementation are noted. These actions can include specific inspection, testing or quality procedures, redesign (such as selection of new components), adding more redundancy and limiting environmental stresses or operating range. Once the actions have been implemented in the design/process, the new RPN should be checked, to confirm the improvements. These tests are often put in graphs, for easy visualization. Whenever a design or a process changes, an FMEA should be updated.
-
-%A few logical but important thoughts come in mind:
-
-%Try to eliminate the failure mode (some failures are more preventable than others)
-%Minimize the severity of the failure
-%Reduce the occurrence of the failure mode
-%Improve the detection
-
-%TODO - maybe small example or disussion
 
 \section{HAZOP}
-HAZOP is a short form of HAZard and OPerability study. It uses a set of guide words to create a systematic review of a system. It is originally developed to analyse chemical process systems, but is now used for a variety of systems - including software. The method itself, and the list of guide words are standardized\footnote{BS: IEC61882:2002 Hazard and operability studies (HAZOP studies)}.
-
-%A hazard and operability study (HAZOP) is a structured and systematic examination of a planned or existing process or operation in order to identify and evaluate problems that may represent risks to personnel or equipment, or prevent efficient operation. The HAZOP technique was initially developed to analyze chemical process systems, but has later been extended to other types of systems and also to complex operations and to software systems. A HAZOP is a qualitative technique based on guide-words and is carried out by a multi-disciplinary team (HAZOP team) during a set of meetings.
-
+HAZOP is a short form of HAZard and OPerability study. It uses a set of guide words to create a systematic review of a system. It is originally developed to analyse chemical process systems, but is now used for a variety of systems - including software. The method itself, and the list of guide words are standardized\footnote{BS: IEC61882:2002 Hazard and operability studies (HAZOP studies)}.\\
+\\
 HAZOP works by first defining components and interfaces - and how they are interconnected. Due to its origin in chemical processing industry, it focuses on the flow between thesis components via the connections. This however, has proven to be a relevant general model for other field - such as computer science. Here the flow is not a material, but information - or a electrical signal.\\
 This has added four additional guide words to HAZOP; early, late, before and after.
 Upon identification of interconnections of components, a systematic process is started by taking every relevant guide word for each connection and record any findings.
@@ -636,21 +593,19 @@ Upon identification of interconnections of components, a systematic process is s
 \end{table}
 The data in table \ref{table:hazop_guide_words} is based on the similar table found in \cite{storey1996safety}.
 
-%TODO Small example
-
 \subsection{Discussion}
 HAZOP is a strong and formalized method for doing systematic assessment of a complete system. However, it focuses primarily on the couplings between components, and thus fails to capture any propagation there may arise. This can be remedied by the use of fault trees (\ref{sec:fault_tree_analysis})
 
 \section{STAMP}
 %TODO classic view: chain of events
-System-Theoretic Accident Model and Process regards the safety problem as a control problem (define and enforce safety constraints)
-
+System-Theoretic Accident Model and Process regards the safety problem as a control problem. It seeks to define, and on the remedial side, enforce safety constraints.\\
+It consists of three basic constructs; safety constraints, 
 Maps control structure through controlling entities
 
 Models the control structure and tries to captures the individual cotributiuon of each level (technical, managerial, organizational and regulatory)
-\cite{leveson2012engineering}
+For a full presentation of STAMP see \cite{leveson2012engineering}.
 
-STAMP seeks to complete accident reports
+%STAMP seeks to complete accident reports
 \section{Other models}
 MORT, SCAT, STEP, MTO, AEB, TRIPOD, change analysis are covered in-depth by \cite{Sklet200429}.
 
@@ -791,8 +746,6 @@ Define the purpose of modelling and describe the situation being analysed. Eithe
 \section{FRAM tools}
 A special-purpose piece of computer software exists to visualize the FRAM models and conveniently describe the functions and couplings using textual input and graphical representation. It can be seen in figure \ref{fig:fram_visualizer_interface}.
 
-
-
 \begin{figure}
  \centering
    \includegraphics[width=320pt]{figures/framvisualizer1.png}
@@ -800,7 +753,7 @@ A special-purpose piece of computer software exists to visualize the FRAM models
  \label{fig:fram_visualizer_interface}
 \end{figure}
 
-
+\markboth{}{}
 \chapter{Example accident model}
 \label{ch:accident_model}
 Using FRAM retrospectively will, hopefully, identify some of the critically constrained couplings between functions in a system. Applying this knowledge, it will be possible not only to build safer, but also more resilient system.\\
@@ -982,8 +935,15 @@ On the remedial side, there could be a gain by adding a second set of crossing b
 
 %TODO The fields usabilty engineering and safety enginering are closely related in terms of clear communication.
 
+\markboth{}{}
 \chapter{Conclusion}
-FRAM and STAMP share the same goal and have identified some of the same issues with organizational 
+Usability engineering is a field where cognitive systems engineering could benefit from. A lot the research done here, share the same traits as ``cognition in wild'', and can thus be used for optimizing human-machine interfaces.
+
+FRAM and STAMP share the same goal and have identified some of the same issues; organizational structure and its impact on design and safety and the performance issue. The graphical aspect of FRAM is more formal than STAMP, and it appears that the notation form of FRAM could be integrated into STAMP relatively simple, the reverse seems improbable though.\\
+\\
+The evolution of accident modelling methods seems inevitable, as they merely seek to comprehend the increasing complexity of the world around us. There is no empiric data on the new accident model's adoption today, but chances are, that they will get a good foothold within the next 5-10 years.\\
+\\
+From a personal perspective, having only an academic background on both linear and non-linear accident models, it is very difficult to be able to identify the relevant details in a specific situation. I can only imagine that a practitioner will find FRAM a valuable tool for explaining the unexplainable.
 
 \appendix
 %\include{Appendix1}							             %Appendix A
