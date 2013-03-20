@@ -1,0 +1,2 @@
+date_example.adb:7:14: warning: value not in range of type "Days_In_Month" defined at line 2
+date_example.adb:7:14: warning: "Constraint_Error" will be raised at run time

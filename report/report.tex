@@ -13,6 +13,8 @@
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
 
+\newcommand{\code}[1]{\texttt{#1}}
+
 \lstset{ %
   backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
   basicstyle=\footnotesize,        % the size of the fonts that are used for the code
@@ -141,11 +143,36 @@ Consider the following prototype:
 The annotation specifies which conditions must be true upon entering the method (pre) and exiting (post). If we were to program the method so that X was decremented, or untouched, the verification software would fail and leave us with no option but to fix the bad implementation.
 Contract programming is typically only used in safety-critical systems that mandates formal requirements for software correctness. Contracts and verification reports can be used as argument and documentation that the software is indeed correct - according to specifications.
 
+\subsection{Software testing}
+
+\section{Project description}
+
+\subsection{Analysis}
+
+\subsection{Design}
+
 \section{Implementation}
 
 \subsection{Choice of Ada}
-The background for choosing Ada is based on the assumption, or more precisely; claim, that programs written in Ada in general has less defect than other languages.
+The background for choosing Ada is based on the assumption, or more precisely; claim, that programs written in Ada in general has less defect than other languages.\\
 
+The main philosophy of Ada is \emph{strong} typing. It emphasizes the use of types, though self-defined types and numerous built-in types. One of the main advantages of having strong typing in-language is that the compiler can give the programmer feedback on potential overflows and type mismatches.\\
+
+For instance, a classic example would be
+\lstinputlisting[frame=single, language=Ada] {include/date_example.adb}
+Where we try to assign the variable \code{Day} to a number that is outside of the defined range. This will trigger the following compiler warning;
+\lstinputlisting[frame=single, language=make] {include/date_example.output}
+And raise the exception at run-time as predicted.
+
+The key point here, is that the model $\leftrightarrow$ code relationship can be closer with appropriate types and constraints.
+
+\subsection{Parameter passing}
+Another strong feature of Ada is the way parameters for subprograms are formalized. For starters, Ada distinguishes between functions and procedure, where a procedure is similar to a function returning void in other programming languages, and uses a \code{in} \code{out} notation for parameters as opposed to specifying pointers/references/constant values. The philosophy here is that by showing your \emph{intent} with the parameters, the compiler can figure out how the actual passing should be done, warn about assignments to \code{in} parameters and non-used \code{out} parameters.
+
+
+\subsection{Programming as a human activity}
+
+%Software testing
 \appendix
 
 % The following two commands are all you need in the
