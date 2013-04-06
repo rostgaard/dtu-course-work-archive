@@ -1,0 +1,87 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+\title{02220 Distributed systems}
+
+\maketitle
+
+\tableofcontents
+
+\begin{abstract}
+Nothing to see here - yet.
+\end{abstract}
+
+\section{Terminology}
+
+\subsection{Semantics}
+
+\subsubsection{Maybe}
+\subsubsection{At-least-once}
+\subsubsection{At-most-once}
+
+\section{The system}
+
+The overall system consists of a number of nodes. For this model we assume at least three nodes.
+
+\subsection{Assumptions and extensions}
+As the system utilizes RMI\footnote{RMI uses at-most-once semantics}, we assume that any direct messages are sent reliably. Multicast messages, however, are sent unreliably and must thus be handled on the application layer.\\
+
+The system is extended with new role for the nodes; router. The motivation is found in section \ref{network_topology}.
+
+\subsection{Network topology}
+\label{network_topology}
+A single unique node is, by agreement among all nodes, elected as admin node. The election causes a global lock of all nodes until agreement is made.
+
+Upon startup every node is given a unique identification that must be quantifiable - i.e. it must be comparable.
+
+It would be possible to extend the ring network by adding additional subnets and additional nodes to the local rings.
+
+Given the topology, we require an additional node role.
+
+\subsection{Nodes}
+A node can be of three classes; Basic, Router and Admin. The constraints are as follows;
+\begin{itemize}
+\item A basic node is a system-wide root class of all nodes. All other classes inherit the functionality of this type of node.
+\item The admin node is \emph{unique}, meaning that there can be only either 0 or 1 admin node at all times.
+\item A router is a basic node that bridges ring networks. It is, similar to the admin node, unique - but only its local ring.
+\end{itemize}
+
+
+\subsubsection{Node states}
+During the lifetime of a node, it can assume different characteristics mainly based on its class.
+
+\subsubsection{Node lifetime}
+Upon startup, each node is enumerated and started. The first node (sequentially) is elected as being the RMI registry master, and thus the admin. This is arbitrary, and could also be randomized.
+
+\subsubsection{Possible problems}
+Global locks are dangerous and should be done in the following manner; 
+
+\subsection{Network failure}
+
+Upon network failure a node will be tagged as stalled, and a timer starts. When the timer reaches zero, the node is tagged as gone and a network reconfiguration is started.
+
+\subsection{Network reconfiguration}
+
+\section{Asynchonous communication}
+In order to enable the nodes to reliably 
+
+\section{Persistant storage}
+**FIXME** Persistant storage is achieved by means of a manual lowly-practical SQLite replication layer \emph{or} a CouchDB replication layer.
+
+\section{Security}
+No security measures are taken in this system. The assumption is, that it is as closed loop system with no malicious nodes or individuals.
+
+The security \emph{could} be improved by 
+\begin{enumerate}
+\item Adding a security manager to RMI
+\item Supplying every node with a pre-shared key
+\item Periodically cycle the encryption with a random key\footnote{From for example /dev/random on Linux/Unix systems}
+\end{enumerate}
+Securing the individual nodes on the opearating system level from leaking the pre-shared-key is out of scope of this report.
+
+\subsection{The process}
+\end{document}
