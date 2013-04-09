@@ -7,6 +7,9 @@
 \usepackage{url}
 \usepackage{listings}
 
+\usepackage{tikz}
+
+
 \usepackage{color}
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
@@ -148,8 +151,197 @@ Contract programming is typically only used in safety-critical systems that mand
 \section{Project description}
 
 \subsection{Analysis}
+We are modelling the railway network as an undirected graph. The nodes of the graph are considered as stations and points (those that are not declared as station) and the tracks are considered as edges.
+ 
+Each station has capacity for having at most one train visiting or stopping at the station at one time.
+The tracks between two nodes is considered as single track (no double tracks between the stations). This means that there can only be one train moving from one station to another.  
+ 
+All nodes must be connected to each other as a single connected component in order to confirm that the trains can reach from a node to all others.  A possible railway network could look like the graph seen in figure 
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+  [scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+  \node (J) at (1,10) {J};
+  \node (A) at (1,8) {A};
+  \node (I) at (1,6) {I};
+  \node (H) at (3,6) {H};
+  \node (B) at (3,8) {B};
+  \node (C) at (5,8) {C};
+  \node (D) at (7,8) {D};
+  \node (E) at (9,8) {E};
+  \node (F) at (7,10) {F};
+  \node (G) at (9,10) {G};
+  \node (K) at (9,6) {K};
+
+
+  \foreach \from/\to in {J/B, A/B, B/C, C/D, D/E, I/H, H/C, D/K, C/F, F/G}
+    \draw (\from) -- (\to);
+
+\end{tikzpicture}
+ \caption{Example network}
+
+ \label{fig:graph}
+\end{figure}
+
+\subsubsection{Simulation}
+ 
+In order to keep the simulation simple the tracks has not been given any weights (e.g. a time unit from moving on the tracks). Therefore, it takes one simulation time unit for a train to move from one node to another specified on its route.
+ 
+Each train that has to be simulated has a route, which consist of a list of stations and points. The trains follows this route during simulation time. When the train arrives to the last station specified on its route, the train is then out of the system.
+ 
+\subsubsection{Train collision}
+ 
+A train collision can occurs in two different situations:
+ 
+1 – Station collision:
+A train is collided on a station when two or more train arrives at the same station at the same time.
+ 
+2 – Track collision:
+When two trains wants to cross each other e.g. a train moving from A to B while another train is moving from B to A at same time (keep in mind that we only have single tracks).
+
+
+\subsection{Configuration}
+ 
+We expect to read at least two files. A file, which contains the configuration for the railway network and another, which contains the route for a train.  
+ 
+\subsubsection{Railway network configuration}
+ 
+This configuration consist of 3 parts; stations, connections and endpoints
+ 
+Stations:       	STAT String ID
+Connections:  CONN ID ID
+End points:  	END ID
+ 
+Preconditions for stations:
+-          The station has not been created before (unique in terms of ID).
+ 
+Post conditions for station:
+-          The station becomes created as a node in the internal system.
+ 
+Preconditions for connections:
+-          The order of the ID’s does not matter e.g. CONN 2 4 is the same as CONN 4 2.
+-          An ID which is not declared as a station above is considered as a point.
+ 
+Post conditions for connections:
+-          An edge has been created between two points or a point and an endpoint.
+-          ID which are not declared as a station above is created as a point in the internal system.
+ 
+Preconditions for end points:
+-          Only nodes with degree 1 can have endpoints (in the figure above: J, G A, E, I and K).
+ 
+Post conditions for end points:
+-          End points are created in the internal system
+ 
+\subsubsection{Route configuration}
+ 
+Each route configuration read by the program correspond to a train that has to be simulated in the railway.
+ 
+The trains can only change direction when they are stopped. This means that the ID for time Ti must be different than Ti+2.
+ 
+A route configuration as following: H L stop H or H L L H is considered to take the same amount of simulation time. A train can stop in all types of nodes (also for those that are not declared as stations).
+
+
+
 
 \subsection{Design}
+\subsection{Validation}
+ 
+In order to have a valid a robust railway network and simulation of the trains we are going to validate on three parameters before the simulation takes place:
+\begin{enumerate}
+\item Railway network validation: \\
+      As described above the railway network must be connected to ensure connectivity and reachability from each node. This can be done by implementing the breadth-first search algorithm and check that it reaches every node in the graph. If it does not, then the graph is not connected as a single component and we can’t ensure that the given train routes are drivable based on the given network configuration.
+ 
+\item Train routes vs. railway network validation: \\
+      The routes must be drivable on the basis of the given network configuration. This should happen without jumping.
+ 
+\item Trains routes validation: \\
+      A validation regarding the train routes must ensure that the trains doesn’t collide during simulation time. 
+
+\end{enumerate}
+ 
+ 
+\subsubsection{train routes}
+ 
+The train route are inserted in a matrix where the rows corresponds to train routes while the columns indicate the simulation time.
+As an example of a configuration with three train routes would look like the matrix in (1).
+
+\begin{equation}
+M_{schedule} = \bordermatrix{
+                    ~ & t_0 & t_1 & t_2 & t_3 & t_4 \cr
+                  r_0 & a   & b   & c   & d   & e\cr
+                  r_1 & d   & c   & b   & a   & a\cr
+                  r_2 & i   & h   & c   & f   & g}
+\end{equation}
+
+Using this matrix, we can detect collisions using the following rules;
+
+\begin{description}
+  \item[RV1] The first rule
+  \item[RV2] The second rule 
+  \item[RV3] The third\ldots
+\end{description}
+ 
+A stations collision it detected if a station/node is repeated two or more times for a given time (column).
+In the example above, we can see that there is a station collision between route $r_0$ and $r_2$ for time $t_2$.
+This check has to be done for each columns in the matrix.
+ 
+A track collision is detected be looking for crosses such that for each row for time ti and ti+1 there must not be a two stations in reversed order in another row.
+An example if this is when train with route r0 and the train with r1 for time t1 and t2. (r0 is moving from B -> C and r1 is moving from C -> B) Here we can see that those trains wants to cross each other by moving on the same piece of track.  
+
+\subsubsection{Optimizations}
+ 
+The algorithm suggested for the track collision in the above section is quite slow since it has to check for each columns and rows (this algorithm has time complexity of: O(n2)).
+Therefore, we have suggested the following algorithm:
+For each entry in the matrix above, we duplicate the content for each row such that we have the same station twice and then the concatenation with the next station. This duplication is done throughout the matrix. For the example above, the final matrix would look like (2).
+
+\begin{equation}
+M_{schedules} = \bordermatrix{
+                    ~ & t_0 & t_{0.5} & t_1 & t_{1.5} & t_2 & t_{2.5} & t_3 & t_{3.5} & t_4 \cr
+                  S_0 & aa  &  ab     & bb  &  bc     & cc  &  cd     & dd  & de      & ee\cr
+                  S_1 & dd  &  dc     & cc  &  cb     & bb  &  ba     & aa  & aa      & aa\cr
+                  S_2 & ii  &  ih     & hh  &  hc     & cc  &  cf     & ff  & fg      & gg}
+\end{equation}
+
+The entries in the matrix has to be ordered lexically (this is not done in the example above) so we can make string comparisons!
+ 
+Now we only have to look column wise. The columns should contain unique entries in order to have valid train routes.
+A station collision is detected if there is duplicated entries for the even columns and a track collision is detected if there is duplicates in the odd rows.
+ 
+The station collision in the previous example is now detected by the duplicate for route r0 and r2 in time t4.
+The track collection is detected by the duplication in r0 and r1 for t3 (remember that the alphabetic ordering has to be done first).
+ 
+The optimized validation algorithm has time complexity of $O(2n-1)$, since the number of columns in the matrix has been roughly duplicated.
+
+\subsection{Optimizing train routes}
+ 
+This part concerns about optimizations that can be done on the train routes to avoid trains collisions to occur:
+ 
+\subsubsection{Station collisions}
+ 
+The program should avoid that trains collide with each other before those trains arrive at the same station/point. In order to avoid a station collision only one train is allowed to move while the other trains must wait. A possible way to implement this is to assign priority to the trains. If a train does not have to stop at the station concerned then this train has a higher priority than a train that has to stop. The computer picks up a randomly selected train with high priority and allow it to move while the others have to wait until there the station is available. As soon, there is no more trains with high priority waiting to pass the station, the lower prioritized trains will start to move.
+With this solution, we could avoid trains blocking for others that just have to pass the station (remember that it takes one simulation time unit for stopping a train on a station).
+ 
+\subsubsection{Track collision}
+ 
+If this situation occurs, there is not much to do. A deadlock occurs since none of the trains can pass each other.
+A rerouting of the train could be a possible solution but then the route might be significantly changed regarding the initial configuration setup. In some railway network configurations, it might not even be possible that such rerouting can take place.
+ 
+
+\section{The V-model}
+ 
+With the model we have the ability to change the view of point for the problems in the project.
+For instance, this model could be used in the case of validating the network (first point in the validation section). Instead of checking the network configuration makes a valid network, we know that it should be possible to create a graph, which is a subset of the original graph on the basis of the matrix which contains the train routes. This graph might be split in different components but this would indicate that some of the tracks are not used in the system.
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.6]{fig/graphical_schedule.png}
+ \caption{Visualization of schedules}
+ \label{fig:graphical_schedule}
+\end{figure}
+
+To visualize the output on how the network of the tracks looks like and how the different route are scheduled compared to each other over time, the following will be used as part of the output. 
+The right side of the picture shows the network, based on stations and tracks. The left side of the picture shows how the routes overlaps on t(n).
+
 
 \section{Implementation}
 
