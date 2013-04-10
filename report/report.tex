@@ -20,6 +20,13 @@
 \def\Code#1{\texttt{#1}}
 \def\Key#1{\textsf{#1}}
 
+% Nice borders on matrices.
+\usepackage{etoolbox}
+\let\bbordermatrix\bordermatrix
+\patchcmd{\bbordermatrix}{8.75}{4.75}{}{}
+\patchcmd{\bbordermatrix}{\left(}{\left[}{}{}
+\patchcmd{\bbordermatrix}{\right)}{\right]}{}{}
+
 \parindent 0pt
 \parskip 0.5\baselineskip
 
@@ -60,7 +67,7 @@
   Kim Rostgaard Christensen (kroch@imm.dtu.dk)
 }
 \title{02241 - Robust software systems \\
-	First draft
+	Second draft
 }
 
 \maketitle
@@ -145,19 +152,17 @@ This is one of the most difficult concept to learn in that it requires a great k
 Another perspective in this principle is that our code is not fixed. We have to know that the source code may be changed during maintenance or expanding its functionality. Those changes might affect other parts of the software, which may lead to impossible cases occurring. 
 
 \subsection{Contract programming}
-Contract programming is a more exotic method for verifying the correctness of software.
+Contract programming is a more formal method for verifying the correctness of software.
 The basic idea is that by adding additional semantics to your code, software tools can be used to prove whether or not a given procedure lives up to it's contract.
-Consider the following prototype:
+Consider the following prototype written in Ada using the SPARK annotation language:
 \lstinputlisting[frame=single, language=Ada] {code_examples/Overflow_Example.adb}
 The annotation specifies which conditions must be true upon entering the method (pre) and exiting (post). If we were to program the method so that X was decremented, or untouched, the verification software would fail and leave us with no option but to fix the bad implementation.
 Contract programming is typically only used in safety-critical systems that mandates formal requirements for software correctness. Contracts and verification reports can be used as argument and documentation that the software is indeed correct - according to specifications.
 
 \subsection{The human-machine interface}
-
-\emph{Todo}
-
 Considering that humans are considerably more error-prone than computers, it makes sense to build programs on the premises of human beings rather than the opposite. We can also see the, perhaps even inevitable, evolution from programming in binary to modern day textual/model-based programming as a direct effect of this.
 
+\subsection{Software testing}
 
 \section{Applying the principles}
 Reflecting on the principles stated in section \ref{sec:programming_principles}, the programming language Ada 2012 was chosen with the following motivation:
@@ -183,7 +188,9 @@ A strong feature of Ada is the way parameters for sub-routines are formalized. F
 This also has the side-effect of not having to worry about pass-by-reference/pass-by-value, as this is now up to the compiler.
 
 \subsection{Encapsulation}
-
+There are several levels of encapsulation in Ada. The most common is the packages which have a specification part and an implementation part. These are separated into two distinct files with suffix \File{.ads} and \File{.adb} respectively. Only the parts exposed by the specification is usable outside of the package. This is similar to the header files from C.
+Ada specifications can also have a private part, where types and subroutines can be applied restrictions; private types cannot be read, and private subroutines cannot be used outside of the package - except for child packages.
+Package encapsulation rules are somewhat complex, and covered by the Ada Reference Manual (ARM) \cite{taft1997ada}.
 
 \subsection{Contract programming and type invariants}
 As of Ada 2012, contract programming is included as a language feature. It is enabled by compiling the program with the \Code{-gnatA} flag which enables assertions.
@@ -207,36 +214,34 @@ Another new features is type invariants which asserts that a type is always cons
 The language incorporates the philosophy ``programming as a human activity'' and generally encourages (or maybe even forces) you to be explicit in your code. A typical quote is that ``Ada usually favours the reader over than the writer''.
 The compiler also works very hard to produce you with accurate information about where errors and warnings are locate, and possible remedial actions. It even detects minor misspellings.
 
-\subsection{Software testing}
-
 \section{Project description}
 
 \subsection{Analysis}
-We are modelling the railway network as an undirected graph. The nodes of the graph are considered as stations and points (those that are not declared as station) and the tracks are considered as edges.
+We are modelling the railway network as an undirected non-disjoint graph. The nodes of the graph are considered as stations and points (those that are not declared as station) and the tracks are considered as edges.
  
 Each station has capacity for having at most one train visiting or stopping at the station at one time.
 The tracks between two nodes is considered as single track (no double tracks between the stations). This means that there can only be one train moving from one station to another.  
  
-All nodes must be connected to each other as a single connected component in order to confirm that the trains can reach from a node to all others.  A possible railway network could look like the graph seen in figure 
+All nodes must be connected to each other as a single connected component in order to confirm that the trains can reach from a node to all others.  A possible railway network could look like the graph seen in figure \ref{fig:graph}.
 
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}
   [scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
-  \node (J) at (1,10) {J};
-  \node (A) at (1,8) {A};
-  \node (I) at (1,6) {I};
-  \node (H) at (3,6) {H};
-  \node (B) at (3,8) {B};
-  \node (C) at (5,8) {C};
-  \node (D) at (7,8) {D};
-  \node (E) at (9,8) {E};
-  \node (F) at (7,10) {F};
-  \node (G) at (9,10) {G};
-  \node (K) at (9,6) {K};
+  \node (j) at (1,10) {j};
+  \node (a) at (1,8)  {a};
+  \node (i) at (1,6)  {i};
+  \node (h) at (3,6)  {h};
+  \node (b) at (3,8)  {b};
+  \node (c) at (5,8)  {c};
+  \node (d) at (7,8)  {d};
+  \node (e) at (9,8)  {e};
+  \node (f) at (7,10) {f};
+  \node (g) at (9,10) {g};
+  \node (k) at (9,6)  {k};
 
 
-  \foreach \from/\to in {J/B, A/B, B/C, C/D, D/E, I/H, H/C, D/K, C/F, F/G}
+  \foreach \from/\to in {j/b, a/b, b/c, c/d, d/e, i/h, h/c, d/k, c/f, f/g}
     \draw (\from) -- (\to);
 
 \end{tikzpicture}
@@ -244,19 +249,6 @@ All nodes must be connected to each other as a single connected component in ord
 
  \label{fig:graph}
 \end{figure}
-
-\subsection{Safety domain}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.5]{fig/Safety_domains.eps}
- \caption{Basic model of the realm of our safety domain.}
- \label{fig:safety_domain}
-\end{figure}
-
-This means we can classify our validation requirements accordingly. This is similar to a risk matrix, but simplified for the purpose of this assignment.
-
-\subsection{Assumptions}
-Something about switch-tracks.
 
 \subsubsection{Simulation}
  
@@ -267,13 +259,25 @@ Each train that has to be simulated has a route, which consist of a list of stat
 \subsubsection{Train collision}
  
 A train collision can occurs in two different situations:
- 
-1 – Station collision:
-A train is collided on a station when two or more train arrives at the same station at the same time.
- 
-2 – Track collision:
-When two trains wants to cross each other e.g. a train moving from A to B while another train is moving from B to A at same time (keep in mind that we only have single tracks).
 
+\begin{description}
+
+\item[Station collision:]
+A train is collided on a station when two or more train arrives at the same station at the same time.
+\item[Track collision:]
+When two trains wants to cross each other e.g. a train moving from A to B while another train is moving from B to A at same time (keep in mind that we only have single tracks).
+\end{description}
+
+\subsubsection{Failure model}
+For the purpose of determining the severity, we have defined a safety domain. This is basically just a 2-by-2 matrix that categorizes our different failure modes which are unsafe, but invalid routes and unsafe valid routes - where the latter is the critical one, and hence marked by red in figure \ref{fig:safety_domain}. Invalid routes \emph{can} be ignored, as they are unrealisable, but are convenient to know about during validation.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{fig/Safety_domains.eps}
+ \caption{Basic model of the realm of our safety domain.}
+ \label{fig:safety_domain}
+\end{figure}
+This is similar to a risk matrix, but simplified for the purpose of this assignment.
 
 \subsection{Configuration}
  
@@ -284,47 +288,56 @@ We expect to read at least two files. A file, which contains the configuration f
 This configuration consist of 3 (4) parts; stations, connections and endpoints
 
 \begin{description}
-\item[Stations:] Stations are basically tracks with a string identification. It is formalized by ``\texttt{STAT String ID}'' in the grammar, and thus serves as a station/id declaration and freezing.
-\item[Connections:] Connections connect tracks and are formalized by ``\texttt{CONN ID ID}'' in the grammar.
-\item[End points:] \emph{TODO} END ID
+\item[Stations:] Stations are basically tracks with a string identification. It is formalized by ``\Code{STAT String ID}'' in the grammar, and thus serves as a station/id declaration and freezing.
+\item[Connections:] Connections connect tracks and are formalized by ``\Code{CONN ID ID}'' in the grammar.
+\item[End points:] \emph{TODO} \Code{END ID}
 \item[Non-station tracks:] These are characterized by by the absence of a station identification in a connection, and are thus not explicitly formalized in the grammar.
 \end{description} 
 
-As there is no requirements on the order in which \texttt{STAT} and \texttt{CONN} must appear, it is possible to from a parser point of view to see a station before its declaration. 
-Furthermore there are also 
+As there is no requirements on the order in which \Code{STAT} and \Code{CONN} must appear, it is possible to from a parser point of view to see a station before its declaration. In effect; a \Code{STAT} freezes the \Code{ID}, whereas a \Code{Conn} only marks it as defined.
  
-Preconditions for stations:
--          The station has not been created before (unique in terms of ID).
+Or more formalized;
+\paragraph{Preconditions for stations:}
+\begin{itemize}
+  \item The station has not been created before (unique in terms of ID).
+\end{itemize}
+
+\paragraph{Post conditions for station:}
+\begin{itemize}
+\item The station becomes created as a node in the internal system.
+\end{itemize} 
+
+\paragraph{Preconditions for connections:}
+\begin{itemize}
+  \item The order of the ID’s does not matter e.g. CONN 2 4 is the same as CONN 4 2.
+  \item An ID which is not declared as a station above is considered as a point.
+\end{itemize}
+
+\paragraph{Post conditions for connections:}
+\begin{itemize}
+  \item An edge has been created between two points or a point and an endpoint.
+  \item ID which are not declared as a station above is created as a point in the internal system.
+\end{itemize} 
+
+\paragraph{Preconditions for end points:}
+\begin{itemize}
+  \item Only nodes with degree 1 can have endpoints (in the figure above: $j, g a, e, i$ and $k$).
+\end{itemize}
  
-Post conditions for station:
--          The station becomes created as a node in the internal system.
- 
-Preconditions for connections:
--          The order of the ID’s does not matter e.g. CONN 2 4 is the same as CONN 4 2.
--          An ID which is not declared as a station above is considered as a point.
- 
-Post conditions for connections:
--          An edge has been created between two points or a point and an endpoint.
--          ID which are not declared as a station above is created as a point in the internal system.
- 
-Preconditions for end points:
--          Only nodes with degree 1 can have endpoints (in the figure above: J, G A, E, I and K).
- 
-Post conditions for end points:
--          End points are created in the internal system
- 
+\paragraph{Post conditions for end points:}
+\begin{itemize}
+  \item End points are created in the internal system
+\end{itemize}
+
 \subsubsection{Route configuration}
  
 Each route configuration read by the program correspond to a train that has to be simulated in the railway.
  
-The trains can only change direction when they are stopped. This means that the ID for time Ti must be different than Ti+2.
+The trains can only change direction when they are stopped. This means that the \Code{ID} for time $T_i$ must be different than $T_{i+2}$.
  
 A route configuration as following: H L stop H or H L L H is considered to take the same amount of simulation time. A train can stop in all types of nodes (also for those that are not declared as stations).
 
-
-
-
-\subsection{Design}
+\section{Design}
 \subsection{Validation}
  
 In order to have a valid a robust railway network and simulation of the trains we are going to validate on three parameters before the simulation takes place:
@@ -339,19 +352,19 @@ In order to have a valid a robust railway network and simulation of the trains w
       A validation regarding the train routes must ensure that the trains doesn’t collide during simulation time. 
 
 \end{enumerate}
- 
- 
+  
 \subsubsection{train routes}
  
 The train route are inserted in a matrix where the rows corresponds to train routes while the columns indicate the simulation time.
-As an example of a configuration with three train routes would look like the matrix in (1).
+As an example of a configuration with three train routes would look like the matrix in (\ref{eq:sched1}).
 
 \begin{equation}
-M_{schedule} = \bordermatrix{
+M_{schedule} = \bbordermatrix{
                     ~ & t_0 & t_1 & t_2 & t_3 & t_4 \cr
                   r_0 & a   & b   & c   & d   & e\cr
                   r_1 & d   & c   & b   & a   & a\cr
                   r_2 & i   & h   & c   & f   & g}
+\label{eq:sched1}
 \end{equation}
 
 A stations collision it detected if a station/node is repeated two or more times for a given time (column).
@@ -359,34 +372,44 @@ In the example above, we can see that there is a station collision between route
 This check has to be done for each columns in the matrix.
  
 A track collision is detected be looking for crosses such that for each row for time $t_i$ and $t_{i+1}$ there must not be a two stations in reversed order in another row.
-An example if this is when train with route $r_0$ and the train with $r_1$ for time $t_1$ and $t_2$. ($r_0$ is moving from B $\rightarrow$ C and $r_1$ is moving from C $\rightarrow$ B) Here we can see that those trains wants to cross each other by moving on the same piece of track.  
+An example if this is when train with route $r_0$ and the train with $r_1$ for time $t_1$ and $t_2$. ($r_0$ is moving from $b \rightarrow c$ and $r_1$ is moving from $ c \rightarrow b $) Here we can see that those trains wants to cross each other by moving on the same piece of track.  
 
 In short; using this matrix, we can detect collisions using the following rules;
 
 \begin{description}
   \item[RV1:] Each column must contain unique track identifications.
-  \item[RV2:] For each column pair, there cannot be a values may not cross.
+  \item[RV2:] For each column pair $\left( x_1,x_2 \right), \left( y_1,y_2 \right)$ the following must hold;\\ $\lnot\left(x_1 = y_2 \land x_2 = 0y_1\right)$.
 \end{description}
 
-\subsubsection{Checking uniqueness}
+\subsubsection{Enforcing rules}
 For the purpose of checking uniqueness, we can use the abstract data type Multiset which fits the profile quite perfect, as it counts the occurrences of elements. 
+
+We can detect violations of \textbf{RV2} using a type invariant.
 \subsubsection{Optimizations}
  
-The algorithm suggested for the track collision in the above section is quite slow since it has to check for each columns and rows (this algorithm has time complexity of: O(n2)).
+The algorithm suggested for the track collision in the above section is quite slow since it has to check for each columns and rows (this algorithm has time complexity of: $O(n^2)$.
 Therefore, we have suggested the following algorithm:
-For each entry in the matrix above, we duplicate the content for each row such that we have the same station twice and then the concatenation with the next station. This duplication is done throughout the matrix. For the example above, the final matrix would look like (2).
+For each entry in the matrix above, we duplicate the content for each row such that we have the same station twice and then the concatenation with the next station. This duplication is done throughout the matrix. For the example above, the final matrix would look like (\ref{eq:sched2}).
 
 \begin{equation}
-M_{schedule} = \bordermatrix{
+M_{schedule} = \bbordermatrix{
                     ~ & t_0 & t_{0.5} & t_1 & t_{1.5} & t_2 & t_{2.5} & t_3 & t_{3.5} & t_4 \cr
                   r_0 & aa  &  ab     & bb  &  bc     & cc  &  cd     & dd  & de      & ee\cr
                   r_1 & dd  &  dc     & cc  &  cb     & bb  &  ba     & aa  & aa      & aa\cr
                   r_2 & ii  &  ih     & hh  &  hc     & cc  &  cf     & ff  & fg      & gg}
+\label{eq:sched2}
 \end{equation}
 
-The entries in the matrix has to be ordered lexically (this is not done in the example above) so we can simply make string comparisons to detect uniqueness.
+The entries in the matrix has to be ordered lexically so we can simply make string comparisons to detect uniqueness. And while we are at it, we adjust the time reference as well.
 
- 
+\begin{equation}
+M_{schedule} = \bbordermatrix{
+                    ~ & t_0 & t_1 & t_2 & t_3 & t_4 & t_5 & t_6 & t_7 & t_8 \cr
+                  r_0 & aa  & ab  & bb  & bc  & cc  & cd  & dd  & de  & ee\cr
+                  r_1 & dd  & cd  & cc  & bc  & bb  & ab  & aa  & aa  & aa\cr
+                  r_2 & ii  & hi  & hh  & ch  & cc  & cf  & ff  & fg  & gg}
+\label{eq:sched3}
+\end{equation} 
 Now we only have to look column wise. The columns should contain unique entries in order to have valid train routes.
 A station collision is detected if there is duplicated entries for the even columns and a track collision is detected if there is duplicates in the odd rows.
  
@@ -424,10 +447,10 @@ For instance, this model could be used in the case of validating the network (fi
 \end{figure}
 
 To visualize the output on how the network of the tracks looks like and how the different route are scheduled compared to each other over time, the following will be used as part of the output. 
-The right side of the picture shows the network, based on stations and tracks. The left side of the picture shows how the routes overlaps on t(n).
+The right side of the picture shows the network, based on stations and tracks. The left side of the picture shows how the routes overlaps on $t\left(n\right)$.
 
 
-\section{Implementation}
+%\section{Implementation}
 
 
 %Software testing
