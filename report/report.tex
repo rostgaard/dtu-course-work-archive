@@ -265,7 +265,7 @@ A train collision can occurs in two different situations:
 \item[Station collision:]
 A train is collided on a station when two or more train arrives at the same station at the same time.
 \item[Track collision:]
-When two trains wants to cross each other e.g. a train moving from A to B while another train is moving from B to A at same time (keep in mind that we only have single tracks).
+When two trains wants to cross each other e.g. a train moving from $a$ to $b$ while another train is moving from $b$ to $a$ at same time (keep in mind that we only have single tracks).
 \end{description}
 
 \subsubsection{Failure model}
@@ -321,7 +321,7 @@ Or more formalized;
 
 \paragraph{Preconditions for end points:}
 \begin{itemize}
-  \item Only nodes with degree 1 can have endpoints (in the figure above: $j, g a, e, i$ and $k$).
+  \item Only nodes with degree 1 can have endpoints (in the figure above: $j, g, a, e, i$ and $k$).
 \end{itemize}
  
 \paragraph{Post conditions for end points:}
@@ -378,7 +378,7 @@ In short; using this matrix, we can detect collisions using the following rules;
 
 \begin{description}
   \item[RV1:] Each column must contain unique track identifications.
-  \item[RV2:] For each column pair $\left( x_1,x_2 \right), \left( y_1,y_2 \right)$ the following must hold;\\ $\lnot\left(x_1 = y_2 \land x_2 = 0y_1\right)$.
+  \item[RV2:] For each column pair $\left( x_1,x_2 \right), \left( y_1,y_2 \right)$ the following must hold;\\ $\lnot\left(x_1 = y_2 \land x_2 = y_1\right)$.
 \end{description}
 
 \subsubsection{Enforcing rules}
@@ -414,11 +414,11 @@ Now we only have to look column wise. The columns should contain unique entries 
 A station collision is detected if there is duplicated entries for the even columns and a track collision is detected if there is duplicates in the odd rows.
  
 The station collision in the previous example is now detected by the duplicate for route $r_0$ and $r_2$ in time $t_4$.
-The track collection is detected by the duplication in $r_0$ and $r_1$ for $t_3$ (remember that the alphabetic ordering has to be done first).
+The track collection is detected by the duplication in $r_0$ and $r_1$ for $t_3$.
  
 The optimized validation algorithm has time complexity of $O(2n-1)$, since the number of columns in the matrix has been roughly duplicated.
 
-In effect, this eliminates the need for the second rule (\textbf{RV2}), giving us only one thing to check.
+In effect, this eliminates the need for the second rule \textbf{RV2}, giving us only one thing to check.
 
 \subsection{Optimizing train routes}
  
