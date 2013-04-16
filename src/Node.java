@@ -10,6 +10,8 @@ import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+import dk.retrospekt.dtemp.vectorclock.VectorClock;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -18,17 +20,20 @@ import java.util.logging.Logger;
  *
  * @author krc
  */
-public final class Node {
+public class Node {
 
+    private static int ID = 0;
     private static Registry registry = null;
     private static Initiator initiator = null;
+    private static boolean isAdmin = false;
+    private VectorClock vc = new VectorClock(Node.ID, 10);
 
     public static boolean hasRegistry() {
         return Node.registry == null;
     }
 
     public static void disconnectRegistry() {
-        Logger.getLogger(Node.class.getName()).log(Level.INFO, "Disconnected regitry");
+        Logger.getLogger(Node.class.getName()).log(Level.INFO, "Disconnected registry");
         Node.registry = null;
         // Restart the initiator
         initiator.startListening();
@@ -42,7 +47,6 @@ public final class Node {
         while (true) {
             initiator.RegistryBeacon();
             Thread.sleep(1000);
-
         }
     }
 
