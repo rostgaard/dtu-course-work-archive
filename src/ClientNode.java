@@ -1,12 +1,24 @@
 
 import java.rmi.Naming;
 import java.rmi.registry.Registry;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 
 public class ClientNode {
 
+    private Runnable BasicRunnable;
     private static Registry registry;
+    private static final ScheduledExecutorService scheduler =
+            Executors.newScheduledThreadPool(1);
+
 
     public static void main(String args[]) throws Exception {
+        final Runnable stuff = new BasicRunnable();
+
+        scheduler.scheduleAtFixedRate(stuff, 0, (long) Math.pow(10, 9), TimeUnit.NANOSECONDS);
+ 
         boolean connected = false;
 
         String host = "localhost";
@@ -23,7 +35,6 @@ public class ClientNode {
         //	(new RMISecurityManager());
         //}
 
-        // Call registry for PowerService
         MasterNodeService service = null;
         while (!connected) {
             TemperatureSensor sensor = new TemperatureSensor();

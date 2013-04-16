@@ -21,7 +21,6 @@ public class Temperature implements Serializable{
     private double measurement;
 
     //private static Random random = new Random(sRandom.);
-
     public Temperature() {
         this.timestamp = System.nanoTime();
         this.measurement = Randomizer.randomInRange(-10.2, 22);
@@ -32,5 +31,12 @@ public class Temperature implements Serializable{
         return this.timestamp + " : " + this.measurement;
     }
 
+    public long TimeDelta(Temperature t) {
+        return t.timestamp - this.timestamp;
+    }
+
+    public long timestamp() {
+        return this.timestamp;
+    }
 
 }
