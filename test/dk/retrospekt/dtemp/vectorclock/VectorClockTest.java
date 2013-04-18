@@ -3,7 +3,14 @@ package dk.retrospekt.dtemp.vectorclock;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+/*
+ * Needs comment.
+ */
 
+/**
+ *
+ * @author Kim Rostgaard Christensen
+ */
 public class VectorClockTest {
 
     private VectorClock testClock;
@@ -11,7 +18,7 @@ public class VectorClockTest {
     @Before
     public void setupTest() {
         // MyClass is tested
-        this.testClock = new VectorClock(0, 3);
+        this.testClock = new VectorClock(3);
     }
 
     @Test

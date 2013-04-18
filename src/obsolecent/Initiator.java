@@ -1,3 +1,4 @@
+package obsolecent;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -8,14 +9,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Needs comment.
  */
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
-public final class Initiator {
+public class Initiator {
 
     private static MulticastSocket socket = null;
     private static InetAddress group = null;
@@ -23,10 +23,10 @@ public final class Initiator {
     public static boolean listening = false;
 
     public Initiator() {
-        Initiator.startListening();
+        this.startListening();
     }
 
-    public static void startListening() {
+    private void startListening() {
         try {
             // Set up multicast group
             if (group == null) {
@@ -50,15 +50,15 @@ public final class Initiator {
         }
     }
 
-    public static void RegistryAck() {
-        Initiator.send(Protocol.registryAcknowledgement);
+    public void RegistryAck() {
+        this.send(Protocol.registryAcknowledgement);
     }
 
-    public static void RegistryBeacon() {
-        Initiator.send(Protocol.registrySearch);
+    public void RegistryBeacon() {
+        this.send(Protocol.registrySearch);
     }
 
-    private static void send(String message) {
+    private void send(String message) {
 
         // Send the outgoing message
         byte[] packet = message.getBytes();
@@ -89,9 +89,14 @@ class Listener extends Thread {
 
     private MulticastSocket socket = null;
     private String message;
+    private boolean hasRegistry = false;
 
     public Listener(MulticastSocket s) {
         this.socket = s;
+    }
+
+    public void setRegistry(boolean hasRegistry) {
+        this.hasRegistry = hasRegistry;
     }
 
     @Override
@@ -112,7 +117,7 @@ class Listener extends Thread {
 
             if (message.equals(Protocol.registrySearch)) {
                 System.out.print("Received a registrySearch request from " + data.getAddress().toString());
-                if (!Node.hasRegistry()) {
+                if (!this.hasRegistry) {
                     System.out.println(" - but no local registry found.");
                 } else {
                     System.out.println(" - broadcasting my service.");

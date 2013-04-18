@@ -1,14 +1,16 @@
+package experiments;
 
 import java.math.BigInteger;
 
+import temperaturemonitoring.*;
+
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Needs comment.
  */
 
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 public class BasicRunnable implements Runnable {
 

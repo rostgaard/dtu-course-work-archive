@@ -1,4 +1,4 @@
-package dk.retrospekt.dtemp.vectorclock;
+package toolset.vectorclock;
 
 import java.io.Serializable;
 

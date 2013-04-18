@@ -1,3 +1,4 @@
+package temperaturemonitoring;
 
 import java.io.Serializable;
 import java.rmi.Remote;

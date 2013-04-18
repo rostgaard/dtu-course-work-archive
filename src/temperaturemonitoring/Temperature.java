@@ -1,9 +1,11 @@
+package temperaturemonitoring;
 
 import java.io.Serializable;
 import java.rmi.Remote;
 import java.security.SecureRandom;
 import java.util.Random;
 
+import toolset.mutex.Randomizer;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.

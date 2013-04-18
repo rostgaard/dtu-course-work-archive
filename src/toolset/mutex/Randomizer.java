@@ -1,3 +1,4 @@
+package toolset.mutex;
 
 import java.security.SecureRandom;
 
@@ -8,7 +9,7 @@ import java.security.SecureRandom;
 
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 public class Randomizer {
 

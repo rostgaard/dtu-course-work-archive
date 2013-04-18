@@ -1,12 +1,19 @@
+package experiments;
 
 import java.rmi.Naming;
 import java.rmi.registry.Registry;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
+/*
+ * Experimental program that tries to detect clock "drift" in scheduler.
+ */
 
-public class ClientNode {
+/**
+ *
+ * @author Kim Rostgaard Christensen
+ */
+public class Clockdrift {
 
     private Runnable BasicRunnable;
     private static Registry registry;
@@ -34,12 +41,12 @@ public class ClientNode {
         //	System.setSecurityManager
         //	(new RMISecurityManager());
         //}
-
-        MasterNodeService service = null;
+/*
+         RegistryService service = null;
         while (!connected) {
             TemperatureSensor sensor = new TemperatureSensor();
             try {
-                service = (MasterNodeService) Naming.lookup("rmi://" + host + "/PowerService");
+                service = (RegistryService) Naming.lookup("rmi://" + host + "/Temperature");
                 connected = true;
                 registry = java.rmi.registry.LocateRegistry.getRegistry(host);
                 registry.bind("Temperature", sensor);
@@ -56,6 +63,7 @@ public class ClientNode {
                 Thread.sleep(1000);
 
             }
-        }
+
+         }*/
     }
 }

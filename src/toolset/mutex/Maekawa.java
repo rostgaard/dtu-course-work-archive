@@ -1,3 +1,4 @@
+package toolset.mutex;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -9,7 +10,7 @@ import java.util.logging.Logger;
  */
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 public class Maekawa {
 
