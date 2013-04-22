@@ -1,5 +1,10 @@
 package temperaturemonitoring;
 
+import bootstrapping.ObservationServiceInterface;
+import java.io.Serializable;
+import java.rmi.AccessException;
+import java.rmi.AlreadyBoundException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.logging.Level;
@@ -16,7 +21,7 @@ import java.util.concurrent.ScheduledExecutorService;
  *
  * @author Kim Rostgaard Christensen
  */
-public class Node extends Thread {
+public class Node extends Thread implements TemperatureNode, Serializable {
 
     private int ID = 0;
     private boolean running = false;
@@ -27,6 +32,8 @@ public class Node extends Thread {
     private static final Logger logger = Logger.getLogger(Node.class.getName());
     private static final ScheduledExecutorService scheduler =
             Executors.newScheduledThreadPool(1);
+    private bootstrapping.ObservationServiceInterface monitor;
+    private TemperatureMeasurementCollection collectedMeasurements = new TemperatureMeasurementCollection();
 
     public boolean hasRegistry() {
         return this.registry == null;
@@ -60,8 +67,19 @@ public class Node extends Thread {
     public void connectRegistry(String host) throws InterruptedException {
         try {
             this.registry = java.rmi.registry.LocateRegistry.getRegistry(host);
-            //TODO Connect the registry.
-            //this.initiator.stopListening();
+            try {
+                logger.log(Level.FINEST, "Registring interfaces.");
+                //  Connecting the remote interfaces.
+
+                registry.bind("/Process" + new Integer(this.ID).toString(), this);
+                try {
+                    monitor = (ObservationServiceInterface) registry.lookup(ObservationServiceInterface.class.getSimpleName()); //this.initiator.stopListening();
+                } catch (NotBoundException | AccessException ex) {
+                    Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (AlreadyBoundException | AccessException ex) {
+                Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         } catch (RemoteException ex) {
             Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,15 +96,24 @@ public class Node extends Thread {
     public void run() {
         logger.log(Level.INFO, "Stating node " + this.ID);
         this.running = true;
-
         while (this.running) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
-                Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
+                logger.log(Level.SEVERE, null, ex);
             }
-            logger.log(Level.INFO, "Running node " + this.ID);
 
+            try {
+                monitor.newConnection(ID, ID);
+            } catch (RemoteException ex) {
+                logger.log(Level.SEVERE, null, ex);
+            }
         }
+
+    }
+
+    @Override
+    public Temperature latestMeasurement() {
+        return new Temperature();
     }
 }

@@ -3,6 +3,7 @@ package dk.retrospekt.dtemp.vectorclock;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import toolset.vectorclock.VectorClock;
 /*
  * Needs comment.
  */

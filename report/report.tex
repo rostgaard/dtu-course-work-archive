@@ -64,7 +64,8 @@ Global locks are dangerous and should be done in the following manner;
 
 Upon network failure a node will be tagged as stalled, and a timer starts. When the timer reaches zero, the node is tagged as gone and a network reconfiguration is started.
 
-\subsection{Network reconfiguration}
+\subsection{Election a new admin}
+The election can happen by first multicasting a startelection which will make every node go into a critical section.
 
 \section{Asynchonous communication}
 In order to enable the nodes to reliably 

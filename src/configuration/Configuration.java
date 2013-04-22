@@ -11,6 +11,7 @@ package configuration;
  */
 public class Configuration {
 
+    public static final int RMIPort = 1099;
     public static final int multicastPort = 6789;
     public static final String initialGroup = "228.5.6.7";
     public static final int minimumDelay = 1000;

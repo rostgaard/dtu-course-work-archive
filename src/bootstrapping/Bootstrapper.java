@@ -15,32 +15,31 @@ import temperaturemonitoring.Node;
  *
  * @author Kim Rostgaard Christensen
  */
-public class Bootstrapper extends UnicastRemoteObject
-        implements ObservationService, RegistryService {
+public class Bootstrapper extends UnicastRemoteObject {
 
-    private static final int PORT = 1099;
     private static Registry registry;
+    private static final Logger logger = Logger.getLogger(Bootstrapper.class.getName());
+
 
     public static void startRegistry() throws RemoteException {
-        // create in server registry
-        registry = java.rmi.registry.LocateRegistry.createRegistry(PORT);
+        logger.log(Level.INFO, "Starting RMI registry.");
+        registry = java.rmi.registry.LocateRegistry.createRegistry(configuration.Configuration.RMIPort);
     }
 
-    @Override
-    public void registerObject(String name, Remote remoteObj)
+    public static void registerObject(String name, Remote remoteObj)
             throws RemoteException {
+        logger.log(Level.FINEST, " Registered " + name + " as " + remoteObj);
         try {
             registry.bind(name, remoteObj);
         } catch (AlreadyBoundException | AccessException ex) {
-            Logger.getLogger(Bootstrapper.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, null, ex);
         }
 
         System.out.println("Registered: " + name + " -> "
                 + remoteObj.getClass().getName() + "[" + remoteObj + "]");
     }
 
-    @Override
-    public void unregisterObject(String name)
+    public static void unregisterObject(String name)
             throws RemoteException {
         try {
             registry.unbind(name);
@@ -57,18 +56,14 @@ public class Bootstrapper extends UnicastRemoteObject
     public static void main ( String args[] ) throws Exception
     {
         Node node[] = new Node[5];
-
+        ObservationService observationService = new ObservationService();
         startRegistry();
+        registerObject(ObservationServiceInterface.class.getSimpleName(), observationService);
 
         for (int i = 0; i < 5; i++) {
             node[i] = new Node(i, 5);
             node[i].connectRegistry("localhost");
             node[i].start();
         }
-    }
-
-    @Override
-    public void newConnection(int sourcePid, int destinationPid) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
