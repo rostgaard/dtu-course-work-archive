@@ -5,7 +5,12 @@
 \usepackage{amssymb}
 \begin{document}
 
+\def\File#1{\textsf{#1}}
+\def\Code#1{\texttt{#1}}
+\def\Key#1{\textsf{#1}}
+
 \title{02220 Distributed systems}
+\author{Kim Rostgaard Christensen \\ Silvia}
 
 \maketitle
 
@@ -26,6 +31,14 @@ Nothing to see here - yet.
 \section{The system}
 
 The overall system consists of a number of nodes. For this model we assume at least three nodes.
+
+\section{Notes}
+\subsection{Choice of RMI}
+% Why not CORBA / RMI-IIOP?
+
+\subsection{Replication}
+%The UnicastRemoteServer class defines a non-replicated remote object whose references are valid only while the server process is alive. 
+As the Java interface \Code{UnicastRemoteServer} only support remote references, we will need to use serialization to ensure replication and pass-by-value of objects.
 
 \subsection{Assumptions and extensions}
 As the system utilizes RMI\footnote{RMI uses at-most-once semantics}, we assume that any direct messages are sent reliably. Multicast messages, however, are sent unreliably and must thus be handled on the application layer.\\

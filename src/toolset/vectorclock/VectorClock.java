@@ -35,6 +35,8 @@ public class VectorClock implements Serializable {
      * @param pid The ID of the process which was incremented.
      */
     public void incrementClock(int pid) {
+        assert (pid < this.Clock.length);
+
         this.Clock[pid]++;
     }
 
@@ -46,7 +48,7 @@ public class VectorClock implements Serializable {
      */
     @Override
     public String toString() {
-        String buffer = new String("<");
+        String buffer = "";
 
         if (Clock.length == 0) {
             buffer += "empty";
@@ -59,7 +61,39 @@ public class VectorClock implements Serializable {
             }
         }
 
-        return buffer + ">";
+        return "<" + buffer + ">";
 
+    }
+
+    /**
+     * Returns a new VectorClock with the maximum values of each index. This
+     * method is used to implement the merge operation.
+     *
+     * @param vc The VectorClock to make comparison to.
+     * @return
+     */
+    private VectorClock max(VectorClock vc) {
+        VectorClock tmp = new VectorClock(this.Clock.length);
+
+        assert (this.Clock.length == vc.Clock.length);
+
+        for (int i = 0; i < Clock.length; i++) {
+            if (this.Clock[i] > vc.Clock[i]) {
+                tmp.Clock[i] = this.Clock[i];
+            } else {
+                tmp.Clock[i] = vc.Clock[i];
+            }
+        }
+        return tmp;
+    }
+
+    /**
+     * Implements the merge operation (VC4) of vector clocks. Merges the
+     * VectorClock with another, giving out the maximums of each index.
+     *
+     * @param vc The VectorClock to merge.
+     */
+    public void merge(VectorClock vc) {
+        this.Clock = this.max(vc).Clock;
     }
 }

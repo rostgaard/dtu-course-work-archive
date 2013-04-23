@@ -22,4 +22,9 @@ public class ObservationService implements ObservationServiceInterface, Serializ
     public void newConnection(int sourcePid, int destinationPid) throws RemoteException {
         logger.log(Level.INFO, "Process " + sourcePid + " connects to " + destinationPid);
     }
+
+    @Override
+    public void sendMessage() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

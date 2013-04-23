@@ -35,6 +35,15 @@ public class Node extends Thread implements TemperatureNode, Serializable {
     private bootstrapping.ObservationServiceInterface monitor;
     private TemperatureMeasurementCollection collectedMeasurements = new TemperatureMeasurementCollection();
 
+    /**
+     * Promotes the node to an admin.
+     */
+    public void promote() {
+        logger.log(Level.INFO, "Promoting node " + this.ID + " to admin.");
+        //TODO, Start an election or similar.
+        this.isAdmin = true;
+    }
+
     public boolean hasRegistry() {
         return this.registry == null;
     }
