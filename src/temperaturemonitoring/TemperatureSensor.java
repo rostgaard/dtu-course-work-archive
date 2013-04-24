@@ -13,9 +13,16 @@ import java.rmi.Remote;
  *
  * @author krc
  */
-public class TemperatureSensor implements Remote, Serializable {
+public class TemperatureSensor extends Thread {
 
-    public Temperature poll() {
-        return new Temperature();
+    Node owner;
+
+    public TemperatureSensor(Node n) {
+        this.owner = n;
+    }
+
+    @Override
+    public void run() {
+        this.owner.collectedMeasurements.add(new Temperature());
     }
 }

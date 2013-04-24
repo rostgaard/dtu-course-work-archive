@@ -13,4 +13,6 @@ import java.rmi.Remote;
 public interface TemperatureNode extends Remote {
 
     public Temperature latestMeasurement();
+
+    //public void sendMaekawaReply();
 }

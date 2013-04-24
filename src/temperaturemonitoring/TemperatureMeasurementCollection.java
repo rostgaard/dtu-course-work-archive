@@ -14,6 +14,11 @@ public class TemperatureMeasurementCollection extends ArrayList<Temperature> {
 
     private long version = 0;
 
+    /**
+     *
+     * @param t
+     * @return
+     */
     @Override
     public boolean add(Temperature t) {
         boolean retVal = super.add(t);

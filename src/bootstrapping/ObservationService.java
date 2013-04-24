@@ -21,6 +21,13 @@ public class ObservationService implements ObservationServiceInterface, Serializ
     @Override
     public void newConnection(int sourcePid, int destinationPid) throws RemoteException {
         logger.log(Level.INFO, "Process " + sourcePid + " connects to " + destinationPid);
+        NetworkModel.connect(sourcePid, destinationPid);
+    }
+
+    @Override
+    public void newNode(int pid) throws RemoteException {
+        logger.log(Level.INFO, "Process " + pid + " joined network");
+        NetworkModel.addNode(pid);
     }
 
     @Override

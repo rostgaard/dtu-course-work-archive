@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import toolset.vectorclock.VectorClock;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -34,6 +35,12 @@ public class Node extends Thread implements TemperatureNode, Serializable {
             Executors.newScheduledThreadPool(1);
     private bootstrapping.ObservationServiceInterface monitor;
     private TemperatureMeasurementCollection collectedMeasurements = new TemperatureMeasurementCollection();
+
+    public void addMeasurement(Temperature t) {
+        if (this.collectedMeasurements.add(t)) {
+            this.vc.incrementClock(ID);
+        }
+    }
 
     /**
      * Promotes the node to an admin.
@@ -83,6 +90,9 @@ public class Node extends Thread implements TemperatureNode, Serializable {
                 registry.bind("/Process" + new Integer(this.ID).toString(), this);
                 try {
                     monitor = (ObservationServiceInterface) registry.lookup(ObservationServiceInterface.class.getSimpleName()); //this.initiator.stopListening();
+
+                    // Notify the Networkmodel that this node joined the network.
+                    monitor.newNode(this.ID);
                 } catch (NotBoundException | AccessException ex) {
                     Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -105,24 +115,43 @@ public class Node extends Thread implements TemperatureNode, Serializable {
     public void run() {
         logger.log(Level.INFO, "Stating node " + this.ID);
         this.running = true;
+
+        TemperatureSensor fixedrateTemperatureMonitor = new TemperatureSensor(this);
+        scheduler.scheduleAtFixedRate(fixedrateTemperatureMonitor, 0, 1, TimeUnit.SECONDS);
+
         while (this.running) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 logger.log(Level.SEVERE, null, ex);
             }
-
-            try {
-                monitor.newConnection(ID, ID);
+            /*
+             try {
+                monitor.newConnection(ID, ID + 1);
             } catch (RemoteException ex) {
                 logger.log(Level.SEVERE, null, ex);
             }
-        }
 
+             */
+             }
     }
-
+    /**
+     * TODO
+     *
+     * @return
+     */
     @Override
     public Temperature latestMeasurement() {
         return new Temperature();
+    }
+
+    /**
+     * TODO
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return Node.class.getSimpleName() + " " + this.ID;
     }
 }
