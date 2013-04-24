@@ -23,6 +23,6 @@ public class TemperatureSensor extends Thread {
 
     @Override
     public void run() {
-        this.owner.collectedMeasurements.add(new Temperature());
+        this.owner.addMeasurement(new Temperature());
     }
 }

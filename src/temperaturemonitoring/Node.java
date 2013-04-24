@@ -122,6 +122,7 @@ public class Node extends Thread implements TemperatureNode, Serializable {
         while (this.running) {
             try {
                 Thread.sleep(1000);
+                logger.log(Level.INFO, this + " " + this.vc);
             } catch (InterruptedException ex) {
                 logger.log(Level.SEVERE, null, ex);
             }
