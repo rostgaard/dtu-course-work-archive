@@ -36,6 +36,11 @@ public class Node extends Thread implements TemperatureNode, Serializable {
     private bootstrapping.ObservationServiceInterface monitor;
     private TemperatureMeasurementCollection collectedMeasurements = new TemperatureMeasurementCollection();
 
+    /**
+     * TODO
+     *
+     * @param t
+     */
     public void addMeasurement(Temperature t) {
         if (this.collectedMeasurements.add(t)) {
             this.vc.incrementClock(ID);
@@ -118,7 +123,13 @@ public class Node extends Thread implements TemperatureNode, Serializable {
 
         TemperatureSensor fixedrateTemperatureMonitor = new TemperatureSensor(this);
         scheduler.scheduleAtFixedRate(fixedrateTemperatureMonitor, 0, 1, TimeUnit.SECONDS);
-
+        try {
+            if (this.ID != 0) {
+                this.monitor.newConnection(ID, 0);
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
+        }
         while (this.running) {
             try {
                 Thread.sleep(1000);
@@ -136,6 +147,7 @@ public class Node extends Thread implements TemperatureNode, Serializable {
              */
              }
     }
+
     /**
      * TODO
      *
