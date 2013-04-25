@@ -7,13 +7,28 @@
 \usepackage{url}
 \usepackage{listings}
 
+\usepackage{tikz}
+
+
 \usepackage{color}
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
 
-\newcommand{\code}[1]{\texttt{#1}}
+\def\File#1{\textsf{#1}}
+\def\Code#1{\texttt{#1}}
+\def\Key#1{\textsf{#1}}
+
+% Nice borders on matrices.
+\usepackage{etoolbox}
+\let\bbordermatrix\bordermatrix
+\patchcmd{\bbordermatrix}{8.75}{4.75}{}{}
+\patchcmd{\bbordermatrix}{\left(}{\left[}{}{}
+\patchcmd{\bbordermatrix}{\right)}{\right]}{}{}
+
+\parindent 0pt
+\parskip 0.5\baselineskip
 
 \lstset{ %
   backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
@@ -52,7 +67,7 @@
   Kim Rostgaard Christensen (kroch@imm.dtu.dk)
 }
 \title{02241 - Robust software systems \\
-	First draft
+	Second draft
 }
 
 \maketitle
@@ -62,7 +77,7 @@ A robust software system can be described as a system which aims to be unbreakab
 \end{abstract}
 
 \tableofcontents
-
+\newpage
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.4]{fig/dilbert_robust.png}
@@ -70,7 +85,7 @@ A robust software system can be described as a system which aims to be unbreakab
  \label{fig:dilber_robustness}
 \end{figure}
 
-\newpage
+
 \section{Defining robustness}
 As figure \ref{fig:dilber_robustness} states, robustness can be a fuzzy term which is sometimes over-sold by egar marketeers.
 However, there exist several engineering disciplines that focus on robustness individually. The fields covered here are;
@@ -109,6 +124,7 @@ The goal is, in brief, to provide the right information, no more or less, at the
 Clearly, there are a lot of interests in improving the robustness of a software system, be the motivator either constant loss of data from word-processing application, or securing a nuclear power plant from melting down, everyone likes their software responsive, correct and robust.
 
 \section{Programming principles}
+\label{sec:programming_principles}
 
 To help the programmer to build a robust software system, he or she can use the principles explained below.
 
@@ -136,41 +152,306 @@ This is one of the most difficult concept to learn in that it requires a great k
 Another perspective in this principle is that our code is not fixed. We have to know that the source code may be changed during maintenance or expanding its functionality. Those changes might affect other parts of the software, which may lead to impossible cases occurring. 
 
 \subsection{Contract programming}
-Contract programming is a more exotic method for verifying the correctness of software.
+Contract programming is a more formal method for verifying the correctness of software.
 The basic idea is that by adding additional semantics to your code, software tools can be used to prove whether or not a given procedure lives up to it's contract.
-Consider the following prototype:
-\lstinputlisting[frame=single, language=Ada] {include/Overflow_Example.adb}
+Consider the following prototype written in Ada using the SPARK annotation language:
+\lstinputlisting[frame=single, language=Ada] {code_examples/Overflow_Example.adb}
 The annotation specifies which conditions must be true upon entering the method (pre) and exiting (post). If we were to program the method so that X was decremented, or untouched, the verification software would fail and leave us with no option but to fix the bad implementation.
 Contract programming is typically only used in safety-critical systems that mandates formal requirements for software correctness. Contracts and verification reports can be used as argument and documentation that the software is indeed correct - according to specifications.
 
+\subsection{The human-machine interface}
+Considering that humans are considerably more error-prone than computers, it makes sense to build programs on the premises of human beings rather than the opposite. We can also see the, perhaps even inevitable, evolution from programming in binary to modern day textual/model-based programming as a direct effect of this.
+
 \subsection{Software testing}
+
+\section{Applying the principles}
+Reflecting on the principles stated in section \ref{sec:programming_principles}, the programming language Ada 2012 was chosen with the following motivation:
+
+The main philosophy of Ada is \emph{strong} typing. It emphasizes the use of types, though self-defined types and numerous built-in types. Having strong typing in-language enriches the compiler with information which it can use to give the programmer feedback on potential overflows and type mismatches.
+
+For instance, a classic example would be
+\lstinputlisting[frame=single, language=Ada] {code_examples/date_example.adb}
+Where we try to assign the variable \Code{Day} to a number that is outside of the defined range. This will trigger the following compiler warning;
+\lstinputlisting[frame=single, language=make] {code_examples/date_example.output}
+And raise the exception at run-time as predicted.
+
+Another benefit, is that the model $\leftrightarrow$ code relationship can potentially be closer with appropriate types and constraints. E.g. your multiplicities can be asserted at compile time.
+
+\subsection{Rules of engagement}
+Besides the strong typing, Ada features a lot of both compile- and run-time rules and checks that serves as a safety mechanism - effectively preventing you from doing things like referencing a, perhaps deallocated, local object from a global scope for instance.
+
+These rules exist both to protect the programmer from him/herself and to be able to make guarantees about the runtime stability.
+
+\subsection{Parameter passing}
+A strong feature of Ada is the way parameters for sub-routines are formalized. For starters, Ada distinguishes between functions and procedure, where a procedure is similar to a function returning void in other programming languages, and uses a \Code{in out} notation for parameters as opposed to specifying pointers/references/constant values. The philosophy here is that by showing your \emph{intent} with the parameters, the compiler can figure out how the actual passing should be done, warn about assignments to \Code{in} parameters and non-used \Code{out} parameters.
+
+This also has the side-effect of not having to worry about pass-by-reference/pass-by-value, as this is now up to the compiler.
+
+\subsection{Encapsulation}
+There are several levels of encapsulation in Ada. The most common is the packages which have a specification part and an implementation part. These are separated into two distinct files with suffix \File{.ads} and \File{.adb} respectively. Only the parts exposed by the specification is usable outside of the package. This is similar to the header files from C.
+Ada specifications can also have a private part, where types and subroutines can be applied restrictions; private types cannot be read, and private subroutines cannot be used outside of the package - except for child packages.
+Package encapsulation rules are somewhat complex, and covered by the Ada Reference Manual (ARM) \cite{taft1997ada}.
+
+\subsection{Contract programming and type invariants}
+As of Ada 2012, contract programming is included as a language feature. It is enabled by compiling the program with the \Code{-gnatA} flag which enables assertions.
+Contracts work by adding additional data to your declarations, and are enforced run-time like any other assertion. An example is shown in figure \ref{fig:ada2012_contract}
+\begin{figure}[h]
+\centering
+\lstinputlisting[frame=single, language=Ada] {code_examples/ada2012_contract.ads}
+ \caption{An example Ada 2012 contract.}
+ \label{fig:ada2012_contract}
+\end{figure}
+
+Another new features is type invariants which asserts that a type is always consistent within the rules specified. The example in figure \ref{fig:ada2012_type_invariant} illustrates a network packet which must always have a valid CRC $\leftrightarrow$ payload relationship.
+
+\begin{figure}[h]
+\centering
+\lstinputlisting[frame=single, language=Ada] {code_examples/ada2012_type_invariant.ads}
+ \caption{An example Ada 2012 type invariant.}
+ \label{fig:ada2012_type_invariant}
+\end{figure}
+\subsection{The human factor}
+The language incorporates the philosophy ``programming as a human activity'' and generally encourages (or maybe even forces) you to be explicit in your code. A typical quote is that ``Ada usually favours the reader over than the writer''.
+The compiler also works very hard to produce you with accurate information about where errors and warnings are locate, and possible remedial actions. It even detects minor misspellings.
 
 \section{Project description}
 
 \subsection{Analysis}
+We are modelling the railway network as an undirected non-disjoint graph. The nodes of the graph are considered as stations and points (those that are not declared as station) and the tracks are considered as edges.
+ 
+Each station has capacity for having at most one train visiting or stopping at the station at one time.
+The tracks between two nodes is considered as single track (no double tracks between the stations). This means that there can only be one train moving from one station to another.  
+ 
+All nodes must be connected to each other as a single connected component in order to confirm that the trains can reach from a node to all others.  A possible railway network could look like the graph seen in figure \ref{fig:graph}.
 
-\subsection{Design}
-
-\section{Implementation}
-
-\subsection{Choice of Ada}
-The background for choosing Ada is based on the assumption, or more precisely; claim, that programs written in Ada in general has less defect than other languages.\\
-
-The main philosophy of Ada is \emph{strong} typing. It emphasizes the use of types, though self-defined types and numerous built-in types. One of the main advantages of having strong typing in-language is that the compiler can give the programmer feedback on potential overflows and type mismatches.\\
-
-For instance, a classic example would be
-\lstinputlisting[frame=single, language=Ada] {include/date_example.adb}
-Where we try to assign the variable \code{Day} to a number that is outside of the defined range. This will trigger the following compiler warning;
-\lstinputlisting[frame=single, language=make] {include/date_example.output}
-And raise the exception at run-time as predicted.
-
-The key point here, is that the model $\leftrightarrow$ code relationship can be closer with appropriate types and constraints.
-
-\subsection{Parameter passing}
-Another strong feature of Ada is the way parameters for subprograms are formalized. For starters, Ada distinguishes between functions and procedure, where a procedure is similar to a function returning void in other programming languages, and uses a \code{in} \code{out} notation for parameters as opposed to specifying pointers/references/constant values. The philosophy here is that by showing your \emph{intent} with the parameters, the compiler can figure out how the actual passing should be done, warn about assignments to \code{in} parameters and non-used \code{out} parameters.
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+  [scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+  \node (j) at (1,10) {j};
+  \node (a) at (1,8)  {a};
+  \node (i) at (1,6)  {i};
+  \node (h) at (3,6)  {h};
+  \node (b) at (3,8)  {b};
+  \node (c) at (5,8)  {c};
+  \node (d) at (7,8)  {d};
+  \node (e) at (9,8)  {e};
+  \node (f) at (7,10) {f};
+  \node (g) at (9,10) {g};
+  \node (k) at (9,6)  {k};
 
 
-\subsection{Programming as a human activity}
+  \foreach \from/\to in {j/b, a/b, b/c, c/d, d/e, i/h, h/c, d/k, c/f, f/g}
+    \draw (\from) -- (\to);
+
+\end{tikzpicture}
+ \caption{Example network}
+
+ \label{fig:graph}
+\end{figure}
+
+\subsubsection{Simulation}
+ 
+In order to keep the simulation simple the tracks has not been given any weights (e.g. a time unit from moving on the tracks). Therefore, it takes one simulation time unit for a train to move from one node to another specified on its route.
+ 
+Each train that has to be simulated has a route, which consist of a list of stations and points. The trains follows this route during simulation time. When the train arrives to the last station specified on its route, the train is then out of the system.
+ 
+\subsubsection{Train collision}
+ 
+A train collision can occurs in two different situations:
+
+\begin{description}
+
+\item[Station collision:]
+A train is collided on a station when two or more train arrives at the same station at the same time.
+\item[Track collision:]
+When two trains wants to cross each other e.g. a train moving from $a$ to $b$ while another train is moving from $b$ to $a$ at same time (keep in mind that we only have single tracks).
+\end{description}
+
+\subsubsection{Failure model}
+For the purpose of determining the severity, we have defined a safety domain. This is basically just a 2-by-2 matrix that categorizes our different failure modes which are unsafe, but invalid routes and unsafe valid routes - where the latter is the critical one, and hence marked by red in figure \ref{fig:safety_domain}. Invalid routes \emph{can} be ignored, as they are unrealisable, but are convenient to know about during validation.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{fig/Safety_domains.eps}
+ \caption{Basic model of the realm of our safety domain.}
+ \label{fig:safety_domain}
+\end{figure}
+This is similar to a risk matrix, but simplified for the purpose of this assignment.
+
+\subsection{Configuration}
+ 
+We expect to read at least two files. A file, which contains the configuration for the railway network and another, which contains the route for a train.  
+ 
+\subsubsection{Railway network configuration}
+ 
+This configuration consist of 3 (4) parts; stations, connections and endpoints
+
+\begin{description}
+\item[Stations:] Stations are basically tracks with a string identification. It is formalized by ``\Code{STAT String ID}'' in the grammar, and thus serves as a station/id declaration and freezing.
+\item[Connections:] Connections connect tracks and are formalized by ``\Code{CONN ID ID}'' in the grammar.
+\item[End points:] \emph{TODO} \Code{END ID}
+\item[Non-station tracks:] These are characterized by by the absence of a station identification in a connection, and are thus not explicitly formalized in the grammar.
+\end{description} 
+
+As there is no requirements on the order in which \Code{STAT} and \Code{CONN} must appear, it is possible to from a parser point of view to see a station before its declaration. In effect; a \Code{STAT} freezes the \Code{ID}, whereas a \Code{Conn} only marks it as defined.
+ 
+Or more formalized;
+\paragraph{Preconditions for stations:}
+\begin{itemize}
+  \item The station has not been created before (unique in terms of ID).
+\end{itemize}
+
+\paragraph{Post conditions for station:}
+\begin{itemize}
+\item The station becomes created as a node in the internal system.
+\end{itemize} 
+
+\paragraph{Preconditions for connections:}
+\begin{itemize}
+  \item The order of the ID’s does not matter e.g. CONN 2 4 is the same as CONN 4 2.
+  \item An ID which is not declared as a station above is considered as a point.
+\end{itemize}
+
+\paragraph{Post conditions for connections:}
+\begin{itemize}
+  \item An edge has been created between two points or a point and an endpoint.
+  \item ID which are not declared as a station above is created as a point in the internal system.
+\end{itemize} 
+
+\paragraph{Preconditions for end points:}
+\begin{itemize}
+  \item Only nodes with degree 1 can have endpoints (in the figure above: $j, g, a, e, i$ and $k$).
+\end{itemize}
+ 
+\paragraph{Post conditions for end points:}
+\begin{itemize}
+  \item End points are created in the internal system
+\end{itemize}
+
+\subsubsection{Route configuration}
+ 
+Each route configuration read by the program correspond to a train that has to be simulated in the railway.
+ 
+The trains can only change direction when they are stopped. This means that the \Code{ID} for time $T_i$ must be different than $T_{i+2}$.
+ 
+A route configuration as following: H L stop H or H L L H is considered to take the same amount of simulation time. A train can stop in all types of nodes (also for those that are not declared as stations).
+
+\section{Design}
+\subsection{Validation}
+ 
+In order to have a valid a robust railway network and simulation of the trains we are going to validate on three parameters before the simulation takes place:
+\begin{enumerate}
+\item Railway network validation: \\
+      As described above the railway network must be connected to ensure connectivity and reachability from each node. This can be done by implementing the breadth-first search algorithm and check that it reaches every node in the graph. If it does not, then the graph is not connected as a single component and we can’t ensure that the given train routes are drivable based on the given network configuration.
+ 
+\item Train routes vs. railway network validation: \\
+      The routes must be drivable on the basis of the given network configuration. This should happen without jumping.
+ 
+\item Trains routes validation: \\
+      A validation regarding the train routes must ensure that the trains doesn’t collide during simulation time. 
+
+\end{enumerate}
+  
+\subsubsection{train routes}
+ 
+The train route are inserted in a matrix where the rows corresponds to train routes while the columns indicate the simulation time.
+As an example of a configuration with three train routes would look like the matrix in (\ref{eq:sched1}).
+
+\begin{equation}
+M_{schedule} = \bbordermatrix{
+                    ~ & t_0 & t_1 & t_2 & t_3 & t_4 \cr
+                  r_0 & a   & b   & c   & d   & e\cr
+                  r_1 & d   & c   & b   & a   & a\cr
+                  r_2 & i   & h   & c   & f   & g}
+\label{eq:sched1}
+\end{equation}
+
+A stations collision it detected if a station/node is repeated two or more times for a given time (column).
+In the example above, we can see that there is a station collision between route $r_0$ and $r_2$ for time $t_2$.
+This check has to be done for each columns in the matrix.
+ 
+A track collision is detected be looking for crosses such that for each row for time $t_i$ and $t_{i+1}$ there must not be a two stations in reversed order in another row.
+An example if this is when train with route $r_0$ and the train with $r_1$ for time $t_1$ and $t_2$. ($r_0$ is moving from $b \rightarrow c$ and $r_1$ is moving from $ c \rightarrow b $) Here we can see that those trains wants to cross each other by moving on the same piece of track.  
+
+In short; using this matrix, we can detect collisions using the following rules;
+
+\begin{description}
+  \item[RV1:] Each column must contain unique track identifications.
+  \item[RV2:] For each column pair $\left( x_1,x_2 \right), \left( y_1,y_2 \right)$ the following must hold;\\ $\lnot\left(x_1 = y_2 \land x_2 = y_1\right)$.
+\end{description}
+
+\subsubsection{Enforcing rules}
+For the purpose of checking uniqueness, we can use the abstract data type Multiset which fits the profile quite perfect, as it counts the occurrences of elements. 
+
+We can detect violations of \textbf{RV2} using a type invariant.
+\subsubsection{Optimizations}
+ 
+The algorithm suggested for the track collision in the above section is quite slow since it has to check for each columns and rows (this algorithm has time complexity of: $O(n^2)$.
+Therefore, we have suggested the following algorithm:
+For each entry in the matrix above, we duplicate the content for each row such that we have the same station twice and then the concatenation with the next station. This duplication is done throughout the matrix. For the example above, the final matrix would look like (\ref{eq:sched2}).
+
+\begin{equation}
+M_{schedule} = \bbordermatrix{
+                    ~ & t_0 & t_{0.5} & t_1 & t_{1.5} & t_2 & t_{2.5} & t_3 & t_{3.5} & t_4 \cr
+                  r_0 & aa  &  ab     & bb  &  bc     & cc  &  cd     & dd  & de      & ee\cr
+                  r_1 & dd  &  dc     & cc  &  cb     & bb  &  ba     & aa  & aa      & aa\cr
+                  r_2 & ii  &  ih     & hh  &  hc     & cc  &  cf     & ff  & fg      & gg}
+\label{eq:sched2}
+\end{equation}
+
+The entries in the matrix has to be ordered lexically so we can simply make string comparisons to detect uniqueness. And while we are at it, we adjust the time reference as well.
+
+\begin{equation}
+M_{schedule} = \bbordermatrix{
+                    ~ & t_0 & t_1 & t_2 & t_3 & t_4 & t_5 & t_6 & t_7 & t_8 \cr
+                  r_0 & aa  & ab  & bb  & bc  & cc  & cd  & dd  & de  & ee\cr
+                  r_1 & dd  & cd  & cc  & bc  & bb  & ab  & aa  & aa  & aa\cr
+                  r_2 & ii  & hi  & hh  & ch  & cc  & cf  & ff  & fg  & gg}
+\label{eq:sched3}
+\end{equation} 
+Now we only have to look column wise. The columns should contain unique entries in order to have valid train routes.
+A station collision is detected if there is duplicated entries for the even columns and a track collision is detected if there is duplicates in the odd rows.
+ 
+The station collision in the previous example is now detected by the duplicate for route $r_0$ and $r_2$ in time $t_4$.
+The track collection is detected by the duplication in $r_0$ and $r_1$ for $t_3$.
+ 
+The optimized validation algorithm has time complexity of $O(2n-1)$, since the number of columns in the matrix has been roughly duplicated.
+
+In effect, this eliminates the need for the second rule \textbf{RV2}, giving us only one thing to check.
+
+\subsection{Optimizing train routes}
+ 
+This part concerns about optimizations that can be done on the train routes to avoid trains collisions to occur:
+ 
+\subsubsection{Station collisions}
+ 
+The program should avoid that trains collide with each other before those trains arrive at the same station/point. In order to avoid a station collision only one train is allowed to move while the other trains must wait. A possible way to implement this is to assign priority to the trains. If a train does not have to stop at the station concerned then this train has a higher priority than a train that has to stop. The computer picks up a randomly selected train with high priority and allow it to move while the others have to wait until there the station is available. As soon, there is no more trains with high priority waiting to pass the station, the lower prioritized trains will start to move.
+With this solution, we could avoid trains blocking for others that just have to pass the station (remember that it takes one simulation time unit for stopping a train on a station).
+ 
+\subsubsection{Track collision}
+ 
+If this situation occurs, there is not much to do. A deadlock occurs since none of the trains can pass each other.
+A rerouting of the train could be a possible solution but then the route might be significantly changed regarding the initial configuration setup. In some railway network configurations, it might not even be possible that such rerouting can take place.
+ 
+
+\section{The V-model}
+ 
+With the model we have the ability to change the view of point for the problems in the project.
+For instance, this model could be used in the case of validating the network (first point in the validation section). Instead of checking the network configuration makes a valid network, we know that it should be possible to create a graph, which is a subset of the original graph on the basis of the matrix which contains the train routes. This graph might be split in different components but this would indicate that some of the tracks are not used in the system.
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.6]{fig/graphical_schedule.png}
+ \caption{Visualization of schedules}
+ \label{fig:graphical_schedule}
+\end{figure}
+
+To visualize the output on how the network of the tracks looks like and how the different route are scheduled compared to each other over time, the following will be used as part of the output. 
+The right side of the picture shows the network, based on stations and tracks. The left side of the picture shows how the routes overlaps on $t\left(n\right)$.
+
+
+%\section{Implementation}
+
 
 %Software testing
 \appendix
@@ -181,6 +462,7 @@ Another strong feature of Ada is the way parameters for subprograms are formaliz
 \bibliographystyle{plain}
 
 % These are entries that should be a part of references, no matter if they were cited or not.
+\nocite{Dijkstra:1979:PCH:1241515.1241516}
 \nocite{Chapman:2006:CCM:1151816.1151820}
 \nocite{bishop2004teaching}
 \nocite{Wikipedia:Defensive_programming}
