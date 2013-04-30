@@ -1,7 +1,7 @@
 STAT Holte h
 STAT Hellerup e
 STAT Lyngby l
-STAT Klampenborg
+STAT Klampenborg k 
 CONN l h
 CONN e l
 CONN b l

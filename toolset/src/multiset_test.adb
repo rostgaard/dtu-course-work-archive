@@ -3,7 +3,7 @@ with Ada.Text_IO; use Ada.Text_IO;
 with Multiset;
 
 procedure Multiset_Test is
-   type Foo is range 0 .. 1;
+   type Foo is range 0 .. 2;
    
    type Two_Letter_String is new String (1 .. 2);
    package Bag is new Multiset (Element      => Two_Letter_String,

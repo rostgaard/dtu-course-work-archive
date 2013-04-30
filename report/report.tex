@@ -163,6 +163,9 @@ Contract programming is typically only used in safety-critical systems that mand
 Considering that humans are considerably more error-prone than computers, it makes sense to build programs on the premises of human beings rather than the opposite. We can also see the, perhaps even inevitable, evolution from programming in binary to modern day textual/model-based programming as a direct effect of this.
 
 \subsection{Software testing}
+There are several ways to test software and some test methods suits the chosen development method more than others. To mention the most common test methods, we got test driven development, black and white box testing and unit testing.
+To test the software does not prove that the code is correct, but it can be used together with code contracts as an argument for the correctness of the code.
+When developing a system based on code contracts it does not make any sense to use test driven development. Instead the developer/tester can use white- and black-box testing or unit testing as an extension to the code contracts.
 
 \section{Applying the principles}
 Reflecting on the principles stated in section \ref{sec:programming_principles}, the programming language Ada 2012 was chosen with the following motivation:
@@ -230,18 +233,18 @@ All nodes must be connected to each other as a single connected component in ord
   [scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
   \node (j) at (1,10) {j};
   \node (a) at (1,8)  {a};
-  \node (i) at (1,6)  {i};
-  \node (h) at (3,6)  {h};
+  \node (i) at (3,6)  {i};
+  \node (h) at (5,6)  {h};
   \node (b) at (3,8)  {b};
   \node (c) at (5,8)  {c};
   \node (d) at (7,8)  {d};
   \node (e) at (9,8)  {e};
   \node (f) at (7,10) {f};
   \node (g) at (9,10) {g};
-  \node (k) at (9,6)  {k};
+  \node (k) at (7,6)  {k};
 
 
-  \foreach \from/\to in {j/b, a/b, b/c, c/d, d/e, i/h, h/c, d/k, c/f, f/g}
+  \foreach \from/\to in {j/b, a/b, b/c, c/d, d/e, i/h, h/d, h/k, c/f, f/g}
     \draw (\from) -- (\to);
 
 \end{tikzpicture}

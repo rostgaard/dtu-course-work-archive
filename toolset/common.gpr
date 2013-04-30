@@ -2,14 +2,14 @@ project Common is
    type Build_Type is ("Debug", "Production");
    Build : Build_Type := External ("BUILDTYPE", "Production");
 
-   Source_Options := ("src/**");
+   Source_Options := ("src/**", "test/**");
    for Source_Dirs use Source_Options;
 
    for Exec_Dir use ".";
 
    case Build is
       when "Production" =>
-         for Object_Dir use "build_production";
+         for Object_Dir use "build";
       when "Debug" =>
          for Object_Dir use "build_debug";
    end case;
@@ -26,7 +26,7 @@ project Common is
                                               "-gnatf",
                                               "-gnato",
                                               "-gnatwa",
---                                              "-gnaty3abcdefhiklmnoprstux",
+                                              "-gnaty3abcdefhiklmnoprstux",
                                               "-Wall",
                                               "-O2",
                                               "-gnat2012");
