@@ -17,8 +17,9 @@ package Railval.Tokenizer is
    package Station_Names is new Ada.Strings.Bounded.Generic_Bounded_Length
      (Max => Maximum_Station_Name_Length);
 
-   type Tokens (Kind : Keywords) is private; --  with
---      Type_Invariant => Check (Item => Tokens);
+   --  "Fat" Token with additional payload information.
+   type Tokens (Kind : Keywords) is tagged private with
+      Type_Invariant => Check (Item => Tokens);
 
    function Check (Item : in Tokens) return Boolean;
 
@@ -26,19 +27,34 @@ package Railval.Tokenizer is
 
    Null_Token : constant Tokens;
 
-   function Image (Item : Tokens) return String;
+   function Image (Item : in Tokens) return String;
+
+   function Station_Name (Object : in Tokens) return String with
+     Precondition => Object.Kind = STAT;
+
+   function Identifier (Object : in Tokens) return Identifications with
+     Precondition => Object.Kind = STAT;
+
+   function Left (Object : in Tokens) return Identifications with
+     Precondition => Object.Kind = CONN;
+
+   function Right (Object : in Tokens) return Identifications with
+     Precondition => Object.Kind = CONN;
+
+   function Closing (Object : in Tokens) return Identifications with
+     Precondition => Object.Kind = ENDP;
 
 private
 
    Null_Identification : constant Identifications :=
      Identifications (ASCII.NUL);
 
-   type Tokens (Kind : Keywords) is
+   type Tokens (Kind : Keywords) is tagged
       record
          case Kind is
             when STAT =>
-               Name       : Station_Names.Bounded_String;
                Identifier : Identifications;
+               Name       : Station_Names.Bounded_String;
             when CONN =>
                Left       : Identifications;
                Right      : Identifications;

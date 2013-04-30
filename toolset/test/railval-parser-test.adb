@@ -1,6 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 
 procedure Railval.Parser.Test is
+   use Railval;
 
    File_Handle : File_Type;
    Buffer      : String (1 .. 128);
@@ -18,10 +19,16 @@ begin
       declare
          Token : Tokens :=
            Parse_Line (Buffer (Buffer'First .. Filled));
-         pragma Unreferenced (Token);
       begin
-         --  Put_Line (Image (Token));
-         null;
+         case Token.Kind is
+            when CONN =>
+               Parser.Link (Token.Left, Token.Right);
+            when STAT =>
+               Parser.Define_Station (Name           => Token.Station_Name,
+                                      Identification => Token.Identifier);
+            when others =>
+               null;
+         end case;
       end;
    end loop;
 

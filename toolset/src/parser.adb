@@ -1,27 +1,37 @@
 with Ada.Text_IO; use Ada.Text_IO;
-with Ada.Command_Line; use Ada.Command_Line;
+with Ada.Command_line; use Ada.Command_Line;
 with Ada.Strings.Fixed; use Ada.Strings.Fixed;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 
 with Ada.Exceptions;
 
 procedure Parser is
+   type Keywords is (STAT, CONN, ENDP);
 
    type Identifiers is new Unbounded_String;
+   type Identifications is new Character range ASCII.Nul .. 'Z';
 
    Null_Identifier : constant Identifiers := To_Unbounded_String ("");
 
-   Null_Identification : constant Identifications :=
-     Identifications (ASCII.NUL);
-   End_Point_ID : constant Identifications := Identifications (ASCII.SHARP);
-
-   function Image (Item : in Identifications) return String;
+   Null_Identification : constant Identifications := Identifications (ASCII.Nul);
 
    function Image (Item : in Identifications) return String is
-      Buf : constant String (1 .. 1) := (1 => Character (Item));
+      Buf : String (1 ..1) := (1 => Character (Item));
    begin
       return Buf;
    end Image;
+
+   type Rails (Defined : Boolean := False;) is
+      record
+         case Defined is
+            when True =>
+               Identifier : Identifiers     := Null_Identifier;
+               Link1      : Identifications :=  Null_Identification;
+               Link2      : Identifications :=  Null_Identification;
+            when False =>
+               null;
+         end case;
+      end record;
 
    function Create (Identifier : in Identifiers) return Rails is
    begin
@@ -31,11 +41,13 @@ procedure Parser is
               Link2      => Null_Identification);
    end Create;
 
+   --Undefined_Rail : constant Rails;
    Undefined_Rail : constant Rails := (Defined => False);
 
-   --  We initialize the railmap with unidentified
    Identification_Map : array (Identifications) of Rails :=
      (others => Undefined_Rail);
+
+   Separator_String : constant String := " ";
 
    File_Handle : File_Type;
    Buffer      : String (1 .. 128);
@@ -46,7 +58,18 @@ procedure Parser is
       Put_Line (Command_Name & " input_file");
    end Usage;
 
+   function Keyword_Of (Item : in String) return Keywords is
+      Separator_Position :
+        constant Natural :=
+           Index (Source    => Item,
+                  Pattern   => Separator_String)
+           - Separator_String'Length;
 
+      Keyword_String : String renames
+        Item (Item'First .. Item'First+Separator_Position-1);
+   begin
+      return (Keywords'Value(Keyword_String));
+   end Keyword_Of;
 
    function Identifier_Of (Item : in String) return Keywords is
       Separator_Position :

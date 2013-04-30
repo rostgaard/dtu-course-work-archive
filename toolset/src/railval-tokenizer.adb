@@ -29,6 +29,16 @@ package body Railval.Tokenizer is
       end case;
    end Check;
 
+   function Closing (Object : in Tokens) return Identifications is
+   begin
+      return Object.Closing;
+   end Closing;
+
+   function Identifier (Object : in Tokens) return Identifications is
+   begin
+      return Object.Identifier;
+   end Identifier;
+
    function Image (Item : Tokens) return String is
    begin
       case Item.Kind is
@@ -48,6 +58,11 @@ package body Railval.Tokenizer is
             return "Undefined";
       end case;
    end Image;
+
+   function Left (Object : in Tokens) return Identifications is
+   begin
+      return Object.Left;
+   end Left;
 
    ------------------
    --  Parse_Line  --
@@ -106,5 +121,15 @@ package body Railval.Tokenizer is
                       Message => "Could not process " & Item);
          return Null_Token;
    end Parse_Line;
+
+   function Right (Object : in Tokens) return Identifications is
+   begin
+      return Object.Right;
+   end Right;
+
+   function Station_Name (Object : in Tokens) return String is
+   begin
+      return To_String (Object.Name);
+   end Station_Name;
 
 end Railval.Tokenizer;
