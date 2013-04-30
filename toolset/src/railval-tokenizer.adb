@@ -59,6 +59,11 @@ package body Railval.Tokenizer is
       end case;
    end Image;
 
+   function Image (Item : in Identifications) return String is
+   begin
+      return (1 => Character (Item));
+   end Image;
+
    function Left (Object : in Tokens) return Identifications is
    begin
       return Object.Left;

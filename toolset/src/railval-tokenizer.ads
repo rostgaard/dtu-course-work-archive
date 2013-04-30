@@ -13,6 +13,7 @@ package Railval.Tokenizer is
    Separator_String : constant String := " ";
 
    Null_Identification : constant Identifications;
+   End_Point_Identification : constant Identifications;
 
    package Station_Names is new Ada.Strings.Bounded.Generic_Bounded_Length
      (Max => Maximum_Station_Name_Length);
@@ -28,6 +29,7 @@ package Railval.Tokenizer is
    Null_Token : constant Tokens;
 
    function Image (Item : in Tokens) return String;
+   function Image (Item : in Identifications) return String;
 
    function Station_Name (Object : in Tokens) return String with
      Precondition => Object.Kind = STAT;
@@ -48,6 +50,9 @@ private
 
    Null_Identification : constant Identifications :=
      Identifications (ASCII.NUL);
+
+   End_Point_Identification : constant Identifications :=
+     Identifications (ASCII.SHARP);
 
    type Tokens (Kind : Keywords) is tagged
       record

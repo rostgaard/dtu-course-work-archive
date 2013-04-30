@@ -1,6 +1,6 @@
 with Ada.Text_IO; use Ada.Text_IO;
 
-procedure Railval.Parser.Test is
+procedure Railval.Tokenizer.Test is
 
    File_Handle : File_Type;
    Buffer      : String (1 .. 128);
@@ -25,4 +25,4 @@ begin
       end;
    end loop;
 
-end Railval.Parser.Test;
+end Railval.Tokenizer.Test;

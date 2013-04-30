@@ -17,7 +17,7 @@ begin
                 Item => Buffer,
                 Last => Filled);
       declare
-         Token : Tokens :=
+         Token : constant Tokens :=
            Parse_Line (Buffer (Buffer'First .. Filled));
       begin
          case Token.Kind is
@@ -26,10 +26,14 @@ begin
             when STAT =>
                Parser.Define_Station (Name           => Token.Station_Name,
                                       Identification => Token.Identifier);
-            when others =>
-               null;
+            when ENDP =>
+               Parser.Define_Endpoint (Identification => Token.Closing);
+            when Undefined =>
+               raise Constraint_Error with "File Syntax error detected.";
          end case;
       end;
    end loop;
+
+   Parser.Dump_Network;
 
 end Railval.Parser.Test;
