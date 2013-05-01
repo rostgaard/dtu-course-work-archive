@@ -1,9 +1,13 @@
+with Ada.Text_IO;
 with Ada.Containers.Vectors;
 
 with Railval.Tokenizer;
 
 package Railval.Parser is
+   use Ada.Text_IO;
    use Railval.Tokenizer;
+
+   Maximum_Links : exception;
 
    type Railway_Networks is tagged private;
 
@@ -60,6 +64,8 @@ package Railval.Parser is
    procedure Validate (Object : in out Railway_Networks);
 
    function Image (Item : in Rails) return String;
+
+   function Load_From_File (File : File_Type) return Railway_Networks;
 
 private
 

@@ -24,10 +24,8 @@ package body Railval.Parser is
 
    function Check (Rail : in Frozen_Rails) return Boolean is
       use Ada.Containers;
-      Context : constant String := Package_Name & ".Validate (Frozen_Rails)";
    begin
       return Rail.Kind /= Invalid and Rail.Links.Length > 1;
-         return False;
    end Check;
 
    --------------
@@ -68,6 +66,32 @@ package body Railval.Parser is
                      Character (Identification));
    end Define_Endpoint;
 
+   ----------------------
+   --  Define_Station  --
+   ----------------------
+
+   procedure Define_Station (Object         : in out Railway_Networks;
+                             Name           : in String;
+                             Identification : in Identifications) is
+      use Station_Names;
+
+      Context : constant String := Package_Name & ".Define_Station";
+
+   begin
+      if Object.Map (Identification).Defined then
+         Trace.Debug (Context => Context,
+                      Message => Character (Identification) & " Defined");
+      else
+         Trace.Debug (Context => Context,
+                      Message => Character (Identification) & " Not defined");
+         Object.Map (Identification) :=
+           (Defined        => True,
+            Kind           => Station,
+            Name           => To_Bounded_String (Name),
+            Links          => Connection_Storage.Empty_Vector);
+      end if;
+   end Define_Station;
+
    --------------------
    --  Dump_Network  --
    --------------------
@@ -98,7 +122,7 @@ package body Railval.Parser is
          Position          := Position + 2;
       end loop;
 
-      return Buffer (Buffer'First .. Position-1);
+      return Buffer (Buffer'First .. Position - 2);
    end Image;
 
    -------------
@@ -151,6 +175,9 @@ package body Railval.Parser is
      (Object          : in out Railway_Networks;
       Identification1 : in     Identifications;
       Identification2 : in     Identifications) is
+
+      use Ada.Containers;
+
       Context : constant String := Package_Name & ".Link";
 
       Rail1   : Rails renames Object.Map (Identification1);
@@ -160,7 +187,7 @@ package body Railval.Parser is
       Trace.Debug (Context => Context,
                    Message =>
                      "Linking " & Character (Identification1) & " and " &
-                     Character (Identification2));
+                     Character (Identification2) & ".");
 
       if not Rail1.Defined then
          Define (Object, Identification1);
@@ -179,30 +206,40 @@ package body Railval.Parser is
    end Link;
 
    ----------------------
-   --  Define_Station  --
+   --  Load_From_File  --
    ----------------------
 
-   procedure Define_Station (Object         : in out Railway_Networks;
-                             Name           : in String;
-                             Identification : in Identifications) is
-      use Station_Names;
-
-      Context : constant String := Package_Name & ".Define_Station";
-
+   function Load_From_File (File : File_Type) return Railway_Networks is
+      Buffer      : String (1 .. 128);
+      Filled      : Natural := 0;
+      Railnet     : Parser.Railway_Networks;
    begin
-      if Object.Map (Identification).Defined then
-         Trace.Debug (Context => Context,
-                      Message => Character (Identification) & " Defined");
-      else
-         Trace.Debug (Context => Context,
-                      Message => Character (Identification) & " Not defined");
-         Object.Map (Identification) :=
-           (Defined        => True,
-            Kind           => Station,
-            Name           => To_Bounded_String (Name),
-            Links          => Connection_Storage.Empty_Vector);
-      end if;
-   end Define_Station;
+      while not End_Of_File (File) loop
+         Get_Line (File => File,
+                   Item => Buffer,
+                   Last => Filled);
+         declare
+            Token : constant Tokens :=
+              Parse_Line (Buffer (Buffer'First .. Filled));
+         begin
+            case Token.Kind is
+            when CONN =>
+               Railnet.Link (Token.Left, Token.Right);
+            when STAT =>
+               Railnet.Define_Station (Name           => Token.Station_Name,
+                                       Identification => Token.Identifier);
+            when ENDP =>
+               Railnet.Define_Endpoint (Identification => Token.Closing);
+            when Undefined =>
+               raise Constraint_Error with "File Syntax error detected.";
+            end case;
+         end;
+      end loop;
+
+      Railnet.Validate;
+
+      return Railnet;
+   end Load_From_File;
 
    ----------------
    --  Validate  --
@@ -214,6 +251,7 @@ package body Railval.Parser is
          if Item.Defined then
             declare
                Freeze : Frozen_Rails := Frozen_Rails (Item);
+               pragma Unreferenced (Freeze);
             begin
                null;
             end;
