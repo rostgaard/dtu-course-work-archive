@@ -4,9 +4,10 @@ package body Railval.Parser is
    use Railval;
 
    --  Defines a previously undefined track and allocates it.
-   procedure Define (ID : in Identifications) with
-     Precondition  => not Is_Defined (ID),
-     Postcondition => Allocation_Map (ID) = New_Rail;
+   procedure Define (Object : in out Railway_Networks;
+                     ID     : in Identifications) with
+     Precondition  => not Object.Is_Defined (ID),
+   Postcondition => Object.Map (ID) = New_Rail;
 
    -------------
    --  Check  --
@@ -21,41 +22,45 @@ package body Railval.Parser is
    --  Check  --
    -------------
 
-   function Check (Item : in Frozen_Rails) return Boolean is
+   function Check (Rail : in Frozen_Rails) return Boolean is
       use Ada.Containers;
+      Context : constant String := Package_Name & ".Validate (Frozen_Rails)";
    begin
-      return Item.Links.Length > 1;
+      return Rail.Kind /= Invalid and Rail.Links.Length > 1;
+         return False;
    end Check;
 
    --------------
    --  Define  --
    --------------
 
-   procedure Define (ID : in Identifications) is
+   procedure Define (Object : in out Railway_Networks;
+                     ID     : in     Identifications) is
       Context : constant String := Package_Name & ".Define";
    begin
       Trace.Debug (Context => Context,
-                      Message =>
-                        "Defining new non-station link " & Character (ID));
+                   Message =>
+                     "Defining new non-station link " & Character (ID));
 
-      Allocation_Map (ID) := New_Rail;
+      Object.Map (ID) := New_Rail;
    end Define;
 
    -----------------------
    --  Define_Endpoint  --
    -----------------------
 
-   procedure Define_Endpoint (Identification : in Identifications) is
+   procedure Define_Endpoint (Object         : in out Railway_Networks;
+                              Identification : in Identifications) is
       Context : constant String := Package_Name & ".Define_Endpoint";
 
-      Rail    : Rails renames Allocation_Map (Identification);
+      Rail    : Rails renames Object.Map (Identification);
    begin
 
       if not Rail.Defined then
-         Define (Identification);
+         Define (Object, Identification);
       end if;
 
-      Allocation_Map (Identification).Links.Append
+      Object.Map (Identification).Links.Append
         (Tokenizer.End_Point_Identification);
 
       Trace.Debug (Context => Context,
@@ -67,14 +72,14 @@ package body Railval.Parser is
    --  Dump_Network  --
    --------------------
 
-   procedure Dump_Network is
+   procedure Dump_Network (Object : in out Railway_Networks) is
       Context : constant String := Package_Name & ".Dump_Network";
    begin
       for I in Identifications'Range loop
-         if Allocation_Map (I).Defined then
+         if Object.Map (I).Defined then
             Trace.Debug (Context => Context,
                          Message => Image (I) & " " &
-                           Image (Allocation_Map (I)));
+                           Image (Object.Map (I)));
          end if;
       end loop;
    end Dump_Network;
@@ -93,7 +98,7 @@ package body Railval.Parser is
          Position          := Position + 2;
       end loop;
 
-      return Buffer (Buffer'First .. Position);
+      return Buffer (Buffer'First .. Position-1);
    end Image;
 
    -------------
@@ -119,10 +124,11 @@ package body Railval.Parser is
    ------------------
 
    function Is_Defined
-     (Identification : in Identifications) return Boolean
+     (Object         : in out Railway_Networks;
+      Identification : in     Identifications) return Boolean
    is
    begin
-      return Allocation_Map (Identification).Defined;
+      return Object.Map (Identification).Defined;
    end Is_Defined;
 
    ---------------
@@ -130,21 +136,25 @@ package body Railval.Parser is
    ---------------
 
    function Is_Link
-     (Identification : in Identifications) return Boolean
+     (Object         : in out Railway_Networks;
+      Identification : in     Identifications) return Boolean
    is
    begin
-      return Allocation_Map (Identification).Kind = Link;
+      return Object.Map (Identification).Kind = Link;
    end Is_Link;
 
    ------------
    --  Link  --
    ------------
 
-   procedure Link (Identification1, Identification2 : in Identifications) is
+   procedure Link
+     (Object          : in out Railway_Networks;
+      Identification1 : in     Identifications;
+      Identification2 : in     Identifications) is
       Context : constant String := Package_Name & ".Link";
 
-      Rail1   : Rails renames Allocation_Map (Identification1);
-      Rail2   : Rails renames Allocation_Map (Identification2);
+      Rail1   : Rails renames Object.Map (Identification1);
+      Rail2   : Rails renames Object.Map (Identification2);
 
    begin
       Trace.Debug (Context => Context,
@@ -153,18 +163,18 @@ package body Railval.Parser is
                      Character (Identification2));
 
       if not Rail1.Defined then
-         Define (Identification1);
+         Define (Object, Identification1);
       end if;
 
       if not Rail2.Defined then
-         Define (Identification2);
+         Define (Object, Identification2);
          Trace.Debug (Context => Context,
                       Message =>
                         "Defining " & Character (Identification2));
       end if;
 
-      Allocation_Map (Identification1).Links.Append (Identification2);
-      Allocation_Map (Identification2).Links.Append (Identification1);
+      Object.Map (Identification1).Links.Append (Identification2);
+      Object.Map (Identification2).Links.Append (Identification1);
 
    end Link;
 
@@ -172,25 +182,43 @@ package body Railval.Parser is
    --  Define_Station  --
    ----------------------
 
-   procedure Define_Station (Name           : in String;
+   procedure Define_Station (Object         : in out Railway_Networks;
+                             Name           : in String;
                              Identification : in Identifications) is
       use Station_Names;
 
       Context : constant String := Package_Name & ".Define_Station";
 
    begin
-      if Allocation_Map (Identification).Defined then
+      if Object.Map (Identification).Defined then
          Trace.Debug (Context => Context,
                       Message => Character (Identification) & " Defined");
       else
          Trace.Debug (Context => Context,
                       Message => Character (Identification) & " Not defined");
-         Allocation_Map (Identification) :=
+         Object.Map (Identification) :=
            (Defined        => True,
             Kind           => Station,
             Name           => To_Bounded_String (Name),
             Links          => Connection_Storage.Empty_Vector);
       end if;
    end Define_Station;
+
+   ----------------
+   --  Validate  --
+   ----------------
+
+   procedure Validate (Object : in out Railway_Networks) is
+   begin
+      for Item of Object.Map loop
+         if Item.Defined then
+            declare
+               Freeze : Frozen_Rails := Frozen_Rails (Item);
+            begin
+               null;
+            end;
+         end if;
+      end loop;
+   end Validate;
 
 end Railval.Parser;

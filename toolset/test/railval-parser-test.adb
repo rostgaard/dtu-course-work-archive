@@ -2,11 +2,13 @@ with Ada.Text_IO; use Ada.Text_IO;
 
 procedure Railval.Parser.Test is
    use Railval;
+   use Parser;
 
    File_Handle : File_Type;
    Buffer      : String (1 .. 128);
    Filled      : Natural := 0;
 
+   Railnet     : Parser.Railway_Networks;
 begin
    Open (File => File_Handle,
          Mode => In_File,
@@ -22,18 +24,19 @@ begin
       begin
          case Token.Kind is
             when CONN =>
-               Parser.Link (Token.Left, Token.Right);
+               Railnet.Link (Token.Left, Token.Right);
             when STAT =>
-               Parser.Define_Station (Name           => Token.Station_Name,
+               Railnet.Define_Station (Name           => Token.Station_Name,
                                       Identification => Token.Identifier);
             when ENDP =>
-               Parser.Define_Endpoint (Identification => Token.Closing);
+               Railnet.Define_Endpoint (Identification => Token.Closing);
             when Undefined =>
                raise Constraint_Error with "File Syntax error detected.";
          end case;
       end;
    end loop;
 
-   Parser.Dump_Network;
+   Railnet.Dump_Network;
+   Railnet.Validate;
 
 end Railval.Parser.Test;

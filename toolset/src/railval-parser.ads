@@ -5,6 +5,8 @@ with Railval.Tokenizer;
 package Railval.Parser is
    use Railval.Tokenizer;
 
+   type Railway_Networks is tagged private;
+
    Package_Name : constant String := "Railval.Parser";
 
    type Rail_Kinds is (Invalid, Link, Station);
@@ -15,27 +17,33 @@ package Railval.Parser is
 
    Null_Rail : constant Rails;
 
-   function Check (Item : in Rails) return Boolean;
+   function Check (Item   : in     Rails) return Boolean;
+
    --  Defines a station.
    --  This can be done under the following premises;
    --   1. The station is not defined as a track.
    --   2. The station is already defined as a track.
    --  When the stations is already defined, we need to "upgrade" the track
    --  to a station.
-   procedure Define_Station (Name           : in String;
+   procedure Define_Station (Object : in out Railway_Networks;
+                             Name           : in String;
                              Identification : in Identifications) with
-     Precondition => not Is_Defined (Identification) or
-                         Is_Link (Identification);
+     Precondition => not Object.Is_Defined (Identification) or
+                          Object.Is_Link (Identification);
 
-   function Is_Defined (Identification : in Identifications) return
+   function Is_Defined (Object : in out Railway_Networks;
+                        Identification : in Identifications) return
      Boolean;
 
-   function Is_Link (Identification : in Identifications) return
+   function Is_Link (Object : in out Railway_Networks;
+                     Identification : in Identifications) return
      Boolean;
 
-   procedure Link (Identification1, Identification2 : in Identifications);
+   procedure Link (Object : in out Railway_Networks;
+                   Identification1, Identification2 : in Identifications);
 
-   procedure Define_Endpoint (Identification : in Identifications);
+   procedure Define_Endpoint (Object : in out Railway_Networks;
+                              Identification : in Identifications);
 
    --   function Not_Defined (Item : in Identifications) return Boolean;
 
@@ -45,13 +53,22 @@ package Railval.Parser is
    type Frozen_Rails is private with
    Type_Invariant => Check (Frozen_Rails);
 
-   function Check (Item : in Frozen_Rails) return Boolean;
+   function Check (Rail : in Frozen_Rails) return Boolean;
 
-   procedure Dump_Network;
+   procedure Dump_Network (Object : in out Railway_Networks);
+
+   procedure Validate (Object : in out Railway_Networks);
 
    function Image (Item : in Rails) return String;
 
 private
+
+   type Allocation_Maps is array (Identifications) of Rails;
+
+   type Railway_Networks is tagged
+      record
+         Map : Allocation_Maps;
+      end record;
 
    type Connection_Count is new Natural range 0 .. 3;
 
@@ -87,7 +104,5 @@ private
       Links          => Connection_Storage.Empty_Vector);
 
    type Frozen_Rails is new Rails;
-
-   Allocation_Map : array (Identifications) of Rails;
 
 end Railval.Parser;

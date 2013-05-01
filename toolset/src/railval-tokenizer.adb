@@ -29,6 +29,10 @@ package body Railval.Tokenizer is
       end case;
    end Check;
 
+   ---------------
+   --  Closing  --
+   ---------------
+
    function Closing (Object : in Tokens) return Identifications is
    begin
       return Object.Closing;
