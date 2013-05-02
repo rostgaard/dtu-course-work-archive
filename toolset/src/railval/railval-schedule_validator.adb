@@ -11,7 +11,6 @@ package body Railval.Schedule_Validator is
       return (C1, C2);
    end Create;
 
-
    -- type Schedule is array (Positive range <>, Positive range <>) of Character;
 
    function Check (Item : in Pairs) return Boolean is

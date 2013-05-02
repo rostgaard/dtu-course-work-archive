@@ -40,5 +40,4 @@ private
            not (Valid_Square.Top.Left = Valid_Square.Bottom.Right and
                 Valid_Square.Top.Right = Valid_Square.Bottom.Left);   -- Cross rule.
 
-
 end Railval.Schedule_Validator;
