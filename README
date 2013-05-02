@@ -1,1 +1,44 @@
 Sources for DTU project 02241 Robust software systems
+
+----
+Description
+----
+
+The toolset consists of three parts; A schedule validator, a track validator and a visualizer. 
+In brief, it's a toolset for aiding the the user in validating a train track network - and
+schedules.
+
+---
+The Visualizer
+---
+The purpose of the visualizer is to provide a means for visually inspecting the schedules and tracks.
+
+---
+The track validator
+---
+The purpose of the track validator is to ensure that a track network is valid, given the constraints.
+
+---
+The schedule validator
+---
+The purpose of this tool, is to provide guarantees that no trains will ever collide - give a schedule.
+
+----
+Requirements
+----
+
+ - A java compiler
+ - JUNG Graphing library
+ - A GNAT 2012 compiler
+ - GNU make
+
+The Ada sources can be built by invoking make in the toolset folder, but are command-line only.
+
+----
+State of the program
+----
+Currently the program is not throughly tested, and the schedule validator is not able to load in
+files - but will validate them if given statically.
+
+
+ - Enjoy.

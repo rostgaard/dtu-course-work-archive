@@ -2,6 +2,7 @@ all:
 	 gnatmake -P common test
 
 clean:
+	-gnatclean -P common
 	-rm build/*
 	-rm src/*~
 
