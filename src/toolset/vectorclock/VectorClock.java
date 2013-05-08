@@ -90,10 +90,70 @@ public class VectorClock implements Serializable {
     /**
      * Implements the merge operation (VC4) of vector clocks. Merges the
      * VectorClock with another, giving out the maximums of each index.
+
      *
      * @param vc The VectorClock to merge.
      */
     public void merge(VectorClock vc) {
         this.Clock = this.max(vc).Clock;
+    }
+
+    /**
+     * VectorClock compare operation. 
+     *
+     * @param vc - VectorClock to compare to.
+     *
+     * @return VectorClockEquality value indicating how the two clocks relate to
+     * each other.
+     */
+    public VectorClockEquality relativeTo(VectorClock vc) {
+        // Initial "pull-down" flags.
+        boolean foundEqual = true;
+
+        boolean leftHasGreater = false;
+        boolean rightHasGreater = false;
+
+        assert (this.Clock.length == vc.Clock.length);
+
+
+        // Go over all elements in Clock one.
+        //for (String lEntry : pOne.keySet()) {
+        for (int i = 0; i < this.Clock.length; i++) {
+            // Compare if also present in clock two.
+
+            // If any value differs, the two clocks are not equal.
+            if (this.Clock[i] == vc.Clock[i]) {
+                continue;
+            }
+
+            foundEqual = false;
+
+            if (this.Clock[i] > vc.Clock[i]) {
+                rightHasGreater = true;
+            }
+
+            if (this.Clock[i] < vc.Clock[i]) {
+                leftHasGreater = true;
+            }
+
+        }
+        // Return based on determined information.
+        if (foundEqual) {
+            return VectorClockEquality.EQUAL;
+        }
+
+        if (leftHasGreater && rightHasGreater) {
+            return VectorClockEquality.CONCURRENT;
+        }
+
+        if (leftHasGreater) {
+            return VectorClockEquality.GREATER;
+        }
+
+        if (rightHasGreater) {
+            return VectorClockEquality.LESS;
+        }
+
+        return VectorClockEquality.INVALID;
     }
 }
