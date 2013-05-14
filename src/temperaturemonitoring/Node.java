@@ -14,9 +14,11 @@ import toolset.vectorclock.VectorClock;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import networktools.TemperatureMessage;
+import networktools.Transceiver;
+import networktools.TransceiverMode;
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Represenation of a network node.
  */
 /**
  *
@@ -24,7 +26,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class Node extends Thread implements TemperatureNode, Serializable {
 
-    private int ID = 0;
+    private int ID = -1;
+    private int nextHop = -1;
     private boolean running = false;
     private Registry registry = null;
 //    private Initiator initiator = null;
@@ -35,6 +38,7 @@ public class Node extends Thread implements TemperatureNode, Serializable {
             Executors.newScheduledThreadPool(1);
     private bootstrapping.ObservationServiceInterface monitor;
     private TemperatureMeasurementCollection collectedMeasurements = new TemperatureMeasurementCollection();
+    private Transceiver transceiver;
 
     /**
      * TODO
@@ -42,8 +46,10 @@ public class Node extends Thread implements TemperatureNode, Serializable {
      * @param t
      */
     public void addMeasurement(Temperature t) {
+        logger.log(Level.INFO, "Adding measurement to " + this);
         if (this.collectedMeasurements.add(t)) {
             this.vc.incrementClock(ID);
+            this.transceiver.enqueue(new TemperatureMessage(t, this.nextHop, this));
         }
     }
 
@@ -112,6 +118,7 @@ public class Node extends Thread implements TemperatureNode, Serializable {
     }
 
     public Node(int pid, int numNodes) throws InterruptedException {
+        this.transceiver = new Transceiver(TransceiverMode.FIFO, this);
         this.vc = new VectorClock(numNodes);
         this.ID = pid;
     }
@@ -130,8 +137,8 @@ public class Node extends Thread implements TemperatureNode, Serializable {
         } catch (RemoteException ex) {
             Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
         }
-        while (this.running) {
-            try {
+
+        /*        while (this.running) {            try {
                 Thread.sleep(1000);
                 logger.log(Level.INFO, this + " " + this.vc);
             } catch (InterruptedException ex) {
@@ -144,8 +151,9 @@ public class Node extends Thread implements TemperatureNode, Serializable {
                 logger.log(Level.SEVERE, null, ex);
             }
 
-             */
-             }
+             
+
+         }*/
     }
 
     /**
@@ -155,7 +163,7 @@ public class Node extends Thread implements TemperatureNode, Serializable {
      */
     @Override
     public Temperature latestMeasurement() {
-        return new Temperature();
+        return this.collectedMeasurements.get(this.collectedMeasurements.size() - 1);
     }
 
     /**
@@ -165,6 +173,23 @@ public class Node extends Thread implements TemperatureNode, Serializable {
      */
     @Override
     public String toString() {
-        return Node.class.getSimpleName() + " " + this.ID;
+        return Node.class.getSimpleName() + " " + this.ID + " " + this.vc;
+    }
+
+    @Override
+    public Node lookupNode(int destination) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void synchonousSend(TemperatureMessage message) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void asynchonousSend(TemperatureMessage message) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void deliver(TemperatureMessage message) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -5,6 +5,7 @@
 package temperaturemonitoring;
 
 import java.rmi.Remote;
+import networktools.TemperatureMessage;
 
 /**
  *
@@ -14,5 +15,12 @@ public interface TemperatureNode extends Remote {
 
     public Temperature latestMeasurement();
 
+    public Node lookupNode(int nodeID);
     //public void sendMaekawaReply();
+
+    public void synchonousSend(TemperatureMessage message);
+
+    public void asynchonousSend(TemperatureMessage message);
+
+    public void deliver(TemperatureMessage message);
 }
