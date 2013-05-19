@@ -38,7 +38,9 @@ public class Node extends Thread implements TemperatureNode, Serializable {
             Executors.newScheduledThreadPool(1);
     private bootstrapping.ObservationServiceInterface monitor;
     private TemperatureMeasurementCollection collectedMeasurements = new TemperatureMeasurementCollection();
+    // Periodic tasks.
     private Transceiver transceiver;
+    private TemperatureSensor fixedrateTemperatureMonitor;
 
     /**
      * TODO
@@ -128,8 +130,13 @@ public class Node extends Thread implements TemperatureNode, Serializable {
         logger.log(Level.INFO, "Stating node " + this.ID);
         this.running = true;
 
-        TemperatureSensor fixedrateTemperatureMonitor = new TemperatureSensor(this);
-        scheduler.scheduleAtFixedRate(fixedrateTemperatureMonitor, 0, 1, TimeUnit.SECONDS);
+        fixedrateTemperatureMonitor = new TemperatureSensor(this);
+        transceiver = new Transceiver(TransceiverMode.FIFO, this);
+
+        scheduler.scheduleAtFixedRate(this.fixedrateTemperatureMonitor, 0, 1, TimeUnit.SECONDS);
+
+        scheduler.scheduleAtFixedRate(this.transceiver, 0, 200, TimeUnit.MILLISECONDS);
+
         try {
             if (this.ID != 0) {
                 this.monitor.newConnection(ID, 0);

@@ -2,6 +2,8 @@ package temperaturemonitoring;
 
 import java.io.Serializable;
 import java.rmi.Remote;
+import java.util.logging.Logger;
+import networktools.Transceiver;
 
 
 /*
@@ -15,7 +17,9 @@ import java.rmi.Remote;
  */
 public class TemperatureSensor extends Thread {
 
-    Node owner;
+    private Node owner;
+    private static final Logger logger = Logger.getLogger(TemperatureSensor.class.getName());
+
 
     public TemperatureSensor(Node n) {
         this.owner = n;
