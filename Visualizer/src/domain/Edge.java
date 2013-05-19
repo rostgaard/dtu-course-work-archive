@@ -23,7 +23,7 @@ public class Edge {
 	public Edge(Node n1, Node n2){
 		this.n1 = n1;
 		this.n2 = n2;
-		this.color = Color.BLACK;
+		this.color = Color.BLACK; //default color of the edges
 	}
 
 	public Node getN1() {

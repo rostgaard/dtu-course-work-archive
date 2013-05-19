@@ -22,21 +22,23 @@ import network.NetworkGraph;
 
 public class StatusPanel{
 
-	private static int height = 100;
+	private static int height = 100; //height of the panel in pixels
 	private static JTextArea textArea;
 
 	/**
 	 * Creates the status panel
 	 * 
 	 * @param width - width of the panel in pixels
-	 * @return
+	 * @return - returns the status panel
 	 */
-	public JScrollPane getPanel(int width){
+	public JScrollPane createPanel(int width){
 		//Create text area
 		textArea = new JTextArea();
 		textArea.setLineWrap(false);
 		textArea.setEditable(false);
 		textArea.setText("Status panel:");
+
+		//adding mouse listener (right click functionality)
 		textArea.addMouseListener(new MouseListener() {
 
 			@Override
@@ -44,6 +46,8 @@ public class StatusPanel{
 				// Right click menu
 				if(arg0.getButton() == MouseEvent.BUTTON3 && arg0.getClickCount() == 1) {
 					JPopupMenu menu = new JPopupMenu();
+					
+					//clear panel menu
 					JMenuItem item1 = new JMenuItem("Clear panel");
 					item1.addActionListener(new ActionListener() {
 						@Override
@@ -53,11 +57,12 @@ public class StatusPanel{
 					});
 					menu.add(item1);
 					
+					//clear graph menu
 					JMenuItem item2 = new JMenuItem("Clear graph");
 					item2.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							NetworkGraph.clearGraph();
+							NetworkGraph.resetGraph();
 						}
 					});
 					menu.add(item2);
