@@ -199,11 +199,13 @@ public class ScheduleGraph extends JPanel {
 				Node station2 = nodes.get(j);
 				//if a station collision is detected then set the color red
 				if(station1.equals(station2)){
-					station1.setColor(Color.RED);
-					station2.setColor(Color.RED);
-					//add message to status panel
-					String errorMsg = "Station collision detected at node/station: " + station1.toString();
-					StatusPanel.addText(errorMsg);
+					if((!station1.getId().equals(stopNode.getId()) && !station2.getId().equals(stopNode.getId()))){
+						station1.setColor(Color.RED);						
+						station2.setColor(Color.RED);
+						//add message to status panel
+						String errorMsg = "Station collision detected at node/station: " + station1.toString();
+						StatusPanel.addText(errorMsg);
+					}
 				}
 			}
 		}
@@ -331,7 +333,7 @@ public class ScheduleGraph extends JPanel {
 				//calculate source node coordinates
 				Node station = route.get(i);
 				//don't draw the stop nodes!
-				if(!station.equals(stopNode)){
+				if(!station.getId().equals(stopNode.getId())){
 					int x1 = X_AXIS_GAP + FINAL_GAP + (i*HATCH_GAP);
 					int y1 = Y_AXIS_GAP +(HATCH_GAP * (stations.indexOf(station)+1)) - FINAL_GAP;
 
