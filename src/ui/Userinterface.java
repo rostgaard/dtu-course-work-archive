@@ -8,7 +8,6 @@
 package ui;
 
 import edu.uci.ics.jung.algorithms.layout.Layout;
-import edu.uci.ics.jung.visualization.BasicVisualizationServer;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
@@ -17,12 +16,24 @@ import bootstrapping.NetworkModel;
 import edu.uci.ics.jung.algorithms.layout.SpringLayout;
 import edu.uci.ics.jung.algorithms.layout.util.Relaxer;
 import static edu.uci.ics.jung.samples.AddNodeDemo.EDGE_LENGTH;
+import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
+import edu.uci.ics.jung.visualization.picking.PickedState;
 import edu.uci.ics.jung.visualization.renderers.Renderer.VertexLabel.Position;
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GraphicsConfiguration;
 import java.awt.Paint;
 import java.awt.Stroke;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import org.apache.commons.collections15.Transformer;
 import org.apache.commons.collections15.functors.ConstantTransformer;
 
@@ -31,6 +42,7 @@ import org.apache.commons.collections15.functors.ConstantTransformer;
  * @author Dr. Greg M. Bernstein
  */
 public class Userinterface {
+    //private final GraphicsConfiguration BorderLayout;
     public Userinterface() throws InterruptedException {
         // The Layout<V, E> is parameterized by the vertex and edge types
         Layout<Integer, String> layout;
@@ -38,10 +50,32 @@ public class Userinterface {
                 new ConstantTransformer(EDGE_LENGTH));
         layout.setSize(new Dimension(300, 300)); // sets the initial size of the layout space
         // The BasicVisualizationServer<V,E> is parameterized by the vertex and edge types
-        BasicVisualizationServer<Integer, String> vv = new BasicVisualizationServer<Integer, String>(layout);
+        VisualizationViewer<Integer, String> vv = new VisualizationViewer<>(
+                layout);
         vv.setPreferredSize(new Dimension(350, 350)); //Sets the viewing area size
-        Relaxer relaxer = vv.getModel().getRelaxer();
 
+
+        final PickedState<Integer> pickedState = vv.getPickedVertexState();
+// Attach the listener that will print when the vertices selection changes.
+        pickedState.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                Object subject = e.getItem();
+                // The graph uses Integers for vertices.
+                if (subject instanceof Integer) {
+                    Integer vertex = (Integer) subject;
+                    if (pickedState.isPicked(vertex)) {
+                        System.out.println("Vertex " + vertex
+                                + " is now selected");
+                    } else {
+                        System.out.println("Vertex " + vertex
+                                + " no longer selected");
+                    }
+                }
+            }
+        });
+
+        final Relaxer relaxer = vv.getModel().getRelaxer();
         layout.initialize();
         layout.lock(Integer.SIZE, false);
         Transformer<Integer, Paint> vertexPaint = new Transformer<Integer, Paint>() {
@@ -70,13 +104,47 @@ public class Userinterface {
         //vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
         vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
 
-        JFrame frame = new JFrame("Network");
+
+        JButton promoteButton1 = new JButton("Promote 1");
+        JButton promoteButton2 = new JButton("Promote 2");
+        JButton promoteButton3 = new JButton("Promote 3");
+        JButton promoteButton4 = new JButton("Promote 4");
+        JButton promoteButton5 = new JButton("Promote 5");
+
+        promoteButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                if (ae.getActionCommand().equals("Promote 1")) {
+                    System.out.println("Promote 1");
+                }
+            }
+        });
+
+        JFrame frame;
+        frame = new JFrame("02220 Demo UI");
+
+        frame.getContentPane().add(vv, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
+
+        buttonPanel.add(promoteButton1);
+        buttonPanel.add(promoteButton2);
+        buttonPanel.add(promoteButton3);
+        buttonPanel.add(promoteButton4);
+        buttonPanel.add(promoteButton5);
+
+        frame.getContentPane().add(buttonPanel, BorderLayout.EAST);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(vv);
         frame.pack();
         frame.setVisible(true);
 
-        //relaxer.resume();
+        relaxer.setSleepTime(200);
+
+
+        
 /*                Thread.sleep(200);
          NetworkModel.addNode(1);
         Thread.sleep(200);
@@ -98,6 +166,7 @@ public class Userinterface {
 
 
          */
-        //relaxer.pause();
+
+        
     }
 }
