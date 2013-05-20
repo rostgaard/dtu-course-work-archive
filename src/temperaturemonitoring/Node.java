@@ -17,6 +17,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import networktools.Message;
+import networktools.NewAdminMessage;
 import networktools.TemperatureMessage;
 import networktools.Transceiver;
 import networktools.TransceiverMode;
@@ -30,7 +31,7 @@ import networktools.TransceiverMode;
 public class Node extends Thread implements TemperatureNode, Serializable {
 
     private int ID = -1;
-    private int nextHop = 0;
+    private int admin = 0;
     private boolean running = false;
     private Registry registry = null;
 //    private Initiator initiator = null;
@@ -56,7 +57,7 @@ public class Node extends Thread implements TemperatureNode, Serializable {
         //logger.log(Level.INFO, "Adding measurement to " + this);
         //if (this.collectedMeasurements.add(t)) {
             this.vc.incrementClock(ID);
-            this.transceiver.enqueue(new TemperatureMessage(t, this.nextHop, this));
+        this.transceiver.enqueue(new TemperatureMessage(t, this.admin, this));
         //}
     }
 
@@ -65,7 +66,11 @@ public class Node extends Thread implements TemperatureNode, Serializable {
      */
     public void promote() {
         logger.log(Level.INFO, "Promoting node " + this.ID + " to admin.");
-        //TODO, Start an election or similar.
+
+        // Start by b-multicasting the new admin number
+
+        this.basicMulticast(multicastGroup, new NewAdminMessage(this.ID, -1, this));
+
         this.isAdmin = true;
     }
 
@@ -157,7 +162,7 @@ public class Node extends Thread implements TemperatureNode, Serializable {
                 this.monitor.newConnection(ID, 0);
             } else {
                 // TEST
-                this.reliableMulticast(this.multicastGroup, (Message) new TemperatureMessage(null, -1, this));
+                this.reliableMulticast(this.multicastGroup, new TemperatureMessage(null, -1, this));
             }
         } catch (RemoteException ex) {
             Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
@@ -235,7 +240,8 @@ public class Node extends Thread implements TemperatureNode, Serializable {
             this.messageBuffer.add(message); // Buffer the message.
 
             if (message.getSender() != this) { // Skip the current node.
-                reliableMulticast(this.multicastGroup, message);
+                //TODO
+                //reliableMulticast(this.multicastGroup, message);
             }
 
             // Deliver the message.
@@ -247,15 +253,44 @@ public class Node extends Thread implements TemperatureNode, Serializable {
 
     private void basicMulticast(ArrayList<Integer> group, Message message) {
         for (Integer node : group) {
-            
-            this.lookupNode(node).basicDeliver(message);
+            if (node != this.ID) { // Skip own ID.
+                VectorClock remoteClock = this.lookupNode(node).basicDeliver(message);
+                this.vc.merge(remoteClock);
+            }
+
         }
     }
 
-    private void reliableMulticast(ArrayList<Integer> group, Message message) {
+    private void basicMulticast(ArrayList<Integer> group, NewAdminMessage message) {
+
         for (Integer node : group) {
-            logger.log(Level.INFO, "Reliable multicast sending from " + this.ID + " to " + node);
-            this.lookupNode(node).reliableDeliver(message);
+            if (node != this.ID) { // Skip own ID.
+                VectorClock remoteClock = this.lookupNode(node).basicDeliver(message);
+                this.vc.merge(remoteClock);
+                logger.log(Level.INFO, "Basic multicasting new admin request from " + this.ID + " to " + node);
+            }
         }
+    }
+
+    private void reliableMulticast(ArrayList<Integer> group, TemperatureMessage message) {
+
+        for (Integer node : group) {
+            VectorClock vc = this.lookupNode(node).reliableDeliver(message);
+            this.vc.merge(vc);
+
+            logger.log(Level.INFO, "Reliable multicast sending from " + this.ID + " to " + node);
+
+        }
+    }
+
+    @Override
+    public VectorClock basicDeliver(TemperatureMessage message) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public VectorClock basicDeliver(NewAdminMessage message) {
+        // Send to every process that has not yet received the proposed new admin
+        return this.vc;
     }
 }

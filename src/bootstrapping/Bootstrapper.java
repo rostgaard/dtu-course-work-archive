@@ -72,15 +72,14 @@ public class Bootstrapper extends UnicastRemoteObject {
 
             }
 
-            if (i == 0) {
-                node[i].promote();
-            }
-
             
         }
 
         for (int i = 0; i < 5; i++) {
             node[i].start();
+            if (i == 0) {
+                node[i].promote();
+            }
         }
     }
 }

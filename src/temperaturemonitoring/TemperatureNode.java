@@ -6,6 +6,8 @@ package temperaturemonitoring;
 
 import java.rmi.Remote;
 import networktools.Message;
+import networktools.NewAdminMessage;
+import networktools.TemperatureMessage;
 import toolset.vectorclock.VectorClock;
 
 /**
@@ -23,6 +25,9 @@ public interface TemperatureNode extends Remote {
     public VectorClock asynchonousSend(Message message);
 
     public VectorClock basicDeliver(Message message);
+
+    public VectorClock basicDeliver(TemperatureMessage message);
+    public VectorClock basicDeliver(NewAdminMessage message);
 
     public VectorClock reliableDeliver(Message message);
 }

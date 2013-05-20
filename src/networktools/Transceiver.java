@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static networktools.TransceiverMode.CAUSAL;
 import temperaturemonitoring.Node;
-import temperaturemonitoring.Temperature;
+
 /**
  *
  * @author krc
