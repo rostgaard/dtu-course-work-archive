@@ -33,7 +33,15 @@ Nothing to see here - yet.
 The overall system consists of a number of nodes. For this model we assume at least three nodes.
 
 \section{Notes}
+
+\section{Assumptions}
+A RMI interface for looking up the current list of active nodes is provide for easy availability of information. In production this would introduce a single point of failure, and make the system too vulnerable to failures.
+Alternative approaches would be to have every node maintain a list of active nodes
+
+\subsection{Network model}
+
 \subsection{Choice of RMI}
+RMI is used as a means to abstract away the socket-fiddling, and to ensure at-most-once semantics.
 % Why not CORBA / RMI-IIOP?
 
 \subsection{Replication}

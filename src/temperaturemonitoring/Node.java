@@ -14,6 +14,7 @@ import toolset.vectorclock.VectorClock;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import networktools.Message;
 import networktools.TemperatureMessage;
 import networktools.Transceiver;
 import networktools.TransceiverMode;
@@ -198,5 +199,9 @@ public class Node extends Thread implements TemperatureNode, Serializable {
 
     public void deliver(TemperatureMessage message) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void basicMulticast(Message message, String group) {
+        Node nodeList[] = registry.lookup("nodelist/" + group);
     }
 }

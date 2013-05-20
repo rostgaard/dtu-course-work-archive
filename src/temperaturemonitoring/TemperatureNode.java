@@ -16,7 +16,6 @@ public interface TemperatureNode extends Remote {
     public Temperature latestMeasurement();
 
     public Node lookupNode(int nodeID);
-    //public void sendMaekawaReply();
 
     public void synchonousSend(TemperatureMessage message);
 
