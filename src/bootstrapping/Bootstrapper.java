@@ -67,10 +67,19 @@ public class Bootstrapper extends UnicastRemoteObject {
             node[i] = new Node(i, 5);
             node[i].connectRegistry("localhost");
 
+            for (int j = 0; j < 5; j++) {
+                node[i].addMulticastNode(j);
+
+            }
+
             if (i == 0) {
                 node[i].promote();
             }
 
+            
+        }
+
+        for (int i = 0; i < 5; i++) {
             node[i].start();
         }
     }

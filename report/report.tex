@@ -39,6 +39,8 @@ A RMI interface for looking up the current list of active nodes is provide for e
 Alternative approaches would be to have every node maintain a list of active nodes
 
 \subsection{Network model}
+The simulator contains an emulated network model to make monitoring easier. Every Node, including the admin, uses only RMI for communication primitives in order to enable nodes to run on different machines.
+One possible exception could be the multicast primitives, that require a more technology-specific solution as RMI does not support multicast.
 
 \subsection{Choice of RMI}
 RMI is used as a means to abstract away the socket-fiddling, and to ensure at-most-once semantics.

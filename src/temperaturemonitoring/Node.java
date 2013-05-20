@@ -7,6 +7,8 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,7 +30,7 @@ import networktools.TransceiverMode;
 public class Node extends Thread implements TemperatureNode, Serializable {
 
     private int ID = -1;
-    private int nextHop = -1;
+    private int nextHop = 0;
     private boolean running = false;
     private Registry registry = null;
 //    private Initiator initiator = null;
@@ -42,6 +44,8 @@ public class Node extends Thread implements TemperatureNode, Serializable {
     // Periodic tasks.
     private Transceiver transceiver;
     private TemperatureSensor fixedrateTemperatureMonitor;
+    private Stack<Message> messageBuffer = new Stack<>();
+    private ArrayList<Integer> multicastGroup = new ArrayList<>();
 
     /**
      * TODO
@@ -49,11 +53,11 @@ public class Node extends Thread implements TemperatureNode, Serializable {
      * @param t
      */
     public void addMeasurement(Temperature t) {
-        logger.log(Level.INFO, "Adding measurement to " + this);
-        if (this.collectedMeasurements.add(t)) {
+        //logger.log(Level.INFO, "Adding measurement to " + this);
+        //if (this.collectedMeasurements.add(t)) {
             this.vc.incrementClock(ID);
             this.transceiver.enqueue(new TemperatureMessage(t, this.nextHop, this));
-        }
+        //}
     }
 
     /**
@@ -101,7 +105,10 @@ public class Node extends Thread implements TemperatureNode, Serializable {
                 logger.log(Level.FINEST, "Registring interfaces.");
                 //  Connecting the remote interfaces.
 
-                registry.bind("/Process" + new Integer(this.ID).toString(), this);
+                
+                registry.bind("/Process/" + new Integer(this.ID).toString(), this);
+                //logger.log(Level.INFO, "Registring " + "/Process/" + new Integer(this.ID).toString());
+
                 try {
                     monitor = (ObservationServiceInterface) registry.lookup(ObservationServiceInterface.class.getSimpleName()); //this.initiator.stopListening();
 
@@ -126,6 +133,13 @@ public class Node extends Thread implements TemperatureNode, Serializable {
         this.ID = pid;
     }
 
+    public void addMulticastNode(int n) {
+        //   logger.log(Level.INFO, "Adding node " + n
+        //          +  " to " + this.ID + "'s multicast group."
+        //  );
+        this.multicastGroup.add(n);
+    }
+
     @Override
     public void run() {
         logger.log(Level.INFO, "Stating node " + this.ID);
@@ -139,12 +153,17 @@ public class Node extends Thread implements TemperatureNode, Serializable {
         scheduler.scheduleAtFixedRate(this.transceiver, 0, 200, TimeUnit.MILLISECONDS);
 
         try {
-            if (this.ID != 0) {
+            if (!this.isAdmin) {
                 this.monitor.newConnection(ID, 0);
+            } else {
+                // TEST
+                this.reliableMulticast(this.multicastGroup, (Message) new TemperatureMessage(null, -1, this));
             }
         } catch (RemoteException ex) {
             Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        
 
         /*        while (this.running) {            try {
                 Thread.sleep(1000);
@@ -185,23 +204,58 @@ public class Node extends Thread implements TemperatureNode, Serializable {
     }
 
     @Override
-    public Node lookupNode(int destination) {
+    public Node lookupNode(Integer destination) {
+        Node node = null;
+        try {
+            node = (Node) registry.lookup("/Process/" + destination);
+        } catch (RemoteException | NotBoundException ex) {
+            logger.log(Level.SEVERE, null, ex);
+        }
+        return node;
+    }
+
+    @Override
+    public VectorClock synchonousSend(Message message) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void synchonousSend(TemperatureMessage message) {
+    @Override
+    public VectorClock asynchonousSend(Message message) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void asynchonousSend(TemperatureMessage message) {
+    @Override
+    public VectorClock basicDeliver(Message message) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void deliver(TemperatureMessage message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Override
+    public VectorClock reliableDeliver(Message message) {
+        if (!this.messageBuffer.contains(message)) { // The message is not already received.
+            this.messageBuffer.add(message); // Buffer the message.
+
+            if (message.getSender() != this) { // Skip the current node.
+                reliableMulticast(this.multicastGroup, message);
+            }
+
+            // Deliver the message.
+            logger.log(Level.INFO, "R-delivered message to" + this.ID + " from " + message.getSender());
+        }
+
+        return this.vc;
     }
 
-    public void basicMulticast(Message message, String group) {
-        Node nodeList[] = registry.lookup("nodelist/" + group);
+    private void basicMulticast(ArrayList<Integer> group, Message message) {
+        for (Integer node : group) {
+            
+            this.lookupNode(node).basicDeliver(message);
+        }
+    }
+
+    private void reliableMulticast(ArrayList<Integer> group, Message message) {
+        for (Integer node : group) {
+            logger.log(Level.INFO, "Reliable multicast sending from " + this.ID + " to " + node);
+            this.lookupNode(node).reliableDeliver(message);
+        }
     }
 }

@@ -34,7 +34,7 @@ public class Transceiver extends Thread implements Serializable {
      * @param t The temperature to enqueue.
      */
     public synchronized void enqueue(TemperatureMessage t) {
-        logger.log(Level.INFO, "Enqueueing " + t);
+        //logger.log(Level.INFO, "Enqueueing " + t);
 
         this.temperatureQueue.add(t);
     }
@@ -51,7 +51,7 @@ public class Transceiver extends Thread implements Serializable {
                 return;
             }
 
-            logger.log(Level.INFO, "Running Tranceiver for " + this.owner);
+            //logger.log(Level.INFO, "Running Tranceiver for " + this.owner);
 
             Node destinationNode = owner.lookupNode(message.getDestination());
 
@@ -63,7 +63,7 @@ public class Transceiver extends Thread implements Serializable {
                     destinationNode.asynchonousSend(message);
                     break;
                 case TOTAL:
-                    destinationNode.deliver(message);
+                    destinationNode.reliableDeliver(message);
                     break;
             }
 
