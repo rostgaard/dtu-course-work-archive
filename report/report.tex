@@ -38,9 +38,13 @@ The overall system consists of a number of nodes. For this model we assume at le
 A RMI interface for looking up the current list of active nodes is provide for easy availability of information. In production this would introduce a single point of failure, and make the system too vulnerable to failures.
 Alternative approaches would be to have every node maintain a list of active nodes
 
+Processes cannot affect each other by other means than IPC. Processes can therefore not make other process stop/start/restart, or similar.
+
 \subsection{Network model}
 The simulator contains an emulated network model to make monitoring easier. Every Node, including the admin, uses only RMI for communication primitives in order to enable nodes to run on different machines.
 One possible exception could be the multicast primitives, that require a more technology-specific solution as RMI does not support multicast.
+
+Every RMI call interface is explicitly specified. This gives us a safety that \emph{only} explicitly outlined calls are used througout the system. e.g. it would be a logical contradiction to multicast a temperature message, as these always have a destination. This, however gives some extra code overhead.
 
 \subsection{Choice of RMI}
 RMI is used as a means to abstract away the socket-fiddling, and to ensure at-most-once semantics.
@@ -87,7 +91,14 @@ Global locks are dangerous and should be done in the following manner;
 
 Upon network failure a node will be tagged as stalled, and a timer starts. When the timer reaches zero, the node is tagged as gone and a network reconfiguration is started.
 
-\subsection{Election a new admin}
+\subsection{Promoting a new admin}
+Initially, this problem was treated as an election, but as development progressed it became evident that it resembled the Byzantine generals problem much closer:
+\begin{itemize}
+\item The new admin node is the commander.
+\item Every other node are the lieutenants.
+\item 
+\end{itemize}
+
 The election can happen by first multicasting a startelection which will make every node go into a critical section.
 
 \section{Asynchonous communication}

@@ -1,5 +1,6 @@
 package bootstrapping;
 
+import configuration.Configuration;
 import java.rmi.*;
 import java.rmi.registry.Registry;
 import java.rmi.server.*;
@@ -58,25 +59,18 @@ public class Bootstrapper extends UnicastRemoteObject {
     {
         Userinterface ui = new Userinterface();
 
-        Node node[] = new Node[5];
+        Node node[] = new Node[Configuration.Number_Of_Nodes];
         ObservationService observationService = new ObservationService();
         startRegistry();
         registerObject(ObservationServiceInterface.class.getSimpleName(), observationService);
 
-        for (int i = 0; i < 5; i++) {
-            node[i] = new Node(i, 5);
+        for (int i = 0; i < Configuration.Number_Of_Nodes; i++) {
+            node[i] = new Node(i, Configuration.Number_Of_Nodes);
             node[i].connectRegistry("localhost");
-
-            for (int j = 0; j < 5; j++) {
-                node[i].addMulticastNode(j);
-
-            }
-
-            
         }
 
-        for (int i = 0; i < 5; i++) {
-            node[i].start();
+        for (int i = 0; i < Configuration.Number_Of_Nodes; i++) {
+            node[i].run();
             if (i == 0) {
                 node[i].promote();
             }

@@ -1,6 +1,7 @@
 package temperaturemonitoring;
 
 import bootstrapping.ObservationServiceInterface;
+import configuration.Configuration;
 import java.io.Serializable;
 import java.rmi.AccessException;
 import java.rmi.AlreadyBoundException;
@@ -34,19 +35,16 @@ public class Node extends Thread implements TemperatureNode, Serializable {
     private int admin = 0;
     private boolean running = false;
     private Registry registry = null;
-//    private Initiator initiator = null;
-    private boolean isAdmin = false;
     private VectorClock vc = null;
     private static final Logger logger = Logger.getLogger(Node.class.getName());
     private static final ScheduledExecutorService scheduler =
             Executors.newScheduledThreadPool(1);
-    private bootstrapping.ObservationServiceInterface monitor;
+
     private TemperatureMeasurementCollection collectedMeasurements = new TemperatureMeasurementCollection();
     // Periodic tasks.
     private Transceiver transceiver;
     private TemperatureSensor fixedrateTemperatureMonitor;
     private Stack<Message> messageBuffer = new Stack<>();
-    private ArrayList<Integer> multicastGroup = new ArrayList<>();
 
     /**
      * TODO
@@ -54,24 +52,51 @@ public class Node extends Thread implements TemperatureNode, Serializable {
      * @param t
      */
     public void addMeasurement(Temperature t) {
-        //logger.log(Level.INFO, "Adding measurement to " + this);
+        logger.log(Level.INFO, "Adding measurement to " + this);
         //if (this.collectedMeasurements.add(t)) {
             this.vc.incrementClock(ID);
         this.transceiver.enqueue(new TemperatureMessage(t, this.admin, this));
         //}
     }
 
+    private ObservationServiceInterface getMonitor() {
+        ObservationServiceInterface monitor = null;
+        try {
+            monitor = (ObservationServiceInterface) registry.lookup(ObservationServiceInterface.class.getSimpleName());
+        } catch (RemoteException | NotBoundException ex) {
+            Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return monitor;
+    }
+
+    private NodeList getMulticastGroup() {
+        NodeList nodelist = new NodeList();
+
+        for (int i = 0; i < Configuration.Number_Of_Nodes; i++) {
+            nodelist.add(i);
+        }
+
+        return nodelist;
+    }
+
+    private boolean isAdmin() {
+        return this.ID == this.admin;
+    }
+
     /**
      * Promotes the node to an admin.
      */
-    public void promote() {
+    public void promote() throws RemoteException, NotBoundException {
         logger.log(Level.INFO, "Promoting node " + this.ID + " to admin.");
-
+        
+        this.getMonitor().clearConnections();
         // Start by b-multicasting the new admin number
+        this.reliabeMulticast(this.getMulticastGroup(), new NewAdminMessage(this.ID, -1, this));
 
-        this.basicMulticast(multicastGroup, new NewAdminMessage(this.ID, -1, this));
-
-        this.isAdmin = true;
+        
+        
+        this.admin = this.ID;
+        this.getMonitor().newAdmin(this.ID);
     }
 
     public boolean hasRegistry() {
@@ -81,8 +106,6 @@ public class Node extends Thread implements TemperatureNode, Serializable {
     public void disconnectRegistry() {
         logger.log(Level.INFO, "Disconnected registry");
         this.registry = null;
-        // Restart the initiator
-        //this.initiator.startListening();
     }
 
     private void locateRegistry() throws InterruptedException {
@@ -114,20 +137,15 @@ public class Node extends Thread implements TemperatureNode, Serializable {
                 registry.bind("/Process/" + new Integer(this.ID).toString(), this);
                 //logger.log(Level.INFO, "Registring " + "/Process/" + new Integer(this.ID).toString());
 
-                try {
-                    monitor = (ObservationServiceInterface) registry.lookup(ObservationServiceInterface.class.getSimpleName()); //this.initiator.stopListening();
-
-                    // Notify the Networkmodel that this node joined the network.
-                    monitor.newNode(this.ID);
-                } catch (NotBoundException | AccessException ex) {
-                    Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                
+                this.getMonitor().newNode(this.ID);
+                
             } catch (AlreadyBoundException | AccessException ex) {
-                Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
+                logger.log(Level.SEVERE, null, ex);
             }
 
         } catch (RemoteException ex) {
-            Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, null, ex);
             this.registry = null;
         }
     }
@@ -139,10 +157,10 @@ public class Node extends Thread implements TemperatureNode, Serializable {
     }
 
     public void addMulticastNode(int n) {
-        //   logger.log(Level.INFO, "Adding node " + n
-        //          +  " to " + this.ID + "'s multicast group."
-        //  );
-        this.multicastGroup.add(n);
+        //logger.log(Level.INFO, "Adding node " + n
+        //       +  " to " + this.ID + "'s multicast group."
+        // );
+        this.getMulticastGroup().add(n);
     }
 
     @Override
@@ -158,32 +176,20 @@ public class Node extends Thread implements TemperatureNode, Serializable {
         scheduler.scheduleAtFixedRate(this.transceiver, 0, 200, TimeUnit.MILLISECONDS);
 
         try {
-            if (!this.isAdmin) {
-                this.monitor.newConnection(ID, 0);
-            } else {
-                // TEST
-                this.reliableMulticast(this.multicastGroup, new TemperatureMessage(null, -1, this));
+            if (!this.isAdmin()) {
+                this.getMonitor().newConnection(ID, 0);
             }
         } catch (RemoteException ex) {
             Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         
-
-        /*        while (this.running) {            try {
+        /*        this.running = true;
+         while (this.running) {            try {
                 Thread.sleep(1000);
-                logger.log(Level.INFO, this + " " + this.vc);
             } catch (InterruptedException ex) {
                 logger.log(Level.SEVERE, null, ex);
             }
-            /*
-             try {
-                monitor.newConnection(ID, ID + 1);
-            } catch (RemoteException ex) {
-                logger.log(Level.SEVERE, null, ex);
-            }
-
-             
 
          }*/
     }
@@ -234,17 +240,24 @@ public class Node extends Thread implements TemperatureNode, Serializable {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public VectorClock reliableDeliver(Message message) {
+    public VectorClock reliableDeliver(NewAdminMessage message) throws RemoteException {
+        logger.log(Level.INFO, "R-deliver received message on node " + this.ID + " from " + message.getSender());
+
         if (!this.messageBuffer.contains(message)) { // The message is not already received.
             this.messageBuffer.add(message); // Buffer the message.
 
             if (message.getSender() != this) { // Skip the current node.
                 //TODO
-                //reliableMulticast(this.multicastGroup, message);
+                //this.reliabeMulticast(multicastGroup, message);
             }
 
             // Deliver the message.
+            this.admin = message.getPayload();
+
+            if (this.ID != this.admin) {
+                this.getMonitor().newConnection(this.ID, this.admin);
+            }
+
             logger.log(Level.INFO, "R-delivered message to" + this.ID + " from " + message.getSender());
         }
 
@@ -272,13 +285,13 @@ public class Node extends Thread implements TemperatureNode, Serializable {
         }
     }
 
-    private void reliableMulticast(ArrayList<Integer> group, TemperatureMessage message) {
+    private void reliabeMulticast(ArrayList<Integer> group, NewAdminMessage message) throws RemoteException {
+        logger.log(Level.INFO, "Reliable multicast sending from " + this.ID);
 
         for (Integer node : group) {
-            VectorClock vc = this.lookupNode(node).reliableDeliver(message);
-            this.vc.merge(vc);
-
             logger.log(Level.INFO, "Reliable multicast sending from " + this.ID + " to " + node);
+            VectorClock remoteClock = this.lookupNode(node).reliableDeliver(message);
+            this.vc.merge(remoteClock);
 
         }
     }
@@ -292,5 +305,10 @@ public class Node extends Thread implements TemperatureNode, Serializable {
     public VectorClock basicDeliver(NewAdminMessage message) {
         // Send to every process that has not yet received the proposed new admin
         return this.vc;
+    }
+
+    @Override
+    public VectorClock reliableDeliver(Message message) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

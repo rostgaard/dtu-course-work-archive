@@ -8,6 +8,11 @@ import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.util.Graphs;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,11 +20,16 @@ import java.util.ArrayList;
  */
 public final class NetworkModel {
 
+    private static final Logger logger = Logger.getLogger(NetworkModel.class.getName());
+
     /* Multicast groups within the network. */
     private static ArrayList<NodeList> multicastGroups = new ArrayList<>();
     /* Network model stored in a graph. */
     public static Graph<Integer, String> g =
             Graphs.<Integer, String>synchronizedDirectedGraph(new DirectedSparseMultigraph<Integer, String>());
+    private static Collection<String> edges = new HashSet<>();
+    public static int currentAdmin = -1;
+
     /**
      * Adds a node to the network model.
      *
@@ -36,7 +46,9 @@ public final class NetworkModel {
      * @param destPid The destination of the sink.
      */
     public static void connect(int sourcePid, int destPid) {
-        g.addEdge("Edge-" + sourcePid + "-" + destPid, sourcePid, destPid);
+        String edgeName = "Edge-" + sourcePid + "-" + destPid;
+        g.addEdge(edgeName, sourcePid, destPid);
+        edges.add(edgeName);
     }
 
     /**
@@ -77,6 +89,23 @@ public final class NetworkModel {
             // unsubscibe.
         }
 
+    }
+
+    public static void clearEdges() {
+        logger.log(Level.INFO, "Clearing edges");
+
+        for (String e : edges) {
+            g.removeEdge(e);
+        }
+
+        edges.clear();
+
+        for (int i = 0; i < 5; i++) {
+        }
+    }
+
+    public void setNewAdmin(int ID) {
+        NetworkModel.currentAdmin = ID;
     }
 }
 

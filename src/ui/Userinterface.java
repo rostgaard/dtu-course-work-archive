@@ -31,18 +31,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.rmi.AccessException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import org.apache.commons.collections15.Transformer;
 import org.apache.commons.collections15.functors.ConstantTransformer;
+import temperaturemonitoring.Node;
 
 /**
  *
  * @author Dr. Greg M. Bernstein
  */
 public class Userinterface {
-    //private final GraphicsConfiguration BorderLayout;
+
+    private Registry registry = null;
+    private static final Logger logger = Logger.getLogger(Userinterface.class.getName());
+
     public Userinterface() throws InterruptedException {
         // The Layout<V, E> is parameterized by the vertex and edge types
         Layout<Integer, String> layout;
@@ -56,7 +66,7 @@ public class Userinterface {
 
 
         final PickedState<Integer> pickedState = vv.getPickedVertexState();
-// Attach the listener that will print when the vertices selection changes.
+        // Attach the listener that will print when the vertices selection changes.
         pickedState.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -80,7 +90,7 @@ public class Userinterface {
         layout.lock(Integer.SIZE, false);
         Transformer<Integer, Paint> vertexPaint = new Transformer<Integer, Paint>() {
             public Paint transform(Integer i) {
-                if (i == 0) {
+                if (i == NetworkModel.currentAdmin) {
                     return Color.GREEN;
                 } else {
                     return Color.YELLOW;
@@ -105,21 +115,38 @@ public class Userinterface {
         vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
 
 
-        JButton promoteButton1 = new JButton("Promote 1");
-        JButton promoteButton2 = new JButton("Promote 2");
-        JButton promoteButton3 = new JButton("Promote 3");
-        JButton promoteButton4 = new JButton("Promote 4");
-        JButton promoteButton5 = new JButton("Promote 5");
-
-        promoteButton1.addActionListener(new ActionListener() {
+        ActionListener prototionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                if (ae.getActionCommand().equals("Promote 1")) {
-                    System.out.println("Promote 1");
+                logger.log(Level.INFO, "Clicked " + ae.getActionCommand());
+                if (registry == null) {
+                    try {
+                        registry = java.rmi.registry.LocateRegistry.getRegistry("localhost");
+                    } catch (RemoteException ex) {
+                        logger.log(Level.SEVERE, null, ex);
+                    }
+                }
+                try {
+                    Node node = (Node) registry.lookup("/Process/" + ae.getActionCommand());
+                    node.promote();
+                } catch (RemoteException | NotBoundException ex) {
+                    logger.log(Level.SEVERE, null, ex);
                 }
             }
-        });
+        };
+        JButton promoteButton1 = new JButton("0");
+        promoteButton1.addActionListener(prototionListener);
+        JButton promoteButton2 = new JButton("1");
+        promoteButton2.addActionListener(prototionListener);
+        JButton promoteButton3 = new JButton("2");
+        promoteButton3.addActionListener(prototionListener);
+        JButton promoteButton4 = new JButton("3");
+        promoteButton4.addActionListener(prototionListener);
+        JButton promoteButton5 = new JButton("4");
+        promoteButton5.addActionListener(prototionListener);
+
+        
 
         JFrame frame;
         frame = new JFrame("02220 Demo UI");

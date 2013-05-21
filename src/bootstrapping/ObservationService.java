@@ -34,4 +34,14 @@ public class ObservationService implements ObservationServiceInterface, Serializ
     public void sendMessage() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void clearConnections() throws RemoteException {
+        NetworkModel.clearEdges();
+    }
+
+    @Override
+    public void newAdmin(int pid) throws RemoteException {
+        NetworkModel.currentAdmin = pid;
+    }
 }
