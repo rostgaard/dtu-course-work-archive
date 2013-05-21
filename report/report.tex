@@ -33,6 +33,9 @@ Nothing to see here - yet.
 The overall system consists of a number of nodes. For this model we assume at least three nodes.
 
 \section{Notes}
+\subsection{Protocol design}
+%synchronization primitives with multicast.
+%Messages piggypacking VectorClock
 
 \section{Assumptions}
 A RMI interface for looking up the current list of active nodes is provide for easy availability of information. In production this would introduce a single point of failure, and make the system too vulnerable to failures.
@@ -60,6 +63,8 @@ As the system utilizes RMI\footnote{RMI uses at-most-once semantics}, we assume 
 The system is extended with new role for the nodes; router. The motivation is found in section \ref{network_topology}.
 
 \subsection{Network topology}
+Given the project description, a fitting topology would be the suggested fully-connected, divided into a fully connected network for doing reliable multicast, and a star-topology network for sending the temperature measurements to the admin node - which of course is the center of the star.
+
 \label{network_topology}
 A single unique node is, by agreement among all nodes, elected as admin node. The election causes a global lock of all nodes until agreement is made.
 

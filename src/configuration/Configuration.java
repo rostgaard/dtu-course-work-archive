@@ -18,4 +18,6 @@ public class Configuration {
     public static final String initialGroup = "228.5.6.7";
     public static final int minimumDelay = 1000;
     public static final int maximumDelay = 1500;
+    public static final int simulatedStandardDeviation = 5;
+    public static final int simulatedMean = 25;
 }

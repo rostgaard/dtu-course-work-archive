@@ -2,7 +2,6 @@ package temperaturemonitoring;
 
 import bootstrapping.ObservationServiceInterface;
 import configuration.Configuration;
-import java.io.Serializable;
 import java.rmi.AccessException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
@@ -225,8 +224,15 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     }
 
     @Override
-    public VectorClock synchonousSend(Message message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public VectorClock synchonousSend(TemperatureMessage message) {
+
+        //  If we are not the admin, route the package.
+        if (!isAdmin()) {
+            logger.log(Level.INFO, "Node " + this + "received " + message.getPayload() + " not for me, routing.");
+            this.transceiver.enqueue(new TemperatureMessage(message.getPayload(), this.admin, this));
+        }
+
+        return this.vc;
     }
 
     @Override

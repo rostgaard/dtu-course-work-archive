@@ -64,8 +64,7 @@ public class Transceiver extends Thread implements Serializable {
                 case CAUSAL:
                     destinationNode.asynchonousSend(message);
                     break;
-                case TOTAL:
-                    destinationNode.reliableDeliver(message);
+                default:
                     break;
             }
 

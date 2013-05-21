@@ -1,5 +1,6 @@
 package temperaturemonitoring;
 
+import configuration.Configuration;
 import java.io.Serializable;
 import java.rmi.Remote;
 import java.security.SecureRandom;
@@ -25,7 +26,7 @@ public class Temperature implements Serializable{
     //private static Random random = new Random(sRandom.);
     public Temperature() {
         this.timestamp = System.nanoTime();
-        this.measurement = Randomizer.randomInRange(-10.2, 22);
+        this.measurement = Randomizer.nextGaussian(Configuration.simulatedStandardDeviation, Configuration.simulatedMean);
     }
 
     @Override
