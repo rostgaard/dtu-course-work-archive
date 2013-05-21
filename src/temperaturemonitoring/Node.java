@@ -8,6 +8,7 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.logging.Level;
@@ -29,7 +30,7 @@ import networktools.TransceiverMode;
  *
  * @author Kim Rostgaard Christensen
  */
-public class Node extends Thread implements TemperatureNode, Serializable {
+public class Node extends UnicastRemoteObject implements TemperatureNode {
 
     private int ID = -1;
     private int admin = 0;
@@ -86,14 +87,13 @@ public class Node extends Thread implements TemperatureNode, Serializable {
     /**
      * Promotes the node to an admin.
      */
-    public void promote() throws RemoteException, NotBoundException {
+    @Override
+    public void promote() throws RemoteException {
         logger.log(Level.INFO, "Promoting node " + this.ID + " to admin.");
         
         this.getMonitor().clearConnections();
         // Start by b-multicasting the new admin number
         this.reliabeMulticast(this.getMulticastGroup(), new NewAdminMessage(this.ID, -1, this));
-
-        
         
         this.admin = this.ID;
         this.getMonitor().newAdmin(this.ID);
@@ -150,7 +150,7 @@ public class Node extends Thread implements TemperatureNode, Serializable {
         }
     }
 
-    public Node(int pid, int numNodes) throws InterruptedException {
+    public Node(int pid, int numNodes) throws RemoteException {
         this.transceiver = new Transceiver(TransceiverMode.FIFO, this);
         this.vc = new VectorClock(numNodes);
         this.ID = pid;
@@ -163,8 +163,7 @@ public class Node extends Thread implements TemperatureNode, Serializable {
         this.getMulticastGroup().add(n);
     }
 
-    @Override
-    public void run() {
+    public void start() {
         logger.log(Level.INFO, "Stating node " + this.ID);
         this.running = true;
 
@@ -215,10 +214,10 @@ public class Node extends Thread implements TemperatureNode, Serializable {
     }
 
     @Override
-    public Node lookupNode(Integer destination) {
-        Node node = null;
+    public TemperatureNode lookupNode(Integer destination) {
+        TemperatureNode node = null;
         try {
-            node = (Node) registry.lookup("/Process/" + destination);
+            node = (TemperatureNode) registry.lookup("/Process/" + destination);
         } catch (RemoteException | NotBoundException ex) {
             logger.log(Level.SEVERE, null, ex);
         }
@@ -240,6 +239,7 @@ public class Node extends Thread implements TemperatureNode, Serializable {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public VectorClock reliableDeliver(NewAdminMessage message) throws RemoteException {
         logger.log(Level.INFO, "R-deliver received message on node " + this.ID + " from " + message.getSender());
 
@@ -264,7 +264,7 @@ public class Node extends Thread implements TemperatureNode, Serializable {
         return this.vc;
     }
 
-    private void basicMulticast(ArrayList<Integer> group, Message message) {
+    private void basicMulticast(ArrayList<Integer> group, Message message) throws RemoteException {
         for (Integer node : group) {
             if (node != this.ID) { // Skip own ID.
                 VectorClock remoteClock = this.lookupNode(node).basicDeliver(message);
@@ -274,7 +274,7 @@ public class Node extends Thread implements TemperatureNode, Serializable {
         }
     }
 
-    private void basicMulticast(ArrayList<Integer> group, NewAdminMessage message) {
+    private void basicMulticast(ArrayList<Integer> group, NewAdminMessage message) throws RemoteException {
 
         for (Integer node : group) {
             if (node != this.ID) { // Skip own ID.
@@ -305,10 +305,5 @@ public class Node extends Thread implements TemperatureNode, Serializable {
     public VectorClock basicDeliver(NewAdminMessage message) {
         // Send to every process that has not yet received the proposed new admin
         return this.vc;
-    }
-
-    @Override
-    public VectorClock reliableDeliver(Message message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

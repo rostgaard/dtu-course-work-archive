@@ -6,6 +6,7 @@ package networktools;
 
 import temperaturemonitoring.Node;
 import temperaturemonitoring.Temperature;
+import temperaturemonitoring.TemperatureNode;
 
 /**
  *
@@ -15,7 +16,7 @@ public class TemperatureMessage extends Message {
 
     private Temperature payload;
 
-    public TemperatureMessage(Temperature payload, int destination, Node sender) {
+    public TemperatureMessage(Temperature payload, int destination, TemperatureNode sender) {
         super(destination, sender);
         this.payload = payload;
     }

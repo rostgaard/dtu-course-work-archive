@@ -5,6 +5,7 @@
 package bootstrapping;
 
 import java.io.Serializable;
+import java.rmi.server.UnicastRemoteObject;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,9 +15,12 @@ import temperaturemonitoring.Node;
  *
  * @author krc
  */
-public class ObservationService implements ObservationServiceInterface, Serializable {
+public class ObservationService extends UnicastRemoteObject implements ObservationServiceInterface {
 
     private static final Logger logger = Logger.getLogger(Node.class.getName());
+
+    public ObservationService() throws RemoteException {
+    }
 
     @Override
     public void newConnection(int sourcePid, int destinationPid) throws RemoteException {
@@ -31,7 +35,7 @@ public class ObservationService implements ObservationServiceInterface, Serializ
     }
 
     @Override
-    public void sendMessage() {
+    public void sendMessage() throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

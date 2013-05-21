@@ -5,6 +5,7 @@
 package temperaturemonitoring;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import networktools.Message;
 import networktools.NewAdminMessage;
 import networktools.TemperatureMessage;
@@ -16,18 +17,21 @@ import toolset.vectorclock.VectorClock;
  */
 public interface TemperatureNode extends Remote {
 
-    public Temperature latestMeasurement();
+    public Temperature latestMeasurement() throws RemoteException;
 
-    public Node lookupNode(Integer nodeID);
+    public TemperatureNode lookupNode(Integer nodeID) throws RemoteException;
 
-    public VectorClock synchonousSend(Message message);
+    public VectorClock synchonousSend(Message message) throws RemoteException;
 
-    public VectorClock asynchonousSend(Message message);
+    public VectorClock asynchonousSend(Message message) throws RemoteException;
 
-    public VectorClock basicDeliver(Message message);
+    public VectorClock basicDeliver(Message message) throws RemoteException;
 
-    public VectorClock basicDeliver(TemperatureMessage message);
-    public VectorClock basicDeliver(NewAdminMessage message);
+    public VectorClock basicDeliver(TemperatureMessage message) throws RemoteException;
 
-    public VectorClock reliableDeliver(Message message);
+    public VectorClock basicDeliver(NewAdminMessage message) throws RemoteException;
+
+    public VectorClock reliableDeliver(NewAdminMessage message) throws RemoteException;
+
+    public void promote() throws RemoteException;
 }

@@ -43,6 +43,7 @@ import javax.swing.JPanel;
 import org.apache.commons.collections15.Transformer;
 import org.apache.commons.collections15.functors.ConstantTransformer;
 import temperaturemonitoring.Node;
+import temperaturemonitoring.TemperatureNode;
 
 /**
  *
@@ -128,7 +129,7 @@ public class Userinterface {
                     }
                 }
                 try {
-                    Node node = (Node) registry.lookup("/Process/" + ae.getActionCommand());
+                    TemperatureNode node = (TemperatureNode) registry.lookup("/Process/" + ae.getActionCommand());
                     node.promote();
                 } catch (RemoteException | NotBoundException ex) {
                     logger.log(Level.SEVERE, null, ex);

@@ -5,6 +5,7 @@
 package networktools;
 
 import temperaturemonitoring.Node;
+import temperaturemonitoring.TemperatureNode;
 
 /**
  *
@@ -14,7 +15,7 @@ public class NewAdminMessage extends Message {
 
     private int proposedAdmin;
 
-    public NewAdminMessage(int proposedAdmin, int destination, Node sender) {
+    public NewAdminMessage(int proposedAdmin, int destination, TemperatureNode sender) {
         super(destination, sender);
         this.proposedAdmin = proposedAdmin;
     }

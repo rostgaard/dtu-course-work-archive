@@ -17,7 +17,7 @@ public interface ObservationServiceInterface extends java.rmi.Remote {
 
     public void clearConnections() throws RemoteException;
 
-    public void sendMessage();
+    public void sendMessage() throws RemoteException;
 
     public void newNode(int pid) throws RemoteException;
 

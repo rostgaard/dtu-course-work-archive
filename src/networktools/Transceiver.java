@@ -5,11 +5,13 @@
 package networktools;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static networktools.TransceiverMode.CAUSAL;
 import temperaturemonitoring.Node;
+import temperaturemonitoring.TemperatureNode;
 
 /**
  *
@@ -38,7 +40,7 @@ public class Transceiver extends Thread implements Serializable {
 
         this.temperatureQueue.add(t);
     }
-    public synchronized void send() {
+    public synchronized void send() throws RemoteException {
         // Based on the mode, we either stall on error, or just continue to
         // to through the list.
 
@@ -53,7 +55,7 @@ public class Transceiver extends Thread implements Serializable {
 
             //logger.log(Level.INFO, "Running Tranceiver for " + this.owner);
 
-            Node destinationNode = owner.lookupNode(message.getDestination());
+            TemperatureNode destinationNode = owner.lookupNode(message.getDestination());
 
             switch (this.mode) {
                 case FIFO:
@@ -72,7 +74,11 @@ public class Transceiver extends Thread implements Serializable {
 
     @Override
     public void run() {
-        // Try to dispatch the queue.
-        this.send();
+        try {
+            // Try to dispatch the queue.
+            this.send();
+        } catch (RemoteException ex) {
+            Logger.getLogger(Transceiver.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

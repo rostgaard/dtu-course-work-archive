@@ -8,6 +8,7 @@ import com.sun.org.apache.xpath.internal.operations.Equals;
 import java.io.Serializable;
 import java.util.UUID;
 import temperaturemonitoring.Node;
+import temperaturemonitoring.TemperatureNode;
 import toolset.vectorclock.VectorClock;
 
 
@@ -19,10 +20,10 @@ public abstract class Message implements Serializable {
 
     private UUID uuid;
     private int destinationProcess;
-    private Node sender;
+    private TemperatureNode sender;
     private VectorClock vc;
 
-    public Message(int destinationProcess, Node sender) {
+    public Message(int destinationProcess, TemperatureNode sender) {
         this.uuid = UUID.randomUUID();
         this.destinationProcess = destinationProcess;
         this.sender = sender;
@@ -32,7 +33,7 @@ public abstract class Message implements Serializable {
         return this.destinationProcess;
     }
 
-    public Node getSender() {
+    public TemperatureNode getSender() {
         return this.sender;
     }
 

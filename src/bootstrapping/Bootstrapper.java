@@ -70,7 +70,7 @@ public class Bootstrapper extends UnicastRemoteObject {
         }
 
         for (int i = 0; i < Configuration.Number_Of_Nodes; i++) {
-            node[i].run();
+            node[i].start();
             if (i == 0) {
                 node[i].promote();
             }
