@@ -33,18 +33,16 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
 
     private int ID = -1;
     private int admin = 0;
-    private boolean running = false;
     private Registry registry = null;
     private VectorClock vc = null;
     private static final Logger logger = Logger.getLogger(Node.class.getName());
     private static final ScheduledExecutorService scheduler =
             Executors.newScheduledThreadPool(1);
 
-    private TemperatureMeasurementCollection collectedMeasurements = new TemperatureMeasurementCollection();
+    private Stack<Message> messageBuffer = new Stack<>();
     // Periodic tasks.
     private Transceiver transceiver;
     private TemperatureSensor fixedrateTemperatureMonitor;
-    private Stack<Message> messageBuffer = new Stack<>();
 
     /**
      * TODO
@@ -53,10 +51,8 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
      */
     public void addMeasurement(Temperature t) {
         logger.log(Level.INFO, "Adding measurement to " + this);
-        //if (this.collectedMeasurements.add(t)) {
             this.vc.incrementClock(ID);
         this.transceiver.enqueue(new TemperatureMessage(t, this.admin, this));
-        //}
     }
 
     private ObservationServiceInterface getMonitor() {
@@ -164,7 +160,6 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
 
     public void start() {
         logger.log(Level.INFO, "Stating node " + this.ID);
-        this.running = true;
 
         fixedrateTemperatureMonitor = new TemperatureSensor(this);
         transceiver = new Transceiver(TransceiverMode.FIFO, this);
@@ -180,26 +175,6 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         } catch (RemoteException ex) {
             Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        
-        /*        this.running = true;
-         while (this.running) {            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                logger.log(Level.SEVERE, null, ex);
-            }
-
-         }*/
-    }
-
-    /**
-     * TODO
-     *
-     * @return
-     */
-    @Override
-    public Temperature latestMeasurement() {
-        return this.collectedMeasurements.get(this.collectedMeasurements.size() - 1);
     }
 
     /**
@@ -223,6 +198,11 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         return node;
     }
 
+    /**
+     *
+     * @param message
+     * @return
+     */
     @Override
     public VectorClock synchonousSend(TemperatureMessage message) {
 
@@ -252,9 +232,11 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         if (!this.messageBuffer.contains(message)) { // The message is not already received.
             this.messageBuffer.add(message); // Buffer the message.
 
-            if (message.getSender() != this) { // Skip the current node.
-                //TODO
-                //this.reliabeMulticast(multicastGroup, message);
+            // B-Multicast
+            for (Integer node : this.getMulticastGroup()) {
+                if (message.getSender() != this) { // Skip the current node.
+                    this.lookupNode(node).basicDeliver(message);
+                }
             }
 
             // Deliver the message.

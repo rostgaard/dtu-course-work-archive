@@ -17,8 +17,6 @@ import toolset.vectorclock.VectorClock;
  */
 public interface TemperatureNode extends Remote {
 
-    public Temperature latestMeasurement() throws RemoteException;
-
     public TemperatureNode lookupNode(Integer nodeID) throws RemoteException;
 
     public VectorClock synchonousSend(TemperatureMessage message) throws RemoteException;

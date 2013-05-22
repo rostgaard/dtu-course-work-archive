@@ -39,7 +39,11 @@ The overall system consists of a number of nodes. For this model we assume at le
 
 \section{Assumptions}
 A RMI interface for looking up the current list of active nodes is provide for easy availability of information. In production this would introduce a single point of failure, and make the system too vulnerable to failures.
+
+The system assumes no malicious nodes.
 Alternative approaches would be to have every node maintain a list of active nodes
+
+
 
 Processes cannot affect each other by other means than IPC. Processes can therefore not make other process stop/start/restart, or similar.
 
@@ -123,5 +127,7 @@ The security \emph{could} be improved by
 \end{enumerate}
 Securing the individual nodes on the opearating system level from leaking the pre-shared-key is out of scope of this report.
 
-\subsection{The process}
+\subsection{Simulator design}
+%Network model (monitor+graph+ui) - make drawing.
+
 \end{document}

@@ -14,14 +14,13 @@ import temperaturemonitoring.*;
  */
 public class BasicRunnable implements Runnable {
 
-    TemperatureSensor tsens = new TemperatureSensor();
-    Temperature t = new Temperature();
+    Temperature t = null;
     long t_0;
     int occurence = 0;
 
     @Override
     public void run() {
-        this.t = tsens.poll();
+        this.t = new Temperature();
         if (occurence == 0) {
             t_0 = t.timestamp();
         }

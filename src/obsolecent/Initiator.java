@@ -1,5 +1,6 @@
 package obsolecent;
 
+import configuration.Configuration;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -7,9 +8,17 @@ import java.net.MulticastSocket;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import temperaturemonitoring.Node;
 
 /*
- * Needs comment.
+ * Initial experiments, nothing relevant for current system. Kept for reference.
+ *
+ * The initiators purpose is to look for a RMI registry an subscribe it's owning
+ * node's service to it.
+ *
+ * This file also contains a listener that picks up messages, processes then and
+ * delegates.
+ *
  */
 /**
  *
@@ -20,6 +29,7 @@ public class Initiator {
     private static MulticastSocket socket = null;
     private static InetAddress group = null;
     private static Listener reader = null;
+    private static Node owner = null;
     public static boolean listening = false;
 
     public Initiator() {
@@ -50,15 +60,15 @@ public class Initiator {
         }
     }
 
-    public void RegistryAck() {
-        this.send(Protocol.registryAcknowledgement);
+    public static void RegistryAck() {
+        send(Protocol.registryAcknowledgement);
     }
 
     public void RegistryBeacon() {
         this.send(Protocol.registrySearch);
     }
 
-    private void send(String message) {
+    private static void send(String message) {
 
         // Send the outgoing message
         byte[] packet = message.getBytes();
@@ -90,6 +100,7 @@ class Listener extends Thread {
     private MulticastSocket socket = null;
     private String message;
     private boolean hasRegistry = false;
+    private Node owningNode;
 
     public Listener(MulticastSocket s) {
         this.socket = s;
@@ -114,27 +125,28 @@ class Listener extends Thread {
 
 
             message = new String(data.getData()).trim();
-
-            if (message.equals(Protocol.registrySearch)) {
-                System.out.print("Received a registrySearch request from " + data.getAddress().toString());
-                if (!this.hasRegistry) {
-                    System.out.println(" - but no local registry found.");
-                } else {
-                    System.out.println(" - broadcasting my service.");
-                    Initiator.RegistryAck();
-                }
-
-
-            } else if (message.equals(Protocol.registryAcknowledgement)) {
-                System.out.print("Received a registryAcknowledgement request from " + data.getAddress().toString());
-                if (!Node.hasRegistry()) {
-                    System.out.println(" - but I do not care, because I'm the registry");
-                } else {
-                    System.out.println(" my new friend is " + data.getAddress().toString());
-                    //Node.connectRegistry(data.getAddress());
-                }
-            } else {
-                System.out.println("Received unknown: \"" + new String(data.getData()).trim() + "\"");
+            switch (message) {
+                case Protocol.registrySearch:
+                    System.out.print("Received a registrySearch request from " + data.getAddress().toString());
+                    if (!this.hasRegistry) {
+                        System.out.println(" - but no local registry found.");
+                    } else {
+                        System.out.println(" - broadcasting my service.");
+                        Initiator.RegistryAck();
+                    }
+                    break;
+                case Protocol.registryAcknowledgement:
+                    System.out.print("Received a registryAcknowledgement request from " + data.getAddress().toString());
+                    if (!owningNode.hasRegistry()) {
+                        System.out.println(" - but I do not care, because I'm the registry");
+                    } else {
+                        System.out.println(" my new friend is " + data.getAddress().toString());
+                        //Node.connectRegistry(data.getAddress());
+                    }
+                    break;
+                default:
+                    System.out.println("Received unknown: \"" + new String(data.getData()).trim() + "\"");
+                    break;
             }
 
         }

@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 
 
 import bootstrapping.NetworkModel;
+import configuration.Configuration;
 import edu.uci.ics.jung.algorithms.layout.SpringLayout;
 import edu.uci.ics.jung.algorithms.layout.util.Relaxer;
 import static edu.uci.ics.jung.samples.AddNodeDemo.EDGE_LENGTH;
@@ -25,6 +26,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GraphicsConfiguration;
+import java.awt.Insets;
 import java.awt.Paint;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
@@ -39,7 +41,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import org.apache.commons.collections15.Transformer;
 import org.apache.commons.collections15.functors.ConstantTransformer;
 import temperaturemonitoring.Node;
@@ -63,7 +67,7 @@ public class Userinterface {
         // The BasicVisualizationServer<V,E> is parameterized by the vertex and edge types
         VisualizationViewer<Integer, String> vv = new VisualizationViewer<>(
                 layout);
-        vv.setPreferredSize(new Dimension(350, 350)); //Sets the viewing area size
+        vv.setPreferredSize(new Dimension(600, 600)); //Sets the viewing area size
 
 
         final PickedState<Integer> pickedState = vv.getPickedVertexState();
@@ -110,7 +114,7 @@ public class Userinterface {
             }
         };
         vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);
-        //vv.getRenderContext().setEdgeStrokeTransformer(edgeStrokeTransformer);
+        vv.getRenderContext().setEdgeStrokeTransformer(edgeStrokeTransformer);
         vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
         //vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
         vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
@@ -136,65 +140,44 @@ public class Userinterface {
                 }
             }
         };
-        JButton promoteButton1 = new JButton("0");
-        promoteButton1.addActionListener(prototionListener);
-        JButton promoteButton2 = new JButton("1");
-        promoteButton2.addActionListener(prototionListener);
-        JButton promoteButton3 = new JButton("2");
-        promoteButton3.addActionListener(prototionListener);
-        JButton promoteButton4 = new JButton("3");
-        promoteButton4.addActionListener(prototionListener);
-        JButton promoteButton5 = new JButton("4");
-        promoteButton5.addActionListener(prototionListener);
-
-        
 
         JFrame frame;
-        frame = new JFrame("02220 Demo UI");
+        frame = new JFrame(Configuration.productName + " (" + Configuration.productVersion + ")");
 
+        vv.setBorder(new EmptyBorder(10, 10, 10, 10));
         frame.getContentPane().add(vv, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
 
-        buttonPanel.add(promoteButton1);
-        buttonPanel.add(promoteButton2);
-        buttonPanel.add(promoteButton3);
-        buttonPanel.add(promoteButton4);
-        buttonPanel.add(promoteButton5);
+        buttonPanel.add(new JLabel("Promote:"));
+
+        for (int i = 0; i < Configuration.Number_Of_Nodes; i++) {
+            JButton promoteButton = new JButton(new Integer(i).toString());
+            promoteButton.addActionListener(prototionListener);
+            buttonPanel.add(promoteButton);
+        }
+
+        buttonPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        // Temperature information.
+        JPanel tempPanel = new JPanel();
+        tempPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        JLabel temp1 = new JLabel("1: ");
+        tempPanel.add(temp1);
+
+        frame.getContentPane().add(tempPanel, BorderLayout.SOUTH);
 
         frame.getContentPane().add(buttonPanel, BorderLayout.EAST);
 
+        // Final window operations.
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
 
-        relaxer.setSleepTime(200);
-
-
-        
-/*                Thread.sleep(200);
-         NetworkModel.addNode(1);
-        Thread.sleep(200);
-        NetworkModel.addNode(2);
-        Thread.sleep(200);
-        NetworkModel.addNode(3);
-        Thread.sleep(200);
-        NetworkModel.addNode(4);
-
-        Thread.sleep(200);
-        NetworkModel.connect(1, 2);
-        
-        Thread.sleep(200);
-        NetworkModel.connect(2, 3);
-        Thread.sleep(200);
-        NetworkModel.connect(2, 4);
-        Thread.sleep(200);
-        NetworkModel.connect(4, 5);
-
-
-         */
-
+        // Make relaxer less aggressive.
+        relaxer.setSleepTime(100);
         
     }
 }

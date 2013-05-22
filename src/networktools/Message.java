@@ -41,7 +41,12 @@ public abstract class Message implements Serializable {
         return vc;
     }
 
-    public boolean equals(Message m) {
-        return this.uuid == m.uuid;
+    /**
+     *
+     * @param m
+     * @return
+     */
+    public int compareTo(Message m) {
+        return this.uuid.compareTo(m.uuid);
     }
 }
