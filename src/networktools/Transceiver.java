@@ -55,6 +55,10 @@ public class Transceiver extends Thread implements Serializable {
             // lookup the node and deliver the message.
 
             TemperatureNode destinationNode = owner.lookupNode(message.getDestination());
+            if (destinationNode == null) {
+                System.out.println("Refusing to send to null node " + message.getDestination());
+                return;
+            }
             destinationNode.sendMeasurement(message);
             //System.out.println(this.owner.ID() + "Sent a message to " + destinationNode.ID());
 

@@ -31,8 +31,10 @@ import networktools.TransceiverMode;
  */
 public class Node extends UnicastRemoteObject implements TemperatureNode {
 
-    private int ID = -1;
-    private int admin = 0;
+    public static final int Null_ID = -1;
+
+    private int ID = Null_ID;
+    private int admin = Null_ID;
     private Registry registry = null;
     private VectorClock vc = null;
     private static final Logger logger = Logger.getLogger(Node.class.getName());
@@ -179,13 +181,6 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     public void start() {
         logger.log(Level.INFO, "Stating node " + this.ID);
 
-        fixedrateTemperatureMonitor = new TemperatureSensor(this);
-        transceiver = new Transceiver(TransceiverMode.FIFO, this);
-
-        scheduler.scheduleAtFixedRate(this.fixedrateTemperatureMonitor, 0, 1, TimeUnit.SECONDS);
-
-        scheduler.scheduleAtFixedRate(this.transceiver, 1, 1000, TimeUnit.MILLISECONDS);
-
         try {
             if (!this.isAdmin()) {
                 this.getMonitor().newConnection(ID, 0);
@@ -208,6 +203,11 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     @Override
     public TemperatureNode lookupNode(Integer destination) {
         TemperatureNode node = null;
+
+        if (destination == Null_ID) {
+            return node; // null;
+        }
+
         try {
             node = (TemperatureNode) registry.lookup("/Process/" + destination);
         } catch (RemoteException | NotBoundException ex) {
@@ -276,10 +276,24 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         return this.vc;
     }
 
+    public void startTasks() {
+
+        fixedrateTemperatureMonitor = new TemperatureSensor(this);
+        transceiver = new Transceiver(TransceiverMode.FIFO, this);
+
+        scheduler.scheduleAtFixedRate(this.fixedrateTemperatureMonitor, 0, 1, TimeUnit.SECONDS);
+
+        scheduler.scheduleAtFixedRate(this.transceiver, 1, 1000, TimeUnit.MILLISECONDS);
+    }
+
     private void basicMulticast(ArrayList<Integer> group, Message message) throws RemoteException {
         for (Integer node : group) {
             if (node != this.ID) { // Skip own ID.
-                VectorClock remoteClock = this.lookupNode(node).basicDeliver(message);
+                TemperatureNode lnode = this.lookupNode(node);
+                if (lnode == null) {
+                    return;
+                }
+                VectorClock remoteClock = lnode.basicDeliver(message);
                 this.vc.merge(remoteClock);
             }
 

@@ -10,27 +10,39 @@
 \def\Key#1{\textsf{#1}}
 
 \title{02220 Distributed systems}
-\author{Kim Rostgaard Christensen \\ Silvia}
+\author{Kim Rostgaard Christensen (s084283)}
 
 \maketitle
 
 \tableofcontents
 
 \begin{abstract}
-Nothing to see here - yet.
+This report describes the work done on implementing a distributed temperature monitoring network, for the course 02220 - Distributed systems using Java RMI, and various published distributed algorithms.
 \end{abstract}
 
-\section{Terminology}
+\section{Introduction}
+The system implemented consists of a set of inter-connected nodes that each poll a local temperature sensor at a fixed frequency. One dedicated node is appointed the role of being the master-node, or more formally the admin node. Each node (including the regular node) reports it's local sensor values back to the admin node, which then stores them.
+The admin node can suffer from temporary, or permanent failures, and therefore it must be possible to promote another node to admin. This is done via a user interface.
 
-\subsection{Semantics}
+%\section{Terminology}
 
-\subsubsection{Maybe}
-\subsubsection{At-least-once}
-\subsubsection{At-most-once}
+%\subsection{Semantics}
+
+%\subsubsection{Maybe}
+%\subsubsection{At-least-once}
+%\subsubsection{At-most-once}
 
 \section{The system}
 
-The overall system consists of a number of nodes. For this model we assume at least three nodes.
+The overall system model of a given number of nodes. For this model we assume at least four nodes including the admin.
+\subsection{Network topology}
+Given the project description, a fitting topology would be the suggested fully-connected, divided into a fully connected network for doing reliable multicast, and a star-topology network for sending the temperature measurements to the admin node - which of course is the center of the star.
+
+\label{network_topology}
+A single unique node is, by agreement among all nodes, elected as admin node. The election causes a global lock of all nodes until agreement is made.
+
+Upon startup every node is given a unique identification that must be quantifiable - i.e. it must be comparable.
+
 
 \section{Notes}
 \subsection{Protocol design}
@@ -40,10 +52,15 @@ The overall system consists of a number of nodes. For this model we assume at le
 \section{Assumptions}
 A RMI interface for looking up the current list of active nodes is provide for easy availability of information. In production this would introduce a single point of failure, and make the system too vulnerable to failures.
 
-The system assumes no malicious nodes.
+
 Alternative approaches would be to have every node maintain a list of active nodes
 
-Every node has a reliable timer (not clock), so every node has the same notion of time passed, but not of absolute time.
+\begin{description}
+ \item[A1] The system Contains no malicious nodes
+ \item[A2] Every node has a reliable timer (not clock), so every node has the same notion of time passed, but not of absolute time
+ \item[A3] A node does not change its period-count.
+\end{description} 
+
 
 
 Processes cannot affect each other by other means than IPC. Processes can therefore not make other process stop/start/restart, or similar.
@@ -66,14 +83,6 @@ As the Java interface \Code{UnicastRemoteServer} only support remote references,
 As the system utilizes RMI\footnote{RMI uses at-most-once semantics}, we assume that any direct messages are sent reliably. Multicast messages, however, are sent unreliably and must thus be handled on the application layer.\\
 
 The system is extended with new role for the nodes; router. The motivation is found in section \ref{network_topology}.
-
-\subsection{Network topology}
-Given the project description, a fitting topology would be the suggested fully-connected, divided into a fully connected network for doing reliable multicast, and a star-topology network for sending the temperature measurements to the admin node - which of course is the center of the star.
-
-\label{network_topology}
-A single unique node is, by agreement among all nodes, elected as admin node. The election causes a global lock of all nodes until agreement is made.
-
-Upon startup every node is given a unique identification that must be quantifiable - i.e. it must be comparable.
 
 It would be possible to extend the ring network by adding additional subnets and additional nodes to the local rings.
 
