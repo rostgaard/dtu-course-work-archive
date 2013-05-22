@@ -19,6 +19,8 @@ public interface TemperatureNode extends Remote {
 
     public TemperatureNode lookupNode(Integer nodeID) throws RemoteException;
 
+    public Temperature latestAverage() throws RemoteException;
+
     public VectorClock synchonousSend(TemperatureMessage message) throws RemoteException;
 
     public VectorClock asynchonousSend(Message message) throws RemoteException;

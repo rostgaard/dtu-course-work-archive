@@ -43,7 +43,7 @@ public class EmulatedProcess extends Thread {
 
         while (this.running) {
             try {
-                double delay = Randomizer.randomInRange(Configuration.minimumDelay, Configuration.maximumDelay);
+                double delay = Randomizer.nextUniform(Configuration.minimumDelay, Configuration.maximumDelay);
 
                 System.out.println("Process " + id
                         + " sleeping for ~" + Math.round(delay) + " miliseconds");

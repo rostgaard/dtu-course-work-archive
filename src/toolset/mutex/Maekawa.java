@@ -5,8 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Conceptual model that tests Maekawa's algorithm for distributed mutual exclusion.
  */
 /**
  *

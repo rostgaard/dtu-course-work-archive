@@ -42,4 +42,8 @@ public class Temperature implements Serializable{
         return this.timestamp;
     }
 
+    public double temperature() {
+        return this.measurement;
+    }
+
 }

@@ -37,12 +37,17 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     private VectorClock vc = null;
     private static final Logger logger = Logger.getLogger(Node.class.getName());
     private static final ScheduledExecutorService scheduler =
-            Executors.newScheduledThreadPool(1);
+            Executors.newScheduledThreadPool(2);
 
     private Stack<Message> messageBuffer = new Stack<>();
     // Periodic tasks.
     private Transceiver transceiver;
     private TemperatureSensor fixedrateTemperatureMonitor;
+
+    @Override
+    public Temperature latestAverage() throws RemoteException {
+        return new Temperature();
+    }
 
     /**
      * TODO
