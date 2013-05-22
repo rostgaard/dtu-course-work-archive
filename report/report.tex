@@ -43,6 +43,7 @@ A RMI interface for looking up the current list of active nodes is provide for e
 The system assumes no malicious nodes.
 Alternative approaches would be to have every node maintain a list of active nodes
 
+Every node has a reliable timer (not clock), so every node has the same notion of time passed, but not of absolute time.
 
 
 Processes cannot affect each other by other means than IPC. Processes can therefore not make other process stop/start/restart, or similar.
@@ -54,7 +55,7 @@ One possible exception could be the multicast primitives, that require a more te
 Every RMI call interface is explicitly specified. This gives us a safety that \emph{only} explicitly outlined calls are used througout the system. e.g. it would be a logical contradiction to multicast a temperature message, as these always have a destination. This, however gives some extra code overhead.
 
 \subsection{Choice of RMI}
-RMI is used as a means to abstract away the socket-fiddling, and to ensure at-most-once semantics.
+RMI is used as a means to abstract away the socket-fiddling, and to ensure at-most-once semantics. In practice, the implementation introduces a single point of failure in having to have a central registry for all services. A remedial action for this could be to distribute the registry to several servers.
 % Why not CORBA / RMI-IIOP?
 
 \subsection{Replication}
@@ -103,12 +104,16 @@ Upon network failure a node will be tagged as stalled, and a timer starts. When 
 \subsection{Promoting a new admin}
 Initially, this problem was treated as an election, but as development progressed it became evident that it resembled the Byzantine generals problem much closer:
 \begin{itemize}
-\item The new admin node is the commander.
+\item The node proposed for the new admin node is the commander.
 \item Every other node are the lieutenants.
 \item 
 \end{itemize}
 
-The election can happen by first multicasting a startelection which will make every node go into a critical section.
+The election starts by having the commander multicast %TODO Reliable?
+to every lieutenant.
+
+
+%The election can happen by first multicasting a startelection which will make every node go into a critical section.
 
 \section{Asynchonous communication}
 In order to enable the nodes to reliably 
@@ -129,5 +134,8 @@ Securing the individual nodes on the opearating system level from leaking the pr
 
 \subsection{Simulator design}
 %Network model (monitor+graph+ui) - make drawing.
+
+\subsection{Admin node shifting}
+Under the assumption that 
 
 \end{document}

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static networktools.TransceiverMode.CAUSAL;
+import org.apache.commons.collections15.buffer.CircularFifoBuffer;
 import temperaturemonitoring.Node;
 import temperaturemonitoring.TemperatureNode;
 
@@ -19,14 +20,14 @@ import temperaturemonitoring.TemperatureNode;
  */
 public class Transceiver extends Thread implements Serializable {
 
-    ArrayList<TemperatureMessage> temperatureQueue;
+    CircularFifoBuffer<TemperatureMessage> temperatureQueue;
     TransceiverMode mode = null;
     Node owner = null;
     private static final Logger logger = Logger.getLogger(Transceiver.class.getName());
 
     public Transceiver(TransceiverMode mode, Node owner) {
         this.owner = owner;
-        this.temperatureQueue = new ArrayList<>();
+        this.temperatureQueue = new CircularFifoBuffer<>();
         this.mode = mode;
     }
 
@@ -35,8 +36,8 @@ public class Transceiver extends Thread implements Serializable {
      *
      * @param t The temperature to enqueue.
      */
-    public synchronized void enqueue(TemperatureMessage t) {
-        //logger.log(Level.INFO, "Enqueueing " + t);
+    public synchronized void enqueue(TemperatureMessage t) throws RemoteException {
+        //logger.log(Level.INFO, owner.ID() + "Enqueueing " + t.getPayload());
 
         this.temperatureQueue.add(t);
     }
@@ -44,31 +45,22 @@ public class Transceiver extends Thread implements Serializable {
         // Based on the mode, we either stall on error, or just continue to
         // to through the list.
 
+        if (this.temperatureQueue.isEmpty()) {
+            //logger.log(Level.INFO, "Nothing to send, bailing.");
+            return;
+        }
+
         for (TemperatureMessage message : this.temperatureQueue) {
             // TODO
             // lookup the node and deliver the message.
 
-            if (this.temperatureQueue.isEmpty()) {
-                logger.log(Level.INFO, "Nothing to send, bailing.");
-                return;
-            }
-
-            //logger.log(Level.INFO, "Running Tranceiver for " + this.owner);
-
             TemperatureNode destinationNode = owner.lookupNode(message.getDestination());
-
-            switch (this.mode) {
-                case FIFO:
-                    destinationNode.synchonousSend(message);
-                    break;
-                case CAUSAL:
-                    destinationNode.asynchonousSend(message);
-                    break;
-                default:
-                    break;
-            }
+            destinationNode.sendMeasurement(message);
+            //System.out.println(this.owner.ID() + "Sent a message to " + destinationNode.ID());
 
         }
+
+        temperatureQueue.clear();
     }
 
     @Override

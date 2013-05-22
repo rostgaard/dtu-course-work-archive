@@ -43,10 +43,19 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     // Periodic tasks.
     private Transceiver transceiver;
     private TemperatureSensor fixedrateTemperatureMonitor;
+    private TemperatureMeasurementCollection measurements = new TemperatureMeasurementCollection(Configuration.Number_Of_Nodes);
 
+
+    /**
+     * Calculates and returns the latest average.
+     *
+     * @return @throws RemoteException
+     */
     @Override
-    public Temperature latestAverage() throws RemoteException {
-        return new Temperature();
+    public double latestAverage() throws RemoteException {
+        System.out.println("Node " + this.ID + " Got average request.");
+        return measurements.latestAverage();
+        //return 0.0;
     }
 
     /**
@@ -54,10 +63,14 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
      *
      * @param t
      */
-    public void addMeasurement(Temperature t) {
-        logger.log(Level.INFO, "Adding measurement to " + this);
-            this.vc.incrementClock(ID);
-        this.transceiver.enqueue(new TemperatureMessage(t, this.admin, this));
+    public void addMeasurement(Temperature t) throws RemoteException {
+        
+        this.vc.incrementClock(ID);
+        if (this.isAdmin()) {
+            this.measurements.add(ID, t);
+        } else {
+            this.transceiver.enqueue(new TemperatureMessage(t, this.admin, this));
+        }
     }
 
     private ObservationServiceInterface getMonitor() {
@@ -89,12 +102,12 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
      */
     @Override
     public void promote() throws RemoteException {
-        logger.log(Level.INFO, "Promoting node " + this.ID + " to admin.");
         
         this.getMonitor().clearConnections();
         // Start by b-multicasting the new admin number
         this.reliabeMulticast(this.getMulticastGroup(), new NewAdminMessage(this.ID, -1, this));
         
+        logger.log(Level.INFO, "Promoting node " + this.ID + " to admin.");
         this.admin = this.ID;
         this.getMonitor().newAdmin(this.ID);
     }
@@ -171,7 +184,7 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
 
         scheduler.scheduleAtFixedRate(this.fixedrateTemperatureMonitor, 0, 1, TimeUnit.SECONDS);
 
-        scheduler.scheduleAtFixedRate(this.transceiver, 0, 200, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(this.transceiver, 1, 1000, TimeUnit.MILLISECONDS);
 
         try {
             if (!this.isAdmin()) {
@@ -209,13 +222,17 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
      * @return
      */
     @Override
-    public VectorClock synchonousSend(TemperatureMessage message) {
-
+    public VectorClock sendMeasurement(TemperatureMessage message) throws RemoteException {
+        //logger.log(Level.INFO, "Node " + this + "received " + message.getPayload());
         //  If we are not the admin, route the package.
         if (!isAdmin()) {
-            logger.log(Level.INFO, "Node " + this + "received " + message.getPayload() + " not for me, routing.");
+            logger.log(Level.INFO, "Node " + this + "received " + message + " not for me, re-routing to " + this.admin);
             this.transceiver.enqueue(new TemperatureMessage(message.getPayload(), this.admin, this));
+        } else {
+            //logger.log(Level.INFO, "Node " + this + "adds message to collection.");
+            this.measurements.add(message.getSender().ID(), message.getPayload());
         }
+
 
         return this.vc;
     }
@@ -245,13 +262,15 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
             }
 
             // Deliver the message.
+            System.out.println("Node " + this.ID + " Changes admin to " + message.getPayload());
+            
             this.admin = message.getPayload();
 
             if (this.ID != this.admin) {
                 this.getMonitor().newConnection(this.ID, this.admin);
             }
 
-            logger.log(Level.INFO, "R-delivered message to" + this.ID + " from " + message.getSender());
+            //logger.log(Level.INFO, "R-delivered message to" + this.ID + " from " + message.getSender());
         }
 
         return this.vc;
@@ -298,5 +317,10 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     public VectorClock basicDeliver(NewAdminMessage message) {
         // Send to every process that has not yet received the proposed new admin
         return this.vc;
+    }
+
+    @Override
+    public int ID() throws RemoteException {
+        return this.ID;
     }
 }

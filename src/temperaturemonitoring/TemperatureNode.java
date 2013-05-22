@@ -17,11 +17,13 @@ import toolset.vectorclock.VectorClock;
  */
 public interface TemperatureNode extends Remote {
 
+    public int ID() throws RemoteException;
+
     public TemperatureNode lookupNode(Integer nodeID) throws RemoteException;
 
-    public Temperature latestAverage() throws RemoteException;
+    public double latestAverage() throws RemoteException;
 
-    public VectorClock synchonousSend(TemperatureMessage message) throws RemoteException;
+    public VectorClock sendMeasurement(TemperatureMessage message) throws RemoteException;
 
     public VectorClock asynchonousSend(Message message) throws RemoteException;
 

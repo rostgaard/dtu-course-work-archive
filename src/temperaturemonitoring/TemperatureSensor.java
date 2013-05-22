@@ -2,6 +2,8 @@ package temperaturemonitoring;
 
 import java.io.Serializable;
 import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import networktools.Transceiver;
 
@@ -19,6 +21,7 @@ public class TemperatureSensor extends Thread {
 
     private Node owner;
     private static final Logger logger = Logger.getLogger(TemperatureSensor.class.getName());
+    private long period = 0;
 
 
     public TemperatureSensor(Node n) {
@@ -27,6 +30,11 @@ public class TemperatureSensor extends Thread {
 
     @Override
     public void run() {
-        this.owner.addMeasurement(new Temperature());
+        try {
+            this.owner.addMeasurement(new Temperature(period));
+        } catch (RemoteException ex) {
+            logger.log(Level.SEVERE, null, ex);
+        }
+        this.period++;
     }
 }

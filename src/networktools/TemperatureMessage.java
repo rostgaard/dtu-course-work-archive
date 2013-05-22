@@ -24,4 +24,9 @@ public class TemperatureMessage extends Message {
     public Temperature getPayload() {
         return this.payload;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " Payload: " + this.payload;
+    }
 }

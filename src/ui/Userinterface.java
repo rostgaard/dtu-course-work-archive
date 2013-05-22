@@ -204,12 +204,20 @@ public class Userinterface {
         pollingService = new Thread() {
             @Override
             public void run() {
+                TemperatureNode node;
                 try {
-                    TemperatureNode node = (TemperatureNode) registry.lookup("/Process/" + NetworkModel.currentAdmin);
-                    tempPanel.pushMeasurement(node.latestAverage().temperature());
+                    logger.info("Looking up node " + NetworkModel.currentAdmin + " for new average.");
+            
+                    node = (TemperatureNode) registry.lookup("/Process/" + NetworkModel.currentAdmin);
+
+                    double newAverage = node.latestAverage();
+                    logger.info("Got new average:" + newAverage);
+
+
+                    tempPanel.pushMeasurement(newAverage);
 
                 } catch (RemoteException | NotBoundException ex) {
-                    logger.log(Level.SEVERE, null, ex);
+                    logger.log(Level.SEVERE, "Could not bind to admin", ex);
                 }
             }
         };

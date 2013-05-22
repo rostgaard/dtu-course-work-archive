@@ -4,10 +4,12 @@
  */
 package networktools;
 
-import com.sun.org.apache.xpath.internal.operations.Equals;
+
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.UUID;
-import temperaturemonitoring.Node;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import temperaturemonitoring.TemperatureNode;
 import toolset.vectorclock.VectorClock;
 
@@ -48,5 +50,16 @@ public abstract class Message implements Serializable {
      */
     public int compareTo(Message m) {
         return this.uuid.compareTo(m.uuid);
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return "Dest: " + this.destinationProcess + " source " + this.sender.ID();
+        } catch (RemoteException ex) {
+            Logger.getLogger(Message.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
     }
 }

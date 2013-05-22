@@ -20,7 +20,7 @@ public class BasicRunnable implements Runnable {
 
     @Override
     public void run() {
-        this.t = new Temperature();
+        this.t = new Temperature(0);
         if (occurence == 0) {
             t_0 = t.timestamp();
         }

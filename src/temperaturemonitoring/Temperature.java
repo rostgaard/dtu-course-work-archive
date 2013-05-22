@@ -22,9 +22,11 @@ public class Temperature implements Serializable{
 
     private long timestamp;
     private double measurement;
+    private long period;
 
     //private static Random random = new Random(sRandom.);
-    public Temperature() {
+    public Temperature(long period) {
+        this.period = period;
         this.timestamp = System.nanoTime();
         this.measurement = Randomizer.nextGaussian(Configuration.simulatedStandardDeviation, Configuration.simulatedMean);
     }
@@ -44,6 +46,10 @@ public class Temperature implements Serializable{
 
     public double temperature() {
         return this.measurement;
+    }
+
+    public long period() {
+        return this.period;
     }
 
 }
