@@ -35,5 +35,7 @@ public interface TemperatureNode extends Remote {
 
     public VectorClock reliableDeliver(NewAdminMessage message) throws RemoteException;
 
+    public void start() throws RemoteException;
+
     public void promote() throws RemoteException;
 }

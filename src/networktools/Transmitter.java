@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static networktools.TransceiverMode.CAUSAL;
+import static networktools.TransmitterMode.CAUSAL;
 import org.apache.commons.collections15.buffer.CircularFifoBuffer;
 import temperaturemonitoring.Node;
 import temperaturemonitoring.TemperatureNode;
@@ -18,14 +18,14 @@ import temperaturemonitoring.TemperatureNode;
  *
  * @author krc
  */
-public class Transceiver extends Thread implements Serializable {
+public class Transmitter extends Thread implements Serializable {
 
     CircularFifoBuffer<TemperatureMessage> temperatureQueue;
-    TransceiverMode mode = null;
+    TransmitterMode mode = null;
     Node owner = null;
-    private static final Logger logger = Logger.getLogger(Transceiver.class.getName());
+    private static final Logger logger = Logger.getLogger(Transmitter.class.getName());
 
-    public Transceiver(TransceiverMode mode, Node owner) {
+    public Transmitter(TransmitterMode mode, Node owner) {
         this.owner = owner;
         this.temperatureQueue = new CircularFifoBuffer<>();
         this.mode = mode;
@@ -73,7 +73,7 @@ public class Transceiver extends Thread implements Serializable {
             // Try to dispatch the queue.
             this.send();
         } catch (RemoteException ex) {
-            Logger.getLogger(Transceiver.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Transmitter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -5,7 +5,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import networktools.Transceiver;
+import networktools.Transmitter;
 
 
 /*

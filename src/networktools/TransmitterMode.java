@@ -8,7 +8,7 @@ package networktools;
  *
  * @author krc
  */
-public enum TransceiverMode {
+public enum TransmitterMode {
 
     CAUSAL, FIFO, TOTAL
 }

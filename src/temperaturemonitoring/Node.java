@@ -20,8 +20,8 @@ import java.util.concurrent.TimeUnit;
 import networktools.Message;
 import networktools.NewAdminMessage;
 import networktools.TemperatureMessage;
-import networktools.Transceiver;
-import networktools.TransceiverMode;
+import networktools.Transmitter;
+import networktools.TransmitterMode;
 /*
  * Represenation of a network node.
  */
@@ -40,10 +40,10 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     private static final Logger logger = Logger.getLogger(Node.class.getName());
     private static final ScheduledExecutorService scheduler =
             Executors.newScheduledThreadPool(2);
-
+    private boolean started = false;
     private Stack<Message> messageBuffer = new Stack<>();
     // Periodic tasks.
-    private Transceiver transceiver;
+    private Transmitter transceiver;
     private TemperatureSensor fixedrateTemperatureMonitor;
     private TemperatureMeasurementCollection measurements = new TemperatureMeasurementCollection(Configuration.Number_Of_Nodes);
 
@@ -166,7 +166,7 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     }
 
     public Node(int pid, int numNodes) throws RemoteException {
-        this.transceiver = new Transceiver(TransceiverMode.FIFO, this);
+        this.transceiver = new Transmitter(TransmitterMode.FIFO, this);
         this.vc = new VectorClock(numNodes);
         this.ID = pid;
     }
@@ -178,7 +178,11 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         this.getMulticastGroup().add(n);
     }
 
-    public void start() {
+    @Override
+    public void start() throws RemoteException {
+        if (this.started) {
+            return;
+        }
         logger.log(Level.INFO, "Stating node " + this.ID);
 
         try {
@@ -188,6 +192,8 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         } catch (RemoteException ex) {
             Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        this.started = true;
     }
 
     /**
@@ -279,7 +285,7 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     public void startTasks() {
 
         fixedrateTemperatureMonitor = new TemperatureSensor(this);
-        transceiver = new Transceiver(TransceiverMode.FIFO, this);
+        transceiver = new Transmitter(TransmitterMode.FIFO, this);
 
         scheduler.scheduleAtFixedRate(this.fixedrateTemperatureMonitor, 0, 1, TimeUnit.SECONDS);
 

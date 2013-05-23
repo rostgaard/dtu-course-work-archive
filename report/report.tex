@@ -3,6 +3,9 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{url}
+
 \begin{document}
 
 \def\File#1{\textsf{#1}}
@@ -25,9 +28,7 @@ The system implemented consists of a set of inter-connected nodes that each poll
 The admin node can suffer from temporary, or permanent failures, and therefore it must be possible to promote another node to admin. This is done via a user interface.
 
 %\section{Terminology}
-
 %\subsection{Semantics}
-
 %\subsubsection{Maybe}
 %\subsubsection{At-least-once}
 %\subsubsection{At-most-once}
@@ -35,19 +36,19 @@ The admin node can suffer from temporary, or permanent failures, and therefore i
 \section{The system}
 
 The overall system model of a given number of nodes. For this model we assume at least four nodes including the admin.
+
 \subsection{Network topology}
 Given the project description, a fitting topology would be the suggested fully-connected, divided into a fully connected network for doing reliable multicast, and a star-topology network for sending the temperature measurements to the admin node - which of course is the center of the star.
 
-\label{network_topology}
-A single unique node is, by agreement among all nodes, elected as admin node. The election causes a global lock of all nodes until agreement is made.
+Upon system startup every node is given a unique identification that must be quantifiable - i.e. it must be comparable. For simplicity, a simple incrementing numbering scheme is chosen, starting from 0. The number of nodes is given in \File(Configuration.java) file, and is thus known before run-time.
 
-Upon startup every node is given a unique identification that must be quantifiable - i.e. it must be comparable.
 
 
 \section{Notes}
 \subsection{Protocol design}
 %synchronization primitives with multicast.
 %Messages piggypacking VectorClock
+%Number of nodes is specified in  file.
 
 \section{Assumptions}
 A RMI interface for looking up the current list of active nodes is provide for easy availability of information. In production this would introduce a single point of failure, and make the system too vulnerable to failures.
@@ -57,7 +58,7 @@ Alternative approaches would be to have every node maintain a list of active nod
 
 \begin{description}
  \item[A1] The system Contains no malicious nodes
- \item[A2] Every node has a reliable timer (not clock), so every node has the same notion of time passed, but not of absolute time
+ \item[A2] Every node has an accurate timer (not clock), so every node has the same notion of time passed, but not of absolute time
  \item[A3] A node does not change its period-count.
 \end{description} 
 
@@ -79,15 +80,22 @@ RMI is used as a means to abstract away the socket-fiddling, and to ensure at-mo
 %The UnicastRemoteServer class defines a non-replicated remote object whose references are valid only while the server process is alive. 
 As the Java interface \Code{UnicastRemoteServer} only support remote references, we will need to use serialization to ensure replication and pass-by-value of objects.
 
+\subsection{Node realization}
+Every node starts their life idle, and needs to be started manually using the \Code{Start()} call. For development and demonstration purposes, a bootstrapper has been developed to take care of the process launching. The bootstrapper also maintains the RMI registry, which otherwise would have to be run as separate command (\File{rmiregistry}).
+Once the nodes have been started, they will register themselves as processes with their ID in the RMI registry.
+
 \subsection{Assumptions and extensions}
 As the system utilizes RMI\footnote{RMI uses at-most-once semantics}, we assume that any direct messages are sent reliably. Multicast messages, however, are sent unreliably and must thus be handled on the application layer.\\
 
-The system is extended with new role for the nodes; router. The motivation is found in section \ref{network_topology}.
+% Ring topology; cleanup.
+%The system is extended with new role for the nodes; router. The motivation is found in section \ref{network_topology}.
+%It would be possible to extend the ring network by adding additional subnets and additional nodes to the local rings.
+%Given the topology, we require an additional node role.\ref
 
-It would be possible to extend the ring network by adding additional subnets and additional nodes to the local rings.
+\subsection{The transceiver}
 
-Given the topology, we require an additional node role.
 
+A single unique node is, by agreement among all nodes, elected as admin node. The election causes a global lock of all nodes until agreement is made.
 \subsection{Nodes}
 A node can be of three classes; Basic, Router and Admin. The constraints are as follows;
 \begin{itemize}
@@ -95,7 +103,6 @@ A node can be of three classes; Basic, Router and Admin. The constraints are as 
 \item The admin node is \emph{unique}, meaning that there can be only either 0 or 1 admin node at all times.
 \item A router is a basic node that bridges ring networks. It is, similar to the admin node, unique - but only its local ring.
 \end{itemize}
-
 
 \subsubsection{Node states}
 During the lifetime of a node, it can assume different characteristics mainly based on its class.
@@ -120,6 +127,20 @@ Initially, this problem was treated as an election, but as development progresse
 
 The election starts by having the commander multicast %TODO Reliable?
 to every lieutenant.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.65]{fig/Networkmodel.png}
+ \caption{Network model}
+ \label{fig:network_model}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.4]{fig/UI.png}
+ \caption{User interface}
+ \label{fig:ui}
+\end{figure}
 
 
 %The election can happen by first multicasting a startelection which will make every node go into a critical section.
@@ -146,5 +167,9 @@ Securing the individual nodes on the opearating system level from leaking the pr
 
 \subsection{Admin node shifting}
 Under the assumption that 
+
+\section{Conclusion}
+Working with RMI has been a learning experience, but a positive one at that. It is extremely convenient to do distributed programming without having to deal with the many pitfalls of sockets, selectors, streams and file descriptors. Being able to design the protocol pseudo-formally in the Java language takes a lot of the load of having to solve general problems regarding transfers, generally.
+On a personal note; It is this authors opinion that a hands-on approach to algorithms is the best way to understand them. Hence, experiencing the application of them, when faced with real problems.
 
 \end{document}
