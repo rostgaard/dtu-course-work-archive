@@ -25,12 +25,6 @@ public interface TemperatureNode extends Remote {
 
     public VectorClock sendMeasurement(TemperatureMessage message) throws RemoteException;
 
-    public VectorClock asynchonousSend(Message message) throws RemoteException;
-
-    public VectorClock basicDeliver(Message message) throws RemoteException;
-
-    public VectorClock basicDeliver(TemperatureMessage message) throws RemoteException;
-
     public VectorClock basicDeliver(NewAdminMessage message) throws RemoteException;
 
     public VectorClock reliableDeliver(NewAdminMessage message) throws RemoteException;

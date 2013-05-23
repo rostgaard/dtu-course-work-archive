@@ -42,10 +42,15 @@ Given the project description, a fitting topology would be the suggested fully-c
 
 Upon system startup every node is given a unique identification that must be quantifiable - i.e. it must be comparable. For simplicity, a simple incrementing numbering scheme is chosen, starting from 0. The number of nodes is given in \File(Configuration.java) file, and is thus known before run-time.
 
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.65]{fig/Networkmodel.png}
+ \caption{Network model}
+ \label{fig:network_model}
+\end{figure}
 
 
-\section{Notes}
-\subsection{Protocol design}
+\section{Protocol design}
 %synchronization primitives with multicast.
 %Messages piggypacking VectorClock
 %Number of nodes is specified in  file.
@@ -92,8 +97,9 @@ As the system utilizes RMI\footnote{RMI uses at-most-once semantics}, we assume 
 %It would be possible to extend the ring network by adding additional subnets and additional nodes to the local rings.
 %Given the topology, we require an additional node role.\ref
 
-\subsection{The transceiver}
+\subsection{The transmitter}
 
+\subsection{Synchronous operations}
 
 A single unique node is, by agreement among all nodes, elected as admin node. The election causes a global lock of all nodes until agreement is made.
 \subsection{Nodes}
@@ -127,13 +133,6 @@ Initially, this problem was treated as an election, but as development progresse
 
 The election starts by having the commander multicast %TODO Reliable?
 to every lieutenant.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.65]{fig/Networkmodel.png}
- \caption{Network model}
- \label{fig:network_model}
-\end{figure}
 
 \begin{figure}[h]
 \centering

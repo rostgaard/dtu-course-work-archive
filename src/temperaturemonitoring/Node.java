@@ -60,6 +60,10 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         //return 0.0;
     }
 
+    public void incrementVectorClock() {
+        this.vc.incrementClock(ID);
+    }
+
     /**
      * TODO
      *
@@ -67,7 +71,7 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
      */
     public void addMeasurement(Temperature t) throws RemoteException {
         
-        this.vc.incrementClock(ID);
+        this.incrementVectorClock();; //State changes on each measurement.
         if (this.isAdmin()) {
             this.measurements.add(ID, t);
         } else {
@@ -107,8 +111,9 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         
         this.getMonitor().clearConnections();
         // Start by b-multicasting the new admin number
+
         this.reliabeMulticast(this.getMulticastGroup(), new NewAdminMessage(this.ID, -1, this));
-        
+
         logger.log(Level.INFO, "Promoting node " + this.ID + " to admin.");
         this.admin = this.ID;
         this.getMonitor().newAdmin(this.ID);
@@ -244,16 +249,6 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     }
 
     @Override
-    public VectorClock asynchonousSend(Message message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public VectorClock basicDeliver(Message message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public VectorClock reliableDeliver(NewAdminMessage message) throws RemoteException {
         logger.log(Level.INFO, "R-deliver received message on node " + this.ID + " from " + message.getSender());
 
@@ -292,24 +287,12 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         scheduler.scheduleAtFixedRate(this.transceiver, 1, 1000, TimeUnit.MILLISECONDS);
     }
 
-    private void basicMulticast(ArrayList<Integer> group, Message message) throws RemoteException {
-        for (Integer node : group) {
-            if (node != this.ID) { // Skip own ID.
-                TemperatureNode lnode = this.lookupNode(node);
-                if (lnode == null) {
-                    return;
-                }
-                VectorClock remoteClock = lnode.basicDeliver(message);
-                this.vc.merge(remoteClock);
-            }
-
-        }
-    }
-
     private void basicMulticast(ArrayList<Integer> group, NewAdminMessage message) throws RemoteException {
 
         for (Integer node : group) {
             if (node != this.ID) { // Skip own ID.
+                this.vc.incrementClock(ID);
+
                 VectorClock remoteClock = this.lookupNode(node).basicDeliver(message);
                 this.vc.merge(remoteClock);
                 logger.log(Level.INFO, "Basic multicasting new admin request from " + this.ID + " to " + node);
@@ -321,6 +304,8 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         logger.log(Level.INFO, "Reliable multicast sending from " + this.ID);
 
         for (Integer node : group) {
+            this.vc.incrementClock(ID);
+
             logger.log(Level.INFO, "Reliable multicast sending from " + this.ID + " to " + node);
             VectorClock remoteClock = this.lookupNode(node).reliableDeliver(message);
             this.vc.merge(remoteClock);
@@ -328,13 +313,10 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         }
     }
 
-    @Override
-    public VectorClock basicDeliver(TemperatureMessage message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public VectorClock basicDeliver(NewAdminMessage message) {
+        //TODO!
         // Send to every process that has not yet received the proposed new admin
         return this.vc;
     }

@@ -56,10 +56,12 @@ public class Transmitter extends Thread implements Serializable {
 
             TemperatureNode destinationNode = owner.lookupNode(message.getDestination());
             if (destinationNode == null) {
+                // Classic comment; this should never happen.
                 System.out.println("Refusing to send to null node " + message.getDestination());
                 return;
             }
             destinationNode.sendMeasurement(message);
+            this.owner.incrementVectorClock();
             //System.out.println(this.owner.ID() + "Sent a message to " + destinationNode.ID());
 
         }
