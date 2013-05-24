@@ -1,4 +1,4 @@
-package body Multiset is
+package body Crude_Containers.Multiset is
 
    function Find (Item : in Element) return Natural is
    begin
@@ -48,4 +48,4 @@ package body Multiset is
       Storage (Index).Occurence := Storage (Index).Occurence + 1;
    end Remove;
 
-end Multiset;
+end Crude_Containers.Multiset;
