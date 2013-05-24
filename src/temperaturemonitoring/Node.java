@@ -18,13 +18,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import networktools.Message;
-import networktools.NewAdminMessage;
+import networktools.ProposedAdminMessage;
 import networktools.TemperatureMessage;
 import networktools.Transmitter;
 import networktools.TransmitterMode;
+import org.apache.commons.collections15.map.HashedMap;
 /*
  * Represenation of a network node.
  */
+
 /**
  *
  * @author Kim Rostgaard Christensen
@@ -32,9 +34,9 @@ import networktools.TransmitterMode;
 public class Node extends UnicastRemoteObject implements TemperatureNode {
 
     public static final int Null_ID = -1;
-
     private int ID = Null_ID;
     private int admin = Null_ID;
+    private int general = Null_ID;
     private Registry registry = null;
     private VectorClock vc = null;
     private static final Logger logger = Logger.getLogger(Node.class.getName());
@@ -46,16 +48,16 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     private Transmitter transceiver;
     private TemperatureSensor fixedrateTemperatureMonitor;
     private TemperatureMeasurementCollection measurements = new TemperatureMeasurementCollection(Configuration.Number_Of_Nodes);
-
+    private ProposalList proposals;
 
     /**
      * Calculates and returns the latest average.
      *
-     * @return @throws RemoteException
+     * @return
+     * @throws RemoteException
      */
     @Override
     public double latestAverage() throws RemoteException {
-        System.out.println("Node " + this.ID + " Got average request.");
         return measurements.latestAverage();
         //return 0.0;
     }
@@ -70,7 +72,7 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
      * @param t
      */
     public void addMeasurement(Temperature t) throws RemoteException {
-        
+
         this.incrementVectorClock();; //State changes on each measurement.
         if (this.isAdmin()) {
             this.measurements.add(ID, t);
@@ -89,7 +91,7 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         return monitor;
     }
 
-    private NodeList getMulticastGroup() {
+    private NodeList getProcessGroup() {
         NodeList nodelist = new NodeList();
 
         for (int i = 0; i < Configuration.Number_Of_Nodes; i++) {
@@ -108,11 +110,19 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
      */
     @Override
     public void promote() throws RemoteException {
-        
-        this.getMonitor().clearConnections();
-        // Start by b-multicasting the new admin number
 
-        this.reliabeMulticast(this.getMulticastGroup(), new NewAdminMessage(this.ID, -1, this));
+        this.getMonitor().clearConnections();
+
+        //processes[ j].SendMessages(i, processes);
+        for (Integer node : this.getProcessGroup()) {
+            if (node != this.ID) {
+                this.vc.incrementClock(ID);
+                ProposedAdminMessage message = new ProposedAdminMessage(0, this.ID, node, this);
+                this.vc.merge(this.lookupNode(node).send(message));
+            }
+        }
+        // Works-ish!
+        //this.reliabeMulticast(this.getMulticastGroup(), new NewAdminMessage(this.ID, -1, this));
 
         logger.log(Level.INFO, "Promoting node " + this.ID + " to admin.");
         this.admin = this.ID;
@@ -153,13 +163,13 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
                 logger.log(Level.FINEST, "Registring interfaces.");
                 //  Connecting the remote interfaces.
 
-                
+
                 registry.bind("/Process/" + new Integer(this.ID).toString(), this);
                 //logger.log(Level.INFO, "Registring " + "/Process/" + new Integer(this.ID).toString());
 
-                
+
                 this.getMonitor().newNode(this.ID);
-                
+
             } catch (AlreadyBoundException | AccessException ex) {
                 logger.log(Level.SEVERE, null, ex);
             }
@@ -171,6 +181,9 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     }
 
     public Node(int pid, int numNodes) throws RemoteException {
+        this.proposals = new ProposalList();
+
+
         this.transceiver = new Transmitter(TransmitterMode.FIFO, this);
         this.vc = new VectorClock(numNodes);
         this.ID = pid;
@@ -180,7 +193,7 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         //logger.log(Level.INFO, "Adding node " + n
         //       +  " to " + this.ID + "'s multicast group."
         // );
-        this.getMulticastGroup().add(n);
+        this.getProcessGroup().add(n);
     }
 
     @Override
@@ -249,32 +262,68 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     }
 
     @Override
-    public VectorClock reliableDeliver(NewAdminMessage message) throws RemoteException {
+    public VectorClock send(ProposedAdminMessage message) throws RemoteException {
+        //System.out.println("Node" + this.ID + " got message: " + message);
+        this.proposals.add(message.getPayload());
+
+        /*        if (message.getVotingRound() < Configuration.Tolerable_Failures) {
+         for (Integer node : this.getProcessGroup()) {
+         if (node == message.getPayload() || node == this.ID) {
+         continue;
+         }
+
+         this.vc.incrementClock(ID);
+         ProposedAdminMessage nextMessage = new ProposedAdminMessage(message.getVotingRound() + 1, message.getPayload(), node, this);
+         System.out.println("Node" + this.ID + " sends message: " + nextMessage);
+
+         this.vc.merge(this.lookupNode(node).send(nextMessage));
+         /*                try {                    Thread.sleep(100);
+         } catch (InterruptedException ex) {
+         Logger.getLogger(Node.class.getName()).log(Level.SEVERE, null, ex);
+
+         }*/
+        /*          }
+         } else {
+
+         this.admin = proposals.majority();
+         System.out.println("Node " + this.ID + " proposals: " + this.proposals);
+         System.out.println("Node " + this.ID + " selects: " + this.admin);
+
+         if (this.ID != this.admin) {
+         this.getMonitor().newConnection(this.ID, this.admin);
+         }
+
+         proposals.clear();
+         }*/
+
+
+
+//}
         logger.log(Level.INFO, "R-deliver received message on node " + this.ID + " from " + message.getSender());
 
         if (!this.messageBuffer.contains(message)) { // The message is not already received.
             this.messageBuffer.add(message); // Buffer the message.
 
             // B-Multicast
-            for (Integer node : this.getMulticastGroup()) {
+            for (Integer node : this.getProcessGroup()) {
                 if (message.getSender() != this) { // Skip the current node.
-                    this.lookupNode(node).basicDeliver(message);
+                    this.lookupNode(node).basicDeliver(message);  // Deliver the message.
                 }
-            }
-
-            // Deliver the message.
-            System.out.println("Node " + this.ID + " Changes admin to " + message.getPayload());
-            
-            this.admin = message.getPayload();
-
-            if (this.ID != this.admin) {
-                this.getMonitor().newConnection(this.ID, this.admin);
             }
 
             //logger.log(Level.INFO, "R-delivered message to" + this.ID + " from " + message.getSender());
         }
+        this.admin = message.getPayload();
+        System.out.println("Node " + this.ID + " Changes admin to " + message.getPayload());
+        if (this.ID != this.admin) {
+            this.getMonitor().newConnection(this.ID, this.admin);
+        }
 
         return this.vc;
+
+
+
+
     }
 
     public void startTasks() {
@@ -287,7 +336,7 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         scheduler.scheduleAtFixedRate(this.transceiver, 1, 1000, TimeUnit.MILLISECONDS);
     }
 
-    private void basicMulticast(ArrayList<Integer> group, NewAdminMessage message) throws RemoteException {
+    private void basicMulticast(ArrayList<Integer> group, ProposedAdminMessage message) throws RemoteException {
 
         for (Integer node : group) {
             if (node != this.ID) { // Skip own ID.
@@ -300,22 +349,21 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         }
     }
 
-    private void reliabeMulticast(ArrayList<Integer> group, NewAdminMessage message) throws RemoteException {
+    private void reliabeMulticast(ArrayList<Integer> group, ProposedAdminMessage message) throws RemoteException {
         logger.log(Level.INFO, "Reliable multicast sending from " + this.ID);
 
         for (Integer node : group) {
             this.vc.incrementClock(ID);
 
             logger.log(Level.INFO, "Reliable multicast sending from " + this.ID + " to " + node);
-            VectorClock remoteClock = this.lookupNode(node).reliableDeliver(message);
+            VectorClock remoteClock = this.lookupNode(node).send(message);
             this.vc.merge(remoteClock);
 
         }
     }
 
-
     @Override
-    public VectorClock basicDeliver(NewAdminMessage message) {
+    public VectorClock basicDeliver(ProposedAdminMessage message) {
         //TODO!
         // Send to every process that has not yet received the proposed new admin
         return this.vc;
@@ -324,5 +372,13 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     @Override
     public int ID() throws RemoteException {
         return this.ID;
+    }
+}
+
+class ProposalList extends ArrayList<Integer> {
+
+    //TODO
+    public int majority() {
+        return this.get(0);
     }
 }

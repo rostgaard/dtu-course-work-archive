@@ -7,7 +7,7 @@ package temperaturemonitoring;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import networktools.Message;
-import networktools.NewAdminMessage;
+import networktools.ProposedAdminMessage;
 import networktools.TemperatureMessage;
 import toolset.vectorclock.VectorClock;
 
@@ -25,9 +25,9 @@ public interface TemperatureNode extends Remote {
 
     public VectorClock sendMeasurement(TemperatureMessage message) throws RemoteException;
 
-    public VectorClock basicDeliver(NewAdminMessage message) throws RemoteException;
+    public VectorClock basicDeliver(ProposedAdminMessage message) throws RemoteException;
 
-    public VectorClock reliableDeliver(NewAdminMessage message) throws RemoteException;
+    public VectorClock send(ProposedAdminMessage message) throws RemoteException;
 
     public void start() throws RemoteException;
 

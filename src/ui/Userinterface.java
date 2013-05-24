@@ -206,12 +206,12 @@ public class Userinterface {
             public void run() {
                 TemperatureNode node;
                 try {
-                    logger.info("Looking up node " + NetworkModel.currentAdmin + " for new average.");
+                    logger.log(Level.FINEST, "Looking up node " + NetworkModel.currentAdmin + " for new average.");
             
                     node = (TemperatureNode) registry.lookup("/Process/" + NetworkModel.currentAdmin);
 
                     double newAverage = node.latestAverage();
-                    logger.info("Got new average:" + newAverage);
+                    logger.log(Level.FINEST, "Got new average:" + newAverage);
 
 
                     tempPanel.pushMeasurement(newAverage);

@@ -5,6 +5,7 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{url}
+\usepackage{listings}
 
 \begin{document}
 
@@ -52,8 +53,12 @@ Upon system startup every node is given a unique identification that must be qua
 
 \section{Protocol design}
 %synchronization primitives with multicast.
+\subsection{Vector clocks}
+Every node maintains a local vector clock that increments whenever the node changes state. This means whenever a new measurement is added, or whenever the node sends a message.
 %Messages piggypacking VectorClock
 %Number of nodes is specified in  file.
+
+\section{Average temperature}
 
 \section{Assumptions}
 A RMI interface for looking up the current list of active nodes is provide for easy availability of information. In production this would introduce a single point of failure, and make the system too vulnerable to failures.
@@ -98,6 +103,7 @@ As the system utilizes RMI\footnote{RMI uses at-most-once semantics}, we assume 
 %Given the topology, we require an additional node role.\ref
 
 \subsection{The transmitter}
+The Transmitter as one purpose, gather messages in a circular queue and dispatch them in order. It was meant to also be able to handle re-ordering of packages to comply with either FIFO, Causal or total ordering. This feature was dropped due to increasing complexity, and lack of resources.
 
 \subsection{Synchronous operations}
 
@@ -110,31 +116,19 @@ A node can be of three classes; Basic, Router and Admin. The constraints are as 
 \item A router is a basic node that bridges ring networks. It is, similar to the admin node, unique - but only its local ring.
 \end{itemize}
 
-\subsubsection{Node states}
-During the lifetime of a node, it can assume different characteristics mainly based on its class.
-
-\subsubsection{Node lifetime}
-Upon startup, each node is enumerated and started. The first node (sequentially) is elected as being the RMI registry master, and thus the admin. This is arbitrary, and could also be randomized.
-
-\subsubsection{Possible problems}
-Global locks are dangerous and should be done in the following manner; 
-
-\subsection{Network failure}
-
-Upon network failure a node will be tagged as stalled, and a timer starts. When the timer reaches zero, the node is tagged as gone and a network reconfiguration is started.
 
 \subsection{Promoting a new admin}
-Initially, this problem was treated as an election, but as development progressed it became evident that it resembled the Byzantine generals problem much closer:
+Initially, this problem was treated as an election, then as a R-Multicast problem. But as development progressed it became apparent that it could be solved by the same means Byzantine generals solution, providing resilience to faulty nodes.
 \begin{itemize}
 \item The node proposed for the new admin node is the commander.
 \item Every other node are the lieutenants.
 \item 
 \end{itemize}
 
-The election starts by having the commander multicast %TODO Reliable?
+The election starts by having the commander start  %TODO Reliable?
 to every lieutenant.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[scale=0.4]{fig/UI.png}
  \caption{User interface}
@@ -143,12 +137,6 @@ to every lieutenant.
 
 
 %The election can happen by first multicasting a startelection which will make every node go into a critical section.
-
-\section{Asynchonous communication}
-In order to enable the nodes to reliably 
-
-\section{Persistant storage}
-**FIXME** Persistant storage is achieved by means of a manual lowly-practical SQLite replication layer \emph{or} a CouchDB replication layer.
 
 \section{Security}
 No security measures are taken in this system. The assumption is, that it is as closed loop system with no malicious nodes or individuals.
@@ -170,5 +158,17 @@ Under the assumption that
 \section{Conclusion}
 Working with RMI has been a learning experience, but a positive one at that. It is extremely convenient to do distributed programming without having to deal with the many pitfalls of sockets, selectors, streams and file descriptors. Being able to design the protocol pseudo-formally in the Java language takes a lot of the load of having to solve general problems regarding transfers, generally.
 On a personal note; It is this authors opinion that a hands-on approach to algorithms is the best way to understand them. Hence, experiencing the application of them, when faced with real problems.
+A lot of time was spent trying to implement the Byzantine Generals solution algorithm.
 
 \end{document}
+%TODO References.
+%@article{lamport1982byzantine,
+%  title={The Byzantine generals problem},
+%  author={Lamport, Leslie and Shostak, Robert and Pease, Marshall},
+% journal={ACM Transactions on Programming Languages and Systems (TOPLAS)},
+%  volume={4},
+%  number={3},
+%  pages={382--401},
+%  year={1982},
+%  publisher={ACM}
+%}

@@ -4,7 +4,6 @@
  */
 package bootstrapping;
 
-import java.io.Serializable;
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
@@ -17,7 +16,7 @@ import temperaturemonitoring.Node;
  */
 public class ObservationService extends UnicastRemoteObject implements ObservationServiceInterface {
 
-    private static final Logger logger = Logger.getLogger(Node.class.getName());
+    private static final Logger logger = Logger.getLogger(ObservationService.class.getName());
 
     public ObservationService() throws RemoteException {
     }
@@ -30,7 +29,7 @@ public class ObservationService extends UnicastRemoteObject implements Observati
 
     @Override
     public void newNode(int pid) throws RemoteException {
-        logger.log(Level.INFO, "Process " + pid + " joined network");
+        logger.log(Level.FINEST, "Process " + pid + " joined network");
         NetworkModel.addNode(pid);
     }
 
