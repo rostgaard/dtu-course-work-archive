@@ -23,7 +23,7 @@ public class Node {
 	public Node(String id, String name){
 		this.id = id;
 		this.name = name;
-		this.color = Color.WHITE;
+		this.color = Color.WHITE; //default color of the nodes
 	}
 
 	public String getId(){
@@ -58,19 +58,21 @@ public class Node {
 	public String toString() {
 		//the cuttings are done due to space on the GUI and readability
 		String tempId = id;
+		String tempName = name;
+		
 		//cut id if longer than 2 chars
-		if(id.length() > 2){
-			tempId = id.substring(0, 2);
+		if(tempId.length() > 2){
+			tempId = tempId.substring(0, 2);
 		}		
 		//if no name declared, then return id
-		if(name == null){
+		if(tempName == null){
 			return "Node " + tempId;
 		}		
 		//cut name if longer than 8 chars
-		if(name.length() > 8){
-			name = name.substring(0, 8);
+		if(tempName.length() > 8){
+			tempName= tempName.substring(0, 8);
 		}
-		return name + " " + tempId;
+		return tempName + " " + tempId;
 	}
 
 	@Override
