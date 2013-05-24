@@ -48,5 +48,7 @@ exception
       Put_Line (Exception_Message (E));
    when others =>
       Put_Line ("Validation failed");
+      New_Line;
+      Put_Line ("Reason:");
       raise;
 end Route_Validator;

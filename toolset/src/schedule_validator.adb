@@ -45,6 +45,12 @@ begin
    begin
       Validate (Schedule => Schedule);
       Put_Line ("Schedule is valid");
+   exception
+      when others =>
+         Put_Line ("Schedule is invalid");
+         Put (Image (Schedule));
+         Put_Line ("Reason:");
+         raise;
    end;
 
 end Schedule_Validator;

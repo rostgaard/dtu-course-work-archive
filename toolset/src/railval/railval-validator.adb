@@ -182,13 +182,30 @@ package body Railval.Validator is
 
    function Image (Item : in Schedules) return String is
       --  use Ada.Strings.Unbounded;
-
       Buffer : Unbounded_String;
    begin
       for I in Item'Range (1) loop
+         --  Add header.
+         if I = Item'First (1) then
+            Append (Buffer, "   ");
+            for J in Item'Range (2) loop
+               Append (Buffer,J'Img & " ");
+               if J < 10 then
+                  Append (Buffer, " ");
+               end if;
+            end loop;
+            Append (Buffer, ASCII.LF);
+         end if;
+
+         Append (Buffer, I'Img & " ");
          for J in Item'Range (2) loop
-            Append (Buffer, Image (Item (I, J)) & ',' & ' ');
+            Append (Buffer, Image (Item (I, J)));
+            if J /= Item'Last(2) then
+               Append (Buffer, ',' & ' ');
+            end if;
+
          end loop;
+        Append (Buffer, ASCII.LF);
       end loop;
 
       return To_String (Buffer);
@@ -250,6 +267,7 @@ package body Railval.Validator is
 
    procedure Validate (Schedule : in Schedules) is
       use Crude_Containers;
+      X : Natural := 0;
    begin
       if Schedule = Null_Schedule then
          raise Constraint_Error with "Empty schedule";
@@ -264,8 +282,13 @@ package body Railval.Validator is
                Count        => Train_Track_Multiplicity);
          begin
             for I in Schedule'Range (1) loop
+               X := I;
                Traincount.Insert (Schedule (I, J));
             end loop;
+         exception
+            when Constraint_Error =>
+               raise Train_Collision with "Collision at (" &
+                 X'Img & "," & J'Img & ")";
          end;
       end loop;
    end Validate;

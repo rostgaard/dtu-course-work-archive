@@ -184,11 +184,6 @@ package body Railval.Parser is
       Rail2   : Rails renames Object.Map (Identification2);
 
    begin
-      Trace.Debug (Context => Context,
-                   Message =>
-                     "Linking " & Character (Identification1) & " and " &
-                     Character (Identification2) & ".");
-
       if not Rail1.Defined then
          Define (Object, Identification1);
       end if;
@@ -199,6 +194,11 @@ package body Railval.Parser is
                       Message =>
                         "Defining " & Character (Identification2));
       end if;
+
+      Trace.Debug (Context => Context,
+                   Message =>
+                     "Linking " & Character (Identification1) & " and " &
+                     Character (Identification2) & ".");
 
       Object.Map (Identification1).Links.Append (Identification2);
       Object.Map (Identification2).Links.Append (Identification1);
@@ -240,6 +240,31 @@ package body Railval.Parser is
 
       return Railnet;
    end Load_From_File;
+
+   ------------------
+   --  Not_Linked  --
+   ------------------
+
+   function Not_Linked
+     (Object : in out Railway_Networks;
+      Identification1, Identification2 : in Identifications) return Boolean is
+   begin
+      if not Object.Is_Defined (Identification => Identification1) or
+        not Object.Is_Defined (Identification => Identification2) then
+         return True;
+      end if;
+
+      if Object.Map (Identification1).Links.Contains (Identification2) then
+         return False;
+      end if;
+
+      if Object.Map (Identification2).Links.Contains (Identification1) then
+         return False;
+      end if;
+
+      return False;
+
+   end Not_Linked;
 
    ----------------
    --  Validate  --

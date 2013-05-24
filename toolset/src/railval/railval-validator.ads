@@ -10,6 +10,8 @@ package Railval.Validator is
 
    Null_Token : constant String := "";
 
+   Train_Collision : exception;
+
    package Row_Element_Container is new Vectors (Natural, Unbounded_String);
 
    function "=" (Left, Right : in Row_Element_Container.Vector) return Boolean;
