@@ -5,10 +5,8 @@ package networktools;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static networktools.TransmitterMode.CAUSAL;
 import org.apache.commons.collections15.buffer.CircularFifoBuffer;
 import temperaturemonitoring.Node;
 import temperaturemonitoring.TemperatureNode;
@@ -23,11 +21,20 @@ public class Transmitter extends Thread implements Serializable {
     TransmitterMode mode = null;
     Node owner = null;
     private static final Logger logger = Logger.getLogger(Transmitter.class.getName());
+    private boolean paused = false;
 
     public Transmitter(TransmitterMode mode, Node owner) {
         this.owner = owner;
         this.temperatureQueue = new CircularFifoBuffer<>();
         this.mode = mode;
+    }
+
+    public void pauseTransmit() {
+        this.paused = true;
+    }
+
+    public void resumeTransmit() {
+        this.paused = false;
     }
 
     /**

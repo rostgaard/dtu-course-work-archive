@@ -37,14 +37,13 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     public static final int Null_ID = -1;
     private int ID = Null_ID;
     private int admin = Null_ID;
-    private int general = Null_ID;
     private Registry registry = null;
     private VectorClock vc = null;
     private static final Logger logger = Logger.getLogger(Node.class.getName());
     private static final ScheduledExecutorService scheduler =
             Executors.newScheduledThreadPool(2);
     private boolean started = false;
-    private Stack<Message> messageBuffer = new Stack<>();
+    //private Stack<Message> messageBuffer = new Stack<>();
     private Message adminMessageBuffer = null;
     // Periodic tasks.
     private Transmitter transceiver;
@@ -137,7 +136,7 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
             }
         }
 
-        logger.log(Level.INFO, "Promoting node " + this.ID + " to admin.");
+        logger.log(Level.INFO, "Promoting node {0} to admin.", this.ID);
 
         // Reset measurements.
         this.measurements = new TemperatureMeasurementCollection(Configuration.Number_Of_Nodes);

@@ -4,8 +4,9 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
-\usepackage{url}
+\usepackage{hyperref}
 \usepackage{listings}
+%\usepackage[margin=1.2in]{geometry}
 
 \begin{document}
 
@@ -14,7 +15,7 @@
 \def\Key#1{\textsf{#1}}
 
 \title{02220 Distributed systems}
-\author{Kim Rostgaard Christensen (s084283)}
+\author{Kim Rostgaard Christensen (s084283 - \href{mailto:kroch@imm.dtu.dk}{kroch@imm.dtu.dk})}
 
 \maketitle
 
@@ -26,11 +27,12 @@ This report describes the work done on implementing a distributed temperature mo
 
 \section{Introduction}
 The system implemented consists of a set of inter-connected nodes that each poll a local temperature sensor at a fixed frequency. One dedicated node is appointed the role of being the master-node, or more formally the admin node. Each node (including the regular node) reports it's local sensor values back to the admin node, which then stores them.
-The admin node can suffer from temporary, or permanent failures, and therefore it must be possible to promote another node to admin. This is done via a user interface which connects to the network from an external point.
+The basic node is a system-wide root class of all nodes. All other classes inherit the functionality of this type of node.
+The admin node is \emph{unique}, meaning that there can be only either 0 or 1 admin node at all times. It may suffer from temporary, or permanent failures, and therefore it must be possible to promote another node to admin. This is done via a user interface which connects to the network from an external point.
 
 \section{The system}
 
-The overall system model of a given number of nodes. For this model we assume at least four nodes including the admin.
+The overall system model of a given number of nodes. For this model it was assume that the system consisted of at least four nodes - including the admin.
 
 \subsection{Assumptions}
 
@@ -39,13 +41,24 @@ The overall system model of a given number of nodes. For this model we assume at
  \item[A2] Every node has an accurate timer (not clock), so every node has the same notion of time passed, but not of absolute time
  \item[A3] A node does not change its period-count, even if disconnected.
 \end{description} 
-
+No security measures are taken in this system. The assumption is, that it is as closed loop system with no malicious nodes or individuals.\\
 Processes cannot affect each other by other means than IPC. Processes can therefore not make other process stop/start/restart, or similar.
 
 \subsection{Network topology}
 Given the project description, a fitting topology would be the suggested fully-connected, divided into a fully connected network for doing reliable multicast, and a star-topology network for sending the temperature measurements to the admin node - which of course is the center of the star.
 
 Upon system startup every node is given a unique identification that must be quantifiable - i.e. it must be comparable. For simplicity, a simple incrementing numbering scheme is chosen, starting from 0. The number of nodes and the topology is known before run-time by every node. This has to be done externally
+
+\subsubsection{Alternate topology}
+During the development of the system a number of topologies was discussed. Among these was the layered ring network, that gave some advantages when inferring causality. More details can be found in appendix \ref{sec:ring_layer_topology}.
+
+\subsection{Choice of Java RMI}
+As Java RMI (hereby also reference as merely RMI), doesn't really p
+is used as a means to abstract away the socket-fiddling, and to ensure at-most-once semantics. In practice, the implementation introduces a single point of failure in having to have a central registry for all services. A remedial action for this could be to distribute the registry to several servers.
+% Why not CORBA / RMI-IIOP?
+
+\subsection{Network model}
+The simulator contains an emulated network model to make monitoring easier. Every Node, including the admin, uses only RMI for communication primitives in order to enable nodes to run on different machines.
 
 \begin{figure}[h]
 \centering
@@ -54,28 +67,23 @@ Upon system startup every node is given a unique identification that must be qua
  \label{fig:network_model}
 \end{figure}
 
-\subsubsection{Alternate topology}
-During the development of the system a number of topologies was discussed. Among these was the layered ring network, that gave some advantages when inferring causality. More details can be found in 
-
-\subsection{Node realization}
-Every node starts their life idle, and needs to be started manually using the \Code{Start()} call. For development and demonstration purposes, a bootstrapper has been developed to take care of the process launching. The bootstrapper also maintains the RMI registry, which otherwise would have to be run as separate command (\File{rmiregistry}).
-Once the nodes have been started, they will register themselves as processes with their ID in the RMI registry.
+The network model seen in figure \ref{fig:network_model} is 
 
 
+Every RMI call interface is explicitly specified in the code. This gives us a safety that \emph{only} explicitly outlined calls are used throughout the system. e.g. it would be a logical contradiction to multicast a temperature message, as these always have a destination.
 
-\subsection{Choice of Java RMI}
-As Java RMI (hereby also reference as merely RMI), doesn't really p
-is used as a means to abstract away the socket-fiddling, and to ensure at-most-once semantics. In practice, the implementation introduces a single point of failure in having to have a central registry for all services. A remedial action for this could be to distribute the registry to several servers.
-% Why not CORBA / RMI-IIOP?
-
+\subsection{Group communication}
+Every node is part of a system-global multicast network that can do reliable multicast, essentially meaning that every node is fully connected. This is not depicted as edges in figure \ref{fig:network_model}, but as an ellipsis.
+%TODO Alternative approaches would be to have every node maintain a list of active nodes
 \section{Protocol design}
+\label{sec:protocol_design}
 %synchronization primitives with multicast.
 \begin{description}
   \item[\Code{ID}:] Returns the Process ID of the remote reference as an integer.
   \item[\Code{latestAverage}:] Returns the latest average of measurements as a double-precision floating point value. This call is delegated to the current admin, if called on a regular node. The delegation is protected from infinite recursions.
   \item[\Code{sendMeasurement(TemperatureMessage)}:] Synchonously sends a temperature object embedded in a TemperatureMessage to a node. If the node is not an admin, it will reroute the message to the admin. Returns the a copy of the receivers VectorClock as a receipt.
-  \item[\Code{basicDeliver(ProposedAdminMessage)}:] %TODO Returns the a copy of the receivers VectorClock as a receipt.
-  \item[\Code{send(ProposedAdminMessage)}:] %TODO Returns the a copy of the receivers VectorClock as a receipt.
+  \item[\Code{send(ProposedAdminMessage)}:] Synchronously send a proposal for a new admin to a node. This receiver then returns the a copy of its VectorClock as a receipt. This follows the semantics of R-Multicast described in \cite{DistSystems}.
+  \item[\Code{basicDeliver(ProposedAdminMessage)}:] Second part of the algorithm from \Code{send}. Resends all messages not previously re-sent. Returns the a copy of the receivers VectorClock as a receipt.
   \item[\Code{initialize}:] Initialize the node's internal state. Only used \emph{once} in the lifetime of a node.
   \item[\Code{startTasks}:] Start the periodic tasks of a node (see section \ref{sec:internal_tasks}). Only used \emph{once} in the lifetime of a node.
   \item[\Code{promote}:] Promotes an node to an admin (see section \ref{sec:admin_promotion}).
@@ -95,98 +103,78 @@ Every node maintains a local vector clock that increments whenever the node chan
 
 - No optimizations have been done to reduce the size of vector clock messages.
 
-\section{Admin node}
-\subsection{Average temperature}
-The average temperature for the user interface is an average, calculated on the basis of the latest measurements the admin has received from all nodes. To provide a consistent snapshot of the average, we have relied on \textbf{A2} and \textbf{A3}. This enables us to extract the temperature of each node which has the same common period, and use this for calculating an average.
+\section{Regular nodes}
+Nodes are RMI \Code{UnicastRemoteObject}'s classes implementing the \Code{Remote} interface.
+Every node starts their life idle, and needs to be started manually using the \Code{Start()} call. For development and demonstration purposes, a bootstrapper has been developed to take care of the process launching. The bootstrapper also maintains the RMI registry, which otherwise would have to be run as separate command (\File{rmiregistry}).
+Once the nodes have been started, they will register themselves as processes with their ID in the RMI registry.
 
-\subsection{Network model}
-The simulator contains an emulated network model to make monitoring easier. Every Node, including the admin, uses only RMI for communication primitives in order to enable nodes to run on different machines.
-One possible exception could be the multicast primitives, that require a more technology-specific solution as RMI does not support multicast.
-
-Every RMI call interface is explicitly specified. This gives us a safety that \emph{only} explicitly outlined calls are used througout the system. e.g. it would be a logical contradiction to multicast a temperature message, as these always have a destination. This, however gives some extra code overhead.
-
-\subsection{Group communication}
-Every node is part of a system-global multicast network. This
-Alternative approaches would be to have every node maintain a list of active nodes
-
-\subsection{Assumptions and extensions}
-As the system utilizes RMI\footnote{RMI uses at-most-once semantics}, we assume that any direct messages are sent reliably. Multicast messages, however, are sent unreliably and must thus be handled on the application layer.\\
-
-% Ring topology; cleanup.
-%The system is extended with new role for the nodes; router. The motivation is found in section \ref{network_topology}.
-%It would be possible to extend the ring network by adding additional subnets and additional nodes to the local rings.
-%Given the topology, we require an additional node role.\ref
-
-\subsection{The transmitter}
-The Transmitter as one purpose, gather messages in a circular queue and dispatch them in order. It was meant to also be able to handle re-ordering of packages to comply with either FIFO, Causal or total ordering. This feature was dropped due to increasing complexity, and lack of resources.
-
-\subsection{Synchronous operations}
-
-A single unique node is, by agreement among all nodes, elected as admin node. The election causes a global lock of all nodes until agreement is made.
-\subsection{Nodes}
-
-\subsubsection{Internal tasks}
+\subsection{Internal tasks}
 \label{sec:internal_tasks}
-Transceiver and temperaturesensor.
+Each Node has two periodic tasks which together comprise a classic producer-consumer design.
+\begin{description}
+  \item[Transmitter:] This task is designated to emptying the transmit buffer, which is filled by the temperature sensor task. It has only this one purpose; gather messages in a circular queue and dispatch them in order. It was meant to also be able to handle re-ordering of packages to comply with either FIFO, Causal or total ordering. This feature was dropped due to increasing complexity, and lack of resources.
+  \item[Temperature sensor:] This task polls it's local sensor for a value when invoked and places it, indirectly via the node, in the transmit buffer of the transmitter.
+\end{description}
+Both tasks are triggered by the assumed reliable timer, and thus will be have a harmonic period across all nodes.
 
-
-A node can be of three classes; Basic, Router and Admin. The constraints are as follows;
-\begin{itemize}
-\item A basic node is a system-wide root class of all nodes. All other classes inherit the functionality of this type of node.
-\item The admin node is \emph{unique}, meaning that there can be only either 0 or 1 admin node at all times.
-\end{itemize}
-
-in \File(Configuration.java) file, and is thus 
-
-\subsection{Promoting a new admin}
+\subsection{Promoting to admin}
 \label{sec:admin_promotion}
-Initially, this problem was treated as an election, then as a R-Multicast problem. But as development progressed it became apparent that it could be solved by the same means Byzantine generals solution, providing resilience to faulty nodes.
-\begin{itemize}
+The problem with selecting a new admin has gone through several iterations, which are described here.
+\subsubsection{Mutual exclusion}
+During the development phase, it was considered that using mutual exclusion could be used to assert that all nodes agreed upon the same admin, at all times. This, however, would lead to very high (and inefficient) bandwidth consumption, due to the number of messages needed to be passed around every time a node needed to send a message to the admin. It would, on the other hand, introduce total order of measurements as a side-benefit as the admin could now act as a sequencer.
+
+\subsubsection{Agreement}
+As development progressed it became apparent that the problem could be solved by the same means Byzantine generals solution, providing resilience to faulty nodes. It would follow that;
+\begin{enumerate}
 \item The node proposed for the new admin node is the commander.
 \item Every other node are the lieutenants.
-\item 
-\end{itemize}
-
-The election starts by having the commander start  %TODO Reliable?
-to every lieutenant.
-
-This system however, uses a modified (simplified) recursive version of the OM algorithm from \cite{}. Instead of keep intiating sending rounds, which will require all nodes to have a timeout mechanism, each node resends its message with votinground increased by one.
-
-This does not protect against nodes refusing to send an answer.
-
-%The election can happen by first multicasting a startelection which will make every node go into a critical section.
-
-\section{Security}
-No security measures are taken in this system. The assumption is, that it is as closed loop system with no malicious nodes or individuals.
-
-The security \emph{could} be improved by 
-\begin{enumerate}
-\item Adding a security manager to RMI
-\item Supplying every node with a pre-shared key
-\item Periodically cycle the encryption with a random key\footnote{From for example /dev/random on Linux/Unix systems}
+\item Every lieutenants node becomes a new (local) commander and sends each value received, to each other process (apart from the original commander) for $m$ rounds, where $m$ is the tolerated amount of failed processes.
 \end{enumerate}
-Securing the individual nodes on the opearating system level from leaking the pre-shared-key is out of scope of this report.
+This system however, uses a modified (simplified) recursive version of the, more elaborately described above, OM algorithm from \cite{lamport1982byzantine}. Instead of keep initiating sending rounds, which will require all nodes to have a timeout mechanism for each round, each node resends every message with voting round increased by one - until voting round = $m-1$. As all calls are synchronous, we will eventually terminate. We would still need to keep track on who had already sent answers, though.\\\\
+This algorithm was experimented with for quite some time before being abandoned. This was primarily due lack of success with getting both the fuzzy recursive OM, and the published OM implemented correctly. Secondly, it was also due to the lack of scalability due to the sheer amount of messages required to reach consensus.
 
-\subsection{Simulator design}
-%Network model (monitor+graph+ui) - make drawing.
+\subsubsection{Reliable multicast}
+\label{sec:agreement_r_multicast}
+The solution selected can therefore be seen as a heuristic on both project-time remaining, messages sent and holistic system view.\\
+When looking upon the system as a whole, the problem of selecting a new admin and reaching an agreement can be seen as a simple reliable broadcast - with a safety net.\\
+Resilience then is provide through the routing mechanism built into the nodes, meaning that even if a node is faulty and sends a temperature message to a non-admin node, the receiving node will simply reroute the message. If a node is faulty, and claims to be the admin - all other nodes will still have the right admin. This effectively disconnects the faulty node from the network, as it will only send message to itself and can be unsubscribed from the process group using a global timeout (no measurements received) mechanism.
+
+\section{Admin node}
+The admin need to provide temperature averages to the user interface. This is done via the \Code{latestAverage} RMI interface specified in section \ref{sec:protocol_design}.
+\subsection{Average temperature}
+The average temperature for the user interface is calculated on the basis of the latest measurements the admin has received - from all nodes\\
+To provide a consistent snapshot of the average, \textbf{A2} and \textbf{A3} was applied. This enables us to extract the temperature of each node which has the same common period, and use this for calculating an average.
+
+\section{User interface}
+The user interface is a very rudimentary and classic Java SWING interface using the JUNG framework to visualize the nodes and their connections in the network. It also visualizes the current average temperature in the system, and takes in user requests for selecting a new admin\\
+The network panel uses the ``SpringLayout'' for the graph to accurately display changes to the network. This, unfortunately, has visual glitches and makes the network look a bit ``wobbly''.
+
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.4]{fig/UI.png}
- \caption{User interface}
+ \caption{User interface. The middle panel is the current network. The right panel has controls for promoting a new admin, and the bottom panel displays the last average temperature of the system.}
  \label{fig:ui}
 \end{figure}
 
 
 \section{Discussion}
-\subsection{On using RMI}
-A RMI interface for looking up the current list of active nodes is provide for easy availability of information. In production this would introduce a single point of failure, and make the system too vulnerable to failures.
 
-Reliability in distributed systems is expensive, i.e. it takes a lot communication to assert that a given state, or agreement has been reached. Therefore heuristics
+\subsection{Node realization}
+Every node is currently implemented as threads in the simulation of the system. They are, however, totally isolated and uses no shared memory and would be straight-forward to implement as processes. In doing this, we could give the parameters now supplied by the bootstrapper via the command line instead, or give each process a local configuration file.
+
+\subsection{On using RMI}
+A RMI interface for looking up the current list of active nodes is provide for easy availability of information. In production this would introduce a single point of failure, and make the system too vulnerable to failures.\\\\
+Working with RMI has been a learning experience, but a positive one at that. It is extremely convenient to do distributed programming without having to deal with the many pitfalls of sockets, selectors, streams and file descriptors. Being able to design the protocol pseudo-formally in the Java language takes a lot of the load of having to solve general problems regarding transfers, generally.
+
+\subsection{Replication}
+\label{sec:discussion:replication}
+The conceptual model of the originally designed system (see appendix \ref{sec:ring_layer_topology}) gave good opportunities for implementing replication. If the overall model of the system was reconsidered a bit, the measurements could be kept at the nodes as long as no-one wanted any averages - i.e. no user interface was subscribing to the averages. Even so, if the measurement data (within a given window) was replicated over several nodes, measurements would not need to be stored centrally, but could be located within the distributed system and fetched on-demand.\\
+It would also provide opportunety to implement more sophisticated agreement algorithms, such as described in \cite{Liris-5968} and \cite{clement2009making}.
 
 \section{Conclusion}
-Working with RMI has been a learning experience, but a positive one at that. It is extremely convenient to do distributed programming without having to deal with the many pitfalls of sockets, selectors, streams and file descriptors. Being able to design the protocol pseudo-formally in the Java language takes a lot of the load of having to solve general problems regarding transfers, generally.
-On a personal note; It is this authors opinion that a hands-on approach to algorithms is the best way to understand them. Hence, experiencing the application of them, when faced with real problems.
-A lot of time was spent trying to implement the Byzantine Generals solution algorithm.
+Reliability in distributed systems is expensive, i.e. it takes a lot communication to assert that a given state, or agreement has been reached. Therefore heuristics has been applied where they could without jeopardizing the integrity of the system. The hands-on approach to algorithms, however, is a very good way to understand them.\\
+When faced with a concrete problem, it becomes easier to recollect the general solutions from the mind, and apply them specifically.\\\\
+In all, the system works as intended. Alas, not with all the features originally intended. Especially the replication covered in section \ref{sec:discussion:replication} would have given some good opportunities to implement more advanced agreement algorithms.
 
 \newpage
 \appendix
@@ -203,16 +191,9 @@ This concept was abandoned eventually due to estimated implementation complexity
  \label{fig:old_network_model}
 \end{figure}
 
+\bibliographystyle{plain}
+\bibliography{references}  % sigpr
+
+\nocite{DistSystems}
 
 \end{document}
-%TODO References.
-%@article{lamport1982byzantine,
-%  title={The Byzantine generals problem},
-%  author={Lamport, Leslie and Shostak, Robert and Pease, Marshall},
-% journal={ACM Transactions on Programming Languages and Systems (TOPLAS)},
-%  volume={4},
-%  number={3},
-%  pages={382--401},
-%  year={1982},
-%  publisher={ACM}
-%}
