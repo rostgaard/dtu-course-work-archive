@@ -28,11 +28,9 @@ import java.awt.Paint;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -209,9 +207,13 @@ public class Userinterface {
                     logger.log(Level.FINEST, "Looking up node " + NetworkModel.currentAdmin + " for new average.");
             
                     node = (TemperatureNode) registry.lookup("/Process/" + NetworkModel.currentAdmin);
-
-                    double newAverage = node.latestAverage();
-                    logger.log(Level.FINEST, "Got new average:" + newAverage);
+                    double newAverage = Double.NaN;
+                    try {
+                    newAverage = node.latestAverage();
+                        logger.log(Level.FINEST, "Got new average:" + newAverage);
+                    } catch (RemoteException ex) {
+                        logger.log(Level.WARNING, "Could not contact admin!");
+                    }
 
 
                     tempPanel.pushMeasurement(newAverage);
@@ -230,6 +232,7 @@ public class Userinterface {
 /* Private class implementing a temperature panel.*/
 class TemperaturePanel extends JPanel {
 
+    // private Double latestMeasurement = Double.NaN;
     private ArrayList<Double> measurements = new ArrayList();
     private ArrayList<JLabel> labels = new ArrayList<>();
     private int maxsize = 0;
@@ -259,7 +262,11 @@ class TemperaturePanel extends JPanel {
     @Override
     public void repaint() {
         if (this.measurements != null) {
-            this.labels.get(0).setText("Latest measurement: " + roundTwoDecimals(this.measurements.get(0)));
+            if (this.measurements.get(0).isNaN()) {
+                this.labels.get(0).setText("Latest measurement: pending...");
+            } else {
+                this.labels.get(0).setText("Latest measurement: " + roundTwoDecimals(this.measurements.get(0)));
+            }
         }
 
         super.repaint();

@@ -4,7 +4,6 @@
  */
 package networktools;
 
-import temperaturemonitoring.Node;
 import temperaturemonitoring.TemperatureNode;
 
 /**
@@ -30,9 +29,11 @@ public class ProposedAdminMessage extends Message {
         return this.proposedAdmin;
     }
 
+
     @Override
     public String toString() {
         return "Round: " + this.getVotingRound() + " ProposedAdmin: " + this.getPayload() + super.toString();
 
     }
+
 }

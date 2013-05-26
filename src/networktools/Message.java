@@ -18,7 +18,7 @@ import toolset.vectorclock.VectorClock;
  *
  * @author krc
  */
-public abstract class Message implements Serializable {
+public abstract class Message implements Serializable, Comparable<Message> {
 
     private UUID uuid;
     private int destinationProcess;
@@ -48,6 +48,7 @@ public abstract class Message implements Serializable {
      * @param m
      * @return
      */
+    @Override
     public int compareTo(Message m) {
         return this.uuid.compareTo(m.uuid);
     }
@@ -55,7 +56,7 @@ public abstract class Message implements Serializable {
     @Override
     public String toString() {
         try {
-            return "Dest: " + this.destinationProcess + " source " + this.sender.ID();
+            return "UUID:" + this.uuid + "Dest: " + this.destinationProcess + " source " + this.sender.ID();
         } catch (RemoteException ex) {
             Logger.getLogger(Message.class.getName()).log(Level.SEVERE, null, ex);
         }

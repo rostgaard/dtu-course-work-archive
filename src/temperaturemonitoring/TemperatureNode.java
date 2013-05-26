@@ -19,8 +19,6 @@ public interface TemperatureNode extends Remote {
 
     public int ID() throws RemoteException;
 
-    public TemperatureNode lookupNode(Integer nodeID) throws RemoteException;
-
     public double latestAverage() throws RemoteException;
 
     public VectorClock sendMeasurement(TemperatureMessage message) throws RemoteException;
@@ -29,7 +27,13 @@ public interface TemperatureNode extends Remote {
 
     public VectorClock send(ProposedAdminMessage message) throws RemoteException;
 
-    public void start() throws RemoteException;
+    public void initialize() throws RemoteException;
+
+    public void startTasks() throws RemoteException;
 
     public void promote() throws RemoteException;
+
+    public void connectRegistry(String host) throws RemoteException;
+
+    public void disconnectRegistry() throws RemoteException;
 }

@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import temperaturemonitoring.Node;
+import temperaturemonitoring.TemperatureNode;
 import ui.Userinterface;
 /*
  * Needs comment.
@@ -59,7 +60,7 @@ public class Bootstrapper extends UnicastRemoteObject {
     {
         Userinterface ui = new Userinterface();
 
-        Node node[] = new Node[Configuration.Number_Of_Nodes];
+        TemperatureNode node[] = new TemperatureNode[Configuration.Number_Of_Nodes];
         ObservationService observationService = new ObservationService();
         startRegistry();
         registerObject(ObservationServiceInterface.class.getSimpleName(), observationService);
@@ -70,7 +71,7 @@ public class Bootstrapper extends UnicastRemoteObject {
         }
 
         for (int i = 0; i < Configuration.Number_Of_Nodes; i++) {
-            node[i].start();
+            node[i].initialize();
             if (i == 0) {
                 node[i].promote();
             }
