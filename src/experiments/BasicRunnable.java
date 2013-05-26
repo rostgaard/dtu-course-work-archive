@@ -1,12 +1,12 @@
+/*
+ * Early experiments with detecting clockdrift in a distributed system.
+ */
+
 package experiments;
 
 import java.math.BigInteger;
 
 import temperaturemonitoring.*;
-
-/*
- * Needs comment.
- */
 
 /**
  *

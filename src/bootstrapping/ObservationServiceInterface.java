@@ -3,13 +3,12 @@ package bootstrapping;
 import java.rmi.RemoteException;
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * RMI (protocol) specification.
  */
 
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 public interface ObservationServiceInterface extends java.rmi.Remote {
 

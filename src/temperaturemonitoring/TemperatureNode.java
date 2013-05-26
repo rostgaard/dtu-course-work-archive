@@ -1,19 +1,17 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * RMI interface for the temperature node.
  */
 package temperaturemonitoring;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import networktools.Message;
 import networktools.ProposedAdminMessage;
 import networktools.TemperatureMessage;
 import toolset.vectorclock.VectorClock;
 
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 public interface TemperatureNode extends Remote {
 

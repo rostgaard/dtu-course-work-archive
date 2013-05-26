@@ -1,3 +1,7 @@
+/*
+ * Unused. Meant for visualizing measurements over time.
+ */
+package obsolecent;
 
 import java.awt.*;
 import javax.swing.*;
@@ -6,7 +10,7 @@ import java.awt.image.BufferedImage;
 
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 public class PlotXY extends JFrame {
 

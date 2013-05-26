@@ -1,13 +1,11 @@
-package configuration;
-
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Static configuration.
  */
+package configuration;
 
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 public class Configuration {
 

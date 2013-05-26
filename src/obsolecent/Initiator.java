@@ -1,3 +1,13 @@
+/*
+ * Initial experiments, nothing relevant for current system. Kept for reference.
+ *
+ * The initiators purpose is to look for a RMI registry an subscribe it's owning
+ * node's service to it.
+ *
+ * This file also contains a listener that picks up messages, processes then and
+ * delegates.
+ *
+ */
 package obsolecent;
 
 import configuration.Configuration;
@@ -10,16 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import temperaturemonitoring.Node;
 
-/*
- * Initial experiments, nothing relevant for current system. Kept for reference.
- *
- * The initiators purpose is to look for a RMI registry an subscribe it's owning
- * node's service to it.
- *
- * This file also contains a listener that picks up messages, processes then and
- * delegates.
- *
- */
 /**
  *
  * @author Kim Rostgaard Christensen

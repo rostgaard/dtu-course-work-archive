@@ -1,9 +1,5 @@
 /*
- * SimpleGraphView.java
- *
- * Created on March 8, 2007, 7:49 PM; Updated May 29, 2007
- *
- * Copyright March 8, 2007 Grotto Networking
+ * The user interface.
  */
 package ui;
 
@@ -47,7 +43,7 @@ import org.apache.commons.collections15.functors.ConstantTransformer;
 import temperaturemonitoring.TemperatureNode;
 /**
  *
- * @author Dr. Greg M. Bernstein
+ * @author Kim Rostgaard Christensen
  */
 public class Userinterface {
 

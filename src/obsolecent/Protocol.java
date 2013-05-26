@@ -1,12 +1,11 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Early protocol specification.
  */
 package obsolecent;
 
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 class Protocol {
 

@@ -11,7 +11,7 @@ import temperaturemonitoring.Node;
 import temperaturemonitoring.TemperatureNode;
 import ui.Userinterface;
 /*
- * Needs comment.
+ * Bootstraps the entire test system.
  */
 
 /**

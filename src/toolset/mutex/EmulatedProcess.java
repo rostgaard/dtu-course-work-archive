@@ -1,3 +1,6 @@
+/*
+ * A thread representing a process for testing a mutual exclusion algorithm.
+ */
 package toolset.mutex;
 
 import java.util.ArrayList;
@@ -5,11 +8,7 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import configuration.*;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+import configuration.Configuration;
 
 /**
  *

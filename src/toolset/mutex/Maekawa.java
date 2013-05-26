@@ -1,12 +1,12 @@
+/*
+ * Conceptual model that tests Maekawa's algorithm for distributed mutual exclusion.
+ */
 package toolset.mutex;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/*
- * Conceptual model that tests Maekawa's algorithm for distributed mutual exclusion.
- */
 /**
  *
  * @author Kim Rostgaard Christensen

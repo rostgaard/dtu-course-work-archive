@@ -1,20 +1,16 @@
+/*
+ * A temperature object.
+ */
 package temperaturemonitoring;
 
 import configuration.Configuration;
 import java.io.Serializable;
-import java.rmi.Remote;
-import java.security.SecureRandom;
-import java.util.Random;
-
 import toolset.mutex.Randomizer;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 public class Temperature implements Serializable{
 

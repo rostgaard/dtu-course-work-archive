@@ -1,11 +1,9 @@
+/*
+ * A randomizer for returning random uniform and guassian values, given bounds.
+ */
 package toolset.mutex;
 
 import java.security.SecureRandom;
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *

@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * List of node identifications.
  */
 package temperaturemonitoring;
 
@@ -8,7 +7,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 class NodeList extends ArrayList<Integer> {
 }

@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Network monitor interface.
  */
 package bootstrapping;
 
@@ -12,7 +11,7 @@ import temperaturemonitoring.Node;
 
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 public class ObservationService extends UnicastRemoteObject implements ObservationServiceInterface {
 

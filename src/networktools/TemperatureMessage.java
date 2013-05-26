@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * TODO
  */
 package networktools;
 
@@ -10,7 +9,7 @@ import temperaturemonitoring.TemperatureNode;
 
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 public class TemperatureMessage extends Message {
 

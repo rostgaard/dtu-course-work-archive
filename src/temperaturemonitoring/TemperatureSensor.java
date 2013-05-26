@@ -1,21 +1,15 @@
+/*
+ * Schedulable sensor.
+ */
 package temperaturemonitoring;
 
-import java.io.Serializable;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import networktools.Transmitter;
-
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
- * @author krc
+ * @author Kim Rostgaard Christensen
  */
 public class TemperatureSensor extends Thread {
 

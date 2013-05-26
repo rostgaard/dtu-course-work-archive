@@ -1,3 +1,7 @@
+
+/*
+ * Represenation of a network node.
+ */
 package temperaturemonitoring;
 
 import bootstrapping.ObservationServiceInterface;
@@ -23,9 +27,6 @@ import networktools.TemperatureMessage;
 import networktools.Transmitter;
 import networktools.TransmitterMode;
 
-/*
- * Represenation of a network node.
- */
 
 /**
  *

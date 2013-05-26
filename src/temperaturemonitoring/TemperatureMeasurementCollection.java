@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Container for storing measurements locally on the admin.
  */
 package temperaturemonitoring;
 

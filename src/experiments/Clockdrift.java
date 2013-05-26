@@ -1,3 +1,6 @@
+/*
+ * Experimental program that tries to detect clock "drift" in scheduler.
+ */
 package experiments;
 
 import java.rmi.Naming;
@@ -5,9 +8,6 @@ import java.rmi.registry.Registry;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-/*
- * Experimental program that tries to detect clock "drift" in scheduler.
- */
 
 /**
  *

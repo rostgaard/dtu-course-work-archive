@@ -1,10 +1,9 @@
-package toolset.vectorclock;
-
-import java.io.Serializable;
-
 /*
  * Class implementing vector clocks.
  */
+package toolset.vectorclock;
+
+import java.io.Serializable;
 
 /**
  *
