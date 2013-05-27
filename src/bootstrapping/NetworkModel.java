@@ -44,17 +44,17 @@ public final class NetworkModel {
      * @param sourcePid The source of the sink.
      * @param destPid The destination of the sink.
      */
-    public static void connect(int sourcePid, int destPid) {
+    public synchronized static void connect(int sourcePid, int destPid) {
         String edgeName = "Edge-" + sourcePid + "-" + destPid;
         g.addEdge(edgeName, sourcePid, destPid);
         edges.add(edgeName);
     }
 
     /**
-     * TODO
+     * Subscribe a node to the a multicast group.
      *
-     * @param PID
-     * @param GroupID
+     * @param PID The process ID to subscribe.
+     * @param GroupID The group to subscribe to.
      */
     public static void subscribe(int PID, int GroupID) {
         try {
@@ -70,10 +70,10 @@ public final class NetworkModel {
     }
 
     /**
-     * TODO
+     * Unsubscribe a node from a multicast group.
      *
-     * @param PID
-     * @param GroupID
+     * @param PID The process ID to unsubscribe.
+     * @param GroupID The group to unsubscribe from.
      */
     public static void unsubscribe(int PID, int GroupID) {
         try {
@@ -90,6 +90,9 @@ public final class NetworkModel {
 
     }
 
+    /**
+     * Resets the channels visualized.
+     */
     public static void clearEdges() {
         logger.log(Level.INFO, "Clearing edges");
 
@@ -103,6 +106,11 @@ public final class NetworkModel {
         }
     }
 
+    /**
+     * Signal a new admin.
+     *
+     * @param ID The PID of the new admin node.
+     */
     public void setNewAdmin(int ID) {
         NetworkModel.currentAdmin = ID;
     }

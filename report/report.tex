@@ -15,7 +15,7 @@
 \def\Key#1{\textsf{#1}}
 
 \title{02220 Distributed systems}
-\author{Kim Rostgaard Christensen (s084283 - \href{mailto:kroch@imm.dtu.dk}{kroch@imm.dtu.dk})}
+\author{Kim Rostgaard Christensen (s084283 - \href{mailto:kroch@imm.dtu.dk}{ost})}
 
 \maketitle
 
@@ -26,13 +26,13 @@ This report describes the work done on implementing a distributed temperature mo
 \end{abstract}
 
 \section{Introduction}
-The system implemented consists of a set of inter-connected nodes that each poll a local temperature sensor at a fixed frequency. One dedicated node is appointed the role of being the master-node, or more formally the admin node. Each node (including the regular node) reports it's local sensor values back to the admin node, which then stores them.
+The system implemented consists of a set of inter-connected nodes that each poll a local temperature sensor at a fixed frequency. One dedicated node is appointed the role of being the master-node, or more formally the admin node. Each node (including the admin node) reports it's local sensor values back to the admin node, which then stores them.
 The basic node is a system-wide root class of all nodes. All other classes inherit the functionality of this type of node.
 The admin node is \emph{unique}, meaning that there can be only either 0 or 1 admin node at all times. It may suffer from temporary, or permanent failures, and therefore it must be possible to promote another node to admin. This is done via a user interface which connects to the network from an external point.
 
 \section{The system}
 
-The overall system model of a given number of nodes. For this model it was assume that the system consisted of at least four nodes - including the admin.
+For this model it was assume that the system consisted of at least four nodes - including the admin.
 
 \subsection{Assumptions}
 

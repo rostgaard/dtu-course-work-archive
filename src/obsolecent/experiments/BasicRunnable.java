@@ -2,7 +2,7 @@
  * Early experiments with detecting clockdrift in a distributed system.
  */
 
-package experiments;
+package obsolecent.experiments;
 
 import java.math.BigInteger;
 

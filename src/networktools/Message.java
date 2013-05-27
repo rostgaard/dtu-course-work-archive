@@ -3,7 +3,6 @@
  */
 package networktools;
 
-
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.UUID;
@@ -29,28 +28,49 @@ public abstract class Message implements Serializable, Comparable<Message> {
         this.sender = sender;
     }
 
+    /**
+     * Retrieve the destination pID of the message.
+     *
+     * @return The destination pID of the receiver.
+     */
     public int getDestination() {
         return this.destinationProcess;
     }
 
+    /**
+     * Retrieve the origin pID of the message.
+     *
+     * @return The source PID of the sender, originating this message.
+     */
     public TemperatureNode getSender() {
         return this.sender;
     }
 
+    /**
+     * Extracts the embedded vector clock of the message.
+     *
+     * @return The vector clock of the messsage.
+     */
     public VectorClock getVectorClock() {
         return vc;
     }
 
     /**
+     * Enables the message to be detected as a duplicate in a container.
      *
-     * @param m
-     * @return
+     * @param m The message to compare to.
+     * @return Regular compareTo results.
      */
     @Override
     public int compareTo(Message m) {
         return this.uuid.compareTo(m.uuid);
     }
 
+    /**
+     * Stringify the object.
+     *
+     * @return The object in a debug-friendly format.
+     */
     @Override
     public String toString() {
         try {

@@ -1,6 +1,6 @@
 
 /*
- * Represenation of a network node.
+ * Represenation of a network node, and the back-bone of the system.
  */
 package temperaturemonitoring;
 
@@ -13,7 +13,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,7 +54,7 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     /**
      * Calculates and returns the latest average.
      *
-     * @return
+     * @return The latest average temperature.
      * @throws RemoteException
      */
     @Override
@@ -75,18 +74,21 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
 
     }
 
+    /**
+     * Increment the state of the node.
+     */
     public void incrementVectorClock() {
         this.vc.incrementClock(ID);
     }
 
     /**
-     * TODO
+     * Adds a measurement to the transmission queue.
      *
-     * @param t
+     * @param t The measurement to enqueue.
      */
     public void addMeasurement(Temperature t) throws RemoteException {
 
-        this.incrementVectorClock();; //State changes on each measurement.
+        this.incrementVectorClock(); //State changes on each measurement.
         if (this.isAdmin()) {
             this.measurements.add(ID, t);
         } else {
@@ -94,6 +96,11 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         }
     }
 
+    /**
+     * Wrapper method for returning the reference to the monitor.
+     *
+     * @return The current network monitor.
+     */
     private ObservationServiceInterface getMonitor() {
         ObservationServiceInterface monitor = null;
         try {
@@ -104,9 +111,15 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         return monitor;
     }
 
+    /**
+     * Looks up the current list of processes in the group.
+     *
+     * @return A list of process ID's
+     */
     private NodeList getProcessGroup() {
         NodeList nodelist = new NodeList();
 
+        // Currently just a static table.
         for (int i = 0; i < Configuration.Number_Of_Nodes; i++) {
             nodelist.add(i);
         }
@@ -114,6 +127,11 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         return nodelist;
     }
 
+    /**
+     * Wrapper call to simplify migration to other algorithms.
+     *
+     * @return True if the node inquired is the admin, false otherwise.
+     */
     private boolean isAdmin() {
         return this.ID == this.admin;
     }
@@ -147,22 +165,34 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         this.getMonitor().newAdmin(this.ID);
     }
 
+    /**
+     * Wrapper call.
+     *
+     * @return True if the node has a registry, false otherwise.
+     */
     public boolean hasRegistry() {
         return this.registry == null;
     }
 
+    /**
+     * Disconnect from the RMI registry.
+     */
     @Override
     public void disconnectRegistry() {
         logger.log(Level.INFO, "Disconnected registry");
         this.registry = null;
     }
 
+    /**
+     * @deprecated Used to lookup a server providing an RMI registry.
+     * @throws InterruptedException
+     */
     private void locateRegistry() throws InterruptedException {
         //this.initiator = new Initiator();
         //this.initiator.startListening();
 
         System.out.println("Started");
-        while (true) {
+        while (this.started) {
             //initiator.RegistryBeacon();
             Thread.sleep(1000);
         }
@@ -172,7 +202,7 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
      * Connect a node to the RMI registry, in order for us to initiate the
      * system.
      *
-     * @param host
+     * @param host The name of the host to connect to.
      * @throws InterruptedException
      */
     @Override
@@ -200,6 +230,13 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         }
     }
 
+    /**
+     * Constructor for the node. Gives it it's process ID.
+     *
+     * @param pid The ID of the process.
+     * @param numNodes The number of nodes currently in the network.
+     * @throws RemoteException
+     */
     public Node(int pid, int numNodes) throws RemoteException {
         this.proposals = new ProposalList();
 
@@ -209,19 +246,17 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         this.ID = pid;
     }
 
-    public void addMulticastNode(int n) {
-        //logger.log(Level.INFO, "Adding node " + n
-        //       +  " to " + this.ID + "'s multicast group."
-        // );
-        this.getProcessGroup().add(n);
-    }
-
+    /**
+     * Initializes the node, and connects it to the network monitor.
+     *
+     * @throws RemoteException
+     */
     @Override
     public void initialize() throws RemoteException {
         if (this.started) {
             return;
         }
-        logger.log(Level.INFO, "Stating node " + this.ID);
+        logger.log(Level.INFO, "Stating node {0}", this.ID);
 
         try {
             if (!this.isAdmin()) {
@@ -234,16 +269,21 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     }
 
     /**
-     * TODO
+     * Stringify the object.
      *
-     * @return
+     * @return The object in a debug-friendly format.
      */
     @Override
     public String toString() {
         return Node.class.getSimpleName() + " " + this.ID + " " + this.vc;
     }
 
-
+    /**
+     * Lookup a node in the RMI registry from a process ID.
+     *
+     * @param destination The pID of the node to lookup.
+     * @return A Remote reference to the node inquired.
+     */
     public TemperatureNode lookupNode(Integer destination) {
         TemperatureNode node = null;
 
@@ -260,9 +300,11 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
     }
 
     /**
+     * Sends a measurement to the node. If this node is not the admin node, then
+     * it will forward it to the admin node.
      *
-     * @param message
-     * @return
+     * @param message The message containing the measurement.
+     * @return The receivers vector clock.
      */
     @Override
     public VectorClock sendMeasurement(TemperatureMessage message) throws RemoteException {
@@ -270,17 +312,22 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         //  If we are not the admin, route the package.
 
         if (!isAdmin()) {
-            logger.log(Level.INFO, "Node " + this + "received " + message + " not for me, re-routing to " + this.admin);
+            logger.log(Level.INFO, "Node {0}received {1} not for me, re-routing to {2}", new Object[]{this, message, this.admin});
             this.transceiver.enqueue(new TemperatureMessage(message.getPayload(), this.admin, this));
         } else {
             //logger.log(Level.INFO, "Node " + this + "adds message to collection.");
             this.measurements.add(message.getSender().ID(), message.getPayload());
         }
-
-
         return this.vc;
     }
 
+    /**
+     * Reliably multicast a message proposing a new admin.
+     *
+     * @param message The message containing the new proposed admin.
+     * @return The receivers vector clock.
+     * @throws RemoteException
+     */
     @Override
     public VectorClock send(ProposedAdminMessage message) throws RemoteException {
         //System.out.println("Node" + this.ID + " got message: " + message);
@@ -314,12 +361,10 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
          }
 
          proposals.clear();
+         }
+
          }*/
-
-
-
-//}
-        logger.log(Level.INFO, "R-deliver received message on node " + this.ID + " from " + message.getSender());
+        logger.log(Level.INFO, "R-deliver received message on node {0} from {1}", new Object[]{this.ID, message.getSender()});
             // B-Multicast
             for (Integer node : this.getProcessGroup()) {
                 if (message.getSender() != this) { // Skip the current node.
@@ -339,6 +384,9 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
 
     }
 
+    /**
+     * Start the periodic tasks of the node.
+     */
     @Override
     public void startTasks() {
 
@@ -356,32 +404,13 @@ public class Node extends UnicastRemoteObject implements TemperatureNode {
         this.started = true;
     }
 
-    private void basicMulticast(ArrayList<Integer> group, ProposedAdminMessage message) throws RemoteException {
-
-        for (Integer node : group) {
-            if (node != this.ID) { // Skip own ID.
-                this.vc.incrementClock(ID);
-
-                VectorClock remoteClock = this.lookupNode(node).basicDeliver(message);
-                this.vc.merge(remoteClock);
-                logger.log(Level.INFO, "Basic multicasting new admin request from " + this.ID + " to " + node);
-            }
-        }
-    }
-
-    private void reliabeMulticast(ArrayList<Integer> group, ProposedAdminMessage message) throws RemoteException {
-        logger.log(Level.INFO, "Reliable multicast sending from " + this.ID);
-
-        for (Integer node : group) {
-            this.vc.incrementClock(ID);
-
-            logger.log(Level.INFO, "Reliable multicast sending from " + this.ID + " to " + node);
-            VectorClock remoteClock = this.lookupNode(node).send(message);
-            this.vc.merge(remoteClock);
-
-        }
-    }
-
+    /**
+     * Second part of R-Multicast.
+     *
+     * @param message
+     * @return
+     * @throws RemoteException
+     */
     @Override
     public VectorClock basicDeliver(ProposedAdminMessage message) throws RemoteException {
         if (this.adminMessageBuffer == null) { // The message is not already received.

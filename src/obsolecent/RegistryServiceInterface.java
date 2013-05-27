@@ -1,9 +1,9 @@
-package bootstrapping;
+/*
+ * Registry interface abstraction - no longer needed.
+ */
+package obsolecent;
 
 import java.rmi.*;
-/*
- * Needs comment.
- */
 
 /**
  *

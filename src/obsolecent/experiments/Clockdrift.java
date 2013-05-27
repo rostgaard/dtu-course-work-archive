@@ -1,9 +1,8 @@
 /*
  * Experimental program that tries to detect clock "drift" in scheduler.
  */
-package experiments;
+package obsolecent.experiments;
 
-import java.rmi.Naming;
 import java.rmi.registry.Registry;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.Executors;

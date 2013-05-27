@@ -1,5 +1,5 @@
 /*
- * Static configuration.
+ * Static glonbal configuration.
  */
 package configuration;
 
@@ -12,7 +12,7 @@ public class Configuration {
     public static final String productName = "Network monitor";
     public static final String productVersion = "git-testing";
     public static final int RMIPort = 1099;
-    public static final int Number_Of_Nodes = 11;
+    public static final int Number_Of_Nodes = 5;
     public static final int Tolerable_Failures = 3;
     public static final int Initial_Admin = 0;
     public static final int multicastPort = 6789;
