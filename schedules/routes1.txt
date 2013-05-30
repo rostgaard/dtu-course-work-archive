@@ -1,0 +1,18 @@
+# A route is not possible, because its going between two STAT that does not have any CONN ( 3 -> 4)
+
+# Network
+# STAT Station1 1
+# STAT Station2 2
+# STAT Station3 3
+# STAT Station4 4
+# STAT Station4 5
+# CONN 1 2
+# CONN 2 3
+# CONN 2 4
+# CONN 3 5
+# END 1
+# END 4
+# END 5
+
+# Route
+1 2 3 4 5 STOP

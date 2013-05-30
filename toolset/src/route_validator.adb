@@ -5,7 +5,7 @@ with Ada.Exceptions;
 with Railval.Parser;
 with Railval.Trace;
 
-procedure Railway_Validator is
+procedure Route_Validator is
    use Ada.Text_IO;
    use Ada.Command_Line;
    use Ada.Exceptions;
@@ -22,6 +22,8 @@ procedure Railway_Validator is
    procedure Usage is
    begin
       Put_Line (Command_Name & " input_file --debug");
+      Put_Line (ASCII.HT &
+                  "--debug provides additional information about validation");
       Set_Exit_Status (Code => Failure);
    end Usage;
 
@@ -46,5 +48,7 @@ exception
       Put_Line (Exception_Message (E));
    when others =>
       Put_Line ("Validation failed");
+      New_Line;
+      Put_Line ("Reason:");
       raise;
-end Railway_Validator;
+end Route_Validator;

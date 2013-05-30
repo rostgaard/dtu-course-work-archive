@@ -35,10 +35,12 @@ Requirements
 The Ada sources can be built by invoking make in the toolset folder, but are command-line only.
 
 ----
-State of the program
+Building
 ----
-Currently the program is not throughly tested, and the schedule validator is not able to load in
-files - but will validate them if given statically.
+Cd to the toolset folder and invoke make. This will produce two binaries;
+ * route_validator - the track layout validator
+ * schedule_validator - the schedule validator
 
+Running each binary without arguments will provide details for how to run it.
 
  - Enjoy.

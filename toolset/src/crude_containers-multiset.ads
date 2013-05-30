@@ -1,5 +1,4 @@
 --  Crude implementation of a multiset.
-
 generic
    type Element is private;
    Null_Element : Element;
@@ -7,7 +6,7 @@ generic
 
    type Count is range <>;
 
-package Multiset is
+package Crude_Containers.Multiset is
 
    procedure Insert (Item : in Element);
    function Occurences (Item : in Element) return Count;
@@ -27,4 +26,4 @@ private
    function Next_Free return Natural;
 
    Storage : array (1 .. Max_Elements) of Set_Element;
-end Multiset;
+end Crude_Containers.Multiset;

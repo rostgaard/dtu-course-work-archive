@@ -1,12 +1,14 @@
 with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Assertions;
 
-with Multiset;
+with Crude_Containers.Multiset;
 
-procedure Crude_Containers.Multiset.Test is
+procedure Crude_Containers.Multiset_Test is
    type Foo is range 0 .. 2;
 
    type Two_Letter_String is new String (1 .. 2);
-   package Bag is new Multiset (Element      => Two_Letter_String,
+   package Bag is new
+     Crude_Containers.Multiset (Element      => Two_Letter_String,
                                 Null_Element => "00",
                                 Max_Elements => 8,
                                 Count        => Foo);
@@ -24,10 +26,10 @@ begin
 
    begin
       Bag.Insert ("AA");
-      raise Assert_Failure with "Expected exception";
+      raise Ada.Assertions.Assertion_Error with "Expected exception";
    exception
-      when others =>
+      when Constraint_Error =>
          Put_Line ("Exception raised successfully.");
    end;
 
-end Crude_Containers.Multiset.Test;
+end Crude_Containers.Multiset_Test;

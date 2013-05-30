@@ -1,0 +1,11 @@
+# Same CONN is mentioned twice
+STAT Station1 1
+STAT Station2 2
+STAT Station3 3
+STAT Station4 4
+CONN 1 2
+CONN 2 3
+CONN 2 3
+CONN 3 4
+END 1
+END 4

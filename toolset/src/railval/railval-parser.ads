@@ -44,7 +44,16 @@ package Railval.Parser is
      Boolean;
 
    procedure Link (Object : in out Railway_Networks;
-                   Identification1, Identification2 : in Identifications);
+                   Identification1, Identification2 : in Identifications)
+   with
+     Precondition => Identification1 /= Identification2 and
+     Identification1 /= Null_Identification and
+     Identification2 /= Null_Identification and
+     Object.Not_Linked (Identification1, Identification2);
+
+   function Not_Linked
+     (Object : in out Railway_Networks;
+      Identification1, Identification2 : in Identifications) return Boolean;
 
    procedure Define_Endpoint (Object : in out Railway_Networks;
                               Identification : in Identifications);

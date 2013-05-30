@@ -1,0 +1,14 @@
+STAT Holte h
+STAT Hellerup e
+STAT Lyngby l
+STAT Klampenborg k 
+CONN l h
+CONN e l
+CONN k l
+CONN b l
+CONN b k
+ENDP l
+ENDP h
+ENDP e
+ENDP k
+

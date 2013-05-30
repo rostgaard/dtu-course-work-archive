@@ -1,0 +1,13 @@
+# A STAT does not have a CONN or END
+STAT Station1 1
+STAT Station2 2
+STAT Station3 3
+STAT Station4 4
+STAT Station4 5
+CONN 1 2
+CONN 2 3
+CONN 2 4
+CONN 3 6
+END 1
+END 3
+END 4
