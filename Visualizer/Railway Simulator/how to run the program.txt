@@ -1,0 +1,9 @@
+Open the command line and type in:
+java -jar RailwaySimulation.jar networkfile rutefile
+
+replace networkfile and rutefile with the name of your 
+network configuration and route configuration files
+
+Example:
+
+java -jar RailwaySimulation.jar net1.txt rute1.txt
