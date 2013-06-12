@@ -10,6 +10,8 @@ package Digrams is
 
    function Value (C1, C2 : in Character) return Digram;
 
+   procedure Show_Contents;
+
    procedure Add (Letter : in Digram);
 
    function Frequency (Letter : in Digram) return Float;

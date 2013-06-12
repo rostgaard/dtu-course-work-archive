@@ -1,3 +1,4 @@
+
 with Ada.Text_IO; use Ada.Text_IO;
 
 procedure Exercise_08 is

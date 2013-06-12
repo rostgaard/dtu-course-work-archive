@@ -6,6 +6,8 @@ package Letters is
 
    Package_Name : constant String := "Letters";
 
+   procedure Show_Contents;
+
    procedure Add (Letter : in Character);
 
    function Frequency (Letter : in Character) return Float;

@@ -6,6 +6,8 @@ package Trigrams is
 
    Package_Name : constant String := "Trigrams";
 
+   procedure Show_Contents;
+
    type Trigram is array (1 .. 3) of Character;
 
    function Value (C1, C2, C3 : in Character) return Trigram;

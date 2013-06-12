@@ -57,6 +57,14 @@ exercise_08:
 	@-echo ""
 	@${GNATMAKE} $@
 
+exercise_09:
+	@-echo ""
+	@-echo "***************************"
+	@-echo Building $@ ...
+	@-echo "***************************"
+	@-echo ""
+	@${GNATMAKE} $@
+
 exercise_11:
 	@-echo ""
 	@-echo "***************************"

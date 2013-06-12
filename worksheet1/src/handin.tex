@@ -59,10 +59,25 @@ Output from program \Code{exercise\_01.adb}:
 \lstinputlisting[frame=single] {../output/exercise_01.output}
 
 \section*{Exercise 2}
+
+ABQZ => ZAPY YZOX XYNW WXMV VWLU UVKT TUJS STIR RSHQ QRGP PQFO OPEN NODM MNCL LMBK KLAJ JKZI IJYH HIXG GHWF FGVE EFUD DETC CDSB BCRA
+
+About 9000 was found by means of brute force and an English dictionary.
+
 \section*{Exercise 3}
 \section*{Exercise 4}
 \section*{Exercise 5}
 In one hour 11.385.500.000 keys tested.
+
+600000*60*60
+
+2.160.000.000
+
+(600000*60*60)*24*365
+
+%18.921.600.000.000 ~ 19*10^12 * 10^6 = 19*10^18 corresponding to ~64 bit.
+
+
 \section*{Exercise 6}
 For $|K|$, our keyspace is $26!$, $R_L$ is $26$, which gives us;
 \begin{equation}
@@ -72,6 +87,24 @@ UD \approx \frac{\log_2{26!}}{0.7 \cdot \log_2{26}} \Leftrightarrow UD \approx 2
 \section*{Exercise 7}
 \section*{Exercise 8}
 \section*{Exercise 9}
+Our test-population is 1000, given that we have 1000 \emph{pairs}.\\
+Feeding the this to the $\chi^2$ test gives the following;
+\begin{eqnarray}
+\chi^2 = \frac{\left(231 - 500\right)^2}{250} + 
+         \frac{\left(271 - 500\right)^2}{250} + 
+         \frac{\left(270 - 500\right)^2}{250} + 
+         \frac{\left(228 - 500\right)^2}{250} \\
+\chi^2 = 6.744
+\end{eqnarray}
+
+This is then fed to R, which gives out:
+
+\begin{eqnarray}
+CHIDIST \left(6.744,3\right) = 0.08
+\end{eqnarray}
+
+Around 8\% of the experiments will result in a distribution like similar to this. We should not reject this as acceptable output, as it is within the standard 95\% confidence interval. Since the probability is so low, more data should be acquired to get more accurate results.
+
 \section*{Exercise 10}
 \section*{Exercise 11}
 

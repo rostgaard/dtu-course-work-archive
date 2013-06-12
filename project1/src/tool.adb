@@ -30,12 +30,16 @@ procedure Tool is
    Char       : Character := ' ';
 begin
 
-   Decrypter.Trace.Unmute (Trace => Decrypter.Trace.Debug);
 
    if Argument_Count < 1 then
       Usage;
       return;
+   elsif Argument_Count > 1 and then Argument (2) = "--debug" then
+
+      Decrypter.Trace.Unmute (Trace => Decrypter.Trace.Debug);
+
    end if;
+
    Ada.Streams.Stream_IO.Open
      (File => File,
       Name => Argument (1),
@@ -66,15 +70,12 @@ begin
          when 1 =>
             Digrams.Add (Buffer (2) & Buffer (3));
             Trigrams.Add (Buffer (2) & Buffer (3) & Buffer (1));
-            Put_Line ("1 " & Buffer (2) & Buffer (3) & Buffer (1));
          when 2 =>
             Digrams.Add (Buffer (3) & Buffer (1));
             Trigrams.Add (Buffer (3) & Buffer (1) & Buffer (2));
-            Put_Line ("2 " & Buffer (3) & Buffer (1) & Buffer (2));
          when 3 =>
             Digrams.Add (Buffer (1) & Buffer (2));
             Trigrams.Add (Buffer (1) & Buffer (2) & Buffer (3));
-            Put_Line ("3 " & Buffer (1) & Buffer (2) & Buffer (3));
          when others =>
             null;
          end case;
@@ -115,5 +116,11 @@ begin
       Aft  => 3,
       Exp  => 0);
    New_Line;
+
+   Letters.Show_Contents;
+
+   Digrams.Show_Contents;
+
+   Trigrams.Show_Contents;
 
 end Tool;
