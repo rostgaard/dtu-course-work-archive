@@ -1,6 +1,6 @@
 with Ada.Text_IO; use Ada.Text_IO;
 
-procedure Exercise_08 is
+procedure Exercise_09 is
 
    type Test_Paramaters is
       record
@@ -24,11 +24,13 @@ procedure Exercise_08 is
       return Sum;
    end Chi_Squared;
 
-   Sample : constant Test_Sets := ((Value => 542.0, Expected => 500.0),
-                                   (Value => 458.0, Expected => 500.0));
+   Sample : constant Test_Sets :=
+     ((Value => 231.0, Expected => 250.0),
+      (Value => 271.0, Expected => 250.0),
+      (Value => 270.0, Expected => 250.0),
+      (Value => 228.0, Expected => 250.0));
 
 begin
-
    Put_Line (Chi_Squared (Sample)'Img);
 
-end Exercise_08;
+end Exercise_09;

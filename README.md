@@ -1,2 +1,4 @@
-practical_cryptoanalysis
-========================
+01435 - Practical Cryptoanalysis
+================================
+
+Sources for the solutions to the course.

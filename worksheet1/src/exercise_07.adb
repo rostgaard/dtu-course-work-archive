@@ -1,2 +1,5 @@
-procedure Exercise_7 is
+procedure Exercise_07 is
+begin
+   null;
+end Exercise_07;
 

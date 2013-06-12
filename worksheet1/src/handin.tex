@@ -48,9 +48,7 @@
 \begin{document}
 \maketitle
 
-\section*{Exercise 1}
-Exercise 1: Decrypt the following ciphertext that was encrypted with a Caesar cipher\\
-
+\paragraph{Exercise 1:} Decrypt the following ciphertext that was encrypted with a Caesar cipher
 \begin{center}
 GJBFW JYMJN IJXTK RFWHM
 \end{center}
@@ -58,25 +56,26 @@ Output from program \Code{exercise\_01.adb}:
 
 \lstinputlisting[frame=single] {../output/exercise_01.output}
 
-\section*{Exercise 2}
+\paragraph{Exercise 2:}
+The ciphertext ``ABQZ'' can translate to either ``STIR'' or ``OPEN''.
 
-ABQZ => ZAPY YZOX XYNW WXMV VWLU UVKT TUJS STIR RSHQ QRGP PQFO OPEN NODM MNCL LMBK KLAJ JKZI IJYH HIXG GHWF FGVE EFUD DETC CDSB BCRA
+9.000+ was found by means of brute force and an English dictionary.
 
-About 9000 was found by means of brute force and an English dictionary.
+\paragraph{Exercise 3:}
+\paragraph{Exercise 4:}
+\paragraph{Exercise 5:}
+%In one hour 11.385.500.000 keys tested.
 
-\section*{Exercise 3}
-\section*{Exercise 4}
-\section*{Exercise 5}
-In one hour 11.385.500.000 keys tested.
+For this, not very efficient implementation, 2.160.000.000 keys was tested in an hour.\\\\
+This gives $600000 \cdot 24 \cdot 365 = 18.921.600.000.000 \approx 19 \cdot 10^{12}$ in a year.\\\\
+Given a cluster of 1 million machines, the number would be $19 \cdot 10^{12} \cdot 10^6 = 19 \cdot 10^{18}$ keys attempted, roughly corresponding to ~64 bit.\\\\
+Code is listed in figure \ref{lst:exercise_05}.
 
-600000*60*60
-
-2.160.000.000
-
-(600000*60*60)*24*365
-
-%18.921.600.000.000 ~ 19*10^12 * 10^6 = 19*10^18 corresponding to ~64 bit.
-
+\begin{figure}
+\lstinputlisting[frame=single] {../src/exercise_05.adb}
+\caption{exercise\_05.adb}
+\label{lst:exercise_05}
+\end{figure}
 
 \section*{Exercise 6}
 For $|K|$, our keyspace is $26!$, $R_L$ is $26$, which gives us;

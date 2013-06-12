@@ -19,7 +19,7 @@ GNATCLEAN=gnatclean -P common
 
 all: folders solutions
 
-solutions: exercise_01.output exercise_08 exercise_11
+solutions: exercise_01.output exercise_02 exercise_08 exercise_09 exercise_11
 
 folders:
 	@-(ls build > /dev/null || mkdir build)
@@ -31,6 +31,7 @@ clean:
 distclean: clean
 	-rm exercise_01
 	-rm exercise_08
+	-rm exercise_09
 	-rm exercise_11
 
 exercise_01:
@@ -39,7 +40,23 @@ exercise_01:
 	@-echo Building $@ ...
 	@-echo "***************************"
 	@-echo ""
-	@${GNATMAKE} $@
+	@${GNATMAKE} $@ 1> /dev/null
+
+exercise_02:
+	@-echo ""
+	@-echo "***************************"
+	@-echo Building $@ ...
+	@-echo "***************************"
+	@-echo ""
+	@${GNATMAKE} $@ 1> /dev/null
+
+exercise_05:
+	@-echo ""
+	@-echo "***************************"
+	@-echo Building $@ ...
+	@-echo "***************************"
+	@-echo ""
+	@${GNATMAKE} $@ 1> /dev/null
 
 exercise_07:
 	@-echo ""
@@ -47,7 +64,7 @@ exercise_07:
 	@-echo Building $@ ...
 	@-echo "***************************"
 	@-echo ""
-	@${GNATMAKE} $@
+	@${GNATMAKE} $@ 1> /dev/null
 
 exercise_08:
 	@-echo ""
@@ -55,7 +72,7 @@ exercise_08:
 	@-echo Building $@ ...
 	@-echo "***************************"
 	@-echo ""
-	@${GNATMAKE} $@
+	@${GNATMAKE} $@ 1> /dev/null
 
 exercise_09:
 	@-echo ""
@@ -63,7 +80,7 @@ exercise_09:
 	@-echo Building $@ ...
 	@-echo "***************************"
 	@-echo ""
-	@${GNATMAKE} $@
+	@${GNATMAKE} $@ 1> /dev/null
 
 exercise_11:
 	@-echo ""
@@ -71,8 +88,7 @@ exercise_11:
 	@-echo Building $@ ...
 	@-echo "***************************"
 	@-echo ""
-	@${GNATMAKE} $@
-	
+	@${GNATMAKE} $@ 1> /dev/null
 
 exercise_01.output:exercise_01
 	@./exercise_01 | grep "BEWARE" > output/exercise_01.output
