@@ -1,6 +1,4 @@
-with BC.Containers;
-with BC.Containers.Bags;
-with BC.Containers.Bags.Bounded;
+with Ada.Containers.Hashed_Maps;
 
 package Digrams is
 
@@ -8,27 +6,23 @@ package Digrams is
 
    type Digram is array (1 .. 2) of Character;
 
-   function Value (C1, C2 : in Character) return Digram;
+   procedure Show_Contents (Threshold : in Float := 0.0001);
 
-   procedure Show_Contents;
+   procedure Add (D : in Digram);
 
-   procedure Add (Letter : in Digram);
-
-   function Frequency (Letter : in Digram) return Float;
+   function Frequency (D : in Digram) return Float;
 
 private
+   use Ada.Containers;
 
-   package Containers is new BC.Containers
-     (Item => Digram);
+   function Hash_Trigram (Item : in Digram) return Hash_Type;
+   function Equivalent_Keys (Left, Right : Digram) return Boolean;
 
-   package Bags is new Containers.Bags;
+   package Count_Storage is new Ada.Containers.Hashed_Maps
+     (Key_Type        => Digram,
+      Element_Type    => Natural,
+      Hash            => Hash_Trigram,
+      Equivalent_Keys => Equivalent_Keys);
 
-   function Hash_Digram (Item : in Digram) return Positive;
-
-   package Digram_Counter is new
-     Bags.Bounded (Hash         => Hash_Digram,
-                   Buckets      => 1,
-                   Maximum_Size => (Character'Pos (Character'Last))**2);
-
-   Frequencies : Digram_Counter.Bag;
+   Frequencies : Count_Storage.Map;
 end Digrams;

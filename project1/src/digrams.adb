@@ -1,52 +1,84 @@
 with Ada.Strings.Hash;
 with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Float_Text_IO; use Ada.Float_Text_IO;
+with Ada.Strings.Equal_Case_Insensitive;
 
 with Decrypter.Trace;
 
 package body Digrams is
 
-   procedure Show (Item : Digram;
-                   Ok   : out Boolean);
+   Element_Count : Natural := 0;
 
-   procedure Frequency_Visitor is new Containers.Visit (Show);
-
-   procedure Add (Letter : in Digram) is
-      Context : constant String := Package_Name & ".Add";
+   function Equivalent_Keys (Left, Right : Digram) return Boolean is
    begin
-      Decrypter.Trace.Debug (Message => "Adding """ & String (Letter) & """",
+      return Ada.Strings.Equal_Case_Insensitive (Left => String (Left),
+                                                 Right => String (Right));
+   end Equivalent_Keys;
+
+   procedure Image (Item : Digram);
+
+   procedure Add (D : in Digram) is
+      Context : constant String := Package_Name & ".Add";
+
+      procedure Update (Key     : in Digram;
+                        Element : in out Natural) is
+      begin
+         Element := Element + 1;
+      end Update;
+
+   begin
+      Decrypter.Trace.Debug (Message => "Adding """ & String (D) & """",
                              Context => Context);
-      Frequencies.Add (Letter);
+      if not Frequencies.Contains (D) then
+         Frequencies.Insert (D, 0);
+      else
+
+         Frequencies.Update_Element (Frequencies.Find (D), Update'Access);
+      end if;
+
+      Element_Count := Element_Count + 1;
    end Add;
 
-   function Frequency (Letter : in Digram) return Float
+   function Frequency (D : in Digram) return Float
    is
    begin
-      return Float (Frequencies.Count (Letter)) /
-        Float (Frequencies.Total_Size);
+      if not Frequencies.Contains (D) then
+         return 0.0;
+      else
+         return Float (Frequencies.Element (D)) /
+           Float (Element_Count);
+      end if;
    end Frequency;
 
-   procedure Show (Item : Digram;
-                   Ok   : out Boolean) is
+   function Hash_Trigram (Item : in Digram) return Hash_Type is
    begin
-      Put_Line (String (Item) & " => " & Frequencies.Count (Item)'Img);
-      Ok := True;
-   end Show;
+      return Ada.Strings.Hash (String (Item));
+   end Hash_Trigram;
 
-   procedure Show_Contents is
-      Iterator : Containers.Iterator'Class
-        := Frequencies.New_Iterator;
+   procedure Image (Item : Digram) is
    begin
-      Frequency_Visitor (Iterator);
+      Put (String (Item) & " => ");
+      Ada.Float_Text_IO.Put
+        (Item => Frequency (D => Item),
+         Fore => 0,
+         Aft  => 4,
+         Exp  => 0);
+      New_Line;
+   end Image;
+
+   procedure Show_Contents (Threshold : in Float := 0.0001) is
+      use Count_Storage;
+
+      C : Cursor := Frequencies.First;
+   begin
+
+      while Has_Element (C) loop
+         if Frequency (Key (C)) > Threshold then
+            Image (Key (C));
+         end if;
+         C := Next (C);
+      end loop;
+
    end Show_Contents;
-
-   function Hash_Digram (Item : in Digram) return Positive is
-   begin
-      return Positive (Ada.Strings.Hash (Key => Item (1) & Item (2)));
-   end Hash_Digram;
-
-   function Value (C1, C2 : in Character) return Digram is
-   begin
-      return (1 => C1, 2 => C2);
-   end Value;
 
 end Digrams;

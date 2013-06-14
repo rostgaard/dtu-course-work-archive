@@ -1,30 +1,29 @@
-with BC.Containers;
-with BC.Containers.Bags;
-with BC.Containers.Bags.Bounded;
+
+with Ada.Containers.Ordered_Maps;
 
 package Letters is
 
    Package_Name : constant String := "Letters";
 
-   procedure Show_Contents;
+   procedure Show_Contents (Threshold : in Float := 0.0001);
 
-   procedure Add (Letter : in Character);
+   type Letter is
+      record
+         Letter : Character;
+         Count  : Natural := 0;
+      end record;
 
-   function Frequency (Letter : in Character) return Float;
+   procedure Add (C : in Character);
+
+   function Frequency (C : in Character) return Float;
 
 private
 
-   package Containers is new BC.Containers
-     (Item => Character);
-
-   package Bags is new Containers.Bags;
-
    function Hash_Character (Item : in Character) return Positive;
 
-   package Character_Counter is new
-     Bags.Bounded (Hash         => Hash_Character,
-                   Buckets      => 1,
-                   Maximum_Size => Character'Pos (Character'Last));
+   package Character_Counter is new Ada.Containers.Ordered_Maps
+     (Key_Type     => Character,
+      Element_Type => Letter);
 
-   Frequencies : Character_Counter.Bag;
+   Frequencies : Character_Counter.Map;
 end Letters;
