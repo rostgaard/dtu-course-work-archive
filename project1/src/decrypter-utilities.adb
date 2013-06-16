@@ -10,11 +10,6 @@ package body Decrypter.Utilities is
 
    function Is_Character (C : in Character) return Boolean;
 
-   function Is_Character (C : in Character) return Boolean is
-   begin
-      return C in Character'('A') .. Character'('Z');
-   end Is_Character;
-
    function Buffer_From_File (Filename : in String) return String is
       Buffer : String (1 .. Natural (Size (Filename)));
 
@@ -43,6 +38,11 @@ package body Decrypter.Utilities is
       return Buffer (Buffer'First .. Count - 1);
    end Buffer_From_File;
 
+   function Is_Character (C : in Character) return Boolean is
+   begin
+      return C in Character'('A') .. Character'('Z');
+   end Is_Character;
+
    function Read_From_File (Filename : in String) return File_Statistics is
       use Letters;
       use Digrams;
@@ -58,13 +58,16 @@ package body Decrypter.Utilities is
 
       Start : Ada.Calendar.Time;
 
+      procedure Show_Progress;
+
       procedure Show_Progress is
          use Ada.Calendar;
          Runtime : constant Duration := Ada.Calendar.Clock - Start;
          Tmp     : constant Natural :=
            Natural ((Float (Bytes) / Float (Runtime))/1024.0);
       begin
-         Put (ASCII.ESC & "]" & ASCII.LF & ASCII.ESC & "[F" & ASCII.ESC & "[J");
+         Put (ASCII.ESC & "]" & ASCII.LF &
+                ASCII.ESC & "[F" & ASCII.ESC & "[J");
          Put ("Processed" & Bytes'Img & " bytes of file " &
                 Filename & " in ");
 
@@ -73,7 +76,7 @@ package body Decrypter.Utilities is
               Aft  => 2,
               Exp  => 0);
          Put (" seconds (" & Tmp'Img & " kbytes/s).");
-      end;
+      end Show_Progress;
 
    begin
       Ada.Streams.Stream_IO.Open
@@ -152,5 +155,15 @@ package body Decrypter.Utilities is
               Digram  => Digrams.To_Ordered_Table (Reverse_Order => True),
               Trigram => Trigrams.To_Ordered_Table (Reverse_Order => True));
    end Read_From_File;
+
+   function To_Lower (Item : in String) return String is
+   begin
+      return Ada.Characters.Handling.To_Lower (Item);
+   end To_Lower;
+
+   function To_Upper (Item : in Character) return Character is
+   begin
+      return Ada.Characters.Handling.To_Upper (Item);
+   end To_Upper;
 
 end Decrypter.Utilities;

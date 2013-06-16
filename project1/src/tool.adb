@@ -4,6 +4,7 @@ with Letters;
 with Digrams;
 with Trigrams;
 
+with Decrypter;
 with Decrypter.Utilities;
 with Decrypter.Trace;
 
@@ -14,33 +15,12 @@ procedure Tool is
 
    procedure Usage;
 
-   procedure Usage is
-   begin
-      Put_Line ("Usage " & Command_Name & " plaintext_file (dictionary)" &
-                  " ciphertext_file [--debug]");
-   end Usage;
-
    Dictionary  : Decrypter.Utilities.File_Statistics;
    Cipher_Text : Decrypter.Utilities.File_Statistics;
 
-begin
+   procedure Show_Substitution_Table;
 
-   if Argument_Count < 2 then
-      Usage;
-      return;
-   elsif Argument_Count > 2 and then Argument (3) = "--debug" then
-
-      Decrypter.Trace.Unmute (Trace => Decrypter.Trace.Debug);
-
-   end if;
-
-   Dictionary := Decrypter.Utilities.Read_From_File (Filename => Argument (1));
-   New_Line;
-   Cipher_Text := Decrypter.Utilities.Read_From_File
-     (Filename => Argument (2));
-   New_Line;
-
-   declare
+   procedure Show_Substitution_Table is
       use Letters.Frequency_Count;
       use Digrams.Frequency_Count;
       use Trigrams.Frequency_Count;
@@ -127,41 +107,179 @@ begin
       end loop;
 
       New_Line;
+   end Show_Substitution_Table;
 
-      declare
+   procedure Usage is
+   begin
+      Put_Line ("Usage " & Command_Name & " plaintext_file (dictionary)" &
+                  " ciphertext_file [--debug]");
+   end Usage;
 
-         Cipher      : constant String :=
-           Decrypter.Utilities.Buffer_From_File (Filename => Argument (2));
+begin
+
+   if Argument_Count < 2 then
+      Usage;
+      return;
+   elsif Argument_Count > 2 and then Argument (3) = "--debug" then
+
+      Decrypter.Trace.Unmute (Trace => Decrypter.Trace.Debug);
+
+   end if;
+
+   Dictionary := Decrypter.Utilities.Read_From_File (Filename => Argument (1));
+   New_Line;
+   Cipher_Text := Decrypter.Utilities.Read_From_File
+     (Filename => Argument (2));
+   New_Line;
+
+   declare
+
+      Quit        : constant Character := 'q';
+      Replace     : constant Character := 'r';
+      Clear       : constant Character := 'c';
+      Exchange    : constant Character := 'x';
+      Command     : Character;
+      Status      : String (1 .. 80) := (others => ' ');
+      Cipher      : constant String :=
+        Decrypter.Utilities.Buffer_From_File (Filename => Argument (2));
+      Subst_Table : Decrypter.Encoding_Table := ('B' => 'E',
+                                                 'S' => 'T',
+                                                 'P' => 'H',
+                                                 others => '_');
+      procedure Clear_Screen;
+      procedure Menu;
+      procedure Replace_Character;
+      procedure Exchange_Character;
+      procedure Clear_Character;
+      procedure Show_Status;
+
+      procedure Clear_Character is
+         Source : Character;
+      begin
+         Put ("clear: ");
+
+         Get_Immediate (Source);
+         Source := Decrypter.Utilities.To_Upper (Source);
+         Put (Source);
+
+         Subst_Table (Source) := '_';
+      exception
+         when Constraint_Error =>
+            Status (1 .. 20) := "Invalid character: " & Source;
+      end Clear_Character;
+
+      procedure Clear_Screen is
+      begin
+         Put (ASCII.ESC & "[2J");
+      end Clear_Screen;
+
+      procedure Exchange_Character is
+         Source, Target, Tmp : Character;
+      begin
+         Put ("replace: ");
+
+         Get_Immediate (Source);
+         Source := Decrypter.Utilities.To_Upper (Source);
+         Put (Source);
+         Put (" with: ");
+         Get_Immediate (Target);
+         Target := Decrypter.Utilities.To_Upper (Target);
+         Put (Target);
+
+         Tmp := Subst_Table (Source);
+         Subst_Table (Source) := Subst_Table (Target);
+         Subst_Table (Target) := Tmp;
+      exception
+         when Constraint_Error =>
+            Status (1 .. 26) := "Invalid character: " &
+              Source & " or " & Target & ".";
+      end Exchange_Character;
+
+      procedure Menu is
+      begin
+         Put_Line ("q: Quit,  r: Replace character in table. ");
+         Put ("c: Clear charcter,  x: Exchange character in table. ");
+      end Menu;
+
+      procedure Replace_Character is
+         Source, Target : Character;
+      begin
+         Put ("replace: ");
+
+         Get_Immediate (Source);
+         Source := Decrypter.Utilities.To_Upper (Source);
+         Put (Source);
+         Put (" with: ");
+         Get_Immediate (Target);
+         Target := Decrypter.Utilities.To_Upper (Target);
+         Put (Target);
+         Subst_Table (Source) := Target;
+      exception
+         when Constraint_Error =>
+            Status (1 .. 26) := "Invalid character: " &
+              Source & " or " & Target & ".";
+      end Replace_Character;
+
+      procedure Show_Status is
          Position    : Natural := Cipher'First;
-         Subst_Table : String (Cipher'Range) := (others => '.');
-         Subst_Pos   : Natural := Subst_Table'First;
       begin
          while Position < Cipher'Last loop
             if Position + 87 < Cipher'Last then
                Put_Line (Cipher (Position .. Position + 87));
-               Put_Line (Subst_Table (Position .. Position + 87));
+
+               Put_Line
+                 (Decrypter.Utilities.To_Lower
+                    (Decrypter.Decrypt
+                       (Cipher_Text => Cipher (Position .. Position + 87),
+                        Encodings   => Subst_Table)));
+
                Position := Position + 87;
             else
                Put_Line (Cipher (Position .. Cipher'Last));
-               Put_Line (Subst_Table (Position .. Cipher'Last));
+
+               Put_Line
+                 (Decrypter.Utilities.To_Lower
+                    (Decrypter.Decrypt
+                       (Cipher_Text => Cipher (Position .. Cipher'Last),
+                        Encodings   => Subst_Table)));
                Position := Cipher'Last;
             end if;
             New_Line;
-
---              if Position mod 87 = 0 then
---                 New_Line;
---                 while Subst_Pos /= Subst_Table'Last loop
---                    exit when Subst_Pos mod 87 = 0;
---                    Put (Subst_Table (Subst_Pos));
---                    Subst_Pos := Subst_Pos +1;
---                 end loop;
---                 Subst_Pos := Subst_Pos +1;
---                 New_Line;
---                 New_Line;
---
---              end if;
-
          end loop;
-      end;
+      end Show_Status;
+
+   begin
+      loop
+         Clear_Screen;
+
+         Put_Line (Status);
+         --  Clear buffer.
+         Status := (others => ' ');
+
+         Show_Substitution_Table;
+         Show_Status;
+
+         Menu;
+         Get_Immediate (Command);
+
+         case Command is
+            when Quit =>
+               Set_Exit_Status (Success);
+               return;
+
+            when Replace =>
+               Replace_Character;
+
+            when Clear =>
+               Clear_Character;
+
+            when Exchange =>
+               Exchange_Character;
+
+            when others =>
+               null;
+         end case;
+      end loop;
+
    end;
 end Tool;

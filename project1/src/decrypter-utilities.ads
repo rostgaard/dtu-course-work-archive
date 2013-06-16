@@ -14,4 +14,9 @@ package Decrypter.Utilities is
    function Read_From_File (Filename : in String) return File_Statistics;
 
    function Buffer_From_File (Filename : in String) return String;
+
+   function To_Upper (Item : in Character) return Character;
+
+   function To_Lower (Item : in String) return String;
+
 end Decrypter.Utilities;

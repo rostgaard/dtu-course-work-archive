@@ -17,9 +17,7 @@
 GNATMAKE=gnatmake -P common
 GNATCLEAN=gnatclean -P common
 
-all: folders solutions
-
-solutions: exercise_01.output exercise_08 exercise_11
+all: folders tool
 
 folders:
 	@-(ls build > /dev/null || mkdir build)
@@ -29,25 +27,9 @@ clean:
 
 
 distclean: clean
-	rm exercise1
-	rm exercise2
+	-rm tool
 
-exercise_01:
+tool:
 	@-echo "Building $@"
 	@${GNATMAKE} $@
 
-exercise_07:
-	@-echo "Building $@"
-	@${GNATMAKE} $@
-
-exercise_08:
-	@-echo "Building $@"
-	@${GNATMAKE} $@
-
-exercise_11:
-	@-echo "Building $@"
-	@${GNATMAKE} $@
-	
-
-exercise_01.output:exercise_01
-	@./exercise_01 | grep "BEWARE" > exercise_01.output
