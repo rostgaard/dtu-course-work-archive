@@ -114,6 +114,7 @@ package body Trigrams is
 
    function To_Ordered_Table (Reverse_Order : in Boolean := False)
                               return Frequency_Count.Vector is
+      use Count_Storage;
       Vec : Frequency_Count.Vector;
 
       function Comparison (Left, Right : in Trigram_Frequency)
@@ -138,9 +139,12 @@ package body Trigrams is
         ("<" => Reverse_Comparison);
       package Sorting is new Frequency_Count.Generic_Sorting
         ("<" => Comparison);
+
+      C : Cursor := Frequencies.First;
    begin
-      for Item of Frequencies loop
-         Vec.Append ((Key => Item.Key, Frequency => Frequency (Item.Key)));
+      while C /= No_Element loop
+         Vec.Append ((Key => Key (C), Frequency => Frequency (Key (C))));
+         C := Next (C);
       end loop;
 
       if Reverse_Order then
