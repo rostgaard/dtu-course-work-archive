@@ -1,0 +1,9 @@
+known plaintext attacks
+The simple caesar cipher, can be broken only knowing a sigle letter, but a more real life example is WEP(Wired Equivalent Privacy). It has been shown that it can be broken, with a passive attack but that requries tousinds of packages. In 2006 Bittau, Handly and Lackey showed that by only capturing a single package, followed by sending 128 packages, it is possible to get the key.
+
+Source: http://en.wikipedia.org/wiki/Wired_Equivalent_Privacy
+
+chosen plaintext attacks.
+If we look at the Vigenère cipher, that one can easily be broken if you choose a text that is at least the key lengh, which only consists of the same letter, for instance: if the Key is "HALLO" then we could choose the plaintext "AAAAA", which would be encrypted to: HALLO. and just like that we get the key.
+
+Source: http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher
