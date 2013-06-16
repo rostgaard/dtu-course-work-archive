@@ -1,15 +1,10 @@
 with Ada.Text_IO; use Ada.Text_IO;
-with Ada.Float_Text_IO; use Ada.Float_Text_IO;
-with Ada.Streams.Stream_IO;
 with Ada.Command_Line; use Ada.Command_Line;
-with Ada.Streams; use Ada.Streams;
-with Ada.Characters.Handling; use Ada.Characters.Handling;
-with Ada.Directories;  use Ada.Directories;
-with Ada.Calendar;
 with Letters;
 with Digrams;
 with Trigrams;
 
+with Decrypter.Utilities;
 with Decrypter.Trace;
 
 procedure Tool is
@@ -17,148 +12,156 @@ procedure Tool is
    use Digrams;
    use Trigrams;
 
-   File         : Ada.Streams.Stream_IO.File_Type;
-   Stream  : Ada.Streams.Stream_IO.Stream_Access;
-
    procedure Usage;
-
-   function Is_Character (C : in Character) return Boolean;
-
-   function Is_Character (C : in Character) return Boolean is
-   begin
-      return C in Character'('A') .. Character'('Z');
-   end Is_Character;
 
    procedure Usage is
    begin
-      Put_Line ("Usage " & Command_Name & " plaintext_file");
+      Put_Line ("Usage " & Command_Name & " plaintext_file (dictionary)" &
+                  " ciphertext_file [--debug]");
    end Usage;
 
-   Buffer     : String (1 .. 3) := (others => ' ');
-   Char_Count : Natural := 0;
-   Char       : Character := ' ';
-   Bytes      : File_Size :=  0;
-   Total      : File_Size := 0;
-
-   Start : Ada.Calendar.Time;
+   Dictionary  : Decrypter.Utilities.File_Statistics;
+   Cipher_Text : Decrypter.Utilities.File_Statistics;
 
 begin
 
-   if Argument_Count < 1 then
+   if Argument_Count < 2 then
       Usage;
       return;
-   elsif Argument_Count > 1 and then Argument (2) = "--debug" then
+   elsif Argument_Count > 2 and then Argument (3) = "--debug" then
 
       Decrypter.Trace.Unmute (Trace => Decrypter.Trace.Debug);
 
    end if;
 
-   Ada.Streams.Stream_IO.Open
-     (File => File,
-      Name => Argument (1),
-      Mode => Ada.Streams.Stream_IO.In_File);
+   Dictionary := Decrypter.Utilities.Read_From_File (Filename => Argument (1));
+   New_Line;
+   Cipher_Text := Decrypter.Utilities.Read_From_File
+     (Filename => Argument (2));
+   New_Line;
 
-   Total := Size (Argument (1));
+   declare
+      use Letters.Frequency_Count;
+      use Digrams.Frequency_Count;
+      use Trigrams.Frequency_Count;
 
-   Stream := Ada.Streams.Stream_IO.Stream (File => File);
-   --  TODO: Read in file and do frequency analysis.
+      procedure Header;
 
+      procedure Header is
+         HR : constant String (1 .. 87) := (others => '-');
+      begin
+         Put_Line ("          Trigrams            |" &
+                     "           Bigrams           |" &
+                     "         Letters");
+         Put_Line (HR);
+         Put_Line ("Ciphertext         Dictionary |" &
+                     "Ciphertext        Dictionary |" &
+                     "Ciphertext      Dictionary");
+         Put_Line (HR);
+      end Header;
 
-   Start := Ada.Calendar.Clock;
+      DC1 : Letters.Frequency_Count.Cursor := Dictionary.Letter.First;
+      CC1 : Letters.Frequency_Count.Cursor := Cipher_Text.Letter.First;
+      DC2 : Digrams.Frequency_Count.Cursor := Dictionary.Digram.First;
+      CC2 : Digrams.Frequency_Count.Cursor := Cipher_Text.Digram.First;
+      DC3 : Trigrams.Frequency_Count.Cursor := Dictionary.Trigram.First;
+      CC3 : Trigrams.Frequency_Count.Cursor := Cipher_Text.Trigram.First;
+   begin
 
-   --  Pre-fill the buffer.
-   while not Ada.Streams.Stream_IO.End_Of_File (File) loop
-      exit when Char_Count = 2;
-      Char := To_Upper (Character'Input (Stream));
-      if Is_Character (Char) then
-         Buffer ((Char_Count mod 3) + 1) := Char;
-         Letters.Add (C => Char);
+      New_Line;
+      Header;
 
-         Char_Count := Char_Count + 1;
+      for I in 1 .. Cipher_Text.Letter.Length loop
+         if DC3 /= Trigrams.Frequency_Count.No_Element then
+            Put (Image (Element (DC3)));
+         else
+            Put ("            -");
+         end if;
 
-      end if;
+         Put ("   "); -- Separator;
 
-      Bytes := Bytes + 1;
-   end loop;
+         if CC3 /= Trigrams.Frequency_Count.No_Element then
+            Put (Image (Element (CC3)));
+         else
+            Put ("            -");
+         end if;
 
-   while not Ada.Streams.Stream_IO.End_Of_File (File) loop
-      Char := To_Upper (Character'Input (Stream));
+         Put (" | "); -- Separator;
 
-      if Is_Character (Char) then
-         Buffer ((Char_Count mod 3) + 1) := Char;
+         if DC2 /= Digrams.Frequency_Count.No_Element then
+            Put (Image (Element (DC2)));
+         else
+            Put ("            -");
+         end if;
 
-         Letters.Add (C => Char);
+         Put ("   "); -- Separator;
 
-         case (Char_Count mod 3) + 1 is
-         when 1 =>
-            Digrams.Add (Buffer (2) & Buffer (3));
-            Trigrams.Add (Buffer (2) & Buffer (3) & Buffer (1));
-         when 2 =>
-            Digrams.Add (Buffer (3) & Buffer (1));
-            Trigrams.Add (Buffer (3) & Buffer (1) & Buffer (2));
-         when 3 =>
-            Digrams.Add (Buffer (1) & Buffer (2));
-            Trigrams.Add (Buffer (1) & Buffer (2) & Buffer (3));
-         when others =>
-            null;
-         end case;
+         if CC2 /= Digrams.Frequency_Count.No_Element then
+            Put (Image (Element (CC2)));
+         else
+            Put ("           -");
+         end if;
 
-         Char_Count := Char_Count + 1;
+         Put (" | "); -- Separator;
 
-      end if;
-      Bytes := Bytes + 1;
+         if DC1 /= Letters.Frequency_Count.No_Element then
+            Put (Image (Element (DC1)));
+         else
+            Put ("          -");
+         end if;
 
-      if Bytes mod 2**16 = 0 then
-         Put (Item => Float(Bytes)/Float (Total)* 100.0,
-              Fore => 3,
-              Exp  => 0,
-              Aft  => 2);
-         Put ("% .. ");
+         Put ("   "); -- Separator;
 
-         declare
-            use Ada.Calendar;
-            Runtime : constant Duration := Ada.Calendar.Clock - Start;
-            Tmp     : constant Natural :=
-              Natural ((Float (Bytes) / Float (Runtime))/1024.0);
-         begin
-            Put (" Processed" & Bytes'Img & " bytes in ");
+         if CC1 /= Letters.Frequency_Count.No_Element then
+            Put (Image (Element (CC1)) & " ");
+         end if;
+         New_Line;
 
-            Put (Item => Float (Runtime),
-                 Fore => 0,
-                 Aft  => 2,
-                 Exp  => 0);
-            Put_Line (" seconds (" & Tmp'Img & " kbytes/s).");
-         end;
+         Next (DC1);
+         Next (CC1);
+         Next (DC2);
+         Next (CC2);
+         Next (DC3);
+         Next (CC3);
 
-      end if;
+      end loop;
 
-   end loop;
+      New_Line;
 
-         Put (Item => Float(Bytes)/Float (Total)* 100.0,
-              Fore => 3,
-              Exp  => 0,
-              Aft  => 2);
-         Put ("% .. ");
+      declare
 
-         declare
-            use Ada.Calendar;
-            Runtime : constant Duration := Ada.Calendar.Clock - Start;
-            Tmp     : constant Natural :=
-              Natural ((Float (Bytes) / Float (Runtime))/1024.0);
-         begin
-            Put (" Processed" & Bytes'Img & " bytes in ");
+         Cipher      : constant String :=
+           Decrypter.Utilities.Buffer_From_File (Filename => Argument (2));
+         Position    : Natural := Cipher'First;
+         Subst_Table : String (Cipher'Range) := (others => '.');
+         Subst_Pos   : Natural := Subst_Table'First;
+      begin
+         while Position < Cipher'Last loop
+            if Position + 87 < Cipher'Last then
+               Put_Line (Cipher (Position .. Position + 87));
+               Put_Line (Subst_Table (Position .. Position + 87));
+               Position := Position + 87;
+            else
+               Put_Line (Cipher (Position .. Cipher'Last));
+               Put_Line (Subst_Table (Position .. Cipher'Last));
+               Position := Cipher'Last;
+            end if;
+            New_Line;
 
-            Put (Item => Float (Runtime),
-                 Fore => 0,
-                 Aft  => 2,
-                 Exp  => 0);
-            Put_Line (" seconds (" & Tmp'Img & " kbytes/s).");
-         end;
+--              if Position mod 87 = 0 then
+--                 New_Line;
+--                 while Subst_Pos /= Subst_Table'Last loop
+--                    exit when Subst_Pos mod 87 = 0;
+--                    Put (Subst_Table (Subst_Pos));
+--                    Subst_Pos := Subst_Pos +1;
+--                 end loop;
+--                 Subst_Pos := Subst_Pos +1;
+--                 New_Line;
+--                 New_Line;
+--
+--              end if;
 
-   Letters.Show_Contents;
-
-   -- Digrams.Show_Contents;
-
-   -- Trigrams.Show_Contents;
-
+         end loop;
+      end;
+   end;
 end Tool;

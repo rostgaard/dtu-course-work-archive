@@ -1,16 +1,32 @@
 with Ada.Containers.Hashed_Maps;
+with Ada.Containers.Vectors;
 
 package Digrams is
 
    Package_Name : constant String := "Digrams";
 
-   type Digram is array (1 .. 2) of Character;
+   type Digram is new String (1 .. 2);
 
-   procedure Show_Contents (Threshold : in Float := 0.0001);
+   type Digram_Frequency is
+      record
+         Key       : Digram;
+         Frequency : Float := 0.0;
+      end record;
+
+   function Image (Item : in Digram_Frequency) return String;
 
    procedure Add (D : in Digram);
 
+   procedure Clear;
+
    function Frequency (D : in Digram) return Float;
+
+   package Frequency_Count is new Ada.Containers.Vectors
+     (Index_Type   => Natural,
+      Element_Type => Digram_Frequency);
+
+   function To_Ordered_Table (Reverse_Order : in Boolean := False)
+                              return Frequency_Count.Vector;
 
 private
    use Ada.Containers;

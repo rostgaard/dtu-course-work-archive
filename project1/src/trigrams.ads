@@ -1,4 +1,5 @@
 with Ada.Containers.Ordered_Maps;
+with Ada.Containers.Vectors;
 
 package Trigrams is
 
@@ -8,10 +9,18 @@ package Trigrams is
 
    type Trigram_String is new String (1 .. 3);
 
+   procedure Clear;
+
    type Trigram is
       record
          Key   : Trigram_String;
          Count : Natural := 0;
+      end record;
+
+   type Trigram_Frequency is
+      record
+         Key       : Trigram_String;
+         Frequency : Float := 0.0;
       end record;
 
 --     function "<" (Left, Right : in Trigram) return Boolean;
@@ -19,12 +28,14 @@ package Trigrams is
 
    procedure Image (Item : Trigram);
 
-   type Ordered_Trigram_List is array (Natural range <>) of aliased Trigram;
+   function Image (Item : in Trigram_Frequency) return String;
 
---   function Value (C1, C2, C3 : in Character) return Trigram;
+   package Frequency_Count is new Ada.Containers.Vectors
+     (Index_Type   => Natural,
+      Element_Type => Trigram_Frequency);
 
---     procedure Add (Item : in String) with
---       Precondition => Item'Length = 3;
+   function To_Ordered_Table (Reverse_Order : in Boolean := False)
+                              return Frequency_Count.Vector;
 
    procedure Add (T : in Trigram_String);
 
@@ -32,9 +43,6 @@ package Trigrams is
 
 private
    use Ada.Containers;
-
---     function Hash_Trigram (Item : in Trigram) return Hash_Type;
---     function Equivalent_Keys (Left, Right : Trigram) return Boolean;
 
    package Count_Storage is new Ada.Containers.Ordered_Maps
      (Key_Type     => Trigram_String,

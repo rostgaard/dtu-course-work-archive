@@ -1,5 +1,5 @@
-with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Float_Text_IO; use Ada.Float_Text_IO;
+with Ada.Strings.Equal_Case_Insensitive;
 
 with Decrypter.Trace;
 
@@ -7,32 +7,34 @@ package body Letters is
 
    Element_Count : Natural := 0;
 
-   procedure Image (Item : in Letter);
-
-   function "=" (Left, Right : in Letter) return Boolean is
-   begin
-      return Left.Count = Right.Count;
-   end "=";
-
    procedure Add (C : in Character) is
+   begin
+      Add ((1 => C));
+   end Add;
+
+   procedure Add (C : in Letter) is
       use Character_Counter;
 
       Context : constant String := Package_Name & ".Add";
 
-      procedure Update (Key     : in     Character;
-                        Element : in out Letter) is
+      procedure Update (Key     : in     Letter;
+                        Element : in out Natural);
+
+      procedure Update (Key     : in     Letter;
+                        Element : in out Natural) is
+         pragma Unreferenced (Key);
       begin
-         Element.Count := Element.Count + 1;
+         Element := Element + 1;
       end Update;
 
       Cur : constant Cursor := Frequencies.Find (C);
    begin
-      Decrypter.Trace.Debug (Message => "Adding """ & C & """",
+      Decrypter.Trace.Debug (Message => "Adding """ & String (C) & """",
                              Context => Context);
 
       if Cur = No_Element then
          Frequencies.Insert (Key      => C,
-                             New_Item => (Letter => C, Count => 0));
+                             New_Item => 0);
       else
          Frequencies.Update_Element (Position => Cur,
                                      Process  => Update'Access);
@@ -41,44 +43,90 @@ package body Letters is
       Element_Count := Element_Count + 1;
    end Add;
 
-   function Frequency (C : in Character) return Float is
+   procedure Clear is
+   begin
+      Frequencies.Clear;
+   end Clear;
+
+   function Equivalent_Keys (Left, Right : in Letter) return Boolean is
+   begin
+      return Ada.Strings.Equal_Case_Insensitive (Left  => String (Left),
+                                                 Right => String (Right));
+   end Equivalent_Keys;
+
+   function Frequency (C : in Letter) return Float is
    begin
       if Frequencies.Contains (Key => C) then
          return
-           Float (Frequencies.Element (C).Count) /
+           Float (Frequencies.Element (C)) /
            Float (Element_Count);
       else
          return 0.0;
       end if;
    end Frequency;
 
-   function Hash_Character (Item : in Character) return Positive is
+   function Hash_Letter (Item : in Letter) return Hash_Type is
    begin
-      return Character'Pos (Item);
-   end Hash_Character;
+      return Character'Pos (Item (Item'First));
+   end Hash_Letter;
 
-   procedure Image (Item : in Letter) is
+   function Image (Item : in Letter_Frequency) return String is
+      Buffer : String (1 .. 6);
    begin
-      Put (Item.Letter & " => ");
       Ada.Float_Text_IO.Put
-        (Item => Frequency (C => Item.Letter),
-         Fore => 0,
-         Aft  => 3,
+        (To   => Buffer,
+         Item => Item.Frequency,
+         Aft  => 4,
          Exp  => 0);
-      New_Line;
+
+      return String (Item.Key) & " => " & Buffer;
    end Image;
 
-   procedure Show_Contents (Threshold : in Float := 0.0001) is
+   function To_Ordered_Table (Reverse_Order : in Boolean := False)
+                              return Frequency_Count.Vector is
       use Character_Counter;
+
+      Vec : Frequency_Count.Vector;
+
+      function Comparison (Left, Right : in Letter_Frequency)
+                           return Boolean;
+
+      function Reverse_Comparison (Left, Right : in Letter_Frequency)
+                                   return Boolean;
+
+      function Comparison (Left, Right : in Letter_Frequency)
+                                   return Boolean is
+      begin
+         return Left.Frequency < Right.Frequency;
+      end Comparison;
+
+      function Reverse_Comparison (Left, Right : in Letter_Frequency)
+                                   return Boolean is
+      begin
+         return Left.Frequency > Right.Frequency;
+      end Reverse_Comparison;
+
+      package Sorting_Reverse is new Frequency_Count.Generic_Sorting
+        ("<" => Reverse_Comparison);
+      package Sorting is new Frequency_Count.Generic_Sorting
+        ("<" => Comparison);
 
       C : Cursor := Frequencies.First;
    begin
-      while Has_Element (C) loop
-         if Frequency (Key (C)) > Threshold then
-
-            Image (Element (C));
-         end if;
+      while C /= No_Element loop
+         Vec.Append (New_Item =>
+                       (Key       => Key (C),
+                        Frequency => Frequency (Key (C))));
          C := Next (C);
       end loop;
-   end Show_Contents;
+
+      if Reverse_Order then
+         Sorting_Reverse.Sort (Vec);
+      else
+         Sorting.Sort (Vec);
+      end if;
+
+      return Vec;
+   end To_Ordered_Table;
+
 end Letters;

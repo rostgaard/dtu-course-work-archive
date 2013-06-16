@@ -1,7 +1,7 @@
-with Ada.Strings.Hash;
+--  with Ada.Strings.Hash;
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Float_Text_IO; use Ada.Float_Text_IO;
-with Ada.Strings.Equal_Case_Insensitive;
+--  with Ada.Strings.Equal_Case_Insensitive;
 
 with Decrypter.Trace;
 
@@ -9,15 +9,15 @@ package body Trigrams is
 
    Element_Count : Natural := 0;
 
-   function "<" (Left, Right : in Trigram) return Boolean is
-   begin
-      return Left.Count < Right.Count;
-   end "<";
-
-   function "=" (Left, Right : in Trigram) return Boolean is
-   begin
-      return Left.Count = Right.Count;
-   end "=";
+--     function "<" (Left, Right : in Trigram) return Boolean is
+--     begin
+--        return Left.Count < Right.Count;
+--     end "<";
+--
+--     function "=" (Left, Right : in Trigram) return Boolean is
+--     begin
+--        return Left.Count = Right.Count;
+--     end "=";
 
    procedure Add (T : in Trigram_String) is
       use Count_Storage;
@@ -29,6 +29,7 @@ package body Trigrams is
 
       procedure Update (Key     : in     Trigram_String;
                         Element : in out Trigram) is
+         pragma Unreferenced (Key);
       begin
          Element.Count := Element.Count + 1;
       end Update;
@@ -46,6 +47,11 @@ package body Trigrams is
 
       Element_Count := Element_Count + 1;
    end Add;
+
+   procedure Clear is
+   begin
+      Frequencies.Clear;
+   end Clear;
 
 --     function Equivalent_Keys (Left, Right : Trigram) return Boolean is
 --     begin
@@ -80,6 +86,18 @@ package body Trigrams is
       New_Line;
    end Image;
 
+   function Image (Item : in Trigram_Frequency) return String is
+      Buffer : String (1 .. 6);
+   begin
+      Ada.Float_Text_IO.Put
+        (To   => Buffer,
+         Item => Item.Frequency,
+         Aft  => 4,
+         Exp  => 0);
+
+      return String (Item.Key) & " => " & Buffer;
+   end Image;
+
    procedure Show_Contents (Threshold : in Float := 0.0001) is
       use Count_Storage;
 
@@ -94,38 +112,44 @@ package body Trigrams is
       end loop;
    end Show_Contents;
 
---     function Value (C1, C2, C3 : in Character) return Trigram is
---     begin
---        return (1 => C1, 2 => C2, 3 => C3);
---     end Value;
+   function To_Ordered_Table (Reverse_Order : in Boolean := False)
+                              return Frequency_Count.Vector is
+      Vec : Frequency_Count.Vector;
 
---     function To_Ordered_Array (Max_Size : in Natural := 25)
---                                return Ordered_Trigram_List is
---        use Count_Storage;
---
---        Result_List : Ordered_Trigram_List (1 .. Max_Size);
---        First       : constant access Trigram
---          := Result_List (Result_List'Last)'Access;
---        Count : Natural := 0;
---
---        procedure Insert (Element : in     Trigram;
---                          Into    : in out Ordered_Trigram_List) is
---        begin
---
---        end Insert;
---
---        C : Cursor := Frequencies.First;
---
---     begin
---        while Has_Element (C) loop
---           Insert (Element => Key (C),
---                   Into    => Result_List);
---           Count := Count + 1;
---
---           C := Next (C);
---        end loop;
---
---        return Result_List;
---     end To_Ordered_Array;
+      function Comparison (Left, Right : in Trigram_Frequency)
+                                   return Boolean;
+
+      function Comparison (Left, Right : in Trigram_Frequency)
+                           return Boolean is
+      begin
+         return Left.Frequency < Right.Frequency;
+      end Comparison;
+
+      function Reverse_Comparison (Left, Right : in Trigram_Frequency)
+                                   return Boolean;
+
+      function Reverse_Comparison (Left, Right : in Trigram_Frequency)
+                                   return Boolean is
+      begin
+         return Left.Frequency > Right.Frequency;
+      end Reverse_Comparison;
+
+      package Sorting_Reverse is new Frequency_Count.Generic_Sorting
+        ("<" => Reverse_Comparison);
+      package Sorting is new Frequency_Count.Generic_Sorting
+        ("<" => Comparison);
+   begin
+      for Item of Frequencies loop
+         Vec.Append ((Key => Item.Key, Frequency => Frequency (Item.Key)));
+      end loop;
+
+      if Reverse_Order then
+         Sorting_Reverse.Sort (Vec);
+      else
+         Sorting.Sort (Vec);
+      end if;
+
+      return Vec;
+   end To_Ordered_Table;
 
 end Trigrams;
