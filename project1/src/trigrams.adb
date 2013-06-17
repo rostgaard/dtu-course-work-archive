@@ -22,7 +22,7 @@ package body Trigrams is
    procedure Add (T : in Trigram_String) is
       use Count_Storage;
 
-      Context : constant String := Package_Name & ".Add";
+      --  Context : constant String := Package_Name & ".Add";
 
       procedure Update (Key     : in     Trigram_String;
                         Element : in out Trigram);
@@ -35,8 +35,6 @@ package body Trigrams is
       end Update;
 
    begin
-      Decrypter.Trace.Debug (Message => "Adding """ & String (T) & """",
-                             Context => Context);
       if not Frequencies.Contains (T) then
          Frequencies.Insert (Key      => T,
                              New_Item => (Key => T, Count => 0));
@@ -51,6 +49,7 @@ package body Trigrams is
    procedure Clear is
    begin
       Frequencies.Clear;
+      Element_Count := 0;
    end Clear;
 
 --     function Equivalent_Keys (Left, Right : Trigram) return Boolean is

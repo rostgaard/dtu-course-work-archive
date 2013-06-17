@@ -17,7 +17,7 @@
 GNATMAKE=gnatmake -P common
 GNATCLEAN=gnatclean -P common
 
-all: folders tool
+all: folders substitution_cipher_decrypter
 
 folders:
 	@-(ls build > /dev/null || mkdir build)
@@ -27,9 +27,10 @@ clean:
 
 
 distclean: clean
-	-rm tool
+	-rm substitution_cipher_decrypter
 
-tool:
+substitution_cipher_decrypter:
 	@-echo "Building $@"
 	@${GNATMAKE} $@
 
+.PHONY: substitution_cipher_decrypter

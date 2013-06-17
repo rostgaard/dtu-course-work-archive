@@ -29,9 +29,6 @@ package body Letters is
 
       Cur : constant Cursor := Frequencies.Find (C);
    begin
-      Decrypter.Trace.Debug (Message => "Adding """ & String (C) & """",
-                             Context => Context);
-
       if Cur = No_Element then
          Frequencies.Insert (Key      => C,
                              New_Item => 0);
@@ -46,6 +43,7 @@ package body Letters is
    procedure Clear is
    begin
       Frequencies.Clear;
+      Element_Count := 0;
    end Clear;
 
    function Equivalent_Keys (Left, Right : in Letter) return Boolean is

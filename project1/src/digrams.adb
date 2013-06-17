@@ -10,7 +10,7 @@ package body Digrams is
    Element_Count : Natural := 0;
 
    procedure Add (D : in Digram) is
-      Context : constant String := Package_Name & ".Add";
+      --  Context : constant String := Package_Name & ".Add";
 
       procedure Update (Key     : in Digram;
                         Element : in out Natural);
@@ -23,12 +23,9 @@ package body Digrams is
       end Update;
 
    begin
-      Decrypter.Trace.Debug (Message => "Adding """ & String (D) & """",
-                             Context => Context);
       if not Frequencies.Contains (D) then
          Frequencies.Insert (D, 0);
       else
-
          Frequencies.Update_Element (Frequencies.Find (D), Update'Access);
       end if;
 
@@ -38,6 +35,7 @@ package body Digrams is
    procedure Clear is
    begin
       Frequencies.Clear;
+      Element_Count := 0;
    end Clear;
 
    function Equivalent_Keys (Left, Right : Digram) return Boolean is

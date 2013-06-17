@@ -1,5 +1,5 @@
 \documentclass[10pt,a4paper]{article}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -42,37 +42,54 @@
 %  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
 
-
 \title{01435 Practical Cryptanalysis}
-\author{Kim Rostgaard Christensen - s084283}
+%\author{Kim Rostgaard Christensen - s084283}
+\author{Thomas Pedersen - s103665}
 \begin{document}
 \maketitle
 
-\paragraph{Exercise 1:} Decrypt the following ciphertext that was encrypted with a Caesar cipher
-\begin{center}
-GJBFW JYMJN IJXTK RFWHM
-\end{center}
-Output from program \Code{exercise\_01.adb}:
+%\paragraph{Exercise 1:} Decrypt the following ciphertext that was encrypted with a Caesar cipher
+%\1begin{center}
+%GJBFW JYMJN IJXTK RFWHM
+%\end{center}
+%Output from program \Code{exercise\_01.adb}:
 
-\lstinputlisting[frame=single] {../output/exercise_01.output}
+%\lstinputlisting[frame=single] {../output/exercise_01.output}
 
-\paragraph{Exercise 2:}
-The ciphertext ``ABQZ'' can translate to either ``STIR'' or ``OPEN''.
+%\paragraph{Exercise 2:}
+%The ciphertext ``ABQZ'' can translate to either ``STIR'' or ``OPEN''.
 
-9.000+ was found by means of brute force and an English dictionary.
+%9.000+ was found by means of brute force and an English dictionary.
 
 \paragraph{Exercise 3:}
-\paragraph{Exercise 4:}
+Known plaintext is a special case of chosen plaintext.
+\begin{description}
+\item[Known plaintext attacks:]
+The simple caesar cipher, can be broken only knowing a sigle letter, but a more real life example is WEP(Wired Equivalent Privacy).\\
+It has been shown that it can be broken, with a passive attack but that requires thousands of packages.\\
+In 2006 Bittau, Handly and Lackey showed that by only capturing a single package, followed by sending 128 packages, it is possible to get the key.\footnote{Source: http://en.wikipedia.org/wiki/Wired\_Equivalent\_Privacy}
+
+\item[chosen plaintext attacks:] If we look at the Vigenère cipher, that one can easily be broken if you choose a text that is at least the key lengh, which only consists of the same letter, for instance: if the Key is "HALLO" then we could choose the plaintext "AAAAA", which would be encrypted to: HALLO. and just like that we get the key.\footnote{Source: http://en.wikipedia.org/wiki/Vigen\%C3\%A8re\_cipher
+}
+
+\end{description}
+
+
+%Source: 
+
+
+
+%\paragraph{Exercise 4:}
 \paragraph{Exercise 5:}
 %In one hour 11.385.500.000 keys tested.
 
-For this, not very efficient implementation, 2.160.000.000 keys was tested in an hour.\\\\
+For this implementation, 2.160.000.000 keys was tested in an hour.\\\\
 This gives $600000 \cdot 24 \cdot 365 = 18.921.600.000.000 \approx 19 \cdot 10^{12}$ in a year.\\\\
 Given a cluster of 1 million machines, the number would be $19 \cdot 10^{12} \cdot 10^6 = 19 \cdot 10^{18}$ keys attempted, roughly corresponding to ~64 bit.\\\\
 Code is listed in figure \ref{lst:exercise_05}.
 
 \begin{figure}
-\lstinputlisting[frame=single] {../src/exercise_05.adb}
+\lstinputlisting[frame=single,language=Ada] {../src/exercise_05.adb}
 \caption{exercise\_05.adb}
 \label{lst:exercise_05}
 \end{figure}
@@ -83,8 +100,8 @@ For $|K|$, our keyspace is $26!$, $R_L$ is $26$, which gives us;
 UD \approx \frac{\log_2{26!}}{0.7 \cdot \log_2{26}} \Leftrightarrow UD \approx 26.7
 \end{equation}
 
-\section*{Exercise 7}
-\section*{Exercise 8}
+%\section*{Exercise 7}
+%\section*{Exercise 8}
 \section*{Exercise 9}
 Our test-population is 1000, given that we have 1000 \emph{pairs}.\\
 Feeding the this to the $\chi^2$ test gives the following;
@@ -104,7 +121,7 @@ CHIDIST \left(6.744,3\right) = 0.08
 
 Around 8\% of the experiments will result in a distribution similar to this. We should not reject this as acceptable output, as it is within the standard 95\% confidence interval. Since the probability is so low, more data should be acquired to get more accurate results.
 
-\section*{Exercise 10}
+%\section*{Exercise 10}
 \section*{Exercise 11}
 Putting the table into a functional graph, we observe that it consists of two disjoint cycles. One of them being merely $4 \rightarrow 1 \rightarrow 4$.
 When using the input vector consisting of identical elements (all 3's), we observe the function repeating itself after 14 iterations.\\
