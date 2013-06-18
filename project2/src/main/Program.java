@@ -8,40 +8,50 @@ public class Program {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub, hest
+	public static void main(String[] args) throws NoSuchAlgorithmException {
+		// TODO Auto-generated method stub
 		System.out.println("Hello World!");
-		
-		try {
-			MD5();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
+
+		long result = MD5_Hash(45L);
+		System.out.println(result);
 	}
 
-	static void MD5() throws NoSuchAlgorithmException{
-		String password = "123456";
-		 
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(password.getBytes());
- 
-        byte byteData[] = md.digest();
- 
-        //convert the byte to hex format method 1
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < byteData.length; i++) {
-         sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-        }
- 
-        System.out.println("Digest(in hex format):: " + sb.toString());
- 
-        //convert the byte to hex format method 2
-        StringBuffer hexString = new StringBuffer();
-    	for (int i=0;i<byteData.length;i++) {
-    		String hex=Integer.toHexString(0xff & byteData[i]);
-   	     	if(hex.length()==1) hexString.append('0');
-   	     	hexString.append(hex);
-    	}
-    	System.out.println("Digest(in hex format):: " + hexString.toString());
+	static long MD5_Hash(long arg) {
+		MessageDigest md = null;
+		try {
+			md = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+
+		md.update(longToByteArr(arg));
+		byte byteData[] = md.digest();
+
+		return byteArrToLong(byteData);
+	}
+
+	/**
+	 * Combines x and y. X||Y
+	 */
+	static long combine28bit(long x, long y){
+		long a = x & 0xfffffff;
+		return ((a << 28) + y);
+	}
+
+	static long byteArrToLong(byte arg[]) {
+		long value = 0;
+		for (int i = 0; i < arg.length; i++) {
+			value += ((long) arg[i] & 0xffL) << (8 * i);
+		}
+		return value;
+	}
+	
+	static byte[] longToByteArr(long x){
+		byte[] res = new byte[8];
+		for(int i = 0; i <= 8; i ++){
+			res[i] = (byte) (x & (0xff << (8 * i)) >> (8 * i));
+		}
+		return res;
 	}
 }
