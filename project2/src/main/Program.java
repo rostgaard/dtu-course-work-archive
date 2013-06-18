@@ -49,7 +49,7 @@ public class Program {
 	
 	static byte[] longToByteArr(long x){
 		byte[] res = new byte[8];
-		for(int i = 0; i <= 8; i ++){
+		for(int i = 0; i < 8; i ++){
 			res[i] = (byte) (x & (0xff << (8 * i)) >> (8 * i));
 		}
 		return res;
