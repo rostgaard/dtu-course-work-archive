@@ -4,12 +4,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Program {
-
+	private final static long bit28 = 0xfffffff;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) throws NoSuchAlgorithmException {
-		// TODO Auto-generated method stub
 		System.out.println("Hello World!");
 
 		long result = MD5_Hash(45L);
@@ -25,33 +24,21 @@ public class Program {
 			System.exit(-1);
 		}
 
-		md.update(longToByteArr(arg));
+		md.update(Utilities.longToByteArr(arg));
 		byte byteData[] = md.digest();
-
-		return byteArrToLong(byteData);
+				
+		return Utilities.byteArrToLong(byteData) & bit28;
 	}
 
 	/**
 	 * Combines x and y. X||Y
 	 */
 	static long combine28bit(long x, long y){
-		long a = x & 0xfffffff;
+		long a = x & bit28;
 		return ((a << 28) + y);
 	}
-
-	static long byteArrToLong(byte arg[]) {
-		long value = 0;
-		for (int i = 0; i < arg.length; i++) {
-			value += ((long) arg[i] & 0xffL) << (8 * i);
-		}
-		return value;
-	}
 	
-	static byte[] longToByteArr(long x){
-		byte[] res = new byte[8];
-		for(int i = 0; i < 8; i ++){
-			res[i] = (byte) (x & (0xff << (8 * i)) >> (8 * i));
-		}
-		return res;
+	static long reductionFunction(long cipherText, long reductionNumber, long tableSize){
+		return (cipherText + reductionNumber) % tableSize;
 	}
 }
