@@ -5,13 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Program {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) throws NoSuchAlgorithmException {
-		// TODO Auto-generated method stub
-		System.out.println("Hello World!");
-
 		long result = MD5_Hash(45L);
 		System.out.println(result);
 	}
