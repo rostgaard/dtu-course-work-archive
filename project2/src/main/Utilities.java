@@ -1,6 +1,11 @@
 package main;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class Utilities {
+	public static final long bit28 = 0xfffffff;
+	
 	static long byteArrToLong(byte arg[]) {
 		long value = 0;
 		for (int i = 0; i < arg.length; i++) {
@@ -16,5 +21,20 @@ public class Utilities {
 		  b[i] = (byte) (x >> (size - i - 1 << 3));
 		}
 		return b;
+	}
+	
+	static long MD5_Hash(long arg) {
+		MessageDigest md = null;
+		try {
+			md = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+
+		md.update(longToByteArr(arg));
+		byte byteData[] = md.digest();
+		
+		return Utilities.byteArrToLong(byteData) & bit28;
 	}
 }
