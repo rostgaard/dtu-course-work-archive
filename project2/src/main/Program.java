@@ -4,13 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Program {
-	private final static long bit28 = 0xfffffff;
-	/**
-	 * @param args
-	 */
+	final static long bit28 = 0xfffffff;
 	public static void main(String[] args) throws NoSuchAlgorithmException {
-		System.out.println("Hello World!");
-
 		long result = MD5_Hash(45L);
 		System.out.println(result);
 	}
