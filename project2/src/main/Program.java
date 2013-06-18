@@ -10,7 +10,6 @@ public class Program {
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		ran = new SecureRandom();
 		generateRainbowTable();
-		//test();
 	}
 
 	static long MD5_Hash(long arg) {
@@ -55,7 +54,7 @@ public class Program {
 		
 		long length = (long) Math.pow(2, 10);
 		long rows = (long) Math.pow(2, 18);
-		Long lastTime = System.currentTimeMillis();
+		
 		for (int i = 0; i < rows; i++) {
 			String startValue = getRandomString();
 			long accumilator =  Utilities.byteArrToLong(startValue.getBytes());
@@ -69,9 +68,5 @@ public class Program {
 		}
 		
 		return rainbow;
-	}
-	
-	static void test(){
-		
 	}
 }
