@@ -1,97 +1,63 @@
 package main;
 
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+
 public class Program {
-	final static long bit28 = 0xfffffff;
 	static SecureRandom ran;
-	
+
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		ran = new SecureRandom();
-		generateRainbowTable();
-	}
+		RainbowTable rainbow = generateRainbowTable();
+		String path = "small.rainbow";
+		RainbowTable.writeToFile(rainbow, path);
 
-	static long MD5_Hash(long arg) {
-		MessageDigest md = null;
-		try {
-			md = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			System.exit(-1);
+		RainbowTable testTable = RainbowTable.readFromFile(path);
+
+		if (testTable != null) {
+			System.out.println(rainbow.size() == testTable.size());
 		}
 
-		md.update(Utilities.longToByteArr(arg));
-		byte byteData[] = md.digest();
-				
-		return Utilities.byteArrToLong(byteData) & bit28;
+		System.out.println("Main is done");
 	}
 
 	/**
 	 * Combines x and y. X||Y
 	 */
-	static long combine28bit(long x, long y){
-		long a = x & bit28;
-		return ((a << 28) + y);
+	static long combine28bit(long x, long y) {
+		long a = x & Utilities.bit28;
+		long b = y & Utilities.bit28;
+		return ((a << 28) + b);
 	}
-	
-	static long reductionFunction(long cipherText, long reductionNumber, long tableSize){
+
+	static long reductionFunction(long cipherText, long reductionNumber,
+			long tableSize) {
 		return (cipherText + reductionNumber) % tableSize;
 	}
-	
-	static String getRandomString(){
-		final int textLenght = 8;
-		String buffer = "";
-		for (int i = 0; i < textLenght; i++){
-			buffer += (char)(ran.nextInt(26) + 'A');
-		}
-		return buffer;
-	}
-	
-	static RainbowTable generateRainbowTable(){
+
+	static RainbowTable generateRainbowTable() {
 		RainbowTable rainbow = new RainbowTable();
-		
+
 		long length = (long) Math.pow(2, 10);
 		long rows = (long) Math.pow(2, 18);
-		
+
+		long lastTime = System.currentTimeMillis();
 		for (int i = 0; i < rows; i++) {
-			String startValue = getRandomString();
-			long accumilator =  Utilities.byteArrToLong(startValue.getBytes());
-			System.out.println(accumilator);
+			long startValue = ran.nextInt() % Utilities.bit28;
+			long accumilator = startValue;
 			for (int j = 0; j < length; j++) {
-				long cipher = MD5_Hash(accumilator);
-				
-				long reducedCipher = reductionFunction(cipher, j, bit28+1);
+				long cipher = Utilities.MD5_Hash(accumilator);
+
+				long reducedCipher = reductionFunction(cipher, j, Utilities.bit28 + 1);
 				accumilator = reducedCipher;
-				
-				if (j == length -2){
-					System.out.println("Hashed: " + cipher);
-					System.out.println("Reduced: " + reducedCipher);
-				
-					try {
-						Thread.sleep(300);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
 			}
-			System.out.println("i:" + i + " accumilator: " + accumilator + " startValue: " + startValue);
 			rainbow.put(accumilator, startValue);
-			
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 		}
-		
+
+		long currentTime = System.currentTimeMillis();
+		System.out.println("Generated the table in: "
+				+ (currentTime - lastTime));
+
 		return rainbow;
-	}
-	
-	static void test(){
-		
 	}
 }
