@@ -92,3 +92,5 @@ exercise_11:
 
 exercise_01.output:exercise_01
 	@./exercise_01 | grep "BEWARE" > output/exercise_01.output
+
+.PHONY: exercise_05
