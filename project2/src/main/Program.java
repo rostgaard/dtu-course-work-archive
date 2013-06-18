@@ -3,21 +3,27 @@ package main;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import javax.naming.ldap.HasControls;
+
 public class Program {
 	static SecureRandom ran;
-
+	
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		ran = new SecureRandom();
-		RainbowTable rainbow = generateRainbowTable();
+		//RainbowTable rainbow = generateRainbowTable();
 		String path = "small.rainbow";
-		RainbowTable.writeToFile(rainbow, path);
+		//RainbowTable.writeToFile(rainbow, path);
 
 		RainbowTable testTable = RainbowTable.readFromFile(path);
-
-		if (testTable != null) {
-			System.out.println(rainbow.size() == testTable.size());
-		}
-
+		
+		long plain = 1535;
+		long hash = Utilities.MD5_Hash(plain);
+		System.out.println(hash);
+		long plainGuess = testTable.lookup(hash);
+		
+		System.out.println("Real: " + plain);
+		System.out.println("Guess: " + plainGuess);
+		
 		System.out.println("Main is done");
 	}
 
@@ -26,7 +32,9 @@ public class Program {
 
 		long length = (long) Math.pow(2, 10);
 		long rows = (long) Math.pow(2, 18);
-
+		rainbow.rows = rows;
+		rainbow.chainLength = length;
+		
 		long lastTime = System.currentTimeMillis();
 		for (int i = 0; i < rows; i++) {
 			long startValue = ran.nextInt() % Utilities.bit28;
@@ -42,7 +50,7 @@ public class Program {
 
 		long currentTime = System.currentTimeMillis();
 		System.out.println("Generated the table in: "
-				+ (currentTime - lastTime));
+				+ (currentTime - lastTime)/1000);
 
 		return rainbow;
 	}

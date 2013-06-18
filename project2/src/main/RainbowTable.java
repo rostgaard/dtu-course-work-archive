@@ -14,7 +14,9 @@ import java.io.*;
  */
 public class RainbowTable extends HashMap<Long, Long> implements Serializable {
 	private static final long serialVersionUID = 8562121795254811164L;
-
+	public long rows;
+	public long chainLength;
+	
 	public static RainbowTable readFromFile(String path) {
 		RainbowTable table = null;
 		try {
@@ -42,5 +44,51 @@ public class RainbowTable extends HashMap<Long, Long> implements Serializable {
 		} catch (IOException i) {
 			i.printStackTrace();
 		}
+	}
+	
+	public long lookup(long value){
+		long startValue = 0, numberOfReductionFunctions = 0;
+		
+		for (int numReducFunc = 1; numReducFunc < chainLength; numReducFunc++) {
+			long accumulator = value;
+			for (long i = chainLength-numReducFunc; i < chainLength; i++) {
+				accumulator = Utilities.reductionFunction(accumulator, i, Utilities.bit28 + 1);
+				
+				//Last iteration
+				if (i < chainLength-1){
+					accumulator = Utilities.MD5_Hash(accumulator);
+				}
+			}
+			
+			if (containsKey(accumulator)){
+				System.out.println("Found the right row");
+				
+				startValue = get(accumulator);
+				numberOfReductionFunctions = numReducFunc;
+				break;
+				
+			}
+		}
+		
+		System.out.println(startValue);
+		System.out.println(numberOfReductionFunctions);
+		
+		//Now that we know the row, we need to find the right key.
+		long accumilator = startValue;
+		for (long i = 0; i < chainLength; i++) {
+			long cipher = Utilities.MD5_Hash(accumilator);
+			
+			System.out.println(cipher);
+			
+			//Have we found the key?
+			if (cipher == value){
+				System.out.println("Value: " + value + " == Cipher: " + cipher);
+				return accumilator;
+			}
+			
+			accumilator = Utilities.reductionFunction(cipher, i, Utilities.bit28 + 1);
+		}
+		
+		return 0;
 	}
 }
