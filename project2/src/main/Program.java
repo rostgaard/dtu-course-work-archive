@@ -21,20 +21,6 @@ public class Program {
 		System.out.println("Main is done");
 	}
 
-	/**
-	 * Combines x and y. X||Y
-	 */
-	static long combine28bit(long x, long y) {
-		long a = x & Utilities.bit28;
-		long b = y & Utilities.bit28;
-		return ((a << 28) + b);
-	}
-
-	static long reductionFunction(long cipherText, long reductionNumber,
-			long tableSize) {
-		return (cipherText + reductionNumber) % tableSize;
-	}
-
 	static RainbowTable generateRainbowTable() {
 		RainbowTable rainbow = new RainbowTable();
 
@@ -48,7 +34,7 @@ public class Program {
 			for (int j = 0; j < length; j++) {
 				long cipher = Utilities.MD5_Hash(accumilator);
 
-				long reducedCipher = reductionFunction(cipher, j, Utilities.bit28 + 1);
+				long reducedCipher = Utilities.reductionFunction(cipher, j, Utilities.bit28 + 1);
 				accumilator = reducedCipher;
 			}
 			rainbow.put(accumilator, startValue);

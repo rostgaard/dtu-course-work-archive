@@ -23,6 +23,20 @@ public class Utilities {
 		return b;
 	}
 	
+	/**
+	 * Combines x and y. X||Y
+	 */
+	static long combine28bit(long x, long y) {
+		long a = x & bit28;
+		long b = y & bit28;
+		return ((a << 28) + b);
+	}
+
+	static long reductionFunction(long cipherText, long reductionNumber,
+			long tableSize) {
+		return (cipherText + reductionNumber) % tableSize;
+	}
+	
 	static long MD5_Hash(long arg) {
 		MessageDigest md = null;
 		try {
