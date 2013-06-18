@@ -10,10 +10,11 @@ public class Utilities {
 	}
 	
 	static byte[] longToByteArr(long x){
-		byte[] res = new byte[8];
-		for(int i = 0; i < 8; i ++){
-			res[i] = (byte) (x & (0xff << (8 * i)) >> (8 * i));
+		int size = 8;
+		byte[] b = new byte[size];
+		for (int i = 0; i < size; ++i) {
+		  b[i] = (byte) (x >> (size - i - 1 << 3));
 		}
-		return res;
+		return b;
 	}
 }

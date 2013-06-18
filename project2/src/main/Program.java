@@ -10,6 +10,7 @@ public class Program {
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		ran = new SecureRandom();
 		generateRainbowTable();
+		//test();
 	}
 
 	static long MD5_Hash(long arg) {
@@ -23,7 +24,7 @@ public class Program {
 
 		md.update(Utilities.longToByteArr(arg));
 		byte byteData[] = md.digest();
-				
+		
 		return Utilities.byteArrToLong(byteData) & bit28;
 	}
 
@@ -54,39 +55,17 @@ public class Program {
 		
 		long length = (long) Math.pow(2, 10);
 		long rows = (long) Math.pow(2, 18);
-		
+		Long lastTime = System.currentTimeMillis();
 		for (int i = 0; i < rows; i++) {
 			String startValue = getRandomString();
 			long accumilator =  Utilities.byteArrToLong(startValue.getBytes());
-			System.out.println(accumilator);
 			for (int j = 0; j < length; j++) {
 				long cipher = MD5_Hash(accumilator);
 				
 				long reducedCipher = reductionFunction(cipher, j, bit28+1);
 				accumilator = reducedCipher;
-				
-				if (j == length -2){
-					System.out.println("Hashed: " + cipher);
-					System.out.println("Reduced: " + reducedCipher);
-				
-					try {
-						Thread.sleep(300);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
 			}
-			System.out.println("i:" + i + " accumilator: " + accumilator + " startValue: " + startValue);
 			rainbow.put(accumilator, startValue);
-			
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 		}
 		
 		return rainbow;
