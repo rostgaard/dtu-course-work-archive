@@ -32,7 +32,8 @@ public class Program {
 	 */
 	static long combine28bit(long x, long y){
 		long a = x & bit28;
-		return ((a << 28) + y);
+		long b = y & bit28;
+		return ((a << 28) + b);
 	}
 	
 	static long reductionFunction(long cipherText, long reductionNumber, long tableSize){
