@@ -10,7 +10,7 @@ public class Program {
 		ran = new SecureRandom();
                 
 		//RainbowTable rainbow = generateRainbowTable();
-		String path = "small.rainbow";
+		String path = "small1.rainbow";
 		//RainbowTableIO.writeToFile(rainbow, path);
 
 		RainbowTable testTable = RainbowTableIO.readFromFile(path);
