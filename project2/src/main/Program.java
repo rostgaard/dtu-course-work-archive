@@ -3,8 +3,6 @@ package main;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-import javax.naming.ldap.HasControls;
-
 public class Program {
 	static SecureRandom ran;
 	
@@ -18,11 +16,13 @@ public class Program {
 		
 		long plain = 1535;
 		long hash = Utilities.MD5_Hash(plain);
-		System.out.println(hash);
 		long plainGuess = testTable.lookup(hash);
 		
 		System.out.println("Real: " + plain);
 		System.out.println("Guess: " + plainGuess);
+		
+		long guessHashed = Utilities.MD5_Hash(plainGuess);
+		System.out.println("original hash:" + hash + " guessedHashed: " + guessHashed);
 		
 		System.out.println("Main is done");
 	}
