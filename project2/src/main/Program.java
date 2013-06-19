@@ -8,11 +8,12 @@ public class Program {
 	
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		ran = new SecureRandom();
+                
 		//RainbowTable rainbow = generateRainbowTable();
 		String path = "small.rainbow";
-		//RainbowTable.writeToFile(rainbow, path);
+		//RainbowTableIO.writeToFile(rainbow, path);
 
-		RainbowTable testTable = RainbowTable.readFromFile(path);
+		RainbowTable testTable = RainbowTableIO.readFromFile(path);
 		
 		long plain = 1535;
 		long hash = Utilities.MD5_Hash(plain);
