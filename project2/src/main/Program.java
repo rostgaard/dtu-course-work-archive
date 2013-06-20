@@ -69,9 +69,9 @@ public class Program {
 			long accumulator = startValue;
 			for (int j = 0; j < length; j++) {
 				long cipher = Utilities.MD5_Hash(accumulator, Utilities.bit28);
+
 				long reducedCipher = Utilities.reductionFunction(cipher, j,
 						Utilities.bit28 + 1);
-
 				accumulator = reducedCipher;
 			}
 			rainbow.put(accumulator, startValue);
