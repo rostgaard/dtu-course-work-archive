@@ -74,7 +74,7 @@ begin
          for J in Unsigned_20 (0) .. Unsigned_20 (2**T) loop
 
             Val := Reduction (Cipher => MD5_Redux (Val),
-                              I      => J,
+                              I      => 1,
                               Size   => Unsigned_20'Last);
             Definition_Map.Add (Val);
          end loop;

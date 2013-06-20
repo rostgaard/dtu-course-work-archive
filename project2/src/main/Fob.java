@@ -11,7 +11,7 @@ public class Fob
 		
 		long combined = Utilities.combine28bit(mySecret, ChallengeFromCar);
 		
-		long myResponse = Utilities.MD5_Hash(combined);
+		long myResponse = Utilities.MD5_Hash(combined, Utilities.bit28);
 		
 		boolean Success = Car.TryUnlock(myResponse);
 		if(Success)

@@ -3,6 +3,8 @@ package main;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import javax.rmi.CORBA.Util;
+
 public class Program {
 	static SecureRandom ran;
 
@@ -13,8 +15,10 @@ public class Program {
 		String path = "small.rainbow";
 		//RainbowTableIO.writeToFile(rainbow, path);
 
+
 		System.out.println("Loading table");
 		RainbowTable testTable = RainbowTableIO.readFromFile(path);
+
 		System.out.println("Done loading table");
 
 		/*
@@ -35,8 +39,8 @@ public class Program {
 			attempts++;
 			System.out.print("Attemt number " + attempts + ", ");
 			long challengeFromCar = Car.GetChallenge();
-			long challengeMD5 = Utilities.MD5_Hash(challengeFromCar);
-			long ResponseToCar = testTable.lookup(challengeMD5);
+			long challengeMD5 = Utilities.MD5_Hash(challengeFromCar, Utilities.bit28);
+			long ResponseToCar = testTable.lookup(challengeMD5, Utilities.bit28);
 			if (ResponseToCar == 0) {
 				System.out.print("Skipping\n");
 			} else {
@@ -64,15 +68,17 @@ public class Program {
 		long lastTime = System.currentTimeMillis();
 		for (int i = 0; i < rows; i++) {
 			long startValue = ran.nextInt() % Utilities.bit28;
-			long accumilator = startValue;
+			long accumulator = startValue;
 			for (int j = 0; j < length; j++) {
-				long cipher = Utilities.MD5_Hash(accumilator);
+				long cipher = Utilities.MD5_Hash(accumulator, Utilities.bit28);
 
 				long reducedCipher = Utilities.reductionFunction(cipher, j,
 						Utilities.bit28 + 1);
-				accumilator = reducedCipher;
+
+				accumulator = reducedCipher;
 			}
-			rainbow.put(accumilator, startValue);
+			rainbow.put(accumulator, startValue);
+			System.out.print(rainbow.size());
 		}
 
 		long currentTime = System.currentTimeMillis();

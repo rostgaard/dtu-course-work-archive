@@ -27,7 +27,7 @@ public class Car {
 	public static boolean TryUnlock(long Response)
 	{
 		long combined = Utilities.combine28bit(MySecret, Challenge);
-		long myResponse = Utilities.MD5_Hash(combined);
+		long myResponse = Utilities.MD5_Hash(combined, Utilities.bit28);
 		System.out.println("Car Secret: " + MySecret + ", CarChallenge: " + Challenge + ", Hash(Secret||CarChallenge): " + myResponse + ", Received: " + Response);
 		return (myResponse == Response);
 	}

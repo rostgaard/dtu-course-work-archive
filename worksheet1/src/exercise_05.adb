@@ -1,6 +1,8 @@
-with Ada.Calendar;     use Ada.Calendar;
-with Ada.Text_IO;      use Ada.Text_IO;
-with Ada.Command_Line; use Ada.Command_Line;
+with Ada.Calendar;      use Ada.Calendar;
+with Ada.Text_IO;       use Ada.Text_IO;
+with Ada.Float_Text_IO; use Ada.Float_Text_IO;
+with Ada.Command_Line;  use Ada.Command_Line;
+with Ada.Exceptions;    use Ada.Exceptions;
 procedure Exercise_05 is
 
    type Unsigned_128 is mod 2**Long_Long_Integer'Size;
@@ -14,41 +16,55 @@ procedure Exercise_05 is
       return Key xor Value;
    end Encrypt;
 
-   Count     : array (1 .. 4) of Unsigned_128 := (others => 0);
+   procedure Clear is
+   begin
+      Put (ASCII.ESC & "]" & ASCII.LF & ASCII.ESC & "[F" & ASCII.ESC & "[J");
+   end Clear;
+
+   function Decrypt (Key   : in Unsigned_128;
+                     Value : in Unsigned_128) return Unsigned_128
+                     renames Encrypt;
+
+   Count     : array (Unsigned_128 range 1 .. Max_Tasks)
+     of Unsigned_128 := (others => 0);
    Plain     : constant Unsigned_128 := 23455673624214;
-   Key       : Unsigned_128 := 9223372036884775826;
-   Test      : constant Unsigned_128 := Plain xor Key;
-   Res       : Unsigned_128 := 1;
+   Key       : constant Unsigned_128 := 80_000_000;
+   Cipher    : constant Unsigned_128 := Encrypt (Key   => Key,
+                                                 Value => Plain);
+   Start     : Ada.Calendar.Time;
    Found     : Boolean := False;
    Found_Key : Unsigned_128 := 0;
+   Processed : Unsigned_128 := 0;
 
    pragma Atomic (Found);
-
-   Start : Ada.Calendar.Time;
 
    task type Processor (ID    : Natural;
                         First : Unsigned_128;
                         Last  :  Unsigned_128);
 
    task body Processor is
+      Test : Unsigned_128;
    begin
-      Put_Line ("Starting task" & ID'Img & " - decrypting from" &
-                  First'Img & " to" & Last'Img);
-
       for I in First .. Last loop
          exit when Found;
 
-         Res := Encrypt (Key   => I,
-                         Value => Test);
+         Test := Decrypt (Key   => I,
+                          Value => Cipher);
 
-         Count (ID) := Count (ID) + 1;
+         Count (Unsigned_128 (ID)) := Count (Unsigned_128 (ID)) + 1;
 
-         if Res = Plain then
+         if Test = Plain then
             Found     := True;
             Found_Key := I;
+            New_Line;
             Put_Line ("Task" & ID'Img &" Found key!");
          end if;
       end loop;
+   exception
+      when E : others =>
+         Put_Line ("Task" & ID'Img & " died with " &
+                     Exception_Information (E));
+
    end Processor;
 
    Num_Tasks : Unsigned_128 := 4;
@@ -63,38 +79,45 @@ begin
       end if;
    end if;
 
-   Put_Line ("Starting:" & Num_Tasks'Img & " tasks;");
+   Put_Line ("Using" & Num_Tasks'Img & " tasks.");
    Start := Clock;
 
    for I in 1 .. Num_Tasks loop
       declare
          Total : constant Unsigned_128 := Unsigned_128'Last / Num_Tasks;
       begin
-         Put_Line ("Starting task" & I'Img);
          Tasks (I) := new Processor
            (ID    => Natural (I),
             First => (I - 1) * Total,
-            Last  => (if I = Num_Tasks then I * Total else (I * Total)-1));
+            Last  => (if I = Num_Tasks then Unsigned_128'Last
+                      else (I * Total)-1));
       end;
    end loop;
+
    loop
-      exit when Found;
+      exit when Found or (Processed = Unsigned_128'Last);
       declare
-         Processed : Unsigned_128 := 0;
          Runtime   : constant Duration := Ada.Calendar.Clock - Start;
          Tmp       : Duration := 0.0;
       begin
+         Processed := 0;
          for Item of Count loop
             Processed := Processed + Item;
          end loop;
 
          Tmp := Duration (Float (Processed)) / Runtime;
-
-         Put_Line ("Processed" & Processed'Img & " decryptions in" &
-                     Runtime'Img & " seconds (" & Tmp'Img &
-                     " decryptions/s).");
+         Clear;
+         Put ("Processed" & Natural(Processed/1_000_000)'Img &
+                "M decryptions in ");
+         Put (Item => Float (Runtime),
+              Aft  => 1,
+              Exp  => 0);
+         Put (" seconds (");
+         Put (Item => Float (Tmp),
+              Aft  => 2);
+         Put (" decryptions/s).");
       end;
-      delay 2.0;
+      delay 0.1;
    end loop;
 
    Put_Line ("Key is:" & Found_Key'Img & " (expected" & Key'Img & ")");

@@ -17,17 +17,17 @@ public class RainbowTable extends HashMap<Long, Long> implements Serializable {
 	public long rows;
 	public long chainLength;
 
-	public long lookup(long value) {
+	public long lookup(long value, long mask) {
 		ArrayList<Long> possibleStartValues = new ArrayList<Long>();
 		for (int numReducFunc = 1; numReducFunc < chainLength; numReducFunc++) {
 			long accumulator = value;
 			for (long i = chainLength - numReducFunc; i < chainLength; i++) {
 				accumulator = Utilities.reductionFunction(accumulator, i,
-						Utilities.bit28 + 1);
+						mask + 1);
 
 				// Last iteration
 				if (i < chainLength - 1) {
-					accumulator = Utilities.MD5_Hash(accumulator);
+					accumulator = Utilities.MD5_Hash(accumulator, mask);
 				}
 			}
 
@@ -42,7 +42,7 @@ public class RainbowTable extends HashMap<Long, Long> implements Serializable {
 		for (Long startValue : possibleStartValues) {
 			long accumilator = startValue;
 			for (long i = 0; i < chainLength; i++) {
-				long cipher = Utilities.MD5_Hash(accumilator);
+				long cipher = Utilities.MD5_Hash(accumilator, mask);
 
 				// Have we found the key?
 				if (cipher == value) {
@@ -52,7 +52,7 @@ public class RainbowTable extends HashMap<Long, Long> implements Serializable {
 				}
 
 				accumilator = Utilities.reductionFunction(cipher, i,
-						Utilities.bit28 + 1);
+						mask + 1);
 			}
 		}
 		return 0;
