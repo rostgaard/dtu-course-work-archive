@@ -21,19 +21,19 @@ public class Worksheet_17 {
 
 	static RainbowTable generateRainbowTable() {
 		final long bitmask = Utilities.bit20;
-		RainbowTable rainbow = new RainbowTable();
+		long u = 1;
+		long length = (long) Math.pow(2, 8);
+		long rows = (long) Math.pow(2, 16);
+		RainbowTable rainbow = new RainbowTable(u, rows, length);
 		HashMap<Long, Long> Definition_Map = new HashMap<Long, Long>();
 		String filename = "ex17.data";
 		try {
 			outfile = new PrintWriter(new FileWriter(filename));
 		} catch (IOException ex) {
 
-			Logger.getLogger(Worksheet_17.class.getName()).log(Level.SEVERE,
-					null, ex);
+			Logger.getLogger(Worksheet_17.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-		long length = (long) Math.pow(2, 8);
-		long rows = (long) Math.pow(2, 16);
 		long collisions = 0;
 		long start = System.currentTimeMillis();
 		rainbow.rows = rows;
@@ -66,8 +66,7 @@ public class Worksheet_17 {
 		}
 
 		long currentTime = System.currentTimeMillis();
-		System.out.println("Generated the table in: "
-				+ (currentTime - lastTime) / 1000);
+		System.out.println("Generated the table in: " + (currentTime - lastTime) / 1000);
 		outfile.close();
 		return rainbow;
 	}

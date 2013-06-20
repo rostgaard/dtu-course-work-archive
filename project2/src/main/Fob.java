@@ -1,24 +1,16 @@
 package main;
 
 public class Fob 
-{
-	private static long mySecret = 1337;
+{	
+	public long secret;
+	public Fob(long secret){
+		this.secret = secret;
+	}
 	
-	
-	public static boolean TryUnlock()
-	{
-		long ChallengeFromCar = Car.GetChallenge();
-		
-		long combined = Utilities.combine28bit(mySecret, ChallengeFromCar);
-		
-		long myResponse = Utilities.MD5_Hash(combined, Utilities.bit28);
-		
-		boolean Success = Car.TryUnlock(myResponse);
-		if(Success)
-			System.out.println("Car is unlocked!");
-		else
-			System.out.println("Car is still locked");
-		return Success;
+	public long ChallengeMe(long challenge, long bitmask){
+		long concat = Utilities.combine(secret, challenge, bitmask);
+		long response = Utilities.MD5_Hash(concat, Utilities.bit28);
+		return response;
 	}
 
 }

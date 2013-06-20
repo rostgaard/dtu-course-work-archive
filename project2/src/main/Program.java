@@ -1,85 +1,65 @@
 package main;
 
+import java.io.File;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 public class Program {
-	static SecureRandom ran;
 
 	public static void main(String[] args) throws NoSuchAlgorithmException {
-		ran = new SecureRandom();
-
-		//RainbowTable rainbow = generateRainbowTable();
-		String path = "small.rainbow";
-		//RainbowTableIO.writeToFile(rainbow, path);
-
-
-		System.out.println("Loading table");
-		RainbowTable testTable = RainbowTableIO.readFromFile(path);
-		System.out.println("Done loading table");
-
-		/*
-		 * long plain = 1535; long hash = Utilities.MD5_Hash(plain); long
-		 * plainGuess = testTable.lookup(hash);
-		 * 
-		 * System.out.println("Real: " + plain); System.out.println("Guess: " +
-		 * plainGuess);
-		 * 
-		 * long guessHashed = Utilities.MD5_Hash(plainGuess);
-		 * System.out.println("original hash:" + hash + " guessedHashed: " +
-		 * guessHashed);
-		 */
-
-		
-		int attempts = 0;
-		do {
-			attempts++;
-			System.out.print("Attemt number " + attempts + ", ");
-			long challengeFromCar = Car.GetChallenge();
-			long challengeMD5 = Utilities.MD5_Hash(challengeFromCar, Utilities.bit28);
-			long ResponseToCar = testTable.lookup(challengeMD5, Utilities.bit28);
-			if (ResponseToCar == 0) {
-				System.out.print("Skipping\n");
-			} else {
-				if (Car.TryUnlock(ResponseToCar)) {
-					System.out.println("Car is now open!");
-					break;
-				}
+		long u = 1337L;
+		long bitMask = Utilities.bit28;
+		RainbowTable rainbow = getRainbow(u,bitMask);
+		int success = 0;
+		for (int i = 1; i < 1000; i++) {
+			if(robFobKey(rainbow, i, bitMask)){
+				System.out.print("Guessed Secret: " + i);
+				success += 1;
+			}else{
+				System.out.print("Failed secret: " + i);
 			}
-
-		} while (attempts < 1000);
-
-		// Fob.TryUnlock();
-		System.out.println("Main is done");
-	}
-
-	static RainbowTable generateRainbowTable() {
-		RainbowTable rainbow = new RainbowTable();
-
-		long length = (long) Math.pow(2, 10);
-		long rows = (long) Math.pow(2, 18);
-		rainbow.rows = rows;
-		rainbow.chainLength = length;
-
-		long lastTime = System.currentTimeMillis();
-		for (int i = 0; i < rows; i++) {
-			long startValue = ran.nextInt() % Utilities.bit28;
-			long accumulator = startValue;
-			for (int j = 0; j < length; j++) {
-				long cipher = Utilities.MD5_Hash(accumulator, Utilities.bit28);
-
-				long reducedCipher = Utilities.reductionFunction(cipher, j,
-						Utilities.bit28 + 1);
-				accumulator = reducedCipher;
-			}
-			rainbow.put(accumulator, startValue);
-			System.out.print(rainbow.size());
+			double rate = ( ( (double)(success * 100) ) / ( (double) i) );
+			System.out.println(" Success: " + success + " failed: " + (i-success) + " Total: " + i + " rate: " + rate);
 		}
-
-		long currentTime = System.currentTimeMillis();
-		System.out.println("Generated the table in: "
-				+ (currentTime - lastTime) / 1000);
-
+	 	System.out.println("Done");
+	}
+	
+	static RainbowTable getRainbow(long u, long bitMask){
+		long rows = (long)Math.pow(2,18);
+		long chainLength = (long)Math.pow(2, 10);
+		int bitsUsed = (int) (Math.log(bitMask) / Math.log(2)) +1;
+		String filename = "U" + u + "_M" + rows + "_T" + chainLength + "_Bit" + bitsUsed + ".rainbow";
+		RainbowTable rainbow;
+		
+		//generate rainbow table with u
+		if (new File(filename).exists()){
+			rainbow = RainbowTableIO.readFromFile(filename);
+		}else{
+			rainbow = new RainbowTable(u, rows, chainLength);
+			System.out.println("Generating rainbow table");
+			rainbow.generate();
+			RainbowTableIO.writeToFile(rainbow, filename);
+		}
 		return rainbow;
+	}
+	
+	static boolean robFobKey(RainbowTable rainbow, long secret, long bitmask){
+		// Sends the picked u to Fob, and gets r
+		Fob fob = new Fob(secret);
+		long response = fob.ChallengeMe(rainbow.u, bitmask);
+		//System.out.println("Real Secret: " + fob.secret);
+		//System.out.println("Reponse: " + response);
+		
+		// Finds the r in rainbow, and from that extract the s
+	 	long guessedSecret = rainbow.lookup(response, bitmask);
+	 	//System.out.println("guessedSecret: " + guessedSecret);
+		
+		//Verifiers the secret, by trying again.
+	 	long newU = rainbow.u + 1;
+	 	long guessedSecretHash = Utilities.MD5_Hash(Utilities.combine(guessedSecret, newU, bitmask), bitmask);
+	 	long response1 = fob.ChallengeMe(newU, bitmask);
+	 	if (guessedSecretHash == response1){
+	 		return true;
+	 	}
+	 	return false;
 	}
 }

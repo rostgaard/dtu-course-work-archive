@@ -28,10 +28,11 @@ public class Utilities {
 	/**
 	 * Combines x and y. X||Y
 	 */
-	static long combine28bit(long x, long y) {
-		long a = x & bit28;
-		long b = y & bit28;
-		return ((a << 28) + b);
+	static long combine(long x, long y, long bitmask) {
+		int bitsUsed = (int) (Math.log(bitmask) / Math.log(2)) +1;
+		long a = x & bitmask;
+		long b = y & bitmask;
+		return ((a << bitsUsed) + b);
 	}
 
 	static long reductionFunction(long cipherText, long reductionNumber,
