@@ -39,7 +39,7 @@ public class Utilities {
 		return (cipherText + reductionNumber) % tableSize;
 	}
 	
-	static long MD5_Hash(long arg) {
+	static long MD5_Hash(long arg, long mask) {
 		MessageDigest md = null;
 		try {
 			md = MessageDigest.getInstance("MD5");
@@ -51,6 +51,6 @@ public class Utilities {
 		md.update(longToByteArr(arg));
 		byte byteData[] = md.digest();
 		
-		return Utilities.byteArrToLong(byteData) & bit28;
+		return Utilities.byteArrToLong(byteData) & mask;
 	}
 }
