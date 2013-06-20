@@ -9,11 +9,9 @@ public class Program {
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		ran = new SecureRandom();
 
-
 		//RainbowTable rainbow = generateRainbowTable();
 		String path = "small.rainbow";
 		//RainbowTableIO.writeToFile(rainbow, path);
-
 
 
 		System.out.println("Loading table");
