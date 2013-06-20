@@ -3,22 +3,21 @@ package main;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-import javax.rmi.CORBA.Util;
-
 public class Program {
 	static SecureRandom ran;
 
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		ran = new SecureRandom();
 
+
 		//RainbowTable rainbow = generateRainbowTable();
 		String path = "small.rainbow";
 		//RainbowTableIO.writeToFile(rainbow, path);
 
 
+
 		System.out.println("Loading table");
 		RainbowTable testTable = RainbowTableIO.readFromFile(path);
-
 		System.out.println("Done loading table");
 
 		/*
@@ -53,7 +52,6 @@ public class Program {
 		} while (attempts < 1000);
 
 		// Fob.TryUnlock();
-
 		System.out.println("Main is done");
 	}
 
@@ -71,7 +69,6 @@ public class Program {
 			long accumulator = startValue;
 			for (int j = 0; j < length; j++) {
 				long cipher = Utilities.MD5_Hash(accumulator, Utilities.bit28);
-
 				long reducedCipher = Utilities.reductionFunction(cipher, j,
 						Utilities.bit28 + 1);
 
