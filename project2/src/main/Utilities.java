@@ -4,6 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Utilities {
+	public static final long bit20 =   0xfffff;
+	public static final long bit24 =  0xffffff;
 	public static final long bit28 = 0xfffffff;
 	
 	static long byteArrToLong(byte arg[]) {

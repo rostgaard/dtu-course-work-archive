@@ -47,6 +47,7 @@ public class Program {
 				accumilator = reducedCipher;
 			}
 			rainbow.put(accumilator, startValue);
+                        System.out.print(rainbow.size());
 		}
 
 		long currentTime = System.currentTimeMillis();
