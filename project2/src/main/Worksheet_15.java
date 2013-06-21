@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Worksheet_17 {
+public class Worksheet_15 {
 
 	static SecureRandom ran;
 	private static PrintWriter outfile;
@@ -27,12 +27,12 @@ public class Worksheet_17 {
 		long rows = (long) Math.pow(2, 16);
 		RainbowTable rainbow = new RainbowTable(u, rows, length);
 		HashMap<Long, Long> Definition_Map = new HashMap<Long, Long>();
-		String filename = "ex17.data";
+		String filename = "ex15.data";
 		try {
 			outfile = new PrintWriter(new FileWriter(filename));
 		} catch (IOException ex) {
 
-			Logger.getLogger(Worksheet_17.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(Worksheet_15.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
 		long collisions = 0;
@@ -49,7 +49,7 @@ public class Worksheet_17 {
 			for (int j = 0; j < length; j++) {
 				long cipher = Utilities.MD5_Hash(accumulator, bitmask);
 
-				long reducedCipher = Utilities.reductionFunction(cipher, j, bitmask + 1);
+				long reducedCipher = Utilities.reductionFunction(cipher, 1, bitmask + 1);
 				accumulator = reducedCipher;
 				if (!Definition_Map.containsKey(reducedCipher)) {
 					Definition_Map.put(reducedCipher, 0L);
@@ -58,12 +58,10 @@ public class Worksheet_17 {
 
 			rainbow.put(accumulator, startValue);
 
-			System.out.println("Added an element");
 			double coverage = ((double) Definition_Map.size()) / Math.pow(2, 20);
 			double end = (System.currentTimeMillis() - start) / 1000.0;
 
-			System.out.format("%d %f %.8f %d \n", Definition_Map.size(), end, coverage, collisions);
-			outfile.format("%f %.4f %d \n", end, coverage, collisions);
+			outfile.format("%f %.4f \n", end, coverage);
 		}
 
 		long currentTime = System.currentTimeMillis();

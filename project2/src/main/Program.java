@@ -26,7 +26,7 @@ public class Program {
 		//generatingTest();
 	}
 	
-	public static void multipleSecrets(){
+	public static void multipleSecrets() throws NoSuchAlgorithmException{
 		long u = 1337L;
 		long bitMask = Utilities.bit28;
 		long rows = (long)Math.pow(2,18);
@@ -107,7 +107,7 @@ public class Program {
 		return rainbow;
 	}
 	
-	static boolean robFobKey(RainbowTable rainbow, long secret, long bitmask){
+	static boolean robFobKey(RainbowTable rainbow, long secret, long bitmask) throws NoSuchAlgorithmException{
 		// Sends the picked u to Fob, and gets r
 		Fob fob = new Fob(secret);
 		long response = fob.ChallengeMe(rainbow.u, bitmask);

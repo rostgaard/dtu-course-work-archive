@@ -40,7 +40,7 @@ exercise_15.output: exercise_15
 	@-echo Building $@ ...
 	@-echo "***************************"
 	@-echo ""
-	(ls ex15.data || (echo "Generating datafile..." && ./exercise_15 > ex15.data))
+	@(ls ex15.data > /dev/null || (echo "Datafile not found - regenerating..." && ./exercise_15 > ex15.data))
 	tools/coverage.gnuplot
 	(cd output && ps2pdf coverage_map.ps)
 	

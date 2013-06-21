@@ -1,5 +1,7 @@
 package main;
 
+import java.security.NoSuchAlgorithmException;
+
 public class Fob 
 {	
 	public long secret;
@@ -7,7 +9,7 @@ public class Fob
 		this.secret = secret;
 	}
 	
-	public long ChallengeMe(long challenge, long bitmask){
+	public long ChallengeMe(long challenge, long bitmask) throws NoSuchAlgorithmException{
 		long concat = Utilities.combine(secret, challenge, bitmask);
 		long response = Utilities.MD5_Hash(concat, Utilities.bit28);
 		return response;
