@@ -7,7 +7,7 @@ with Utilities;
 with Unsigned_Types;
 with Definition_Map;
 
-procedure Exercise_15 is
+procedure Exercise_17 is
    use Utilities;
    use Unsigned_Types;
    --  use Ada.Real_Time;
@@ -43,7 +43,7 @@ begin
          for J in Unsigned_20 (0) .. Unsigned_20 (2**T) loop
 
             Val := Reduction (Cipher => MD5_Redux (Val),
-                              I      => 0,
+                              I      => J,
                               Size   => Unsigned_20'Last);
             Definition_Map.Add (Val);
          end loop;
@@ -67,4 +67,4 @@ begin
    end loop;
    --  Generate chains
 
-end Exercise_15;
+end Exercise_17;

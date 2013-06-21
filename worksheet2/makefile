@@ -1,4 +1,3 @@
-
 ###############################################################################
 #                                                                             #
 #  This is free software;  you can redistribute it  and/or modify it          #
@@ -19,7 +18,7 @@ GNATCLEAN=gnatclean -P common
 
 all: folders solutions
 
-solutions: exercise_01.output exercise_02 exercise_08 exercise_09 exercise_11
+solutions: exercise_15.output exercise_17.output
 
 folders:
 	@-(ls build > /dev/null || mkdir build)
@@ -29,20 +28,35 @@ clean:
 
 
 distclean: clean
-	-rm exercise_01
-	-rm exercise_08
-	-rm exercise_09
-	-rm exercise_11
+	-rm exercise_15
+	-rm exercise_17
+	-rm ex15.data
+	-rm ex17.data
 
 exercise_15.output: exercise_15
 	@-echo ""
 	@-echo "***************************"
-	@-echo Building $@ ...
+	@-echo " Plotting graph..."
 	@-echo "***************************"
 	@-echo ""
-	@(ls ex15.data > /dev/null || (echo "Datafile not found - regenerating..." && ./exercise_15 > ex15.data))
-	tools/coverage.gnuplot
-	(cd output && ps2pdf coverage_map.ps)
+	@(ls ex15.data 1> /dev/null 2> /dev/null|| (echo "Datafile not found - regenerating..." && ./exercise_15 > ex15.data))
+	@echo Running GNUPlot.
+	@tools/coverage_ex15.gnuplot
+	@echo Converting to PDF.
+	@(cd output && ps2pdf ex15.ps)
+
+exercise_17.output: exercise_17
+	@-echo ""
+	@-echo "***************************"
+	@-echo " Plotting graph..."
+	@-echo "***************************"
+	@-echo ""
+	@(ls ex17.data 1> /dev/null 2> /dev/null|| (echo "Datafile not found - regenerating..." && ./exercise_17 > ex17.data))
+	@echo Running GNUPlot.
+	@tools/coverage_ex17.gnuplot
+	@echo Converting to PDF.
+	@(cd output && ps2pdf ex17.ps)
+	@(cd output && ps2pdf ex17a.ps)
 	
 
 exercise_15:
@@ -53,53 +67,4 @@ exercise_15:
 	@-echo ""
 	@${GNATMAKE} $@ 1> /dev/null
 
-exercise_02:
-	@-echo ""
-	@-echo "***************************"
-	@-echo Building $@ ...
-	@-echo "***************************"
-	@-echo ""
-	@${GNATMAKE} $@ 1> /dev/null
-
-exercise_05:
-	@-echo ""
-	@-echo "***************************"
-	@-echo Building $@ ...
-	@-echo "***************************"
-	@-echo ""
-	@${GNATMAKE} $@ 1> /dev/null
-
-exercise_07:
-	@-echo ""
-	@-echo "***************************"
-	@-echo Building $@ ...
-	@-echo "***************************"
-	@-echo ""
-	@${GNATMAKE} $@ 1> /dev/null
-
-exercise_08:
-	@-echo ""
-	@-echo "***************************"
-	@-echo Building $@ ...
-	@-echo "***************************"
-	@-echo ""
-	@${GNATMAKE} $@ 1> /dev/null
-
-exercise_09:
-	@-echo ""
-	@-echo "***************************"
-	@-echo Building $@ ...
-	@-echo "***************************"
-	@-echo ""
-	@${GNATMAKE} $@ 1> /dev/null
-
-exercise_11:
-	@-echo ""
-	@-echo "***************************"
-	@-echo Building $@ ...
-	@-echo "***************************"
-	@-echo ""
-	@${GNATMAKE} $@ 1> /dev/null
-
-exercise_01.output:exercise_01
-	@./exercise_01 | grep "BEWARE" > output/exercise_01.output
+.PHONY: exercise_15
