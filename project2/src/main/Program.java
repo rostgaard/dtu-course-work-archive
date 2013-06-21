@@ -90,7 +90,7 @@ public class Program {
 		}
 	}
 	
-	static RainbowTable getRainbow(long u, long bitMask, long rows, long chainLength){
+	static RainbowTable getRainbow(long u, long bitMask, long rows, long chainLength) throws NoSuchAlgorithmException{
 		long bitsUsed = (long) (Math.log(bitMask) / Math.log(2)) +1;
 		String filename = "U" + u + "_M" + rows + "_T" + chainLength + "_Bit" + bitsUsed + ".rainbow";
 		RainbowTable rainbow;
