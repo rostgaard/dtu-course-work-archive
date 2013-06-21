@@ -91,7 +91,8 @@ public class test_MD5 {
 //        md.reset();
 //        md.update(ab);
 //        byteData = md.digest();
-        long hat = Utilities.MD5_Hash(1000, Utilities.bit28);
+//        long hat = 
+        		Utilities.MD5_Hash(1000, Utilities.bit28);
         
         System.out.println();
         assert 1 == 2;
