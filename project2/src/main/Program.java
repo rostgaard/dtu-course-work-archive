@@ -1,14 +1,37 @@
 package main;
 
-import java.io.File;
+import java.io.*;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
 public class Program {
 
 	public static void main(String[] args) throws NoSuchAlgorithmException {
+		HashMap<Long, Long> h = new HashMap<Long, Long>();
+		System.out.println("Size: " + h.size());
+		Long key = 42L;
+		Long s1 = 1L;
+		Long s2 = 2L;
+		
+		h.put(key, s1);
+		System.out.println("Size: " + h.size());
+		System.out.println("Key: " + key + " value: " + h.get(key));
+		
+		h.put(key, s2);
+		System.out.println("Size: " + h.size());
+		System.out.println("Key: " + key + " value: " + h.get(key));
+		
+		
+		
+		//generatingTest();
+	}
+	
+	public static void multipleSecrets(){
 		long u = 1337L;
 		long bitMask = Utilities.bit28;
-		RainbowTable rainbow = getRainbow(u,bitMask);
+		long rows = (long)Math.pow(2,18);
+		long chainLength = (long)Math.pow(2, 10);
+		RainbowTable rainbow = getRainbow(u,bitMask, rows, chainLength);
 		int success = 0;
 		for (int i = 1; i < 1000; i++) {
 			if(robFobKey(rainbow, i, bitMask)){
@@ -22,11 +45,53 @@ public class Program {
 		}
 	 	System.out.println("Done");
 	}
+
+	public static void generatingTest() {
+		try {
+			// Create file
+			FileWriter fstream = new FileWriter("out.txt");
+			BufferedWriter out = new BufferedWriter(fstream);
+			
+			long bitMask;
+
+			long rows;
+			long chainLength;
+			long start;
+			out.write("Rows: ChainLength: Bits: Time: ");
+			out.flush();
+//			for (int row = 18; row <= 24; row++) {
+//				for (int length = 10; length <= 16; length++) {
+//					bitMask = Utilities.bit28;
+//					rows = (long)Math.pow(2,row);
+//					chainLength = (long)Math.pow(2, length);
+//					start = System.currentTimeMillis();
+//					getRainbow(1337, bitMask, rows, chainLength);
+//					out.write(rows + " " + chainLength + " " + "28" + " " + (System.currentTimeMillis()-start) + "\r\n");
+//					out.flush();
+//				}
+//			}
+			
+			for (int row = 18; row <= 24; row++) {
+				for (int length = 10; length <= 16; length++) {
+					bitMask = Utilities.bit32;
+					rows = (long)Math.pow(2,row);
+					chainLength = (long)Math.pow(2, length);
+					start = System.currentTimeMillis();
+					getRainbow(1337, bitMask, rows, chainLength);
+					out.write(rows + " " + chainLength + " " + "32" + " " + (System.currentTimeMillis()-start) + "\r\n");
+					out.flush();
+				}
+			}
+			
+			// Close the output stream
+			out.close();
+		} catch (Exception e) {// Catch exception if any
+			System.err.println("Error: " + e.getMessage());
+		}
+	}
 	
-	static RainbowTable getRainbow(long u, long bitMask){
-		long rows = (long)Math.pow(2,18);
-		long chainLength = (long)Math.pow(2, 10);
-		int bitsUsed = (int) (Math.log(bitMask) / Math.log(2)) +1;
+	static RainbowTable getRainbow(long u, long bitMask, long rows, long chainLength){
+		long bitsUsed = (long) (Math.log(bitMask) / Math.log(2)) +1;
 		String filename = "U" + u + "_M" + rows + "_T" + chainLength + "_Bit" + bitsUsed + ".rainbow";
 		RainbowTable rainbow;
 		
@@ -35,7 +100,7 @@ public class Program {
 			rainbow = RainbowTableIO.readFromFile(filename);
 		}else{
 			rainbow = new RainbowTable(u, rows, chainLength);
-			System.out.println("Generating rainbow table");
+			System.out.println("Generating rainbow table: " + filename);
 			rainbow.generate();
 			RainbowTableIO.writeToFile(rainbow, filename);
 		}
