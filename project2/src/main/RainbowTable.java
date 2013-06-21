@@ -5,6 +5,7 @@
 package main;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +27,7 @@ public class RainbowTable extends HashMap<Long, Long> implements Serializable {
 		this.chainLength = chainLength;
 	}
 	
-	public void generate() {
+	public void generate() throws NoSuchAlgorithmException {
 		long bitMask = Utilities.bit28;
 		SecureRandom ran = new SecureRandom();
 		
@@ -47,7 +48,7 @@ public class RainbowTable extends HashMap<Long, Long> implements Serializable {
 				+ (currentTime - lastTime) / 1000);
 	}
 	
-	public long lookup(long value, long mask) {
+	public long lookup(long value, long mask) throws NoSuchAlgorithmException {
 		ArrayList<Long> possibleStartValues = new ArrayList<Long>();
 		for (int numReducFunc = 1; numReducFunc < chainLength; numReducFunc++) {
 			long accumulator = value;

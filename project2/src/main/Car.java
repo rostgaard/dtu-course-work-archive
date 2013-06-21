@@ -1,5 +1,6 @@
 package main;
 
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 public class Car {
@@ -24,7 +25,7 @@ public class Car {
 		return Challenge;			
 	}
 	
-	public static boolean TryUnlock(long Response, long bitmask)
+	public static boolean TryUnlock(long Response, long bitmask) throws NoSuchAlgorithmException
 	{
 		long combined = Utilities.combine(MySecret, Challenge, bitmask);
 		long myResponse = Utilities.MD5_Hash(combined, Utilities.bit28);
