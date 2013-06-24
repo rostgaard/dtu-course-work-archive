@@ -1,0 +1,4 @@
+C:\Users\Lars\documents\visual studio 2010\Projects\Cryptanalysis-XOR\Cryptanalysis.Entropy\bin\Debug\Cryptanalysis.Entropy.exe
+C:\Users\Lars\documents\visual studio 2010\Projects\Cryptanalysis-XOR\Cryptanalysis.Entropy\bin\Debug\Cryptanalysis.Entropy.pdb
+C:\Users\Lars\documents\visual studio 2010\Projects\Cryptanalysis-XOR\Cryptanalysis.Entropy\obj\x86\Debug\Cryptanalysis.Entropy.exe
+C:\Users\Lars\documents\visual studio 2010\Projects\Cryptanalysis-XOR\Cryptanalysis.Entropy\obj\x86\Debug\Cryptanalysis.Entropy.pdb
