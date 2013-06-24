@@ -9,6 +9,11 @@ package Utilities is
      (Date : in Time)
       return String;
 
+   function Reduction_Function
+     (Cipher : in Unsigned_20;
+      I      : in Unsigned_20;
+      Size   : in Unsigned_20) return Unsigned_20;
+
    function MD5_Redux (Item : in String) return Unsigned_20;
    function MD5_Redux (Item : in Unsigned_20) return Unsigned_20;
 

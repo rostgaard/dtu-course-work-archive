@@ -28,6 +28,16 @@ package body Utilities is
       return Unsigned_20'Value
         ("16#" & Digest (Digest'Last - 4 .. Digest'Last) & "#");
    end MD5_Redux;
+
+   function Reduction_Function
+     (Cipher : in Unsigned_20;
+      I      : in Unsigned_20;
+      Size   : in Unsigned_20) return Unsigned_20
+   is
+   begin
+      return (Cipher + I) mod Size;
+   end Reduction_Function;
+
    function Unix_Timestamp
      (Date : in Time)
       return String
