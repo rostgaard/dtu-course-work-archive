@@ -35,7 +35,7 @@ public class Worksheet_15 {
 			Logger.getLogger(Worksheet_15.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-//		long collisions = 0;
+		long collisions = 0;
 		long start = System.currentTimeMillis();
 		rainbow.rows = rows;
 		rainbow.chainLength = length;
