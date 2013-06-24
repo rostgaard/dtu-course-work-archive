@@ -5,3 +5,5 @@ worksheet1/src/handin.synctex.gz
 .#*
 #*#
 worksheet?/exercise_??
+project?/build/*.ali
+project?/build/*.o
