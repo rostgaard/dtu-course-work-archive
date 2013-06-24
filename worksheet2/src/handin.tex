@@ -45,33 +45,40 @@
 
 \title{01435 Practical Cryptanalysis}
 %\author{Kim Rostgaard Christensen - s084283}
-\author{Thomas Pedersen - s103665}
+%\author{Thomas Pedersen - s103665}
+\author{Lars Kristensen - s072662}
 \begin{document}
 \maketitle
 
-\paragraph*{Exercise 15} For $m = $ values, we get the following plot.
+\paragraph*{Exercise 15}
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.4]{../output/ex15.pdf}
- \caption{Data plot}
+ \caption{Coverage using one Hellman table}
  \label{fig:ex15}
 \end{figure}
-Given the democratic voting in class, this graph fits nicely the assumption that coverage is around ~30%.
+Given the democratic voting in class, this graph fits nicely the assumption that coverage is around 30\%.
 
-\paragraph*{Exercise 16}
+%\paragraph*{Exercise 16}
+%\begin{tabular}{ l c r }
+%  1 & 2 & 3 \\
+%  4 & 5 & 6 \\
+%5  7 & 8 & 9 \\
+%\end{tabular}
 
-\paragraph*{Exercise 17}
+
+\paragraph*{Exercise 17} As expected, the coverage using a single table is much greater, and much closer to 100\% using Rainbow tables. Figure \ref{fig:ex17a} shows the two graphs one the same plot to emphasize the difference.
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.4]{../output/ex17.pdf}
- \caption{Data plot}
+ \caption{Coverage using one Rainbow table}
  \label{fig:ex17}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.4]{../output/ex17a.pdf}
- \caption{Data plot}
+ \caption{Coverage for both Rainbow and Hellman tables}
  \label{fig:ex17a}
 \end{figure}
 
