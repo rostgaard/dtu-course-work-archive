@@ -99,8 +99,8 @@ namespace Cryptanalysis.Project3
 
         public static int GCC(int seed)
         {
-            long a = 69069;
-            long c = 5;
+            const long a = 69069;
+            const long c = 5;
             return (int)(((a * seed) + c) % (long)Math.Pow(2, 32));
         }
 
