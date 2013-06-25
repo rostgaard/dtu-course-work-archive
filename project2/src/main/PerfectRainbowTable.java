@@ -44,6 +44,7 @@ public class PerfectRainbowTable extends HashMap<Long, Long> implements
 	}
 
 	public long lookup(long value, long mask) throws NoSuchAlgorithmException {
+		//saves all candidates for a key.
 		ArrayList<Long> possibleStartValues = new ArrayList<Long>();
 		for (int numReducFunc = 1; numReducFunc < chainLength; numReducFunc++) {
 			long accumulator = value;
@@ -63,14 +64,13 @@ public class PerfectRainbowTable extends HashMap<Long, Long> implements
 			}
 		}
 
-		// Now that we know the row, we need to find the right key.
-
+		//Now we have some candidates. Now we need to check for duplicates, and by that find a key. 
 		for (Long startValue : possibleStartValues) {
 			long accumilator = startValue;
 			for (long i = 0; i < chainLength; i++) {
-				long cipher = Utilities.MD5_Hash(
-						Utilities.combine(accumilator, u, mask), mask);
-				// Have we found the key?
+				long cipher = Utilities.MD5_Hash(Utilities.combine(accumilator, u, mask), mask);
+				
+				// Have we found a valid key?
 				if (cipher == value) {
 					return accumilator;
 				}

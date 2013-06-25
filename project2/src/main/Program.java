@@ -4,7 +4,6 @@ import java.io.*;
 import java.security.NoSuchAlgorithmException;
 
 public class Program {
-
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		//multipleSecrets(1000);
 		//multipleSecretsPerfect(1000);
@@ -63,13 +62,14 @@ public class Program {
 		int success = 0;
 		int perfectSucces = 0;
 		for (int i = 1; i < numberOfTests; i++) {
-			if(robFobKey(rainbow, i, bitMask)){
+			int secret = i;
+			if(robFobKey(rainbow, secret, bitMask)){
 				success += 1;
 			}
 			double rate = ( ( (double)(success * 100) ) / ( (double) i) );
 			System.out.println("nonPerfect Success: " + success + " failed: " + (i-success) + " Total: " + i + " rate: " + rate);
 			
-			if (robFobKey(perfectRainbow, i, bitMask)){
+			if (robFobKey(perfectRainbow, secret, bitMask)){
 				perfectSucces += 1;
 			}
 			rate = ( ( (double)(perfectSucces * 100) ) / ( (double) i) );
