@@ -12,8 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 /**
- *
- * @author krc
+ * Rainbowtable is based on a HashMap. The key is the last HashValue in the chain, and the value is a set of all startValues from that chain. It's set because we have merging chains.
  */
 public class RainbowTable extends HashMap<Long, HashSet<Long>> implements Serializable {
 
