@@ -5,14 +5,17 @@ with Decrypter;
 
 package body Key_Utilities is
 
+   function Shift_Left (Value  : in Unsigned_64;
+                        Amount : in Natural) return Unsigned_64;
+
    function Generate_Key (Seed : Unsigned_64) return Keys is
       Key : Keys := (others => 0);
       S   : Unsigned_64 := Seed;
    begin
       for I in Key'Range loop
          --  The eight least significant bits of update.
-         S := Decrypter.Update (S) and 16#ff#;
-         Key (I) := Bytes (S);
+         S := Decrypter.Update (S);
+         Key (I) := Bytes (S and 16#ff#);
       end loop;
 
       return Key;
@@ -28,7 +31,7 @@ package body Key_Utilities is
                                   Item  => Integer (Item (I)),
                                   Base  => 16);
 
-         if Item (I) < 16  then
+         if Item (I) > 16 then
             Append
               (Source   => Buffer,
                New_Item => S_Buf (4 .. 5));
@@ -45,16 +48,24 @@ package body Key_Utilities is
    function Is_Printable (C : in Character) return Boolean is
    begin
 
-      return C in Character'('A') .. Character'('Z') or
-        C in Character'('a') .. Character'('a') or
-        C in Character'('0') .. Character'('9');
+      return
+        Character'Pos (C) in 32 .. 126 or
+        Character'Pos (C) in 9 .. 13;
    end Is_Printable;
 
-   function Value (Item : in Keys) return Unsigned_128 is
-      Sum    : Unsigned_128 := 0;
+   function Shift_Left (Value  : in Unsigned_64;
+                        Amount : in Natural) return Unsigned_64 is
    begin
-      for I in reverse 0 .. 15 loop
-         Sum := Sum + ((2**I) * Unsigned_128 (Item (I)));
+      return Value * (2**Amount);
+   end Shift_Left;
+
+   function Value (Item : in Keys) return Unsigned_64 is
+      Sum    : Unsigned_64 := 0;
+   begin
+      for I in 0 .. 8 loop
+         Sum := Sum + Shift_Left
+           (Value  => Unsigned_64 (Item (I)),
+            Amount => I * 8);
       end loop;
 
       return Sum;
