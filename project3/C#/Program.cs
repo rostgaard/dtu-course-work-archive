@@ -1,83 +1,107 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Text;
 
 namespace Cryptanalysis.Project3
 {
-    class Program
+    public class Program
     {
         const string PATH = @"C:\Data\ciphertext_sheet3.txt";
-        private static List<byte[]> PossibleKeys;
-
+        private static IList<byte[]> PossibleKeys;
         static void Main(string[] args)
         {
             DateTime Beginning = new DateTime(1970, 1, 1, 0, 0, 0);
             DateTime Start = new DateTime(2009, 6, 22, 0, 0, 0);
             DateTime End = new DateTime(2009, 6, 28, 23, 59, 59);
 
-            long Min = (long)(Start - Beginning).TotalSeconds;
-            long Max = (long)(End - Beginning).TotalSeconds;
+            int Min = (int)(Start - Beginning).TotalSeconds;
+            int Max = (int)(End - Beginning).TotalSeconds;
 
             PossibleKeys = GenerateKeys(Min, Max);
 
             byte[] CipherText = File.ReadAllBytes(PATH);
-            
+
 
             List<string> PossiblePlaintext = new List<string>();
-
-
-            for(int i = 0; i < PossibleKeys.Count; i++)
+            foreach (var key in PossibleKeys)
             {
-                string plaintext = Decrypt(CipherText, PossibleKeys[i]);
-                if (plaintext.Contains("NSA") || (LetterRatio(plaintext) > 0.1F))
+                string plaintext = Decrypt(CipherText, key);
+
+                if (!containsNonprintableChars(plaintext)) //string.contains("NSA")
+                {
                     PossiblePlaintext.Add(plaintext);
 
+                }
             }
 
-            Console.WriteLine("Found " + PossiblePlaintext.Count + " plaintexts, containing \"NSA\".");
-            
+            Console.WriteLine("Found {0} readable plaintext{1}.", PossiblePlaintext.Count, PossiblePlaintext.Count > 1 ? "s" : "");
 
+            Console.ReadKey();
         }
 
-        private static double LetterRatio(string input)
+        private static bool containsNonprintableChars(string text)
         {
-            int counter = 0;
-            foreach (char c in input)
+            foreach (var c in text)
             {
-                if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-                    counter++;
+                if (!char.IsLetter(c) &&
+                    !char.IsPunctuation(c) &&
+                    !char.IsNumber(c) &&
+                    !char.IsSeparator(c) &&
+                    !char.IsWhiteSpace(c) &&
+                    !char.IsSymbol(c))
+                {
+                    return true;
+                }
             }
-            double result = counter / input.Length;
-            return result;
+            return false;
         }
 
-        private static List<byte[]> GenerateKeys(long start, long end)
+        private static IList<byte[]> GenerateKeys(int start, int end)
         {
-            List<byte[]> Keys = new List<byte[]>();
+            IList<byte[]> Keys = new List<byte[]>();
 
-            for (long i = start; i <= end; i++)
+            for (int i = start; i <= end; i++)
             {
-                Keys.Add(GetKey(i));
+                byte[] key = GetKey(i);
+                bool match = false;
+                foreach (var k in Keys)
+                {
+                    if (compare(k, key))
+                    {
+                        match = true;
+                        break;
+                    }
+                }
+                if (!match)
+                {
+                    Keys.Add(key);
+                }
             }
+            Console.WriteLine("Number of unique keys: {0}", Keys.Count);
             return Keys;
         }
 
-        private static byte[] GetKey(long init)
+        private static byte[] GetKey(int init)
         {
-            long value = init;
+            int value = init;
             byte[] key = new byte[16];
 
             for (int i = 0; i < key.Length; i++)
             {
-                long r = (69096 * init + 5) % (long)Math.Pow(2, 32);
-                byte  b = (byte)(r & 0xFF);
+                value = GCC(value);
+                byte b = (byte)(value & 0xFF);
                 key[i] = b;
             }
 
             return key;
+        }
+
+        public static int GCC(int seed)
+        {
+            long a = 69069;
+            long c = 5;
+            return (int)(((a * seed) + c) % (long)Math.Pow(2, 32));
         }
 
         private static String Decrypt(byte[] CipherText, byte[] key)
@@ -85,9 +109,31 @@ namespace Cryptanalysis.Project3
             byte[] PlainBytes = new byte[CipherText.Length];
             for (int i = 0; i < CipherText.Length; i++)
             {
-                PlainBytes[i] = (byte)(CipherText[i] ^ key[i % 16]);
+                PlainBytes[i] = Xor(CipherText[i], key[i % 16]);
             }
             return Encoding.UTF8.GetString(PlainBytes);
+        }
+
+        public static bool compare(Byte[] x, Byte[] y)
+        {
+            if (x.Length != y.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < x.Length; i++)
+            {
+                if (x[i] != y[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static byte Xor(byte x, byte y)
+        {
+            return (byte)(x ^ y);
         }
     }
 }
