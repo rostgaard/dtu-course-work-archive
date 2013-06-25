@@ -3,7 +3,6 @@ package main;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
 public abstract class Utilities {
     public static final long bit20 = 0xfffff;
     public static final long bit24 = 0xffffff;
@@ -28,6 +27,9 @@ public abstract class Utilities {
         
     }
     
+    /**
+     * Transforms a byte array to a long.
+     */
     static long byteArrToLong(byte arg[]) {
         long value = 0;
         for (int i = 0; i < arg.length; i++) {
@@ -36,6 +38,9 @@ public abstract class Utilities {
         return value;
     }
 
+    /**
+     * Transform a long to a Byte array.
+     */
     static byte[] longToByteArr(long x) {
         int size = 8;
         byte[] b = new byte[size];
