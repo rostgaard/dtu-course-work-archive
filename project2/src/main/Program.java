@@ -7,7 +7,8 @@ public class Program {
 
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		//generatingTest();
-		multipleSecrets();
+		//multipleSecrets();
+		PerfectProgram.multipleSecretsPerfect();
 	}
 	
 	public static void multipleSecrets() throws NoSuchAlgorithmException{
