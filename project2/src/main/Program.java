@@ -2,28 +2,12 @@ package main;
 
 import java.io.*;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 
 public class Program {
 
 	public static void main(String[] args) throws NoSuchAlgorithmException {
-		HashMap<Long, Long> h = new HashMap<Long, Long>();
-		System.out.println("Size: " + h.size());
-		Long key = 42L;
-		Long s1 = 1L;
-		Long s2 = 2L;
-		
-		h.put(key, s1);
-		System.out.println("Size: " + h.size());
-		System.out.println("Key: " + key + " value: " + h.get(key));
-		
-		h.put(key, s2);
-		System.out.println("Size: " + h.size());
-		System.out.println("Key: " + key + " value: " + h.get(key));
-		
-		
-		
 		//generatingTest();
+		multipleSecrets();
 	}
 	
 	public static void multipleSecrets() throws NoSuchAlgorithmException{
