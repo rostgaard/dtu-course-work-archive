@@ -1,17 +1,12 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Command_Line; use Ada.Command_Line;
-with Letters;
-with Digrams;
-with Trigrams;
 
 with Decrypter;
 with Decrypter.Utilities;
 with Decrypter.Trace;
 
 procedure Substitution_Cipher_Decrypter is
-   use Letters;
-   use Digrams;
-   use Trigrams;
+   use Decrypter.Utilities;
 
    procedure Usage;
 
@@ -53,7 +48,7 @@ procedure Substitution_Cipher_Decrypter is
 
       for I in 1 .. Cipher_Text.Letter.Length loop
          if DC3 /= Trigrams.Frequency_Count.No_Element then
-            Put (Image (Element (DC3)));
+            Put (Trigrams.Image (Element (DC3)));
          else
             Put ("            -");
          end if;
@@ -61,7 +56,7 @@ procedure Substitution_Cipher_Decrypter is
          Put ("   "); -- Separator;
 
          if CC3 /= Trigrams.Frequency_Count.No_Element then
-            Put (Image (Element (CC3)));
+            Put (Trigrams.Image (Element (CC3)));
          else
             Put ("            -");
          end if;
@@ -69,7 +64,7 @@ procedure Substitution_Cipher_Decrypter is
          Put (" | "); -- Separator;
 
          if DC2 /= Digrams.Frequency_Count.No_Element then
-            Put (Image (Element (DC2)));
+            Put (Digrams.Image (Element (DC2)));
          else
             Put ("            -");
          end if;
@@ -77,7 +72,7 @@ procedure Substitution_Cipher_Decrypter is
          Put ("   "); -- Separator;
 
          if CC2 /= Digrams.Frequency_Count.No_Element then
-            Put (Image (Element (CC2)));
+            Put (Digrams.Image (Element (CC2)));
          else
             Put ("           -");
          end if;
@@ -85,7 +80,7 @@ procedure Substitution_Cipher_Decrypter is
          Put (" | "); -- Separator;
 
          if DC1 /= Letters.Frequency_Count.No_Element then
-            Put (Image (Element (DC1)));
+            Put (Letters.Image (Element (DC1)));
          else
             Put ("          -");
          end if;
@@ -93,7 +88,7 @@ procedure Substitution_Cipher_Decrypter is
          Put ("   "); -- Separator;
 
          if CC1 /= Letters.Frequency_Count.No_Element then
-            Put (Image (Element (CC1)) & " ");
+            Put (Letters.Image (Element (CC1)) & " ");
          end if;
          New_Line;
 
