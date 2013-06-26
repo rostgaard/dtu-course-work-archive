@@ -1,8 +1,10 @@
-with Letters;
-with Digrams;
-with Trigrams;
+with N_Grams;
 
 package Decrypter.Utilities is
+
+   package Letters is new N_Grams (N => 1);
+   package Digrams is new N_Grams (N => 2);
+   package Trigrams is new N_Grams (N => 3);
 
    type File_Statistics is
       record
