@@ -20,7 +20,8 @@ public class RainbowTable extends HashMap<Long, HashSet<Long>> implements Serial
     public long rows;
     public long chainLength;
     public long u;
-
+    public long bitMask;
+    
     public void put(long key, long value) {
         if (!this.containsKey(key)) {
             this.put(key, new HashSet<Long>());
@@ -30,15 +31,16 @@ public class RainbowTable extends HashMap<Long, HashSet<Long>> implements Serial
         }
     }
 
-    public RainbowTable(long u, long rows, long chainLength) {
+    public RainbowTable(long u, long rows, long chainLength, long bitMask) {
         super();
         this.u = u;
         this.rows = rows;
         this.chainLength = chainLength;
+        this.bitMask = bitMask;
     }
 
     public void generate() throws NoSuchAlgorithmException {
-        long bitMask = Utilities.bit28;
+        //long bitMask = Utilities.bit28;
         SecureRandom ran = new SecureRandom();
 
         long lastTime = System.currentTimeMillis();
