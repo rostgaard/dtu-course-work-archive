@@ -12,16 +12,18 @@ public class PerfectRainbowTable extends HashMap<Long, Long> implements
 	public long rows;
 	public long chainLength;
 	public long u;
+	public long bitMask;
 
-	public PerfectRainbowTable(long u, long rows, long chainLength) {
+	public PerfectRainbowTable(long u, long rows, long chainLength, long bitMask) {
 		super();
 		this.u = u;
 		this.rows = rows;
 		this.chainLength = chainLength;
+		this.bitMask = bitMask;
 	}
 
 	public void generate() throws NoSuchAlgorithmException {
-		long bitMask = Utilities.bit28;
+		//long bitMask = Utilities.bit28;
 		SecureRandom ran = new SecureRandom();
 
 		long lastTime = System.currentTimeMillis();

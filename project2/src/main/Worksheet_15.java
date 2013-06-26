@@ -25,7 +25,7 @@ public class Worksheet_15 {
 		long u = 1;
 		long length = (long) Math.pow(2, 8);
 		long rows = (long) Math.pow(2, 16);
-		RainbowTable rainbow = new RainbowTable(u, rows, length);
+		RainbowTable rainbow = new RainbowTable(u, rows, length, bitmask);
 		HashMap<Long, Long> Definition_Map = new HashMap<Long, Long>();
 		String filename = "ex15.data";
 		try {

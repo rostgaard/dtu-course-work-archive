@@ -21,7 +21,7 @@ public class Fob
 	 */
 	public long ChallengeMe(long challenge, long bitmask) throws NoSuchAlgorithmException{
 		long concat = Utilities.combine(secret, challenge, bitmask);
-		long response = Utilities.MD5_Hash(concat, Utilities.bit28);
+		long response = Utilities.MD5_Hash(concat, bitmask);
 		return response;
 	}
 

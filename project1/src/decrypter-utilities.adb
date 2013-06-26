@@ -101,7 +101,7 @@ package body Decrypter.Utilities is
          Char := To_Upper (Character'Input (Stream));
          if Is_Character (Char) then
             Buffer ((Char_Count mod 3) + 1) := Char;
-            Letters.Add (C => Char);
+            Letters.Add (Item => (1 => Char));
 
             Char_Count := Char_Count + 1;
 
@@ -116,8 +116,9 @@ package body Decrypter.Utilities is
          if Is_Character (Char) then
             Buffer ((Char_Count mod 3) + 1) := Char;
 
-            Letters.Add (C => Char);
+            Letters.Add ((1 => Char)); --  Convert to string type.
 
+            --  Reorder the circular buffer.
             case (Char_Count mod 3) + 1 is
             when 1 =>
                Digrams.Add (Buffer (2) & Buffer (3));

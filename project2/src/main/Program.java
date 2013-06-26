@@ -53,7 +53,7 @@ public class Program {
 	
 	static void nonPerfectVSPerfect(int numberOfTests) throws NoSuchAlgorithmException{
 		long u = 1337L;
-		long bitMask = Utilities.bit28;
+		long bitMask = Utilities.bit20;
 		long rows = (long)Math.pow(2,18);
 		long chainLength = (long)Math.pow(2, 10);
 		
@@ -61,7 +61,7 @@ public class Program {
 		RainbowTable rainbow = getRainbow(u, bitMask, rows, chainLength);
 		int success = 0;
 		int perfectSucces = 0;
-		for (int i = 1; i < numberOfTests; i++) {
+		for (int i = 1; i <= numberOfTests; i++) {
 			int secret = i;
 			if(robFobKey(rainbow, secret, bitMask)){
 				success += 1;
@@ -88,7 +88,7 @@ public class Program {
 		if (new File(filename).exists()){
 			rainbow = PerfectRainbowTableIO.readFromFile(filename);
 		}else{
-			rainbow = new PerfectRainbowTable(u, rows, chainLength);
+			rainbow = new PerfectRainbowTable(u, rows, chainLength, bitMask);
 			System.out.println("Generating rainbow table: " + filename);
 			rainbow.generate();
 			PerfectRainbowTableIO.writeToFile(rainbow, filename);
@@ -105,7 +105,7 @@ public class Program {
 		if (new File(filename).exists()){
 			rainbow = RainbowTableIO.readFromFile(filename);
 		}else{
-			rainbow = new RainbowTable(u, rows, chainLength);
+			rainbow = new RainbowTable(u, rows, chainLength, bitMask);
 			System.out.println("Generating rainbow table: " + filename);
 			rainbow.generate();
 			RainbowTableIO.writeToFile(rainbow, filename);
