@@ -3,7 +3,7 @@
 With the set of English letters, S, and the corresponding set of letter-probabilities, P, we compute the Entropy, H, using the function\\
 $H(P) = \sum_{i=1}^{n} p_i \times log_2(\frac{1}{p_i}) $\\
 where $p_i$ is the probability of the corresponding letter $s_i$, to occur in a text written in the English language.
-To compute the Entropy, a C\#-program was written. The letter-probabilities from the lecture slides are paired with the corresponding letter in a Dictionary-datatype. The computation is then done for each entry in the dictionary, and summed in an entropy-value. Using this approach, we compute the Entropy to be approximately 4,18. This number indicates the average number of bits needed to store one letter of an English plaintext. \\
+To compute the Entropy, a C\#-program was written. The letter-probabilities from the lecture slides are paired with the corresponding letter in a Dictionary-datatype. The computation is then done for each entry in the dictionary, and summed in an entropy-value. Using this approach, we compute the Entropy to be approximately 4,18. This number indicates the average number of bits needed to store one letter of an English plaintext, using perfect compression. \\
 The code used to calculate the entropy, is found on the following page.
 
 \newpage
