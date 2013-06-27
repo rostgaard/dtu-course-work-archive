@@ -5,55 +5,26 @@ import java.security.NoSuchAlgorithmException;
 
 public class Program {
 	public static void main(String[] args) throws NoSuchAlgorithmException {
-		//multipleSecrets(1000);
-		//multipleSecretsPerfect(1000);
-		nonPerfectVSPerfect(1000);
+		simpleTest();
+		//nonPerfectVSPerfect(1000);
 	}
 	
-	public static void multipleSecrets(int numberOfTests) throws NoSuchAlgorithmException{
-		long u = 1337L;
-		long bitMask = Utilities.bit28;
-		long rows = (long)Math.pow(2,18);
-		long chainLength = (long)Math.pow(2, 10);
-		RainbowTable rainbow = getRainbow(u,bitMask, rows, chainLength);
-		int success = 0;
-		for (int i = 1; i < numberOfTests; i++) {
-			if(robFobKey(rainbow, i, bitMask)){
-				System.out.print("Guessed Secret: " + i);
-				success += 1;
-			}else{
-				System.out.print("Failed secret: " + i);
-			}
-			double rate = ( ( (double)(success * 100) ) / ( (double) i) );
-			System.out.println(" Success: " + success + " failed: " + (i-success) + " Total: " + i + " rate: " + rate);
-		}
-	 	System.out.println("Done");
-	}
-	
-	public static void multipleSecretsPerfect(int numberOfTests) throws NoSuchAlgorithmException{
+	public static void simpleTest() throws NoSuchAlgorithmException{
 		long u = 1337L;
 		long bitMask = Utilities.bit28;
 		long rows = (long)Math.pow(2,18);
 		long chainLength = (long)Math.pow(2, 10);
 		
-		PerfectRainbowTable rainbow = getPerfectRainbow(u,bitMask, rows, chainLength);
-		int success = 0;
-		for (int i = 1; i < numberOfTests; i++) {
-			if(robFobKey(rainbow, i, bitMask)){
-				System.out.print("Guessed Secret: " + i);
-				success += 1;
-			}else{
-				System.out.print("Failed secret: " + i);
-			}
-			double rate = ( ( (double)(success * 100) ) / ( (double) i) );
-			System.out.println(" Success: " + success + " failed: " + (i-success) + " Total: " + i + " rate: " + rate);
-		}
-	 	System.out.println("Done");
+		RainbowTable rainbow = getRainbow(u, bitMask, rows, chainLength);
+		
+		long secret = 12345;
+		boolean res = robFobKey(rainbow, secret, bitMask);
+		System.out.println(res);
 	}
 	
 	static void nonPerfectVSPerfect(int numberOfTests) throws NoSuchAlgorithmException{
 		long u = 1337L;
-		long bitMask = Utilities.bit20;
+		long bitMask = Utilities.bit28;
 		long rows = (long)Math.pow(2,18);
 		long chainLength = (long)Math.pow(2, 10);
 		
@@ -73,7 +44,7 @@ public class Program {
 				perfectSucces += 1;
 			}
 			rate = ( ( (double)(perfectSucces * 100) ) / ( (double) i) );
-			System.out.println("Perfect Success: " + perfectSucces + " failed: " + (i-perfectSucces) + " Total: " + i + " rate: " + rate);
+			System.out.println("   Perfect Success: " + perfectSucces + " failed: " + (i-perfectSucces) + " Total: " + i + " rate: " + rate);
 			System.out.println();
 		}
 	 	System.out.println("Done");
