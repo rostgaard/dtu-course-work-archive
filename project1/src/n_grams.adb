@@ -6,6 +6,11 @@ with Ada.Strings.Equal_Case_Insensitive;
 package body N_Grams is
 
    Element_Count : Natural := 0;
+   --  The current number of elements in the containter.
+
+   -----------
+   --  Add  --
+   -----------
 
    procedure Add (Item : in Element_String) is
       use Count_Storage;
@@ -35,6 +40,10 @@ package body N_Grams is
       Element_Count := Element_Count + 1;
    end Add;
 
+   ---------------------------
+   --  Calculate_Frequency  --
+   ---------------------------
+
    function Calculate_Frequency (Item : in Element_String) return Float
    is
    begin
@@ -46,11 +55,19 @@ package body N_Grams is
       end if;
    end Calculate_Frequency;
 
+   -------------
+   --  Clear  --
+   -------------
+
    procedure Clear is
    begin
       Frequencies.Clear;
       Element_Count := 0;
    end Clear;
+
+   -----------------------
+   --  Equivalent_Keys  --
+   -----------------------
 
    function Equivalent_Keys (Left, Right : in Element_String) return Boolean is
    begin
@@ -58,10 +75,18 @@ package body N_Grams is
                                                  Right => String (Right));
    end Equivalent_Keys;
 
+   ------------
+   --  Hash  --
+   ------------
+
    function Hash (Item : in Element_String) return Hash_Type is
    begin
       return Ada.Strings.Hash_Case_Insensitive (String (Item));
    end Hash;
+
+   -------------
+   --  Image  --
+   -------------
 
    function Image (Item : in Frequency) return String is
       Buffer : String (1 .. 6);
@@ -74,6 +99,10 @@ package body N_Grams is
 
       return String (Item.Key) & " => " & Buffer;
    end Image;
+
+   ------------------------
+   --  To_Ordered_Table  --
+   ------------------------
 
    function To_Ordered_Table (Reverse_Order : in Boolean := False)
                               return Frequency_Count.Vector is
