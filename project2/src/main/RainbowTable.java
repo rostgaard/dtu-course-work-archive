@@ -12,9 +12,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 /**
- * Rainbowtable is based on a HashMap. The key is the last HashValue in the chain, and the value is a set of all startValues from that chain. It's set because we have merging chains.
+ * Rainbowtable is based on a HashMap. The key is the last HashValue in the 
+ * chain, and the value is a set of all startValues from that chain. It's 
+ * set because we have merging chains.
  */
-public class RainbowTable extends HashMap<Long, HashSet<Long>> implements Serializable {
+public class RainbowTable extends HashMap<Long, HashSet<Long>> 
+                          implements Serializable {
 
     private static final long serialVersionUID = 8562121795254811164L;
     public long rows;
@@ -48,8 +51,11 @@ public class RainbowTable extends HashMap<Long, HashSet<Long>> implements Serial
             long startValue = ran.nextInt() % bitMask;
             long accumulator = startValue;
             for (int j = 0; j < this.chainLength; j++) {
-                long cipher = Utilities.MD5_Hash(Utilities.combine(accumulator, this.u, bitMask), bitMask);
-                long reducedCipher = Utilities.reductionFunction(cipher, j, bitMask + 1);
+                long cipher = Utilities.MD5_Hash
+                        (Utilities.combine
+                          (accumulator, this.u, bitMask), bitMask);
+                long reducedCipher =
+                        Utilities.reductionFunction(cipher, j, bitMask + 1);
                 accumulator = reducedCipher;
             }
             put(accumulator, startValue);
@@ -65,11 +71,13 @@ public class RainbowTable extends HashMap<Long, HashSet<Long>> implements Serial
         for (int numReducFunc = 1; numReducFunc < chainLength; numReducFunc++) {
             long accumulator = value;
             for (long i = chainLength - numReducFunc; i < chainLength; i++) {
-                accumulator = Utilities.reductionFunction(accumulator, i, mask + 1);
+                accumulator = 
+                        Utilities.reductionFunction(accumulator, i, mask + 1);
 
                 // Last iteration
                 if (i < chainLength - 1) {
-                    long combined = Utilities.combine(accumulator, this.u, mask);
+                    long combined = 
+                            Utilities.combine(accumulator, this.u, mask);
                     accumulator = Utilities.MD5_Hash(combined, mask);
                 }
             }
@@ -87,7 +95,9 @@ public class RainbowTable extends HashMap<Long, HashSet<Long>> implements Serial
         for (Long startValue : possibleStartValues) {
             long accumilator = startValue;
             for (long i = 0; i < chainLength; i++) {
-                long cipher = Utilities.MD5_Hash(Utilities.combine(accumilator, u, mask), mask);
+                long cipher = 
+                        Utilities.MD5_Hash
+                          (Utilities.combine(accumilator, u, mask), mask);
                 // Have we found the key?
                 if (cipher == value) {
                     return accumilator;
