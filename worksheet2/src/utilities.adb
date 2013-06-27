@@ -5,18 +5,46 @@ with Interfaces.C;
 with GNAT.MD5;
 with Ada.Unchecked_Conversion;
 
+with MD5;
+
 package body Utilities is
 
-   function MD5_Redux (Item : in Unsigned_20) return Unsigned_20 is
-      subtype Bytes is String (1 .. 3);
+   Ctx : MD5.Context;
 
-      type Unsigned_24 is mod 2**24;
+   subtype Bytes is String (1 .. 4);
 
+   function Convert is new Ada.Unchecked_Conversion
+     (Source => Unsigned_32,
+      Target => MD5.Fingerprint);
+
+   function MD5_Redux (Item : in Unsigned_32) return Unsigned_32 is
+      use MD5;
+
+      Digest : constant Digest_String :=
+        MD5.Digest_To_Text (A =>  Convert (Item));
+   begin
+      return Unsigned_32'Value
+        ("16#" & Digest (Digest'Last - 7 .. Digest'Last) & "#");
+   end MD5_Redux;
+
+   function MD5_Redux_GNAT (Item : in Unsigned_32) return Unsigned_32 is
       function Convert is new Ada.Unchecked_Conversion
-        (Source => Unsigned_24,
+        (Source => Unsigned_32,
          Target => Bytes);
+
+      Digest : constant String := GNAT.MD5.Digest (Convert (Item));
+   begin
+      return Unsigned_32'Value
+        ("16#" & Digest (Digest'Last - 7 .. Digest'Last) & "#");
+   end MD5_Redux_GNAT;
+
+   function MD5_Redux (Item : in Unsigned_20) return Unsigned_20 is
+      function Convert is new Ada.Unchecked_Conversion
+        (Source => Unsigned_32,
+         Target => Bytes);
+
       Digest : constant String :=
-        GNAT.MD5.Digest (Convert (Unsigned_24 (Item)));
+        GNAT.MD5.Digest (Convert (Unsigned_32 (Item)));
    begin
       return Unsigned_20'Value
         ("16#" & Digest (Digest'Last - 4 .. Digest'Last) & "#");
@@ -50,5 +78,8 @@ package body Utilities is
            (Ada.Calendar.Conversions.To_Unix_Time (Date)),
          Side   => Left);
    end Unix_Timestamp;
+
+begin
+   MD5.Init (Ctx => Ctx);
 
 end Utilities;
