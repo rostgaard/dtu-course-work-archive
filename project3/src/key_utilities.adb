@@ -26,7 +26,7 @@ package body Key_Utilities is
       Buffer : Unbounded_String;
       S_Buf  : String (1 .. 6);
    begin
-      for I in reverse Item'Range loop
+      for I in Item'Range loop
          Ada.Integer_Text_IO.Put (To    => S_Buf,
                                   Item  => Integer (Item (I)),
                                   Base  => 16);
@@ -47,10 +47,11 @@ package body Key_Utilities is
 
    function Is_Printable (C : in Character) return Boolean is
    begin
-
+      --  Should be moved to use Ada.Character.Handling.
       return
-        Character'Pos (C) in 32 .. 126 or
-        Character'Pos (C) in 9 .. 13;
+        Character'Pos (C) in  32 .. 126 or --  Printable characters.
+        Character'Pos (C) in   9 ..  13 or --  LF, CR and others.
+        Character'Pos (C) in 128 .. 255;   --  Extended ASCII table.
    end Is_Printable;
 
    function Shift_Left (Value  : in Unsigned_64;
