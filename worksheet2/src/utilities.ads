@@ -16,5 +16,6 @@ package Utilities is
 
    function MD5_Redux (Item : in String) return Unsigned_20;
    function MD5_Redux (Item : in Unsigned_20) return Unsigned_20;
+   function MD5_Redux (Item : in Unsigned_32) return Unsigned_32;
 
 end Utilities;

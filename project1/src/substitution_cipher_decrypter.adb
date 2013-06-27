@@ -106,7 +106,7 @@ procedure Substitution_Cipher_Decrypter is
 
    procedure Usage is
    begin
-      Put_Line ("Usage " & Command_Name & " plaintext_file (dictionary)" &
+      Put_Line ("Usage: " & Command_Name & " plaintext_file (dictionary)" &
                   " ciphertext_file [--debug]");
    end Usage;
 

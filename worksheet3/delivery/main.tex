@@ -2,29 +2,118 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[scaled]{beramono}
+%\usepackage{bera}
+
+\usepackage{libertine}
+\usepackage[T1]{fontenc}
 
 \usepackage{color}
 \definecolor{bluekeywords}{rgb}{0.13,0.13,1}
 \definecolor{greencomments}{rgb}{0,0.5,0}
 \definecolor{redstrings}{rgb}{0.9,0,0}
 
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.2,0.2,0.2}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
 
 \usepackage{listings}
-\lstset{language=[Sharp]C,
-showspaces=false,
-showtabs=false,
-breaklines=true,
-showstringspaces=false,
-breakatwhitespace=true,
-escapeinside={(*@}{@*)},
-commentstyle=\color{greencomments},
-keywordstyle=\color{bluekeywords}\bfseries,
-stringstyle=\color{redstrings},
-basicstyle=\ttfamily
+%\lstset{
+%}
+
+\lstset{ %
+  language=[Sharp]C,
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  showspaces=false,
+  basicstyle=\footnotesize\ttfamily,  % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+%  keywordstyle=\color{blue},       % keyword style
+%  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{mygray},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  commentstyle=\color{greencomments},
+  keywordstyle=\color{bluekeywords}\bfseries,
+  stringstyle=\color{redstrings},
+  showtabs=false,
+  breaklines=true,
+  breakatwhitespace=true,
+  numberstyle=\footnotesize\ttfamily,
+  numbers=left,
+  stepnumber=3,
+  breaklines=true
+  escapeinside={(*@}{@*)},
+  tabsize=2                       % sets default tabsize to 2 spaces
+%  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
 
+\title{01435 Practical Cryptanalysis}
+\author{Kim Rostgaard Christensen - s084283}
 \begin{document}
+\maketitle
  
 
-\input{ex_19.tex}
+\section{Exercise 19 (P)}
+
+With the set of English letters, $S$, and the corresponding set of letter-probabilities, $P$, we compute the Entropy, $H$, using the function\\
+
+\begin{equation}
+H(P) = \sum_{i=1}^{n} p_i \times log_2(\frac{1}{p_i})
+\end{equation}
+where $p_i$ is the probability of the corresponding letter $s_i$, to occur in a text written in the English language.\\
+To compute the Entropy, a C\#-program was written. The letter-probabilities from the lecture slides are paired with the corresponding letter in a Dictionary-datatype. The computation is then done for each entry in the dictionary, and summed in an entropy-value.\\
+Using this approach, we compute the Entropy to be approximately $4.18$. This number indicates the average number of bits needed to store one letter of an English plaintext. \\\\
+The code used to calculate the entropy, is found on figure \ref{lst:code}.
+
+\begin{figure}
+
+\begin{lstlisting}
+using System;
+using System.Collections.Generic;
+
+namespace Cryptanalysis.Entropy {
+  class Program {
+    static void Main(string[] args) {
+      //Probabilities extracted from the lecture slides.
+      Dictionary<char, double> probabilities = new Dictionary<char, double>() {
+                {'A', 0.082F}, {'B', 0.015F},
+                {'C', 0.028F}, {'D', 0.043F},
+                {'E', 0.127F}, {'F', 0.022F},
+                {'G', 0.020F}, {'H', 0.061F},
+                {'I', 0.070F}, {'J', 0.002F},
+                {'K', 0.008F}, {'L', 0.040F},
+                {'M', 0.024F}, {'N', 0.067F},
+                {'O', 0.075F}, {'P', 0.019F},
+                {'Q', 0.001F}, {'R', 0.060F},
+                {'S', 0.063F}, {'T', 0.091F},
+                {'U', 0.028F}, {'V', 0.010F},
+                {'W', 0.023F}, {'X', 0.001F},
+                {'Y', 0.020F}, {'Z', 0.001F}
+      };
+      double Entropy = 0.0F;
+
+      for (char c = 'A'; c <= 'Z'; c++) {
+        Entropy += probabilities[c] * Math.Log((1 / probabilities[c]), 2);
+      }
+
+      Console.WriteLine("Entropy: " + Entropy);
+      //Entropy: 4,18024503236223
+    }
+  }
+}
+\end{lstlisting}
+\label{lst:code}
+\caption{C\# program used for calculating entropy}
+\end{figure}
 \end{document}

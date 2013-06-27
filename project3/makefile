@@ -26,8 +26,12 @@ clean:
 	${GNATCLEAN}
 
 
+plot:
+	tools/scatter.gnuplot
+	(cd output && ps2pdf scatter.ps)
+
 distclean: clean
-	-rm substitution_cipher_decrypter
+	-rm tool
 
 tool:
 	@-echo "Building $@"

@@ -67,4 +67,12 @@ exercise_15:
 	@-echo ""
 	@${GNATMAKE} $@ 1> /dev/null
 
-.PHONY: exercise_15
+exercise_17:
+	@-echo ""
+	@-echo "***************************"
+	@-echo Building $@ ...
+	@-echo "***************************"
+	@-echo ""
+	@${GNATMAKE} $@ 1> /dev/null
+
+.PHONY: exercise_15 exercise_17

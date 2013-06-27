@@ -31,7 +31,7 @@ namespace Cryptanalysis.Project3
                 if (!containsNonprintableChars(plaintext)) //string.contains("NSA")
                 {
                     PossiblePlaintext.Add(plaintext);
-
+                    Console.WriteLine(plaintext);
                 }
             }
 

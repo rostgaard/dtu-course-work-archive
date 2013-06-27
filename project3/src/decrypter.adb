@@ -18,7 +18,7 @@ package body Decrypter is
       for I in Plaintext'Range loop
          C (I) := Encode (Item => P (I),
                           Key  => Key,
-                          I    => I);
+                          I    => I-1);
       end loop;
 
       return C;
