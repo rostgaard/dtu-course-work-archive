@@ -195,13 +195,33 @@ end
 \caption{Slicing code example}
 \end{figure}
 
-The point of interest is label 8.  The result of program slice analysis is; [y:=x]$^4$, [z:=1]$^5$, [z:=z*y]$^7$, [int z]$^3$, [int y]$^2$.\\\\
+The point of interest is label 8.  The result of program slice analysis is; [y:=x]$^4$, [y:=y-1]$^8$, [int x]$^1$.\\\\
 
-kill$_{RD}$([int x]$^2$) = $\emptyset$\\
-gen$_{RD}$([int x]$^2$) = $\{(x,2)\}$\\\\
+The point of interest is label 7.  The result of program slice analysis is; [y:=x]$^4$, [z:=1]$^5$, [z:=z*y]$^7$, [int z]$^3$, [int y]$^2$.\\\\
 
-kill$_{RD}$([A[n]]$^2$) = $\emptyset$\\
-gen$_{RD}$([A[n]$^2$) = $\{(A[0],1), ... (A[i-a],<1)\}$\\
+
+\begin{table}[h]
+    \begin{tabular}{l | l }
+    \textbf{int x} &  kill$_{RD}$([int x]$^2$) = $\emptyset$ \\
+                   &  gen$_{RD}$([int x]$^2$) = $\{(x,2)\}$ \\
+    \hline
+    \textbf{A[n]} & kill$_{RD}$([A[n]]$^2$) = $\emptyset$\\
+                  & gen$_{RD}$([A[n]$^2$) = $\{(A[0],l), ... (A[i-a],l)\}$ \\
+
+    \hline
+    \textbf{A[a$_1$ := a$_2$} & kill$_{RD}$([A[a$_1$]]$^2$) = \{ (A[a$_1$],l' \} \\
+                              & gen$_{RD}$([A[n]$^2$) = $\{(A[0],l), ... (A[i-a],l)\}$ \\
+
+    \end{tabular}
+    \centering
+	\caption{RD Equations}
+	\label{table:rd_equations}
+\end{table}
+
+
+\paragraph*{:}
+
+\paragraph*{int A[n]:}
 
 
 \subsection*{(b) Extending Reaching Definitions Analysis table}
