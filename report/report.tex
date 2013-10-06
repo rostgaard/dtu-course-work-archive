@@ -8,6 +8,7 @@
 \usepackage{listings}
 \usepackage{libertine}
 \usepackage[T1]{fontenc}
+\usepackage{MnSymbol}
 
 \usepackage{color}
 \definecolor{bluekeywords}{rgb}{0.13,0.13,1}
@@ -20,6 +21,8 @@
 
 \usepackage{listings}
 \lstset{escapechar=\@}
+
+
 
 % Define block styles
 \tikzstyle{block} = [rectangle, draw, fill=blue!20, 
@@ -123,7 +126,7 @@ The edges are represented by the tuple $(q_s, x, q_T)$ where $q_s$ and $q_t$ are
 \begin{tikzpicture}
   [scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
   \tikzstyle{line} = [draw, -latex']
-
+  %\node (l1) [circle, draw=black, fill=white!20, text=black, scale=0.8]{$l_1$};
   \node (q_s) at (0,3)  {$q_s$};
   \node (q_t) at (0,1)  {$q_t$};
 
@@ -172,6 +175,17 @@ The edges are represented by the tuple $(q_s, x, q_T)$ where $q_s$ and $q_t$ are
 \item[Flow($S$):] $\{ (1,2), (2,3), (3,4), (4,5), (5,3), (3,6), (6,7) \}$
 \end{description}
 
+$a_{\bullet}, a_{\circ}$
+
+\section*{Enumerations}
+\begin{verbatim}
+Variable_Enum : {int, Array}
+Operator_A_Enum : {Plus, Minus, Divide, Multiply}
+Operator_R_Enum : {Less, Less_Equal, Equal, 
+                   Not_Equal, Greater, Greater_Equal}
+Operator_B_Enum : {And, Or}
+\end{verbatim}
+
 
 \section*{Exercise 2 - Program Slicing}
 
@@ -198,6 +212,7 @@ end
 The point of interest is label 8.  The result of program slice analysis is; [y:=x]$^4$, [y:=y-1]$^8$, [int x]$^1$.\\\\
 
 The point of interest is label 7.  The result of program slice analysis is; [y:=x]$^4$, [z:=1]$^5$, [z:=z*y]$^7$, [int z]$^3$, [int y]$^2$.\\\\
+
 
 
 \begin{table}[h]
@@ -229,12 +244,18 @@ The point of interest is label 7.  The result of program slice analysis is; [y:=
 \subsection*{(d) Program slice calculation algorithm}
 \section*{Exercise 3}
 
-\begin{equation}
-  \left(L, \mathcal{F}, F, E, \iota, \mathrm{f}.  \right) \frac{1}{x^2}
-  \label{eq:hej}
-\end{equation}
-
 Where 
 
-\section*{Exercise 4}
+\section*{Exercise 4 - Buffer overflow}
+\begin{equation}
+  \left(L, \mathcal{F}, F, E, \iota, \mathrm{f}.  \right)
+  \label{eq:monotone_framework}
+\end{equation}
+
+We define our complete lattice to; $(?,\sqsubseteq,\bigsqcup, \bigsqcap, \top, \bot )$, and our interval is defined to: Interval = $\{\bot\} \bigcup \{[Z_2, Z_2] | Z_1 < Z_2, Z_1, Z_2, \in Z' \bigcup \{- \infty, \infty \} \} $, where $Z' = \{ Z | \min \leq Z \leq \max \}$ and $ - \infty \leq \infty $ minimum $ \in Z$\\
+$\sqsubseteq$-Ordering: $\subseteq$ (subset ordering).\\
+Interval$_1 \sqsubseteq $ Interval$_2 $ if, and only if $\beta($Interval$_1) \subseteq \beta($Interval$_2)$, where $\beta(\bot) = \emptyset$ 
+
+\subsection*{Internal analysis}
+
 \end{document}
