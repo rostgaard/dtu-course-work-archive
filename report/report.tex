@@ -48,15 +48,14 @@ Program analysis is the discipline of extracting and deriving information about 
 
 \section{Program representation}
 The first problems we need to solve is which data structures should be used for our abstract syntax tree, which will serve as the first step of our intermediate representation.
-\subsection*{(a) Abstract syntax tree data structure}
-We have decided that we could use an unbalanced tree for storage of our abstract syntax tree in our target programming language.
-\subsection*{(b) Flow graph data structure}
-%Present a data structure for flow graphs and give an algorithms for transforming abstract syntax trees into flow graphs.
-This is a typical tree structure, with a parent reference.
-\subsection*{(c) Program graph data structure}
-Present a data structure for program graphs and give an algorithm for
-transforming abstract syntax trees into program graphs.
 
+\subsection{Abstract syntax tree data structure}
+We have decided that we could use an unbalanced tree for storage of our abstract syntax tree in our target programming language. Constraining the tree construction will give us the necessary check for syntax errors.\\
+A simple tree-traversal will give us the appropriate unique label numbers.
+\subsection{Flow graph graph data structure}
+For the flow graph, we have chosen a network graph data structure. This gives an intuitive way of linking statements to potential paths.
+
+\subsection{Program graph data structure} %TODO
 
 \section*{**Notes Below**}
 
@@ -181,13 +180,25 @@ The edges are represented by the tuple $(q_s, x, q_T)$ where $q_s$ and $q_t$ are
 
 $a_{\bullet}, a_{\circ}$
 
-\section*{Enumerations}
+\begin{table}[h]
+    \begin{tabular}{l | l }
+    Variable\_Enum  &  \{ int, Array \} \\
+    \hline
+    Operator\_R\_Enum & \{Less, Less\_Equal, Equal, \\
+                      &  Not\_Equal, Greater, Greater\_Equal\} \\
+    \hline
+    Operator\_B\_Enum & \{And, Or\} \\
+
+    \end{tabular}
+    \centering
+	\caption{Enumerations}
+	\label{table:rd_equations}
+\end{table}
+
+
 \begin{verbatim}
-Variable_Enum : {int, Array}
+
 Operator_A_Enum : {Plus, Minus, Divide, Multiply}
-Operator_R_Enum : {Less, Less_Equal, Equal, 
-                   Not_Equal, Greater, Greater_Equal}
-Operator_B_Enum : {And, Or}
 \end{verbatim}
 
 
