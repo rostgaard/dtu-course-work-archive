@@ -42,10 +42,14 @@
 \begin{abstract}
 This is the report documenting and describing the work done in the course 02242: Program Analysis.
 \end{abstract}
-\section*{Exercise 1}
-For the first exercise we define and discuss the various data structures used for our intermediate representation.
+
+\section{Introduction}
+Program analysis is the discipline of extracting and deriving information about the structure, and potential behaviour of computer programs. It has many applications, such as; bug finding, optimizations, code reuse, formal validation and model mapping. In this report, we take a closer look at some of the specialized and general theory used for transforming source code text into analysis-friendly structures, and then performing the actual analysis on them.
+
+\section{Program representation}
+The first problems we need to solve is which data structures should be used for our abstract syntax tree, which will serve as the first step of our intermediate representation.
 \subsection*{(a) Abstract syntax tree data structure}
-%The parser provides a representation of the abstract syntax tree; specify this data structure in your implementation language.
+We have decided that we could use an unbalanced tree for storage of our abstract syntax tree in our target programming language.
 \subsection*{(b) Flow graph data structure}
 %Present a data structure for flow graphs and give an algorithms for transforming abstract syntax trees into flow graphs.
 This is a typical tree structure, with a parent reference.
@@ -251,10 +255,19 @@ Where
   \left(L, \mathcal{F}, F, E, \iota, \mathrm{f}.  \right)
   \label{eq:monotone_framework}
 \end{equation}
-
+%TODO: Put this into a table.
 We define our complete lattice to; $(?,\sqsubseteq,\bigsqcup, \bigsqcap, \top, \bot )$, and our interval is defined to: Interval = $\{\bot\} \bigcup \{[Z_2, Z_2] | Z_1 < Z_2, Z_1, Z_2, \in Z' \bigcup \{- \infty, \infty \} \} $, where $Z' = \{ Z | \min \leq Z \leq \max \}$ and $ - \infty \leq \infty $ minimum $ \in Z$\\
 $\sqsubseteq$-Ordering: $\subseteq$ (subset ordering).\\
-Interval$_1 \sqsubseteq $ Interval$_2 $ if, and only if $\beta($Interval$_1) \subseteq \beta($Interval$_2)$, where $\beta(\bot) = \emptyset$ 
+Interval$_1 \sqsubseteq $ Interval$_2 $ if, and only if $\beta($Interval$_1) \subseteq \beta($Interval$_2)$, where $\beta(\bot) = \emptyset$\\
+%TODO $\beta([Z_1, Z_2]) = \emptyset$
+Least upper bound: $\bigsqcup Y = \bigcup Y$\\
+Greatest lower bound: $\bigsqcap Y = \bigcap Y$\\
+$\bot$ : Bottom, least element : $\emptyset$\\
+$\top$ : Top, greatest element : $[-\infty, \infty]$\\\
+
+This is a complete lattice, as every subset in the partial ordered set have a least upper bound and a greatest lower bound.\\
+It also holds the Ascending Chain Property, because the lattice has a finite height, and will thus, eventually stabilize.
+
 
 \subsection*{Internal analysis}
 
