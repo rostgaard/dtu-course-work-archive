@@ -1,0 +1,67 @@
+\section{Exercise 2 - Program Slicing}
+
+\subsection{Example program}
+Figure~\ref{fig:codeexample} shows an example program written in the \texttt{WHILE} language that will be used as an example for this exercise. The program consists of 3 declared variables which are assigned and a while loop.
+\begin{figure}
+	\label{fig:codeexample}
+	\begin{lstlisting}
+	program
+	[int x]@$^1$@
+	[int y]@$^2$@
+	[int z]@$^3$@
+	[y := x]@$^4$@
+	[z := 1]@$^5$@
+	while [y>0]@$^6$@ do
+	   [z:= z*y]@$^7$@
+	   [y:= y-1]@$^8$@
+	od
+	[y:=0]@$^9$@
+	end
+	\end{lstlisting}
+	\caption{Code example used in to calculate program slice.}
+\end{figure}
+
+\begin{itemize}
+	\item If the point of interest is label 8. The result of program slice analysis would be; [y:=x]$^4$, [y:=y-1]$^8$, [int x]$^1$.
+	\item If instead the point of interest is label 7.  The result of program slice analysis would be; [y:=x]$^4$, [z:=1]$^5$, [z:=z*y]$^7$, [int x]$^1$.
+\end{itemize}
+
+\subsection{Reaching Definitions Analysis table}
+Table~\ref{table:rd_equations} shows the Reaching Definitions Analysis table for the extended \texttt{WHILE} language. For each statement it is possible to see what is generated and what is killed.
+
+\begin{table}[h]
+    \begin{tabular}{l | l }
+    \textbf{int x} &  kill$_{RD}$([int x]$^l$) = $\emptyset$ \\
+                   &  gen$_{RD}$([int x]$^l$) = $\{(x,l)\}$ \\
+    \hline
+    \textbf{int A[n]} & kill$_{RD}$([A[n]]$^l$) = $\emptyset$\\
+                  & gen$_{RD}$([A[n]$^l$) = $\{(A[0],l), ... (A[n-1],l)\}$ \\
+
+    \hline
+    \textbf{A[a$_1$] = a$_2$} & kill$_{RD}$([A[a$_1$]]$^l$) = \{ (A[a$_1$],l' \}|$B^{l'}$ is a declaration or an assignment to $A[a_1]$ \} \\
+                              & gen$_{RD}$([A[n]$^l$) = $\{(A[0],l), ... (A[i-a],l)\}$ \\
+
+    \hline
+    \textbf{read x} & kill$_{RD}$(read x) = \{ (x,l' \}|$B^{l'}$ is a declaration or an assignment to x \} \\
+                              & gen$_{RD}$(read x) = $\{(x,l)\}$ \\
+							  
+    \hline
+    \textbf{read A[a]} & kill$_{RD}$(read A[a]) = \{ (A[a],l' \}|$B^{l'}$ is a declaration or an assignment to A[a] \} \\
+                              & gen$_{RD}$(read A[a]) = $\{(A[a],l)\}$ \\
+							  
+    \hline
+    \textbf{write a} &  kill$_{RD}$([write a]$^l$) = $\emptyset$ \\
+                   &  gen$_{RD}$([[write a]$^l$) = $\emptyset$ \\
+
+    \hline
+    \textbf{x:=a} & kill$_{RD}$(x:=a) = \{ (x,l' \}|$B^{l'}$ is a declaration or an assignment to x \} \\
+                              & gen$_{RD}$(x:=a) = $\{(x,l)\}$ \\
+    \end{tabular}
+    \centering
+	\caption{RD Equations}
+	\label{table:rd_equations}
+\end{table}
+
+
+\subsection{(c) Flow graph}
+\subsection{(d) Program slice calculation algorithm}

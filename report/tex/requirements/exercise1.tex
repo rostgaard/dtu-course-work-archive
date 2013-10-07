@@ -1,0 +1,162 @@
+\section{Exercise 1 - Data structures}
+The first problems we need to solve is which data structures should be used for our abstract syntax tree, which will serve as the first step of our intermediate representation.
+
+\subsection{Abstract syntax tree data structure}
+We have decided that we could use an unbalanced tree for storage of our abstract syntax tree in our target programming language. Constraining the tree construction will give us the necessary check for syntax errors.
+A simple tree-traversal will give us the appropriate unique label numbers.
+\\
+\\
+Using a parser a program written in the extended WHILE language will be parsed to a abstract syntax tree. This abstract syntax tree needs to be represented using a data structure in our implementation. Figure~\ref{fig:AST} shows the defined data structure.
+
+\subsection{Flow graph data structure}
+For the flow graph, we have chosen a network graph data structure. This gives an intuitive way of linking statements to potential paths.
+\\
+\\
+It is convenient to transform the abstract syntax tree into a flow graph when performing a program analysis. For that reason a data structure for the flow graph as well as mapping from a abstract syntax tree to a flow graph is needed 
+\\
+\\
+Figure~\ref{fig:flowgraph} shows the classes used to represent a flow graph. The idea is that there exists two kinds of nodes that both inherits from the abstract \texttt{Node} class. Each \texttt{Node} has a \texttt{label} and a \texttt{prev}, which is the previous node in the graph. The first node in the program will not have a previous node. A \texttt{Statement Node} is a node that contains a \texttt{CodeBlock} and it is used for everything that does not use branching. It has a pointer to the next node in the flow graph. A \texttt{Branching Node} is used for if statements and while loops where branching is needed. It contains a \texttt{condition} and a pointer to two possible next nodes.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=1.0]{../img/flow_graph}
+	\caption{Data structures used to represent a flow graph}
+	\label{fig:flowgraph}
+\end{figure}
+
+\subsubsection{Creating flow graphs}
+The way a flow graph representation will be created is by first going through all declarations in the abstract syntax tree. This will for sure not include branching so they should end up in \texttt{Statement Node}s. One for each declaration. The next thing to do is to go through each statement and check whenever it is a branching statement or not and create the correct nodes. When a statement is met that contains more statements (for instance a while statement), these statements needs to be added to the graph before the iteration of statements can continue.
+
+\subsection{Program graph data structure}
+For some types of analysis it is more convenient to use a program graph compared to a flow graph. In that case a way of transforming a abstract syntax tree into a program graph is needed. Figure~\ref{fig:programgraph} shows a data structure for a program graph. It is a bit more complicated than flow graphs since we need to introduce both nodes and edges. A node has a \texttt{label}. If it is a \texttt{Branch Node} then it contains two \texttt{Branch Edge}s. A \texttt{Branch Edge} is an edge that contains a \texttt{condition}. If it is a \texttt{Statement Node} is contains a \texttt{Statement Edge}. A \texttt{Statement Edge} is an edge that contains a \texttt{codeBlock}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=1.0]{../img/program_graph}
+	\caption{Data structures used to represent a program graph}
+	\label{fig:programgraph}
+\end{figure}
+
+\subsubsection{Creating program graphs}
+A program graph can be created much in the same way as a flow graph by going through all the declarations first and then the statements. Basically the only difference is that the labels are stored in nodes and code blocks and conditions are stored in edges.
+% 
+% \section{**Notes Below**}
+% 
+% \subsection{Constructing flow graphs}
+% 
+% \begin{description}
+%    \item[Functions:] Slide 11+12 of from week 2
+%    \item[label(S):] The set of nodes of the flow graph S
+%    \item[Init(S):] The initial node of the flow graph S. Unique node where the execution of the program starts.
+%    \item[Final(S):] The final node of the flow graph S. A set of nodes where the execution of the program may terminate.
+%    \item[Block(S):] A set of the blocks/statements in the program under inquisition.
+%    \item[Flow(S):] The edges of the flow graph for S. A set of pairs is returned.
+% \end{description}
+% 
+% \begin{figure}
+% \begin{lstlisting}
+% [y:=x]@$^1$@
+% [z:=1]@$^2$@
+% while [x>0]@$^3$@ do
+%    [z:= z*y]@$^4$@
+%    [Y:= y-1]@$^5$@
+% od
+% [y:=0]@$^6$@
+% \end{lstlisting}
+% \label{source:example1}
+% \caption{Source code example}
+% \end{figure}
+% 
+% \begin{figure}
+% 
+% \begin{tikzpicture}[node distance = 2cm, auto]
+% 
+%     % Place nodes
+%     \node [block] (L1) {L$_1$ \\ y := x};
+%     \node [block, below of=L1] (L2) {L$_2$ \\ Z := 1};
+%     \node [block, below of=L2] (L3) {L$_3$ \\ Y > 0};
+%     \node [block, below of=L3] (L4) {L$_4$ \\ };
+%     \node [block, below of=L4] (L5) {L$_5$ \\};
+%     \node [block, right of=L3, node distance=3cm] (L6) {L$_6$ \\};
+% 
+%     % Draw edges
+%     \path [line] (L1) -- (L2);
+%     \path [line] (L2) -- (L3);
+%     \path [line] (L3) -- node {True} (L4);
+%     \path [line] (L3) -- node {False} (L6);
+%     \path [line] (L4) -- (L5);
+%    	\path [line] (L5) -| (-2,-6) |-  node [near start, color=black] {} (L3);
+% 
+% \end{tikzpicture}
+% 
+% \caption{Flow Graph}
+% 
+% \end{figure}
+% 
+% \begin{description}
+% \item[Label($S$):] $\left\lbrace   1,2,3,4,5,6   \right\rbrace$
+% \item[Initial($S$):] 1
+% \item[Final($S$):] $\left\lbrace   6   \right\rbrace$
+% \item[Blocks($S$):]$\{$ y:=x, z:=1 y>0, z:=z*y, y;=y-1, Y:=0 $\}$
+% \item[Flow($S$):] $\{ (1,2), (2,3), (3,4), (4,5), (5,3), (3,6) \}$
+% \end{description}
+% 
+% \subsection{Constructing program graph}
+% Functions: Slide 14, week 2.\\
+% $pg^{qt}_{qs}$: The program graph for statement $S$ with with initial node being $q_{s}$\footnote{$s$ for source.}, and $q_{t}$\footnote{$t$ for target.}\\
+% Nodes are constructed by the algorithm.\\
+% The edges are represented by the tuple $(q_s, x, q_T)$ where $q_s$ and $q_t$ are nodes, and x is and elementary block statement. %NOTE, krc: shouldn't x be s ?
+% 
+% \begin{figure}[h]
+% \centering
+% \begin{tikzpicture}
+%   [scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+%   \tikzstyle{line} = [draw, -latex']
+% 
+%   \node (q_s) at (0,3)  {$q_s$};
+%   \node (q_t) at (0,1)  {$q_t$};
+% 
+%   \path [line] (0,4) -- (q_s);
+%   \path [line] (q_s) -- (q_t); %TODO; Add label here.
+%   \path [line] (q_t) -- (0,0);
+% 
+% 
+%   \node (q_s) at (3,3)  {$q_s$};
+%   \node (q_t) at (2,1)  {$q_t$};
+%   \node (q_f) at (4,1)  {$q_f$};
+%   \node (empty1) at (2,-1)  {$...$};
+%   \node (empty2) at (4,-1)  {$...$};
+% 
+%   \path [line] (3,4) -- (q_s);
+%   \path [line] (q_s) -- (q_t); %TODO; Add label here.
+%   \path [line] (q_s) -- (q_f); %TODO; Add label here.
+%   \path [line] (q_f) -- (empty2);
+%   \path [line] (q_t) -- (empty1);
+%   \path [line] (empty2) -- (4,-2);
+%   \draw[bend left=60,->]  (empty1) to (q_s);
+%   
+%   \node (q_s) at (7,3)  {$q_s$};
+%   \node (q_t) at (6,1)  {$q_t$};
+%   \node (q_f) at (8,1)  {$q_f$};
+% 
+%   \path [line] (7,4) -- (q_s);
+%   \path [line] (q_s) -- (q_t); %TODO; Add label here.
+%   \path [line] (q_s) -- (q_f); %TODO; Add label here.
+%   \path [line] (q_t) -- (6,0);
+%   \path [line] (q_f) -- (8,0);
+% 
+% \end{tikzpicture}
+%  \caption{Assignments, loops and branches}
+% 
+%  \label{fig:graph}
+% \end{figure}
+% 
+% %TODO Figure from 6.jpg
+% 
+% \begin{description}
+% \item[Label($S$):] $\{ 1,2,3,4,5,6,7 \}$
+% \item[Initial($S$):] $1$
+% \item[Final($S$):] $\{ 7 \}$
+% \item[Blocks($S$):]$\{ [y:=x], [z:=1], [y>0], [z:=z*y], [y;=y-1], [\lnot (y>0)] ,[Y:=0] \}$
+% \item[Flow($S$):] $\{ (1,2), (2,3), (3,4), (4,5), (5,3), (3,6), (6,7) \}$
+% \end{description}
