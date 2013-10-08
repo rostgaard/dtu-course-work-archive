@@ -1,1 +1,93 @@
 \section{Exercise 4}
+\begin{equation}
+  \left(L, \mathcal{F}, F, E, \iota, \mathrm{f}.  \right)
+  \label{eq:monotone_framework}
+\end{equation}
+%TODO: Put this into a table.
+\begin{table}
+\begin{tabular}{| l | l |}
+  \hline
+  Instance & $(L,\sqsubseteq,\bigsqcup, \bigsqcap, \top, \bot )$ \\
+  \hline
+  \hline
+  Lattice  & (Interval, $\sqsubseteq$) \\
+  \hline
+  Interval & $\{\bot\} \bigcup \{[z_1, z_2] | z_1 < z_2, z_1, z_2, \in Z' \bigcup \{- \infty, \infty \} \} $ \\
+           & where $Z' = \{ z | \min \leq z \leq \max \}$ and $ - \infty \leq \infty $, and $ \min, \max \in Z$ \\
+           \hline
+   $\sqsubseteq$-Ordering &  $\subseteq$ (subset ordering).\\
+                          & Interval$_1 \sqsubseteq $ Interval$_2 $ if, and only if $\beta($Interval$_1) \subseteq \beta($Interval$_2)$, where \\
+                          & $\beta(\bot) = \emptyset$ \\
+                          & $\beta([z_1, z_2]) = \{ z \in Z | z_1 \leq z \leq z_2\} $ if $z_1 \in Z' \bigcup \{  -\infty\} $ and $ z_2 \in Z' \bigcup \{\infty\}$ \\
+                          & $\beta(\{-\infty, -\infty\}) = \{z | z < \min\}$ \\
+                          & $\beta(\{\infty, \infty\}) = \{z | z > \max\}$ \\
+   \hline
+   Least upper bound      & $\bigsqcup Y = \bigcup Y$\\
+   \hline
+   Greatest lower bound   & $\bigsqcap Y = \bigcap Y$\\
+   \hline
+   $\bot$                 & Bottom, least element : $\emptyset$\\
+   \hline
+   $\top$                 & Top, greatest element : $[-\infty, \infty]$\\
+\hline   
+\end{tabular}
+  \centering
+\end{table}
+
+This is a complete lattice, as every subset in the partial ordered set have a least upper bound and a greatest lower bound.\\
+It also holds the Ascending Chain Property, because the lattice has a finite height, and will thus, eventually stabilize.\\\\
+We define the flow as 
+\begin{description}
+  \item[Flow $F$:] flow ($S_*$) (forward analysis)
+  \item[Extremal label $E$:] \{init($S_*$)\}
+\end{description}
+
+The analysis is defined as :
+\begin{table}
+\begin{tabular}{| l | l |}
+  \hline
+  Analysis$_\circ(\ell)$ & $ \bigsqcup \{$ Analysis$_\bullet (\ell') | (\ell', \ell) \in F \} \bigcup \iota_E^{\ell} $ \\
+                         & where $\iota_E^{\ell} = \begin{cases} \iota & \text{if } \ell \in E \\ 
+                                                                 \bot  & \text{if } \ell \notin E
+                                                   \end{cases}$\\
+  \hline
+  Analysis$_\bullet(\ell)$ & f$_\ell$(Analysis$_\circ(\ell)$)\\
+  \hline
+\end{tabular}
+\centering
+\caption{Analysis definitions}
+\end{table}
+
+\subsection{Transfer functions}
+%We define our transfer functions as
+\begin{table}
+\begin{tabular}{| l | l | l |}
+  \hline
+  \# & Statement & Function \\
+  \hline
+  \hline
+  1 & [int x]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto [0,0]]$ \\
+  \hline
+  2 & [int A[n]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = 
+     \begin{cases} 
+        \widehat{\sigma}[$A[n]$ \mapsto \bot] & \text{if } n \leq 0] \\
+        \widehat{\sigma}[$A[i]$ \mapsto [0,0] | \forall i \in \{0, ..., n-1 \} & \text{if } n > 0] \\
+     \end{cases}$\\
+  \hline
+  3 & [x := a]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto A_I[[a]] \widehat{\sigma} ]$ \\
+  \hline
+  4 & [skip]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
+  \hline
+  5 & [b]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
+  \hline
+  6 & [int A[a$_1$] := a$_2$]$^\ell$ & \\
+  \hline
+  7 & [read x]$^\ell$ & \\
+  \hline
+  8 & [read A[a]]$^\ell$ & \\
+  \hline
+  9 & [write A[n]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
+  \hline
+\end{tabular}
+
+\end{table}

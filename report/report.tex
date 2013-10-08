@@ -262,24 +262,4 @@ The point of interest is label 7.  The result of program slice analysis is; [y:=
 Where 
 
 \section*{Exercise 4 - Buffer overflow}
-\begin{equation}
-  \left(L, \mathcal{F}, F, E, \iota, \mathrm{f}.  \right)
-  \label{eq:monotone_framework}
-\end{equation}
-%TODO: Put this into a table.
-We define our complete lattice to; $(?,\sqsubseteq,\bigsqcup, \bigsqcap, \top, \bot )$, and our interval is defined to: Interval = $\{\bot\} \bigcup \{[Z_2, Z_2] | Z_1 < Z_2, Z_1, Z_2, \in Z' \bigcup \{- \infty, \infty \} \} $, where $Z' = \{ Z | \min \leq Z \leq \max \}$ and $ - \infty \leq \infty $ minimum $ \in Z$\\
-$\sqsubseteq$-Ordering: $\subseteq$ (subset ordering).\\
-Interval$_1 \sqsubseteq $ Interval$_2 $ if, and only if $\beta($Interval$_1) \subseteq \beta($Interval$_2)$, where $\beta(\bot) = \emptyset$\\
-%TODO $\beta([Z_1, Z_2]) = \emptyset$
-Least upper bound: $\bigsqcup Y = \bigcup Y$\\
-Greatest lower bound: $\bigsqcap Y = \bigcap Y$\\
-$\bot$ : Bottom, least element : $\emptyset$\\
-$\top$ : Top, greatest element : $[-\infty, \infty]$\\\
-
-This is a complete lattice, as every subset in the partial ordered set have a least upper bound and a greatest lower bound.\\
-It also holds the Ascending Chain Property, because the lattice has a finite height, and will thus, eventually stabilize.
-
-
-\subsection*{Internal analysis}
-
 \end{document}
