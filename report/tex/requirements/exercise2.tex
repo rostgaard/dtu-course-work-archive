@@ -1,8 +1,9 @@
 \section{Exercise 2 - Program Slicing}
 
-\subsection{Example program}
+\subsection{Example program}\label{sec:exampleprogram}
 Figure~\ref{fig:codeexample} shows an example program written in the \texttt{WHILE} language that will be used as an example for this exercise. The program consists of 3 declared variables which are assigned and a while loop.
 \begin{figure}
+	\label{fig:codeexample}
 	\begin{lstlisting}
 	program
 	[int x]@$^1$@
@@ -17,7 +18,6 @@ Figure~\ref{fig:codeexample} shows an example program written in the \texttt{WHI
 	[y:=0]@$^9$@
 	end
 	\end{lstlisting}
-	\label{fig:codeexample}
 	\caption{Code example used in to calculate program slice.}
 \end{figure}
 
@@ -62,6 +62,199 @@ Table~\ref{table:rd_equations} shows the Reaching Definitions Analysis table for
 	\label{table:rd_equations}
 \end{table}
 
+% \begin{table}[h]
+%     \begin{tabular}{l | l }
+%     \textbf{$RD_{entry}(l)$} & $\emptyset$ if $l=init(S_*)$\\
+% 					& $f$ otherwise %\cup {RD_{exit}(l')|(l',l)\in flow(S_*)}
+% 
+% 
+%     \hline
+% 	
+%     \textbf{$RD_{exit}(l)$} & $(RD_{entry}(l)\backslash kill_{RD}(B^l))\cup gen_{RB}(B^l)$\\
+% 					& where $B_l\in blocks(S_*)$
+% 
+%     \end{tabular}
+%     \centering
+% 	\caption{RD Equations}
+% 	\label{table:rd_equations}
+% \end{table}
 
-\subsection{(c) Flow graph}
-\subsection{(d) Program slice calculation algorithm}
+
+\subsection{Flow graph for program}
+
+
+
+\begin{table}
+    \begin{tabular}{l | l }
+    label$(S)$ & The set of nodes of the flow graph $S$ \\
+    \hline    
+    Init$(S)$  & The initial node of the flow graph $S$.\\
+               & Unique node where the execution of the program starts.\\
+    \hline
+    Final$(S)$   & The final node of the flow graph $S$.\\
+                 & A set of nodes where the execution of the program may terminate.\\
+    \hline
+    Block$(S)$   & A set of the blocks/statements in the program under inquisition.\\
+    \hline
+    Flow$(S)$& The edges of the flow graph for $S$. A set of pairs is returned. \\
+    \end{tabular}
+    \centering
+	\caption{Function definitions}
+	\label{table:flow_graph_definitions}
+\end{table}
+
+
+\begin{table}
+    \begin{tabular}{l | l }
+     Label($S$)   & $\{   1,2,3,4,5,6,7,8,9   \}$ \\
+     \hline
+     Initial($S$) & $1$ \\
+     \hline
+     Final($S$)   & $\left\lbrace   9   \right\rbrace$ \\
+     \hline
+     Blocks($S$)  & $\{$int x, int y, int z y:=x, z:=1, y>0, z:=$z\cdot y$, y:=y-1, y:=0 $\}$ \\
+     \hline
+     Flow($S$)    &  $\{ (1,2), (2,3), (3,4), (4,5), (5,6), (6,7), (7,8) (8,6), (6,9) \}$ \\
+    \end{tabular}
+    \centering
+	\caption{Example flow graph table}
+	\label{table:example_flow_table}
+\end{table}
+
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+  [scale=0.8,auto=left,every node/.style={circle,fill=blue!20}]
+  \tikzstyle{line} = [draw, -latex']
+
+  \node[block] (1) at (0,3)  {[int x]$^1$};
+  \node[block] (2) at (0,1)  {[int y]$^2$};
+  \node[block] (3) at (0,-1)  {[int z]$^3$};
+  \node[block] (4) at (0,-3)  {[y:=x]$^4$};
+  \node[block] (5) at (0,-5)  {[z:=1]$^5$};
+  \node[block] (6) at (0,-7)  {[y>0]$^6$};
+  \node[block] (7) at (0,-9)  {[z:=z$\cdot$y]$^7$};
+  \node[block] (8) at (0,-11)  {[y:=y-1]$^8$};
+  \node[block] (9) at (3,-7)  {[y:=0]$^9$};
+
+  
+  \path [line] (0,4) -- (1);
+  \path [line] (1) -- (2); %TODO; Add label here.
+  \path [line] (2) -- (3);
+  \path [line] (3) -- (4);
+  \path [line] (4) -- (5);
+  \path [line] (5) -- (6);
+  \path [line] (6) -- (7);
+  \path [line] (7) -- (8);
+  \path [line] (8) -| (-2,-8) |- (6);
+  \path [line] (6) -- (9);
+
+\end{tikzpicture}
+ \caption{Flow graph}
+
+ \label{fig:graph}
+\end{figure}
+
+
+\subsection{Program graph for program}
+
+
+\subsection{Data flow equations}
+
+\begin{figure}
+$RD_\circ(1)=\emptyset$\\
+$RD_\circ(2)=RD_\bullet(1)$\\
+$RD_\circ(3)=RD_\bullet(2)$\\
+$RD_\circ(4)=RD_\bullet(3)$\\
+$RD_\circ(5)=RD_\bullet(4)$\\
+$RD_\circ(6)=RD_\bullet(1)\cup RD_\bullet(8)$\\
+$RD_\circ(7)=RD_\bullet(6)$\\
+$RD_\circ(8)=RD_\bullet(7)$\\
+$RD_\circ(9)=RD_\bullet(6)$\\
+\end{figure}
+
+\begin{figure}
+$RD_\bullet(1)=(RD_\circ(1)\backslash\{(x,1)\})\cup \{(x,1)\}$\\
+$RD_\bullet(2)=(RD_\circ(2)\backslash\{(y,2),(y,4),(y,8),(y,9)\})\cup \{(y,2)\}$\\
+$RD_\bullet(3)=(RD_\circ(3)\backslash\{(z,3),(z,5),(z,7)\})\cup \{(z,3)\}$\\
+$RD_\bullet(4)=(RD_\circ(4)\backslash\{(y,2),(y,4),(y,8),(y,9)\})\cup \{(y,4)\}$\\
+$RD_\bullet(5)=(RD_\circ(5)\backslash\{(z,3),(z,5),(z,7)\})\cup \{(z,5)\}$\\
+$RD_\bullet(6)=RD_\circ(6)$\\
+$RD_\bullet(7)=(RD_\circ(7)\backslash\{(z,3),(z,5),(z,7)\})\cup \{(z,7)\}$\\
+$RD_\bullet(8)=(RD_\circ(8)\backslash\{(y,2),(y,4),(y,8),(y,9)\})\cup \{(y,8)\}$\\
+$RD_\bullet(9)=(RD_\circ(9)\backslash\{(y,2),(y,4),(y,8),(y,9)\})\cup \{(y,9)\}$\\
+\end{figure}
+
+\begin{table}
+\begin{tabular}{| l | l |}
+  \hline
+  l & $RD_\circ(l)$ \\
+  \hline
+  \hline
+1 & $\emptyset$\\
+2 & $\{(x,1)\}$\\
+3 & $\{(x,1),(y,2)\}$\\
+4 & $\{(x,1),(y,2),(z,3)\}$\\
+5 & $\{(x,1),(y,4),(z,3)\}$\\
+6 & $\{(x,1),(y,4),(z,5),(z,7),(y,8)\}$\\
+7 & $\{(x,1),(y,4),(z,5),(z,7),(y,8)\}$\\
+8 & $\{(x,1),(y,4),(z,7),(y,8)\}$\\
+9 & $\{(x,1),(y,4),(z,5),(z,7),(y,8)\}$\\
+  \hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\begin{tabular}{| l | l |}
+  \hline
+  l & $RD_\bullet(l)$ \\
+  \hline
+  \hline
+1 & $\{(x,1)\}$\\
+2 & $\{(x,1),(y,2)\}$\\
+3 & $\{(x,1),(y,2),(z,3)\}$\\
+4 & $\{(x,1),(y,2),(z,3)\}$\\
+5 & $\{(x,1),(y,4),(z,5)\}$\\
+6 & $\{(x,1),(y,4),(z,5),(z,7),(y,8)\}$\\
+7 & $\{(x,1),(y,4),(z,7),(y,8)\}$\\
+8 & $\{(x,1),(z,7),(y,8)\}$\\
+9 & $\{(x,1),(z,5),(z,7),(y,9)\}$\\
+  \hline
+\end{tabular}
+\end{table}
+
+\subsection{Program slice calculation algorithm}
+The Reaching Definitions Analysis algorithm can be used to calculate the Program Slice for a given program at a point of interest. An algorithm for calculating the Program Slice is given in figure~\ref{fig:programslicealgorithm}.
+\\
+\\
+The algorithm takes the label of the point of interest as input. The output is an array with the labels that is a part of the program slice. It is assumed that the Reaching Definitions Analysis has been performed beforehand and the result is available in the variable \texttt{RD}. The algorithm uses a queue where the point of interest is added to and continues until the queue is empty. For every iteration the label in the queue is added to the \texttt{result} array. Then all the variables that this label depends on is retrieved. The labels where these variables are used from the result of the Reaching Definitions Analysis is added to the queue. It is assumed that once a label has been added to the queue it can not be added again. This will then guarantee that the algorithm terminates.
+\begin{algorithm}
+ \begin{algorithmic}[1]
+ \Procedure{Program Slice}{$point\_of\_interest$}
+ \State Array $result$
+ \State Queue $queue$
+ \State $queue.enqueue(point\_of\_interest)$
+ \While{$queue.not\_empty()$}
+ \State Label $l:=queue.dequeue()$
+ \State $result.add(l)$
+ \State Array $variables:=l.get\_variables()$
+ \State Array RD = $RD_{entry}(l)$
+\For {label in RD}
+\If {$variables.contains(label.get\_variables())$}
+\State queue.enqueue(label)
+\EndIf 
+\EndFor
+ \EndWhile
+ \State \textbf{return} $result$
+ \EndProcedure
+ \end{algorithmic}
+ \caption{Calculate Program Slice}
+ \label{fig:programslicealgorithm}
+\end{algorithm}
+\\\\
+The algorithm can calculate the Program Slice for the example program from section~\ref{sec:exampleprogram}. To find the Program Slice with point of interest at label 8.
+
+\begin{itemize}
+	\item First the point of interest is added to the queue. $queue=[y:= y-1]^8$ $result=[]$
+\end{itemize}
