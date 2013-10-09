@@ -1,7 +1,8 @@
 \section{Exercise 2 - Program Slicing}
+A program slicing is a set of statements that may affect the values at some point of interest.
 
 \subsection{Example program}\label{sec:exampleprogram}
-Figure~\ref{fig:codeexample} shows an example program written in the \texttt{WHILE} language that will be used as an example for this exercise. The program consists of 3 declared variables which are assigned and a while loop.
+Figure~\ref{fig:codeexample} shows an example program written in the \texttt{WHILE} language. This example program will be used as an example for this exercise. The program consists of 3 declared variables which are assigned several times and a while loop.
 \begin{figure}
 	\label{fig:codeexample}
 	\begin{lstlisting}
@@ -20,15 +21,17 @@ Figure~\ref{fig:codeexample} shows an example program written in the \texttt{WHI
 	\end{lstlisting}
 	\caption{Code example used in to calculate program slice.}
 \end{figure}
-
+\\\\
+For this program it is possible to calculate the program slice for a point of interest.
 \begin{itemize}
 	\item If the point of interest is label 8. The result of program slice analysis would be; [y:=x]$^4$, [y:=y-1]$^8$, [int x]$^1$.
 	\item If instead the point of interest is label 7.  The result of program slice analysis would be; [y:=x]$^4$, [z:=1]$^5$, [z:=z*y]$^7$, [int x]$^1$.
 \end{itemize}
 
-\subsection{Reaching Definitions Analysis table}
+\subsection{Reaching Definitions Analysis}
+Our algorithm for calculating the Program Slice will use the result of a Reaching Definition Analysis. A reaching definition analysis determines statically which definitions may reach a point of interests.
+\\\\
 Table~\ref{table:rd_equations} shows the Reaching Definitions Analysis table for the extended \texttt{WHILE} language. For each statement it is possible to see what is generated and what is killed.
-
 \begin{table}[h]
     \begin{tabular}{l | l }
     \textbf{int x} &  kill$_{RD}$([int x]$^l$) = $\emptyset$ \\
@@ -61,29 +64,30 @@ Table~\ref{table:rd_equations} shows the Reaching Definitions Analysis table for
 	\caption{RD Equations}
 	\label{table:rd_equations}
 \end{table}
+\\\\
+Furthermore table~\ref{table:rd_analysis} shows the Reaching Definitions Analysis. By using the analysis and equations it is possible for a specific program to calculate the reaching definitions.
 
-% \begin{table}[h]
-%     \begin{tabular}{l | l }
-%     \textbf{$RD_{entry}(l)$} & $\emptyset$ if $l=init(S_*)$\\
-% 					& $f$ otherwise %\cup {RD_{exit}(l')|(l',l)\in flow(S_*)}
-% 
-% 
-%     \hline
-% 	
-%     \textbf{$RD_{exit}(l)$} & $(RD_{entry}(l)\backslash kill_{RD}(B^l))\cup gen_{RB}(B^l)$\\
-% 					& where $B_l\in blocks(S_*)$
-% 
-%     \end{tabular}
-%     \centering
-% 	\caption{RD Equations}
-% 	\label{table:rd_equations}
-% \end{table}
+\begin{table}
+\begin{tabular}{ l | l }
+  \hline
+  \textbf{$RD_{entry}(l)$} & $\begin{cases} \emptyset & \text{ if } \ell=init(S_*) \\ 
+                                                                 \cup \{RD_{exit}(\ell')|(\ell',\ell)\in flow(S_*)\}  & \text{ otherwise }
+                                                   \end{cases}$\\\\
+  \hline
+      
+    \textbf{$RD_{exit}(l)$} & $(RD_{entry}(l)\backslash kill_{RD}(B^l))\cup gen_{RB}(B^l)$\\
+    					& where $B_l\in blocks(S_*)$\\
+
+  \hline
+\end{tabular}
+\centering
+\caption{Analysis definitions}
+\label{table:rd_analysis}
+\end{table}
 
 
 \subsection{Flow graph for program}
-
-
-
+A flow graph can be generated from a program in the \texttt{WHILE} language. Table~\ref{table:flow_graph_definitions} shows what a flow graph consists of. In table~\ref{table:example_flow_table} our example program is shown using this definition.
 \begin{table}
     \begin{tabular}{l | l }
     label$(S)$ & The set of nodes of the flow graph $S$ \\
@@ -102,8 +106,6 @@ Table~\ref{table:rd_equations} shows the Reaching Definitions Analysis table for
 	\caption{Function definitions}
 	\label{table:flow_graph_definitions}
 \end{table}
-
-
 \begin{table}
     \begin{tabular}{l | l }
      Label($S$)   & $\{   1,2,3,4,5,6,7,8,9   \}$ \\
@@ -120,8 +122,8 @@ Table~\ref{table:rd_equations} shows the Reaching Definitions Analysis table for
 	\caption{Example flow graph table}
 	\label{table:example_flow_table}
 \end{table}
-
-
+\\\\
+Furthermore a graphical representation can be created of a flow graph to give a better overview. Figure~\ref{fig:flowgraph} shows the Flow Graph for our example program.
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}
@@ -153,16 +155,14 @@ Table~\ref{table:rd_equations} shows the Reaching Definitions Analysis table for
 \end{tikzpicture}
  \caption{Flow graph}
 
- \label{fig:graph}
+ \label{fig:flowgraph}
 \end{figure}
 
-
-\subsection{Program graph for program}
-
-
 \subsection{Data flow equations}
-
-\begin{figure}
+Using the analysis definitions from table~\ref{table:rd_analysis} the following equations in table~\ref{table:equations} can be made for our xample program.
+\begin{table}
+	\begin{tabular}{| l |}
+		\hline
 $RD_\circ(1)=\emptyset$\\
 $RD_\circ(2)=RD_\bullet(1)$\\
 $RD_\circ(3)=RD_\bullet(2)$\\
@@ -172,9 +172,8 @@ $RD_\circ(6)=RD_\bullet(1)\cup RD_\bullet(8)$\\
 $RD_\circ(7)=RD_\bullet(6)$\\
 $RD_\circ(8)=RD_\bullet(7)$\\
 $RD_\circ(9)=RD_\bullet(6)$\\
-\end{figure}
-
-\begin{figure}
+\hline
+\hline
 $RD_\bullet(1)=(RD_\circ(1)\backslash\{(x,1)\})\cup \{(x,1)\}$\\
 $RD_\bullet(2)=(RD_\circ(2)\backslash\{(y,2),(y,4),(y,8),(y,9)\})\cup \{(y,2)\}$\\
 $RD_\bullet(3)=(RD_\circ(3)\backslash\{(z,3),(z,5),(z,7)\})\cup \{(z,3)\}$\\
@@ -184,44 +183,56 @@ $RD_\bullet(6)=RD_\circ(6)$\\
 $RD_\bullet(7)=(RD_\circ(7)\backslash\{(z,3),(z,5),(z,7)\})\cup \{(z,7)\}$\\
 $RD_\bullet(8)=(RD_\circ(8)\backslash\{(y,2),(y,4),(y,8),(y,9)\})\cup \{(y,8)\}$\\
 $RD_\bullet(9)=(RD_\circ(9)\backslash\{(y,2),(y,4),(y,8),(y,9)\})\cup \{(y,9)\}$\\
-\end{figure}
-
+\hline
+	\end{tabular}
+    \centering
+    \caption{Equations}
+    \label{table:equations}
+\end{table}
+\\\\
+These equations can be solved using the equations from~\ref{table:rd_equations}. The solutions can be found in table~\ref{table:solution1} and table~\ref{table:solution2}.
 \begin{table}
-\begin{tabular}{| l | l |}
-  \hline
-  l & $RD_\circ(l)$ \\
-  \hline
-  \hline
-1 & $\emptyset$\\
-2 & $\{(x,1)\}$\\
-3 & $\{(x,1),(y,2)\}$\\
-4 & $\{(x,1),(y,2),(z,3)\}$\\
-5 & $\{(x,1),(y,4),(z,3)\}$\\
-6 & $\{(x,1),(y,4),(z,5),(z,7),(y,8)\}$\\
-7 & $\{(x,1),(y,4),(z,5),(z,7),(y,8)\}$\\
-8 & $\{(x,1),(y,4),(z,7),(y,8)\}$\\
-9 & $\{(x,1),(y,4),(z,5),(z,7),(y,8)\}$\\
-  \hline
-\end{tabular}
+	\begin{tabular}{| l | l |}
+	  \hline
+	  l & $RD_\circ(l)$ \\
+	  \hline
+	  \hline
+	1 & $\emptyset$\\
+	2 & $\{(x,1)\}$\\
+	3 & $\{(x,1),(y,2)\}$\\
+	4 & $\{(x,1),(y,2),(z,3)\}$\\
+	5 & $\{(x,1),(y,4),(z,3)\}$\\
+	6 & $\{(x,1),(y,4),(z,5),(z,7),(y,8)\}$\\
+	7 & $\{(x,1),(y,4),(z,5),(z,7),(y,8)\}$\\
+	8 & $\{(x,1),(y,4),(z,7),(y,8)\}$\\
+	9 & $\{(x,1),(y,4),(z,5),(z,7),(y,8)\}$\\
+	  \hline
+	\end{tabular}
+    \centering
+    \caption{Solution to equation}
+    \label{table:solution1}
 \end{table}
 
 \begin{table}
-\begin{tabular}{| l | l |}
-  \hline
-  l & $RD_\bullet(l)$ \\
-  \hline
-  \hline
-1 & $\{(x,1)\}$\\
-2 & $\{(x,1),(y,2)\}$\\
-3 & $\{(x,1),(y,2),(z,3)\}$\\
-4 & $\{(x,1),(y,2),(z,3)\}$\\
-5 & $\{(x,1),(y,4),(z,5)\}$\\
-6 & $\{(x,1),(y,4),(z,5),(z,7),(y,8)\}$\\
-7 & $\{(x,1),(y,4),(z,7),(y,8)\}$\\
-8 & $\{(x,1),(z,7),(y,8)\}$\\
-9 & $\{(x,1),(z,5),(z,7),(y,9)\}$\\
-  \hline
-\end{tabular}
+	\begin{tabular}{| l | l |}
+	  \hline
+	  l & $RD_\bullet(l)$ \\
+	  \hline
+	  \hline
+	1 & $\{(x,1)\}$\\
+	2 & $\{(x,1),(y,2)\}$\\
+	3 & $\{(x,1),(y,2),(z,3)\}$\\
+	4 & $\{(x,1),(y,2),(z,3)\}$\\
+	5 & $\{(x,1),(y,4),(z,5)\}$\\
+	6 & $\{(x,1),(y,4),(z,5),(z,7),(y,8)\}$\\
+	7 & $\{(x,1),(y,4),(z,7),(y,8)\}$\\
+	8 & $\{(x,1),(z,7),(y,8)\}$\\
+	9 & $\{(x,1),(z,5),(z,7),(y,9)\}$\\
+	  \hline
+	\end{tabular}
+    \centering
+	\caption{Solution to equation}
+	\label{table:solution2}
 \end{table}
 
 \subsection{Program slice calculation algorithm}
@@ -253,8 +264,19 @@ The algorithm takes the label of the point of interest as input. The output is a
  \label{fig:programslicealgorithm}
 \end{algorithm}
 \\\\
-The algorithm can calculate the Program Slice for the example program from section~\ref{sec:exampleprogram}. To find the Program Slice with point of interest at label 8.
-
+The algorithm can calculate the Program Slice for the example program from section~\ref{sec:exampleprogram}. We have the solution to the reaching definition analysis from table~\ref{table:solution1} available. To find the Program Slice with point of interest at label 8.
 \begin{itemize}
-	\item First the point of interest is added to the queue. $queue=[y:= y-1]^8$ $result=[]$
+	\item First the point of interest is added to the queue. $queue=[8]$, $result=[]$
+	\item The condition is checked. The first element from the queue is removed and added to the result. $queue=[]$, $result=[8]$
+	\item The variables from label 8 is retrieved. This is only $y$.
+	\item The result of the reaching definition analysis for label 8 is retrieved. This is $\{(x, 1), (y, 4), (z, 7), (y, 8)\}$.
+	\item Each of these labels are iterated. If any of them contains the variable $y$ they will be added to the queue. This is 4 and 8. Since is it assumed that a label can not be added to a queue more than once only 4 will be added. $queue=[]$, $result=[8]$.
+	\item The condition is checked again. The first element from the queue is removed and added to the result. $queue=[]$, $result=[8,4]$
+	\item The variables from label 4 is retrieved. This is $x$.
+	\item The result of the reaching definition analysis for label 4 is retrieved. This is $\{(x, 1), (y, 2), (z, 3)\}$.
+	\item Each of these labels are iterated. If any of them contains the variable $x$ they will be added to the queue. This is 1. $queue=[]$, $result=[1]$.
+	\item The condition is checked again. The first element from the queue is removed and added to the result. $queue=[]$, $result=[8,4,1]$
+	\item The variables from label 4 is retrieved. There is none.
+	\item The condition is checked again. It evaluates to false and the result is returned. $result=[8,4,1]$
 \end{itemize}
+The reached result is the same as the manual solution from section~\ref{sec:exampleprogram}.
