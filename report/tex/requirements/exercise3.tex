@@ -16,7 +16,13 @@ end
  \label{code:array_example}
  \caption{Code example for demonstrating buffer overflow}
 \end{figure}
+For the program in figure \ref{code:array_example}, the following cases should fail and thus, optimally be detected in our analysis:
+\begin{description}
+\item[Underflow:] Accessing an index below the base, i.e. any case where i < 0 in A[n].
+\item[Overflow:] Accessing an index after the last element, i.e. any case where i > n-1 in A[n].
+\end{description}
 
+Our instance of the monotone framework becomes; 
  \begin{figure}[h]
  \centering
  \begin{tikzpicture}

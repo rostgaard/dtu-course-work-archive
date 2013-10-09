@@ -121,14 +121,53 @@ $[Z_{11},Z_{12}] + [Z_{21},Z_{22}] = [Z_{1},Z_{2}] =
      \end{cases}
 $
 
-%TODO: Convert operations to lookup tables.
-
 \subsubsection{Subtraction on intervals}
 $[Z_{11},Z_{12}] - [Z_{21},Z_{22}] = [Z_{1},Z_{2}] =
      \begin{cases} 
-        Z_{1i} + Z_{2i} & \text{if } \min \leq Z_{1i} + Z_{2i} \leq \max \\
-        -\infty         & \text{if } Z_{1i} + Z_{2i} < \min \\
-        \infty          & \text{if } Z_{1i} + Z_{2i} > \max\\
+        Z_{1i} - Z_{2i} & \text{if } \min \leq Z_{1i} - Z_{2i} \leq \max \\
+        -\infty         & \text{if } Z_{1i} - Z_{2i} < \min \text{, or } Z_12 = -\infty  \text{or } Z_21 = -\infty\\
+        \infty          & \text{if } Z_{1i} - Z_{2i} > \max \text{, or } Z_12 = \infty  \text{or } Z_21 = \infty\\
+     \end{cases}
+$
+
+\subsubsection{Multiplication on intervals}
+First, we define:\\
+$
+a = \min(z_{11} \cdot z_{21}, z_{11} \cdot z_{22}, z_{12} \cdot z_{21}, z_{12} \cdot z_{22})\\
+b = \max(z_{11} \cdot z_{21}, z_{11} \cdot z_{22}, z_{12} \cdot z_{21}, z_{12} \cdot z_{22})\\
+$\\\\
+$z_1 =
+     \begin{cases} 
+        a       & \text{if } \min \leq a \leq \max \\
+        -\infty & \text{if } a < \min \text{, or } \exists (i,j) : {Z_{ij} = -\infty} \\
+        \infty & \text{if } a > \max \text{, or } \exists (i,j) : {Z_{ij} = \infty} \\
+     \end{cases}\\
+z_2 =
+     \begin{cases} 
+        b       & \text{if } \min \leq b \leq \max \\
+        -\infty & \text{if } b < \min \text{, or } \exists (i,j) : {Z_{ij} = -\infty} \\
+        \infty & \text{if } b > \max \text{, or } \exists (i,j) : {Z_{ij} = \infty} \\
+     \end{cases}
+$
+\subsubsection{Division on intervals}
+First, we define:\\
+$
+[z_{11}, z_{12}] / [z_{21}, z_{22}] = [z_{1}, z_{2}]\
+[z_{1}, z_{2}] = \top \text{ when } 0 \text{not} \in [z_{21}, z_{22}]\\
+a = \min(z_{11} / z_{21}, z_{11} / z_{22}, z_{12} / z_{21}, z_{12} / z_{22})\\
+b = \max(z_{11} / z_{21}, z_{11} / z_{22}, z_{12} / z_{21}, z_{12} / z_{22})\\
+$\\\\
+$Z_1 =
+     \begin{cases} 
+        a       & \text{if } \min \leq a \leq \max \\
+        -\infty & \text{if } a < \min \text{, or } \exists (i,j) : {Z_{ij} = -\infty} \\
+        \infty & \text{if } a > \max \text{, or } \exists (i,j) : {Z_{ij} = \infty} \\
+     \end{cases}\\
+Z_2 =
+     \begin{cases} 
+        b       & \text{if } \min \leq b \leq \max \\
+        -\infty & \text{if } b < \min \text{, or } \exists (i,j) : {Z_{ij} = -\infty} \\
+        \infty & \text{if } b > \max \text{, or } \exists (i,j) : {Z_{ij} = \infty} \\
      \end{cases}
 $
 
@@ -152,3 +191,6 @@ A$_\circ (6) = $A$_\bullet(5)$ & A$_\bullet(6) = \text{f}_{\text{i := i + 1}} (\
 \end{tabular}
 \centering
 \end{table}
+
+\subsection*{Notes}
+Branches: We can assume, on branches that includes an a = b in the boolean expression, that -- on the true branch --  that both a and b is now the intersection of a and b.
