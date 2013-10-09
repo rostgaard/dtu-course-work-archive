@@ -123,7 +123,7 @@ A flow graph can be generated from a program in the \texttt{WHILE} language. Tab
 	\label{table:example_flow_table}
 \end{table}
 \\\\
-Furthermore a graphical representation can be created of a flow graph to give a better overview. Figure~\ref{fig:flowgraph} shows the Flow Graph for our example program.
+Furthermore a graphical representation can be created of a flow graph to give a better overview. Figure~\ref{fig:flowgraph2} shows the Flow Graph for our example program.
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}
@@ -155,11 +155,11 @@ Furthermore a graphical representation can be created of a flow graph to give a 
 \end{tikzpicture}
  \caption{Flow graph}
 
- \label{fig:flowgraph}
+ \label{fig:flowgraph2}
 \end{figure}
 
 \subsection{Data flow equations}
-Using the analysis definitions from table~\ref{table:rd_analysis} the following equations in table~\ref{table:equations} can be made for our xample program.
+Using the analysis definitions from table~\ref{table:rd_analysis} the following equations in table~\ref{table:equations} can be made for our example program.
 \begin{table}
 	\begin{tabular}{| l |}
 		\hline
@@ -270,7 +270,7 @@ The algorithm can calculate the Program Slice for the example program from secti
 	\item The condition is checked. The first element from the queue is removed and added to the result. $queue=[]$, $result=[8]$
 	\item The variables from label 8 is retrieved. This is only $y$.
 	\item The result of the reaching definition analysis for label 8 is retrieved. This is $\{(x, 1), (y, 4), (z, 7), (y, 8)\}$.
-	\item Each of these labels are iterated. If any of them contains the variable $y$ they will be added to the queue. This is 4 and 8. Since is it assumed that a label can not be added to a queue more than once only 4 will be added. $queue=[]$, $result=[8]$.
+	\item Each of these labels are iterated. If any of them contains the variable $y$ they will be added to the queue. This is 4 and 8. Since is it assumed that a label can not be added to a queue more than once only 4 will be added. $queue=[4]$, $result=[8]$.
 	\item The condition is checked again. The first element from the queue is removed and added to the result. $queue=[]$, $result=[8,4]$
 	\item The variables from label 4 is retrieved. This is $x$.
 	\item The result of the reaching definition analysis for label 4 is retrieved. This is $\{(x, 1), (y, 2), (z, 3)\}$.

@@ -1,4 +1,4 @@
-\section{Exercise 3 - buffer overflow with sign detection}
+\section{Exercise 3 - Buffer overflow with sign detection} \label{sec:exercise3}
 Buffer overflow is historically one of the most common programming errors. It is the cause of security breaches, data corruption and program crashes. Detecting them is therefore preferred.\\\\
 We start by defining a test case in the WHILE language, seen in figure \ref{code:array_example}.
 \begin{figure}
@@ -34,7 +34,7 @@ Our instance of the monotone framework becomes;
    \node (n) at (0,1)  {$\{-\}$};
    \node (z) at (2,1)  {$\{0\}$};
    \node (p) at (4,1)  {$\{+\}$};
-   \node (empty) at (2,0)  {$\{\emptyset\}$};
+   \node (empty) at (2,0)  {$\emptyset$};
  
    \path [-] (nzp) edge (nz);
    \path [-] (nzp) edge  (np);

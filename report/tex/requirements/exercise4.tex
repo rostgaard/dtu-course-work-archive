@@ -1,10 +1,16 @@
-\section{Exercise 4}
+\section{Exercise 4 - Buffer Overflow Interval Analysis}
+The sign detection analysis from section~\ref{sec:exercise3} provided a solution to the buffer overflow problem by only considering the lower bound. Using interval analysis it is possible to consider the upper bound as well.
+
+\subsection{Monotone framework}
+The analysis is based on a monotone framework, which has the form:
 \begin{equation}
   \left(L, \mathcal{F}, F, E, \iota, \mathrm{f}.  \right)
   \label{eq:monotone_framework}
 \end{equation}
-%TODO: Put this into a table.
-\begin{table}
+\\\\
+In table~\ref{table:latticedefinition} we our lattice for the analysis. This is a complete lattice, as every subset in the partial ordered set have a least upper bound and a greatest lower bound.\\
+It also holds the Ascending Chain Property, because the lattice has a finite height, and will thus, eventually stabilize.
+\begin{table}[H]
 \begin{tabular}{| l | l |}
   \hline
   Instance & $(L,\sqsubseteq,\bigsqcup, \bigsqcap, \top, \bot )$ \\
@@ -32,18 +38,18 @@
 \hline   
 \end{tabular}
   \centering
+  \caption{Lattice definition}
+  \label{table:latticedefinition}
 \end{table}
+\noindent We define the flow as:
 
-This is a complete lattice, as every subset in the partial ordered set have a least upper bound and a greatest lower bound.\\
-It also holds the Ascending Chain Property, because the lattice has a finite height, and will thus, eventually stabilize.\\\\
-We define the flow as 
 \begin{description}
   \item[Flow $F$:] flow ($S_*$) (forward analysis)
   \item[Extremal label $E$:] \{init($S_*$)\}
 \end{description}
 
-The analysis is defined as :
-\begin{table}
+\noindent The analysis is defined as:
+\begin{table}[H]
 \begin{tabular}{| l | l |}
   \hline
   Analysis$_\circ(\ell)$ & $ \bigsqcup \{$ Analysis$_\bullet (\ell') | (\ell', \ell) \in F \} \bigcup \iota_E^{\ell} $ \\
@@ -59,8 +65,8 @@ The analysis is defined as :
 \end{table}
 
 \subsection{Transfer functions}
-%We define our transfer functions as
-\begin{table}
+Table~\ref{table:transferfunctions} shows our transfer function for the extended \texttt{WHILE} language.
+\begin{table}[H]
 \begin{tabular}{| l | l | l |}
   \hline
   \# & Statement & Function \\
@@ -98,9 +104,11 @@ The analysis is defined as :
   \hline
 \end{tabular}
 \centering
+\caption{Transfer functions}
+\label{table:transferfunctions}
 \end{table}
 
-Where A$_I$ : AExp$ \rightarrow (\widehat{\text{State}_{\text{I}}} \rightarrow \text{Interval})$ determines the interval for the value of an expression.\\\\
+Where A$_I$ : AExp$ \rightarrow (\widehat{\text{State}_{\text{I}}} \rightarrow \text{Interval})$ determines the interval for the value of an expression. It is defined below.\\\\
 
 $A_I[\![x]\!]\widehat{\sigma} = \widehat{\sigma}(x)$ \\
 $A_I[\![n]\!]\widehat{\sigma} = 
@@ -112,6 +120,8 @@ $A_I[\![n]\!]\widehat{\sigma} =
 
 $A_I[\![a_1 op_a a_2 ]\!] = A_I[\![a_1]\!] \widehat{\text{op}_a} A_I[\![a_1]\!]\sigma $, where $  \widehat{\text{op}_a} : \text{interval} \times \text{interval} \rightarrow $  interval is an abstract operator on intervals.\\
 \\
+We support the addition, subtraction, multiplication and division. The definitions for these operators are listed below.
+
 \subsubsection{Addition on intervals}
 $[Z_{11},Z_{12}] + [Z_{21},Z_{22}] = [Z_{1},Z_{2}] =
      \begin{cases} 
@@ -171,8 +181,29 @@ Z_2 =
      \end{cases}
 $
 
-\subsection{Algorithm}
-\begin{table}
+\subsection{Algorithm for calculating buffer overflow}
+The result of an interval analysis can be used to calculate whenever a buffer overflow is present. Algorithm~\ref{algorithm:bufferoverflow2} returns true if a buffer overflow is present for a specific label. It is assumed that the provided label contains an array operation.
+\begin{algorithm}
+ \begin{algorithmic}[1]
+ \Procedure{Buffer overflow}{$l$}
+\State A:=$l.get\_array()$
+\State a:=$A.get\_index_expression()$
+\State $index\_interval:=A_I[a]$
+\State $array\_bounds:=[0,A.get\_size()-1]$
+\If {$index\_interval.is\_within(array\_bounds)$}
+\State \textbf{return} false
+\Else
+\State \textbf{return} true
+\EndIf 
+ \EndProcedure
+ \end{algorithmic}
+ \caption{Calculate buffer overflow}
+ \label{algorithm:bufferoverflow2}
+\end{algorithm}
+
+
+\subsection{Example solution}
+\begin{table}[H]
 \begin{tabular}{| l | l |}
 \hline
 A$_\circ (1) = \iota \{\text{init}(S_*) \} $ & A$_\bullet(1) = \text{f}_{\text{int A[2]}} (\text{A}_\circ (1))$ \\
@@ -190,7 +221,9 @@ A$_\circ (6) = $A$_\bullet(5)$ & A$_\bullet(6) = \text{f}_{\text{i := i + 1}} (\
 \hline
 \end{tabular}
 \centering
+\caption{Equations for the program from figure~\ref{code:array_example}}
+\label{table:}
 \end{table}
 
-\subsection*{Notes}
-Branches: We can assume, on branches that includes an a = b in the boolean expression, that -- on the true branch --  that both a and b is now the intersection of a and b.
+% \subsection*{Notes}
+% Branches: We can assume, on branches that includes an a = b in the boolean expression, that -- on the true branch --  that both a and b is now the intersection of a and b.
