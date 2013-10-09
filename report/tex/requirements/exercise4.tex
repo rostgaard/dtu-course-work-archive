@@ -74,20 +74,42 @@ The analysis is defined as :
         \widehat{\sigma}[$A[i]$ \mapsto [0,0] | \forall i \in \{0, ..., n-1 \} & \text{if } n > 0] \\
      \end{cases}$\\
   \hline
-  3 & [x := a]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto A_I[[a]] \widehat{\sigma} ]$ \\
+  3 & [x := a]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto A_I[\![a]\!] \widehat{\sigma} ]$ \\
   \hline
   4 & [skip]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
   5 & [b]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
-  6 & [int A[a$_1$] := a$_2$]$^\ell$ & \\
+  6 & [int A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = 
+     \begin{cases} 
+        \widehat{\sigma}[$A[a$_1$]$ \mapsto \bot]        & \text{if } $A$_I[\![a]\!] \subsetneq [0, n-1] \\
+        \widehat{\sigma}[$A[a$_1$]$ \mapsto A_I[\![a_2]\!] & \text{if } 0 \leq a_1 < n \\
+     \end{cases}$\\
   \hline
-  7 & [read x]$^\ell$ & \\
+  7 & [read x]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = [x \mapsto $A$_I[\![n]\!] \widehat{\sigma})$  \\
   \hline
-  8 & [read A[a]]$^\ell$ & \\
+  8 & [read A[a]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = 
+     \begin{cases} 
+        \widehat{\sigma}[$A[a]$ \mapsto \bot]        & \text{if } 0 < a \leq n \\ %TODO ??
+        \widehat{\sigma}[$A[a]$ \mapsto A_I[\![n]\!] & \text{if } 0 \leq a_1 < n \\
+     \end{cases}$\\
   \hline
   9 & [write A[n]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
 \end{tabular}
-
+\centering
 \end{table}
+
+Where A$_I$ : AExp$ \rightarrow (\widehat{\text{State}_{\text{I}}} \rightarrow \text{Interval})$ determines the interval for the value of an expression.\\\\
+
+$A_I[\![x]\!]\widehat{\sigma} = \widehat{\sigma}(x)$ \\
+$A_I[\![n]\!]\widehat{\sigma} = 
+     \begin{cases} 
+        [n;n] & \text{if } \min \leq n \leq \max \\
+        [-\infty;-\infty] & \text{if } n < \min\\
+        [\infty;\infty] & \text{if } n > \max\\
+     \end{cases}$\\
+
+$A_I[\![a_1 op_a a_2 ]\!] = A_I[\![a_1]\!] \widehat{\text{op}_a} A_I[\![a_1]\!]\sigma $, where $  \widehat{\text{op}_a} : \text{interval} \times \text{interval} \rightarrow $  interval is an abstract operator on intervals.\\
+\\
+Addition on intervals:

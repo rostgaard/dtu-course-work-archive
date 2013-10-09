@@ -30,27 +30,27 @@ end
    \node (p) at (4,1)  {$\{+\}$};
    \node (empty) at (2,0)  {$\{\emptyset\}$};
  
-   \path [line] (nzp) -- (nz);
-   \path [line] (nzp) -- (np);
-   \path [line] (nzp) -- (zp);
+   \path [-] (nzp) edge (nz);
+   \path [-] (nzp) edge  (np);
+   \path [-] (nzp) edge  (zp);
  
-   \path [line] (nz) -- (z);
-   \path [line] (nz) -- (n);
+   \path [-] (nz) edge (z);
+   \path [-] (nz) edge (n);
 
-   \path [line] (zp) -- (n);
-   \path [line] (zp) -- (z);
-   \path [line] (zp) -- (p);
+   \path [-] (zp) edge (n);
+   \path [-] (zp) edge (z);
+   \path [-] (zp) edge (p);
 
-   \path [line] (np) -- (z);
-   \path [line] (np) -- (p);
+   \path [-] (np) edge (z);
+   \path [-] (np) edge (p);
 
-   \path [line] (n) -- (empty);
-   \path [line] (z) -- (empty);
-   \path [line] (p) -- (empty);
+   \path [-] (n) edge (empty);
+   \path [-] (z) edge (empty);
+   \path [-] (p) edge (empty);
 
  \end{tikzpicture}
-  \caption{Lattice of sign detection instance}
+  \caption{Complete lattice of sign detection instance}
  
-  \label{fig:sign_detection_lattice}
+  \label{fig:sign_detection_complete_lattice}
  \end{figure}
 
