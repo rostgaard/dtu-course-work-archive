@@ -28,7 +28,6 @@ Figure~\ref{fig:codeexample} shows an example program written in the \texttt{WHI
 
 \subsection{Reaching Definitions Analysis table}
 Table~\ref{table:rd_equations} shows the Reaching Definitions Analysis table for the extended \texttt{WHILE} language. For each statement it is possible to see what is generated and what is killed.
-
 \begin{table}[h]
     \begin{tabular}{l | l }
     \textbf{int x} &  kill$_{RD}$([int x]$^l$) = $\emptyset$ \\
@@ -61,29 +60,30 @@ Table~\ref{table:rd_equations} shows the Reaching Definitions Analysis table for
 	\caption{RD Equations}
 	\label{table:rd_equations}
 \end{table}
+\\\\
+Furthermore table~\ref{table:rd_analysis} shows the Reaching Definitions Analysis.
 
-% \begin{table}[h]
-%     \begin{tabular}{l | l }
-%     \textbf{$RD_{entry}(l)$} & $\emptyset$ if $l=init(S_*)$\\
-% 					& $f$ otherwise %\cup {RD_{exit}(l')|(l',l)\in flow(S_*)}
-% 
-% 
-%     \hline
-% 	
-%     \textbf{$RD_{exit}(l)$} & $(RD_{entry}(l)\backslash kill_{RD}(B^l))\cup gen_{RB}(B^l)$\\
-% 					& where $B_l\in blocks(S_*)$
-% 
-%     \end{tabular}
-%     \centering
-% 	\caption{RD Equations}
-% 	\label{table:rd_equations}
-% \end{table}
+\begin{table}
+\begin{tabular}{ l | l }
+  \hline
+  \textbf{$RD_{entry}(l)$} & $\begin{cases} \emptyset & \text{ if } \ell=init(S_*) \\ 
+                                                                 \cup \{RD_{exit}(\ell')|(\ell',\ell)\in flow(S_*)\}  & \text{ otherwise }
+                                                   \end{cases}$\\\\
+  \hline
+      
+    \textbf{$RD_{exit}(l)$} & $(RD_{entry}(l)\backslash kill_{RD}(B^l))\cup gen_{RB}(B^l)$\\
+    					& where $B_l\in blocks(S_*)$\\
+
+  \hline
+\end{tabular}
+\centering
+\caption{Analysis definitions}
+\label{table:rd_analysis}
+\end{table}
 
 
 \subsection{Flow graph for program}
-
-
-
+A flow graph can be generated from a program in the \texttt{WHILE} language.
 \begin{table}
     \begin{tabular}{l | l }
     label$(S)$ & The set of nodes of the flow graph $S$ \\
@@ -102,8 +102,8 @@ Table~\ref{table:rd_equations} shows the Reaching Definitions Analysis table for
 	\caption{Function definitions}
 	\label{table:flow_graph_definitions}
 \end{table}
-
-
+\\\\
+Table~\ref{table:flow_graph_definitions} shows what a flow graph consists of. In table~\ref{table:example_flow_table} our example program is described.
 \begin{table}
     \begin{tabular}{l | l }
      Label($S$)   & $\{   1,2,3,4,5,6,7,8,9   \}$ \\
@@ -120,8 +120,8 @@ Table~\ref{table:rd_equations} shows the Reaching Definitions Analysis table for
 	\caption{Example flow graph table}
 	\label{table:example_flow_table}
 \end{table}
-
-
+\\\\
+Figure~\ref{fig:flowgraph} shows the Flow Graph for our example program.
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}
@@ -153,16 +153,12 @@ Table~\ref{table:rd_equations} shows the Reaching Definitions Analysis table for
 \end{tikzpicture}
  \caption{Flow graph}
 
- \label{fig:graph}
+ \label{fig:flowgraph}
 \end{figure}
-
-
-\subsection{Program graph for program}
-
 
 \subsection{Data flow equations}
 
-\begin{figure}
+
 $RD_\circ(1)=\emptyset$\\
 $RD_\circ(2)=RD_\bullet(1)$\\
 $RD_\circ(3)=RD_\bullet(2)$\\
@@ -172,9 +168,7 @@ $RD_\circ(6)=RD_\bullet(1)\cup RD_\bullet(8)$\\
 $RD_\circ(7)=RD_\bullet(6)$\\
 $RD_\circ(8)=RD_\bullet(7)$\\
 $RD_\circ(9)=RD_\bullet(6)$\\
-\end{figure}
 
-\begin{figure}
 $RD_\bullet(1)=(RD_\circ(1)\backslash\{(x,1)\})\cup \{(x,1)\}$\\
 $RD_\bullet(2)=(RD_\circ(2)\backslash\{(y,2),(y,4),(y,8),(y,9)\})\cup \{(y,2)\}$\\
 $RD_\bullet(3)=(RD_\circ(3)\backslash\{(z,3),(z,5),(z,7)\})\cup \{(z,3)\}$\\
@@ -184,7 +178,6 @@ $RD_\bullet(6)=RD_\circ(6)$\\
 $RD_\bullet(7)=(RD_\circ(7)\backslash\{(z,3),(z,5),(z,7)\})\cup \{(z,7)\}$\\
 $RD_\bullet(8)=(RD_\circ(8)\backslash\{(y,2),(y,4),(y,8),(y,9)\})\cup \{(y,8)\}$\\
 $RD_\bullet(9)=(RD_\circ(9)\backslash\{(y,2),(y,4),(y,8),(y,9)\})\cup \{(y,9)\}$\\
-\end{figure}
 
 \begin{table}
 \begin{tabular}{| l | l |}
