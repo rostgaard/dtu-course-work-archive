@@ -112,4 +112,43 @@ $A_I[\![n]\!]\widehat{\sigma} =
 
 $A_I[\![a_1 op_a a_2 ]\!] = A_I[\![a_1]\!] \widehat{\text{op}_a} A_I[\![a_1]\!]\sigma $, where $  \widehat{\text{op}_a} : \text{interval} \times \text{interval} \rightarrow $  interval is an abstract operator on intervals.\\
 \\
-Addition on intervals:
+\subsubsection{Addition on intervals}
+$[Z_{11},Z_{12}] + [Z_{21},Z_{22}] = [Z_{1},Z_{2}] =
+     \begin{cases} 
+        Z_{1i} + Z_{2i} & \text{if } \min \leq Z_{1i} + Z_{2i} \leq \max \\
+        -\infty         & \text{if } Z_{1i} + Z_{2i} < \min \\
+        \infty          & \text{if } Z_{1i} + Z_{2i} > \max\\
+     \end{cases}
+$
+
+%TODO: Convert operations to lookup tables.
+
+\subsubsection{Subtraction on intervals}
+$[Z_{11},Z_{12}] - [Z_{21},Z_{22}] = [Z_{1},Z_{2}] =
+     \begin{cases} 
+        Z_{1i} + Z_{2i} & \text{if } \min \leq Z_{1i} + Z_{2i} \leq \max \\
+        -\infty         & \text{if } Z_{1i} + Z_{2i} < \min \\
+        \infty          & \text{if } Z_{1i} + Z_{2i} > \max\\
+     \end{cases}
+$
+
+\subsection{Algorithm}
+\begin{table}
+\begin{tabular}{| l | l |}
+\hline
+A$_\circ (1) = \iota \{\text{init}(S_*) \} $ & A$_\bullet(1) = \text{f}_{\text{int A[2]}} (\text{A}_\circ (1))$ \\
+\hline
+A$_\circ (2) =$A$_\bullet(1) $ & A$_\bullet(2) = \text{f}_{\text{int i}} (\text{A}_\circ (2))$ \\
+\hline
+A$_\circ (3) = $A$_\bullet(2)$ & A$_\bullet(3) = \text{f}_{\text{i := -1}} (\text{A}_\circ (3))$  \\
+\hline
+A$_\circ (4) = $A$_\bullet(3) \bigcup $A$_\bullet(6) $ & A$_\bullet(4) = \text{f}_{\text{i < 3}} (\text{A}_\circ (4))$ \\
+\hline
+A$_\circ (5) = $A$_\bullet(4)$ & A$_\bullet(5) = \text{f}_{\text{A[i] := i + 1}} (\text{A}_\circ (5))$ \\
+\hline
+A$_\circ (6) = $A$_\bullet(5)$ & A$_\bullet(6) = \text{f}_{\text{i := i + 1}} (\text{A}_\circ (6))$ \\
+
+\hline
+\end{tabular}
+\centering
+\end{table}
