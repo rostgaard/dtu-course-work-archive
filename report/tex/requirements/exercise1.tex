@@ -4,9 +4,53 @@ The first problems we need to solve is which data structures should be used for 
 \subsection{Abstract syntax tree data structure}
 We have decided that we could use an unbalanced tree for storage of our abstract syntax tree in our target programming language. Constraining the tree construction will give us the necessary check for syntax errors.
 A simple tree-traversal will give us the appropriate unique label numbers.
-\\
-\\
-Using a parser a program written in the extended WHILE language will be parsed to a abstract syntax tree. This abstract syntax tree needs to be represented using a data structure in our implementation. Figure~\ref{fig:AST} shows the defined data structure.
+
+\subsection{Data structure}
+In our implementation language the statements from the \texttt{WHILE} language will be mapped into objects. 
+\\\\
+We will have the following objects.
+\begin{itemize}
+	\item \textbf{Declaration} - Figure~\ref{fig:declaration} shows the structures of declarations.
+	\item \textbf{Statement} - Figure~\ref{fig:statement} shows the structures of statements.
+	\item \textbf{Variable} - Figure~\ref{fig:variable} shows the structures of variables.
+	\item \textbf{Condition} - Figure~\ref{fig:condition} shows the structures of conditions.
+	\item \textbf{Expression} - Figure~\ref{fig:expression} shows the structures of expressions.
+\end{itemize}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=.3]{../fig/Declaration}
+	\caption{Declarion}
+	\label{fig:declaration}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=.3]{../fig/Statement}
+	\caption{Statement}
+	\label{fig:statement}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=.3]{../fig/Variable}
+	\caption{Variable}
+	\label{fig:variable}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=.3]{../fig/Condition}
+	\caption{Condition}
+	\label{fig:condition}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=.3]{../fig/Expression}
+	\caption{Expression}
+	\label{fig:expression}
+\end{figure}
 
 \subsection{Flow graph data structure}
 For the flow graph, we have chosen a network graph data structure. This gives an intuitive way of linking statements to potential paths.
@@ -40,64 +84,3 @@ For some types of analysis it is more convenient to use a program graph compared
 
 \subsubsection{Creating program graphs}
 A program graph can be created much in the same way as a flow graph by going through all the declarations first and then the statements. Basically the only difference is that the labels are stored in nodes and code blocks and conditions are stored in edges.
-
-
-% \subsection{Constructing program graph}
-% Functions: Slide 14, week 2.\\
-% $pg^{qt}_{qs}$: The program graph for statement $S$ with with initial node being $q_{s}$\footnote{$s$ for source.}, and $q_{t}$\footnote{$t$ for target.}\\
-% Nodes are constructed by the algorithm.\\
-% The edges are represented by the tuple $(q_s, x, q_T)$ where $q_s$ and $q_t$ are nodes, and x is and elementary block statement. %NOTE, krc: shouldn't x be s ?
-% 
-% \begin{figure}[h]
-% \centering
-% \begin{tikzpicture}
-%   [scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
-%   \tikzstyle{line} = [draw, -latex']
-% 
-%   \node (q_s) at (0,3)  {$q_s$};
-%   \node (q_t) at (0,1)  {$q_t$};
-% 
-%   \path [line] (0,4) -- (q_s);
-%   \path [line] (q_s) -- (q_t); %TODO; Add label here.
-%   \path [line] (q_t) -- (0,0);
-% 
-% 
-%   \node (q_s) at (3,3)  {$q_s$};
-%   \node (q_t) at (2,1)  {$q_t$};
-%   \node (q_f) at (4,1)  {$q_f$};
-%   \node (empty1) at (2,-1)  {$...$};
-%   \node (empty2) at (4,-1)  {$...$};
-% 
-%   \path [line] (3,4) -- (q_s);
-%   \path [line] (q_s) -- (q_t); %TODO; Add label here.
-%   \path [line] (q_s) -- (q_f); %TODO; Add label here.
-%   \path [line] (q_f) -- (empty2);
-%   \path [line] (q_t) -- (empty1);
-%   \path [line] (empty2) -- (4,-2);
-%   \draw[bend left=60,->]  (empty1) to (q_s);
-%   
-%   \node (q_s) at (7,3)  {$q_s$};
-%   \node (q_t) at (6,1)  {$q_t$};
-%   \node (q_f) at (8,1)  {$q_f$};
-% 
-%   \path [line] (7,4) -- (q_s);
-%   \path [line] (q_s) -- (q_t); %TODO; Add label here.
-%   \path [line] (q_s) -- (q_f); %TODO; Add label here.
-%   \path [line] (q_t) -- (6,0);
-%   \path [line] (q_f) -- (8,0);
-% 
-% \end{tikzpicture}
-%  \caption{Assignments, loops and branches}
-% 
-%  \label{fig:graph}
-% \end{figure}
-% 
-% %TODO Figure from 6.jpg
-% 
-% \begin{description}
-% \item[Label($S$):] $\{ 1,2,3,4,5,6,7 \}$
-% \item[Initial($S$):] $1$
-% \item[Final($S$):] $\{ 7 \}$
-% \item[Blocks($S$):]$\{ [y:=x], [z:=1], [y>0], [z:=z*y], [y;=y-1], [\lnot (y>0)] ,[Y:=0] \}$
-% \item[Flow($S$):] $\{ (1,2), (2,3), (3,4), (4,5), (5,3), (3,6), (6,7) \}$
-% \end{description}
