@@ -1,0 +1,56 @@
+\documentclass[11pt,a4paper]{article}
+\newcommand{\confdir}{../conf/} % Set the folder which contains preamble.tex, titlepage.tex and the general img/ folder
+\newcommand{\imgdir}{../img/} % Set the folder which contains the specific images for the report
+\newcommand{\texdir}{../tex/} % Set the folder which contains the content (.tex files)
+\input{\confdir preamble}
+\usepackage{color}
+\usepackage{listings}
+\usepackage[normalem]{ulem}
+\lstset{language=Ada,mathescape=true,captionpos=b,tabsize=3,frame=lines,keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},numbers=left,numberstyle=\tiny,numbersep=5pt,breaklines=true,showstringspaces=false,basicstyle=\footnotesize,emph={label}}
+
+
+%%%%%%%%%%%
+%% SETUP %%
+%%%%%%%%%%%
+
+%% Set the course number and course name
+% Usage: \setcourse{<course no>}{<course name>}
+	\setcourse{02267}{Software Development of Web Services}
+
+%% Set the title of the report
+% Usage: \settitle{<title>}
+	\settitle{Report}
+
+%% Set the subtitle of the report
+% Usage: \setsubtitle{<subtitle>}
+	\setsubtitle{Fall 2013}
+
+%% Set the date the report is handed in
+% Usage: \setdate{<hand-in date>}
+	\setdate{December 3rd, 2013}
+
+%% Add the authors of the report
+% Usage: \addauthor{<study number>}{<first name(s)>}{<last name>}
+	\addauthor{s084283}{Kim Rostgaard}{Christensen}
+	\addauthor{s093280}{Martin}{Tange}
+	\addauthor{s093255}{Mikkel Riber}{Bojsen}
+	\addauthor{s093263}{Peter Gammelgaard}{Poulsen}
+
+	\setmoretext{}
+
+%%%% END OF SETUP
+
+
+\begin{document}
+
+%% Insert titlepage
+\inserttitlepage
+
+%% Insert table-of-contents
+\inserttoc
+
+%% Input files for the report
+\import{\texdir}{requirements}
+
+
+\end{document}
