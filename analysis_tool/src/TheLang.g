@@ -75,15 +75,15 @@ aexpr : aexpr1 (PLUS aexpr1 | MINUS aexpr1)* ;
 aexpr1 : aexpr2 (MUL aexpr2 | DIV aexpr2)* ;
 
 aexpr2 returns [Expression value]
-    : MINUS expr = aexpr3 {$value = new NegationExpression(expr);}
-    | expr = aexpr3 {$value = expr);}
+    : MINUS expr = aexpr3 {value = new NegationExpression(expr);}
+    | expr = aexpr3 {value = expr);}
     ;
 
 aexpr3 returns [Expression value] 
-    : id = IDENTIFIER {$value = new Variable(Type.INT, $id);}
-    | id = IDENTIFIER LBRACKET idx = aexpr RBRACKET {$value = new ArrayExpression(new Variable(Type.ARRAY, $id), $idx);}	
-    | cons = INTEGER {$value = new Constant($cons);}
-    | LPAREN expr = aexpr RPAREN {$value = new ParanthesesExpression($expr);}
+    : id = IDENTIFIER {value = new Variable(Type.INT, id);}
+    | id = IDENTIFIER LBRACKET idx = aexpr RBRACKET {value = new ArrayExpression(new Variable(Type.ARRAY, id), idx);}	
+    | cons = INTEGER {value = new Constant(cons);}
+    | LPAREN expr = aexpr RPAREN {value = new ParanthesesExpression(expr);}
     ;
 
 bexpr : bexpr1 (OR bexpr1)*
@@ -93,31 +93,31 @@ bexpr1 : bexpr2 (AND bexpr2)*
        ;
 
 bexpr2 returns [Condition value] 
-    : expr1 = aexpr oa = opr expr = aexpr {$value = new ConditionExpressionOperation($expr1, $expr2, $oa);}
-    | NOT cond = bexpr {$value = new NegationCondition($cond);} 
-    | TRUE {$value = new ConditionTrue();}
-    | FALSE {$value = new ConditionFalse();}
-    | LPAREN cond = bexpr RPAREN {$value = new ConditionParanteses($cond);} 
+    : expr1 = aexpr oa = opr expr = aexpr {value = new ConditionExpressionOperation(expr1, expr2, oa);}
+    | NOT cond = bexpr {value = new NegationCondition(cond);} 
+    | TRUE {value = new ConditionTrue();}
+    | FALSE {value = new ConditionFalse();}
+    | LPAREN cond = bexpr RPAREN {value = new ConditionParanteses(cond);} 
     ;
 
 opr returns [OperationRelation value]
-    : GT {$value = OperationRelation.GREATERTHAN}
-    | GE {$value = OperationRelation.GREATEREQUALTHAN}
-    | LT {$value = OperationRelation.LESSTHAN}
-    | LE {$value = OperationRelation.LESSEQUALTHAN}
-    | EQ {$value = OperationRelation.EQUAL}
-    | NEQ {$value = OperationRelation.NOTEQUAL}
+    : GT {value = OperationRelation.GREATERTHAN}
+    | GE {value = OperationRelation.GREATEREQUALTHAN}
+    | LT {value = OperationRelation.LESSTHAN}
+    | LE {value = OperationRelation.LESSEQUALTHAN}
+    | EQ {value = OperationRelation.EQUAL}
+    | NEQ {value = OperationRelation.NOTEQUAL}
     ;
 
 decl returns [Decleration value]
-    : lvl = level? INT id = IDENTIFIER val = INTEGER SEMI {$value = new Int($lvl, new Variable($id), $val);} 
-    | lvl = level? INT id = IDENTIFIER (LBRACKET size = INTEGER RBRACKET)? SEMI {$value = new Array(lvl, new Variable(id), val);} 
+    : lvl = level? INT id = IDENTIFIER val = INTEGER SEMI {value = new Int(lvl, new Variable(id), val);} 
+    | lvl = level? INT id = IDENTIFIER (LBRACKET size = INTEGER RBRACKET)? SEMI {value = new Array(lvl, new Variable(id), val);} 
     ;
 
 
 level returns[Level value] 
-    : LOW {$value = Level.LOW}  
-    | HIGH {$value = Level.HIGH}
+    : LOW {value = Level.LOW}  
+    | HIGH {value = Level.HIGH}
     ;
     
 stmt returns [Statement value]
@@ -127,60 +127,60 @@ stmt returns [Statement value]
      | statement = writeStmt
      | statement = ifStmt
      | statement = whileStmt
-     {$value = $statement}
+     {value = statement}
      ;
 
 assignStmt returns [Statement value]
     : id = IDENTIFIER ASSIGN exp = aexpr SEMI
-      {$value = new Assignment($id, $exp);}	   
+      {value = new Assignment(id, exp);}	   
     | id = IDENTIFIER (LBRACKET idx = aexpr RBRACKET)? ASSIGN exp = aexpr SEMI
-      {$value = new AssignmentArray($id, $idx, $exp);}
+      {value = new AssignmentArray(id, idx, exp);}
     ;
 
 skipStmt returns [Statement value]
     : SKIP SEMI
-      {$value = new Skip();} 
+      {value = new Skip();} 
     ;
 
 readStmt returns [Statement value]
     : READ id = IDENTIFIER SEMI 
-      {$value = new Read($id);}
+      {value = new Read(id);}
     | READ id = IDENTIFIER LBRACKET index = aexpr RBRACKET SEMI 
-      {$value = new ReadArray($id, $index);}
+      {value = new ReadArray(id, index);}
     ;
     
 writeStmt returns [Statement value] 
     : WRITE expr = aexpr SEMI
-      {$value = new Write($expr);} 
+      {value = new Write(expr);} 
     ;
 
 ifStmt returns [Statement value]
     @init
     {
-    	$trueList = new ArrayList<Statement>();
-    	$falseList = new ArrayList<Statment>();
+    	trueList = new ArrayList<Statement>();
+    	falseList = new ArrayList<Statment>();
     }
-    : IF exp = bexpr THEN (trueStmt = stmt {$trueList.add($trueStmt);})+ ELSE (falseStmt = stmt {$falseList.add($falseStmt);})+ FI 
-      {$value = new If($exp, $trueList, $falseList);}  
+    : IF exp = bexpr THEN (trueStmt = stmt {trueList.add(trueStmt);})+ ELSE (falseStmt = stmt {falseList.add(falseStmt);})+ FI 
+      {value = new If(exp, trueList, falseList);}  
     ;
 
 whileStmt returns [Statement value]
     @init	
     {
-    	$stmtList = new ArrayList<Statement>();
+    	stmtList = new ArrayList<Statement>();
     }
-    : WHILE exp = bexpr DO (statement = stmt {$stmtList.add($statement);})+ OD 
-      {$value = new While($exp, $stmtList);} 
+    : WHILE exp = bexpr DO (statement = stmt {stmtList.add(statement);})+ OD 
+      {value = new While(exp, stmtList);} 
     ;
 
 program returns [Program value]
     @init
     {
-    	$declList = new ArrayList<Declaration>();
-    	$stmtList = new ArrayList<Statement>();
+    	declList = new ArrayList<Declaration>();
+    	stmtList = new ArrayList<Statement>();
     }
-    : PROGRAM (declaration = decl {$declList.add($decleration);})* (statement = stmt {$stmtList.Add($statement);})+ END 
-      {$value = new Program($DeclList, $StmtList);} 
+    : PROGRAM (declaration = decl {declList.add(decleration);})* (statement = stmt {stmtList.Add(statement);})+ END 
+      {value = new Program(DeclList, StmtList);} 
     ;
 
 COMMENT : '(*' (options {greedy=false;} : .)* '*)' {$channel=HIDDEN;};
