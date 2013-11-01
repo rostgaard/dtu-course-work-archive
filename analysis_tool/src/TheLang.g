@@ -12,7 +12,7 @@ grammar TheLang;
 
 options {
   language= Java;  /* Change this to generate parser for some other language. */
-  backtrack = true;
+  backtrack = false;
   memoize = true;
   output = AST;
   ASTLabelType = CommonTree;
@@ -70,9 +70,24 @@ tokens {
 }
 
 
-aexpr : aexpr1 (PLUS aexpr1 | MINUS aexpr1)* ;
+aexpr returns [Expression expr] 
+    : arg1 = aexpr1
+    {$expr = arg1;}
+     ( 
+       PLUS arg2 = aexpr1 
+         {res = new OperationExpression (res, arg2, ArithmeticOperation.PLUS);}
+       | MINUS arg2 = aexpr1 
+         {res = new OperationExpression (res, arg2, ArithmeticOperation.MINUS);}
+     )* ;
 
-aexpr1 : aexpr2 (MUL aexpr2 | DIV aexpr2)* ;
+aexpr1 returns [Expression expr]
+    : arg1 = aexpr2
+     ( 
+       MUL arg2 = aexpr2
+         {res = new OperationExpression (res, arg2, ArithmeticOperation.MULTIPLICATION);}
+       | DIV arg2 = aexpr2 
+         {res = new OperationExpression (res, arg2, ArithmeticOperation.DIVISION);}
+     )* ;
 
 aexpr2 returns [Expression value]
     : MINUS expr = aexpr3 {value = new NegationExpression(expr);}
@@ -80,20 +95,28 @@ aexpr2 returns [Expression value]
     ;
 
 aexpr3 returns [Expression value] 
-    : id = IDENTIFIER {value = new Variable(Type.INT, id);}
-    | id = IDENTIFIER LBRACKET idx = aexpr RBRACKET {value = new ArrayExpression(new Variable(Type.ARRAY, id), idx);}	
+    : id = IDENTIFIER {value = new Variable(Type.INT, $id);}
+    | id = IDENTIFIER LBRACKET idx = aexpr RBRACKET {value = new ArrayExpression(new Variable(Type.ARRAY, $id), idx);}	
     | cons = INTEGER {value = new Constant(cons);}
     | LPAREN expr = aexpr RPAREN {value = new ParanthesesExpression(expr);}
     ;
 
-bexpr : bexpr1 (OR bexpr1)*
-      ;
+bexpr returns [Condition cond]
+    : arg1 = bexpr1 
+    {cond = arg1}
+    (OR arg2 = bexpr1 
+      {res = new OperationCondition (cond, arg2, BooleanOperation.OR);} 
+    )*;
 
-bexpr1 : bexpr2 (AND bexpr2)*
-       ;
+bexpr1 returns [Condition cond]
+    : arg1 = bexpr2
+    {cond = arg1}
+    (AND arg2 = bexpr2 
+      {res = new OperationCondition (cond, arg2, BooleanOperation.AND);} 
+    )*;
 
 bexpr2 returns [Condition value] 
-    : expr1 = aexpr oa = opr expr = aexpr {value = new ConditionExpressionOperation(expr1, expr2, oa);}
+    : expr1 = aexpr op = opr expr2 = aexpr {value = new ConditionExpressionOperation(expr1, expr2, op);}
     | NOT cond = bexpr {value = new NegationCondition(cond);} 
     | TRUE {value = new ConditionTrue();}
     | FALSE {value = new ConditionFalse();}
@@ -127,30 +150,35 @@ stmt returns [Statement value]
      | statement = writeStmt
      | statement = ifStmt
      | statement = whileStmt
-     {value = statement}
+     {value = statement} SEMI
      ;
 
 assignStmt returns [Statement value]
-    : id = IDENTIFIER ASSIGN exp = aexpr SEMI
-      {value = new Assignment(id, exp);}	   
-    | id = IDENTIFIER (LBRACKET idx = aexpr RBRACKET)? ASSIGN exp = aexpr SEMI
-      {value = new AssignmentArray(id, idx, exp);}
+    :
+    {Boolean isArray = false;}
+ 
+    (id = IDENTIFIER) 
+     (LBRACKET idx = aexpr RBRACKET
+      {isArray = True;}
+     )? ASSIGN expr = aexpr
+      {if (isArray) value = new AssignmentArray($id, idx, expr);
+       else  value = new Assignment($id, expr)}
     ;
 
 skipStmt returns [Statement value]
-    : SKIP SEMI
+    : SKIP
       {value = new Skip();} 
     ;
 
 readStmt returns [Statement value]
-    : READ id = IDENTIFIER SEMI 
+    : READ id = IDENTIFIER
       {value = new Read(id);}
-    | READ id = IDENTIFIER LBRACKET index = aexpr RBRACKET SEMI 
+    | READ id = IDENTIFIER LBRACKET index = aexpr RBRACKET
       {value = new ReadArray(id, index);}
     ;
     
 writeStmt returns [Statement value] 
-    : WRITE expr = aexpr SEMI
+    : WRITE expr = aexpr
       {value = new Write(expr);} 
     ;
 
