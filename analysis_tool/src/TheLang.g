@@ -127,7 +127,7 @@ stmt returns [Statement value]
      | statement = writeStmt
      | statement = ifStmt
      | statement = whileStmt
-     {{$value = $statement}
+     {$value = $statement}
      ;
 
 assignStmt returns [Statement value]
