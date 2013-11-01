@@ -1,0 +1,12 @@
+program
+low int a;
+high int x;
+int z;
+a:=10;
+x := a+b;
+while (a < 15) (* Comment here *) do
+a := a+1;
+od
+write(a); 
+end
+
