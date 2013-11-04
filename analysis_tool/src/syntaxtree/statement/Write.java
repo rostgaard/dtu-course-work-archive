@@ -13,5 +13,13 @@ public class Write extends Statement{
 	public Write(Expression expr){
 		this.expr = expr;
 	}
+
+	public Expression getExpr() {
+		return expr;
+	}
+
+	public void setExpr(Expression expr) {
+		this.expr = expr;
+	}
 	
 }

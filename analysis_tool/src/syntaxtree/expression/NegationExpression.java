@@ -11,5 +11,13 @@ public class NegationExpression extends Expression{
 	public NegationExpression(Expression expr){
 		this.expr = expr;
 	}
+
+	public Expression getExpr() {
+		return expr;
+	}
+
+	public void setExpr(Expression expr) {
+		this.expr = expr;
+	}
 	
 }

@@ -16,4 +16,21 @@ public class Assignment extends Statement {
 		this.id = id;
 		this.expr = expr;
 	}
+
+	public Variable getId() {
+		return id;
+	}
+
+	public void setId(Variable id) {
+		this.id = id;
+	}
+
+	public Expression getExpr() {
+		return expr;
+	}
+
+	public void setExpr(Expression expr) {
+		this.expr = expr;
+	}
+	
 }

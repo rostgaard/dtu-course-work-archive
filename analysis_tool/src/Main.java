@@ -1,6 +1,14 @@
 
+import java.util.List;
+
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
+
+import output.TheLangLexer;
+import output.TheLangParser;
+import syntaxtree.Program;
+import syntaxtree.declaration.Declaration;
+import syntaxtree.statement.Statement;
 
 public class Main {
 
@@ -24,7 +32,8 @@ public class Main {
 
     public static void main(String args[]) throws Exception {
 
-        String inputfile = "/home/krc/DTU/02242 Program Analysis E13/work/src/examples/sample.lang";
+        String inputfile = args[0];
+        System.out.println("input file: " + inputfile);
         TheLangLexer lex = new TheLangLexer(new ANTLRFileStream(inputfile));
         CommonTokenStream tokens = new CommonTokenStream(lex);
         TheLangParser parser = new TheLangParser(tokens);
@@ -38,12 +47,19 @@ public class Main {
 
             TheLangParser.program_return parserResult = parser.program();
             if (parserResult != null) {
-                CommonTree tree = (CommonTree) parserResult.tree;
-        printTree(tree,0);
-
-                for (int i = 0; i < tree.getChildCount(); i++) {
-                    System.out.println(i + ": " + tree.getChild(i).getChildCount());
+                Program tree = parserResult.value;
+                List<Declaration> decls = tree.getDecls();
+                System.out.println("Number of declarations: " + decls.size());
+                for(Declaration d : decls){
+                	System.out.println(d.toString());
                 }
+                List<Statement> stmts = tree.getStmts();
+                System.out.println("Number of statements: " + stmts.size());
+//                for(Statement stmt : stmts){
+//                	
+//                }
+                //printTree(tree,0);
+                
 
 
 //        System.out.println(tree.getChild());

@@ -11,4 +11,12 @@ public class TrueCondition extends Condition{
 	public boolean getTrue(){
 		return truee;
 	}
+
+	public boolean isTruee() {
+		return truee;
+	}
+
+	public void setTruee(boolean truee) {
+		this.truee = truee;
+	}
 }

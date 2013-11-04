@@ -6,6 +6,6 @@ package syntaxtree.declaration;
  */
 public enum Level {
 	
-	HIGH, LOW;
+	HIGH, LOW, UNKNOWN;
 	
 }

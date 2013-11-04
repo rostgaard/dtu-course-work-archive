@@ -18,4 +18,29 @@ public class ArrayAssignment extends Statement{
 		this.idx = idx;
 		this.expr = expr;
 	}
+
+	public Variable getId() {
+		return id;
+	}
+
+	public void setId(Variable id) {
+		this.id = id;
+	}
+
+	public Expression getIdx() {
+		return idx;
+	}
+
+	public void setIdx(Expression idx) {
+		this.idx = idx;
+	}
+
+	public Expression getExpr() {
+		return expr;
+	}
+
+	public void setExpr(Expression expr) {
+		this.expr = expr;
+	}
+	
 }

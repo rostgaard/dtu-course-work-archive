@@ -11,5 +11,13 @@ public class ParanthesesExpression extends Expression{
 	public ParanthesesExpression(Expression expr){
 		this.expr = expr;
 	}
+
+	public Expression getExpr() {
+		return expr;
+	}
+
+	public void setExpr(Expression expr) {
+		this.expr = expr;
+	}
 	
 }

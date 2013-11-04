@@ -11,5 +11,13 @@ public class NegationCondition extends Condition{
 	public NegationCondition(Condition cond){
 		this.cond = cond;
 	}
+
+	public Condition getCond() {
+		return cond;
+	}
+
+	public void setCond(Condition cond) {
+		this.cond = cond;
+	}
 	
 }

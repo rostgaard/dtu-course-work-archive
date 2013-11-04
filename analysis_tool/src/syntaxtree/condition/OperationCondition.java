@@ -16,5 +16,29 @@ public class OperationCondition extends Condition{
 		this.cond1 = cond1;
 		this.cond2 = cond2;
 		this.bo = bo;
+	}
+
+	public Condition getCond1() {
+		return cond1;
+	}
+
+	public void setCond1(Condition cond1) {
+		this.cond1 = cond1;
+	}
+
+	public Condition getCond2() {
+		return cond2;
+	}
+
+	public void setCond2(Condition cond2) {
+		this.cond2 = cond2;
+	}
+
+	public BooleanOperation getBo() {
+		return bo;
+	}
+
+	public void setBo(BooleanOperation bo) {
+		this.bo = bo;
 	}	
 }

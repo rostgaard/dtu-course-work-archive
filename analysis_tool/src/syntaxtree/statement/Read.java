@@ -13,4 +13,13 @@ public class Read extends Statement{
 	public Read(Variable id){
 		this.id = id;
 	}
+
+	public Variable getId() {
+		return id;
+	}
+
+	public void setId(Variable id) {
+		this.id = id;
+	}
+	
 }

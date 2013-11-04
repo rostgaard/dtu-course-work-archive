@@ -17,5 +17,23 @@ public class Program {
 	public Program(List<Declaration> decls, List<Statement> stmts){
 		this.decls = decls;
 		this.stmts = stmts;
+	}
+
+	public List<Declaration> getDecls() {
+		return decls;
+	}
+
+	public void setDecls(List<Declaration> decls) {
+		this.decls = decls;
+	}
+
+	public List<Statement> getStmts() {
+		return stmts;
+	}
+
+	public void setStmts(List<Statement> stmts) {
+		this.stmts = stmts;
 	}	
+	
+	
 }

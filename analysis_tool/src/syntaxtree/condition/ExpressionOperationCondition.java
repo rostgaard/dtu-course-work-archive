@@ -18,4 +18,28 @@ public class ExpressionOperationCondition extends Condition {
 		this.expr2 = expr2;
 		this.ro = ro; 
 	}
+
+	public Expression getExpr1() {
+		return expr1;
+	}
+
+	public void setExpr1(Expression expr1) {
+		this.expr1 = expr1;
+	}
+
+	public Expression getExpr2() {
+		return expr2;
+	}
+
+	public void setExpr2(Expression expr2) {
+		this.expr2 = expr2;
+	}
+
+	public RelationOperation getRo() {
+		return ro;
+	}
+
+	public void setRo(RelationOperation ro) {
+		this.ro = ro;
+	}
 }

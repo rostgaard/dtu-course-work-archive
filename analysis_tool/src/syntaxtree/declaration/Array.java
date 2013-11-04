@@ -16,4 +16,23 @@ public class Array extends Declaration{
 		this.id = id;
 		this.size = size;
 	}
+
+	public Constant getSize() {
+		return size;
+	}
+
+	public void setSize(Constant size) {
+		this.size = size;
+	}
+
+	@Override
+	public String toString() {
+		return "Array [size=" + size + ", lvl=" + lvl + ", id=" + id
+				+ ", getSize()=" + getSize() + ", getLvl()=" + getLvl()
+				+ ", getId()=" + getId() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
+	}
+	
+	
 }

@@ -11,4 +11,9 @@ public class Constant extends Expression{
 	public Constant(int n){
 		this.n = n;
 	}
+
+	public int getN() {
+		return n;
+	}
+	
 }

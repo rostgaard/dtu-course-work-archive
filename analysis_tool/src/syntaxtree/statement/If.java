@@ -20,4 +20,29 @@ public class If extends Statement{
 		this.tBranch = tBranch;
 		this.fBranch = fBranch;
 	}
+
+	public Condition getCond() {
+		return cond;
+	}
+
+	public void setCond(Condition cond) {
+		this.cond = cond;
+	}
+
+	public List<Statement> gettBranch() {
+		return tBranch;
+	}
+
+	public void settBranch(List<Statement> tBranch) {
+		this.tBranch = tBranch;
+	}
+
+	public List<Statement> getfBranch() {
+		return fBranch;
+	}
+
+	public void setfBranch(List<Statement> fBranch) {
+		this.fBranch = fBranch;
+	}
+	
 }

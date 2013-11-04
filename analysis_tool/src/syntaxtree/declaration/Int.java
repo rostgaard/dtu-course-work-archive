@@ -1,6 +1,5 @@
 package syntaxtree.declaration;
 
-import syntaxtree.expression.Constant;
 import syntaxtree.expression.Variable;
 
 /**
@@ -9,11 +8,13 @@ import syntaxtree.expression.Variable;
  */
 public class Int extends Declaration{
 	
-	private Constant value;
-
-	public Int(Level lvl, Variable id, Constant value){
+	public Int(Level lvl, Variable id){
 		this.lvl = lvl;
 		this.id= id;
-		this.value = value;
+	}
+
+	@Override
+	public String toString() {
+		return "level: " + lvl.toString() + " Type: " + id.getType().toString() + " identifier: " + id.getId();
 	}
 }

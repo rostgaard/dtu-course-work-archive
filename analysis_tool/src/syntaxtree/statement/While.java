@@ -17,4 +17,21 @@ public class While extends Statement{
 		this.cond = cond;
 		this.body = body;
 	}
+
+	public Condition getCond() {
+		return cond;
+	}
+
+	public void setCond(Condition cond) {
+		this.cond = cond;
+	}
+
+	public List<Statement> getBody() {
+		return body;
+	}
+
+	public void setBody(List<Statement> body) {
+		this.body = body;
+	}
+	
 }

@@ -12,7 +12,7 @@ grammar TheLang;
 
 options {
   language= Java;  /* Change this to generate parser for some other language. */
-  backtrack = false;
+  backtrack = true;
   memoize = true;
   output = AST;
   ASTLabelType = CommonTree;
@@ -62,156 +62,152 @@ tokens {
 
 
 @header {
+  package output;
   import java.util.ArrayList;
   import syntaxtree.condition.*;
   import syntaxtree.declaration.*;
   import syntaxtree.expression.*;
   import syntaxtree.statement.*;
+  import syntaxtree.*;
 }
+//aexpr : aexpr1 (PLUS aexpr1 | MINUS aexpr1)* ;
+aexpr returns [Expression value]
+    : arg1 = aexpr1 {$value = arg1.value;} 
+      ( PLUS arg1 = aexpr1 {$value = new OperationExpression($value, arg1.value, ArithmeticOperation.PLUS); }
+      | MINUS arg1 = aexpr1 {$value = new OperationExpression($value, arg1.value, ArithmeticOperation.MINUS);})*
+    ;
 
+//aexpr1 : aexpr2 (MUL aexpr2 | DIV aexpr2)* ;
+aexpr1 returns [Expression value]
+    : arg1 = aexpr2 {$value = arg1.value;} 
+      ( MUL arg1 = aexpr2 {$value = new OperationExpression($value, arg1.value, ArithmeticOperation.MULTIPLICATION); } 
+      | DIV arg1 = aexpr2 {$value = new OperationExpression($value, arg1.value, ArithmeticOperation.DIVISION);})*
+    ;
 
-aexpr returns [Expression expr] 
-    : arg1 = aexpr1
-    {$expr = arg1;}
-     ( 
-       PLUS arg2 = aexpr1 
-         {res = new OperationExpression (res, arg2, ArithmeticOperation.PLUS);}
-       | MINUS arg2 = aexpr1 
-         {res = new OperationExpression (res, arg2, ArithmeticOperation.MINUS);}
-     )* ;
-
-aexpr1 returns [Expression expr]
-    : arg1 = aexpr2
-     ( 
-       MUL arg2 = aexpr2
-         {res = new OperationExpression (res, arg2, ArithmeticOperation.MULTIPLICATION);}
-       | DIV arg2 = aexpr2 
-         {res = new OperationExpression (res, arg2, ArithmeticOperation.DIVISION);}
-     )* ;
-
+//aexpr2 : MINUS aexpr3 | aexpr3;      
 aexpr2 returns [Expression value]
-    : MINUS expr = aexpr3 {value = new NegationExpression(expr);}
-    | expr = aexpr3 {value = expr);}
+    : MINUS expr = aexpr3 {$value = new NegationExpression(expr.value);}
+    | expr = aexpr3 {$value = expr.value;}
     ;
 
+//aexpr3 : IDENTIFIER (LBRACKET aexpr RBRACKET)? | INTEGER | LPAREN aexpr RPAREN;    
 aexpr3 returns [Expression value] 
-    : id = IDENTIFIER {value = new Variable(Type.INT, $id);}
-    | id = IDENTIFIER LBRACKET idx = aexpr RBRACKET {value = new ArrayExpression(new Variable(Type.ARRAY, $id), idx);}	
-    | cons = INTEGER {value = new Constant(cons);}
-    | LPAREN expr = aexpr RPAREN {value = new ParanthesesExpression(expr);}
+    : id = IDENTIFIER {$value = new Variable(Type.INT, id.getText());}
+    | id = IDENTIFIER LBRACKET idx = aexpr RBRACKET {$value = new ArrayExpression(new Variable(Type.ARRAY, id.getText()), idx.value);}	
+    | cons = INTEGER {$value = new Constant(Integer.parseInt($cons.getText()));}
+    | LPAREN expr = aexpr RPAREN {$value = new ParanthesesExpression(expr.value);}
     ;
 
-bexpr returns [Condition cond]
-    : arg1 = bexpr1 
-    {cond = arg1}
-    (OR arg2 = bexpr1 
-      {res = new OperationCondition (cond, arg2, BooleanOperation.OR);} 
-    )*;
+//bexpr : bexpr1 (OR bexpr1)*;
+bexpr returns [Condition value]
+    : expr = bexpr1 {$value = expr.value;} 
+      (OR expr = bexpr1 {$value = new OperationCondition($value, expr.value, BooleanOperation.OR);})*
+    ;
 
-bexpr1 returns [Condition cond]
-    : arg1 = bexpr2
-    {cond = arg1}
-    (AND arg2 = bexpr2 
-      {res = new OperationCondition (cond, arg2, BooleanOperation.AND);} 
-    )*;
+//bexpr1 : bexpr2 (AND bexpr2)*;
+bexpr1 returns [Condition value]
+    : expr = bexpr2 {$value = expr.value;} 
+      (AND expr = bexpr2 {$value = new OperationCondition($value, expr.value, BooleanOperation.AND);})*
+    ;
 
+//bexpr2 : aexpr opr aexpr | NOT bexpr | TRUE | FALSE | LPAREN bexpr RPAREN;
 bexpr2 returns [Condition value] 
-    : expr1 = aexpr op = opr expr2 = aexpr {value = new ConditionExpressionOperation(expr1, expr2, op);}
-    | NOT cond = bexpr {value = new NegationCondition(cond);} 
-    | TRUE {value = new ConditionTrue();}
-    | FALSE {value = new ConditionFalse();}
-    | LPAREN cond = bexpr RPAREN {value = new ConditionParanteses(cond);} 
+    : expr1 = aexpr op = opr expr2 = aexpr {$value = new ExpressionOperationCondition(expr1.value, expr2.value, op.value);}
+    | NOT cond = bexpr {$value = new NegationCondition(cond.value);} 
+    | TRUE {$value = new TrueCondition();}
+    | FALSE {$value = new FalseCondition();}
+    | LPAREN cond = bexpr RPAREN {$value = new ParenthesesCondition(cond.value);} 
     ;
 
-opr returns [OperationRelation value]
-    : GT {value = OperationRelation.GREATERTHAN}
-    | GE {value = OperationRelation.GREATEREQUALTHAN}
-    | LT {value = OperationRelation.LESSTHAN}
-    | LE {value = OperationRelation.LESSEQUALTHAN}
-    | EQ {value = OperationRelation.EQUAL}
-    | NEQ {value = OperationRelation.NOTEQUAL}
+//opr : GT | GE | LT | LE | EQ | NEQ;
+opr returns [RelationOperation value]
+    : GT {$value = RelationOperation.GREATERTHAN;}
+    | GE {$value = RelationOperation.GREATEREQUALTHAN;}
+    | LT {$value = RelationOperation.LESSTHAN;}
+    | LE {$value = RelationOperation.LESSEQUALTHAN;}
+    | EQ {$value = RelationOperation.EQUAL;}
+    | NEQ {$value = RelationOperation.NOTEQUAL;}
     ;
 
-decl returns [Decleration value]
-    : lvl = level? INT id = IDENTIFIER val = INTEGER SEMI {value = new Int(lvl, new Variable(id), val);} 
-    | lvl = level? INT id = IDENTIFIER (LBRACKET size = INTEGER RBRACKET)? SEMI {value = new Array(lvl, new Variable(id), val);} 
+//decl : level? INT IDENTIFIER (LBRACKET INTEGER RBRACKET)? SEMI ;
+decl returns [Declaration value]
+    : lvl = level? INT id = IDENTIFIER SEMI {$value = new Int(lvl.value, new Variable(Type.INT, id.getText()));} 
+    | lvl = level? INT id = IDENTIFIER LBRACKET size = INTEGER RBRACKET SEMI {$value = new Array(lvl.value, new Variable(Type.ARRAY, id.getText()), new Constant(Integer.parseInt(size.getText())));} 
     ;
 
-
+//level : LOW | HIGH ;
 level returns[Level value] 
-    : LOW {value = Level.LOW}  
-    | HIGH {value = Level.HIGH}
+    : LOW {$value = Level.LOW;}  
+    | HIGH {$value = Level.HIGH;}
+    | {$value = Level.UNKNOWN;}
     ;
-    
+
+//stmt : assignStmt | skipStmt | readStmt | writeStmt | ifStmt | whileStmt;  
 stmt returns [Statement value]
-     : statement = assignStmt
-     | statement = skipStmt
-     | statement = readStmt
-     | statement = writeStmt
-     | statement = ifStmt
-     | statement = whileStmt
-     {value = statement} SEMI
+     : statement1 = assignStmt {$value = statement1.value;}
+     | statement2 = skipStmt {$value = statement2.value;}
+     | statement3 = readStmt {$value = statement3.value;}
+     | statement4 = writeStmt{$value = statement4.value;}
+     | statement5 = ifStmt {$value = statement5.value;}
+     | statement6 = whileStmt {$value = statement6.value;}
      ;
 
+//assignStmt : IDENTIFIER (LBRACKET aexpr RBRACKET)? ASSIGN aexpr SEMI ;
 assignStmt returns [Statement value]
-    :
-    {Boolean isArray = false;}
- 
-    (id = IDENTIFIER) 
-     (LBRACKET idx = aexpr RBRACKET
-      {isArray = True;}
-     )? ASSIGN expr = aexpr
-      {if (isArray) value = new AssignmentArray($id, idx, expr);
-       else  value = new Assignment($id, expr)}
+    : id = IDENTIFIER ASSIGN expr = aexpr SEMI {$value = new Assignment(new Variable(Type.INT, id.getText()), expr.value);}
+    | id = IDENTIFIER LBRACKET idx = aexpr RBRACKET ASSIGN expr = aexpr SEMI {$value = new ArrayAssignment(new Variable(Type.ARRAY, id.getText()), idx.value, expr.value);} 
     ;
 
+//skipStmt : SKIP SEMI ;
 skipStmt returns [Statement value]
-    : SKIP
-      {value = new Skip();} 
+    : SKIP SEMI {$value = new Skip();} 
     ;
 
+//readStmt : READ IDENTIFIER (LBRACKET aexpr RBRACKET)? SEMI ;
 readStmt returns [Statement value]
-    : READ id = IDENTIFIER
-      {value = new Read(id);}
-    | READ id = IDENTIFIER LBRACKET index = aexpr RBRACKET
-      {value = new ReadArray(id, index);}
-    ;
-    
-writeStmt returns [Statement value] 
-    : WRITE expr = aexpr
-      {value = new Write(expr);} 
+    : READ id = IDENTIFIER SEMI {$value = new Read(new Variable(Type.INT, id.getText()));}
+    | READ id = IDENTIFIER LBRACKET idx = aexpr RBRACKET SEMI {$value = new ReadArray(new Variable(Type.INT, id.getText()), idx.value);}
     ;
 
+//writeStmt : WRITE aexpr SEMI ;    
+writeStmt returns [Statement value] 
+    : WRITE expr = aexpr SEMI {$value = new Write(expr.value);} 
+    ;
+
+//ifStmt : IF bexpr THEN stmt+ ELSE stmt+ FI ;
 ifStmt returns [Statement value]
     @init
     {
-    	trueList = new ArrayList<Statement>();
-    	falseList = new ArrayList<Statment>();
+    	ArrayList<Statement> trueList = new ArrayList<Statement>();
+	ArrayList<Statement> falseList = new ArrayList<Statement>();
     }
-    : IF exp = bexpr THEN (trueStmt = stmt {trueList.add(trueStmt);})+ ELSE (falseStmt = stmt {falseList.add(falseStmt);})+ FI 
-      {value = new If(exp, trueList, falseList);}  
+    : IF exp = bexpr THEN (trueStmt = stmt {trueList.add(trueStmt.value);})+ ELSE (falseStmt = stmt {falseList.add(falseStmt.value);})+ FI 
+      {$value = new If(exp.value, trueList, falseList);}  
     ;
-
+    
+//whileStmt : WHILE bexpr DO stmt+ OD ;
 whileStmt returns [Statement value]
     @init	
     {
-    	stmtList = new ArrayList<Statement>();
+    	ArrayList<Statement> body = new ArrayList<Statement>();
     }
-    : WHILE exp = bexpr DO (statement = stmt {stmtList.add(statement);})+ OD 
-      {value = new While(exp, stmtList);} 
+    : WHILE exp = bexpr DO (statement = stmt {body.add(statement.value);})+ OD 
+      {$value = new While(exp.value, body);} 
     ;
 
+//program : PROGRAM decl* stmt+ END ;    
 program returns [Program value]
     @init
     {
-    	declList = new ArrayList<Declaration>();
-    	stmtList = new ArrayList<Statement>();
+    	ArrayList<Declaration> declList = new ArrayList<Declaration>();
+    	ArrayList<Statement> stmtList = new ArrayList<Statement>();
     }
-    : PROGRAM (declaration = decl {declList.add(decleration);})* (statement = stmt {stmtList.Add(statement);})+ END 
-      {value = new Program(DeclList, StmtList);} 
+    : PROGRAM (declaration = decl {declList.add($declaration.value);})* (statement = stmt {stmtList.add($statement.value);})+ END 
+      {$value = new Program(declList, stmtList);} 
     ;
 
-COMMENT : '(*' (options {greedy=false;} : .)* '*)' {$channel=HIDDEN;};
+COMMENT : '(*' (options {greedy=false;} : .)* '*)' {$channel=HIDDEN;}
+     ;
 
 INTEGER : ('0' | '1'..'9' '0'..'9'*);
 
@@ -223,4 +219,4 @@ LETTER : 'A'..'Z'
        | '_'
        ;
 
-WS : (' '|'\r'|'\t'|'\u000C'|'\n') {skip();};
+WS : (' '|'\r'|'\t'|'\u000C'|'\n') { skip(); } ;

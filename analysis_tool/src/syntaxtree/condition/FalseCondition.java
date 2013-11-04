@@ -11,5 +11,13 @@ public class FalseCondition extends Condition{
 	public boolean getFalse(){
 		return falsee;
 	}
+
+	public boolean isFalsee() {
+		return falsee;
+	}
+
+	public void setFalsee(boolean falsee) {
+		this.falsee = falsee;
+	}
 	
 }
