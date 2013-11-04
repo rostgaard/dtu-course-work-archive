@@ -42,4 +42,8 @@ public class OperationExpression extends Expression{
 		this.ao = ao;
 	}
 	
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() + "\nExpression1: " + expr1.toString() + "\nExression2: " + expr2.toString() + "\nArithmetic operation: " + ao.toString() + "\n";
+	}
 }

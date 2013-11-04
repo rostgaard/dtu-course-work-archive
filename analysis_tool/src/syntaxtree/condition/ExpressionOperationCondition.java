@@ -42,4 +42,9 @@ public class ExpressionOperationCondition extends Condition {
 	public void setRo(RelationOperation ro) {
 		this.ro = ro;
 	}
+	
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() + "\nExpression1: " + expr1.toString() + "\nExpression2: " + expr2.toString() + "\nRelation Operation: " + ro.toString() + "\n";
+	}
 }

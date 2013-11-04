@@ -20,4 +20,8 @@ public class ParenthesesCondition extends Condition{
 		this.cond = cond;
 	}	
 	
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() + "\nCondition: " + cond.toString() + "\n";
+	}
 }

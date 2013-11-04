@@ -35,5 +35,8 @@ public class Program {
 		this.stmts = stmts;
 	}	
 	
-	
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() + "\nDeclerations:\n" + decls.toString() + "\nStatements:\n" + stmts.toString() + "\n";
+	}
 }

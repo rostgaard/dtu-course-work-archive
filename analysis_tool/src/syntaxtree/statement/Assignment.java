@@ -33,4 +33,8 @@ public class Assignment extends Statement {
 		this.expr = expr;
 	}
 	
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() + "\nIdentifier: " + id.toString() + "\nExpression: " + expr.toString() + "\n";
+	}
 }

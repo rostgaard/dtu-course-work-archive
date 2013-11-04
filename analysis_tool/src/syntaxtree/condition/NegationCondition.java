@@ -19,5 +19,8 @@ public class NegationCondition extends Condition{
 	public void setCond(Condition cond) {
 		this.cond = cond;
 	}
-	
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() + "\nCondition: " + cond.toString() + "\n";
+	}
 }

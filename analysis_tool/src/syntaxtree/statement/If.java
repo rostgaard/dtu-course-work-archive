@@ -45,4 +45,8 @@ public class If extends Statement{
 		this.fBranch = fBranch;
 	}
 	
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() + "\nCondition: " + cond.toString() + "\nTrue branch: " + tBranch.toString() + "\nFalse branch: " + fBranch.toString() + "\n";
+	}	
 }

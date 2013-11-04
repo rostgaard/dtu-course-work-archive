@@ -34,4 +34,8 @@ public class While extends Statement{
 		this.body = body;
 	}
 	
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() + "\nCondition: " + cond.toString() + "\nBody: " + body.toString() + "\n";
+	}
 }

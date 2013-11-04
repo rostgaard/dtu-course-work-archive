@@ -15,5 +15,9 @@ public class Constant extends Expression{
 	public int getN() {
 		return n;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() +"\nValue: " + n + "\n";
+	}	
 }

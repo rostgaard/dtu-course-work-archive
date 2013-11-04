@@ -15,6 +15,6 @@ public class Int extends Declaration{
 
 	@Override
 	public String toString() {
-		return "level: " + lvl.toString() + " Type: " + id.getType().toString() + " identifier: " + id.getId();
+		return "\nClass: " + getClass().getSimpleName() + "\nLevel: " + lvl.toString() + "\nType: " + id.getType().toString() + "\nIdentifier: " + id.getId() + "\n";
 	}
 }

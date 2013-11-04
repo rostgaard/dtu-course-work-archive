@@ -7,4 +7,8 @@ package syntaxtree.statement;
 
 public class Skip extends Statement{
 
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() + "\n";
+	}	
 }

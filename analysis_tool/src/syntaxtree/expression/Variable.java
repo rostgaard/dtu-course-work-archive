@@ -32,4 +32,8 @@ public class Variable extends Expression{
 		this.id = id;
 	}
 	
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() + "\nType: " + type.toString() + "\nIdentifier: " + id.toString() + "\n";
+	}
 }

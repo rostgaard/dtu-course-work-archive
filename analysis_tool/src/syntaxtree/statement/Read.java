@@ -22,4 +22,8 @@ public class Read extends Statement{
 		this.id = id;
 	}
 	
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() + "\nIdentifier: " + id.toString() + "\n";
+	}
 }

@@ -32,5 +32,9 @@ public class ReadArray extends Statement{
 	public void setIdx(Expression idx) {
 		this.idx = idx;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() + "\nIdentifier: " + id.toString() + "\nIndex: " + idx.toString() + "\n";
+	}
 }

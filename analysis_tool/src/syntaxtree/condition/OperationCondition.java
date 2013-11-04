@@ -41,4 +41,9 @@ public class OperationCondition extends Condition{
 	public void setBo(BooleanOperation bo) {
 		this.bo = bo;
 	}	
+	
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() + "\nCondition1: " + cond1.toString() + "\nCondition2: " + cond2.toString() + "\nBoolean Operation: " + bo.toString() + "\n";
+	}
 }

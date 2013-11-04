@@ -12,12 +12,16 @@ public class FalseCondition extends Condition{
 		return falsee;
 	}
 
-	public boolean isFalsee() {
+	public boolean isFalse() {
 		return falsee;
 	}
 
-	public void setFalsee(boolean falsee) {
+	public void setFalse(boolean falsee) {
 		this.falsee = falsee;
 	}
 	
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() + "\nValue: " + falsee + "\n";
+	}
 }

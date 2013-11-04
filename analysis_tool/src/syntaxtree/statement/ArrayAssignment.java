@@ -43,4 +43,8 @@ public class ArrayAssignment extends Statement{
 		this.expr = expr;
 	}
 	
+	@Override
+	public String toString() {
+		return "\nClass: " + getClass().getSimpleName() + "\nIdentifier: " + id.toString() + "\nIndex: " + idx.toString() + "\nExpression: " + expr.toString() + "\n";
+	}
 }
