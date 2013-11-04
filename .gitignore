@@ -22,6 +22,6 @@
 *.mtc1
 *.out
 *.synctex.gz
-
+.idea/
 report/Main/final.pdf
 report/report.pdf
