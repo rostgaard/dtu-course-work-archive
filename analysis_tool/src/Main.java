@@ -32,6 +32,11 @@ public class Main {
 
     public static void main(String args[]) throws Exception {
 
+        if (args.length < 1) {
+            System.out.println("Please supply a file with source code.");
+            System.exit(1);
+        }
+        
         String inputfile = args[0];
         System.out.println("input file: " + inputfile);
         TheLangLexer lex = new TheLangLexer(new ANTLRFileStream(inputfile));

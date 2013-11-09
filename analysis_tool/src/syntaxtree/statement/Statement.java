@@ -5,6 +5,15 @@ package syntaxtree.statement;
  *
  */
 
-public abstract class Statement {
+public abstract class Statement implements analysis.Analysable{
+
+    @Override
+    abstract public void RD();
+
+    //@Override
+    //abstract public void AE();
+
+    //@Override
+    //abstract public void LV();
 
 }

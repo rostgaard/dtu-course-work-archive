@@ -21,5 +21,10 @@ public class Write extends Statement{
 	public void setExpr(Expression expr) {
 		this.expr = expr;
 	}
+
+    @Override
+    public void RD() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 	
 }

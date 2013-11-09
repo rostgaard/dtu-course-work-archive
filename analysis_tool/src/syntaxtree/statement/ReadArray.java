@@ -32,5 +32,10 @@ public class ReadArray extends Statement{
 	public void setIdx(Expression idx) {
 		this.idx = idx;
 	}
+
+    @Override
+    public void RD() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 	
 }

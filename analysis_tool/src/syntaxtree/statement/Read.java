@@ -21,5 +21,10 @@ public class Read extends Statement{
 	public void setId(Variable id) {
 		this.id = id;
 	}
+
+    @Override
+    public void RD() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 	
 }

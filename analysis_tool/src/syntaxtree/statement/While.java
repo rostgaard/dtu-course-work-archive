@@ -8,30 +8,34 @@ import syntaxtree.condition.Condition;
  * Data representation for while statements
  *
  */
-public class While extends Statement{
+public class While extends Statement {
 
-	private Condition cond;
-	private List<Statement> body;
-	
-	public While(Condition cond, List<Statement> body){
-		this.cond = cond;
-		this.body = body;
-	}
+    private Condition cond;
+    private List<Statement> body;
 
-	public Condition getCond() {
-		return cond;
-	}
+    public While(Condition cond, List<Statement> body) {
+        this.cond = cond;
+        this.body = body;
+    }
 
-	public void setCond(Condition cond) {
-		this.cond = cond;
-	}
+    public Condition getCond() {
+        return cond;
+    }
 
-	public List<Statement> getBody() {
-		return body;
-	}
+    public void setCond(Condition cond) {
+        this.cond = cond;
+    }
 
-	public void setBody(List<Statement> body) {
-		this.body = body;
-	}
-	
+    public List<Statement> getBody() {
+        return body;
+    }
+
+    public void setBody(List<Statement> body) {
+        this.body = body;
+    }
+
+    @Override
+    public void RD() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

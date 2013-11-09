@@ -44,5 +44,10 @@ public class If extends Statement{
 	public void setfBranch(List<Statement> fBranch) {
 		this.fBranch = fBranch;
 	}
+
+    @Override
+    public void RD() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 	
 }
