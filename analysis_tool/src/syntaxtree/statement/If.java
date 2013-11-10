@@ -9,45 +9,44 @@ import syntaxtree.statement.Statement;
  * Data representation for if statements
  *
  */
-public class If extends Statement{
+public class If extends Statement {
 
-	private Condition cond;
-	private List<Statement> tBranch;
-	private List<Statement> fBranch;
-	
-	public If(Condition cond, List<Statement> tBranch, List<Statement> fBranch){
-		this.cond = cond;
-		this.tBranch = tBranch;
-		this.fBranch = fBranch;
-	}
+    private Condition cond;
+    private List<Statement> tBranch;
+    private List<Statement> fBranch;
 
-	public Condition getCond() {
-		return cond;
-	}
+    public If(Condition cond, List<Statement> tBranch, List<Statement> fBranch) {
+        this.cond = cond;
+        this.tBranch = tBranch;
+        this.fBranch = fBranch;
+    }
 
-	public void setCond(Condition cond) {
-		this.cond = cond;
-	}
+    public Condition getCond() {
+        return cond;
+    }
 
-	public List<Statement> gettBranch() {
-		return tBranch;
-	}
+    public void setCond(Condition cond) {
+        this.cond = cond;
+    }
 
-	public void settBranch(List<Statement> tBranch) {
-		this.tBranch = tBranch;
-	}
+    public List<Statement> gettBranch() {
+        return tBranch;
+    }
 
-	public List<Statement> getfBranch() {
-		return fBranch;
-	}
+    public void settBranch(List<Statement> tBranch) {
+        this.tBranch = tBranch;
+    }
 
-	public void setfBranch(List<Statement> fBranch) {
-		this.fBranch = fBranch;
-	}
+    public List<Statement> getfBranch() {
+        return fBranch;
+    }
+
+    public void setfBranch(List<Statement> fBranch) {
+        this.fBranch = fBranch;
+    }
 
     @Override
-    public void RD() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String toString() {
+        return "\nClass: " + getClass().getSimpleName() + "\nCondition: " + cond.toString() + "\nTrue branch: " + tBranch.toString() + "\nFalse branch: " + fBranch.toString() + "\n";
     }
-	
 }

@@ -1,6 +1,6 @@
 package syntaxtree.expression;
 
-import syntaxtree.ArithmeticOperation;
+import syntaxtree.*;
 
 /**
  * Data representation for expressions with arithmetic operation
@@ -42,4 +42,12 @@ public class OperationExpression extends Expression{
 		this.ao = ao;
 	}
 	
+	public String debugInformation() {
+		return "\nClass: " + getClass().getSimpleName() + "\nExpression1: " + expr1.toString() + "\nExression2: " + expr2.toString() + "\nArithmetic operation: " + ao.toString() + "\n";
+	}
+        
+        @Override
+        public String toString() {
+            return expr1 + " " + Symbols.symbolOf(ao) +" "+ expr2;
+        }
 }

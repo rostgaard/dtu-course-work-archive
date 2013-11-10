@@ -107,58 +107,58 @@ public class NetworkGraph {
 		return vv; 
 	}   
 
-	//	/**
-	//	 * Updates the color of the nodes on the graph.
-	//	 * @param nodes - nodes to be colored
-	//	 */
-	//	public static void updateNodeColor(final ArrayList<Node> nodes){
-	//		Transformer<String,Paint> vertexPaint = new Transformer<String,Paint>() {
-	//			public Paint transform(String nodeName) {
-	//				//paint for given nodes
-	//				for(Node node : nodes){
-	//					if(nodeName.equals(node.toString())){
-	//						return node.getColor();
-	//					}
-	//				}
-	//				//for other nodes - paint it white
-	//				return Color.WHITE;
-	//			}
-	//		};
-	//		vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);
-	//		vv.updateUI();
-	//	}
+//	/**
+//	 * Updates the color of the nodes on the graph.
+//	 * @param nodes - nodes to be colored
+//	 */
+//	public static void updateNodeColor(final ArrayList<Node> nodes){
+//		Transformer<String,Paint> vertexPaint = new Transformer<String,Paint>() {
+//			public Paint transform(String nodeName) {
+//				//paint for given nodes
+//				for(Node node : nodes){
+//					if(nodeName.equals(node.toString())){
+//						return node.getColor();
+//					}
+//				}
+//				//for other nodes - paint it white
+//				return Color.WHITE;
+//			}
+//		};
+//		vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);
+//		vv.updateUI();
+//	}
 
-	//	/**
-	//	 * Updates the color for the edges on the graph.
-	//	 * @param edges - edges to be colored
-	//	 */
-	//	public static void updateEdgeColor(final ArrayList<Edge> edges){
-	//		Transformer<String, Paint> edgePaint = new Transformer<String, Paint>() {
-	//			public Paint transform(String edgeName) {
-	//				//paint given edges
-	//				for(Edge edge : edges){
-	//					//one of those two edges must exists!
-	//					String edge1 = g.findEdge(edge.getSource().toString(), edge.getTarget().toString());
-	//					String edge2 = g.findEdge(edge.getTarget().toString(), edge.getSource().toString());
-	//					if(edgeName.equals(edge1) || edgeName.equals(edge2)){
-	//						return edge.getColor();
-	//					}
-	//				}
-	//				//for other edges - paint it black
-	//				return Color.BLACK;
-	//			}
-	//		};
-	//
-	//		vv.getRenderContext().setEdgeDrawPaintTransformer(edgePaint);
-	//		vv.updateUI();
-	//	}
+//	/**
+//	 * Updates the color for the edges on the graph.
+//	 * @param edges - edges to be colored
+//	 */
+//	public static void updateEdgeColor(final ArrayList<Edge> edges){
+//		Transformer<String, Paint> edgePaint = new Transformer<String, Paint>() {
+//			public Paint transform(String edgeName) {
+//				//paint given edges
+//				for(Edge edge : edges){
+//					//one of those two edges must exists!
+//					String edge1 = g.findEdge(edge.getSource().toString(), edge.getTarget().toString());
+//					String edge2 = g.findEdge(edge.getTarget().toString(), edge.getSource().toString());
+//					if(edgeName.equals(edge1) || edgeName.equals(edge2)){
+//						return edge.getColor();
+//					}
+//				}
+//				//for other edges - paint it black
+//				return Color.BLACK;
+//			}
+//		};
+//
+//		vv.getRenderContext().setEdgeDrawPaintTransformer(edgePaint);
+//		vv.updateUI();
+//	}
 
-	//	/**
-	//	 * Resets the colors of the graph (nodes and edges).
-	//	 */
-	//	public static void resetGraph(){
-	//		vv.getRenderContext().setEdgeDrawPaintTransformer(blackEdgePaint);
-	//		vv.getRenderContext().setVertexFillPaintTransformer(whiteVertexPaint);
-	//		vv.updateUI();
-	//	}
+//	/**
+//	 * Resets the colors of the graph (nodes and edges).
+//	 */
+//	public static void resetGraph(){
+//		vv.getRenderContext().setEdgeDrawPaintTransformer(blackEdgePaint);
+//		vv.getRenderContext().setVertexFillPaintTransformer(whiteVertexPaint);
+//		vv.updateUI();
+//	}
 }

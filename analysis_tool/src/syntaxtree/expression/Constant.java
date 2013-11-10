@@ -15,5 +15,13 @@ public class Constant extends Expression{
 	public int getN() {
 		return n;
 	}
-	
+
+	public String debugInformation() {
+		return "\nClass: " + getClass().getSimpleName() +"\nValue: " + n + "\n";
+        }
+
+        @Override
+        public String toString() {
+            return ""+n;
+        }
 }

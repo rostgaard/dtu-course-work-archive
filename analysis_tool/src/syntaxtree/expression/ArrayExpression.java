@@ -30,4 +30,12 @@ public class ArrayExpression extends Expression{
 		this.idx = idx;
 	}
 	
+	public String debugInformation() {
+		return "\nClass: " + getClass().getSimpleName() + "\nIdentifier: " + id.toString() + "\nIndex: " + idx.toString() + "\n";
+	}
+
+        @Override
+        public String toString() {
+            return id + "["+idx+"]";
+        }
 }

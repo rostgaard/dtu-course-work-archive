@@ -1,5 +1,7 @@
 package syntaxtree.expression;
 
+import syntaxtree.Symbols;
+
 /**
  * Data representation for expressions surrounded with parentheses
  *
@@ -20,4 +22,12 @@ public class ParanthesesExpression extends Expression{
 		this.expr = expr;
 	}
 	
+	public String debugInformation() {
+		return "\nClass: " + getClass().getSimpleName() + "\nExpression: " + expr.toString() + "\n";
+	}	
+
+        @Override
+        public String toString() {
+            return Symbols.LPARAN + expr + Symbols.RPARAN;
+        }
 }

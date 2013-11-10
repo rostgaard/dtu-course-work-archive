@@ -1,6 +1,8 @@
 package syntaxtree.statement;
 
+import analysis.RDProgramState;
 import java.util.List;
+import syntaxtree.Symbols;
 
 import syntaxtree.condition.Condition;
 
@@ -26,16 +28,22 @@ public class While extends Statement {
         this.cond = cond;
     }
 
-    public List<Statement> getBody() {
-        return body;
-    }
-
     public void setBody(List<Statement> body) {
         this.body = body;
     }
 
+    public String debugInformation() {
+        return "\nClass: " + getClass().getSimpleName() + "\nCondition: " + cond.toString() + "\nBody: " + body.toString() + "\n";
+    }
+
     @Override
-    public void RD() {
+    public String toString() {
+        return Symbols.WHILE + Symbols.LPARAN + cond + Symbols.RPARAN + Symbols.SEPERATOR + Symbols.DO + body + Symbols.OD;
+    }
+
+    @Override
+    public RDProgramState RD(RDProgramState currentState) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }

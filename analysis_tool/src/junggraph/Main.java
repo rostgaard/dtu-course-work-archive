@@ -4,7 +4,7 @@ import javax.swing.SwingUtilities;
 
 /**
  * 
- * Main class - Start the program here
+ * Main class - Start the program here for visualization
  *
  */
 

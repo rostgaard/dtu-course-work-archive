@@ -1,5 +1,6 @@
 package syntaxtree.statement;
 
+import analysis.RDProgramState;
 import syntaxtree.expression.Variable;
 import syntaxtree.expression.Expression;
 
@@ -7,45 +8,53 @@ import syntaxtree.expression.Expression;
  * Data representation for assignments (arrays only)
  *
  */
-public class ArrayAssignment extends Statement{
-	
-	private Variable id;
-	private Expression idx;
-	private Expression expr;
-	
-	public ArrayAssignment(Variable id, Expression idx, Expression expr){
-		this.id = id;
-		this.idx = idx;
-		this.expr = expr;
-	}
+public class ArrayAssignment extends Statement {
 
-	public Variable getId() {
-		return id;
-	}
+    private Variable id;
+    private Expression idx;
+    private Expression expr;
 
-	public void setId(Variable id) {
-		this.id = id;
-	}
+    public ArrayAssignment(Variable id, Expression idx, Expression expr) {
+        this.id = id;
+        this.idx = idx;
+        this.expr = expr;
+    }
 
-	public Expression getIdx() {
-		return idx;
-	}
+    public Variable getId() {
+        return id;
+    }
 
-	public void setIdx(Expression idx) {
-		this.idx = idx;
-	}
+    public void setId(Variable id) {
+        this.id = id;
+    }
 
-	public Expression getExpr() {
-		return expr;
-	}
+    public Expression getIdx() {
+        return idx;
+    }
 
-	public void setExpr(Expression expr) {
-		this.expr = expr;
-	}
+    public void setIdx(Expression idx) {
+        this.idx = idx;
+    }
+
+    public Expression getExpr() {
+        return expr;
+    }
+
+    public void setExpr(Expression expr) {
+        this.expr = expr;
+    }
+
+    public String debugInformation() {
+        return "\nClass: " + getClass().getSimpleName() + "\nIdentifier: " + id.toString() + "\nIndex: " + idx.toString() + "\nExpression: " + expr.toString() + "\n";
+    }
 
     @Override
-    public void RD() {
+    public String toString() {
+        return id +"["+idx+"] := "+  expr +";";
+    }
+
+    @Override
+    public RDProgramState RD(RDProgramState currentState) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-	
 }

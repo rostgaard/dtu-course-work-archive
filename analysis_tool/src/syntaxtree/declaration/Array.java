@@ -27,12 +27,6 @@ public class Array extends Declaration{
 
 	@Override
 	public String toString() {
-		return "Array [size=" + size + ", lvl=" + lvl + ", id=" + id
-				+ ", getSize()=" + getSize() + ", getLvl()=" + getLvl()
-				+ ", getId()=" + getId() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+		return "\nClass: " + getClass().getSimpleName() + "\nLevel: " + lvl.toString() + "\nType: " + id.getType().toString() + "\nIdentifier: " + id.getId() + "\nSize: " + size.toString() + "\n";
 	}
-	
-	
 }

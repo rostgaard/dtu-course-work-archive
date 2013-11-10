@@ -12,11 +12,20 @@ public class TrueCondition extends Condition{
 		return truee;
 	}
 
-	public boolean isTruee() {
+	public boolean isTrue() {
 		return truee;
 	}
 
-	public void setTruee(boolean truee) {
+	public void setTrue(boolean truee) {
 		this.truee = truee;
 	}
+	
+	public String debugInformation() {
+		return "\nClass: " + getClass().getSimpleName() + "\nValue: " + truee + "\n";
+	}
+        
+        @Override
+        public String toString() {
+            return "true";
+        }
 }

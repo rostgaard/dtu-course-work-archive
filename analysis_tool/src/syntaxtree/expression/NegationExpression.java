@@ -20,4 +20,13 @@ public class NegationExpression extends Expression{
 		this.expr = expr;
 	}
 	
+	
+	public String debugInformation() {
+		return "\nClass: " + getClass().getSimpleName() + "\nExpression: " + expr.toString() + "\n";
+	}
+        
+        @Override
+        public String toString() {
+            return "!" + expr;
+        }
 }

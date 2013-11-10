@@ -10,7 +10,7 @@ package analysis;
  */
 public interface Analysable {
     
-    public void RD();
+    public RDProgramState RD(RDProgramState currentState);
     
     //public void AE();
 

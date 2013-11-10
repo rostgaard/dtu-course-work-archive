@@ -20,4 +20,13 @@ public class NegationCondition extends Condition{
 		this.cond = cond;
 	}
 	
+        
+	public String debugInformation() {
+		return "\nClass: " + getClass().getSimpleName() + "\nCondition: " + cond.toString() + "\n";
+	}
+        
+        @Override
+        public String toString() {
+            return "!" + cond;
+        }
 }

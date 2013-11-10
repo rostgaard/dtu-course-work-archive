@@ -14,14 +14,16 @@ public abstract class Declaration {
 	public Level getLvl() {
 		return lvl;
 	}
+	
 	public void setLvl(Level lvl) {
 		this.lvl = lvl;
 	}
+	
 	public Variable getId() {
 		return id;
 	}
+	
 	public void setId(Variable id) {
 		this.id = id;
-	}
-	
+	}	
 }
