@@ -18,7 +18,7 @@ public class RDProgramState {
     
     public RDProgramState (ArrayList<Declaration> initialDefinitions) {
         for (Declaration d: initialDefinitions) {
-            definitions.add(new Definition(d.getId(), new Constant(0)));
+            definitions.add(new Definition(d.getId(), null)); //TODO: null should be bottom
         }
     }
     

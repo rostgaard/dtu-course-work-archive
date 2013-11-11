@@ -4,6 +4,7 @@
  */
 package analysis;
 
+import flowgraph.datastructure.Node;
 import syntaxtree.expression.Expression;
 import syntaxtree.expression.Variable;
 
@@ -14,10 +15,10 @@ import syntaxtree.expression.Variable;
 public class Definition {
 
     Variable   identifier = null;
-    Expression definition = null;
+    Node label = null;
 
-    public Definition(Variable var, Expression definition) {
+    public Definition(Variable var, Node label) {
         this.identifier = var;
-        this.definition = definition;
+        this.label= label;
     }
 }
