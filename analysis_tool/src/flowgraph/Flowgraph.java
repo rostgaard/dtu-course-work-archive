@@ -13,7 +13,6 @@ import syntaxtree.statement.While;
 public class Flowgraph {
 
 	private Node head;
-		
 	
 	public void converter(Program p){
 		List<Statement> statements = p.getStmts();

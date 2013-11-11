@@ -1,5 +1,6 @@
 package syntaxtree.statement;
 
+import analysis.RDProgramState;
 import syntaxtree.expression.Expression;
 import syntaxtree.expression.Variable;
 
@@ -39,7 +40,7 @@ public class ReadArray extends Statement {
     }
 
     @Override
-    public void RD() {
+    public RDProgramState RD(RDProgramState currentState) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

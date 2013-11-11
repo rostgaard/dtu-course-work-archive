@@ -20,4 +20,9 @@ public abstract class Node {
 	public void setPrev(Node prev) {
 		this.prev = prev;
 	}
+        
+        @Override
+        public String toString() {
+            return "" + label;
+        }
 }

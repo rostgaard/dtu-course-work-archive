@@ -1,34 +1,40 @@
 package syntaxtree.statement;
 
+import analysis.RDProgramState;
+import syntaxtree.Symbols;
 import syntaxtree.expression.Variable;
 
 /**
  * Data representation for read statements (variables only)
  *
  */
-public class Read extends Statement{
+public class Read extends Statement {
 
-	private Variable id;
-	
-	public Read(Variable id){
-		this.id = id;
-	}
+    private Variable id;
 
-	public Variable getId() {
-		return id;
-	}
+    public Read(Variable id) {
+        this.id = id;
+    }
 
-	public void setId(Variable id) {
-		this.id = id;
-	}
+    public Variable getId() {
+        return id;
+    }
+
+    public void setId(Variable id) {
+        this.id = id;
+    }
+
+    public String debugInformation() {
+        return "\nClass: " + getClass().getSimpleName() + "\nIdentifier: " + id.toString() + "\n";
+    }
 
     @Override
-    public void RD() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String toString() {
+        return Symbols.READ + Symbols.SEPERATOR + id;
     }
-	
-	@Override
-	public String toString() {
-		return "\nClass: " + getClass().getSimpleName() + "\nIdentifier: " + id.toString() + "\n";
-	}
+
+    @Override
+    public RDProgramState RD(RDProgramState currentState) {
+        return currentState;
+    }
 }

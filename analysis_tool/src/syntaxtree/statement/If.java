@@ -1,6 +1,8 @@
 package syntaxtree.statement;
 
+import analysis.RDProgramState;
 import java.util.List;
+import syntaxtree.Symbols;
 
 import syntaxtree.condition.Condition;
 import syntaxtree.statement.Statement;
@@ -45,8 +47,12 @@ public class If extends Statement {
         this.fBranch = fBranch;
     }
 
-    @Override
-    public String toString() {
+    public String debugInformation() {
         return "\nClass: " + getClass().getSimpleName() + "\nCondition: " + cond.toString() + "\nTrue branch: " + tBranch.toString() + "\nFalse branch: " + fBranch.toString() + "\n";
+    }
+
+    @Override
+    public RDProgramState RD(RDProgramState currentState) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
