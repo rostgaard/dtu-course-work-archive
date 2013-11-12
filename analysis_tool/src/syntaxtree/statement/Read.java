@@ -1,6 +1,8 @@
 package syntaxtree.statement;
 
 import analysis.RDProgramState;
+import flowgraph.datastructure.Node;
+import flowgraph.datastructure.NodeSet;
 import syntaxtree.Symbols;
 import syntaxtree.expression.Variable;
 
@@ -37,4 +39,26 @@ public class Read extends Statement {
     public RDProgramState RD(RDProgramState currentState) {
         return currentState;
     }
+    
+    @Override
+    public NodeSet labels() {
+        NodeSet returnSet = new NodeSet();
+        returnSet.add(new Node(this));
+        
+        return returnSet;
+    }
+
+    @Override
+    public Node init() {
+        return new Node(this);
+    }
+
+    @Override
+    public NodeSet finalNodes() {
+        NodeSet returnSet = new NodeSet();
+        returnSet.add(new Node(this));
+        
+        return returnSet;
+    }
+    
 }

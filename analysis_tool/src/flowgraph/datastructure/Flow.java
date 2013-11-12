@@ -9,7 +9,7 @@ package flowgraph.datastructure;
  * @author krc
  */
 public class Flow {
-
+    
     private Node source;
     private Node target;
     

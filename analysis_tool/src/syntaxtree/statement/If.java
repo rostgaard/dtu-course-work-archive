@@ -1,7 +1,10 @@
 package syntaxtree.statement;
 
 import analysis.RDProgramState;
+import flowgraph.datastructure.Node;
+import flowgraph.datastructure.NodeSet;
 import java.util.List;
+import syntaxtree.StatementList;
 import syntaxtree.Symbols;
 
 import syntaxtree.condition.Condition;
@@ -14,13 +17,13 @@ import syntaxtree.statement.Statement;
 public class If extends Statement {
 
     private Condition cond;
-    private List<Statement> tBranch;
-    private List<Statement> fBranch;
+    private StatementList trueBranch;
+    private StatementList falseBranch;
 
-    public If(Condition cond, List<Statement> tBranch, List<Statement> fBranch) {
+    public If(Condition cond, StatementList tBranch, StatementList fBranch) {
         this.cond = cond;
-        this.tBranch = tBranch;
-        this.fBranch = fBranch;
+        this.trueBranch = tBranch;
+        this.falseBranch = fBranch;
     }
 
     public Condition getCond() {
@@ -32,27 +35,47 @@ public class If extends Statement {
     }
 
     public List<Statement> gettBranch() {
-        return tBranch;
+        return trueBranch;
     }
 
-    public void settBranch(List<Statement> tBranch) {
-        this.tBranch = tBranch;
+    public void settBranch(StatementList tBranch) {
+        this.trueBranch = tBranch;
     }
 
     public List<Statement> getfBranch() {
-        return fBranch;
+        return falseBranch;
     }
 
-    public void setfBranch(List<Statement> fBranch) {
-        this.fBranch = fBranch;
+    public void setfBranch(StatementList fBranch) {
+        this.falseBranch = fBranch;
     }
 
     public String debugInformation() {
-        return "\nClass: " + getClass().getSimpleName() + "\nCondition: " + cond.toString() + "\nTrue branch: " + tBranch.toString() + "\nFalse branch: " + fBranch.toString() + "\n";
+        return "\nClass: " + getClass().getSimpleName() + "\nCondition: " + cond.toString() + "\nTrue branch: " + trueBranch.toString() + "\nFalse branch: " + falseBranch.toString() + "\n";
     }
 
     @Override
     public RDProgramState RD(RDProgramState currentState) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public NodeSet labels() {
+        return (new NodeSet())
+                .addNode(new Node(this))
+                .union(trueBranch.lables())
+                .union(falseBranch.lables());
+    }
+
+    @Override
+    public Node init() {
+        return new Node(this);
+    }
+
+    @Override
+    public NodeSet finalNodes() {
+        return (NodeSet.emptySet
+                .union(trueBranch.lables())
+                .union(falseBranch.lables()));
     }
 }

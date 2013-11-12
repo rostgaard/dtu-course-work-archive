@@ -3,7 +3,6 @@ package syntaxtree;
 import java.util.List;
 
 import syntaxtree.declaration.Declaration;
-import syntaxtree.statement.Statement;
 
 /**
  * Data representation for While-language programs
@@ -11,10 +10,10 @@ import syntaxtree.statement.Statement;
  */
 public class Program {
 
-    private List<Declaration> decls;
-    private List<Statement> stmts;
+    private DeclarationList decls;
+    private StatementList stmts;
 
-    public Program(List<Declaration> decls, List<Statement> stmts) {
+    public Program(DeclarationList decls, StatementList stmts) {
         this.decls = decls;
         this.stmts = stmts;
     }
@@ -23,15 +22,15 @@ public class Program {
         return decls;
     }
 
-    public void setDecls(List<Declaration> decls) {
+    public void setDecls(DeclarationList decls) {
         this.decls = decls;
     }
 
-    public List<Statement> getStmts() {
+    public StatementList getStmts() {
         return stmts;
     }
 
-    public void setStmts(List<Statement> stmts) {
+    public void setStmts(StatementList stmts) {
         this.stmts = stmts;
     }
 

@@ -10,4 +10,7 @@ import java.util.ArrayList;
  *
  * @author krc
  */
-public class FlowSet extends ArrayList<Flow> {}
+public class FlowSet extends ArrayList<Flow> {
+    public final static FlowSet emptySet = new FlowSet();
+
+}

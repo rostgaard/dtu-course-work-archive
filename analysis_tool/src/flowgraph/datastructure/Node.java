@@ -1,28 +1,26 @@
 package flowgraph.datastructure;
 
-public abstract class Node {
+import syntaxtree.statement.Statement;
 
-	protected int label;
-	protected Node prev;
-	
-	public int getLabel() {
-		return label;
-	}
-	
-	public void setLabel(int label) {
-		this.label = label;
-	}
-	
-	public Node getPrev() {
-		return prev;
-	}
-	
-	public void setPrev(Node prev) {
-		this.prev = prev;
-	}
-        
-        @Override
-        public String toString() {
-            return "" + label;
-        }
+public class Node implements Comparable<Node>{
+
+    protected Statement s;
+
+    public Node(Statement s) {
+        this.s = s;
+    }
+
+    public int getLabel() {
+        return s.getLabel();
+    }
+
+    @Override
+    public String toString() {
+        return this.s.toString();
+    }
+
+    @Override
+    public int compareTo(Node n) {
+        return n.s.getLabel() - s.getLabel();
+    }
 }
