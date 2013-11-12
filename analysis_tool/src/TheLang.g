@@ -63,7 +63,6 @@ tokens {
 
 @header {
   package output;
-  import java.util.ArrayList;
   import syntaxtree.condition.*;
   import syntaxtree.declaration.*;
   import syntaxtree.expression.*;
@@ -178,8 +177,8 @@ writeStmt returns [Statement value]
 ifStmt returns [Statement value]
     @init
     {
-    	ArrayList<Statement> trueList = new ArrayList<Statement>();
-	ArrayList<Statement> falseList = new ArrayList<Statement>();
+    	StatementList trueList = new StatementList();
+	StatementList falseList = new StatementList();
     }
     : IF exp = bexpr THEN (trueStmt = stmt {trueList.add(trueStmt.value);})+ ELSE (falseStmt = stmt {falseList.add(falseStmt.value);})+ FI 
       {$value = new If(exp.value, trueList, falseList);}  
@@ -189,7 +188,7 @@ ifStmt returns [Statement value]
 whileStmt returns [Statement value]
     @init	
     {
-    	ArrayList<Statement> body = new ArrayList<Statement>();
+    	StatementList body = new StatementList();
     }
     : WHILE exp = bexpr DO (statement = stmt {body.add(statement.value);})+ OD 
       {$value = new While(exp.value, body);} 
@@ -199,8 +198,8 @@ whileStmt returns [Statement value]
 program returns [Program value]
     @init
     {
-    	ArrayList<Declaration> declList = new ArrayList<Declaration>();
-    	ArrayList<Statement> stmtList = new ArrayList<Statement>();
+    	DeclarationList declList = new StatementList();
+    	StatementList stmtList = new StatementList();
     }
     : PROGRAM (declaration = decl {declList.add($declaration.value);})* (statement = stmt {stmtList.add($statement.value);})+ END 
       {$value = new Program(declList, stmtList);} 
