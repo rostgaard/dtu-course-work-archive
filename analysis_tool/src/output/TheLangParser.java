@@ -2376,8 +2376,8 @@ public class TheLangParser extends Parser {
         CommonTree FI50_tree=null;
 
 
-            	ArrayList<Statement> trueList = new ArrayList<Statement>();
-        	ArrayList<Statement> falseList = new ArrayList<Statement>();
+            	StatementList trueList = new StatementList();
+        	StatementList falseList = new StatementList();
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 16) ) { return retval; }
@@ -2544,7 +2544,7 @@ public class TheLangParser extends Parser {
         CommonTree OD53_tree=null;
 
 
-            	ArrayList<Statement> body = new ArrayList<Statement>();
+            	StatementList body = new StatementList();
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 17) ) { return retval; }
@@ -2665,8 +2665,8 @@ public class TheLangParser extends Parser {
         CommonTree END55_tree=null;
 
 
-            	ArrayList<Declaration> declList = new ArrayList<Declaration>();
-            	ArrayList<Statement> stmtList = new ArrayList<Statement>();
+            	DeclarationList declList = new DeclarationList();
+            	StatementList stmtList = new StatementList();
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 18) ) { return retval; }

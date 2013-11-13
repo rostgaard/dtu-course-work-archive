@@ -19,19 +19,35 @@ public class NodeSet extends ArrayList<Node> {
 
         return this;
     }
-    
+
     /**
-     * Horribly inefficient Union operation, please fix prior to actual release 
+     * Horribly inefficient Union operation, please fix prior to actual release
      * upon the world.
-     * @param nset 
+     *
+     * @param nset
      */
-    public NodeSet union (NodeSet nset) {
-        for (Node n : nset){
+    public NodeSet union(NodeSet nset) {
+        for (Node n : nset) {
             if (!this.contains(n)) {
                 this.add(n);
             }
         }
-        
+
         return this;
+    }
+
+    @Override
+    public String toString() {
+        String buffer = "(";
+
+        for (Node n : this) {
+            buffer += n.getLabel();
+            if (n == this.get(this.size() - 1))  {
+            } else {
+                buffer += ",";
+            }
+        }
+
+        return buffer+")";
     }
 }

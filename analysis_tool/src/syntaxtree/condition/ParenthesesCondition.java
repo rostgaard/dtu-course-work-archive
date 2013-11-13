@@ -1,5 +1,7 @@
 package syntaxtree.condition;
 
+import syntaxtree.Symbols;
+
 /**
  * Data representation for boolean expressions surrounded with parentheses
  *
@@ -26,6 +28,6 @@ public class ParenthesesCondition extends Condition {
     
     @Override
     public String toString() {
-        return "("+cond+")";
+        return Symbols.LPARAN + cond + Symbols.RPARAN;
     }
 }

@@ -1,6 +1,7 @@
 package syntaxtree.condition;
 
 import syntaxtree.RelationOperation;
+import syntaxtree.Symbols;
 import syntaxtree.expression.Expression;
 
 /**
@@ -49,6 +50,7 @@ public class ExpressionOperationCondition extends Condition {
     
     @Override
     public String toString() {
-        return expr1.toString() + ro + expr2 + ";";
+        return expr1 + Symbols.SEPERATOR + 
+                Symbols.symbolOf(ro) + Symbols.SEPERATOR +  expr2;
     }
 }

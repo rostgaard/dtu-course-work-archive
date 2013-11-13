@@ -3,6 +3,7 @@ package syntaxtree.statement;
 import analysis.RDProgramState;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
+import syntaxtree.Symbols;
 import syntaxtree.expression.Variable;
 import syntaxtree.expression.Expression;
 
@@ -42,19 +43,25 @@ public class Assignment extends Statement {
 
     @Override
     public String toString() {
-        return id + " := " + expr +";";
+        return id + " := " + expr + ";";
     }
 
     @Override
     public RDProgramState RD(RDProgramState currentState) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
     @Override
     public NodeSet labels() {
         NodeSet returnSet = new NodeSet();
         returnSet.add(new Node(this));
-        
+
         return returnSet;
+    }
+
+    public String toStringWithLabel() {
+        return Symbols.LSQPARAN + this.toString() + Symbols.RSQPARAN
+                + Symbols.SEPERATOR + this.getLabel();
     }
 
     @Override
@@ -66,7 +73,7 @@ public class Assignment extends Statement {
     public NodeSet finalNodes() {
         NodeSet returnSet = new NodeSet();
         returnSet.add(new Node(this));
-        
+
         return returnSet;
     }
 }

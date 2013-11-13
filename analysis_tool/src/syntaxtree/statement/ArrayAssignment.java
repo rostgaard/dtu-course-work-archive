@@ -3,6 +3,7 @@ package syntaxtree.statement;
 import analysis.RDProgramState;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
+import syntaxtree.Symbols;
 import syntaxtree.expression.Variable;
 import syntaxtree.expression.Expression;
 
@@ -52,7 +53,12 @@ public class ArrayAssignment extends Statement {
 
     @Override
     public String toString() {
-        return id +"["+idx+"] := "+  expr +";";
+        return id + "[" + idx + "] := " + expr + ";";
+    }
+
+    public String toStringWithLabel() {
+        return Symbols.LSQPARAN + this.toString() + Symbols.RSQPARAN + 
+                Symbols.SEPERATOR + this.getLabel();
     }
 
     @Override
@@ -64,7 +70,7 @@ public class ArrayAssignment extends Statement {
     public NodeSet labels() {
         NodeSet returnSet = new NodeSet();
         returnSet.add(new Node(this));
-        
+
         return returnSet;
     }
 
@@ -77,7 +83,7 @@ public class ArrayAssignment extends Statement {
     public NodeSet finalNodes() {
         NodeSet returnSet = new NodeSet();
         returnSet.add(new Node(this));
-        
+
         return returnSet;
     }
 }

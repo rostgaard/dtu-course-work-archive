@@ -1,6 +1,7 @@
 package syntaxtree.condition;
 
 import syntaxtree.BooleanOperation;
+import syntaxtree.Symbols;
 
 /**
  * Data representation for boolean condition with a boolean operator
@@ -42,8 +43,13 @@ public class OperationCondition extends Condition{
 		this.bo = bo;
 	}	
 	
-	@Override
-	public String toString() {
+        public String debugInformation() {
 		return "\nClass: " + getClass().getSimpleName() + "\nCondition1: " + cond1.toString() + "\nCondition2: " + cond2.toString() + "\nBoolean Operation: " + bo.toString() + "\n";
+	}
+
+        @Override
+	public String toString() {
+		return cond1 + Symbols.SEPERATOR + 
+                        Symbols.symbolOf(bo) + Symbols.SEPERATOR + cond2;
 	}
 }

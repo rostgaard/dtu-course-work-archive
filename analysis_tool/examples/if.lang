@@ -1,0 +1,13 @@
+program
+low int a;
+high int x;
+a := 10;
+x := a + b;
+if a < 1 then
+  a := a + 1;
+else
+  skip;
+fi
+write a;
+end
+

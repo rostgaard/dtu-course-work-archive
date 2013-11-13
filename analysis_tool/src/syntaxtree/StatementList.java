@@ -5,6 +5,7 @@
 package syntaxtree;
 
 import flowgraph.datastructure.FlowSet;
+import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
 import java.util.ArrayList;
 import syntaxtree.statement.Statement;
@@ -20,16 +21,33 @@ public class StatementList extends ArrayList<Statement> {
     }
     
     public NodeSet lables () {
-        return NodeSet.emptySet;
+        NodeSet retval = NodeSet.emptySet;
+        
+        for (Statement s : this) {
+            retval.union(s.labels());
+        }
+        
+        return retval;
     }
 
     @Override
     public String toString() {
         String buffer = "";
         for (Statement s : this) {
-            buffer += s +"\n";
+            buffer += s + Symbols.NEWLINE;
         }
         
         return buffer;
     }
+
+    public String labelTable() {
+        String buffer = "";
+        
+        for (Statement s : this) {
+           buffer += s +" "+  s.labels().toString() + "\n";
+        }
+        
+        return buffer;
+    }
+
 }

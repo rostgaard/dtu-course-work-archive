@@ -7,6 +7,7 @@ import java.util.List;
 import syntaxtree.Symbols;
 
 import syntaxtree.condition.Condition;
+import utilities.Sequencer;
 
 /**
  * Data representation for while statements
@@ -32,11 +33,45 @@ public class While extends Statement {
 
     @Override
     public String toString() {
-        return Symbols.WHILE + 
-                Symbols.LPARAN + cond + Symbols.RPARAN + Symbols.SEPERATOR + 
-                Symbols.DO 
-                + body + 
-                Symbols.OD;
+        String buffer = "";
+        for (Statement s : body) {
+            buffer += Symbols.INDENTION + s + Symbols.NEWLINE;
+        }
+        return Symbols.WHILE + Symbols.SEPERATOR + cond + Symbols.SEPERATOR
+                + Symbols.DO
+                + Symbols.NEWLINE
+                + buffer
+                + Symbols.OD;
+    }
+
+    @Override
+    public String toStringWithLabel() {
+        String buffer = "";
+        for (Statement s : body) {
+            buffer += Symbols.INDENTION + s.toStringWithLabel() + Symbols.NEWLINE;
+        }
+        return Symbols.WHILE + Symbols.SEPERATOR +  
+                Symbols.LSQPARAN + cond + Symbols.RSQPARAN 
+                + Symbols.SEPERATOR 
+                + this.getLabel()
+                + Symbols.SEPERATOR 
+                + Symbols.DO
+                + Symbols.NEWLINE
+                + buffer
+                + this.labels()
+                + Symbols.OD;
+    }
+
+    @Override
+    public void setLabel(Sequencer seq) {
+
+        // Initially set my own label.
+        super.setLabel(seq);
+
+        // Recurse into every statement.
+        for (Statement s : this.body) {
+            s.setLabel(seq);
+        }
     }
 
     @Override
@@ -58,5 +93,4 @@ public class While extends Statement {
     public NodeSet finalNodes() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }

@@ -6,6 +6,7 @@ import output.TheLangLexer;
 import output.TheLangParser;
 import syntaxtree.Program;
 import syntaxtree.statement.Statement;
+import utilities.Sequencer;
 
 public class Main {
 
@@ -42,10 +43,17 @@ public class Main {
             TheLangParser.program_return parserResult = parser.program();
             if (parserResult != null) {
                 Program tree = parserResult.value;
+                Sequencer seq = new Sequencer();
+                
+                System.out.println (tree.getStmts());
+                
                 
                 for (Statement s : tree.getStmts()) {
-                    System.out.println(s);
+                    s.setLabel(seq);
+                    System.out.println(""+ s.toStringWithLabel());
                 }
+
+                System.out.println (tree.getStmts().labelTable());
                 
                 System.out.println(tree.toString());
 //				printTree(tree,0);

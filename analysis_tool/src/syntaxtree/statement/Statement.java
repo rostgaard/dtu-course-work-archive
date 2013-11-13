@@ -3,6 +3,8 @@ package syntaxtree.statement;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
+import syntaxtree.Symbols;
+import utilities.Sequencer;
 
 /**
  * Abstract class for statements
@@ -16,12 +18,18 @@ public abstract class Statement implements analysis.Analysable{
     public abstract NodeSet labels();
     public abstract Node init();
     public abstract NodeSet finalNodes();
+    public String toStringWithLabel() {
+        return Symbols.LSQPARAN + this.toString() + Symbols.RSQPARAN + this.label;
+    }
 
-    public void setLabel (int newLabel){
-        this.label = newLabel;
+    public void setLabel (Sequencer seq){
+        this.label = seq.nextInt();
     }
     
     public int getLabel (){
         return this.label;
     }
+    
+    
+    
 }
