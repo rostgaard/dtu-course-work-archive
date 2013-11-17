@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inspection xmlns="http://schemas.xmlsoap.org/ws/2001/10/inspection/"
+xmlns:wsilwsdl="http://schemas.xmlsoap.org/ws/2001/10/inspection/wsdl/"
+xmlns:wsiluddi="http://schemas.xmlsoap.org/ws/2001/10/inspection/uddi/"
+xmlns:uddi="urn:uddi-org:api">
+	<service>
+		<abstract xml:lang="en-US">
+			Web Service for a travel agency with functionality for listing hotels and flights, booking flights and hotels into itinerarys and cancelling itinerarys. 
+		</abstract>
+		<description location="http://localhost:8080/TravelAgencyREST/resources/application.wadl">
+			<wsilwsdl:reference endpointPresent="true">
+		</description>
+		 <link referencedNamespace="http://schemas.xmlsoap.org/ws/2001/10/inspection/" 
+	         location="http://localhost:8080/NiceViewWSDL/inspection.wsil">
+	      <abstract>Nice View Hotel Services</abstract>
+	   </link>
+	    <link referencedNamespace="http://schemas.xmlsoap.org/ws/2001/10/inspection/" 
+	         location="http://localhost:8080/LameDuck/inspection.wsil">
+	      <abstract>Lame Duck Flight Services</abstract>
+	   </link>
+	</service>
+</inspection>
+

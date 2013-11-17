@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.3.3-hudson-757-SNAPSHOT. --><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/NiceViewWSDL/NiceViewWSDL" xmlns:ns="http:/niceview.ws" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns0="urn://types.fastmoney.imm.dtu.dk" name="NiceViewWSDL" targetNamespace="http:/niceview.ws">
+    <types>
+        <xsd:schema xmlns:tns1="http:/niceview.ws" targetNamespace="http:/niceview.ws">
+            <xsd:import schemaLocation="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" namespace="urn://types.fastmoney.imm.dtu.dk"></xsd:import>
+            <xsd:complexType name="hotelType">
+                <xsd:sequence>
+                    <xsd:element name="name" type="xsd:string"></xsd:element>
+                    <xsd:element name="address" type="tns1:addressType"></xsd:element>
+                    <xsd:element name="pricePrNight" type="xsd:double"></xsd:element>
+                    <xsd:element name="creditCardGuarantee" type="xsd:boolean"></xsd:element>
+                    <xsd:element name="reservationService" type="xsd:string"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="addressType">
+                <xsd:sequence>
+                    <xsd:element name="city" type="xsd:string"></xsd:element>
+                    <xsd:element name="postalNumber" type="xsd:string"></xsd:element>
+                    <xsd:element name="country" type="xsd:string"></xsd:element>
+                    <xsd:element name="street" type="xsd:string"></xsd:element>
+                    <xsd:element name="streetNr" type="xsd:string"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="bookingType">
+                <xsd:sequence minOccurs="1" maxOccurs="1">
+                    <xsd:element name="hotel" type="tns1:hotelType"></xsd:element>
+                    <xsd:element name="price" type="xsd:double"></xsd:element>
+                    <xsd:element name="bookingNumber" type="xsd:int"></xsd:element>
+                    <xsd:element name="startDate" type="xsd:date"></xsd:element>
+                    <xsd:element name="endDate" type="xsd:date"></xsd:element>
+                    <xsd:element name="booked" type="xsd:boolean"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="bookingFault" type="xsd:string"></xsd:element>
+            <xsd:element name="cancelingFault" type="xsd:string"></xsd:element>
+            <xsd:complexType name="returnHotelList">
+                <xsd:sequence>
+                    <xsd:element name="hotels" type="tns1:bookingType" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </types>
+    <message name="BookRequest">
+        <part name="bookingNumber" type="xsd:int"></part>
+	<part name="creditInfo" type="ns0:creditCardInfoType"></part>
+    </message>
+    <message name="BookResponse">
+        <part name="success" type="xsd:boolean"></part>
+    </message>
+    <message name="BookingFault">
+        <part name="fault" element="ns:bookingFault"></part>
+    </message>
+    <message name="CancelRequest">
+        <part name="bookingNumber" type="xsd:int"></part>
+    </message>
+    <message name="CancelResponse">
+        <part name="success" type="xsd:boolean"></part>
+    </message>
+    <message name="CancelingFault">
+        <part name="fault" element="ns:cancelingFault"></part>
+    </message>
+    <message name="GetHotelsRequest">
+        <part name="city" type="xsd:string"></part>
+        <part name="arrival" type="xsd:date"></part>
+        <part name="departure" type="xsd:date"></part>
+    </message>
+    <message name="GetHotelsResponse">
+        <part name="hotels" type="ns:returnHotelList"></part>
+    </message>
+    <portType name="NiceViewWSDLPortType">
+        <operation name="bookHotel">
+            <input name="input2" message="ns:BookRequest"></input>
+            <output name="output2" message="ns:BookResponse"></output>
+            <fault name="fault2" message="ns:BookingFault"></fault>
+        </operation>
+        <operation name="cancelHotel">
+            <input name="input3" message="ns:CancelRequest"></input>
+            <output name="output3" message="ns:CancelResponse"></output>
+            <fault name="fault3" message="ns:CancelingFault"></fault>
+        </operation>
+        <operation name="getHotels">
+            <input name="input1" message="ns:GetHotelsRequest"></input>
+            <output name="output1" message="ns:GetHotelsResponse"></output>
+        </operation>
+    </portType>
+    <plnk:partnerLinkType name="NiceViewWSDL">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes.
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="NiceViewWSDLPortTypeRole" portType="ns:NiceViewWSDLPortType"></plnk:role>
+    </plnk:partnerLinkType>
+</definitions>

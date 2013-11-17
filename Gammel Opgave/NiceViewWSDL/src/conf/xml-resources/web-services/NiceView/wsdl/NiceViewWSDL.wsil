@@ -1,0 +1,19 @@
+Web service for the Hotel business NiceView. Contains 3 methods,Web service for the Hotel business NiceView. Contains 3 methodsWeb service for the Hotel business NiceView. Contains 3 methodWeb service for the Hotel business NiceView. Contains 3 methoWeb service for the Hotel business NiceView. Contains 3 methWeb service for the Hotel business NiceView. Contains 3 metWeb service for the Hotel business NiceView. Contains 3 meWeb service for the Hotel business NiceView. Contains 3 mWeb service for the Hotel business NiceView. Contains 3 Web service for the Hotel business NiceView. Contains 3Web service for the Hotel business NiceView. Contains Web service for the Hotel business NiceView. ContainsWeb service for the Hotel business NiceView. ContainWeb service for the Hotel business NiceView. ContaiWeb service for the Hotel business NiceView. ContaWeb service for the Hotel business NiceView. ContWeb service for the Hotel business NiceView. ConWeb service for the Hotel business NiceView. CoWeb service for the Hotel business NiceView. CWeb service for the Hotel business NiceView. Web service for the Hotel business NiceView.Web service for the Hotel business NiceViewWeb service for the Hotel business NiceVieWeb service for the Hotel business NiceViWeb service for the Hotel business NiceVWeb service for the Hotel business NiceWeb service for the Hotel business NiceVWeb service for the Hotel business NiceViWeb service for the Hotel business NiceVWeb service for the Hotel business NiceWeb service for the Hotel business NicWeb service for the Hotel business NiWeb service for the Hotel business NWeb service for the Hotel business Web service for the Hotel businessWeb service for the Hotel businesWeb service for the Hotel busineWeb service for the Hotel businWeb service for the Hotel busiWeb service for the Hotel busWeb service for the Hotel buWeb service for the Hotel bWeb service for the Hotel Web service for the HotelWeb service for the HoteWeb service for the HotWeb service for the HoWeb service for the HWeb service for the Web service for theWeb service for thWeb service for tWeb service for Web service forWeb service foWeb service fWeb service Web serviceWeb servicWeb serviWeb servWeb serWeb seWeb sWeb WebWe<?xml version="1.0" encoding="UTF-8"?>
+<inspection xmlns="http://schemas.xmlsoap.org/ws/2001/10/inspection/"
+xmlns:wsilwsdl="http://schemas.xmlsoap.org/ws/2001/10/inspection/wsdl/"
+xmlns:wsiluddi="http://schemas.xmlsoap.org/ws/2001/10/inspection/uddi/"
+xmlns:uddi="urn:uddi-org:api">
+<service>
+<abstract xml:lang="en-US">
+Web service for the NiceView hotel company. Contains three functions:
+	- bookHotel(bookingNumber, creditCardInformation) : success
+	- cancelHotel(bookingNumber) : success
+	- getHotels(city, arrival, departure) : returnHotelList
+	
+Both bookHotel() and cancelHotel() can throw the faults BookingFault and CancelingFault respectively.
+</abstract>
+<description referencedNamespace="http://schemas.xmlsoap.org/wsdl/" location="http://localhost:8080/NiceViewWSDL/NiceViewWSDLService?wsdl=1">
+</description>
+</service>
+</inspection>
+
