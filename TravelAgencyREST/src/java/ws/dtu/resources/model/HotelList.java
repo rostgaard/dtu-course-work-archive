@@ -8,6 +8,6 @@ package ws.dtu.resources.model;
  *
  * @author krc
  */
-class HotelList {
+public class HotelList {
     
 }

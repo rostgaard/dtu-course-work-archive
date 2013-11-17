@@ -7,6 +7,7 @@ package ws.dtu.resources.model;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import ws.dtu.resources.utils.Sequencer;
+import ws.dtu.lameduck.FlightList;
 
 /**
  *
@@ -19,7 +20,7 @@ public class Itinerary {
     public ItineraryState currentState = ItineraryState.UNBOOKED;
     
     FlightList flights = new FlightList();
-    HotelList  hotels  = new HotelList();
+    HotelBookingList  hotels  = new HotelBookingList();
 
     /**
      * 
@@ -37,6 +38,10 @@ public class Itinerary {
         return this.ID;
     }
     
+    public void book() {
+        // Do magic synchronization stuff.
+    }
+    
     public void cancelBooking() {
         // Do magic synchronization stuff.
     }
@@ -51,7 +56,7 @@ public class Itinerary {
     }
     
     @XmlElement
-    public HotelList getHotels() {
+    public HotelBookingList getHotels() {
         return hotels;
     }
     

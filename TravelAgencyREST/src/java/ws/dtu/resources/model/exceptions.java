@@ -6,12 +6,12 @@ package ws.dtu.resources.model;
 
 /**
  *
- * @author krc
+ * @author peter
  */
 public final class exceptions {
-    static class Seat_Unavailable extends Throwable{
+        public static class NoSuchIdentifier extends Throwable{
 
-        public Seat_Unavailable() {
+        public NoSuchIdentifier() {
         }
     }
 }

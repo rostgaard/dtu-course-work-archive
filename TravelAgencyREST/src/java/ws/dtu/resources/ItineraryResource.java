@@ -3,8 +3,6 @@ package ws.dtu.resources;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,13 +14,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import ws.dtu.entities.Flight;
-import ws.dtu.entities.Hotel;
-import ws.dtu.resources.utils.Sequencer;
+import ws.dtu.lameduck.FlightList;
+import ws.dtu.lameduck.LameDuckService;
+import ws.dtu.resources.model.HotelBookingList;
 
 import ws.dtu.resources.model.ItineraryDatabase;
 import ws.dtu.resources.model.Itinerary;
-import ws.dtu.resources.model.NoSuchIdentfierException;
+import ws.dtu.resources.model.exceptions.NoSuchIdentifier;
 
 
 /**
@@ -39,7 +37,7 @@ public class ItineraryResource {
     public Itinerary getItinerary(@PathParam("id") int itineraryIdentifier) {
         try {
             return ItineraryDatabase.get(itineraryIdentifier);
-        } catch (NoSuchIdentfierException ex) {
+        } catch (NoSuchIdentifier ex) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
     }
@@ -51,21 +49,36 @@ public class ItineraryResource {
         return Response.created(new URI(""+itinerary.getID())).build();
     }
     
+    @PUT
+    @Path("{id}")
+    public Response bookItinerary(@PathParam("id") int itineraryIdentifier) {
+        try {
+            Itinerary itinerary = ItineraryDatabase.get(itineraryIdentifier);
+            itinerary.book();
+            return Response.ok().build();
+        } catch (NoSuchIdentifier ex) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+    }
+    
     @DELETE
     @Path("{id}")
     public void deleteItinerary(@PathParam("id") int itineraryIdentifier) {
         try {
             ItineraryDatabase.delete(itineraryIdentifier);
-        } catch (NoSuchIdentfierException ex) {
+        } catch (NoSuchIdentifier ex) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
     }
     
     @GET
     @Path("{id}/flight")
-    public Flight[] getFlights(@PathParam("id") int itineraryIdentifier) {
-        
-        return null;
+    public FlightList getFlights(@PathParam("id") int itineraryIdentifier) {
+        try {
+            return ItineraryDatabase.get(itineraryIdentifier).getFlights();
+        } catch (NoSuchIdentifier ex) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        } 
     }
     
     @PUT
@@ -77,9 +90,12 @@ public class ItineraryResource {
     
     @GET
     @Path("{id}/hotel")
-    public Hotel[] getHotels(@PathParam("id") int itineraryIdentifier) {
-        
-        return null;
+    public HotelBookingList getHotels(@PathParam("id") int itineraryIdentifier) {
+        try {
+            return ItineraryDatabase.get(itineraryIdentifier).getHotels();
+        } catch (NoSuchIdentifier ex) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }         
     }
     
     @PUT
@@ -89,9 +105,4 @@ public class ItineraryResource {
         return null;
     }
     
-    @PUT
-    @Path("{id}/Booking")
-    public Response book(@PathParam("id") int itineraryIdentifier) {
-        return null;
-    }
 }

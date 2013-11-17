@@ -4,13 +4,16 @@
  */
 package ws.dtu.resources.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author peter
  */
-public class NoSuchIdentfierException extends Exception {
+@XmlRootElement()
+public class HotelBookingList {
 
-    public NoSuchIdentfierException() {
+    public HotelBookingList() {
     }
     
 }

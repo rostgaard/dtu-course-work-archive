@@ -3,8 +3,8 @@
  * and open the template in the editor.
  */
 package ws.dtu.resources.model;
-
 import java.util.HashMap;
+import ws.dtu.resources.model.exceptions.NoSuchIdentifier;
 
 /**
  *
@@ -14,9 +14,9 @@ public final class ItineraryDatabase {
     
     static HashMap<Integer,Itinerary> db = new HashMap<Integer, Itinerary>();
     
-    public static Itinerary get(int itinerary_id) throws NoSuchIdentfierException {
+    public static Itinerary get(int itinerary_id) throws NoSuchIdentifier {
         if(!db.containsKey(itinerary_id)) {
-            throw new NoSuchIdentfierException();
+            throw new NoSuchIdentifier();
         }
         
         return db.get(itinerary_id);
@@ -26,9 +26,9 @@ public final class ItineraryDatabase {
         db.put(new Integer (itinerary.getID()), itinerary);
     }
     
-    public static void delete (int itinerary_id) throws NoSuchIdentfierException {
+    public static void delete (int itinerary_id) throws NoSuchIdentifier {
         if(!db.containsKey(itinerary_id)) {
-            throw new NoSuchIdentfierException();
+            throw new NoSuchIdentifier();
         }
         db.remove(new Integer(itinerary_id));
     }

@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ws.dtu.resources.model;
+package ws.dtu.lameduck.model;
 
 import java.util.Date;
-import ws.dtu.resources.model.exceptions.Seat_Unavailable;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  *
@@ -13,23 +13,25 @@ import ws.dtu.resources.model.exceptions.Seat_Unavailable;
  */
 public class FlightInformation {
 
-    private Date arrival;
+    private XMLGregorianCalendar arrival;
     private String depatureAirport;
     private String destinationAirport;
-    private Date departure;
+    private XMLGregorianCalendar departure;
     private String FlightID;
     protected int capacity = 10;
 
-    public FlightInformation(Date arrival, String depatureAirport, 
-            String destinationAirport, Date departure, String FlightID) {
+    public FlightInformation(String depatureAirport, 
+            String destinationAirport, XMLGregorianCalendar arrival , XMLGregorianCalendar departure, String FlightID) {
         this.arrival = arrival;
         this.depatureAirport = depatureAirport;
         this.destinationAirport = destinationAirport;
         this.departure = departure;
         this.FlightID = FlightID;
+        
+        FlightDatabase.insert(this);
     }
 
-    public Date getArrival() {
+    public XMLGregorianCalendar getArrival() {
         return arrival;
     }
 
@@ -41,6 +43,10 @@ public class FlightInformation {
             throw new exceptions.Seat_Unavailable();
         }
     }
+    
+    public void cancelSeat() {
+        this.capacity++;
+    }
 
     public String getDepatureAirport() {
         return depatureAirport;
@@ -50,7 +56,7 @@ public class FlightInformation {
         return destinationAirport;
     }
 
-    public Date getDeparture() {
+    public XMLGregorianCalendar getDeparture() {
         return departure;
     }
 
