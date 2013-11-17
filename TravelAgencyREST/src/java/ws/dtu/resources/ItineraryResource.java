@@ -13,6 +13,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
+import ws.dtu.resources.utils.Sequencer;
+
 /**
  *
  * @author peter
@@ -30,7 +32,7 @@ public class ItineraryResource {
     @POST
     @Path("")
     public String createItinerary() {
-        return "created itinerary";
+        return "" + Sequencer.getNext();
     }
     
     @DELETE
