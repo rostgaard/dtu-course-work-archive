@@ -9,18 +9,14 @@
     xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
     xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
     xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
-    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://travelgoodbpel.ws">
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://travelgoodbpel.ws" xmlns:ns1="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension">
     <import namespace="http://travelgoodbpel.ws" location="TravelGood.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <partnerLinks>
         <partnerLink name="PartnerLink" xmlns:tns="http://travelgoodbpel.ws" partnerLinkType="tns:TravelGood" myRole="TravelGoodPortTypeRole"/>
     </partnerLinks>
     <variables>
         <variable name="AddFlightOut" messageType="ns0:AddFlightResponse"/>
-        <variable name="flightBookings" type="ns0:flightBookings">
-            <sxed:editor>
-                <sxed:predicate path="$flightBookings/flightBooking[1 + count(.)]" source="to"/>
-            </sxed:editor>
-        </variable>
+        <variable name="flightBookings" type="ns0:flightBookings"/>
         <variable name="AddFlightIn" messageType="ns0:AddFlightRequest"/>
         <variable name="CreateItineraryOut" messageType="ns0:CreateItineraryResponse"/>
         <variable name="CreateItineraryIn" xmlns:tns="http://travelgoodbpel.ws" messageType="ns0:CreateItineraryRequest"/>
@@ -42,8 +38,13 @@
         </assign>
         <reply name="ReplyCreateItinerary" partnerLink="PartnerLink" operation="CreateItinerary" portType="ns0:TravelGoodPortType" variable="CreateItineraryOut"></reply>
         <scope name="Scope">
+            <variables>
+                <variable name="counter" type="xs:int"/>
+                <variable name="hotelAdded" type="xs:boolean"/>
+                <variable name="flightAdded" type="xs:boolean"/>
+            </variables>
             <eventHandlers>
-                <onEvent partnerLink="PartnerLink" operation="GetItinerary" portType="ns0:TravelGoodPortType">
+                <onEvent partnerLink="PartnerLink" operation="GetItinerary" portType="ns0:TravelGoodPortType" variable="getItineraryEvent" messageType="ns0:GetItineraryRequest">
                     <correlations>
                         <correlation set="ItineraryCorrelation" initiate="no"/>
                     </correlations>
@@ -63,41 +64,92 @@
                     </scope>
                 </onEvent>
             </eventHandlers>
-            <while name="PlanningLoop">
-                <condition>true()</condition>
-                    <pick name="Pick1">
+            <sequence name="Sequence3">
+                <assign name="Assign6">
+                    <copy>
+                        <from>false()</from>
+                        <to variable="flightAdded"/>
+                    </copy>
+                    <copy>
+                        <from>false()</from>
+                        <to variable="hotelAdded"/>
+                    </copy>
+                </assign>
+                <while name="PlanningLoop">
+                    <condition>true()</condition>
+                        <pick name="Pick1">
                         <onMessage partnerLink="PartnerLink" operation="AddFlight" portType="ns0:TravelGoodPortType" variable="AddFlightIn">
                                 <correlations>
                                         <correlation set="ItineraryCorrelation" initiate="no"/>
                                     </correlations>
                                     <sequence>
-                                        <assign name="Assign2">
-                                                <copy>
+                                        <if name="If1">
+                                            <condition>$flightAdded</condition>
+                                            <sequence name="Sequence2">
+                                                <assign name="Assign5">
+                                                    <copy>
+                                                        <from>count($flightBookings/flightBooking)</from>
+                                                        <to variable="counter"/>
+                                                    </copy>
+                                                </assign>
+                                                <assign name="Assign2">
+                                                    <copy>
                                                         <from>true()</from>
                                                             <to variable="AddFlightOut" part="status"/>
                                                     </copy>
-                                                    <copy>
+                                                        <copy>
                                                         <from variable="AddFlightIn" part="flightID"/>
-                                                            <to>$flightBookings/flightBooking[1 + count(.)]/flightID
+                                                            <to>$flightBookings/flightBooking[1 + $counter]/flightID
                                                                     <sxed:editor>
-                                                                        <sxed:predicate path="$flightBookings/flightBooking[1 + count(.)]" source="to"/>
+                                                                        <sxed:predicate path="$flightBookings/flightBooking[1 + $counter]" source="to"/>
                                                                     </sxed:editor>
                                                             </to>
+                                                    </copy>
+                                                        <copy>
+                                                        <from>'Planned'</from>
+                                                            <to>$flightBookings/flightBooking[1 + $counter]/status
+                                                                    <sxed:editor>
+                                                                        <sxed:predicate path="$flightBookings/flightBooking[1 + $counter]" source="to"/>
+                                                                    </sxed:editor>
+                                                            </to>
+                                                    </copy>
+                                                </assign>
+                                            </sequence>
+                                            <else>
+                                                <assign name="Assign4">
+                                                    <copy>
+                                                        <from>true()</from>
+                                                        <to variable="flightAdded"/>
+                                                    </copy>
+                                                    <copy>
+                                                        <from variable="AddFlightIn" part="flightID"/>
+                                                        <to>$flightBookings/flightBooking[1]/flightID
+                                                            <sxed:editor>
+                                                                <sxed:predicate path="$flightBookings/flightBooking[1]" source="to"/>
+                                                            </sxed:editor>
+                                                        </to>
                                                     </copy>
                                                     <copy>
                                                         <from>'Planned'</from>
-                                                            <to>$flightBookings/flightBooking[1 + count(.)]/status
-                                                                    <sxed:editor>
-                                                                        <sxed:predicate path="$flightBookings/flightBooking[1 + count(.)]" source="to"/>
-                                                                    </sxed:editor>
-                                                            </to>
+                                                        <to>$flightBookings/flightBooking[1]/status
+                                                            <sxed:editor>
+                                                                <sxed:predicate path="$flightBookings/flightBooking[1]" source="to"/>
+                                                            </sxed:editor>
+                                                        </to>
                                                     </copy>
-                                            </assign>
+                                                    <copy>
+                                                        <from>true()</from>
+                                                        <to variable="AddFlightOut" part="status"/>
+                                                    </copy>
+                                                </assign>
+                                            </else>
+                                        </if>
                                             <reply name="Reply2" partnerLink="PartnerLink" operation="AddFlight" portType="ns0:TravelGoodPortType" variable="AddFlightOut"/>
                                     </sequence>
                             </onMessage>
                     </pick>
-            </while>
+                </while>
+            </sequence>
         </scope>
     </sequence>
 </process>

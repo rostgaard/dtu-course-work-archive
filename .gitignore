@@ -1,4 +1,4 @@
-*.class
+B77;10103;0cB77;10103;0c*.class
 
 # Package Files #
 *.jar
@@ -43,4 +43,4 @@ Report/Main/final.pdf
 /code/TravelGoodClient/nbproject/private/
 /Gammel Opgave/
 /LameDuck/nbproject/private/
-/LameDuck/build/
+/LameDuck/build//code/TravelGoodTest/build/
