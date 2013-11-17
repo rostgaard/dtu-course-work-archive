@@ -8,9 +8,12 @@
             <xsd:simpleType name="itineraryID">
                 <xsd:restriction base="xsd:string"/>
             </xsd:simpleType>
+            <xsd:simpleType name="flightID">
+                <xsd:restriction base="xsd:string"/>
+            </xsd:simpleType>
             <xsd:complexType name="flight">
                 <xsd:sequence>
-                    <xsd:element name="flightID" type="xsd:string"></xsd:element>
+                    <xsd:element name="flightID" type="tns:flightID"></xsd:element>
                     <xsd:element name="departure" type="xsd:dateTime"></xsd:element>
                     <xsd:element name="arrival" type="xsd:dateTime"></xsd:element>
                     <xsd:element name="origin" type="xsd:string"></xsd:element>
@@ -19,7 +22,7 @@
             </xsd:complexType>
             <xsd:complexType name="flightBooking">
                 <xsd:sequence>
-                    <xsd:element name="flight" type="tns:flight"></xsd:element>
+                    <xsd:element name="flightID" type="tns:flightID"></xsd:element>
                     <xsd:element name="status" type="xsd:string"></xsd:element>
                 </xsd:sequence>
             </xsd:complexType>
@@ -38,7 +41,7 @@
     </message>
     <message name="AddFlightRequest">
         <part name="itineraryID" type="tns:itineraryID"/>
-        <part name="flightID" type="xsd:string"/>
+        <part name="flightID" type="tns:flightID"/>
     </message>
     <message name="AddFlightResponse">
         <part name="status" type="xsd:boolean"/>
@@ -48,6 +51,12 @@
     </message>
     <message name="AddHotelResponse">
         <part name="status" type="xsd:string"/>
+    </message>
+    <message name="GetItineraryRequest">
+        <part name="itineraryID" type="tns:itineraryID"/>
+    </message>
+    <message name="GetItineraryResponse">
+        <part name="flights" type="tns:flightBookings"/>
     </message>
     <portType name="TravelGoodPortType">
         <operation name="CreateItinerary">
@@ -61,6 +70,10 @@
         <operation name="AddHotel">
             <input name="input3" message="tns:AddHotelRequest"/>
             <output name="output3" message="tns:AddHotelResponse"/>
+        </operation>
+        <operation name="GetItinerary">
+            <input name="input4" message="tns:GetItineraryRequest"/>
+            <output name="output4" message="tns:GetItineraryResponse"/>
         </operation>
     </portType>
     <binding name="TravelGoodBinding" type="tns:TravelGoodPortType">
@@ -89,4 +102,5 @@ A partner link type characterizes the conversational relationship between two se
     <vprop:property name="itineraryID" type="tns:itineraryID"/>
     <vprop:propertyAlias propertyName="tns:itineraryID" messageType="tns:CreateItineraryRequest" part="itineraryID"/>
     <vprop:propertyAlias propertyName="tns:itineraryID" messageType="tns:AddFlightRequest" part="itineraryID"/>
+    <vprop:propertyAlias propertyName="tns:itineraryID" messageType="tns:GetItineraryRequest" part="itineraryID"/>
 </definitions>
