@@ -87,6 +87,33 @@
                 <soap:body use="literal" namespace="http://travelgoodbpel.ws"/>
             </output>
         </operation>
+        <operation name="AddFlight">
+            <soap:operation/>
+            <input name="input2">
+                <soap:body use="literal" namespace="http://travelgoodbpel.ws"/>
+            </input>
+            <output name="output2">
+                <soap:body use="literal" namespace="http://travelgoodbpel.ws"/>
+            </output>
+        </operation>
+        <operation name="AddHotel">
+            <soap:operation/>
+            <input name="input3">
+                <soap:body use="literal" namespace="http://travelgoodbpel.ws"/>
+            </input>
+            <output name="output3">
+                <soap:body use="literal" namespace="http://travelgoodbpel.ws"/>
+            </output>
+        </operation>
+        <operation name="GetItinerary">
+            <soap:operation/>
+            <input name="input4">
+                <soap:body use="literal" namespace="http://travelgoodbpel.ws"/>
+            </input>
+            <output name="output4">
+                <soap:body use="literal" namespace="http://travelgoodbpel.ws"/>
+            </output>
+        </operation>
     </binding>
     <service name="TravelGoodService">
         <port name="TravelGoodPort" binding="tns:TravelGoodBinding">
