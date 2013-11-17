@@ -18,6 +18,8 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import ws.dtu.entities.Flight;
 import ws.dtu.entities.Hotel;
+import ws.dtu.resources.utils.Sequencer;
+
 import ws.dtu.resources.model.ItineraryDatabase;
 import ws.dtu.resources.model.Itinerary;
 import ws.dtu.resources.model.NoSuchIdentfierException;

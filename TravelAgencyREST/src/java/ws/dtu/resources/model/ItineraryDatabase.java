@@ -4,7 +4,6 @@
  */
 package ws.dtu.resources.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
