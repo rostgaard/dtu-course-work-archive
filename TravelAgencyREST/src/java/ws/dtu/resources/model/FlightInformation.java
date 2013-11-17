@@ -5,6 +5,7 @@
 package ws.dtu.resources.model;
 
 import java.util.Date;
+import ws.dtu.resources.model.exceptions.Seat_Unavailable;
 
 /**
  *
@@ -17,7 +18,7 @@ public class FlightInformation {
     private String destinationAirport;
     private Date departure;
     private String FlightID;
-
+    protected int capacity = 10;
 
     public FlightInformation(Date arrival, String depatureAirport, 
             String destinationAirport, Date departure, String FlightID) {
@@ -30,6 +31,15 @@ public class FlightInformation {
 
     public Date getArrival() {
         return arrival;
+    }
+
+    public void bookSeat() throws exceptions.Seat_Unavailable {
+        if (this.capacity > 0) {
+            this.capacity--;
+        }
+        else {
+            throw new exceptions.Seat_Unavailable();
+        }
     }
 
     public String getDepatureAirport() {
