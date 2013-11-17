@@ -31,5 +31,6 @@
 
 .DS_Store
 Report/Main/final.pdf
-/LameDuckREST/nbproject/private/
-/LameDuckREST/build/
+/TravelAgencyREST/nbproject/private/
+/TravelAgencyREST/build/
+/TravelAgencyREST/dist/
