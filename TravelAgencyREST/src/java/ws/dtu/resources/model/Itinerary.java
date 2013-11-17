@@ -4,12 +4,15 @@
  */
 package ws.dtu.resources.model;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import ws.dtu.resources.utils.Sequencer;
 
 /**
  *
  * @author krc
  */
+@XmlRootElement()
 public class Itinerary {
 
     public final int ID                = Sequencer.getNext();
@@ -40,6 +43,16 @@ public class Itinerary {
     
     public void changeState(ItineraryState newState) {
         // Implement state machine.
+    }
+    
+    @XmlElement
+    public FlightList getFlights() {
+        return flights;
+    }
+    
+    @XmlElement
+    public HotelList getHotels() {
+        return hotels;
     }
     
     
