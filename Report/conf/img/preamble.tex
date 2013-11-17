@@ -28,9 +28,6 @@
 \usepackage[a4paper]{geometry} 			% Slightly wider margins than default
 \usepackage{caption}					% Expanded captions
 \usepackage{subcaption}					% Subcaptions
-\usepackage{color}						% Color package
-\usepackage[normalem]{ulem}				% 
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Setup (only one liners)          %
@@ -108,7 +105,7 @@
 % Chapter style %
 %%%%%%%%%%%%%%%%%
 \newlength{\chapterfontsize}
-\setlength{\chapterfontsize}{28pt}
+\setlength{\chapterfontsize}{32pt}
 \titleformat{\chapter}[display]
     {\sffamily}                            % format
 {\large\textsc{\color{dtugray}\chaptertitlename}~~\fontsize{34}{34}\selectfont\color{dtured}\thechapter} % label
@@ -198,7 +195,7 @@
 %%%%%%%%%%%%%
 % Todo list %
 %%%%%%%%%%%%%
-\makeatletter \newcommand \listoftodos{\section*{Todo list} \@starttoc{tdo}\newpage}
+\makeatletter \newcommand \listoftodos{\section*{Todo list} \@starttoc{tdo}}
 \newcommand\l@todo[2]
 {\noindent \textit{#2} : \parbox{10cm}{#1} \par\vspace{8pt}} \makeatother
 
