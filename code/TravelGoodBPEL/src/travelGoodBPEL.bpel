@@ -9,8 +9,61 @@
     xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
     xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
     xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
-    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling">
-
-   <sequence>
-   </sequence>
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://travelgoodbpel.ws">
+    <import namespace="http://travelgoodbpel.ws" location="TravelGood.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="PartnerLink" xmlns:tns="http://travelgoodbpel.ws" partnerLinkType="tns:TravelGood" myRole="TravelGoodPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="AddFlightOut" messageType="ns0:AddFlightResponse"/>
+        <variable name="flightBookings" type="ns0:flightBookings">
+            <sxed:editor>
+                <sxed:predicate path="$flightBookings/flightBooking[1 + count(.)]" source="to"/>
+            </sxed:editor>
+        </variable>
+        <variable name="AddFlightIn" messageType="ns0:AddFlightRequest"/>
+        <variable name="CreateItineraryOut" messageType="ns0:CreateItineraryResponse"/>
+        <variable name="CreateItineraryIn" xmlns:tns="http://travelgoodbpel.ws" messageType="ns0:CreateItineraryRequest"/>
+    </variables>
+    <correlationSets>
+        <correlationSet name="ItineraryCorrelation" properties="ns0:itineraryID"/>
+    </correlationSets>
+    <sequence>
+        <receive name="Receive1" createInstance="yes" partnerLink="PartnerLink" operation="CreateItinerary" portType="ns0:TravelGoodPortType" variable="CreateItineraryIn">
+            <correlations>
+                <correlation set="ItineraryCorrelation" initiate="yes"/>
+            </correlations>
+        </receive>
+        <assign name="Assign1">
+            <copy>
+                <from>true()</from>
+                <to variable="CreateItineraryOut" part="status"/>
+            </copy>
+        </assign>
+        <reply name="Reply1" partnerLink="PartnerLink" operation="CreateItinerary" portType="ns0:TravelGoodPortType" variable="CreateItineraryOut"></reply>
+        <pick name="Pick1">
+            <onMessage partnerLink="PartnerLink" operation="AddFlight" portType="ns0:TravelGoodPortType" variable="AddFlightIn">
+                <correlations>
+                    <correlation set="ItineraryCorrelation" initiate="no"/>
+                </correlations>
+                <sequence name="Sequence1">
+                    <assign name="Assign2">
+                        <copy>
+                                <from variable="AddFlightIn" part="flightID"/>
+                                    <to>$flightBookings/flightBooking[1 + count(.)]
+                            <sxed:editor>
+                                                <sxed:predicate path="$flightBookings/flightBooking[1 + count(.)]" source="to"/>
+                                            </sxed:editor>
+                                    </to>
+                            </copy>
+                        <copy>
+                            <from>true()</from>
+                            <to variable="AddFlightOut" part="status"/>
+                        </copy>
+                    </assign>
+                    <reply name="Reply2" partnerLink="PartnerLink" operation="AddFlight" portType="ns0:TravelGoodPortType" variable="AddFlightOut"/>
+                </sequence>
+            </onMessage>
+        </pick>
+    </sequence>
 </process>
