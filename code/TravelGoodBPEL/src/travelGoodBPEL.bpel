@@ -44,6 +44,9 @@
         <scope name="Scope">
             <eventHandlers>
                 <onEvent partnerLink="PartnerLink" operation="GetItinerary" portType="ns0:TravelGoodPortType">
+                    <correlations>
+                        <correlation set="ItineraryCorrelation" initiate="no"/>
+                    </correlations>
                     <scope name="Scope1">
                         <variables>
                             <variable name="GetItineraryOut" messageType="ns0:GetItineraryResponse"/>
