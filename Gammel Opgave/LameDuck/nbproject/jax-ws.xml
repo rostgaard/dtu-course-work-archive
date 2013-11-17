@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
+  <services>
+    <service name="LameDuckWS">
+      <implementation-class>lameduck.ws.LameDuckWS</implementation-class>
+      <wsdl-url>file:/C:/Users/Andreas/Documents/DTU/Web-services/LameDuckWSDL.wsdl</wsdl-url>
+      <local-wsdl-file>LameDuckWSDLWrapper.wsdl</local-wsdl-file>
+      <service-name>LameDuckWSDLService</service-name>
+      <port-name>LameDuckWSDLPort</port-name>
+      <package-name>ws.lameduck</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+      <use-provider>false</use-provider>
+      <wsimport-options>
+        <wsimport-option>
+          <wsimport-option-name>extension</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>verbose</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xnocompile</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+      </wsimport-options>
+    </service>
+  </services>
+  <clients>
+    <client name="BankService">
+      <wsdl-url>http://fastmoney.imm.dtu.dk:8080/BankService?wsdl</wsdl-url>
+      <local-wsdl-file>fastmoney.imm.dtu.dk_8080/BankService.wsdl</local-wsdl-file>
+      <package-name>dk.dtu.imm.fastmoney</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+      <wsimport-options>
+        <wsimport-option>
+          <wsimport-option-name>extension</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>verbose</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>wsdlLocation</wsimport-option-name>
+          <wsimport-option-value>http://fastmoney.imm.dtu.dk:8080/BankService?wsdl</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xnocompile</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+      </wsimport-options>
+    </client>
+  </clients>
+</jax-ws>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/TravelAgencyFlightsResource.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/TravelAgencyBookingResource.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/data/Customer.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/TravelAgencyResetResource.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/TravelAgencyResource.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/data/Itinerary.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/TravelAgencyStatusResource.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/TravelAgencyHotelResource.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/data/FlightInfoWrapper.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/data/HotelWrapper.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/data/Status.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/data/Wrapper.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/representation/FlightRepresentation.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/representation/HotelRepresentation.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/representation/ItineraryRepresentation.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/representation/Link.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/representation/Representation.java</file>
+        <file>file:/C:/Users/Andreas/Documents/DTU/Web-services/svn2/Code/TravelAgencyREST/src/java/ws/travelAgency/representation/StateRepresentation.java</file>
+    </open-files>
+</project-private>
