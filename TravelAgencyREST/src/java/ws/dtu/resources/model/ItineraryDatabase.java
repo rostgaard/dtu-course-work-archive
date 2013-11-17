@@ -11,7 +11,7 @@ import java.util.HashMap;
  *
  * @author krc
  */
-public final class IniteraryDatabase {
+public final class ItineraryDatabase {
     
     static HashMap<Integer,Itinerary> db = new HashMap<Integer, Itinerary>();
     

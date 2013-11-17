@@ -30,7 +30,7 @@ public class Itinerary {
     }
     
     private void registerItinerary() {
-        IniteraryDatabase.insert(this);
+        ItineraryDatabase.insert(this);
     }
     
     public int getID() {

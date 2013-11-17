@@ -18,7 +18,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import ws.dtu.entities.Flight;
 import ws.dtu.entities.Hotel;
-import ws.dtu.resources.model.IniteraryDatabase;
+import ws.dtu.resources.model.ItineraryDatabase;
 import ws.dtu.resources.model.Itinerary;
 import ws.dtu.resources.model.NoSuchIdentfierException;
 
@@ -36,7 +36,7 @@ public class ItineraryResource {
     @Path("{id}")
     public Itinerary getItinerary(@PathParam("id") int itineraryIdentifier) {
         try {
-            return IniteraryDatabase.get(itineraryIdentifier);
+            return ItineraryDatabase.get(itineraryIdentifier);
         } catch (NoSuchIdentfierException ex) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
@@ -53,7 +53,7 @@ public class ItineraryResource {
     @Path("{id}")
     public void deleteItinerary(@PathParam("id") int itineraryIdentifier) {
         try {
-            IniteraryDatabase.delete(itineraryIdentifier);
+            ItineraryDatabase.delete(itineraryIdentifier);
         } catch (NoSuchIdentfierException ex) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
