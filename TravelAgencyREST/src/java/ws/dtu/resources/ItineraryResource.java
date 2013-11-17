@@ -12,8 +12,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import ws.dtu.entities.Flight;
 import ws.dtu.entities.Hotel;
-
-
 import ws.dtu.resources.utils.Sequencer;
 
 /**
