@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
+<<<<<<< HEAD
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
         <file>file:/home/krc/DTU/02267%20Software%20Development%20of%20Web%20Services%20E13/work/02267/Gammel%20Opgave/TravelAgencyREST/src/java/ws/travelAgency/TravelAgencyResource.java</file>
@@ -10,4 +11,6 @@
         <file>file:/home/krc/DTU/02267%20Software%20Development%20of%20Web%20Services%20E13/work/02267/Gammel%20Opgave/TravelAgencyREST/src/java/ws/travelAgency/TravelAgencyHotelResource.java</file>
         <file>file:/home/krc/DTU/02267%20Software%20Development%20of%20Web%20Services%20E13/work/02267/Gammel%20Opgave/TravelAgencyREST/src/java/ws/travelAgency/TravelAgencyBookingResource.java</file>
     </open-files>
+=======
+>>>>>>> 138c8fbbf0613c7dc2da957680ffe5b5ddac6f58
 </project-private>
