@@ -29,6 +29,7 @@ public final class Symbols {
     public static final String WRITE     = "write";
     public static final String READ      = "read";
     public static final String SKIP      = "skip";
+    public static final String STMT_TERM = ";";
     public static final String NEWLINE   = "\n";
     
     public static String symbolOf(BooleanOperation bo ) {
