@@ -11,13 +11,15 @@ import utilities.Sequencer;
  *
  */
 
-public abstract class Statement implements analysis.Analysable{
+public abstract class Statement implements analysis.Analysable {
     
     private int label = -1;
 
     public abstract NodeSet labels();
-    public abstract Node init();
     public abstract NodeSet finalNodes();
+    public abstract Node init();
+    public abstract FlowSet flow();
+
     public String toStringWithLabel() {
         return Symbols.LSQPARAN + this.toString() + Symbols.RSQPARAN + this.label;
     }
@@ -29,7 +31,8 @@ public abstract class Statement implements analysis.Analysable{
     public int getLabel (){
         return this.label;
     }
-    
-    
-    
+
+    public Node toNode() {
+        return new Node(this);
+    }
 }

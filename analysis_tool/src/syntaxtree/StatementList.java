@@ -4,6 +4,7 @@
  */
 package syntaxtree;
 
+import flowgraph.datastructure.Flow;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
@@ -16,18 +17,41 @@ import syntaxtree.statement.Statement;
  */
 public class StatementList extends ArrayList<Statement> {
 
-    public FlowSet flow () {
+    public FlowSet flow() {
+        FlowSet retSet = FlowSet.emptySet;
+        Statement s1 = null;
+
+        for (Statement s2 : this) {
+            retSet.union(s2.flow());
+
+            if (s1 != null) {
+                for (Node endNode : s1.finalNodes()) {
+                    retSet.addFlow(new Flow(endNode, s2.init()));
+                }
+            }
+            s1 = s2;
+
+        }
+
         return FlowSet.emptySet;
     }
-    
-    public NodeSet lables () {
+
+    public NodeSet lables() {
         NodeSet retval = NodeSet.emptySet;
-        
+
         for (Statement s : this) {
             retval.union(s.labels());
         }
-        
+
         return retval;
+    }
+
+    public Node init() {
+        return new Node(this.get(0));
+    }
+
+    public NodeSet finalLabels() {
+        return NodeSet.emptySet.addNode(new Node(this.get(this.size() - 1)));
     }
 
     @Override
@@ -36,18 +60,17 @@ public class StatementList extends ArrayList<Statement> {
         for (Statement s : this) {
             buffer += s + Symbols.NEWLINE;
         }
-        
+
         return buffer;
     }
 
     public String labelTable() {
         String buffer = "";
-        
+
         for (Statement s : this) {
-           buffer += s +" "+  s.labels().toString() + "\n";
+            buffer += s + " " + s.labels().toString() + "\n";
         }
-        
+
         return buffer;
     }
-
 }

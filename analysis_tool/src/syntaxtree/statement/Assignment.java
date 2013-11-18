@@ -1,6 +1,7 @@
 package syntaxtree.statement;
 
 import analysis.RDProgramState;
+import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
 import syntaxtree.Symbols;
@@ -53,10 +54,8 @@ public class Assignment extends Statement {
 
     @Override
     public NodeSet labels() {
-        NodeSet returnSet = new NodeSet();
-        returnSet.add(new Node(this));
-
-        return returnSet;
+        return NodeSet.emptySet
+                .addNode(new Node(this));
     }
 
     public String toStringWithLabel() {
@@ -66,14 +65,17 @@ public class Assignment extends Statement {
 
     @Override
     public Node init() {
-        return new Node(this);
+        return (new Node(this));
     }
 
     @Override
     public NodeSet finalNodes() {
-        NodeSet returnSet = new NodeSet();
-        returnSet.add(new Node(this));
+        return NodeSet.emptySet
+                .addNode(new Node(this));
+    }
 
-        return returnSet;
+    @Override
+    public FlowSet flow() {
+        return FlowSet.emptySet;
     }
 }

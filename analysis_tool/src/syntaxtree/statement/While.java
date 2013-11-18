@@ -1,9 +1,12 @@
 package syntaxtree.statement;
 
 import analysis.RDProgramState;
+import flowgraph.datastructure.Flow;
+import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
 import java.util.List;
+import syntaxtree.StatementList;
 import syntaxtree.Symbols;
 
 import syntaxtree.condition.Condition;
@@ -16,9 +19,9 @@ import utilities.Sequencer;
 public class While extends Statement {
 
     private Condition cond;
-    private List<Statement> body;
+    private StatementList body;
 
-    public While(Condition cond, List<Statement> body) {
+    public While(Condition cond, StatementList body) {
         this.cond = cond;
         this.body = body;
     }
@@ -50,11 +53,11 @@ public class While extends Statement {
         for (Statement s : body) {
             buffer += Symbols.INDENTION + s.toStringWithLabel() + Symbols.NEWLINE;
         }
-        return Symbols.WHILE + Symbols.SEPERATOR +  
-                Symbols.LSQPARAN + cond + Symbols.RSQPARAN 
-                + Symbols.SEPERATOR 
+        return Symbols.WHILE + Symbols.SEPERATOR
+                + Symbols.LSQPARAN + cond + Symbols.RSQPARAN
+                + Symbols.SEPERATOR
                 + this.getLabel()
-                + Symbols.SEPERATOR 
+                + Symbols.SEPERATOR
                 + Symbols.DO
                 + Symbols.NEWLINE
                 + buffer
@@ -81,16 +84,33 @@ public class While extends Statement {
 
     @Override
     public NodeSet labels() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return NodeSet.emptySet
+                .addNode(new Node(this))
+                .union(this.labels());
     }
 
     @Override
     public Node init() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.toNode();
     }
 
     @Override
     public NodeSet finalNodes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return NodeSet.emptySet
+                .addNode(new Node(this));
     }
+    
+    @Override
+    public FlowSet flow() {
+        FlowSet retSet = FlowSet.emptySet
+                .addFlow(new Flow (this.toNode(), this.body.init()))
+                .union(this.body.flow());
+        
+        for (Node n : this.body.finalLabels()) {
+            retSet.addFlow(new Flow (n, this.toNode()));
+        }
+        
+        return retSet;
+    }
+    
 }
