@@ -14,8 +14,8 @@ import syntaxtree.expression.Variable;
  * @author krc
  */
 public class RDProgramState {
-    private ArrayList<Definition> definitions = new ArrayList<>();
-    
+    private ArrayList<Definition> definitions = new ArrayList<Definition>();
+
     public RDProgramState (ArrayList<Declaration> initialDefinitions) {
         for (Declaration d: initialDefinitions) {
             definitions.add(new Definition(d.getId(), null)); //TODO: null should be bottom
