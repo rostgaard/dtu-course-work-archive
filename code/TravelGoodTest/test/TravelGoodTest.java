@@ -17,12 +17,9 @@ public class TravelGoodTest {
         bookings = getItinerary("MinMor");
         
         
-        System.out.println("Count: "+bookings.getFlightBooking().size());
-        for (FlightBooking booking : bookings.getFlightBooking()) {
-            System.out.println("=====");
-            System.out.println(booking.getFlightID());
-            System.out.println(booking.getStatus());
-        }
+        assertTrue(bookings.getFlightBooking().size() == 4);
+        
+        cancelPlanning("MinMor");
     }
 
     private static boolean addFlight(String itineraryID, String flightID) {
@@ -42,4 +39,11 @@ public class TravelGoodTest {
         ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
         return port.createItinerary(itineraryID);
     }
+
+    private static String cancelPlanning(java.lang.String itineraryID) {
+        ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
+        ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
+        return port.cancelPlanning(itineraryID);
+    }
+
 }

@@ -44,6 +44,10 @@
     <part name="flightID" type="tns:flightID">
     </part>
   </message>
+  <message name="CancelPlanningResponse">
+    <part name="status" type="xsd:string">
+    </part>
+  </message>
   <message name="CreateItineraryRequest">
     <part name="itineraryID" type="tns:itineraryID">
     </part>
@@ -58,6 +62,10 @@
   </message>
   <message name="AddHotelResponse">
     <part name="status" type="xsd:string">
+    </part>
+  </message>
+  <message name="CancelPlanningRequest">
+    <part name="itineraryID" type="tns:itineraryID">
     </part>
   </message>
   <message name="AddHotelRequest">
@@ -87,6 +95,12 @@
       <input name="input4" message="tns:GetItineraryRequest">
     </input>
       <output name="output4" message="tns:GetItineraryResponse">
+    </output>
+    </operation>
+    <operation name="CancelPlanning">
+      <input name="input5" message="tns:CancelPlanningRequest">
+    </input>
+      <output name="output5" message="tns:CancelPlanningResponse">
     </output>
     </operation>
   </portType>
@@ -128,10 +142,19 @@
         <soap:body use="literal" namespace="http://travelgoodbpel.ws"/>
       </output>
     </operation>
+    <operation name="CancelPlanning">
+      <soap:operation/>
+      <input name="input5">
+        <soap:body use="literal" namespace="http://travelgoodbpel.ws"/>
+      </input>
+      <output name="output5">
+        <soap:body use="literal" namespace="http://travelgoodbpel.ws"/>
+      </output>
+    </operation>
   </binding>
   <service name="TravelGoodService">
     <port name="TravelGoodPort" binding="tns:TravelGoodBinding">
-      <soap:address location="http://mktange-yoga:9080/TravelGoodService/TravelGoodPort"/>
+      <soap:address location="http://10.16.131.46:9080/TravelGoodService/TravelGoodPort"/>
     </port>
   </service>
     <plnk:partnerLinkType name="TravelGood">
@@ -143,5 +166,6 @@ A partner link type characterizes the conversational relationship between two se
     <vprop:property name="itineraryID" type="tns:itineraryID"/>
     <vprop:propertyAlias messageType="tns:CreateItineraryRequest" part="itineraryID" propertyName="tns:itineraryID"/>
     <vprop:propertyAlias messageType="tns:AddFlightRequest" part="itineraryID" propertyName="tns:itineraryID"/>
+    <vprop:propertyAlias messageType="tns:CancelPlanningRequest" part="itineraryID" propertyName="tns:itineraryID"/>
     <vprop:propertyAlias messageType="tns:GetItineraryRequest" part="itineraryID" propertyName="tns:itineraryID"/>
 </definitions>
