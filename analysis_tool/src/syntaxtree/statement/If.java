@@ -77,6 +77,23 @@ public class If extends Statement {
                 .union(trueBranch.lables())
                 .union(falseBranch.lables());
     }
+    
+    @Override
+    public String toStringWithLabel() {
+        String trueBuffer = "";
+        String falseBuffer = "";
+        for (Statement s : this.trueBranch) {
+            trueBuffer += Symbols.INDENTION + s.toStringWithLabel() + Symbols.NEWLINE;
+        }
+        for (Statement s : this.falseBranch) {
+            falseBuffer += Symbols.INDENTION + s.toStringWithLabel() + Symbols.NEWLINE;
+        }
+        return Symbols.IF + Symbols.SEPERATOR + Symbols.LSQPARAN + cond + Symbols.RSQPARAN + this.getLabel() + Symbols.SEPERATOR + Symbols.THEN + Symbols.NEWLINE
+                + trueBuffer
+                + Symbols.ELSE + Symbols.NEWLINE
+                + falseBuffer
+                + Symbols.FI;
+    }
 
     @Override
     public Node init() {

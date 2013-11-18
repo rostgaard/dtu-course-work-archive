@@ -44,7 +44,7 @@ public class Assignment extends Statement {
 
     @Override
     public String toString() {
-        return id + " := " + expr + ";";
+        return id + " := " + expr;
     }
 
     @Override
@@ -55,11 +55,6 @@ public class Assignment extends Statement {
     @Override
     public NodeSet labels() {
         return NodeSet.factory().addNode(new Node(this));
-    }
-
-    public String toStringWithLabel() {
-        return Symbols.LSQPARAN + this.toString() + Symbols.RSQPARAN
-                + Symbols.SEPERATOR + this.getLabel();
     }
 
     @Override

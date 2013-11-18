@@ -5,6 +5,13 @@ a := 10;
 x := a + b;
 if a < 1 then
   a := a + 1;
+  a := a + 2;
+  if a = 2 then
+    a := a - 1;
+    a := 0;
+   else
+     skip;
+    fi
 else
   skip;
 fi

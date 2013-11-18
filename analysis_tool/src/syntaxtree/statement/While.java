@@ -55,13 +55,11 @@ public class While extends Statement {
         }
         return Symbols.WHILE + Symbols.SEPERATOR
                 + Symbols.LSQPARAN + cond + Symbols.RSQPARAN
-                + Symbols.SEPERATOR
                 + this.getLabel()
                 + Symbols.SEPERATOR
                 + Symbols.DO
                 + Symbols.NEWLINE
                 + buffer
-                + this.labels()
                 + Symbols.OD;
     }
 
@@ -86,7 +84,7 @@ public class While extends Statement {
     public NodeSet labels() {
         return NodeSet.factory()
                 .addNode(new Node(this))
-                .union(this.labels());
+                .union(this.body.lables());
     }
 
     @Override
