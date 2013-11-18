@@ -102,7 +102,7 @@ public class If extends Statement {
      */
     @Override
     public NodeSet finalNodes() {
-        return NodeSet.emptySet
+        return NodeSet.factory()
                 .union(trueBranch.finalLabels())
                 .union(falseBranch.finalLabels());
 
@@ -110,7 +110,7 @@ public class If extends Statement {
 
     @Override
     public FlowSet flow() {
-        return FlowSet.emptySet
+        return FlowSet.factory()
                 .union(this.trueBranch.flow())
                 .union(this.falseBranch.flow())
                 .addFlow(new Flow(this.toNode(), trueBranch.init()))

@@ -50,10 +50,11 @@ public class Main {
                 
                 for (Statement s : tree.getStmts()) {
                     s.setLabel(seq);
-//                    System.out.println(""+ s.toStringWithLabel());
                 }
+                System.out.println (tree.getStmts().toStringWithLabel());
+                System.out.println (tree.getStmts().flow());
 
-                System.out.println (tree.getStmts().labelTable());
+                //System.out.println (tree.getStmts().labelTable());
                 
                 //System.out.println(tree.toString());
 //				printTree(tree,0);

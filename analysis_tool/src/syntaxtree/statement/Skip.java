@@ -28,8 +28,7 @@ public class Skip extends Statement {
 
     @Override
     public NodeSet labels() {
-        return NodeSet.emptySet
-                .addNode(new Node(this));
+        return NodeSet.factory().addNode(new Node(this));
     }
 
     @Override
@@ -39,8 +38,7 @@ public class Skip extends Statement {
 
     @Override
     public NodeSet finalNodes() {
-        return NodeSet.emptySet
-                .addNode(new Node(this));
+        return NodeSet.factory().addNode(new Node(this));
     }
 
     @Override

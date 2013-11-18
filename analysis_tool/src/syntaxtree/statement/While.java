@@ -84,7 +84,7 @@ public class While extends Statement {
 
     @Override
     public NodeSet labels() {
-        return NodeSet.emptySet
+        return NodeSet.factory()
                 .addNode(new Node(this))
                 .union(this.labels());
     }
@@ -96,13 +96,12 @@ public class While extends Statement {
 
     @Override
     public NodeSet finalNodes() {
-        return NodeSet.emptySet
-                .addNode(new Node(this));
+        return NodeSet.factory().addNode(new Node(this));
     }
     
     @Override
     public FlowSet flow() {
-        FlowSet retSet = FlowSet.emptySet
+        FlowSet retSet = FlowSet.factory()
                 .addFlow(new Flow (this.toNode(), this.body.init()))
                 .union(this.body.flow());
         
