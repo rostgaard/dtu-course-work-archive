@@ -5,7 +5,6 @@
 package analysis;
 
 import flowgraph.datastructure.Node;
-import syntaxtree.expression.Expression;
 import syntaxtree.expression.Variable;
 
 /**
@@ -14,11 +13,21 @@ import syntaxtree.expression.Variable;
  */
 public class Definition {
 
-    Variable   identifier = null;
+    Variable identifier = null;
     Node label = null;
 
     public Definition(Variable var, Node label) {
         this.identifier = var;
         this.label= label;
     }
+
+	@Override
+	public boolean equals(Object arg) {
+		if(arg instanceof Definition){
+			Definition that = (Definition) arg; //type casting
+			//if the two identifiers are equals then return true otherwise false is returned
+			return this.identifier.getId().equals(that.identifier.getId()) ? true : false; 			
+		}
+		return false;
+	}
 }
