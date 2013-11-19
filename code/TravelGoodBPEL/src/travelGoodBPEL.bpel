@@ -11,7 +11,10 @@
     xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
     xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://travelgoodbpel.ws" xmlns:ns1="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension">
     <import namespace="http://travelgoodbpel.ws" location="TravelGood.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/LameDuckServiceWrapper" location="LameDuckServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://lameduck.dtu.ws/" location="LameDuck/build/generated-sources/jax-ws/resources/LameDuckService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <partnerLinks>
+        <partnerLink name="LameDuckPartnerLink" xmlns:tns="http://enterprise.netbeans.org/bpel/LameDuckServiceWrapper" partnerLinkType="tns:LameDuckServiceLinkType" partnerRole="LameDuckServiceRole"/>
         <partnerLink name="PartnerLink" xmlns:tns="http://travelgoodbpel.ws" partnerLinkType="tns:TravelGood" myRole="TravelGoodPortTypeRole"/>
     </partnerLinks>
     <variables>
@@ -48,6 +51,10 @@
         <reply name="ReplyCreateItinerary" partnerLink="PartnerLink" operation="CreateItinerary" portType="ns0:TravelGoodPortType" variable="CreateItineraryOut"></reply>
         <scope name="Scope">
             <variables>
+                <variable name="GetFlightsOutLameDuck" xmlns:tns="http://lameduck.dtu.ws/" messageType="tns:getFlightsResponse"/>
+                <variable name="GetFlightsIn1" xmlns:tns="http://lameduck.dtu.ws/" messageType="tns:getFlights"/>
+                <variable name="GetFlightsIn" messageType="ns0:GetFlightsRequest"/>
+                <variable name="GetFlightsOut" messageType="ns0:GetFlightsResponse"/>
                 <variable name="AddHotelOut" messageType="ns0:AddHotelResponse"/>
                 <variable name="AddHotelIn" messageType="ns0:AddHotelRequest"/>
                 <variable name="CancelPlanningOut" messageType="ns0:CancelPlanningResponse"/>
@@ -68,6 +75,10 @@
                                 <copy>
                                     <from variable="flightBookings"/>
                                     <to variable="GetItineraryOut" part="flights"/>
+                                </copy>
+                                <copy>
+                                    <from variable="hotelBookings"/>
+                                    <to variable="GetItineraryOut" part="hotels"/>
                                 </copy>
                             </assign>
                             <reply name="Reply3" partnerLink="PartnerLink" operation="GetItinerary" portType="ns0:TravelGoodPortType" variable="GetItineraryOut">                            </reply>
@@ -168,6 +179,21 @@
                                     </assign>
                                     <reply name="Reply4" partnerLink="PartnerLink" operation="CancelPlanning" portType="ns0:TravelGoodPortType" variable="CancelPlanningOut"/>
                                     <exit name="Exit1"/>
+                                </sequence>
+                            </onMessage>
+                            <onMessage partnerLink="PartnerLink" operation="GetFlights" portType="ns0:TravelGoodPortType" variable="GetFlightsIn">
+                                <correlations>
+                                    <correlation set="ItineraryCorrelation" initiate="no"/>
+                                </correlations>
+                                <sequence name="Sequence5">
+                                    <invoke name="LameDuckInvoke" partnerLink="LameDuckPartnerLink" operation="getFlights" xmlns:tns="http://lameduck.dtu.ws/" portType="tns:LameDuckService" inputVariable="GetFlightsIn1" outputVariable="GetFlightsOutLameDuck"/>
+                                    <assign name="Assign7">
+                                        <copy>
+                                            <from variable="GetFlightsOutLameDuck" part="parameters"/>
+                                            <to variable="GetFlightsOut" part="flights"/>
+                                        </copy>
+                                    </assign>
+                                    <reply name="GetFlightsReply" partnerLink="PartnerLink" operation="GetFlights" portType="ns0:TravelGoodPortType" variable="GetFlightsOut"/>
                                 </sequence>
                             </onMessage>
                         </pick>
