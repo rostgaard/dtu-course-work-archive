@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="newElement" type="{http://lameduck.dtu.ws}flightInformation" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="flights" type="{http://lameduck.dtu.ws}flightInformation" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,25 +29,25 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "flightList", propOrder = {
-    "newElement"
+    "flights"
 })
 public class FlightList {
 
-    protected List<FlightInformation> newElement;
+    protected List<FlightInformation> flights;
 
     /**
-     * Gets the value of the newElement property.
+     * Gets the value of the flights property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the newElement property.
+     * This is why there is not a <CODE>set</CODE> method for the flights property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getNewElement().add(newItem);
+     *    getFlights().add(newItem);
      * </pre>
      * 
      * 
@@ -57,11 +57,11 @@ public class FlightList {
      * 
      * 
      */
-    public List<FlightInformation> getNewElement() {
-        if (newElement == null) {
-            newElement = new ArrayList<FlightInformation>();
+    public List<FlightInformation> getFlights() {
+        if (flights == null) {
+            flights = new ArrayList<FlightInformation>();
         }
-        return this.newElement;
+        return this.flights;
     }
 
 }

@@ -19,16 +19,15 @@ public class LameDuck {
     }
     public ws.dtu.lameduck.FlightList getFlights(java.lang.String origin, java.lang.String destination, javax.xml.datatype.XMLGregorianCalendar date) {
         return FlightDatabase.getFlights(origin, destination, date);
+                
     }
 
     public boolean bookFlight(java.lang.String bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInfo) {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return FlightDatabase.bookFlight(bookingNumber, creditCardInfo);
     }
 
     public boolean cancelFlight(java.lang.String bookingNumber, double price, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInfo) throws CancelFlightFault {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return FlightDatabase.cancelFlight(bookingNumber, price, creditCardInfo);
     }
     
 }

@@ -16,8 +16,8 @@
     <import namespace="http://niceview.dtu.ws/" location="NiceView/xml/NiceView.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <import namespace="http://lameduck.dtu.ws" location="LameDuck/LameDuckService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <partnerLinks>
-        <partnerLink name="NiceViewPartnerLink" xmlns:tns="http://niceview.dtu.ws/" partnerLinkType="tns:NiceView" partnerRole="NiceViewPortTypeRole"/>
         <partnerLink name="PartnerLink1" xmlns:tns="http://lameduck.dtu.ws" partnerLinkType="tns:LameDuck" partnerRole="LameDuckPortTypeRole"/>
+        <partnerLink name="NiceViewPartnerLink" xmlns:tns="http://niceview.dtu.ws/" partnerLinkType="tns:NiceView" partnerRole="NiceViewPortTypeRole"/>
         <partnerLink name="TravelGoodPartnerLink" xmlns:tns="http://travelgoodbpel.ws" partnerLinkType="tns:TravelGood" myRole="TravelGoodPortTypeRole"/>
     </partnerLinks>
     <variables>
