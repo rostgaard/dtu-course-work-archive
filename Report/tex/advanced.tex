@@ -1,2 +1,14 @@
 \chapter{Advanced Web services technology}
 
+\section{WS-ReliableMessaging}
+WS-ReliableMessaging is a standard TODO:(insert standard) that specifies the design of general communication semantics in SOAP-based web services. The layer is transparent to the business layer, to which they appear as ordinary messages.
+It follows the standard definitions of message semantics.
+\begin{description}
+\item[At least once:] A message will be resent if no reply is received within a given time frame. The side effect of this, is that it can lead to duplicate messages that needs to be handled within the business layer.
+\item[At most once:] The transmission layer guarantees that no messages are duplicated. They are thus held back until every party agrees that the message is, in fact, received.
+\item[In order] This semantic introduces the concept of a sequencer (still transparent to the application), in order to introduce a total ordering of messages.
+\end{description}
+Whether reliable messaging is applicable on a given scenario, is very specific to the application. It may even provide a false sense of comfort, as guarantees is only provided on the HTTP-SOAP level, and thus does not guarantees that things are done in the right order within the business logic.
+
+%TODO add reference to distributed systems book.
+

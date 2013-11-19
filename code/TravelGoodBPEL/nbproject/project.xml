@@ -6,5 +6,15 @@
             <name>TravelGoodBPEL</name>
             <minimum-ant-version>1.6</minimum-ant-version>
         </data>
+        <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
+            <reference>
+                <foreign-project>LameDuck</foreign-project>
+                <artifact-type>war</artifact-type>
+                <script>build.xml</script>
+                <target>dist</target>
+                <clean-target>clean</clean-target>
+                <id>dist</id>
+            </reference>
+        </references>
     </configuration>
 </project>

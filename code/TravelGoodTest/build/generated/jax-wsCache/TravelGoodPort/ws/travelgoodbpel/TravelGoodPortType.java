@@ -74,4 +74,19 @@ public interface TravelGoodPortType {
         @WebParam(name = "itineraryID", partName = "itineraryID")
         String itineraryID);
 
+<<<<<<< HEAD
+=======
+    /**
+     * 
+     * @param itineraryID
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod(operationName = "CancelPlanning")
+    @WebResult(name = "status", partName = "status")
+    public String cancelPlanning(
+        @WebParam(name = "itineraryID", partName = "itineraryID")
+        String itineraryID);
+
+>>>>>>> c1439566970f1c9d039eb69a84f7279510715bef
 }
