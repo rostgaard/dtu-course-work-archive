@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="LameDuck" targetNamespace="http://lameduck.dtu.ws"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://lameduck.dtu.ws" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns0="urn://types.fastmoney.imm.dtu.dk">
+    <types>
+        <xsd:schema targetNamespace="http://lameduck.dtu.ws" xmlns:tns="http://lameduck.dtu.ws" xmlns:ns1="urn://types.fastmoney.imm.dtu.dk">
+            <xsd:import namespace="urn://types.fastmoney.imm.dtu.dk" schemaLocation="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1"/>
+            <xsd:complexType name="flightInformation">
+                <xsd:sequence>
+                    <xsd:element name="bookingNumber" type="xsd:string"></xsd:element>
+                    <xsd:element name="price" type="xsd:double"></xsd:element>
+                    <xsd:element name="reservationService" type="xsd:string"></xsd:element>
+                    <xsd:element name="flight" type="tns:flight"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="flight">
+                <xsd:sequence>
+                    <xsd:element name="origin" type="xsd:string"></xsd:element>
+                    <xsd:element name="destination" type="xsd:string"></xsd:element>
+                    <xsd:element name="liftOff" type="xsd:dateTime"></xsd:element>
+                    <xsd:element name="arrival" type="xsd:dateTime"></xsd:element>
+                    <xsd:element name="carrier" type="xsd:string"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="flightList">
+                <xsd:sequence>
+                    <xsd:element name="newElement" type="tns:flightInformation" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="creditCardInfo">
+                <xsd:sequence>
+                    <xsd:element name="info" type="xsd:string"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="cancelFault" type="xsd:string"></xsd:element>
+        </xsd:schema>
+    </types>
+    <message name="getFlightsRequest">
+        <part name="origin" type="xsd:string"/>
+        <part name="destination" type="xsd:string"/>
+        <part name="date" type="xsd:date"/>
+    </message>
+    <message name="getFlightsResponse">
+        <part name="flights" type="tns:flightList"/>
+    </message>
+    <message name="bookFlightRequest">
+        <part name="bookingNumber" type="xsd:string"/>
+        <part name="creditCardInfo" type="ns0:creditCardInfoType"/>
+    </message>
+    <message name="bookFlightResponse">
+        <part name="result" type="xsd:boolean"/>
+    </message>
+    <message name="cancelFlightRequest">
+        <part name="bookingNumber" type="xsd:string"/>
+        <part name="price" type="xsd:double"/>
+        <part name="creditCardInfo" type="ns0:creditCardInfoType"/>
+    </message>
+    <message name="cancelFlightResponse">
+        <part name="result" type="xsd:boolean"/>
+    </message>
+    <message name="CancelFlightFault">
+        <part name="CancelFlightFault" element="tns:cancelFault"/>
+    </message>
+    <portType name="LameDuckPortType">
+        <operation name="getFlights">
+            <input name="input1" message="tns:getFlightsRequest"/>
+            <output name="output1" message="tns:getFlightsResponse"/>
+        </operation>
+        <operation name="bookFlight">
+            <input name="input2" message="tns:bookFlightRequest"/>
+            <output name="output2" message="tns:bookFlightResponse"/>
+        </operation>
+        <operation name="cancelFlight">
+            <input name="input3" message="tns:cancelFlightRequest"/>
+            <output name="output3" message="tns:cancelFlightResponse"/>
+            <fault name="fault1" message="tns:CancelFlightFault"/>
+        </operation>
+    </portType>
+    <binding name="LameDuckBinding" type="tns:LameDuckPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+        <operation name="getFlights">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body/>
+            </input>
+            <output name="output1">
+                <soap:body/>
+            </output>
+        </operation>
+        <operation name="bookFlight">
+            <soap:operation/>
+            <input name="input2">
+                <soap:body/>
+            </input>
+            <output name="output2">
+                <soap:body/>
+            </output>
+        </operation>
+        <operation name="cancelFlight">
+            <soap:operation/>
+            <input name="input3">
+                <soap:body/>
+            </input>
+            <output name="output3">
+                <soap:body/>
+            </output>
+            <fault name="fault1">
+                <soap:fault name="fault1"/>
+            </fault>
+        </operation>
+    </binding>
+    <service name="LameDuckService">
+        <port name="LameDuckPortTypeBindingPort" binding="tns:LameDuckBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/LameDuck/LameDuckPort"/>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="LameDuck">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes. 
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="LameDuckPortTypeRole" portType="tns:LameDuckPortType"/>
+    </plnk:partnerLinkType>
+</definitions>
