@@ -82,6 +82,7 @@
     </message>
     <message name="GetFlightsRequest">
         <part name="itineraryID" type="tns:itineraryID"/>
+        <part name="origin" type="xsd:string"/>
         <part name="destination" type="xsd:string"/>
         <part name="datetime" type="xsd:dateTime"/>
     </message>
@@ -90,7 +91,7 @@
     </message>
     <message name="GetHotelsRequest">
         <part name="itineraryID" type="tns:itineraryID"/>
-        <part name="destination" type="xsd:string"/>
+        <part name="location" type="xsd:string"/>
         <part name="datetime" type="xsd:dateTime"/>
     </message>
     <message name="GetHotelsResponse">
@@ -118,12 +119,12 @@
             <output name="output5" message="tns:CancelPlanningResponse"/>
         </operation>
         <operation name="GetFlights">
-            <input name="input6" message="tns:GetItineraryRequest"/>
-            <output name="output6" message="tns:GetItineraryResponse"/>
+            <input name="input6" message="tns:GetFlightsRequest"/>
+            <output name="output6" message="tns:GetFlightsResponse"/>
         </operation>
         <operation name="GetHotels">
-            <input name="input7" message="tns:GetItineraryRequest"/>
-            <output name="output7" message="tns:GetItineraryResponse"/>
+            <input name="input7" message="tns:GetHotelsRequest"/>
+            <output name="output7" message="tns:GetHotelsResponse"/>
         </operation>
     </portType>
     <binding name="TravelGoodBinding" type="tns:TravelGoodPortType">

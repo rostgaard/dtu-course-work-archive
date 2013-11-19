@@ -52,7 +52,7 @@
         <scope name="Scope">
             <variables>
                 <variable name="GetFlightsOutLameDuck" xmlns:tns="http://lameduck.dtu.ws/" messageType="tns:getFlightsResponse"/>
-                <variable name="GetFlightsIn1" xmlns:tns="http://lameduck.dtu.ws/" messageType="tns:getFlights"/>
+                <variable name="GetFlightsInLameDuck" xmlns:tns="http://lameduck.dtu.ws/" messageType="tns:getFlights"/>
                 <variable name="GetFlightsIn" messageType="ns0:GetFlightsRequest"/>
                 <variable name="GetFlightsOut" messageType="ns0:GetFlightsResponse"/>
                 <variable name="AddHotelOut" messageType="ns0:AddHotelResponse"/>
@@ -186,7 +186,21 @@
                                     <correlation set="ItineraryCorrelation" initiate="no"/>
                                 </correlations>
                                 <sequence name="Sequence5">
-                                    <invoke name="LameDuckInvoke" partnerLink="LameDuckPartnerLink" operation="getFlights" xmlns:tns="http://lameduck.dtu.ws/" portType="tns:LameDuckService" inputVariable="GetFlightsIn1" outputVariable="GetFlightsOutLameDuck"/>
+                                    <assign name="Assign8">
+                                        <copy>
+                                            <from variable="GetFlightsIn" part="origin"/>
+                                            <to>$GetFlightsInLameDuck.parameters/arg0</to>
+                                        </copy>
+                                        <copy>
+                                            <from variable="GetFlightsIn" part="destination"/>
+                                            <to>$GetFlightsInLameDuck.parameters/arg1</to>
+                                        </copy>
+                                        <copy>
+                                            <from variable="GetFlightsIn" part="datetime"/>
+                                            <to>$GetFlightsInLameDuck.parameters/arg2</to>
+                                        </copy>
+                                    </assign>
+                                    <invoke name="LameDuckInvoke" partnerLink="LameDuckPartnerLink" operation="getFlights" xmlns:tns="http://lameduck.dtu.ws/" portType="tns:LameDuckService" inputVariable="GetFlightsInLameDuck" outputVariable="GetFlightsOutLameDuck"/>
                                     <assign name="Assign7">
                                         <copy>
                                             <from variable="GetFlightsOutLameDuck" part="parameters"/>
