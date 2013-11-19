@@ -16,29 +16,29 @@ import ws.dtu.niceview.HotelList;
  */
 public class HotelDatabase {
     
-    static Map bookingNoDB = new HashMap<String, HotelInformation>();
-    static Map cityDB = new HashMap<String, HotelList>();
+    static Map bookingNoMap = new HashMap<String, HotelInformation>();
+    static Map cityMap = new HashMap<String, HotelList>();
     
     public static void loadDatabase() {
         
     }
     
     private static void insert(HotelInformation hotel) {
-        bookingNoDB.put(hotel.getBookingNo(), hotel);
-        HotelList hotels = (HotelList)cityDB.get(hotel.getAddress().getCity());
+        bookingNoMap.put(hotel.getBookingNo(), hotel);
+        HotelList hotels = (HotelList)cityMap.get(hotel.getAddress().getCity());
         if (hotels == null) {
             hotels = new HotelList();
-            cityDB.put(hotel.getAddress().getCity(), hotels);
+            cityMap.put(hotel.getAddress().getCity(), hotels);
         }
         hotels.getHotels().add(hotel);
     }
     
     public static HotelList getHotels(String city, XMLGregorianCalendar arrival, XMLGregorianCalendar departure) {
-        return (HotelList)cityDB.get(city);
+        return (HotelList)cityMap.get(city);
     }
     
     public static HotelInformation getHotel(String bookingNo) {
-        HotelInformation hotel = (HotelInformation)bookingNoDB.get(bookingNo);
+        HotelInformation hotel = (HotelInformation)bookingNoMap.get(bookingNo);
         if (hotel == null) {
             // TODO: FAULT
         }
