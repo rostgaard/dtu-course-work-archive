@@ -1,4 +1,4 @@
-B77;10103;0cB77;10103;0c*.class
+*.class
 
 # Package Files #
 *.jar
@@ -29,8 +29,14 @@ B77;10103;0cB77;10103;0c*.class
 *.out
 *.synctex.gz
 
-.DS_Store
+
 Report/Main/final.pdf
+
+# Netbeans #
+.DS_Store
+private/
+build/
+dist/
 /TravelAgencyREST/nbproject/private/
 /TravelAgencyREST/build/
 /TravelAgencyREST/dist/
@@ -41,8 +47,11 @@ Report/Main/final.pdf
 /code/TravelGoodApp/dist/
 /code/TravelGoodTest/nbproject/private/
 /code/TravelGoodClient/nbproject/private/
-/Gammel Opgave/
+/GammelOpgave/
 /LameDuck/nbproject/private/
 /LameDuck/build//code/TravelGoodTest/build/
 /LameDuck/LameDuck/nbproject/private/
 /LameDuck/build/
+/NiceView/nbproject/private/
+/NiceView/build/
+/NiceView/dist/

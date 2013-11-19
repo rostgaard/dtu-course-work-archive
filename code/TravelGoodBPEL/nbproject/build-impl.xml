@@ -87,6 +87,7 @@
     </target>
     <target name="deps-clean" depends="init" unless="${no.dependencies}">
         <ant target="clean" inheritall="false" antfile="${project.LameDuck}/build.xml"/>
+        <ant target="clean" inheritall="false" antfile="${project.NiceView}/build.xml"/>
     </target>
     <target name="do-clean" depends="init,pre-clean">
         <delete dir="${build.dir}"/>

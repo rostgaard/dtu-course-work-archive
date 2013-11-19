@@ -74,6 +74,8 @@ public interface TravelGoodPortType {
         @WebParam(name = "itineraryID", partName = "itineraryID")
         String itineraryID);
 
+<<<<<<< HEAD
+=======
     /**
      * 
      * @param itineraryID
@@ -86,4 +88,5 @@ public interface TravelGoodPortType {
         @WebParam(name = "itineraryID", partName = "itineraryID")
         String itineraryID);
 
+>>>>>>> c1439566970f1c9d039eb69a84f7279510715bef
 }
