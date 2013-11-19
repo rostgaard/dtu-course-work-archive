@@ -91,8 +91,9 @@
     </message>
     <message name="GetHotelsRequest">
         <part name="itineraryID" type="tns:itineraryID"/>
-        <part name="location" type="xsd:string"/>
-        <part name="datetime" type="xsd:dateTime"/>
+        <part name="city" type="xsd:string"/>
+        <part name="arrival" type="xsd:dateTime"/>
+        <part name="departure" type="xsd:dateTime"/>
     </message>
     <message name="GetHotelsResponse">
         <part name="hotels" type="tns:hotelBookings"/>
