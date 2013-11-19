@@ -3,18 +3,19 @@ This report documents the design and implementation of a travel agency service T
 
 \section{Introduction to Web Services}
 The current trend within distributed systems is using the world wide web and it's technologies as a transportation and encapsulation layer. As these technologies are standardized, interoperability becomes less of a hassle than if every protocol should be implemented from scratch.\\\\
+%bla bla general about the wild west of web applications.
 From our perspective, and the bottom up, the interesting web technologies here are:
 
 \begin{description}
 \item[HTTP] The \textbf{H}yper\textbf{T}ext \textbf{T}ransfer \textbf{P}rotocol is a plaintext stateless request-response protocol with standardized methods and response codes. It is deployed everywhere, from coffee machines to mainframes and thus a robust technology to base a web application on. Most programming languages have auxiliary libraries that provide both HTTP client and server components for re-use.
 \item[XML] The e\textbf{X}tensible \textbf{M}arkup \textbf{L}anguage is a subset of the Standard Generalized Markup Language (SGML) and has a very famous cousin named Hypertext Markup Language - or HTML. XML is, basically, a general purpose markup language for adding semantics to documents. This semantic is further formalized by either linking a Document Type Definition (DTD), or an XML Schema (XSL) to the document. A large advantage of XML is that it, like HTTP, is a widely used standard, and most programming languages have libraries for using XML without having to parse everything. XML - being a generalized language - has the further advantage that you can build new standards as XML applications and inherit the well-formedness\footnote{Grammatically and semantically correct.} property of of XML itself, and the general XML parser can used.
-\item[WSDL] \textbf{T}he \textbf{W}eb \textbf{S}ervice \textbf{D}efinition Language is an XML application 
+\item[WSDL] \textbf{T}he \textbf{W}eb \textbf{S}ervice \textbf{D}efinition Language is an XML application introducing formalism to web application in an attempt to unify the diverging methods for collaborating via web.
 
 \item[SOAP] \textbf{S}hoddy \textbf{O}verbloated \textbf{A}ccess \textbf{P}rotocol is another XML application % Simple Object Access Protocol
-\item[BEPL] Business Process Execution Language is also an XML application
+\item[BEPL] \textbf{B}ullshit \textbf{P}olluted \textbf{E}xecution \textbf{L}anguage %Business Process Execution Language is also an XML application
 %TODO Should we discuss this one, or just mention it in the bank interface section? \item[UDDI/service discovery]
 
-\item[REST] Is standard 
+\item[REST] The concept \textbf{RE}presentational \textbf{S}tate \textbf{T}ransfer covers the architecture defined by Roy Fielding and is specific application to HTTP (1.1) and centralized around the concept of resources and representations\footnote{Typically states of resources}. Resources are accessed and changed by ordinary HTTP methods: GET, PUT, POST, DELETE.
 \item[JSON] \textbf{J}ava\textbf{S}cript \textbf{O}bject \textbf{N}otation
 
 %TODO Find reference to XML book and course book.
