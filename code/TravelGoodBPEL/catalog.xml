@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <nextCatalog catalog="nbproject/private/retriever/catalog.xml"/>
-    <system systemId="LameDuck/build/generated-sources/jax-ws/resources/LameDuckService.wsdl" uri="nb-uri:LameDuck#build/generated-sources/jax-ws/resources/LameDuckService.wsdl"/>
     <system systemId="NiceView/xml/NiceView.wsdl" uri="nb-uri:NiceView#src/java/xml/NiceView.wsdl"/>
     <system systemId="LameDuck/LameDuckService.wsdl" uri="nb-uri:LameDuck#src/java/LameDuckService.wsdl"/>
 </catalog>

@@ -17,7 +17,7 @@
     <import namespace="http://lameduck.dtu.ws" location="LameDuck/LameDuckService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <partnerLinks>
         <partnerLink name="NiceViewPartnerLink" xmlns:tns="http://niceview.dtu.ws/" partnerLinkType="tns:NiceView" partnerRole="NiceViewPortTypeRole"/>
-        <partnerLink name="PartnerLink1" xmlns:tns="http://lameduck.dtu.ws" partnerLinkType="tns:LameDuck" partnerRole="LameDuckPortTypeRole"/>
+        <partnerLink name="LameDuckPartnerLink" xmlns:tns="http://lameduck.dtu.ws" partnerLinkType="tns:LameDuck" partnerRole="LameDuckPortTypeRole"/>
         <partnerLink name="TravelGoodPartnerLink" xmlns:tns="http://travelgoodbpel.ws" partnerLinkType="tns:TravelGood" myRole="TravelGoodPortTypeRole"/>
     </partnerLinks>
     <variables>
@@ -54,6 +54,8 @@
         <reply name="ReplyCreateItinerary" partnerLink="TravelGoodPartnerLink" operation="CreateItinerary" portType="ns0:TravelGoodPortType" variable="CreateItineraryOut"></reply>
         <scope name="Scope">
             <variables>
+                <variable name="GetFlightsOutLameDuck" xmlns:tns="http://lameduck.dtu.ws" messageType="tns:getFlightsResponse"/>
+                <variable name="GetFlightsInLameDuck" xmlns:tns="http://lameduck.dtu.ws" messageType="tns:getFlightsRequest"/>
                 <variable name="GetHotelsOut" messageType="ns0:GetHotelsResponse"/>
                 <variable name="GetHotelsOutNiceView" xmlns:tns="http://niceview.dtu.ws/" messageType="tns:GetHotelsResponse"/>
                 <variable name="GetHotelsInNiceView" xmlns:tns="http://niceview.dtu.ws/" messageType="tns:GetHotelsRequest"/>
@@ -191,8 +193,27 @@
                                     <correlation set="ItineraryCorrelation" initiate="no"/>
                                 </correlations>
                                 <sequence name="Sequence5">
-                                    
-                                    
+                                    <assign name="Assign11">
+                                        <copy>
+                                            <from variable="GetFlightsIn" part="origin"/>
+                                            <to variable="GetFlightsInLameDuck" part="origin"/>
+                                        </copy>
+                                        <copy>
+                                            <from variable="GetFlightsIn" part="destination"/>
+                                            <to variable="GetFlightsInLameDuck" part="destination"/>
+                                        </copy>
+                                        <copy>
+                                            <from variable="GetFlightsIn" part="datetime"/>
+                                            <to variable="GetFlightsInLameDuck" part="date"/>
+                                        </copy>
+                                    </assign>
+                                    <invoke name="Invoke1" partnerLink="LameDuckPartnerLink" operation="getFlights" xmlns:tns="http://lameduck.dtu.ws" portType="tns:LameDuckPortType" inputVariable="GetFlightsInLameDuck" outputVariable="GetFlightsOutLameDuck"/>
+                                    <assign name="Assign12">
+                                        <copy>
+                                            <from variable="GetFlightsOutLameDuck" part="flights"/>
+                                            <to variable="GetFlightsOut" part="flights"/>
+                                        </copy>
+                                    </assign>
                                     <reply name="GetFlightsReply" partnerLink="TravelGoodPartnerLink" operation="GetFlights" portType="ns0:TravelGoodPortType" variable="GetFlightsOut"/>
                                 </sequence>
                             </onMessage>
