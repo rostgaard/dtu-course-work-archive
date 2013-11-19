@@ -12,10 +12,12 @@
     xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://travelgoodbpel.ws" xmlns:ns1="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension">
     <import namespace="http://travelgoodbpel.ws" location="TravelGood.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <import namespace="http://enterprise.netbeans.org/bpel/LameDuckServiceWrapper" location="LameDuckServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
-    <import namespace="http://lameduck.dtu.ws/" location="LameDuck/build/generated-sources/jax-ws/resources/LameDuckService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+   
     <import namespace="http://niceview.dtu.ws/" location="NiceView/xml/NiceView.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://lameduck.dtu.ws" location="LameDuck/LameDuckService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <partnerLinks>
         <partnerLink name="NiceViewPartnerLink" xmlns:tns="http://niceview.dtu.ws/" partnerLinkType="tns:NiceView" partnerRole="NiceViewPortTypeRole"/>
+        <partnerLink name="PartnerLink1" xmlns:tns="http://lameduck.dtu.ws" partnerLinkType="tns:LameDuck" partnerRole="LameDuckPortTypeRole"/>
         <partnerLink name="TravelGoodPartnerLink" xmlns:tns="http://travelgoodbpel.ws" partnerLinkType="tns:TravelGood" myRole="TravelGoodPortTypeRole"/>
     </partnerLinks>
     <variables>
@@ -56,8 +58,6 @@
                 <variable name="GetHotelsOutNiceView" xmlns:tns="http://niceview.dtu.ws/" messageType="tns:GetHotelsResponse"/>
                 <variable name="GetHotelsInNiceView" xmlns:tns="http://niceview.dtu.ws/" messageType="tns:GetHotelsRequest"/>
                 <variable name="GetHotelsIn" messageType="ns0:GetHotelsRequest"/>
-                <variable name="GetFlightsOutLameDuck" xmlns:tns="http://lameduck.dtu.ws/" messageType="tns:getFlightsResponse"/>
-                <variable name="GetFlightsInLameDuck" xmlns:tns="http://lameduck.dtu.ws/" messageType="tns:getFlights"/>
                 <variable name="GetFlightsIn" messageType="ns0:GetFlightsRequest"/>
                 <variable name="GetFlightsOut" messageType="ns0:GetFlightsResponse"/>
                 <variable name="AddHotelOut" messageType="ns0:AddHotelResponse"/>
@@ -191,27 +191,8 @@
                                     <correlation set="ItineraryCorrelation" initiate="no"/>
                                 </correlations>
                                 <sequence name="Sequence5">
-                                    <assign name="Assign8">
-                                        <copy>
-                                            <from variable="GetFlightsIn" part="origin"/>
-                                            <to>$GetFlightsInLameDuck.parameters/arg0</to>
-                                        </copy>
-                                        <copy>
-                                            <from variable="GetFlightsIn" part="destination"/>
-                                            <to>$GetFlightsInLameDuck.parameters/arg1</to>
-                                        </copy>
-                                        <copy>
-                                            <from variable="GetFlightsIn" part="datetime"/>
-                                            <to>$GetFlightsInLameDuck.parameters/arg2</to>
-                                        </copy>
-                                    </assign>
-                                    <invoke name="LameDuckInvoke" partnerLink="LameDuckPartnerLink" operation="getFlights" xmlns:tns="http://lameduck.dtu.ws/" portType="tns:LameDuckService" inputVariable="GetFlightsInLameDuck" outputVariable="GetFlightsOutLameDuck"/>
-                                    <assign name="Assign7">
-                                        <copy>
-                                            <from variable="GetFlightsOutLameDuck" part="parameters"/>
-                                            <to variable="GetFlightsOut" part="flights"/>
-                                        </copy>
-                                    </assign>
+                                    
+                                    
                                     <reply name="GetFlightsReply" partnerLink="TravelGoodPartnerLink" operation="GetFlights" portType="ns0:TravelGoodPortType" variable="GetFlightsOut"/>
                                 </sequence>
                             </onMessage>
