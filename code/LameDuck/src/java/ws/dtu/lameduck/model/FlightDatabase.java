@@ -5,8 +5,11 @@
 package ws.dtu.lameduck.model;
 
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import dk.dtu.imm.fastmoney.types.CreditCardInfoType;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.xml.datatype.XMLGregorianCalendar;
 import ws.dtu.lameduck.Flight;
 import ws.dtu.lameduck.FlightInformation;
@@ -19,8 +22,10 @@ import ws.dtu.lameduck.model.exceptions.NoSuchFlightIdentifier;
  */
 public final class FlightDatabase {
     
-    private static Map<String,Flight> db = new HashMap<String,Flight>();
-    
+    private static Map<String,List<FlightInformation>> db = new HashMap<String,List<FlightInformation>>();
+    private static List<String> bookings = new ArrayList<String>();
+    private static Map<String, FlightInformation> flightInfoByBooking = new HashMap<String, FlightInformation>();
+    private static String serviceName = "LameDuck";
     public static void loadDatabase() {
         XMLGregorianCalendar date1 = new XMLGregorianCalendarImpl();
         date1.setMonth(11);
@@ -32,13 +37,32 @@ public final class FlightDatabase {
         date2.setDay(18);
         date2.setYear(2013);
         
-        insert(generateFlight("Kastrup", "Kabul", date1, date2, "SAS"));
-        insert(new FlightInformation("Kabul", "Kastrup", date1, date2, "SAS002"));
-        insert(new FlightInformation("Kastrup", "Moscow", date1, date2, "SAS003"));
-        insert(new FlightInformation("Kastrup", "Afganistan", date1, date2, "SAS004"));
-        insert(new FlightInformation("Kastrup", "Irak", date1, date2, "SAS005"));
-        insert(new FlightInformation("Kastrup", "Libya", date1, date2, "SAS006"));
-        insert(new FlightInformation("Kastrup", "Kazakhstan", date1, date2, "SAS007"));  
+        Flight newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "SAS");
+        insert(generateFlightInformation(newFlight,"b0001", 200.0, serviceName ));
+        
+        newFlight = generateFlight("Kabul", "Kastrup", date1, date2, "SAS");
+        insert(generateFlightInformation(newFlight, "b0002", 250.0, serviceName));
+        
+          newFlight = generateFlight("Kabul", "Kastrup", date1, date2, "SAS");
+        insert(generateFlightInformation(newFlight, "b0008", 250.0, serviceName));
+        
+        newFlight = generateFlight("Kastrup", "Moscow", date1, date2, "SAS");
+        insert(generateFlightInformation(newFlight, "b0003", 300.0, serviceName));
+        
+        newFlight = generateFlight("Kastrup", "Afganistan", date1, date2, "SAS");
+        insert(generateFlightInformation(newFlight, "b0004", 200.0, serviceName));
+        
+        newFlight = generateFlight("Kastrup", "Irak", date1, date2, "SAS");
+        insert(generateFlightInformation(newFlight, "b0005", 220.0, serviceName));
+        
+        newFlight = generateFlight("Kastrup", "Libya", date1, date2, "SAS");
+        insert(generateFlightInformation(newFlight, "b0006", 150.0, serviceName));
+        
+        newFlight = generateFlight("Kastrup", "Kazakhstan", date1, date2, "SAS");
+        insert(generateFlightInformation(newFlight, "b0007", 200.0, serviceName));
+        
+        
+        
     }
     
     private static Flight generateFlight(String origin, String destination, XMLGregorianCalendar liftOff, XMLGregorianCalendar arrival, String carrier){
@@ -50,20 +74,86 @@ public final class FlightDatabase {
         newFlight.setCarrier(carrier);
         return newFlight;
     }
-    public static void insert (Flight flight) {
-        db.put(flight.getFlightID(), flight);
-    }
-    
-    public static FlightList getFlights(String startAirport, String destinationAirport, XMLGregorianCalendar date) {
-        FlightList retList = new FlightList();
-        return null;
-    }
-    
-    public static FlightInformation getFlight(String flightIdentfier) throws NoSuchFlightIdentifier {
-        if (!db.containsKey(flightIdentfier)){
-            throw new exceptions.NoSuchFlightIdentifier();
+    public static void insert (FlightInformation flightInfo) {
+        String key = flightInfo.getFlight().getOrigin();
+        if(db.containsKey(key)){
+            db.get(key).add(flightInfo);
+            flightInfoByBooking.put(flightInfo.getBookingNo(), flightInfo);
+        } else {
+            List<FlightInformation> newList = new ArrayList<FlightInformation>();
+            newList.add(flightInfo);
+            db.put(key, newList);
+            flightInfoByBooking.put(flightInfo.getBookingNo(), flightInfo);
         }
+    }
+    
+    public static FlightList getFlights(String origin, String destination, XMLGregorianCalendar date) {
+        FlightList retList = new FlightList();
         
-        return db.get(flightIdentfier);
+        List<FlightInformation> properOrigin = db.get(origin);
+        for(FlightInformation fi : properOrigin){
+            Flight flight = fi.getFlight();
+            if(flight.getDestination().equals(destination) && 
+                    compareDate(flight.getLiftOff(),date) &&
+                    !bookings.contains(fi.getBookingNo())){
+
+                retList.getFlights().add(fi);
+                                
+            }
+        }
+       
+        return retList;
+    }
+    
+
+    
+
+    private static FlightInformation generateFlightInformation(Flight newFlight, String bookingNo, double price, String serviceName) {
+        FlightInformation flightInfo = new FlightInformation();
+        flightInfo.setBookingNo(bookingNo);
+        flightInfo.setFlight(newFlight);
+        flightInfo.setPrice(price);
+        flightInfo.setReservationService(serviceName);
+        return flightInfo;
+        
+    }
+
+    private static boolean compareDate(XMLGregorianCalendar liftOff, XMLGregorianCalendar date) {
+        return liftOff.getDay() == date.getDay() &&
+                liftOff.getMonth() == date.getMonth() &&
+                liftOff.getYear() == date.getYear();
+    }
+
+    public static boolean bookFlight(String bookingNo, CreditCardInfoType creditCardInfo) {
+        // TODO: fail properly
+        
+        if(bookings.contains(bookingNo)){
+            return false;
+        } else {
+            
+            boolean result = pay(creditCardInfo, flightInfoByBooking.get(bookingNo).getPrice());
+            
+            if(result){
+                bookings.add(bookingNo);     
+            }
+            return result;
+        }
+    }
+    
+    
+
+    public static boolean cancelFlight(String bookingNo, double price, CreditCardInfoType creditCardInfo) {
+        // TODO: Fail properly
+        bookings.remove(bookingNo);
+        return refund(creditCardInfo, price);
+    }
+
+    private static boolean refund(CreditCardInfoType creditCardInfo, double price) {
+        // TODO: use bank service
+        return true;
+    }
+    private static boolean pay(CreditCardInfoType creditCardInfo, double price){
+        // TODO: use bank service
+        return true;
     }
 }

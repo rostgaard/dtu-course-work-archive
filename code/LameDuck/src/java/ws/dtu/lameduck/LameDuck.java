@@ -11,7 +11,7 @@ import ws.dtu.lameduck.model.FlightDatabase;
  *
  * @author Mikkel
  */
-@WebService(serviceName = "LameDuckService", portName = "LameDuckPortTypeBindingPort", endpointInterface = "ws.dtu.lameduck.LameDuckPortType", targetNamespace = "http://lameduck.dtu.ws", wsdlLocation = "WEB-INF/wsdl/LameDuck/LameDuckService.wsdl")
+@WebService(serviceName = "LameDuckService", portName = "LameDuckPort", endpointInterface = "ws.dtu.lameduck.LameDuckPortType", targetNamespace = "http://lameduck.dtu.ws/", wsdlLocation = "WEB-INF/wsdl/LameDuck/LameDuck.wsdl")
 public class LameDuck {
 
     public LameDuck(){
@@ -19,16 +19,15 @@ public class LameDuck {
     }
     public ws.dtu.lameduck.FlightList getFlights(java.lang.String origin, java.lang.String destination, javax.xml.datatype.XMLGregorianCalendar date) {
         return FlightDatabase.getFlights(origin, destination, date);
+                
     }
 
     public boolean bookFlight(java.lang.String bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInfo) {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return FlightDatabase.bookFlight(bookingNumber, creditCardInfo);
     }
 
     public boolean cancelFlight(java.lang.String bookingNumber, double price, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInfo) throws CancelFlightFault {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return FlightDatabase.cancelFlight(bookingNumber, price, creditCardInfo);
     }
     
 }

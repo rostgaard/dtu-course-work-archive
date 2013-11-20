@@ -9,20 +9,31 @@
     xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
     xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
     xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
-    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://travelgoodbpel.ws" xmlns:ns1="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension">
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" 
+    xmlns:ns0="http://travelgoodbpel.ws" 
+    xmlns:ns1="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension" 
+    xmlns:ld="http://lameduck.dtu.ws/" 
+    xmlns:nv="http://niceview.dtu.ws/" 
+    xmlns:sxxf="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/XPathFunctions" xmlns:ns2="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+    
     <import namespace="http://travelgoodbpel.ws" location="TravelGood.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
-    <import namespace="http://enterprise.netbeans.org/bpel/LameDuckServiceWrapper" location="LameDuckServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
-    <import namespace="http://lameduck.dtu.ws/" location="LameDuck/build/generated-sources/jax-ws/resources/LameDuckService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
-    <import namespace="http://niceview.dtu.ws/" location="NiceView/xml/NiceView.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://niceview.dtu.ws/" location="NiceView/ws/dtu/niceview/xml/NiceView.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://lameduck.dtu.ws/" location="LameDuck/ws/dtu/lameduck/xml/LameDuck.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <partnerLinks>
         <partnerLink name="NiceViewPartnerLink" xmlns:tns="http://niceview.dtu.ws/" partnerLinkType="tns:NiceView" partnerRole="NiceViewPortTypeRole"/>
+        <partnerLink name="LameDuckPartnerLink" xmlns:tns="http://lameduck.dtu.ws/" partnerLinkType="tns:LameDuck" partnerRole="LameDuckPortTypeRole"/>
         <partnerLink name="TravelGoodPartnerLink" xmlns:tns="http://travelgoodbpel.ws" partnerLinkType="tns:TravelGood" myRole="TravelGoodPortTypeRole"/>
     </partnerLinks>
     <variables>
         <variable name="hotelBookings" type="ns0:hotelBookings"/>
-        <variable name="AddFlightOut" messageType="ns0:AddFlightResponse"/>
-        <variable name="flightBookings" type="ns0:flightBookings"/>
-        <variable name="AddFlightIn" messageType="ns0:AddFlightRequest"/>
+        <variable name="flightBookings" type="ns0:flightBookings">
+            <sxed:editor>
+                <sxed:predicate path="$flightBookings/flightBooking[$flightCounter]" source="from"/>
+                <sxed:predicate path="$flightBookings/flightBooking[$flightCounter]" source="to"/>
+            </sxed:editor>
+        </variable>
+        <variable name="BookItineraryIn" messageType="ns0:BookItineraryRequest"/>
+        <variable name="BookItineraryOut" messageType="ns0:BookItineraryResponse"/>
         <variable name="CreateItineraryOut" messageType="ns0:CreateItineraryResponse"/>
         <variable name="CreateItineraryIn" xmlns:tns="http://travelgoodbpel.ws" messageType="ns0:CreateItineraryRequest"/>
     </variables>
@@ -52,14 +63,17 @@
         <reply name="ReplyCreateItinerary" partnerLink="TravelGoodPartnerLink" operation="CreateItinerary" portType="ns0:TravelGoodPortType" variable="CreateItineraryOut"></reply>
         <scope name="Scope">
             <variables>
+                <variable name="Planning" type="xs:boolean"/>
+                <variable name="GetFlightsOutLameDuck" xmlns:tns="http://lameduck.dtu.ws" messageType="ld:getFlightsResponse"/>
+                <variable name="GetFlightsInLameDuck" xmlns:tns="http://lameduck.dtu.ws" messageType="ld:getFlightsRequest"/>
                 <variable name="GetHotelsOut" messageType="ns0:GetHotelsResponse"/>
                 <variable name="GetHotelsOutNiceView" xmlns:tns="http://niceview.dtu.ws/" messageType="tns:GetHotelsResponse"/>
                 <variable name="GetHotelsInNiceView" xmlns:tns="http://niceview.dtu.ws/" messageType="tns:GetHotelsRequest"/>
                 <variable name="GetHotelsIn" messageType="ns0:GetHotelsRequest"/>
-                <variable name="GetFlightsOutLameDuck" xmlns:tns="http://lameduck.dtu.ws/" messageType="tns:getFlightsResponse"/>
-                <variable name="GetFlightsInLameDuck" xmlns:tns="http://lameduck.dtu.ws/" messageType="tns:getFlights"/>
                 <variable name="GetFlightsIn" messageType="ns0:GetFlightsRequest"/>
                 <variable name="GetFlightsOut" messageType="ns0:GetFlightsResponse"/>
+                <variable name="AddFlightOut" messageType="ns0:AddFlightResponse"/>
+                <variable name="AddFlightIn" messageType="ns0:AddFlightRequest"/>
                 <variable name="AddHotelOut" messageType="ns0:AddHotelResponse"/>
                 <variable name="AddHotelIn" messageType="ns0:AddHotelRequest"/>
                 <variable name="CancelPlanningOut" messageType="ns0:CancelPlanningResponse"/>
@@ -92,161 +106,253 @@
                 </onEvent>
             </eventHandlers>
             <sequence name="Sequence3">
+                <assign name="StartPlanning">
+                    <copy>
+                        <from>true()</from>
+                        <to variable="Planning"/>
+                    </copy>
+                </assign>
                 <while name="PlanningLoop">
                     <condition>true()</condition>
-                        <pick name="Pick1">
+                    <pick name="PickPlanning">
                         <onMessage partnerLink="TravelGoodPartnerLink" operation="AddFlight" portType="ns0:TravelGoodPortType" variable="AddFlightIn">
-                                <correlations>
-                                        <correlation set="ItineraryCorrelation" initiate="no"/>
-                                    </correlations>
-                                    <sequence>
-                                        <sequence name="PlanFlightSequence">
-                                            <assign name="PlanFlightCounterAssign">
-                                                    <copy>
-                                                        <from>count($flightBookings/flightBooking)</from>
-                                                        <to variable="counter"/>
-                                                    </copy>
-                                                </assign>
-                                                <assign name="Assign2">
-                                                    <copy>
-                                                        <from>true()</from>
-                                                            <to variable="AddFlightOut" part="status"/>
-                                                    </copy>
-                                                        <copy>
-                                                        <from variable="AddFlightIn" part="flightID"/>
-                                                            <to>$flightBookings/flightBooking[1 + $counter]/flightID
-                                                                    <sxed:editor>
-                                                                        <sxed:predicate path="$flightBookings/flightBooking[1 + $counter]" source="to"/>
-                                                                    </sxed:editor>
-                                                            </to>
-                                                    </copy>
-                                                        <copy>
-                                                        <from>'Planned'</from>
-                                                            <to>$flightBookings/flightBooking[1 + $counter]/status
-                                                                    <sxed:editor>
-                                                                        <sxed:predicate path="$flightBookings/flightBooking[1 + $counter]" source="to"/>
-                                                                    </sxed:editor>
-                                                            </to>
-                                                    </copy>
-                                                </assign>
-                                        </sequence>
-                                            <reply name="PlanFlightReply" partnerLink="TravelGoodPartnerLink" operation="AddFlight" portType="ns0:TravelGoodPortType" variable="AddFlightOut"/>
-                                    </sequence>
-                            </onMessage>
-                            <onMessage partnerLink="TravelGoodPartnerLink" operation="AddHotel" portType="ns0:TravelGoodPortType" variable="AddHotelIn">
-                                <correlations>
-                                    <correlation set="ItineraryCorrelation" initiate="no"/>
-                                </correlations>
-                                    <sequence>
-                                        <sequence name="PlanHotelSequence">
-                                            <assign name="PlanHotelCounterAssign">
-                                                    <copy>
-                                                        <from>count($hotelBookings/hotelBooking)</from>
-                                                        <to variable="counter"/>
-                                                    </copy>
-                                                </assign>
-                                                <assign name="PlanHotelAssign">
-                                                    <copy>
-                                                        <from>true()</from>
-                                                            <to variable="AddHotelOut" part="status"/>
-                                                    </copy>
-                                                        <copy>
-                                                        <from variable="AddHotelIn" part="hotelID"/>
-                                                            <to>$hotelBookings/hotelBooking[1 + $counter]/hotelID
-                                                                    <sxed:editor>
-                                                                        <sxed:predicate path="$hotelBookings/hotelBooking[1 + $counter]" source="to"/>
-                                                                    </sxed:editor>
-                                                            </to>
-                                                    </copy>
-                                                        <copy>
-                                                        <from>'Planned'</from>
-                                                            <to>$hotelBookings/hotelBooking[1 + $counter]/status
-                                                                    <sxed:editor>
-                                                                        <sxed:predicate path="$hotelBookings/hotelBooking[1 + $counter]" source="to"/>
-                                                                    </sxed:editor>
-                                                            </to>
-                                                    </copy>
-                                                </assign>
-                                        </sequence>
-                                            <reply name="PlanHotelReply" partnerLink="TravelGoodPartnerLink" operation="AddHotel" portType="ns0:TravelGoodPortType" variable="AddHotelOut"/>
-                                    </sequence>
-                            </onMessage>
-                            <onMessage partnerLink="TravelGoodPartnerLink" operation="CancelPlanning" portType="ns0:TravelGoodPortType" variable="CancelPlanningIn">
-                                <correlations>
-                                    <correlation set="ItineraryCorrelation" initiate="no"/>
-                                </correlations>
-                                <sequence name="Sequence4">
-                                    <assign name="Assign6">
+                            <correlations>
+                                <correlation set="ItineraryCorrelation" initiate="no"/>
+                            </correlations>
+                            <sequence>
+                                <sequence name="PlanFlightSequence">
+                                    <assign name="PlanFlightCounterAssign">
+                                        <copy>
+                                            <from>count($flightBookings/flightBooking)</from>
+                                            <to variable="counter"/>
+                                        </copy>
+                                    </assign>
+                                    <assign name="Assign2">
                                         <copy>
                                             <from>true()</from>
-                                            <to variable="CancelPlanningOut" part="status"/>
+                                            <to variable="AddFlightOut" part="status"/>
+                                        </copy>
+                                        <copy>
+                                            <from variable="AddFlightIn" part="flightInformation"/>
+                                            <to>$flightBookings/flightBooking[1 + $counter]/flightInformation
+                                                <sxed:editor>
+                                                    <sxed:predicate path="$flightBookings/flightBooking[1 + $counter]" source="to"/>
+                                                </sxed:editor>
+                                            </to>
+                                        </copy>
+                                        <copy>
+                                            <from>'Unconfirmed'</from>
+                                            <to>$flightBookings/flightBooking[1 + $counter]/status
+                                                <sxed:editor>
+                                                    <sxed:predicate path="$flightBookings/flightBooking[1 + $counter]" source="to"/>
+                                                </sxed:editor>
+                                            </to>
                                         </copy>
                                     </assign>
-                                    <reply name="Reply4" partnerLink="TravelGoodPartnerLink" operation="CancelPlanning" portType="ns0:TravelGoodPortType" variable="CancelPlanningOut"/>
-                                    <exit name="Exit1"/>
                                 </sequence>
-                            </onMessage>
-                            <onMessage partnerLink="TravelGoodPartnerLink" operation="GetFlights" portType="ns0:TravelGoodPortType" variable="GetFlightsIn">
-                                <correlations>
-                                    <correlation set="ItineraryCorrelation" initiate="no"/>
-                                </correlations>
-                                <sequence name="Sequence5">
-                                    <assign name="Assign8">
+                                <reply name="PlanFlightReply" partnerLink="TravelGoodPartnerLink" operation="AddFlight" portType="ns0:TravelGoodPortType" variable="AddFlightOut"/>
+                            </sequence>
+                        </onMessage>
+                        <onMessage partnerLink="TravelGoodPartnerLink" operation="AddHotel" portType="ns0:TravelGoodPortType" variable="AddHotelIn">
+                            <correlations>
+                                <correlation set="ItineraryCorrelation" initiate="no"/>
+                            </correlations>
+                            <sequence>
+                                <sequence name="PlanHotelSequence">
+                                    <assign name="PlanHotelCounterAssign">
                                         <copy>
-                                            <from variable="GetFlightsIn" part="origin"/>
-                                            <to>$GetFlightsInLameDuck.parameters/arg0</to>
-                                        </copy>
-                                        <copy>
-                                            <from variable="GetFlightsIn" part="destination"/>
-                                            <to>$GetFlightsInLameDuck.parameters/arg1</to>
-                                        </copy>
-                                        <copy>
-                                            <from variable="GetFlightsIn" part="datetime"/>
-                                            <to>$GetFlightsInLameDuck.parameters/arg2</to>
+                                            <from>count($hotelBookings/hotelBooking)</from>
+                                            <to variable="counter"/>
                                         </copy>
                                     </assign>
-                                    <invoke name="LameDuckInvoke" partnerLink="LameDuckPartnerLink" operation="getFlights" xmlns:tns="http://lameduck.dtu.ws/" portType="tns:LameDuckService" inputVariable="GetFlightsInLameDuck" outputVariable="GetFlightsOutLameDuck"/>
-                                    <assign name="Assign7">
+                                    <assign name="PlanHotelAssign">
                                         <copy>
-                                            <from variable="GetFlightsOutLameDuck" part="parameters"/>
-                                            <to variable="GetFlightsOut" part="flights"/>
+                                            <from>true()</from>
+                                            <to variable="AddHotelOut" part="status"/>
+                                        </copy>
+                                        <copy>
+                                            <from variable="AddHotelIn" part="hotelBookingNo"/>
+                                            <to>$hotelBookings/hotelBooking[1 + $counter]/hotelBookingNo
+                                                <sxed:editor>
+                                                    <sxed:predicate path="$hotelBookings/hotelBooking[1 + $counter]" source="to"/>
+                                                </sxed:editor>
+                                            </to>
+                                        </copy>
+                                        <copy>
+                                            <from>'Planned'</from>
+                                            <to>$hotelBookings/hotelBooking[1 + $counter]/status
+                                                <sxed:editor>
+                                                    <sxed:predicate path="$hotelBookings/hotelBooking[1 + $counter]" source="to"/>
+                                                </sxed:editor>
+                                            </to>
                                         </copy>
                                     </assign>
-                                    <reply name="GetFlightsReply" partnerLink="TravelGoodPartnerLink" operation="GetFlights" portType="ns0:TravelGoodPortType" variable="GetFlightsOut"/>
                                 </sequence>
-                            </onMessage>
-                            <onMessage partnerLink="TravelGoodPartnerLink" operation="GetHotels" portType="ns0:TravelGoodPortType" variable="GetHotelsIn">
-                                <correlations>
-                                    <correlation set="ItineraryCorrelation" initiate="no"/>
-                                </correlations>
-                                <sequence name="Sequence6">
-                                    <assign name="Assign9">
-                                        <copy>
-                                            <from variable="GetHotelsIn" part="city"/>
-                                            <to variable="GetHotelsInNiceView" part="city"/>
-                                        </copy>
-                                        <copy>
-                                            <from variable="GetHotelsIn" part="arrival"/>
-                                            <to variable="GetHotelsInNiceView" part="arrival"/>
-                                        </copy>
-                                        <copy>
-                                            <from variable="GetHotelsIn" part="departure"/>
-                                            <to variable="GetHotelsInNiceView" part="departure"/>
-                                        </copy>
-                                    </assign>
-                                    <invoke name="InvokeGetHotels" partnerLink="NiceViewPartnerLink" operation="GetHotels" xmlns:tns="http://niceview.dtu.ws/" portType="tns:NiceViewPortType" inputVariable="GetHotelsInNiceView" outputVariable="GetHotelsOutNiceView"/>
-                                    <assign name="Assign10">
-                                        <copy>
-                                            <from variable="GetHotelsOutNiceView" part="hotels"/>
-                                            <to variable="GetHotelsOut" part="hotels"/>
-                                        </copy>
-                                    </assign>
-                                    <reply name="GetHotelsReply" partnerLink="TravelGoodPartnerLink" operation="GetHotels" portType="ns0:TravelGoodPortType" variable="GetHotelsOut"/>
-                                </sequence>
-                            </onMessage>
-                        </pick>
+                                <reply name="PlanHotelReply" partnerLink="TravelGoodPartnerLink" operation="AddHotel" portType="ns0:TravelGoodPortType" variable="AddHotelOut"/>
+                            </sequence>
+                        </onMessage>
+                        <onMessage partnerLink="TravelGoodPartnerLink" operation="CancelPlanning" portType="ns0:TravelGoodPortType" variable="CancelPlanningIn">
+                            <correlations>
+                                <correlation set="ItineraryCorrelation" initiate="no"/>
+                            </correlations>
+                            <sequence name="Sequence4">
+                                <assign name="Assign6">
+                                    <copy>
+                                        <from>true()</from>
+                                        <to variable="CancelPlanningOut" part="status"/>
+                                    </copy>
+                                </assign>
+                                <reply name="Reply4" partnerLink="TravelGoodPartnerLink" operation="CancelPlanning" portType="ns0:TravelGoodPortType" variable="CancelPlanningOut"/>
+                                <exit name="Exit1"/>
+                            </sequence>
+                        </onMessage>
+                        <onMessage partnerLink="TravelGoodPartnerLink" operation="GetFlights" portType="ns0:TravelGoodPortType" variable="GetFlightsIn">
+                            <correlations>
+                                <correlation set="ItineraryCorrelation" initiate="no"/>
+                            </correlations>
+                            <sequence name="Sequence5">
+                                <assign name="Assign11">
+                                    <copy>
+                                        <from variable="GetFlightsIn" part="origin"/>
+                                        <to variable="GetFlightsInLameDuck" part="origin"/>
+                                    </copy>
+                                    <copy>
+                                        <from variable="GetFlightsIn" part="destination"/>
+                                        <to variable="GetFlightsInLameDuck" part="destination"/>
+                                    </copy>
+                                    <copy>
+                                        <from variable="GetFlightsIn" part="datetime"/>
+                                        <to variable="GetFlightsInLameDuck" part="datetime"/>
+                                    </copy>
+                                </assign>
+                                <invoke name="GetFlightsInvoke" partnerLink="LameDuckPartnerLink" operation="getFlights" xmlns:tns="http://lameduck.dtu.ws/" portType="tns:LameDuckPortType" inputVariable="GetFlightsInLameDuck" outputVariable="GetFlightsOutLameDuck"/>
+                                <assign name="Assign12">
+                                    <copy>
+                                        <from variable="GetFlightsOutLameDuck" part="flights"/>
+                                        <to variable="GetFlightsOut" part="flights"/>
+                                    </copy>
+                                </assign>
+                                <reply name="GetFlightsReply" partnerLink="TravelGoodPartnerLink" operation="GetFlights" portType="ns0:TravelGoodPortType" variable="GetFlightsOut"/>
+                            </sequence>
+                        </onMessage>
+                        <onMessage partnerLink="TravelGoodPartnerLink" operation="GetHotels" portType="ns0:TravelGoodPortType" variable="GetHotelsIn">
+                            <correlations>
+                                <correlation set="ItineraryCorrelation" initiate="no"/>
+                            </correlations>
+                            <sequence name="Sequence6">
+                                <assign name="Assign9">
+                                    <copy>
+                                        <from variable="GetHotelsIn" part="city"/>
+                                        <to variable="GetHotelsInNiceView" part="city"/>
+                                    </copy>
+                                    <copy>
+                                        <from variable="GetHotelsIn" part="arrival"/>
+                                        <to variable="GetHotelsInNiceView" part="arrival"/>
+                                    </copy>
+                                    <copy>
+                                        <from variable="GetHotelsIn" part="departure"/>
+                                        <to variable="GetHotelsInNiceView" part="departure"/>
+                                    </copy>
+                                </assign>
+                                <invoke name="GetHotelsInvoke" partnerLink="NiceViewPartnerLink" operation="GetHotels" xmlns:tns="http://niceview.dtu.ws/" portType="tns:NiceViewPortType" inputVariable="GetHotelsInNiceView" outputVariable="GetHotelsOutNiceView"/>
+                                <assign name="Assign10">
+                                    <copy>
+                                        <from variable="GetHotelsOutNiceView" part="hotels"/>
+                                        <to variable="GetHotelsOut" part="hotels"/>
+                                    </copy>
+                                </assign>
+                                <reply name="GetHotelsReply" partnerLink="TravelGoodPartnerLink" operation="GetHotels" portType="ns0:TravelGoodPortType" variable="GetHotelsOut"/>
+                            </sequence>
+                        </onMessage>
+                        <onMessage partnerLink="TravelGoodPartnerLink" operation="BookItinerary" portType="ns0:TravelGoodPortType" variable="BookItineraryIn">
+                            <correlations>
+                                <correlation set="ItineraryCorrelation" initiate="no"/>
+                            </correlations>
+                            <assign name="Assign13">
+                                <copy>
+                                    <from>false()</from>
+                                    <to variable="Planning"/>
+                                </copy>
+                            </assign>
+                        </onMessage>
+                    </pick>
                 </while>
             </sequence>
         </scope>
+        <flow name="BookFlow">
+            <sequence name="FlowSequence">
+                <forEach name="ForEachFlight" parallel="no" counterName="flightCounter">
+                    <startCounterValue>1</startCounterValue>
+                    <finalCounterValue>count($flightBookings/flightBooking)</finalCounterValue>
+                    <scope name="BookFlightScope">
+                        <variables>
+                            <variable name="CancelFlightOut" messageType="ld:cancelFlightResponse"/>
+                            <variable name="CancelFlightIn" messageType="ld:cancelFlightRequest"/>
+                            <variable name="BookFlightOut" messageType="ld:bookFlightResponse"/>
+                            <variable name="BookFlightIn" messageType="ld:bookFlightRequest"/>
+                        </variables>
+                        <compensationHandler>
+                            <sequence name="Sequence8">
+                                <assign name="Assign16">
+                                    <copy>
+                                        <from variable="BookFlightIn" part="bookingNumber"/>
+                                        <to variable="CancelFlightIn" part="bookingNumber"/>
+                                    </copy>
+                                    <copy>
+                                        <from variable="BookFlightIn" part="creditCardInfo"/>
+                                        <to variable="CancelFlightIn" part="creditCardInfo"/>
+                                    </copy>
+                                </assign>
+                                <invoke name="CancelFlightInvoke" partnerLink="LameDuckPartnerLink" operation="cancelFlight" portType="ld:LameDuckPortType" inputVariable="CancelFlightIn" outputVariable="CancelFlightOut"/>
+                                <assign name="Assign17">
+                                    <copy>
+                                        <from>'Canceled'</from>
+                                        <to>$flightBookings/flightBooking[$flightCounter]/status
+                                            <sxed:editor>
+                                                <sxed:predicate path="$flightBookings/flightBooking[$flightCounter]" source="to"/>
+                                            </sxed:editor>
+                                        </to>
+                                    </copy>
+                                </assign>
+                            </sequence>
+                        </compensationHandler>
+                        <sequence name="Sequence7">
+                            <assign name="Assign14">
+                                <copy>
+                                    <from>$flightBookings/flightBooking[$flightCounter]/flightInformation/ld:bookingNo
+                                        <sxed:editor>
+                                            <sxed:predicate path="$flightBookings/flightBooking[$flightCounter]" source="from"/>
+                                        </sxed:editor>
+                                    </from>
+                                    <to variable="BookFlightIn" part="bookingNumber"/>
+                                </copy>
+                                <copy>
+                                    <from variable="BookItineraryIn" part="ccInformation"/>
+                                    <to variable="BookFlightIn" part="creditCardInfo"/>
+                                </copy>
+                            </assign>
+                            <invoke name="Invoke2" partnerLink="LameDuckPartnerLink" operation="bookFlight" portType="ld:LameDuckPortType" inputVariable="BookFlightIn" outputVariable="BookFlightOut"/>
+                            <assign name="Assign15">
+                                <copy>
+                                    <from>'Confirmed'</from>
+                                    <to>$flightBookings/flightBooking[$flightCounter]/status
+                                        <sxed:editor>
+                                            <sxed:predicate path="$flightBookings/flightBooking[$flightCounter]" source="to"/>
+                                        </sxed:editor>
+                                    </to>
+                                </copy>
+                            </assign>
+                        </sequence>
+                    </scope>
+                </forEach>
+            </sequence>
+        </flow>
+        <assign name="BookingConfirmedAssign">
+            <copy>
+                <from>'Confirmed'</from>
+                <to variable="BookItineraryOut" part="status"/>
+            </copy>
+        </assign>
+        <reply name="BookItineraryReply" partnerLink="TravelGoodPartnerLink" operation="BookItinerary" portType="ns0:TravelGoodPortType" variable="BookItineraryOut"/>
     </sequence>
 </process>
