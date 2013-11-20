@@ -8,29 +8,20 @@
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
              xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" 
              xmlns:bs="urn://types.fastmoney.imm.dtu.dk"
-             xmlns:nv="http://niceview.dtu.ws/">
+             xmlns:nv="http://niceview.dtu.ws/"
+             xmlns:ld="http://lameduck.dtu.ws/">
     <types>
         <xsd:schema targetNamespace="http://travelgoodbpel.ws" xmlns:tns="http://travelgoodbpel.ws">
             <xsd:import namespace="urn://types.fastmoney.imm.dtu.dk" schemaLocation="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1"/>
+            <xsd:import namespace="http://lameduck.dtu.ws/" schemaLocation="LameDuck/ws/dtu/lameduck/xml/LameDuck.xsd"/>
             <xsd:import namespace="http://niceview.dtu.ws/" schemaLocation="NiceView/ws/dtu/niceview/xml/NiceView.xsd"/>
+            
             <xsd:simpleType name="itineraryID">
                 <xsd:restriction base="xsd:string"/>
             </xsd:simpleType>
-            <xsd:simpleType name="flightBookingNo">
-                <xsd:restriction base="xsd:string"/>
-            </xsd:simpleType>
-            <xsd:complexType name="flight">
-                <xsd:sequence>
-                    <xsd:element name="flightBookingNo" type="tns:flightBookingNo"></xsd:element>
-                    <xsd:element name="departure" type="xsd:dateTime"></xsd:element>
-                    <xsd:element name="arrival" type="xsd:dateTime"></xsd:element>
-                    <xsd:element name="origin" type="xsd:string"></xsd:element>
-                    <xsd:element name="destination" type="xsd:string"></xsd:element>
-                </xsd:sequence>
-            </xsd:complexType>
             <xsd:complexType name="flightBooking">
                 <xsd:sequence>
-                    <xsd:element name="flight" type="tns:flight"></xsd:element>
+                    <xsd:element name="flightInformation" type="ld:flightInformation"></xsd:element>
                     <xsd:element name="status" type="xsd:string"></xsd:element>
                 </xsd:sequence>
             </xsd:complexType>
@@ -60,7 +51,7 @@
     </message>
     <message name="AddFlightRequest">
         <part name="itineraryID" type="tns:itineraryID"/>
-        <part name="flight" type="tns:flight"/>
+        <part name="flightInformation" type="ld:flightInformation"/>
     </message>
     <message name="AddFlightResponse">
         <part name="status" type="xsd:boolean"/>
@@ -99,7 +90,7 @@
         <part name="datetime" type="xsd:dateTime"/>
     </message>
     <message name="GetFlightsResponse">
-        <part name="flights" type="tns:flightBookings"/>
+        <part name="flights" type="ld:flightList"/>
     </message>
     <message name="GetHotelsRequest">
         <part name="itineraryID" type="tns:itineraryID"/>
