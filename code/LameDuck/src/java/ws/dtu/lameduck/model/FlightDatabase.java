@@ -78,12 +78,12 @@ public final class FlightDatabase {
         String key = flightInfo.getFlight().getOrigin();
         if(db.containsKey(key)){
             db.get(key).add(flightInfo);
-            flightInfoByBooking.put(flightInfo.getBookingNumber(), flightInfo);
+            flightInfoByBooking.put(flightInfo.getBookingNo(), flightInfo);
         } else {
             List<FlightInformation> newList = new ArrayList<FlightInformation>();
             newList.add(flightInfo);
             db.put(key, newList);
-            flightInfoByBooking.put(flightInfo.getBookingNumber(), flightInfo);
+            flightInfoByBooking.put(flightInfo.getBookingNo(), flightInfo);
         }
     }
     
@@ -95,7 +95,7 @@ public final class FlightDatabase {
             Flight flight = fi.getFlight();
             if(flight.getDestination().equals(destination) && 
                     compareDate(flight.getLiftOff(),date) &&
-                    !bookings.contains(fi.getBookingNumber())){
+                    !bookings.contains(fi.getBookingNo())){
 
                 retList.getFlights().add(fi);
                                 
@@ -108,9 +108,9 @@ public final class FlightDatabase {
 
     
 
-    private static FlightInformation generateFlightInformation(Flight newFlight, String bookingNumber, double price, String serviceName) {
+    private static FlightInformation generateFlightInformation(Flight newFlight, String bookingNo, double price, String serviceName) {
         FlightInformation flightInfo = new FlightInformation();
-        flightInfo.setBookingNumber(bookingNumber);
+        flightInfo.setBookingNo(bookingNo);
         flightInfo.setFlight(newFlight);
         flightInfo.setPrice(price);
         flightInfo.setReservationService(serviceName);
@@ -124,17 +124,17 @@ public final class FlightDatabase {
                 liftOff.getYear() == date.getYear();
     }
 
-    public static boolean bookFlight(String bookingNumber, CreditCardInfoType creditCardInfo) {
+    public static boolean bookFlight(String bookingNo, CreditCardInfoType creditCardInfo) {
         // TODO: fail properly
         
-        if(bookings.contains(bookingNumber)){
+        if(bookings.contains(bookingNo)){
             return false;
         } else {
             
-            boolean result = pay(creditCardInfo, flightInfoByBooking.get(bookingNumber).getPrice());
+            boolean result = pay(creditCardInfo, flightInfoByBooking.get(bookingNo).getPrice());
             
             if(result){
-                bookings.add(bookingNumber);     
+                bookings.add(bookingNo);     
             }
             return result;
         }
@@ -142,9 +142,9 @@ public final class FlightDatabase {
     
     
 
-    public static boolean cancelFlight(String bookingNumber, double price, CreditCardInfoType creditCardInfo) {
+    public static boolean cancelFlight(String bookingNo, double price, CreditCardInfoType creditCardInfo) {
         // TODO: Fail properly
-        bookings.remove(bookingNumber);
+        bookings.remove(bookingNo);
         return refund(creditCardInfo, price);
     }
 

@@ -11,7 +11,7 @@ import ws.dtu.lameduck.model.FlightDatabase;
  *
  * @author Mikkel
  */
-@WebService(serviceName = "LameDuckService", portName = "LameDuckPortTypeBindingPort", endpointInterface = "ws.dtu.lameduck.LameDuckPortType", targetNamespace = "http://lameduck.dtu.ws", wsdlLocation = "WEB-INF/wsdl/LameDuck/LameDuckService.wsdl")
+@WebService(serviceName = "LameDuckService", portName = "LameDuckPort", endpointInterface = "ws.dtu.lameduck.LameDuckPortType", targetNamespace = "http://lameduck.dtu.ws/", wsdlLocation = "WEB-INF/wsdl/LameDuck/LameDuck.wsdl")
 public class LameDuck {
 
     public LameDuck(){
