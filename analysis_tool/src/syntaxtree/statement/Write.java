@@ -1,9 +1,13 @@
 package syntaxtree.statement;
 
+import java.util.ArrayList;
+
+import analysis.Definition;
 import analysis.RDProgramState;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
+import flowgraph.datastructure.VariableSet;
 import syntaxtree.Symbols;
 import syntaxtree.expression.Expression;
 
@@ -11,7 +15,7 @@ import syntaxtree.expression.Expression;
  * Data representation for read statements
  *
  */
-public class Write extends Statement {
+public class Write extends Statement{
 
     private Expression expr;
 
@@ -38,7 +42,18 @@ public class Write extends Statement {
 
     @Override
     public RDProgramState RD(RDProgramState currentState) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	//RDentry
+    	ArrayList<Definition> exit = currentState.getRDExit(getLabel()-1);
+    	currentState.addRDentry(getLabel(), exit);
+
+    	//RDexit
+    	ArrayList<Definition> entry = currentState.getRDEntry(getLabel());
+    	//killRD([write a]l) = ø
+    	//genRD([[write a]l) = ø    	
+    	currentState.addRDexit(getLabel(), entry);
+    	  	
+        return currentState;
+
     }
     
     @Override
@@ -60,6 +75,10 @@ public class Write extends Statement {
     public FlowSet flow() {
         return FlowSet.emptySet;
     }
-    
-    
+
+    @Override
+    public VariableSet getVariable() {
+    	return expr.getVariable();
+    }
+     
 }

@@ -10,6 +10,10 @@ public class Node implements Comparable<Node>{
         this.s = s;
     }
 
+    public VariableSet getVariables(){
+		return s.getVariable();
+    }
+    
     public int getLabel() {
         return s.getLabel();
     }

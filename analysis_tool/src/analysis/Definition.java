@@ -30,4 +30,13 @@ public class Definition {
 		}
 		return false;
 	}
+	
+	@Override
+	public String toString(){
+		try{
+			return "("+identifier.getId() + ", " + label.getLabel() +")";	
+		}catch(NullPointerException e){
+			return "("+identifier.getId() + ", null)";
+		}
+	}
 }

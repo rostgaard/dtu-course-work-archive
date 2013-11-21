@@ -1,9 +1,13 @@
 package syntaxtree.statement;
 
+import java.util.ArrayList;
+
+import analysis.Definition;
 import analysis.RDProgramState;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
+import flowgraph.datastructure.VariableSet;
 import syntaxtree.Symbols;
 import syntaxtree.expression.Variable;
 import syntaxtree.expression.Expression;
@@ -64,7 +68,19 @@ public class ArrayAssignment extends Statement {
 
     @Override
     public RDProgramState RD(RDProgramState currentState) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	//RDentry
+    	ArrayList<Definition> exit = currentState.getRDExit(getLabel()-1);
+    	currentState.addRDentry(getLabel(), exit);
+
+    	//RDexit
+    	ArrayList<Definition> entry = currentState.getRDEntry(getLabel());
+    	//killRD(read A[a]) = {(A, l'}| b(l') is a declaration or an assignment to A[]}    	
+    	entry.removeAll(currentState.kill(id, entry));
+    	//genRD(read A[a]) = {(A[a], l)}
+    	entry.addAll(currentState.gen(id, new Node(this)));
+
+    	currentState.addRDexit(getLabel(), entry);
+    	return currentState;
     }
 
     @Override
@@ -87,5 +103,11 @@ public class ArrayAssignment extends Statement {
         return FlowSet.emptySet;
     }
     
-    
+    @Override
+    public VariableSet getVariable() {
+    	return VariableSet.factory().addVariable(id)
+    			.union(idx.getVariable())
+    			.union(expr.getVariable());
+    }
+       
 }
