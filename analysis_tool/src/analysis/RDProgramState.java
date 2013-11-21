@@ -4,10 +4,7 @@
  */
 package analysis;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import flowgraph.datastructure.Node;
 import syntaxtree.declaration.Declaration;
@@ -19,8 +16,8 @@ import syntaxtree.expression.Variable;
  */
 public class RDProgramState {
 
-	private HashMap<Integer, ArrayList<Definition>> RDentry = new HashMap<Integer, ArrayList<Definition>>();
-	private HashMap<Integer, ArrayList<Definition>> RDexit = new HashMap<Integer, ArrayList<Definition>>();
+	private HashMap<Integer, TreeSet<Definition>> RDentry = new HashMap<Integer, TreeSet<Definition>>();
+	private HashMap<Integer, TreeSet<Definition>> RDexit = new HashMap<Integer, TreeSet<Definition>>();
 
 	/**
 	 * Empty constructor
@@ -32,7 +29,7 @@ public class RDProgramState {
 	 * @param initialDefinitions
 	 */
 	public RDProgramState (List<Declaration> initialDefinitions) {
-		ArrayList<Definition> definitions = new ArrayList<>();
+        TreeSet<Definition> definitions = new TreeSet<>();
 		for (Declaration d: initialDefinitions) {
 			definitions.add(new Definition(d.getId(), null));
 		}
@@ -41,7 +38,7 @@ public class RDProgramState {
 	
 	public void union(ArrayList<Definition> definitions,  HashMap<Integer, ArrayList<Definition>> RDEntry,  HashMap<Integer, ArrayList<Definition>> RDExit){
 		for (Map.Entry<Integer, ArrayList<Definition>> entry : RDEntry.entrySet()) {
-		    ArrayList<Definition> defs = new ArrayList<Definition>();
+            TreeSet<Definition> defs = new TreeSet<Definition>();
 			int key = entry.getKey();
 		    ArrayList<Definition> value = entry.getValue();
 		    
@@ -51,7 +48,7 @@ public class RDProgramState {
 		}
 		
 		for (Map.Entry<Integer, ArrayList<Definition>> entry : RDExit.entrySet()) {
-		    ArrayList<Definition> defs = new ArrayList<Definition>();
+            TreeSet<Definition> defs = new TreeSet<Definition>();
 			int key = entry.getKey();
 		    ArrayList<Definition> value = entry.getValue();
 		    
@@ -61,20 +58,20 @@ public class RDProgramState {
 		}
 	}
 
-	public void addRDentry(int label, ArrayList<Definition> definitions){
+	public void addRDentry(int label, TreeSet<Definition> definitions){
 		RDentry.put(label, definitions);			
 	}
 
-	public void addRDexit(int label, ArrayList<Definition> definitions){
+	public void addRDexit(int label, TreeSet<Definition> definitions){
 		RDexit.put(label, definitions);
 	}
 
-	public ArrayList<Definition> kill(Variable var, ArrayList<Definition> definitions){
+	public TreeSet<Definition> kill(Variable var, TreeSet<Definition> definitions){
 		//create a definition of the variable parameter
 		Definition def = new Definition(var, null);
 
 		//definitions to be killed
-		ArrayList<Definition> kills = new ArrayList<Definition>();
+        TreeSet<Definition> kills = new TreeSet<Definition>();
 
 		//find all definitions to be killed
 		for(Definition definition : definitions){
@@ -96,13 +93,13 @@ public class RDProgramState {
 		return definitions;
 	}
 
-	public ArrayList<Definition> getRDEntry(int label){
-		ArrayList<Definition> defs = new ArrayList<Definition>();
+	public TreeSet<Definition> getRDEntry(int label){
+        TreeSet<Definition> defs = new TreeSet<Definition>();
 		defs.addAll(RDentry.get(label));
 		return defs;
 	}
-	public ArrayList<Definition> getRDExit(int label){
-		ArrayList<Definition> defs = new ArrayList<Definition>();
+	public TreeSet<Definition> getRDExit(int label){
+        TreeSet<Definition> defs = new TreeSet<>();
 		try{
 			defs.addAll((label <= 0) ? RDentry.get(1) : RDexit.get(label));
 		}catch(NullPointerException e){
@@ -112,11 +109,11 @@ public class RDProgramState {
 		return defs;
 	}
 
-	public HashMap<Integer, ArrayList<Definition>> getRDentry(){
+	public HashMap<Integer, TreeSet<Definition>> getRDentry(){
 		return RDentry;	
 	}
 
-	public HashMap<Integer, ArrayList<Definition>> getRDexit(){
+	public HashMap<Integer, TreeSet<Definition>> getRDexit(){
 		return RDexit;	
 	}
 }

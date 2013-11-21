@@ -11,7 +11,7 @@ import syntaxtree.expression.Variable;
  *
  * @author krc
  */
-public class Definition {
+public class Definition implements Comparable {
 
     Variable identifier = null;
     Node label = null;
@@ -26,7 +26,7 @@ public class Definition {
 		if(arg instanceof Definition){
 			Definition that = (Definition) arg; //type casting
 			//if the two identifiers are equals then return true otherwise false is returned
-			return this.identifier.getId().equals(that.identifier.getId()) ? true : false; 			
+			return this.identifier.getId().equals(that.identifier.getId());
 		}
 		return false;
 	}
@@ -39,4 +39,32 @@ public class Definition {
 			return "("+identifier.getId() + ", null)";
 		}
 	}
+
+    @Override
+    public int compareTo(Object arg) {
+        if(arg instanceof Definition){
+            Definition that = (Definition) arg; //type casting
+
+            if (this.label==null) {
+                return -1;
+            }
+
+            if (that.label==null) {
+                return 1;
+            }
+
+            Integer thisLabel = this.label.getLabel();
+            Integer thatLabel = that.label.getLabel();
+
+            if (thisLabel==thatLabel) {
+                return this.identifier.getId().compareTo(that.identifier.getId());
+            }else if(thisLabel>thatLabel) {
+                return 1;
+            }else {
+                return -1;
+            }
+        }
+
+        return -1;
+    }
 }

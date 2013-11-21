@@ -1,6 +1,8 @@
 package syntaxtree.statement;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.TreeSet;
 
 import analysis.Definition;
 import analysis.RDProgramState;
@@ -28,13 +30,13 @@ public class Skip extends Statement {
     @Override
     public RDProgramState RD(RDProgramState currentState) {  	
      	//RDentry
-    	ArrayList<Definition> exit = currentState.getRDExit(getLabel()-1);
+        TreeSet<Definition> exit = currentState.getRDExit(getLabel()-1);
     	currentState.addRDentry(getLabel(), exit);
 
     	//RDexit
-    	ArrayList<Definition> entry = currentState.getRDEntry(getLabel());
-    	//killRD([skip]l) = ø
-    	//genRD([[skip]l) = ø
+        TreeSet<Definition> entry = currentState.getRDEntry(getLabel());
+    	//killRD([skip]l) = ï¿½
+    	//genRD([[skip]l) = ï¿½
     	currentState.addRDexit(getLabel(), entry);
     	return currentState;
     }

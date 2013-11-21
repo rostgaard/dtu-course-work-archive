@@ -1,4 +1,6 @@
 
+import flowgraph.WorklistAlgorithm;
+import flowgraph.datastructure.FlowSet;
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
 
@@ -53,21 +55,23 @@ public class Main {
                     s.setLabel(seq);
                     s.RD(currentState);
                 }
-                
+
                 System.out.println (tree.getStmts().toStringWithLabel());
 //                System.out.println("Flow");
 //                System.out.println (tree.getStmts().flow());
 //                System.out.println("RD result:");
 //                System.out.println(currentState.getDefinitions());
-                System.out.println("RDentry:");
-                System.out.println(currentState.getRDentry().toString());
-                System.out.println("RDexit:");
-                System.out.println(currentState.getRDexit().toString());
+//                System.out.println("RDentry:");
+//                System.out.println(currentState.getRDentry().toString());
+//                System.out.println("RDexit:");
+//                System.out.println(currentState.getRDexit().toString());
                                    
                 //System.out.println (tree.getStmts().labelTable());
                 
                 //System.out.println(tree.toString());
 //				printTree(tree,0);
+                FlowSet flows = tree.getStmts().flow();
+                WorklistAlgorithm.calculate(flows,tree.getStmts().lables(), tree, currentState);
             }
         } catch (RecognitionException e) {
             e.printStackTrace();

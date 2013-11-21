@@ -3,6 +3,8 @@ low int a;
 high int x;
 int z;
 a:=10;
+x:=4;
+a:=3;
 x := a+b;
 while a < 1 (* Comment here *) do
 a := a+1;

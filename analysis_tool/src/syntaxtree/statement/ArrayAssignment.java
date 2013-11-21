@@ -1,6 +1,8 @@
 package syntaxtree.statement;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.TreeSet;
 
 import analysis.Definition;
 import analysis.RDProgramState;
@@ -69,11 +71,11 @@ public class ArrayAssignment extends Statement {
     @Override
     public RDProgramState RD(RDProgramState currentState) {
     	//RDentry
-    	ArrayList<Definition> exit = currentState.getRDExit(getLabel()-1);
+        TreeSet<Definition> exit = currentState.getRDExit(getLabel()-1);
     	currentState.addRDentry(getLabel(), exit);
 
     	//RDexit
-    	ArrayList<Definition> entry = currentState.getRDEntry(getLabel());
+        TreeSet<Definition> entry = currentState.getRDEntry(getLabel());
     	//killRD(read A[a]) = {(A, l'}| b(l') is a declaration or an assignment to A[]}    	
     	entry.removeAll(currentState.kill(id, entry));
     	//genRD(read A[a]) = {(A[a], l)}
