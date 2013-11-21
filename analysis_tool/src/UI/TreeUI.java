@@ -1,3 +1,4 @@
+package UI;
 /*
  * Copyright (c) 2003, the JUNG Project and the Regents of the University of
  * California All rights reserved.

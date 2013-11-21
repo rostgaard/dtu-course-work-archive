@@ -1,5 +1,6 @@
 package syntaxtree.expression;
 
+import flowgraph.datastructure.VariableSet;
 import syntaxtree.*;
 
 /**
@@ -11,7 +12,7 @@ public class OperationExpression extends Expression{
 	private Expression expr1;
 	private Expression expr2;
 	private ArithmeticOperation ao;
-	
+
 	public OperationExpression(Expression expr1, Expression expr2, ArithmeticOperation ao){
 		this.expr1 = expr1;
 		this.expr2 = expr2;
@@ -41,13 +42,19 @@ public class OperationExpression extends Expression{
 	public void setAo(ArithmeticOperation ao) {
 		this.ao = ao;
 	}
-	
+
 	public String debugInformation() {
 		return "\nClass: " + getClass().getSimpleName() + "\nExpression1: " + expr1.toString() + "\nExression2: " + expr2.toString() + "\nArithmetic operation: " + ao.toString() + "\n";
 	}
-        
-        @Override
-        public String toString() {
-            return expr1 + " " + Symbols.symbolOf(ao) +" "+ expr2;
-        }
+
+	@Override
+	public String toString() {
+		return expr1 + " " + Symbols.symbolOf(ao) +" "+ expr2;
+	}
+
+	@Override
+	public VariableSet getVariable() {
+		return expr1.getVariable()
+				.union(expr2.getVariable());
+	}
 }

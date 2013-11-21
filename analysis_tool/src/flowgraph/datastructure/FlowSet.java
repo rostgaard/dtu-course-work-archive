@@ -11,7 +11,13 @@ import java.util.ArrayList;
  * @author krc
  */
 public class FlowSet extends ArrayList<Flow> {
+    
     public final static FlowSet emptySet = new FlowSet();
+    
+    public static FlowSet factory() {
+        return new FlowSet();
+    }
+    
     public FlowSet addFlow(Flow f) {
         super.add(f);
 

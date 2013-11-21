@@ -22,13 +22,13 @@ public class StatementList extends ArrayList<Statement> {
         Statement s1 = null;
 
         for (Statement s2 : this) {
-            retSet.union(s2.flow());
-
             if (s1 != null) {
                 for (Node endNode : s1.finalNodes()) {
                     retSet.addFlow(new Flow(endNode, s2.init()));
                 }
             }
+            retSet.union(s2.flow());
+
             s1 = s2;
 
         }
@@ -51,7 +51,7 @@ public class StatementList extends ArrayList<Statement> {
     }
 
     public NodeSet finalLabels() {
-        return NodeSet.emptySet.addNode(new Node(this.get(this.size() - 1)));
+        return NodeSet.factory().addNode(new Node(this.get(this.size() - 1)));
     }
 
     @Override
@@ -69,6 +69,15 @@ public class StatementList extends ArrayList<Statement> {
 
         for (Statement s : this) {
             buffer += s + " " + s.labels().toString() + "\n";
+        }
+
+        return buffer;
+    }
+
+    public String toStringWithLabel() {
+        String buffer = "";
+        for (Statement s : this) {
+            buffer += s.toStringWithLabel() + Symbols.NEWLINE;
         }
 
         return buffer;

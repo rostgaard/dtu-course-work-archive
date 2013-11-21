@@ -14,6 +14,10 @@ public class NodeSet extends ArrayList<Node> {
 
     public final static NodeSet emptySet = new NodeSet();
 
+    public static NodeSet factory () {
+        return new NodeSet();
+    }
+    
     public NodeSet addNode(Node n) {
         super.add(n);
 

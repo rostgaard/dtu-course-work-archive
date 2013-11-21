@@ -1,5 +1,6 @@
 package syntaxtree.expression;
 
+import flowgraph.datastructure.VariableSet;
 import syntaxtree.Symbols;
 
 /**
@@ -9,7 +10,7 @@ import syntaxtree.Symbols;
 public class ParanthesesExpression extends Expression{
 
 	private Expression expr;
-	
+
 	public ParanthesesExpression(Expression expr){
 		this.expr = expr;
 	}
@@ -21,13 +22,18 @@ public class ParanthesesExpression extends Expression{
 	public void setExpr(Expression expr) {
 		this.expr = expr;
 	}
-	
+
 	public String debugInformation() {
 		return "\nClass: " + getClass().getSimpleName() + "\nExpression: " + expr.toString() + "\n";
 	}	
 
-        @Override
-        public String toString() {
-            return Symbols.LPARAN + expr + Symbols.RPARAN;
-        }
+	@Override
+	public String toString() {
+		return Symbols.LPARAN + expr + Symbols.RPARAN;
+	}
+
+	@Override
+	public VariableSet getVariable() {
+		return expr.getVariable();
+	}
 }

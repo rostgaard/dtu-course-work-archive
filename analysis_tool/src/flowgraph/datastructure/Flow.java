@@ -20,6 +20,6 @@ public class Flow {
     
     @Override
     public String toString() {
-        return "("+this.source + ", " + this.target + ")";
+        return "("+this.source.getLabel() + ", " + this.target.getLabel() + ")";
     }
 }

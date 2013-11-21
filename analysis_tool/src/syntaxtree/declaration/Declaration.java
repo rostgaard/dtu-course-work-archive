@@ -1,5 +1,6 @@
 package syntaxtree.declaration;
 
+import flowgraph.datastructure.VariableSet;
 import syntaxtree.expression.Variable;
 
 /**
@@ -26,4 +27,8 @@ public abstract class Declaration {
 	public void setId(Variable id) {
 		this.id = id;
 	}	
+	
+	public VariableSet getVariable(){
+		return VariableSet.factory().addVariable(id);
+	}
 }

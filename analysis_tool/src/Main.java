@@ -2,6 +2,7 @@
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
 
+import analysis.RDProgramState;
 import output.TheLangLexer;
 import output.TheLangParser;
 import syntaxtree.Program;
@@ -44,16 +45,26 @@ public class Main {
             if (parserResult != null) {
                 Program tree = parserResult.value;
                 Sequencer seq = new Sequencer();
+                RDProgramState currentState = new RDProgramState(tree.getDecls());
                 
-                System.out.println (tree.getStmts());
-                
-                
-                for (Statement s : tree.getStmts()) {
+//                System.out.println (tree.getStmts());
+//                               
+                for(Statement s : tree.getStmts()) {
                     s.setLabel(seq);
-//                    System.out.println(""+ s.toStringWithLabel());
+                    s.RD(currentState);
                 }
-
-                System.out.println (tree.getStmts().labelTable());
+                
+                System.out.println (tree.getStmts().toStringWithLabel());
+//                System.out.println("Flow");
+//                System.out.println (tree.getStmts().flow());
+//                System.out.println("RD result:");
+//                System.out.println(currentState.getDefinitions());
+                System.out.println("RDentry:");
+                System.out.println(currentState.getRDentry().toString());
+                System.out.println("RDexit:");
+                System.out.println(currentState.getRDexit().toString());
+                                   
+                //System.out.println (tree.getStmts().labelTable());
                 
                 //System.out.println(tree.toString());
 //				printTree(tree,0);

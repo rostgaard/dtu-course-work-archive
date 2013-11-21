@@ -1,5 +1,7 @@
 package syntaxtree.expression;
 
+import flowgraph.datastructure.VariableSet;
+
 /**
  * Data representation for array expressions
  *
@@ -8,7 +10,7 @@ public class ArrayExpression extends Expression{
 
 	private Variable id;
 	private Expression idx;
-	
+
 	public ArrayExpression(Variable id, Expression idx){
 		this.id = id;
 		this.idx = idx;
@@ -29,13 +31,19 @@ public class ArrayExpression extends Expression{
 	public void setIdx(Expression idx) {
 		this.idx = idx;
 	}
-	
+
 	public String debugInformation() {
 		return "\nClass: " + getClass().getSimpleName() + "\nIdentifier: " + id.toString() + "\nIndex: " + idx.toString() + "\n";
 	}
 
-        @Override
-        public String toString() {
-            return id + "["+idx+"]";
-        }
+	@Override
+	public String toString() {
+		return id + "["+idx+"]";
+	}
+
+	@Override
+	public VariableSet getVariable() {
+		return VariableSet.factory().addVariable(id)
+				.union(idx.getVariable());
+	}
 }
