@@ -24,8 +24,6 @@ public class ProgramSlicing {
 		queue.add(poi);
 		while (!queue.isEmpty()) {
 			Node label = queue.removeFirst();
-            visitedNodes.put(label.getLabel(), true);
-			result.add(label);
 			VariableSet variables = label.getVariables();
             DefinitionSet definitions = analysis.getRDEntry(label.getLabel());
             for(Definition definition : definitions) {
@@ -33,6 +31,8 @@ public class ProgramSlicing {
                 Boolean labelDefined = definition.label!=null;
 
                 if (containsVariable && labelDefined && !visitedNodes.containsKey(definition.label.getLabel())) {
+                    visitedNodes.put(definition.label.getLabel(), true);
+                    result.add(definition.label);
                     queue.add(definition.label);
                 }
             }
