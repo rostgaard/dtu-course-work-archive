@@ -71,15 +71,28 @@ Figure~\ref{fig:flowgraph} shows the classes used to represent a flow graph. The
 \subsubsection{Creating flow graphs}
 The first thing to do, when creating a flow graph, is to go through each statement and check whenever it is a branching statement or not and create the correct nodes. When a statement is met that contains more statements (for instance a while statement), these statements needs to be added to the graph before the iteration of statements can continue.
 
-%TODO
 \begin{table}
 \begin{tabular}{| l | l | l | l |}
 \hline
-\textsl{S} & \textsl{labels(S)} & \textsl{init(S)} & \textsl{final(S)} \\ 
+\textsl{S}                              & \textsl{labels(S)}                                    & \textsl{init(S)}     & \textsl{final(S)} \\ 
 \hline
-[int A[a$_1$] := a$_2$]$^\ell$ & & & \\
+[x := a]$^\ell$                         & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
 \hline
-[read \textsl{x}]$^\ell$ & $\{\ell\}$ & & \\
+[int A[a$_1$] := a$_2$]$^\ell$          & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
+\hline
+[skip]$^\ell$                           & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
+\hline
+\textsl{S}$_1$;\textsl{S}$_2$           & \textsl{labels(S$_1$)} $\cup$ \textsl{labels(S$_2$)}  & \textsl{init(S$_1$)} & {final(S$_2$)} \\ %S1;S2
+\hline
+if [\textsl{b}]$^\ell$ then             & $\{\ell\}$ $\cup$  \textsl{labels(S$_1$)}             &$\ell$                & \textsl{final(S$_1$)} \\
+  \textsl{S}$_1$ else \textsl{S}$_2$    &  $\cup$ \textsl{labels(S$_2$)}                        &                      & $\cup$ \textsl{final(S$_2$)} \\
+\hline
+while [\textsl{b}]$^\ell$ do \textsl{S} & $\{\ell\}$ $\cup$  \textsl{labels(S)}                 &$\ell$                & $\{\ell\}$ \\
+\hline
+[read \textsl{x}]$^\ell$                & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
+\hline
+[write \textsl{x}]$^\ell$               & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
+\hline 
 \end{tabular}
 \centering
 \caption{Flow graph function definitions}
