@@ -1,9 +1,9 @@
-\section{Exercise 1 - Data structures}
+\section{Data structures}
 The first problems we need to solve is which data structures should be used for our abstract syntax tree, which will serve as the first step of our intermediate representation.
 
 \subsection{Abstract syntax tree data structure}
 We have decided that we could use an unbalanced tree for storage of our abstract syntax tree in our target programming language. Constraining the tree construction will give us the necessary check for syntax errors.
-A simple tree-traversal will give us the appropriate unique label numbers.
+A simple tree-traversal will give us the appropriate unique label numbers - or the ability to assign labels to statements in the right order.
 
 \subsection{Data structure}
 In our implementation language the statements from the \texttt{WHILE} language will be mapped into objects. 
@@ -16,13 +16,6 @@ We will have the following objects.
 	\item \textbf{Expression} - Figure~\ref{fig:expression} shows the structures of expressions.
 \end{itemize}
 Declarations will be handled separately from statements, and will be held in a dedicated declarations list until needed. Only one constraint exists for declarations: Their identifiers must be unique.
-
-%\begin{figure}[h]
-%	\centering
-%	\includegraphics[scale=.3]{../fig/Declaration}
-%	\caption{Declaration}
-%	\label{fig:declaration}
-%\end{figure}
 
 \begin{figure}[h]
 	\centering
@@ -69,7 +62,7 @@ Figure~\ref{fig:flowgraph} shows the classes used to represent a flow graph. The
 \end{figure}
 
 \subsubsection{Creating flow graphs}
-The first thing to do, when creating a flow graph, is to go through each statement and check whenever it is a branching statement or not and create the correct nodes. When a statement is met that contains more statements (for instance a while statement), these statements needs to be added to the graph before the iteration of statements can continue.
+Using the intermediate representation of the abstract syntax tree, we are now familiar with the types of the individual statements. Rather than explicitly parsing the AST, we instead define a function for each statement and let every statement handle it's own branch by recursion. These functions are defined in table \ref{table:flow_graph_functions}, which is an extension of the table from \cite{02242_slides}.
 
 \begin{table}
 \begin{tabular}{| l | l | l | l |}
@@ -96,6 +89,7 @@ while [\textsl{b}]$^\ell$ do \textsl{S} & $\{\ell\}$ $\cup$  \textsl{labels(S)} 
 \end{tabular}
 \centering
 \caption{Flow graph function definitions}
+\label{table:flow_graph_functions}
 \end{table}
 
 \subsection{Program graph data structure}
@@ -109,4 +103,5 @@ For some types of analysis it is more convenient to use a program graph compared
 \end{figure}
 
 \subsubsection{Creating program graphs}
+%TODO Make a similar table as for flow graph.
 A program graph can be created much in the same way as a flow graph by going through all the statements in the program. Basically the only difference is that the labels are stored in nodes and code blocks and conditions are stored in edges.

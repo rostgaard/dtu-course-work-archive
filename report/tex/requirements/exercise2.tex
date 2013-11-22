@@ -1,4 +1,4 @@
-\section{Exercise 2 - Program Slicing}
+\section{Program Slicing}
 A program slicing is a set of statements that may affect the values at some point of interest.
 
 \subsection{Example program}\label{sec:exampleprogram}
@@ -18,23 +18,23 @@ Figure~\ref{fig:codeexample} shows an example program written in the \texttt{WHI
 	[y:=0]@$^9$@
 	end
 	\end{lstlisting}
-	\caption{Code example used in to calculate program slice.}
+	\caption{Code used in to calculate program slice example.}
 	\label{fig:codeexample}
 \end{figure}
 \\\\
 For this program it is possible to calculate the program slice for a point of interest.
 \begin{itemize}
 	\item If the point of interest is label 8. The result of program slice analysis would be; [y:=x]$^4$, [y:=y-1]$^8$.
-	\item If instead the point of interest is label 7.  The result of program slice analysis would be; [y:=x]$^4$, [z:=1]$^5$, [z:=z*y]$^7$, [y := y-1]$^1$.
+	\item If instead the point of interest is label 7.  The result of program slice analysis would be; [y:=x]$^4$, [z:=1]$^5$, [z:=z*y]$^7$, [y := y-1]$^8$.
 \end{itemize}
 
 \subsection{Reaching Definitions Analysis}
 Our algorithm for calculating the Program Slice will use the result of a Reaching Definition Analysis. A reaching definition analysis determines statically which definitions may reach a point of interests.
 \\\\
-Table~\ref{table:rd_equations} shows the Reaching Definitions Analysis table for the extended \texttt{WHILE} language. For each statement it is possible to see what is generated and what is killed.
+Table~\ref{table:rd_equations} shows the Reaching Definitions Analysis table for the extended \texttt{WHILE} language. For each statement it is possible to see what is generated and what is killed. We do and over-approximation with regards to arrays, in the sense that we do not care about the individual positions in the array, but the values of \emph{any} position of the array. In this context, an array inherits some of the properties of an assignment, but as we cannot guarantee anything about which index was changed, we must clear all previous definitions.
 \begin{table}[h]
     \begin{tabular}{l | l }
-    \textbf{A[a$_1$] = a$_2$} & kill$_{RD}$([A[a$_1$]]$^l$) = \{ (A[a$_1$],l' \}|$B^{l'}$ is a declaration or an assignment to $A[a_1]$ \} \\
+    \textbf{A[a$_1$] = a$_2$} & kill$_{RD}$([A[a$_1$]]$^\ell$) = $\emptyset$ \\
                               & gen$_{RD}$([A[n]$^l$) = $\{(A[0],l), ... (A[i-a],l)\}$ \\
 
     \hline
