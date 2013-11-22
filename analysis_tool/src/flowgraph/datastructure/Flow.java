@@ -9,7 +9,7 @@ package flowgraph.datastructure;
  * @author krc
  */
 public class Flow {
-    
+
     private Node source;
     private Node target;
     
@@ -22,4 +22,14 @@ public class Flow {
     public String toString() {
         return "("+this.source.getLabel() + ", " + this.target.getLabel() + ")";
     }
+
+    public Node getSource() {
+        return source;
+    }
+
+    public Node getTarget() {
+        return target;
+    }
+
+
 }

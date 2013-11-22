@@ -4,123 +4,116 @@
  */
 package analysis;
 
-import java.util.ArrayList;
-
-import javax.sound.midi.Sequence;
+import java.util.*;
 
 import flowgraph.datastructure.Node;
-import syntaxtree.ArithmeticOperation;
-import syntaxtree.Type;
-import syntaxtree.declaration.Array;
 import syntaxtree.declaration.Declaration;
-import syntaxtree.declaration.Int;
-import syntaxtree.declaration.Level;
-import syntaxtree.expression.Constant;
-import syntaxtree.expression.Expression;
-import syntaxtree.expression.OperationExpression;
 import syntaxtree.expression.Variable;
-import syntaxtree.statement.Assignment;
-import syntaxtree.statement.Statement;
-import utilities.Sequencer;
 
 /**
  *
  * @author krc
  */
 public class RDProgramState {
-   
-	private ArrayList<Definition> definitions = new ArrayList<>();
-    
-    public RDProgramState (ArrayList<Declaration> initialDefinitions) {
-        for (Declaration d: initialDefinitions) {
-            definitions.add(new Definition(d.getId(), null));
-        }
-    }
-    
-    public void kill(Variable var) {
-    	//create a definition of the variable parameter
-    	Definition def = new Definition(var, null);
 
-    	//definitions to be killed
-    	ArrayList<Definition> kills = new ArrayList<Definition>();
-    	
-    	//find all definitions to be killed
-    	for(Definition definition : definitions){
-    		if(definition.equals(def)){
-    			kills.add(definition);
-    		}
-    	}
-    	//remove definitions to be killed
-    	definitions.removeAll(kills);
-    }
+	private HashMap<Integer, TreeSet<Definition>> RDentry = new HashMap<Integer, TreeSet<Definition>>();
+	private HashMap<Integer, TreeSet<Definition>> RDexit = new HashMap<Integer, TreeSet<Definition>>();
 
-    public void gen(Variable var, Node label) {
-    	//create a definition of the variable parameter
-    	Definition def = new Definition(var, label);
-    	
-    	//add to the list
-    	definitions.add(def);
-    }
-    
-    //test
-    public static void main(String[] args){
-    	ArrayList<Declaration> initialDefinitions = new ArrayList<Declaration>();
-    	
-    	Variable x = new Variable(Type.INT, "x");
-    	Variable y = new Variable(Type.INT, "y");
-    	Variable z = new Variable(Type.INT, "z");
-    	Variable w = new Variable(Type.ARRAY, "w");
-    
-    	Declaration d1 = new Int(Level.UNKNOWN, x); 
-    	Declaration d2 = new Int(Level.UNKNOWN, y); 
-    	Declaration d3 = new Int(Level.UNKNOWN, z); 
-    	Declaration d4 = new Array(Level.UNKNOWN, w, new Constant(10));
-    	
-    	initialDefinitions.add(d1);
-    	initialDefinitions.add(d2);
-    	initialDefinitions.add(d3);
-    	initialDefinitions.add(d4);
-    	
-    	RDProgramState rd = new RDProgramState(initialDefinitions);
-    	Sequencer seq = new Sequencer();
-    
-    	Constant cons7 = new Constant(7);
-    	Constant cons2 = new Constant(2);
-    	Assignment a1 = new Assignment(x, cons7);
-   	    	
-    	OperationExpression plus = new OperationExpression(x, cons2, ArithmeticOperation.PLUS);
-    	Assignment a2 = new Assignment(y, plus);
-    	
-    	a1.setLabel(seq);
-    	a2.setLabel(seq);
-           	
-    	Node label1 = new Node(a1);
-    	Node label2 = new Node(a2);
-    	
-    	ArrayList<Definition> definitions = rd.definitions;
-    	
-    	for(int i = 0; i<definitions.size(); i++){
-    		try{
-    			System.out.print("("+definitions.get(i).identifier.getId() + ", " + definitions.get(i).label.getLabel() +")");	
-    		}catch(NullPointerException e){
-    			System.out.print("("+definitions.get(i).identifier.getId() + ", null)");
-    		}
-    	}
-    	System.out.println();
-    	
-    	rd.kill(x);
-    	rd.gen(x, label1);
-    	
-    	rd.kill(y);
-    	rd.gen(y, label2);
-    	
-    	for(int i = 0; i<definitions.size(); i++){
-    		try{
-    			System.out.print("("+definitions.get(i).identifier.getId() + ", " + definitions.get(i).label.getLabel() +")");	
-    		}catch(NullPointerException e){
-    			System.out.print("("+definitions.get(i).identifier.getId() + ", null)");
-    		}
-    	}
-    	System.out.println();
-    }    
+	/**
+	 * Empty constructor
+	 */
+	public RDProgramState(){}
+
+	/**
+	 * Constructor
+	 * @param initialDefinitions
+	 */
+	public RDProgramState (List<Declaration> initialDefinitions) {
+        TreeSet<Definition> definitions = new TreeSet<>();
+		for (Declaration d: initialDefinitions) {
+			definitions.add(new Definition(d.getId(), null));
+		}
+		addRDentry(1, definitions);
+	}
+	
+	public void union(ArrayList<Definition> definitions,  HashMap<Integer, ArrayList<Definition>> RDEntry,  HashMap<Integer, ArrayList<Definition>> RDExit){
+		for (Map.Entry<Integer, ArrayList<Definition>> entry : RDEntry.entrySet()) {
+            TreeSet<Definition> defs = new TreeSet<Definition>();
+			int key = entry.getKey();
+		    ArrayList<Definition> value = entry.getValue();
+		    
+		    defs.addAll(definitions);
+		    defs.addAll(value);
+		    addRDentry(key, defs);
+		}
+		
+		for (Map.Entry<Integer, ArrayList<Definition>> entry : RDExit.entrySet()) {
+            TreeSet<Definition> defs = new TreeSet<Definition>();
+			int key = entry.getKey();
+		    ArrayList<Definition> value = entry.getValue();
+		    
+		    defs.addAll(definitions);
+		    defs.addAll(value);
+		    addRDexit(key, defs);
+		}
+	}
+
+	public void addRDentry(int label, TreeSet<Definition> definitions){
+		RDentry.put(label, definitions);			
+	}
+
+	public void addRDexit(int label, TreeSet<Definition> definitions){
+		RDexit.put(label, definitions);
+	}
+
+	public TreeSet<Definition> kill(Variable var, TreeSet<Definition> definitions){
+		//create a definition of the variable parameter
+		Definition def = new Definition(var, null);
+
+		//definitions to be killed
+        TreeSet<Definition> kills = new TreeSet<Definition>();
+
+		//find all definitions to be killed
+		for(Definition definition : definitions){
+			if(definition.equals(def)){
+				kills.add(definition);
+			}
+		}
+		return kills;
+	}
+
+	public ArrayList<Definition> gen(Variable var, Node label) {
+		//create a definition of the variable parameter
+		Definition def = new Definition(var, label);
+
+		//add to the list
+		ArrayList<Definition> definitions = new ArrayList<Definition>(); 
+		definitions.add(def);
+
+		return definitions;
+	}
+
+	public TreeSet<Definition> getRDEntry(int label){
+        TreeSet<Definition> defs = new TreeSet<Definition>();
+		defs.addAll(RDentry.get(label));
+		return defs;
+	}
+	public TreeSet<Definition> getRDExit(int label){
+        TreeSet<Definition> defs = new TreeSet<>();
+		try{
+			defs.addAll((label <= 0) ? RDentry.get(1) : RDexit.get(label));
+		}catch(NullPointerException e){
+			//defs.addAll(RDentry.get(label));
+			return defs;
+		}
+		return defs;
+	}
+
+	public HashMap<Integer, TreeSet<Definition>> getRDentry(){
+		return RDentry;	
+	}
+
+	public HashMap<Integer, TreeSet<Definition>> getRDexit(){
+		return RDexit;	
+	}
 }

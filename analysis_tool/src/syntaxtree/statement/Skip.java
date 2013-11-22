@@ -1,9 +1,15 @@
 package syntaxtree.statement;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.TreeSet;
+
+import analysis.Definition;
 import analysis.RDProgramState;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
+import flowgraph.datastructure.VariableSet;
 import syntaxtree.Symbols;
 
 /**
@@ -22,8 +28,17 @@ public class Skip extends Statement {
     }
 
     @Override
-    public RDProgramState RD(RDProgramState currentState) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public RDProgramState RD(RDProgramState currentState) {  	
+     	//RDentry
+        TreeSet<Definition> exit = currentState.getRDExit(getLabel()-1);
+    	currentState.addRDentry(getLabel(), exit);
+
+    	//RDexit
+        TreeSet<Definition> entry = currentState.getRDEntry(getLabel());
+    	//killRD([skip]l) = �
+    	//genRD([[skip]l) = �
+    	currentState.addRDexit(getLabel(), entry);
+    	return currentState;
     }
 
     @Override
@@ -45,4 +60,10 @@ public class Skip extends Statement {
     public FlowSet flow() {
         return FlowSet.emptySet;
     }
+    
+    @Override
+    public VariableSet getVariable() {
+    	return VariableSet.emptySet;
+    }
+    
 }

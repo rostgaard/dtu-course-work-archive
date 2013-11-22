@@ -1,5 +1,6 @@
 package syntaxtree.expression;
 
+import flowgraph.datastructure.VariableSet;
 import syntaxtree.Type;
 
 /**
@@ -10,7 +11,7 @@ public class Variable extends Expression{
 
 	private Type type;
 	private String id;
-	
+
 	public Variable(Type type, String id){
 		this.type = type;
 		this.id = id;
@@ -31,14 +32,19 @@ public class Variable extends Expression{
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public String debugInformation() {
 		return "\nClass: " + getClass().getSimpleName() + "\nType: " + type.toString() + "\nIdentifier: " + id.toString() + "\n";
 	}
 
-        @Override
-        public String toString() {
-            return id;
-        }
-        
+	@Override
+	public String toString() {
+		return id;
+	}
+
+	@Override
+	public VariableSet getVariable() {
+		return VariableSet.factory().addVariable(this);
+	}
+
 }

@@ -1,9 +1,15 @@
 package syntaxtree.statement;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.TreeSet;
+
+import analysis.Definition;
 import analysis.RDProgramState;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
+import flowgraph.datastructure.VariableSet;
 import syntaxtree.Symbols;
 import syntaxtree.expression.Variable;
 
@@ -38,7 +44,19 @@ public class Read extends Statement {
 
     @Override
     public RDProgramState RD(RDProgramState currentState) {
-        return currentState;
+    	//RDentry
+        TreeSet<Definition> exit = currentState.getRDExit(getLabel()-1);
+    	currentState.addRDentry(getLabel(), exit);
+
+    	//RDexit
+        TreeSet<Definition> entry = currentState.getRDEntry(getLabel());
+    	//killRD(read x) = {(x, l'}| b(l') is a declaration or an assignment to x}    	
+    	entry.removeAll(currentState.kill(id, entry));
+    	//genRD(read x) = {(A[a], l)}
+    	entry.addAll(currentState.gen(id, new Node(this)));
+
+    	currentState.addRDexit(getLabel(), entry);
+    	return currentState;
     }
     
     @Override
@@ -59,6 +77,11 @@ public class Read extends Statement {
     @Override
     public FlowSet flow() {
         return FlowSet.emptySet;
+    }
+    
+    @Override
+    public VariableSet getVariable() {
+    	return VariableSet.factory().addVariable(id);
     }
     
 }
