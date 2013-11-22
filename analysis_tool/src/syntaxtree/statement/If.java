@@ -1,5 +1,7 @@
 package syntaxtree.statement;
 
+import analysis.Definition;
+import analysis.DefinitionSet;
 import analysis.RDProgramState;
 import flowgraph.datastructure.Flow;
 import flowgraph.datastructure.FlowSet;
@@ -8,6 +10,7 @@ import flowgraph.datastructure.NodeSet;
 import flowgraph.datastructure.VariableSet;
 
 import java.util.List;
+import java.util.TreeSet;
 
 import syntaxtree.StatementList;
 import syntaxtree.Symbols;
@@ -86,8 +89,8 @@ public class If extends Statement {
 //    	}
 //    	currentState.union(rps2);
 //    	
-//    	//killRD([if b then S1 else S2 fi]l) = ø
-//    	//genRD([[if b then S1 else S2 fi]l) = ø
+//    	//killRD([if b then S1 else S2 fi]l) = ï¿½
+//    	//genRD([[if b then S1 else S2 fi]l) = ï¿½
 //    	currentState.addRDexit(getLabel(), currentState.getDefinitions());
     	return currentState;
     }

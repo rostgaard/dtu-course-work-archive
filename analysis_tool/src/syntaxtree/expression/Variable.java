@@ -47,4 +47,13 @@ public class Variable extends Expression{
 		return VariableSet.factory().addVariable(this);
 	}
 
+    @Override
+    public boolean equals(Object arg) {
+        if(arg instanceof Variable){
+            Variable that = (Variable) arg;
+            return this.getId().equals(that.getId());
+        }
+
+        return false;
+    }
 }

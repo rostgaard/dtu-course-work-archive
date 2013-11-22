@@ -1,15 +1,31 @@
 program
-low int a;
-high int x;
-int z;
-a:=10;
-x:=4;
-a:=3;
-x := a+b;
-while a < 1 (* Comment here *) do
-a := a+1;
-a := a+1;
+low int x;
+x:=10;
+if (x>3) then
+	x:=4;
+	if (x>10) then
+		x:=10;
+	else
+		x:=18;
+		if (x<10) then
+			x:=1;
+			x:=42;
+		else
+			x:=10;
+		fi
+	fi
+else
+	x:=6;
+fi
+x:=3;
+while(x>10) do
+	x:=13;
+	if (x<10) then
+		x:=3;
+	else
+		x:=1;
+	fi
 od
-write(a); 
+x:=7;
 end
 

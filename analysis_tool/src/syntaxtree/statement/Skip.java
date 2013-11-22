@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.TreeSet;
 
 import analysis.Definition;
+import analysis.DefinitionSet;
 import analysis.RDProgramState;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
@@ -30,16 +31,17 @@ public class Skip extends Statement {
     @Override
     public RDProgramState RD(RDProgramState currentState) {  	
      	//RDentry
-        TreeSet<Definition> exit = currentState.getRDExit(getLabel()-1);
+        DefinitionSet exit = currentState.getRDExit(getLabel()-1);
     	currentState.addRDentry(getLabel(), exit);
 
     	//RDexit
-        TreeSet<Definition> entry = currentState.getRDEntry(getLabel());
+        DefinitionSet entry = currentState.getRDEntry(getLabel());
     	//killRD([skip]l) = �
     	//genRD([[skip]l) = �
     	currentState.addRDexit(getLabel(), entry);
     	return currentState;
     }
+
 
     @Override
     public NodeSet labels() {

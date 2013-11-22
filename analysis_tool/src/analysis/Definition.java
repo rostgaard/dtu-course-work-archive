@@ -25,12 +25,20 @@ public class Definition implements Comparable {
 	public boolean equals(Object arg) {
 		if(arg instanceof Definition){
 			Definition that = (Definition) arg; //type casting
-			//if the two identifiers are equals then return true otherwise false is returned
-			return this.identifier.getId().equals(that.identifier.getId());
-		}
+			Boolean equalIdentifiers = this.identifier.getId().equals(that.identifier.getId());
+
+            Boolean equalLabels = false;
+            if (this.label==null && that.label==null) {
+                equalLabels = true;
+            }else if (this.label!=null && that.label!=null) {
+                equalLabels = this.label.getLabel()==that.label.getLabel();
+            }
+
+            return equalIdentifiers && equalLabels;
+        }
 		return false;
 	}
-	
+
 	@Override
 	public String toString(){
 		try{
@@ -45,23 +53,19 @@ public class Definition implements Comparable {
         if(arg instanceof Definition){
             Definition that = (Definition) arg; //type casting
 
-            if (this.label==null) {
-                return -1;
-            }
-
-            if (that.label==null) {
-                return 1;
-            }
-
-            Integer thisLabel = this.label.getLabel();
-            Integer thatLabel = that.label.getLabel();
-
-            if (thisLabel==thatLabel) {
-                return this.identifier.getId().compareTo(that.identifier.getId());
-            }else if(thisLabel>thatLabel) {
-                return 1;
+            int identifierCompare =  this.identifier.getId().compareTo(that.identifier.getId());
+            if (identifierCompare!=0) {
+                return identifierCompare;
             }else {
-                return -1;
+                if (this.label==null && that.label==null) {
+                    return 0;
+                }else if (this.label!=null && that.label!=null) {
+                    return this.label.compareTo(that.label);
+                }else if (that.label==null) {
+                    return 1;
+                }else if (this.label==null) {
+                    return -1;
+                }
             }
         }
 

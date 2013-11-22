@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.TreeSet;
 
 import analysis.Definition;
+import analysis.DefinitionSet;
 import analysis.RDProgramState;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
@@ -55,11 +56,11 @@ public class Assignment extends Statement {
     @Override
     public RDProgramState RD(RDProgramState currentState) {
     	//RDentry
-        TreeSet<Definition> exit = currentState.getRDExit(getLabel()-1);
+        DefinitionSet exit = currentState.getRDExit(getLabel()-1);
     	currentState.addRDentry(getLabel(), exit);
 
     	//RDexit
-        TreeSet<Definition> entry = currentState.getRDEntry(getLabel());
+        DefinitionSet entry = currentState.getRDEntry(getLabel());
     	//killRD([x:= a]l) = {(x, ?)} u  {(x, l') | B(l') is an assignment to x}    	
     	entry.removeAll(currentState.kill(id, entry));
     	//genRD([x:= a]l) = {(x, l)}
@@ -67,6 +68,17 @@ public class Assignment extends Statement {
 
     	currentState.addRDexit(getLabel(), entry);
     	return currentState;
+    }
+
+    @Override
+    public DefinitionSet killed(RDProgramState currentState) {
+        DefinitionSet entry = currentState.getRDEntry(getLabel());
+        return currentState.kill(id, entry);
+    }
+
+    @Override
+    public DefinitionSet generated(RDProgramState currentState) {
+        return currentState.gen(id, new Node(this));
     }
 
     @Override

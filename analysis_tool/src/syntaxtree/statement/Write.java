@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.TreeSet;
 
 import analysis.Definition;
+import analysis.DefinitionSet;
 import analysis.RDProgramState;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
@@ -45,11 +46,11 @@ public class Write extends Statement{
     @Override
     public RDProgramState RD(RDProgramState currentState) {
     	//RDentry
-        TreeSet<Definition> exit = currentState.getRDExit(getLabel()-1);
+        DefinitionSet exit = currentState.getRDExit(getLabel()-1);
     	currentState.addRDentry(getLabel(), exit);
 
     	//RDexit
-        TreeSet<Definition> entry = currentState.getRDEntry(getLabel());
+        DefinitionSet entry = currentState.getRDEntry(getLabel());
     	//killRD([write a]l) = �
     	//genRD([[write a]l) = �    	
     	currentState.addRDexit(getLabel(), entry);

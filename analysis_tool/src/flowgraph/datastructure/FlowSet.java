@@ -55,4 +55,15 @@ public class FlowSet extends ArrayList<Flow> {
         return buffer+")";
     }
 
+    public FlowSet flows(int labelSource) {
+        FlowSet flows = new FlowSet();
+        for (Flow flow : this) {
+            if (flow.getSource().getLabel()==labelSource) {
+                flows.add(flow);
+            }
+        }
+
+        return flows;
+    }
+
 }

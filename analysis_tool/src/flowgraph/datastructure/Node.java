@@ -1,6 +1,9 @@
 package flowgraph.datastructure;
 
+import analysis.Definition;
 import syntaxtree.statement.Statement;
+
+import java.util.TreeSet;
 
 public class Node implements Comparable<Node>{
 
@@ -26,5 +29,9 @@ public class Node implements Comparable<Node>{
     @Override
     public int compareTo(Node n) {
         return n.s.getLabel() - s.getLabel();
+    }
+
+    public Statement getStatement() {
+        return s;
     }
 }

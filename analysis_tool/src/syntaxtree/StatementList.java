@@ -51,7 +51,7 @@ public class StatementList extends ArrayList<Statement> {
     }
 
     public NodeSet finalLabels() {
-        return NodeSet.factory().addNode(new Node(this.get(this.size() - 1)));
+        return this.get(this.size()-1).finalNodes();
     }
 
     @Override

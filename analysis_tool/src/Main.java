@@ -11,6 +11,7 @@ import syntaxtree.Program;
 import syntaxtree.statement.Statement;
 import utilities.Sequencer;
 
+
 public class Main {
 
     public static void printTree(CommonTree t, int indent) {
@@ -36,6 +37,7 @@ public class Main {
             System.out.println("Please supply a file with source code as argument.");
             System.exit(1);
         }
+
         String inputfile = args[0];
         System.out.println("input file: " + inputfile);
         TheLangLexer lex = new TheLangLexer(new ANTLRFileStream(inputfile));
@@ -71,7 +73,8 @@ public class Main {
                 //System.out.println(tree.toString());
 //				printTree(tree,0);
                 FlowSet flows = tree.getStmts().flow();
-                WorklistAlgorithm.calculate(flows,tree.getStmts().lables(), tree, currentState);
+                RDProgramState analysis = WorklistAlgorithm.calculate(flows, tree);
+                System.out.println(analysis.getRDentry());
             }
         } catch (RecognitionException e) {
             e.printStackTrace();
