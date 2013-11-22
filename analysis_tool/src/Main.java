@@ -1,6 +1,8 @@
 
+import analysis.ProgramSlicing;
 import flowgraph.WorklistAlgorithm;
 import flowgraph.datastructure.FlowSet;
+import flowgraph.datastructure.NodeSet;
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
 
@@ -74,7 +76,14 @@ public class Main {
 //				printTree(tree,0);
                 FlowSet flows = tree.getStmts().flow();
                 RDProgramState analysis = WorklistAlgorithm.calculate(flows, tree);
+                System.out.println("Reaching definitions:");
                 System.out.println(analysis.getRDentry());
+
+                System.out.println("");
+                System.out.println("Program slice:");
+                NodeSet programSlice = ProgramSlicing.execute(flows.get(2).getSource(), analysis);
+                System.out.println(programSlice);
+
             }
         } catch (RecognitionException e) {
             e.printStackTrace();

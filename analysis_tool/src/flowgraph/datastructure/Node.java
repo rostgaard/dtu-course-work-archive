@@ -23,7 +23,7 @@ public class Node implements Comparable<Node>{
 
     @Override
     public String toString() {
-        return this.s.toString();
+        return "["+this.s.toString()+"]"+getLabel();
     }
 
     @Override

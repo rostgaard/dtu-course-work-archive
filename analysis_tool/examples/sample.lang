@@ -1,31 +1,12 @@
 program
 low int x;
-x:=10;
-if (x>3) then
-	x:=4;
-	if (x>10) then
-		x:=10;
-	else
-		x:=18;
-		if (x<10) then
-			x:=1;
-			x:=42;
-		else
-			x:=10;
-		fi
-	fi
-else
-	x:=6;
-fi
-x:=3;
-while(x>10) do
-	x:=13;
-	if (x<10) then
-		x:=3;
-	else
-		x:=1;
-	fi
+low int y;
+low int z;
+y:=x;
+z:=1;
+while y>0 do
+	z:=z*y;
+	y:=y+1;
 od
-x:=7;
+y:=0;
 end
-

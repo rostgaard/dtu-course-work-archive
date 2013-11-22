@@ -103,7 +103,7 @@ public class Assignment extends Statement {
     
     @Override
     public VariableSet getVariable() {
-    	return VariableSet.factory().addVariable(id)
+    	return VariableSet.factory()
     			.union(expr.getVariable());
     }
     

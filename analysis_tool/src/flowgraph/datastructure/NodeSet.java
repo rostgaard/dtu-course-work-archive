@@ -40,18 +40,4 @@ public class NodeSet extends ArrayList<Node> {
         return this;
     }
 
-    @Override
-    public String toString() {
-        String buffer = "(";
-
-        for (Node n : this) {
-            buffer += n.getLabel();
-            if (n == this.get(this.size() - 1))  {
-            } else {
-                buffer += ",";
-            }
-        }
-
-        return buffer+")";
-    }
 }
