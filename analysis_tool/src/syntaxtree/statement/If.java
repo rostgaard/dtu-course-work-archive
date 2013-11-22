@@ -102,7 +102,7 @@ public class If extends Statement {
                 .union(trueBranch.lables())
                 .union(falseBranch.lables());
     }
-    
+
     @Override
     public String toStringWithLabel() {
         String trueBuffer = "";

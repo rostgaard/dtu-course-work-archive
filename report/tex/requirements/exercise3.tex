@@ -1,7 +1,7 @@
 \section{Exercise 3 - Buffer overflow with sign detection} \label{sec:exercise3}
 Buffer overflow is historically one of the most common programming errors. It is the cause of security breaches, data corruption and program crashes. Detecting them is therefore preferred.\\\\
-We start by defining a test case in the WHILE language, seen in the figure below.
-\begin{figure}[H]
+We start by defining a test case in the WHILE language, seen in figure \ref{code:array_example}.
+\begin{figure}
   \begin{lstlisting}
 program
 [int A[2]]@$^1$@
@@ -16,18 +16,13 @@ end
  \label{code:array_example}
  \caption{Code example for demonstrating buffer overflow}
 \end{figure}
-\noindent For the program in the figure above, the following cases should fail and thus, optimally be detected in our analysis:
+For the program in figure \ref{code:array_example}, the following cases should fail and thus, optimally be detected in our analysis:
 \begin{description}
 \item[Underflow:] Accessing an index below the base, i.e. any case where i < 0 in A[n].
 \item[Overflow:] Accessing an index after the last element, i.e. any case where i > n-1 in A[n].
 \end{description}
-The analysis is based on a monotone framework, which has the form:
-\begin{equation}
-  \left(L, \mathcal{F}, F, E, \iota, \mathrm{f}.  \right)
-  \label{eq:monotone_framework}
-\end{equation}
-\\\\
-First we define our lattice for the analysis:
+
+Our instance of the monotone framework becomes; 
  \begin{figure}[h]
  \centering
  \begin{tikzpicture}
@@ -65,7 +60,7 @@ First we define our lattice for the analysis:
   \label{fig:sign_detection_complete_lattice}
  \end{figure}
 
-\begin{table}[H]
+\begin{table}
 \begin{tabular}{| l | l |}
   \hline
   Instance & $(L,\sqsubseteq,\bigsqcup, \bigsqcap, \top, \bot )$ \\
@@ -90,15 +85,16 @@ First we define our lattice for the analysis:
   \caption{Sign detection instance}
   \label{table:sign_detection_instance}
 \end{table}
-\noindent This is a complete lattice, as every subset in the partial ordered set have a least upper bound and a greatest lower bound.\\
+This is a complete lattice, as every subset in the partial ordered set have a least upper bound and a greatest lower bound.\\
 It also holds the Ascending Chain Property, because the lattice has a finite height, and will thus, eventually stabilize.\\\\
 We define the flow as 
 \begin{description}
   \item[Flow $F$:] flow ($S_*$) (forward analysis)
   \item[Extremal label $E$:] \{init($S_*$)\}
 \end{description}
-The analysis is defined as:
-\begin{table}[H]
+
+The analysis is defined as :
+\begin{table}
 \begin{tabular}{| l | l |}
   \hline
   Analysis$_\circ(\ell)$ & $ \bigsqcup \{$ Analysis$_\bullet (\ell') | (\ell', \ell) \in F \} \bigcup \iota_E^{\ell} $ \\
@@ -114,8 +110,8 @@ The analysis is defined as:
 \end{table}
 
 \subsection{Transfer functions}
-We define the transfers functions for the analysis in table~\ref{table:sign_detection_functions}.
-\begin{table}[H]
+%We define our transfer functions as
+\begin{table}
 \begin{tabular}{| l | l | l |}
   \hline
   \# & Statement & Function \\
@@ -123,7 +119,11 @@ We define the transfers functions for the analysis in table~\ref{table:sign_dete
   \hline
   1 & [int x]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto {0}]$ \\
   \hline
-  2 & [int A[n]]$^\ell$ & f$_\ell^S (\widehat{\sigma}) =  \widehat{\sigma}[$A[i]$ \mapsto {0} | \forall i \in \{0, ..., n-1 \}]$\\
+  2 & [int A[n]]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = 
+     \begin{cases} 
+        \widehat{\sigma}[$A[n]$ \mapsto \bot] & \text{if } \mathcal{A}_S [\![n]\!] \widehat{a} \subseteq \{-,0\} \textbf{Feedback please!} \\
+        \widehat{\sigma}[$A[i]$ \mapsto {0} | \forall i \in \{0, ..., n-1 \} & \text{if } \mathcal{A}_S [\![n]\!] \widehat{a} = \{+\} \\
+     \end{cases}$\\
   \hline
   3 & [x := a]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto \mathcal{A}_S[\![a]\!] \widehat{\sigma} ]$ \\
   \hline
@@ -131,11 +131,19 @@ We define the transfers functions for the analysis in table~\ref{table:sign_dete
   \hline
   5 & [b]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
-  6 & [int A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}[$A[a$_1$]$ \mapsto A_S[\![a_2]\!]\widehat{\sigma}]$\\
+  6 & [int A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = 
+     \begin{cases} 
+        \widehat{\sigma}[$A[a$_1$]$ \mapsto \bot]        & \text{if } \mathcal{A}_S [\![a_1]\!] \widehat{a} = \{-\} \\
+        \widehat{\sigma}[$A[a$_1$]$ \mapsto A_I[\![a_2]\!] & \text{if }\mathcal{A}_S [\![a_1]\!] \widehat{a} \subseteq \{0,+\} \\
+     \end{cases}$\\
   \hline
   7 & [read x]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = [x \mapsto \mathcal{A}_S [\![n]\!] \widehat{\sigma}]$ \\
   \hline
-  8 & [read A[a]]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}[$A[a]$ \mapsto \mathcal{A}_S[\![n]\!]\widehat{\sigma}]$\\
+  8 & [read A[a]]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = 
+     \begin{cases} 
+        \widehat{\sigma}[$A[a]$ \mapsto \bot]        & \text{if } \mathcal{A}_S [\![a]\!]\widehat{\sigma} = \{-\} \\
+        \widehat{\sigma}[$A[a]$ \mapsto \mathcal{A}_S[\![n]\!]\widehat{\sigma} & \text{if } \mathcal{A}_S [\![a]\!]\widehat{\sigma} = \{0,+\} \\
+     \end{cases}$\\
   \hline
   9 & [write A[n]]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
@@ -145,10 +153,9 @@ We define the transfers functions for the analysis in table~\ref{table:sign_dete
 \label{table:sign_detection_functions}
 \end{table}
 
-\noindent Where$
-\mathcal{A}_S [\![a]\!]: \widehat{\textbf{State}_S} \rightarrow \textbf{Sign}$ determines the sign for the value of an expression.
-It is defined below.\\
-$\mathcal{A}_S [\![x]\!]\widehat{\sigma} = \widehat{\sigma} (x)\\
+$
+\mathcal{A}_S [\![a]\!]: \widehat{\textbf{State}_S} \rightarrow \textbf{Sign}\\
+\mathcal{A}_S [\![x]\!]\widehat{\sigma} = \widehat{\sigma} (x)\\
 \mathcal{A}_S [\![n]\!]= 
    \begin{cases} 
       \{-\} & \text{ if } n < 0 \\
@@ -157,13 +164,13 @@ $\mathcal{A}_S [\![x]\!]\widehat{\sigma} = \widehat{\sigma} (x)\\
    \end{cases}\\
 \mathcal{A}_S [\![a_1 \text{ op}_A a_2 ]\!] = \mathcal{A}_S [\![a_1]\!] \widehat{\sigma} \widehat{\text{ op}_A} \mathcal{A}_S [\![a_2]\!] \widehat{\sigma}, \text{where} \widehat{\text{ op}_A} : \textbf{Sign} \times \textbf{Sign} \rightarrow \textbf{Sign} \text{ is given by}:\\
 \widehat{\text{ op}_A} (S_1, S_2) = \{ s_1 \text{ op}_A s_2 | s_1 \in S_1, s_2 \in S_2\}\\
-\widehat{\text{ op}_A} \text {is a specific arithmatic operator from the set op}_a(\text{op}_a = \{+,-,\times,/\}).
+\widehat{\text{ op}_A} \text {is a specific arithmatic operator from the set op}_a(\text{op}_a = \{+,-,*,/\}).
 $
 
 \begin{table}[H]
 \begin{tabular}{| r | c | c | c |}
 \hline
-  +  & -           & 0 & + \\
+    & -           & 0 & + \\
 \hline
  -  & $\{-\}$     & $\{-\}$ & $\{-,0,+\}$ \\
 \hline
@@ -179,7 +186,7 @@ $
 \begin{table}[H]
 \begin{tabular}{| r | c | c | c |}
 \hline
-  -  & -           & 0 & + \\
+    & -           & 0 & + \\
 \hline
  -  & $\{-,0,+\}$ & $\{-\}$ & $\{-\}$ \\
 \hline
@@ -195,7 +202,7 @@ $
 \begin{table}[H]
 \begin{tabular}{| r | c | c | c |}
 \hline
-  $\times$  & -           & 0 & + \\
+    & -           & 0 & + \\
 \hline
  -  & $\{+\}$ & $\{0\}$ & $\{-\}$ \\
 \hline
@@ -211,7 +218,7 @@ $
 \begin{table}[H]
 \begin{tabular}{| r | c | c | c |}
 \hline
-  /  & -           & 0 & + \\
+    & -           & 0 & + \\
 \hline
  -  & $\{+\}$ & $\emptyset$ & $\{-\}$ \\
 \hline
@@ -225,28 +232,10 @@ $
 \end{table}
 
 
-\subsection{Algorithm for lower bound detection}
-The result of an signs detection can be used to calculate whenever a buffer overflow for the lower bounds. Algorithm~\ref{algorithm:bufferoverflow1} returns true if a buffer overflow is present for a specific label and false otherwise. It is assumed that the provided label contains an array operation.
-
-\begin{algorithm}
- \begin{algorithmic}[1]
- \Procedure{Buffer overflow}{$l$}
-\State A:=$l.get\_array()$
-\State a:=$A.get\_index_expression()$
-\State $signes:=A_S[a]$
-\If {$signs.contains(-)$}
-\State \textbf{return} true
-\Else
-\State \textbf{return} false
-\EndIf 
- \EndProcedure
- \end{algorithmic}
- \caption{Calculate buffer overflow}
- \label{algorithm:bufferoverflow1}
-\end{algorithm}
+\subsection{Lower bound detection}
+Check for an assignment which includes an operation with an array, that the sign of the array is not $\emptyset$. If so, we know that the index parameter is invalid according to the lower bounds.
 
 \subsection{Constraints}
-Below is the constraints of the analysis for our example program.
 \begin{table}[H]
 \begin{tabular}{| l | l |}
 \hline
@@ -265,10 +254,7 @@ A$_\circ (6) = $A$_\bullet(5)$ & A$_\bullet(6) = \text{f}_{\text{i := i + 1}} (\
 \hline
 \end{tabular}
 \centering
-\caption{Constraints}
 \end{table}
-
-The solution to these constraint can be found in table~\ref{table:bufferoverflowsolution1}.
 
 \begin{table}[H]
 \begin{tabular}{| r | c | c | c |}
@@ -284,7 +270,4 @@ A$_\bullet (\cdot) $ & A[0]        & A[1]        & i \\
 \hline
 \end{tabular}
 \centering
-\caption{Solution to constraints}
-\label{table:bufferoverflowsolution1}
 \end{table}
-This solution can be used together with algorithm~\ref{algorithm:bufferoverflow1} to determine if there is a buffer overflow.

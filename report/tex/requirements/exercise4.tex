@@ -2,6 +2,12 @@
 The sign detection analysis from section~\ref{sec:exercise3} provided a solution to the buffer overflow problem by only considering the lower bound. Using interval analysis it is possible to consider the upper bound as well.
 
 \subsection{Monotone framework}
+The analysis is based on a monotone framework, which has the form:
+\begin{equation}
+  \left(L, \mathcal{F}, F, E, \iota, \mathrm{f}.  \right)
+  \label{eq:monotone_framework}
+\end{equation}
+\\\\
 In table~\ref{table:latticedefinition} we our lattice for the analysis. This is a complete lattice, as every subset in the partial ordered set have a least upper bound and a greatest lower bound.\\
 It also holds the Ascending Chain Property, because the lattice has a finite height, and will thus, eventually stabilize.
 \begin{table}[H]
@@ -68,19 +74,31 @@ Table~\ref{table:transferfunctions} shows our transfer function for the extended
   \hline
   1 & [int x]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto [0,0]]$ \\
   \hline
-  2 & [int A[n]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[$A[i]$ \mapsto [0,0] | \forall i \in \{0, ..., n-1 \}$\\
+  2 & [int A[n]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = 
+     \begin{cases} 
+        \widehat{\sigma}[$A[n]$ \mapsto \bot] & \text{if } n \leq 0] \\
+        \widehat{\sigma}[$A[i]$ \mapsto [0,0] | \forall i \in \{0, ..., n-1 \} & \text{if } n > 0] \\
+     \end{cases}$\\
   \hline
-  3 & [x := a]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto \mathcal{A}_I[\![a]\!] \widehat{\sigma} ]$ \\
+  3 & [x := a]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto A_I[\![a]\!] \widehat{\sigma} ]$ \\
   \hline
   4 & [skip]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
   5 & [b]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
-  6 & [int A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[$A[a$_1$]$ \mapsto \mathcal{A}_I[\![a_2]\!] \widehat{\sigma} ]$ \\
+  6 & [int A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = 
+     \begin{cases} 
+        \widehat{\sigma}[$A[a$_1$]$ \mapsto \bot]        & \text{if } $A$_I[\![a]\!] \subsetneq [0, n-1] \\
+        \widehat{\sigma}[$A[a$_1$]$ \mapsto A_I[\![a_2]\!] & \text{if } 0 \leq a_1 < n \\
+     \end{cases}$\\
   \hline
-  7 & [read x]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = [x \mapsto \mathcal{A}_I[\![n]\!] \widehat{\sigma})$  \\
+  7 & [read x]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = [x \mapsto $A$_I[\![n]\!] \widehat{\sigma})$  \\
   \hline
-  8 & [read A[a]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[$A[a]$ \mapsto \mathcal{A}_I[\![n]\!] \widehat{\sigma} ]$ \\
+  8 & [read A[a]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = 
+     \begin{cases} 
+        \widehat{\sigma}[$A[a]$ \mapsto \bot]        & \text{if } 0 < a \leq n \\ %TODO ??
+        \widehat{\sigma}[$A[a]$ \mapsto A_I[\![n]\!] & \text{if } 0 \leq a_1 < n \\
+     \end{cases}$\\
   \hline
   9 & [write A[n]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
@@ -184,27 +202,28 @@ The result of an interval analysis can be used to calculate whenever a buffer ov
 \end{algorithm}
 
 
-% \begin{table}[H]
-% \begin{tabular}{| l | l |}
-% \hline
-% A$_\circ (1) = \iota \{\text{init}(S_*) \} $ & A$_\bullet(1) = \text{f}_{\text{int A[2]}} (\text{A}_\circ (1))$ \\
-% \hline
-% A$_\circ (2) =$A$_\bullet(1) $ & A$_\bullet(2) = \text{f}_{\text{int i}} (\text{A}_\circ (2))$ \\
-% \hline
-% A$_\circ (3) = $A$_\bullet(2)$ & A$_\bullet(3) = \text{f}_{\text{i := -1}} (\text{A}_\circ (3))$  \\
-% \hline
-% A$_\circ (4) = $A$_\bullet(3) \bigcup $A$_\bullet(6) $ & A$_\bullet(4) = \text{f}_{\text{i < 3}} (\text{A}_\circ (4))$ \\
-% \hline
-% A$_\circ (5) = $A$_\bullet(4)$ & A$_\bullet(5) = \text{f}_{\text{A[i] := i + 1}} (\text{A}_\circ (5))$ \\
-% \hline
-% A$_\circ (6) = $A$_\bullet(5)$ & A$_\bullet(6) = \text{f}_{\text{i := i + 1}} (\text{A}_\circ (6))$ \\
-% 
-% \hline
-% \end{tabular}
-% \centering
-% \caption{Equations for the program from figure~\ref{code:array_example}}
-% \label{table:}
-% \end{table}
-% 
+\subsection{Example solution}
+\begin{table}[H]
+\begin{tabular}{| l | l |}
+\hline
+A$_\circ (1) = \iota \{\text{init}(S_*) \} $ & A$_\bullet(1) = \text{f}_{\text{int A[2]}} (\text{A}_\circ (1))$ \\
+\hline
+A$_\circ (2) =$A$_\bullet(1) $ & A$_\bullet(2) = \text{f}_{\text{int i}} (\text{A}_\circ (2))$ \\
+\hline
+A$_\circ (3) = $A$_\bullet(2)$ & A$_\bullet(3) = \text{f}_{\text{i := -1}} (\text{A}_\circ (3))$  \\
+\hline
+A$_\circ (4) = $A$_\bullet(3) \bigcup $A$_\bullet(6) $ & A$_\bullet(4) = \text{f}_{\text{i < 3}} (\text{A}_\circ (4))$ \\
+\hline
+A$_\circ (5) = $A$_\bullet(4)$ & A$_\bullet(5) = \text{f}_{\text{A[i] := i + 1}} (\text{A}_\circ (5))$ \\
+\hline
+A$_\circ (6) = $A$_\bullet(5)$ & A$_\bullet(6) = \text{f}_{\text{i := i + 1}} (\text{A}_\circ (6))$ \\
+
+\hline
+\end{tabular}
+\centering
+\caption{Equations for the program from figure~\ref{code:array_example}}
+\label{table:}
+\end{table}
+
 % \subsection*{Notes}
 % Branches: We can assume, on branches that includes an a = b in the boolean expression, that -- on the true branch --  that both a and b is now the intersection of a and b.
