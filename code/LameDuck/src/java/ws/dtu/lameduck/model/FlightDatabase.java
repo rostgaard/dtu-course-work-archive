@@ -11,10 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.xml.datatype.XMLGregorianCalendar;
+import ws.dtu.lameduck.BookFlightFault;
 import ws.dtu.lameduck.Flight;
 import ws.dtu.lameduck.FlightInformation;
 import ws.dtu.lameduck.FlightList;
-import ws.dtu.lameduck.model.exceptions.NoSuchFlightIdentifier;
 
 /**
  *
@@ -22,11 +22,39 @@ import ws.dtu.lameduck.model.exceptions.NoSuchFlightIdentifier;
  */
 public final class FlightDatabase {
     
-    private static Map<String,List<FlightInformation>> db = new HashMap<String,List<FlightInformation>>();
-    private static List<String> bookings = new ArrayList<String>();
-    private static Map<String, FlightInformation> flightInfoByBooking = new HashMap<String, FlightInformation>();
-    private static String serviceName = "LameDuck";
-    public static void loadDatabase() {
+    private  Map<String,List<FlightInformation>> flightInformations = new HashMap<String,List<FlightInformation>>();
+    private  List<String> bookings = new ArrayList<String>();
+    private  Map<String, FlightInformation> flightInfoByBooking = new HashMap<String, FlightInformation>();
+    private  String serviceName = "LameDuck";
+    
+    private static FlightDatabase db;
+    
+    public static synchronized FlightDatabase getInstance(){
+        if(db == null){
+            db = new FlightDatabase();
+            db.loadDatabase();
+        }
+        
+        return db;
+    }
+    
+    private FlightDatabase(){
+        flightInformations = new HashMap<String,List<FlightInformation>>();
+        bookings = new ArrayList<String>();
+        flightInfoByBooking = new HashMap<String, FlightInformation>();
+    }
+    
+    public void reset(){
+        flightInformations = new HashMap<String,List<FlightInformation>>();
+        bookings = new ArrayList<String>();
+        flightInfoByBooking = new HashMap<String, FlightInformation>();
+        
+        this.loadDatabase();
+    }
+    
+    private  void loadDatabase() {
+        
+        
         XMLGregorianCalendar date1 = new XMLGregorianCalendarImpl();
         date1.setMonth(11);
         date1.setDay(17);
@@ -65,7 +93,7 @@ public final class FlightDatabase {
         
     }
     
-    private static Flight generateFlight(String origin, String destination, XMLGregorianCalendar liftOff, XMLGregorianCalendar arrival, String carrier){
+    private  Flight generateFlight(String origin, String destination, XMLGregorianCalendar liftOff, XMLGregorianCalendar arrival, String carrier){
         Flight newFlight = new Flight();
         newFlight.setOrigin(origin);
         newFlight.setDestination(destination);
@@ -74,23 +102,23 @@ public final class FlightDatabase {
         newFlight.setCarrier(carrier);
         return newFlight;
     }
-    public static void insert (FlightInformation flightInfo) {
+    public  void insert (FlightInformation flightInfo) {
         String key = flightInfo.getFlight().getOrigin();
-        if(db.containsKey(key)){
-            db.get(key).add(flightInfo);
+        if(flightInformations.containsKey(key)){
+            flightInformations.get(key).add(flightInfo);
             flightInfoByBooking.put(flightInfo.getBookingNo(), flightInfo);
         } else {
             List<FlightInformation> newList = new ArrayList<FlightInformation>();
             newList.add(flightInfo);
-            db.put(key, newList);
+            flightInformations.put(key, newList);
             flightInfoByBooking.put(flightInfo.getBookingNo(), flightInfo);
         }
     }
     
-    public static FlightList getFlights(String origin, String destination, XMLGregorianCalendar date) {
+    public  FlightList getFlights(String origin, String destination, XMLGregorianCalendar date) {
         FlightList retList = new FlightList();
         
-        List<FlightInformation> properOrigin = db.get(origin);
+        List<FlightInformation> properOrigin = flightInformations.get(origin);
         for(FlightInformation fi : properOrigin){
             Flight flight = fi.getFlight();
             if(flight.getDestination().equals(destination) && 
@@ -108,7 +136,7 @@ public final class FlightDatabase {
 
     
 
-    private static FlightInformation generateFlightInformation(Flight newFlight, String bookingNo, double price, String serviceName) {
+    private  FlightInformation generateFlightInformation(Flight newFlight, String bookingNo, double price, String serviceName) {
         FlightInformation flightInfo = new FlightInformation();
         flightInfo.setBookingNo(bookingNo);
         flightInfo.setFlight(newFlight);
@@ -118,42 +146,30 @@ public final class FlightDatabase {
         
     }
 
-    private static boolean compareDate(XMLGregorianCalendar liftOff, XMLGregorianCalendar date) {
+    private  boolean compareDate(XMLGregorianCalendar liftOff, XMLGregorianCalendar date) {
         return liftOff.getDay() == date.getDay() &&
                 liftOff.getMonth() == date.getMonth() &&
                 liftOff.getYear() == date.getYear();
     }
 
-    public static boolean bookFlight(String bookingNo, CreditCardInfoType creditCardInfo) {
-        // TODO: fail properly
-        
-        if(bookings.contains(bookingNo)){
-            return false;
-        } else {
-            
-            boolean result = pay(creditCardInfo, flightInfoByBooking.get(bookingNo).getPrice());
-            
-            if(result){
-                bookings.add(bookingNo);     
-            }
-            return result;
+    public  FlightInformation bookFlight(String bookingNo) throws BookFlightFault {
+        if(!flightInfoByBooking.containsKey(bookingNo)){
+            throw new BookFlightFault("No such booking number", "No such booking number");
         }
+        else if(bookings.contains(bookingNo)){
+            throw new BookFlightFault("Trip has already been booked", "Trip has already been booked");
+        } else {
+                bookings.add(bookingNo); 
+                return flightInfoByBooking.get(bookingNo);
+        }
+            
+        
     }
     
-    
-
-    public static boolean cancelFlight(String bookingNo, double price, CreditCardInfoType creditCardInfo) {
-        // TODO: Fail properly
-        bookings.remove(bookingNo);
-        return refund(creditCardInfo, price);
+    public  void cancelFlight(String bookingNo) {
+        
+           bookings.remove(bookingNo);   
+        
     }
 
-    private static boolean refund(CreditCardInfoType creditCardInfo, double price) {
-        // TODO: use bank service
-        return true;
-    }
-    private static boolean pay(CreditCardInfoType creditCardInfo, double price){
-        // TODO: use bank service
-        return true;
-    }
 }

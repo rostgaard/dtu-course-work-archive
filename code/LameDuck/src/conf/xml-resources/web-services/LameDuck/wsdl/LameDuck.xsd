@@ -30,4 +30,5 @@
         <xsd:restriction base="xsd:string"/>
     </xsd:simpleType>
     <xsd:element name="cancelFault" type="xsd:string"></xsd:element>
+    <xsd:element name="bookFault" type="xsd:string"></xsd:element>
 </xsd:schema>

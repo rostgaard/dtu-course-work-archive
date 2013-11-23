@@ -39,6 +39,9 @@
     <message name="CancelFlightFault">
         <part name="CancelFlightFault" element="tns:cancelFault"/>
     </message>
+    <message name="BookFlightFault">
+        <part name="BookFlightFault" element="tns:bookFault"/>
+    </message>
     <portType name="LameDuckPortType">
         <operation name="getFlights">
             <input name="input1" message="tns:getFlightsRequest"/>
@@ -47,6 +50,7 @@
         <operation name="bookFlight">
             <input name="input2" message="tns:bookFlightRequest"/>
             <output name="output2" message="tns:bookFlightResponse"/>
+            <fault name="fault2" message="tns:BookFlightFault"/>
         </operation>
         <operation name="cancelFlight">
             <input name="input3" message="tns:cancelFlightRequest"/>
@@ -73,6 +77,9 @@
             <output name="output2">
                 <soap:body use="literal" namespace="http://lameduck.dtu.ws/"/>
             </output>
+            <fault name="fault2">
+                <soap:fault name="fault2"/>
+            </fault>
         </operation>
         <operation name="cancelFlight">
             <soap:operation/>
