@@ -1,2 +1,13 @@
 \chapter{Web services discovery}
 
+To aid in the discovery of our services, we have provided WSIL (Web Service Inspection Language) files for each. These files contains a short description of the service and the operations it offers. It also shows where to find the relevant WSDL files for the service(s) on that server. While all of our services are deployed to the same server, this might not be the case, so we provide a WSIL file for each business entity. They all contain a link to the other services, using the \texttt{link} element of WSIL.
+
+\begin{description}
+\item [LameDuck:] This WSIL, describes which services LameDuck offers for business use, as well as which faults the operations might generate. As the business part uses multiple services, we describe all in the abstract for this service. We also include an element for the service that resets the test data.\todo{Lav LameDuck WSIL}
+
+\item [NiceView:] This WSIL, describes which services NiceView offers for business use, as well as the faults that can be thrown. All services are described in a few words in the abstract element. \todo{Lav NiceView WSIL}
+
+\item [TravelGood:] \todo{Beskriv TravelGood WSIL} \todo{Lav TravelGood WSIL}
+
+
+\end{description}

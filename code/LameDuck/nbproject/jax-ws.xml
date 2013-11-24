@@ -33,6 +33,38 @@
         </wsimport-option>
       </wsimport-options>
     </service>
+    <service name="LameDuck">
+      <implementation-class>ws.dtu.lameduck.LameDuck</implementation-class>
+      <wsdl-url>file:/C:/Users/Mikkel/Documents/GitHub/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuck.wsdl</wsdl-url>
+      <local-wsdl-file>LameDuck.wsdl</local-wsdl-file>
+      <service-name>LameDuckService</service-name>
+      <port-name>LameDuckPort</port-name>
+      <package-name>ws.dtu.lameduck</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+      <use-provider>false</use-provider>
+      <wsimport-options>
+        <wsimport-option>
+          <wsimport-option-name>extension</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>verbose</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xnocompile</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xendorsed</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>target</wsimport-option-name>
+          <wsimport-option-value>2.1</wsimport-option-value>
+        </wsimport-option>
+      </wsimport-options>
+    </service>
   </services>
   <clients>
     <client name="BankService">

@@ -62,6 +62,25 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/reset/lameduck/dtu/ws"/>
         <delete dir="${build.generated.dir}/jax-wsCache/service/LameDuckReset"/>
     </target>
+    <target name="wsimport-service-LameDuck" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/service/LameDuck"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/service/LameDuck" destdir="${build.generated.dir}/jax-wsCache/service/LameDuck" wsdl="${basedir}/${conf-dir}xml-resources/web-services/LameDuck/wsdl/LameDuck.wsdl" catalog="catalog.xml" extension="true" verbose="true" xnocompile="true" xendorsed="true" target="2.1">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-services/LameDuck/wsdl/LameDuck.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/service/LameDuck"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/service/LameDuck">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy todir="${build.web.dir}/WEB-INF/wsdl/LameDuck">
+            <fileset dir="${basedir}/${conf-dir}xml-resources/web-services/LameDuck/wsdl/"/>
+        </copy>
+    </target>
+    <target name="wsimport-service-clean-LameDuck" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/ws/dtu/lameduck"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/service/LameDuck"/>
+    </target>
     <target name="wsimport-client-generate" depends="wsimport-client-BankService"/>
-    <target name="wsimport-service-generate" depends="wsimport-service-LameDuckReset"/>
+    <target name="wsimport-service-generate" depends="wsimport-service-LameDuckReset, wsimport-service-LameDuck"/>
 </project>

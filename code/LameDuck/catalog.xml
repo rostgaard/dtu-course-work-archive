@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <nextCatalog catalog="nbproject/private/retriever/catalog.xml"/>
-    <system systemId="file:/C:/Users/Mikkel/Documents/GitHub/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuck.wsdl" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/LameDuck.wsdl"/>
-    <system systemId="file:/C:/Users/Mikkel/Documents/GitHub/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuck.xsd" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/LameDuck.xsd"/>
     <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?wsdl" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl"/>
-    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
     <system systemId="file:/C:/Users/Mikkel/Documents/GitHub/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuckReset.wsdl" uri="src/conf/xml-resources/web-services/LameDuckReset/wsdl/LameDuckReset.wsdl"/>
+    <system systemId="file:/C:/Users/Mikkel/Documents/GitHub/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuck.wsdl" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/LameDuck.wsdl"/>
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
+    <system systemId="file:/C:/Users/Mikkel/Documents/GitHub/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuck.xsd" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/LameDuck.xsd"/>
 </catalog>
