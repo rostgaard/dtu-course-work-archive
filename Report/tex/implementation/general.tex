@@ -22,7 +22,9 @@ The LameDuck implementations implement the data described in the project descrip
 \subsection{TravelGood - RESTful}
 
 \section{Airline- and hotel services}
-Both LameDuck and NiceView are implemented using RPC-Literal style. This has been done for the simplicity of the format, while we sacrifice things from the document style binding, such as reduced overhead in the SOAP message as well as the ability to validate the SOAP message. We simply assume that the messages are formatted correctly. \todo{Vi bør have en bedre grund til at vi ikke bruger Document style.}
+Both LameDuck and NiceView are implemented using RPC-Literal style. This has been done for the simplicity of the format, while we sacrifice things from the document style binding, such as reduced overhead in the SOAP message as well as the ability to validate the SOAP message. We simply assume that the messages are formatted correctly.
+Also, following the rationale from \cite{papazoglou2008web}, we this implementation is a synchronous service with parameter passing rather than an asynchronous document passing service.
+\todo{Vi bør have en bedre grund til at vi ikke bruger Document style. Er denne ok? (KRC)}
 
 For both services, we have developed a small suite of unit tests, that can be used to ensure that both services are running, before running tests for the BPEL/RESTful implementations. For this purpose, we have added a service along with the required one, to reset the databases of both services. To this end, the databases has been implemented using the singleton pattern, so both service classes works on the same database.
 
