@@ -1,0 +1,80 @@
+Implementation
+We have chosen Java as our implementation language and ANTLR as our framework for constructing a lexer and a parser.
+With those components we are able to convert a given While-program to an abstract syntax tree.
+
+Constructing the intermediate representation
+As described in section constructing_flow_graphs we use an unbalanced tree for containing our abstract syntax tree, which serves as our intermediate representation (IR).
+The implementation architecture for the IR is seen in Figure 1 - Figure 5.
+
+Function Mapping
+
+In order to access information about each statement (block) we have implemented the smallest steps of each analysis to the individual classes (blocks) in the IR.
+
+For each statement class we have implemented following functions:
+Label(s) - returns the set of label for the statement 		
+Init(s) - returns the initial label for the statement
+Final(s) - returns the set of final labels for the statement 
+Flow(s) - returns the flow for the statement
+Variable(s) - returns the set of variables for the statement
+Kill - returns the set of definitions to be killed	
+Gen	 - returns the set of definitions to be generated
+
+As an example for assignments and skip-statement we would have the following results:
+
+Statement:		[x:=a]l												[skip]l	
+Label(s)		{l}													{l}	
+Init(s)			{l}													{l}
+Final(s)		{l}													{l}
+Flow(s)			Ø													Ø
+Variable(s)		{x} U variable(x)									Ø
+Kill			RDentry(l)\{x, l' | Bl' is an assignment to A}		Ø							
+Gen				{x, l}												Ø
+
+
+We have discusses most of the function above in the previous sections of the report. However the Variable function is new. The variable function is used to get variables for a particular statement. It returns a set of variables if any is represented.
+
+If the statement is a declaration, we have defined the variable-function as following: 
+variable(decl):
+	(Integer)			x -> {x}
+	(Array)				A[n] -> {A}
+
+For expressions it is defined as:
+variable(expr):
+	(constant) 			n -> Ø
+	(variable)			x -> {x}
+	(Array expr.)		A[x] -> {A} U var(x)
+	(Arithmetic opr.)	a1 opa a2 -> var(a1) U var(a2)
+	(Negation)			-a -> var(a)
+	(Parenthesis)		(a) -> var(a)
+
+And finally the statements:
+variable(stmt):
+	(Assignment) 		x := a -> {x} U variable(x)	
+	(Skip)				skip -> Ø
+	(Array assignment)	A[a1] := a2 -> {A} U variable(a1) U variable(a2)
+	(Read)				read x -> {x}
+	(Read array)		read A[a] -> {A} U variable(a)
+	(Write)				write a -> variable(a)
+	(composition)		S1 S2 -> variable(S1) U variable(S2)
+	(if-stmt)			if b then s1 else s2 fi -> Ø
+	(while loop)		while b do S od -> Ø
+	
+The variable-function is used for the Program Slicing algorithm.
+	
+
+The functions explained above will give us the equations that is going to be solved.
+
+
+Implementation of the analysis:
+On top of the functions explained above we have implemented the algorithms which is able to perform the analysis as Reaching definitions, Program slicing, detection of signs and interval analysis. 
+Mode details of each analysis is explained below.
+
+Implementation of the Reaching Definition analysis:
+The class WorklistAlgorithm.java implements the Reaching Definition analysis.
+It is an implementation of the pseudo-code presented in the slides for the course.
+
+Implementation of the Program slice analysis:
+The class ProgramSlicing.java implements the program slice algorithm.
+It takes two parameters, a point of interest and the the result from reaching definition.
+It is an implementation of the pseudo-code presented in section 3.5 Program slice calculation algorithm.
+
