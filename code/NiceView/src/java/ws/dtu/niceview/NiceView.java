@@ -8,6 +8,8 @@ import dk.dtu.imm.fastmoney.types.CreditCardInfoType;
 import javax.jws.WebService;
 import javax.xml.datatype.XMLGregorianCalendar;
 import ws.dtu.niceview.model.HotelDatabase;
+import ws.dtu.niceview.types.HotelInformation;
+import ws.dtu.niceview.types.HotelList;
 
 /**
  *

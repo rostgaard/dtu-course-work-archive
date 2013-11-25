@@ -7,8 +7,8 @@ package ws.dtu.niceview.model;
 import java.util.HashMap;
 import java.util.Map;
 import javax.xml.datatype.XMLGregorianCalendar;
-import ws.dtu.niceview.HotelInformation;
-import ws.dtu.niceview.HotelList;
+import ws.dtu.niceview.types.HotelInformation;
+import ws.dtu.niceview.types.HotelList;
 
 /**
  *
