@@ -1,11 +1,8 @@
 package syntaxtree.statement;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.TreeSet;
-
-import analysis.Definition;
 import analysis.DefinitionSet;
+import analysis.Lattice;
+import analysis.RDLattice;
 import analysis.RDProgramState;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
@@ -55,19 +52,19 @@ public class Assignment extends Statement {
 
     @Override
     public RDProgramState RD(RDProgramState currentState) {
-    	//RDentry
-        DefinitionSet exit = currentState.getRDExit(getLabel()-1);
-    	currentState.addRDentry(getLabel(), exit);
+        //RDentry
+        DefinitionSet exit = currentState.getRDExit(getLabel() - 1);
+        currentState.addRDentry(getLabel(), exit);
 
-    	//RDexit
+        //RDexit
         DefinitionSet entry = currentState.getRDEntry(getLabel());
-    	//killRD([x:= a]l) = {(x, ?)} u  {(x, l') | B(l') is an assignment to x}    	
-    	entry.removeAll(currentState.kill(id, entry));
-    	//genRD([x:= a]l) = {(x, l)}
-    	entry.addAll(currentState.gen(id, new Node(this)));
+        //killRD([x:= a]l) = {(x, ?)} u  {(x, l') | B(l') is an assignment to x}    	
+        entry.removeAll(currentState.kill(id, entry));
+        //genRD([x:= a]l) = {(x, l)}
+        entry.addAll(currentState.gen(id, new Node(this)));
 
-    	currentState.addRDexit(getLabel(), entry);
-    	return currentState;
+        currentState.addRDexit(getLabel(), entry);
+        return currentState;
     }
 
     @Override
@@ -100,11 +97,19 @@ public class Assignment extends Statement {
     public FlowSet flow() {
         return FlowSet.emptySet;
     }
-    
+
     @Override
     public VariableSet getVariable() {
-    	return VariableSet.factory()
-    			.union(expr.getVariable());
+        return VariableSet.factory()
+                .union(expr.getVariable());
     }
-    
+
+    @Override
+    public Lattice transferFunction(Lattice lattice) {
+        ((RDLattice) lattice).kill(id).union(
+                ((RDLattice) lattice).gen(id, this.toNode()));
+        System.out.println("transferFunction:" + lattice);
+        return lattice;
+
+    }
 }

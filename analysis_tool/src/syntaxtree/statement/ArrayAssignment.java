@@ -6,6 +6,8 @@ import java.util.TreeSet;
 
 import analysis.Definition;
 import analysis.DefinitionSet;
+import analysis.Lattice;
+import analysis.RDLattice;
 import analysis.RDProgramState;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
@@ -122,6 +124,15 @@ public class ArrayAssignment extends Statement {
     	return VariableSet.factory().addVariable(id)
     			.union(idx.getVariable())
     			.union(expr.getVariable());
+    }
+
+    @Override
+    public Lattice transferFunction(Lattice lattice) {
+        if (lattice instanceof RDLattice) {
+            System.out.println("Doing the Kill/Gen dance for" + this);
+            return ((RDLattice)lattice).kill(this.id);
+        }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
        
 }

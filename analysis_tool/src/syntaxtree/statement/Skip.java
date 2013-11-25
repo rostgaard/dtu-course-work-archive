@@ -6,6 +6,7 @@ import java.util.TreeSet;
 
 import analysis.Definition;
 import analysis.DefinitionSet;
+import analysis.Lattice;
 import analysis.RDProgramState;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
@@ -66,6 +67,11 @@ public class Skip extends Statement {
     @Override
     public VariableSet getVariable() {
     	return VariableSet.emptySet;
+    }
+
+    @Override
+    public Lattice transferFunction(Lattice lattice) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

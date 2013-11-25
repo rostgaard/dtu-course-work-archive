@@ -51,13 +51,10 @@ public class Main {
             if (parserResult != null) {
                 Program tree = parserResult.value;
                 Sequencer seq = new Sequencer();
-                RDProgramState currentState = new RDProgramState(tree.getDecls());
-                
-//                System.out.println (tree.getStmts());
-//                               
+
+                // Intially set the labels.
                 for(Statement s : tree.getStmts()) {
                     s.setLabel(seq);
-                    s.RD(currentState);
                 }
 
                 System.out.println (tree.getStmts().toStringWithLabel());
@@ -75,14 +72,14 @@ public class Main {
                 //System.out.println(tree.toString());
 //				printTree(tree,0);
                 FlowSet flows = tree.getStmts().flow();
-                RDProgramState analysis = WorklistAlgorithm.calculate(flows, tree);
+                WorklistAlgorithm.calculate(flows, tree);
                 System.out.println("Reaching definitions:");
-                System.out.println(analysis.getRDentry());
+                //System.out.println(analysis.getRDentry());
 
                 System.out.println("");
                 System.out.println("Program slice:");
-                NodeSet programSlice = ProgramSlicing.execute(flows.get(2).getSource(), analysis);
-                System.out.println(programSlice);
+                //NodeSet programSlice = ProgramSlicing.execute(flows.get(2).getSource(), analysis);
+                //ystem.out.println(programSlice);
 
             }
         } catch (RecognitionException e) {

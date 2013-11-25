@@ -20,7 +20,7 @@ public class Program {
         this.stmts = stmts;
     }
 
-    public List<Declaration> getDecls() {
+    public DeclarationList getDecls() {
         return decls;
     }
 

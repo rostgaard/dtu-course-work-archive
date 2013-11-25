@@ -4,6 +4,7 @@ import java.security.interfaces.RSAKey;
 import java.util.ArrayList;
 
 import analysis.Definition;
+import analysis.Lattice;
 import analysis.RDProgramState;
 import flowgraph.datastructure.Flow;
 import flowgraph.datastructure.FlowSet;
@@ -96,8 +97,8 @@ public class While extends Statement {
 //    		currentState.addRDentry(s.getLabel(), exit1);
 //    	}
 //    	
-//    	//killRD([while b do S od]l) = ø
-//    	//genRD([[while b do S od]l) = ø
+//    	//killRD([while b do S od]l) = ?
+//    	//genRD([[while b do S od]l) = ?
 //        ArrayList<Definition> entry = currentState.getRDEntry(getLabel());
 //    	currentState.addRDexit(getLabel(), entry);
     	return currentState;
@@ -136,6 +137,11 @@ public class While extends Statement {
     @Override
     public VariableSet getVariable() {
     	return VariableSet.emptySet;
+    }
+
+    @Override
+    public Lattice transferFunction(Lattice lattice) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

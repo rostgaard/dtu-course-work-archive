@@ -1,6 +1,5 @@
 package syntaxtree.statement;
 
-import analysis.Definition;
 import analysis.RDProgramState;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
@@ -9,8 +8,8 @@ import flowgraph.datastructure.VariableSet;
 import syntaxtree.Symbols;
 import utilities.Sequencer;
 import analysis.DefinitionSet;
+import analysis.Lattice;
 
-import java.util.TreeSet;
 
 /**
  * Abstract class for statements
@@ -19,7 +18,7 @@ import java.util.TreeSet;
 
 public abstract class Statement implements analysis.Analysable {
     
-    private int label = -1;
+    private int label = -1; // Default value for an unassigned statement.
 
     public abstract NodeSet labels();
     public abstract NodeSet finalNodes();
@@ -52,4 +51,7 @@ public abstract class Statement implements analysis.Analysable {
         DefinitionSet generated = currentState.getRDEntry(getLabel());
         return generated;
     }
+    
+    public abstract Lattice transferFunction(Lattice lattice);
+    
 }

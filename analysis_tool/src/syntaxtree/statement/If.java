@@ -2,6 +2,8 @@ package syntaxtree.statement;
 
 import analysis.Definition;
 import analysis.DefinitionSet;
+import analysis.Lattice;
+import analysis.RDLattice;
 import analysis.RDProgramState;
 import flowgraph.datastructure.Flow;
 import flowgraph.datastructure.FlowSet;
@@ -89,10 +91,10 @@ public class If extends Statement {
 //    	}
 //    	currentState.union(rps2);
 //    	
-//    	//killRD([if b then S1 else S2 fi]l) = �
-//    	//genRD([[if b then S1 else S2 fi]l) = �
+//    	//killRD([if b then S1 else S2 fi]l) = ?
+//    	//genRD([[if b then S1 else S2 fi]l) = ?
 //    	currentState.addRDexit(getLabel(), currentState.getDefinitions());
-    	return currentState;
+        return currentState;
     }
 
     @Override
@@ -158,10 +160,15 @@ public class If extends Statement {
                 .addFlow(new Flow(this.toNode(), trueBranch.init()))
                 .addFlow(new Flow(this.toNode(), falseBranch.init()));
     }
-    
+
     @Override
     public VariableSet getVariable() {
-    	return VariableSet.emptySet;
+        return VariableSet.emptySet;
     }
-    
+
+    @Override
+    public Lattice transferFunction(Lattice lattice) {
+
+        return lattice;
+    }
 }
