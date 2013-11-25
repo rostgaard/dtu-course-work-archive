@@ -88,7 +88,7 @@
     </binding>
     <service name="LameDuckService">
         <port name="LameDuckPort" binding="tns:LameDuckBinding">
-            <soap:address location="http://localhost:8080/LameDuck/LameDuckService"/>
+            <soap:address location="http://localhost:8070/LameDuck/LameDuckService"/>
         </port>
     </service>
     <plnk:partnerLinkType name="LameDuck">

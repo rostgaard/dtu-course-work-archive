@@ -54,11 +54,19 @@ public final class FlightDatabase {
         this.loadDatabase();
     }
     
-    private  void loadDatabase() throws DatatypeConfigurationException {
-        DatatypeFactory df = df = DatatypeFactory.newInstance();
+    private  void loadDatabase() {
+        
+        DatatypeFactory df;
+        try {
+            df = DatatypeFactory.newInstance();
+        } catch (DatatypeConfigurationException ex) {
+           throw new NullPointerException();
+        }
         
         XMLGregorianCalendar date1 = df.newXMLGregorianCalendar("2013-11-17");
+        
         XMLGregorianCalendar date2 = df.newXMLGregorianCalendar("2013-11-18");
+        
         
         
         Flight newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "SAS");
@@ -90,6 +98,7 @@ public final class FlightDatabase {
     }
     
     private  Flight generateFlight(String origin, String destination, XMLGregorianCalendar liftOff, XMLGregorianCalendar arrival, String carrier){
+        
         Flight newFlight = new Flight();
         newFlight.setOrigin(origin);
         newFlight.setDestination(destination);
