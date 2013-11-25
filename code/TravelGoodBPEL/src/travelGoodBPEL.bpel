@@ -14,14 +14,16 @@
     xmlns:ns1="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension" 
     xmlns:ld="http://lameduck.dtu.ws/" 
     xmlns:nv="http://niceview.dtu.ws/" 
+    xmlns:ldt="urn://types.lameduck.dtu.ws/" 
+    xmlns:nvt="urn://types.niceview.dtu.ws/" 
     xmlns:sxxf="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/XPathFunctions" xmlns:ns2="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
     
     <import namespace="http://travelgoodbpel.ws" location="TravelGood.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
-    <import namespace="http://niceview.dtu.ws/" location="NiceView/ws/dtu/niceview/xml/NiceView.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
-    <import namespace="http://lameduck.dtu.ws/" location="LameDuck/ws/dtu/lameduck/xml/LameDuck.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://niceview.dtu.ws/" location="http://localhost:8080/NiceView/NiceViewService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://lameduck.dtu.ws/" location="http://localhost:8080/LameDuck/LameDuckService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <partnerLinks>
-        <partnerLink name="NiceViewPartnerLink" xmlns:tns="http://niceview.dtu.ws/" partnerLinkType="tns:NiceView" partnerRole="NiceViewPortTypeRole"/>
-        <partnerLink name="LameDuckPartnerLink" xmlns:tns="http://lameduck.dtu.ws/" partnerLinkType="tns:LameDuck" partnerRole="LameDuckPortTypeRole"/>
+        <partnerLink name="LameDuckPartnerLink" partnerLinkType="ld:LameDuck" partnerRole="LameDuckPortTypeRole"/>
+        <partnerLink name="NiceViewPartnerLink" partnerLinkType="nv:NiceView" partnerRole="NiceViewPortTypeRole"/>
         <partnerLink name="TravelGoodPartnerLink" xmlns:tns="http://travelgoodbpel.ws" partnerLinkType="tns:TravelGood" myRole="TravelGoodPortTypeRole"/>
     </partnerLinks>
     <variables>
@@ -319,7 +321,7 @@
                         <sequence name="Sequence7">
                             <assign name="Assign14">
                                 <copy>
-                                    <from>$flightBookings/flightBooking[$flightCounter]/flightInformation/ld:bookingNo
+                                    <from>$flightBookings/flightBooking[$flightCounter]/flightInformation/ldt:bookingNo
                                         <sxed:editor>
                                             <sxed:predicate path="$flightBookings/flightBooking[$flightCounter]" source="from"/>
                                         </sxed:editor>

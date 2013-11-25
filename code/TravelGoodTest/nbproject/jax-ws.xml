@@ -2,9 +2,9 @@
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
   <services/>
   <clients>
-    <client name="TravelGoodPort">
-      <wsdl-url>http://localhost:9080/TravelGoodService/TravelGoodPort?wsdl</wsdl-url>
-      <local-wsdl-file>localhost_9080/TravelGoodService/TravelGoodPort.wsdl</local-wsdl-file>
+    <client name="TravelGood">
+      <wsdl-url>file:/C:/Users/Martin/git/Webservices/code/TravelGoodBPEL/src/TravelGood.wsdl</wsdl-url>
+      <local-wsdl-file>TravelGood.wsdl</local-wsdl-file>
       <package-name>ws.travelgoodbpel</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
@@ -18,7 +18,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://localhost:9080/TravelGoodService/TravelGoodPort?wsdl</wsimport-option-value>
+          <wsimport-option-value>file:/C:/Users/Martin/git/Webservices/code/TravelGoodBPEL/src/TravelGood.wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>

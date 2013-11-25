@@ -16,22 +16,22 @@
             <classpath path="${libs.jaxws21.classpath}"/>
         </taskdef>
     </target>
-    <target name="wsimport-client-TravelGoodPort" depends="wsimport-init">
-        <mkdir dir="${build.generated.dir}/jax-wsCache/TravelGoodPort"/>
-        <property name="wsdl-TravelGoodPort" location="xml-resources/web-service-references/TravelGoodPort/wsdl/localhost_9080/TravelGoodService/TravelGoodPort.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/TravelGoodPort" destdir="${build.generated.dir}/jax-wsCache/TravelGoodPort" wsdl="${wsdl-TravelGoodPort}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:9080/TravelGoodService/TravelGoodPort?wsdl" xnocompile="true" xendorsed="true">
-            <depends file="${wsdl-TravelGoodPort}"/>
-            <produces dir="${build.generated.dir}/jax-wsCache/TravelGoodPort"/>
+    <target name="wsimport-client-TravelGood" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/TravelGood"/>
+        <property name="wsdl-TravelGood" location="xml-resources/web-service-references/TravelGood/wsdl/TravelGood.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/TravelGood" destdir="${build.generated.dir}/jax-wsCache/TravelGood" wsdl="${wsdl-TravelGood}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="file:/C:/Users/Martin/git/Webservices/code/TravelGoodBPEL/src/TravelGood.wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${wsdl-TravelGood}"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/TravelGood"/>
         </wsimport>
         <copy todir="${build.generated.sources.dir}/jax-ws">
-            <fileset dir="${build.generated.dir}/jax-wsCache/TravelGoodPort">
+            <fileset dir="${build.generated.dir}/jax-wsCache/TravelGood">
                 <include name="**/*.java"/>
             </fileset>
         </copy>
     </target>
-    <target name="wsimport-client-clean-TravelGoodPort" depends="-init-project">
-        <delete dir="${build.generated.dir}/jax-wsCache/TravelGoodPort"/>
+    <target name="wsimport-client-clean-TravelGood" depends="-init-project">
+        <delete dir="${build.generated.dir}/jax-wsCache/TravelGood"/>
         <delete dir="${build.generated.sources.dir}/jax-ws/ws/travelgoodbpel"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-TravelGoodPort"/>
+    <target name="wsimport-client-generate" depends="wsimport-client-TravelGood"/>
 </project>

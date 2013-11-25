@@ -1,38 +1,29 @@
+import javax.xml.ws.Holder;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+import ws.dtu.lameduck.types.FlightInformation;
 import ws.travelgoodbpel.*;
 
 public class TravelGoodTest {
 
     @Test
     public void testAddFlight() {
-        FlightBookings bookings;
         createItinerary("MinMor");
-        addFlight("MinMor", "FØRSTE");
-        addFlight("MinMor", "ANDEN");
-        addFlight("MinMor", "TREDJE");
-        addFlight("MinMor", "FJERDE");
+        addFlight("MinMor", new FlightInformation());
+        addFlight("MinMor", new FlightInformation());
+        addFlight("MinMor", new FlightInformation());
+        addFlight("MinMor", new FlightInformation());
         
-        bookings = getItinerary("MinMor");
+        Holder<FlightBookings> flights = new Holder<FlightBookings>();
+        Holder<HotelBookings> hotels = new Holder<HotelBookings>();
+        getItinerary("MinMor", flights, hotels);
         
         
-        assertTrue(bookings.getFlightBooking().size() == 4);
+        assertTrue(flights.value.getFlightBooking().size() == 4);
         
         cancelPlanning("MinMor");
     }
 
-    private static boolean addFlight(String itineraryID, String flightID) {
-        ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
-        ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
-        return port.addFlight(itineraryID, flightID);
-    }
-
-    private static FlightBookings getItinerary(String itineraryID) {
-        ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
-        ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
-        return port.getItinerary(itineraryID);
-    }
 
     private static boolean createItinerary(java.lang.String itineraryID) {
         ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
@@ -44,6 +35,18 @@ public class TravelGoodTest {
         ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
         ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
         return port.cancelPlanning(itineraryID);
+    }
+
+    private static boolean addFlight(java.lang.String itineraryID, ws.dtu.lameduck.types.FlightInformation flightInformation) {
+        ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
+        ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
+        return port.addFlight(itineraryID, flightInformation);
+    }
+
+    private static void getItinerary(java.lang.String itineraryID, javax.xml.ws.Holder<ws.travelgoodbpel.FlightBookings> flights, javax.xml.ws.Holder<ws.travelgoodbpel.HotelBookings> hotels) {
+        ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
+        ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
+        port.getItinerary(itineraryID, flights, hotels);
     }
 
 }
