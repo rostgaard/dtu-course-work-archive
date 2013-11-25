@@ -35,7 +35,7 @@
     </service>
     <service name="LameDuck">
       <implementation-class>ws.dtu.lameduck.LameDuck</implementation-class>
-      <wsdl-url>file:/C:/Users/Mikkel/Documents/GitHub/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuck.wsdl</wsdl-url>
+      <wsdl-url>file:/C:/Users/Martin/git/Webservices/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuck.wsdl</wsdl-url>
       <local-wsdl-file>LameDuck.wsdl</local-wsdl-file>
       <service-name>LameDuckService</service-name>
       <port-name>LameDuckPort</port-name>

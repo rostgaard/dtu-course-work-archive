@@ -4,17 +4,19 @@
  */
 package ws.dtu.lameduck.model;
 
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
-import dk.dtu.imm.fastmoney.types.CreditCardInfoType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import ws.dtu.lameduck.BookFlightFault;
-import ws.dtu.lameduck.Flight;
-import ws.dtu.lameduck.FlightInformation;
-import ws.dtu.lameduck.FlightList;
+import ws.dtu.lameduck.types.Flight;
+import ws.dtu.lameduck.types.FlightInformation;
+import ws.dtu.lameduck.types.FlightList;
 
 /**
  *
@@ -29,7 +31,7 @@ public final class FlightDatabase {
     
     private static FlightDatabase db;
     
-    public static synchronized FlightDatabase getInstance(){
+    public static synchronized FlightDatabase getInstance() {
         if(db == null){
             db = new FlightDatabase();
             db.loadDatabase();
@@ -44,7 +46,7 @@ public final class FlightDatabase {
         flightInfoByBooking = new HashMap<String, FlightInformation>();
     }
     
-    public void reset(){
+    public void reset() {
         flightInformations = new HashMap<String,List<FlightInformation>>();
         bookings = new ArrayList<String>();
         flightInfoByBooking = new HashMap<String, FlightInformation>();
@@ -53,17 +55,15 @@ public final class FlightDatabase {
     }
     
     private  void loadDatabase() {
+        DatatypeFactory df = null;
+        try {
+            df = DatatypeFactory.newInstance();
+        } catch (DatatypeConfigurationException ex) {
+            Logger.getLogger(FlightDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        XMLGregorianCalendar date1 = df.newXMLGregorianCalendar("2013-11-17");
+        XMLGregorianCalendar date2 = df.newXMLGregorianCalendar("2013-11-18");
         
-        
-        XMLGregorianCalendar date1 = new XMLGregorianCalendarImpl();
-        date1.setMonth(11);
-        date1.setDay(17);
-        date1.setYear(2013);
-        
-        XMLGregorianCalendar date2 = new XMLGregorianCalendarImpl();
-        date2.setMonth(11);
-        date2.setDay(18);
-        date2.setYear(2013);
         
         Flight newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight,"b0001", 200.0, serviceName ));

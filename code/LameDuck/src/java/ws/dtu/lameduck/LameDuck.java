@@ -8,9 +8,12 @@ import dk.dtu.imm.fastmoney.BankPortType;
 import dk.dtu.imm.fastmoney.BankService;
 import dk.dtu.imm.fastmoney.CreditCardFaultMessage;
 import dk.dtu.imm.fastmoney.types.AccountType;
+import dk.dtu.imm.fastmoney.types.CreditCardInfoType;
 import javax.jws.WebService;
-import javax.xml.ws.WebServiceRef;
+import javax.xml.datatype.XMLGregorianCalendar;
 import ws.dtu.lameduck.model.FlightDatabase;
+import ws.dtu.lameduck.types.FlightInformation;
+import ws.dtu.lameduck.types.FlightList;
 
 /**
  *
@@ -31,11 +34,11 @@ public class LameDuck {
         account.setNumber("50208812");
     }
 
-    public ws.dtu.lameduck.FlightList getFlights(java.lang.String origin, java.lang.String destination, javax.xml.datatype.XMLGregorianCalendar datetime) {
+    public FlightList getFlights(String origin, String destination, XMLGregorianCalendar datetime) {
         return db.getFlights(origin, destination, datetime);
     }
 
-    public boolean bookFlight(java.lang.String bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInfo) throws BookFlightFault {
+    public boolean bookFlight(String bookingNumber, CreditCardInfoType creditCardInfo) throws BookFlightFault {
         FlightInformation fi = db.bookFlight(bookingNumber);
         try {
             return chargeCreditCard(GROUP, creditCardInfo, (int)fi.getPrice(), account);
