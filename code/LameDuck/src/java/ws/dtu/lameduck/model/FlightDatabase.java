@@ -31,7 +31,7 @@ public final class FlightDatabase {
     
     private static FlightDatabase db;
     
-    public static synchronized FlightDatabase getInstance() {
+    public static synchronized FlightDatabase getInstance() throws DatatypeConfigurationException {
         if(db == null){
             db = new FlightDatabase();
             db.loadDatabase();
@@ -46,7 +46,7 @@ public final class FlightDatabase {
         flightInfoByBooking = new HashMap<String, FlightInformation>();
     }
     
-    public void reset() {
+    public void reset() throws DatatypeConfigurationException {
         flightInformations = new HashMap<String,List<FlightInformation>>();
         bookings = new ArrayList<String>();
         flightInfoByBooking = new HashMap<String, FlightInformation>();
@@ -54,13 +54,9 @@ public final class FlightDatabase {
         this.loadDatabase();
     }
     
-    private  void loadDatabase() {
-        DatatypeFactory df = null;
-        try {
-            df = DatatypeFactory.newInstance();
-        } catch (DatatypeConfigurationException ex) {
-            Logger.getLogger(FlightDatabase.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private  void loadDatabase() throws DatatypeConfigurationException {
+        DatatypeFactory df = df = DatatypeFactory.newInstance();
+        
         XMLGregorianCalendar date1 = df.newXMLGregorianCalendar("2013-11-17");
         XMLGregorianCalendar date2 = df.newXMLGregorianCalendar("2013-11-18");
         
