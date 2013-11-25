@@ -4,6 +4,9 @@
  */
 package ws.dtu.niceview;
 
+import dk.dtu.imm.fastmoney.BankService;
+import dk.dtu.imm.fastmoney.CreditCardFaultMessage;
+import dk.dtu.imm.fastmoney.types.AccountType;
 import dk.dtu.imm.fastmoney.types.CreditCardInfoType;
 import javax.jws.WebService;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -17,25 +20,54 @@ import ws.dtu.niceview.types.HotelList;
  */
 @WebService(serviceName = "NiceViewService", portName = "NiceViewPort", endpointInterface = "ws.dtu.niceview.NiceViewPortType", targetNamespace = "http://niceview.dtu.ws/", wsdlLocation = "WEB-INF/wsdl/NiceView/NiceView.wsdl")
 public class NiceView {
+    private static final int GROUP = 3;
+    
+    private AccountType account;
+    private BankService service = new BankService();
+    private HotelDatabase db;
 
     public NiceView() {
-        HotelDatabase.loadDatabase();
+        db = HotelDatabase.getInstance();
+        
+        account = new AccountType();
+        account.setName("NiceView");
+        account.setNumber("50308815");
+        
     }
 
     public HotelList getHotels(String city, XMLGregorianCalendar arrival, XMLGregorianCalendar departure) {
-        return HotelDatabase.getHotels(city, arrival, departure);
+        return db.getHotels(city, arrival, departure);
     }
 
     public boolean bookHotel(String bookingNo, CreditCardInfoType ccInformation) {
-        HotelInformation hotel = HotelDatabase.getHotel(bookingNo);
-        // Book hotel
+        HotelInformation hotel = db.getHotel(bookingNo);
+        
+        if (hotel.isCcRequired()) {
+            
+        }
+        
         return true;
     }
 
     public boolean cancelHotel(String bookingNo) {
-        HotelInformation hotel = HotelDatabase.getHotel(bookingNo);
+        HotelInformation hotel = db.getHotel(bookingNo);
         // Cancel hotel
         return true;
+    }
+
+    private boolean chargeCreditCard(int group, CreditCardInfoType creditCardInfo, int amount, AccountType account) throws CreditCardFaultMessage {
+        dk.dtu.imm.fastmoney.BankPortType port = service.getBankPort();
+        return port.chargeCreditCard(group, creditCardInfo, amount, account);
+    }
+
+    private boolean refundCreditCard(int group, CreditCardInfoType creditCardInfo, int amount, AccountType account) throws CreditCardFaultMessage {
+        dk.dtu.imm.fastmoney.BankPortType port = service.getBankPort();
+        return port.refundCreditCard(group, creditCardInfo, amount, account);
+    }
+
+    private boolean validateCreditCard(int group, CreditCardInfoType creditCardInfo, int amount) throws CreditCardFaultMessage {
+        dk.dtu.imm.fastmoney.BankPortType port = service.getBankPort();
+        return port.validateCreditCard(group, creditCardInfo, amount);
     }
     
 }

@@ -26,9 +26,10 @@ public class LameDuck {
     private AccountType account;
     private static final int GROUP = 3;
     private BankService service = new BankService();
-    private FlightDatabase db = FlightDatabase.getInstance();
+    private FlightDatabase db;
     
     public LameDuck(){
+        db = FlightDatabase.getInstance();
         account = new AccountType();
         account.setName("LameDuck");
         account.setNumber("50208812");
