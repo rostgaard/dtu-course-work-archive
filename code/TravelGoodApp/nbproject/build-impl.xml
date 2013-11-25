@@ -121,7 +121,44 @@
         </move>
         <copy todir="${build.dir}" file="${reference.TravelGoodBPEL.dist_se}"/>
     </target>
-    <target name="deps-javaee-jar" depends="init" unless="${no.dependencies}"/>
+    <target name="deps-javaee-jar" depends="init" unless="${no.dependencies}">
+        <ant target="dist" inheritall="false" antfile="${project.LameDuck}/build.xml"/>
+        <basename property="LameDuck.su.name" file="${project.LameDuck}"/>
+        <property name="LameDuck.su.dir" value="${src.dir}/../jbiServiceUnits/${LameDuck.su.name}"/>
+        <unzip src="${reference.LameDuck.dist}" dest="${src.dir}/../jbiServiceUnits/${LameDuck.su.name}">
+            <patternset>
+                <include name="**/*.wsdl"/>
+                <include name="**/*.WSDL"/>
+                <include name="**/*.xsd"/>
+                <include name="**/*.XSD"/>
+                <include name="META-INF/jbi.xml"/>
+            </patternset>
+        </unzip>
+        <unzip src="${reference.LameDuck.dist}" dest="${src.dir}/../jbiServiceUnits/META-INF/LameDuck">
+            <patternset>
+                <include name="META-INF/catalog.xml"/>
+            </patternset>
+        </unzip>
+        <jbi-javaee-dist projectName="LameDuck" subprojJar="${reference.LameDuck.dist}" subprojDir="${project.LameDuck}" suExtractDir="${LameDuck.su.dir}" subprojResource="${resource.LameDuck}"/>
+        <ant target="dist" inheritall="false" antfile="${project.NiceView}/build.xml"/>
+        <basename property="NiceView.su.name" file="${project.NiceView}"/>
+        <property name="NiceView.su.dir" value="${src.dir}/../jbiServiceUnits/${NiceView.su.name}"/>
+        <unzip src="${reference.NiceView.dist}" dest="${src.dir}/../jbiServiceUnits/${NiceView.su.name}">
+            <patternset>
+                <include name="**/*.wsdl"/>
+                <include name="**/*.WSDL"/>
+                <include name="**/*.xsd"/>
+                <include name="**/*.XSD"/>
+                <include name="META-INF/jbi.xml"/>
+            </patternset>
+        </unzip>
+        <unzip src="${reference.NiceView.dist}" dest="${src.dir}/../jbiServiceUnits/META-INF/NiceView">
+            <patternset>
+                <include name="META-INF/catalog.xml"/>
+            </patternset>
+        </unzip>
+        <jbi-javaee-dist projectName="NiceView" subprojJar="${reference.NiceView.dist}" subprojDir="${project.NiceView}" suExtractDir="${NiceView.su.dir}" subprojResource="${resource.NiceView}"/>
+    </target>
     <target name="pre-pre-compile" depends="init,deps-jar">
         <mkdir dir="${build.classes.dir}"/>
     </target>
@@ -131,12 +168,18 @@
     </target>
     <target name="library-inclusion-in-archive" depends="compile">
         <unjar dest="${build.classes.dir}" src="${reference.TravelGoodBPEL.dist_se}"/>
+        <unjar dest="${build.classes.dir}" src="${reference.NiceView.dist}"/>
+        <unjar dest="${build.classes.dir}" src="${reference.LameDuck.dist}"/>
     </target>
     <target name="library-inclusion-in-manifest" depends="compile">
         <basename property="included.lib.reference.TravelGoodBPEL.dist_se" file="${reference.TravelGoodBPEL.dist_se}"/>
         <copy todir="${build.classes.dir}" file="${reference.TravelGoodBPEL.dist_se}"/>
+        <basename property="included.lib.reference.NiceView.dist" file="${reference.NiceView.dist}"/>
+        <copy todir="${build.classes.dir}" file="${reference.NiceView.dist}"/>
+        <basename property="included.lib.reference.LameDuck.dist" file="${reference.LameDuck.dist}"/>
+        <copy todir="${build.classes.dir}" file="${reference.LameDuck.dist}"/>
         <manifest file="${build.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${included.lib.reference.TravelGoodBPEL.dist_se}"/>
+            <attribute name="Class-Path" value="${included.lib.reference.TravelGoodBPEL.dist_se},${included.lib.reference.NiceView.dist},${included.lib.reference.LameDuck.dist}"/>
         </manifest>
     </target>
     <target name="do-compile" depends="init,deps-jar,pre-pre-compile,pre-compile"/>
@@ -231,6 +274,8 @@
                 CLEANUP SECTION
             -->
     <target name="deps-clean" depends="init" unless="${no.dependencies}">
+        <ant target="clean" inheritall="false" antfile="${project.LameDuck}/build.xml"/>
+        <ant target="clean" inheritall="false" antfile="${project.NiceView}/build.xml"/>
         <ant target="clean" inheritall="false" antfile="${project.TravelGoodBPEL}/build.xml"/>
     </target>
     <target name="do-clean" depends="init">

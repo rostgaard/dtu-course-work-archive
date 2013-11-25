@@ -9,7 +9,7 @@
         <endpoint display-name="NiceViewPartnerLink" endpoint-name="NiceViewPortTypeRole_partnerRole" file-path="travelGoodBPEL.bpel" interface-name="ns3:NiceViewPortType" name="endpoint6" process-name="travelGoodBPEL" service-name="ns4:NiceViewPartnerLink"/>
     </endpoints>
     <service-units>
-        <service-engine-service-unit artifacts-zip="TravelGoodBPEL.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="TravelGoodApp-TravelGoodBPEL" unit-name="TravelGoodBPEL" unknown="false" x="144" y="99">
+        <service-engine-service-unit artifacts-zip="TravelGoodBPEL.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="TravelGoodApp-TravelGoodBPEL" unit-name="TravelGoodBPEL" unknown="false" x="144" y="269">
             <provides endpoint="endpoint4"/>
             <consumes endpoint="endpoint5"/>
             <consumes endpoint="endpoint6"/>
@@ -33,6 +33,8 @@
                 </port>
             </ports>
         </binding-component-service-unit>
+    <service-engine-service-unit artifacts-zip="NiceView.war" component-name="sun-javaee-engine" defined="false" description="some description" internal="true" name="NiceView" unit-name="NiceView" unknown="false" x="149" y="99"/>
+        <service-engine-service-unit artifacts-zip="LameDuck.war" component-name="sun-javaee-engine" defined="false" description="some description" internal="true" name="LameDuck" unit-name="LameDuck" unknown="false" x="145" y="184"/>
     </service-units>
     <connections>
         <connection consumer="endpoint5" provider="endpoint2" state="unchanged"/>

@@ -16,23 +16,6 @@
             <classpath path="${libs.jaxws21.classpath}"/>
         </taskdef>
     </target>
-    <target name="wsimport-client-LameDuckService" depends="wsimport-init">
-        <mkdir dir="${build.generated.dir}/jax-wsCache/LameDuckService"/>
-        <property name="wsdl-LameDuckService" location="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuck/LameDuckService.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/LameDuckService" destdir="${build.generated.dir}/jax-wsCache/LameDuckService" wsdl="${wsdl-LameDuckService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/LameDuck/LameDuckService?wsdl" xnocompile="true" xendorsed="true">
-            <depends file="${wsdl-LameDuckService}"/>
-            <produces dir="${build.generated.dir}/jax-wsCache/LameDuckService"/>
-        </wsimport>
-        <copy todir="${build.generated.sources.dir}/jax-ws">
-            <fileset dir="${build.generated.dir}/jax-wsCache/LameDuckService">
-                <include name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="wsimport-client-clean-LameDuckService" depends="-init-project">
-        <delete dir="${build.generated.dir}/jax-wsCache/LameDuckService"/>
-        <delete dir="${build.generated.sources.dir}/jax-ws/ws/dtu/lameduck"/>
-    </target>
     <target name="wsimport-client-LameDuckResetService" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/LameDuckResetService"/>
         <property name="wsdl-LameDuckResetService" location="xml-resources/web-service-references/LameDuckResetService/wsdl/localhost_8080/LameDuck/LameDuckResetService.wsdl"/>
@@ -50,5 +33,22 @@
         <delete dir="${build.generated.dir}/jax-wsCache/LameDuckResetService"/>
         <delete dir="${build.generated.sources.dir}/jax-ws/reset/lameduck/dtu/ws"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-LameDuckService, wsimport-client-LameDuckResetService"/>
+    <target name="wsimport-client-LameDuckService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/LameDuckService"/>
+        <property name="wsdl-LameDuckService" location="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuck/LameDuckService.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/LameDuckService" destdir="${build.generated.dir}/jax-wsCache/LameDuckService" wsdl="${wsdl-LameDuckService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/LameDuck/LameDuckService?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${wsdl-LameDuckService}"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/LameDuckService"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/LameDuckService">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-LameDuckService" depends="-init-project">
+        <delete dir="${build.generated.dir}/jax-wsCache/LameDuckService"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/ws/dtu/lameduck"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-LameDuckResetService, wsimport-client-LameDuckService"/>
 </project>

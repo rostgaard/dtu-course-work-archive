@@ -16,8 +16,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import ws.dtu.lameduck.BookFlightFault;
 import ws.dtu.lameduck.CancelFlightFault;
-import ws.dtu.lameduck.FlightInformation;
-import ws.dtu.lameduck.FlightList;
+import ws.dtu.lameduck.types.FlightInformation;
+import ws.dtu.lameduck.types.FlightList;
 
 /**
  *
@@ -214,7 +214,5 @@ public class LameDuckTest {
         reset.lameduck.dtu.ws.LameDuckResetPortType port = service.getLameDuckResetPort();
         port.lameDuckResetOperation();
     }
-    
-
     
 }
