@@ -6,26 +6,8 @@
             <name>TravelGoodApp</name>
             <minimum-ant-version>1.6</minimum-ant-version>
             <included-library>reference.TravelGoodBPEL.dist_se</included-library>
-            <included-library>reference.NiceView.dist</included-library>
-            <included-library>reference.LameDuck.dist</included-library>
         </data>
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
-            <reference>
-                <foreign-project>LameDuck</foreign-project>
-                <artifact-type>war</artifact-type>
-                <script>build.xml</script>
-                <target>dist</target>
-                <clean-target>clean</clean-target>
-                <id>dist</id>
-            </reference>
-            <reference>
-                <foreign-project>NiceView</foreign-project>
-                <artifact-type>war</artifact-type>
-                <script>build.xml</script>
-                <target>dist</target>
-                <clean-target>clean</clean-target>
-                <id>dist</id>
-            </reference>
             <reference>
                 <foreign-project>TravelGoodBPEL</foreign-project>
                 <artifact-type>CAPS.asa:sun-bpel-engine</artifact-type>

@@ -17,26 +17,6 @@
         </service-unit>
         <service-unit>
             <identification>
-                <name>TravelGoodApp-NiceView</name>
-                <description>Represents this Service Unit</description>
-            </identification>
-            <target>
-                <artifacts-zip>NiceView.war</artifacts-zip>
-                <component-name>sun-javaee-engine</component-name>
-            </target>
-        </service-unit>
-        <service-unit>
-            <identification>
-                <name>TravelGoodApp-LameDuck</name>
-                <description>Represents this Service Unit</description>
-            </identification>
-            <target>
-                <artifacts-zip>LameDuck.war</artifacts-zip>
-                <component-name>sun-javaee-engine</component-name>
-            </target>
-        </service-unit>
-        <service-unit>
-            <identification>
                 <name>TravelGoodApp-sun-database-binding</name>
                 <description>Represents this Service Unit</description>
             </identification>
