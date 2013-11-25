@@ -2,6 +2,7 @@
 The first problems we need to solve is which data structures should be used for our abstract syntax tree, which will serve as the first step of our intermediate representation.
 
 \subsection{Abstract syntax tree data structure}
+\label{sec:constructing_ast}
 We have decided that we could use an unbalanced tree for storage of our abstract syntax tree in our target programming language. Constraining the tree construction will give us the necessary check for syntax errors.
 A simple tree-traversal will give us the appropriate unique label numbers - or the ability to assign labels to statements in the right order.
 
@@ -46,6 +47,7 @@ Declarations will be handled separately from statements, and will be held in a d
 \end{figure}
 
 \subsection{Flow graph data structure}
+\label{sec:constructing_flow_graphs}
 For the flow graph, we have chosen a network graph data structure. This gives an intuitive way of linking statements to potential paths.
 \\
 \\
@@ -65,8 +67,7 @@ Figure~\ref{fig:flowgraph} shows the classes used to represent a flow graph. The
 Using the intermediate representation of the abstract syntax tree, we are now familiar with the types of the individual statements. Rather than explicitly parsing the AST, we instead define a function for each statement and let every statement handle it's own branch by recursion. These functions are defined in table \ref{table:flow_graph_functions}, which is an extension of the table from \cite{02242_slides}.
 
 \begin{table}
-\begin{tabular}{| l | l | l | l |}
-\hline
+\begin{tabular}{ l | l | l | l }
 \textsl{S}                              & \textsl{labels(S)}                                    & \textsl{init(S)}     & \textsl{final(S)} \\ 
 \hline
 [x := a]$^\ell$                         & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
@@ -85,7 +86,6 @@ while [\textsl{b}]$^\ell$ do \textsl{S} & $\{\ell\}$ $\cup$  \textsl{labels(S)} 
 [read \textsl{x}]$^\ell$                & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
 \hline
 [write \textsl{x}]$^\ell$               & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
-\hline 
 \end{tabular}
 \centering
 \caption{Flow graph function definitions}
