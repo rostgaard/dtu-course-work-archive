@@ -159,7 +159,7 @@ public final class FlightDatabase {
 
     public  FlightInformation bookFlight(String bookingNo) throws BookFlightFault {
         if(!flightInfoByBooking.containsKey(bookingNo)){
-            throw new BookFlightFault("No such booking number", "No such booking number");
+            throw new BookFlightFault("No such booking number: "+bookingNo, "No such booking number: "+bookingNo);
         }
         else if(bookings.contains(bookingNo)){
             throw new BookFlightFault("Trip has already been booked", "Trip has already been booked");

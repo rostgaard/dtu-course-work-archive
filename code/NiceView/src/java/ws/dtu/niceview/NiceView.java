@@ -39,30 +39,18 @@ public class NiceView {
         return db.getHotels(city, arrival, departure);
     }
 
-    public boolean bookHotel(String bookingNo, CreditCardInfoType ccInformation) {
-        HotelInformation hotel = db.getHotel(bookingNo);
-        
+    public boolean bookHotel(String bookingNo, CreditCardInfoType ccInformation) throws CreditCardFaultMessage, BookHotelFault {
+        HotelInformation hotel = db.bookHotel(bookingNo, ccInformation);
         if (hotel.isCcRequired()) {
-            
+            return validateCreditCard(GROUP, ccInformation, (int)hotel.getPrice());
         }
         
         return true;
     }
 
-    public boolean cancelHotel(String bookingNo) {
-        HotelInformation hotel = db.getHotel(bookingNo);
-        // Cancel hotel
+    public boolean cancelHotel(String bookingNo) throws CancelHotelFault {
+        db.cancelHotel(bookingNo);
         return true;
-    }
-
-    private boolean chargeCreditCard(int group, CreditCardInfoType creditCardInfo, int amount, AccountType account) throws CreditCardFaultMessage {
-        dk.dtu.imm.fastmoney.BankPortType port = service.getBankPort();
-        return port.chargeCreditCard(group, creditCardInfo, amount, account);
-    }
-
-    private boolean refundCreditCard(int group, CreditCardInfoType creditCardInfo, int amount, AccountType account) throws CreditCardFaultMessage {
-        dk.dtu.imm.fastmoney.BankPortType port = service.getBankPort();
-        return port.refundCreditCard(group, creditCardInfo, amount, account);
     }
 
     private boolean validateCreditCard(int group, CreditCardInfoType creditCardInfo, int amount) throws CreditCardFaultMessage {

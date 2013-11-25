@@ -4,13 +4,14 @@
  */
 package ws.dtu.niceview.model;
 
+import dk.dtu.imm.fastmoney.types.CreditCardInfoType;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
+import java.util.Set;
 import javax.xml.datatype.XMLGregorianCalendar;
+import ws.dtu.niceview.BookHotelFault;
+import ws.dtu.niceview.CancelHotelFault;
 import ws.dtu.niceview.types.Address;
 import ws.dtu.niceview.types.HotelInformation;
 import ws.dtu.niceview.types.HotelList;
@@ -21,8 +22,9 @@ import ws.dtu.niceview.types.HotelList;
  */
 public class HotelDatabase {
     
-    private Map bookingNoMap = new HashMap<String, HotelInformation>();
-    private Map cityMap = new HashMap<String, HotelList>();
+    private Map<String, HotelInformation> bookingNoMap = new HashMap<String, HotelInformation>();
+    private Map<String, HotelList> cityMap = new HashMap<String, HotelList>();
+    private Set<String> bookings = new HashSet<String>();
     private String serviceName = "NiceView";
     
     private static HotelDatabase db;
@@ -42,7 +44,7 @@ public class HotelDatabase {
     
     private void init() {
         bookingNoMap = new HashMap<String, HotelInformation>();
-        cityMap = new HashMap<String, HotelInformation>();
+        cityMap = new HashMap<String, HotelList>();
     }
     
     public void reset() {
@@ -51,10 +53,8 @@ public class HotelDatabase {
     }
     
     private  void loadDatabase() {
-       
         HotelInformation hI;
         Address address;
-        
         
         address = new Address();
         address.setCity("Somecity");
@@ -62,7 +62,7 @@ public class HotelDatabase {
         
         hI = new HotelInformation();
         hI.setAddress(address);
-        hI.setBookingNo("SOME1");
+        hI.setBookingNo("SH1");
         hI.setCcRequired(true);
         hI.setName("SomeHotel");
         hI.setPrice(3.1415);
@@ -73,7 +73,7 @@ public class HotelDatabase {
     
     private void insert(HotelInformation hotel) {
         bookingNoMap.put(hotel.getBookingNo(), hotel);
-        HotelList hotels = (HotelList)cityMap.get(hotel.getAddress().getCity());
+        HotelList hotels = cityMap.get(hotel.getAddress().getCity());
         if (hotels == null) {
             hotels = new HotelList();
             cityMap.put(hotel.getAddress().getCity(), hotels);
@@ -82,7 +82,7 @@ public class HotelDatabase {
     }
     
     public HotelList getHotels(String city, XMLGregorianCalendar arrival, XMLGregorianCalendar departure) {
-        return (HotelList)cityMap.get(city);
+        return cityMap.get(city);
     }
     
     public HotelInformation getHotel(String bookingNo) {
@@ -91,5 +91,27 @@ public class HotelDatabase {
             // TODO: FAULT
         }
         return hotel;
+    }
+
+    public HotelInformation bookHotel(String bookingNo, CreditCardInfoType ccInformation) throws BookHotelFault {
+        if (!bookingNoMap.containsKey(bookingNo)) {
+            throw new BookHotelFault("No such booking number: "+bookingNo, "No such booking number: "+bookingNo);
+        }
+        if (bookings.contains(bookingNo)) {
+            throw new BookHotelFault("Hotel room has already been booked", "Hotel room has already been booked");
+        }
+        
+        bookings.add(bookingNo);
+        return bookingNoMap.get(bookingNo);
+    }
+    
+    public void cancelHotel(String bookingNo) throws CancelHotelFault {
+        if (!bookingNoMap.containsKey(bookingNo)) {
+            throw new CancelHotelFault("No such booking number: "+bookingNo, "No such booking number: "+bookingNo);
+        }
+        if (!bookings.contains(bookingNo)) {
+            throw new CancelHotelFault("Hotel room has not been booked", "Hotel room has not been booked");
+        }
+        bookings.remove(bookingNo);
     }
 }
