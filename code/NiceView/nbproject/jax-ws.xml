@@ -33,6 +33,38 @@
         </wsimport-option>
       </wsimport-options>
     </service>
+    <service name="NiceViewReset">
+      <implementation-class>ws.dtu.niceview.NiceViewReset</implementation-class>
+      <wsdl-url>file:/Volumes/02267/02267/code/NiceView/src/java/ws/dtu/niceview/xml/NiceViewReset.wsdl</wsdl-url>
+      <local-wsdl-file>NiceViewReset.wsdl</local-wsdl-file>
+      <service-name>NiceViewResetService</service-name>
+      <port-name>NiceViewResetPort</port-name>
+      <package-name>reset.niceview.dtu.ws</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+      <use-provider>false</use-provider>
+      <wsimport-options>
+        <wsimport-option>
+          <wsimport-option-name>extension</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>verbose</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xnocompile</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xendorsed</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>target</wsimport-option-name>
+          <wsimport-option-value>2.1</wsimport-option-value>
+        </wsimport-option>
+      </wsimport-options>
+    </service>
   </services>
   <clients>
     <client name="BankService">

@@ -76,5 +76,21 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/reset/lameduck/dtu/ws"/>
         <delete dir="${build.generated.dir}/jax-wsCache/LameDuckResetService"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-NiceViewService, wsimport-client-LameDuckService, wsimport-client-LameDuckResetService"/>
+    <target name="wsimport-client-NiceViewResetService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/NiceViewResetService"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/NiceViewResetService" destdir="${build.generated.dir}/jax-wsCache/NiceViewResetService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/NiceViewResetService/wsdl/localhost_8080/NiceView/NiceViewResetService.wsdl" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/NiceView/NiceViewResetService?wsdl" xnocompile="true" xendorsed="true" target="2.1">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/NiceViewResetService/wsdl/localhost_8080/NiceView/NiceViewResetService.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/NiceViewResetService"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/NiceViewResetService">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-NiceViewResetService" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/reset/niceview/dtu/ws"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/NiceViewResetService"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-NiceViewService, wsimport-client-LameDuckService, wsimport-client-LameDuckResetService, wsimport-client-NiceViewResetService"/>
 </project>
