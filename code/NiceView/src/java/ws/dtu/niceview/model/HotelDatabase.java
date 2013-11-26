@@ -53,20 +53,28 @@ public class HotelDatabase {
     }
     
     private  void loadDatabase() {
+        add("Copenhagen", "Istedgade 1", "CPH1", true, "SAS Hotel", 800, "NiceView");
+        add("Copenhagen", "Nørregade 21", "CPH2", true, "Radison Blue Hotel", 500, "NiceView");
+        add("Kabul", "Smokestreet 13", "KAB1", true, "Clear sky Hotel", 230, "NiceView");
+        add("Kabul", "Hotalley 4", "KAB2", true, "Air Hotel", 900, "NiceView");
+        add("Moscow", "Coldway 124", "MOS1", true, "Burning Hotel", 300, "NiceView");
+    }
+    
+    private void add(String city, String street, String bookingNO, Boolean ccRequired, String name, double price, String reservationService) {
         HotelInformation hI;
         Address address;
         
         address = new Address();
-        address.setCity("Somecity");
-        address.setStreetAddress("Some Street 1");
+        address.setCity(city);
+        address.setStreetAddress(street);
         
         hI = new HotelInformation();
         hI.setAddress(address);
-        hI.setBookingNo("SH1");
-        hI.setCcRequired(true);
-        hI.setName("SomeHotel");
-        hI.setPrice(3.1415);
-        hI.setReservationService("NiceView");
+        hI.setBookingNo(bookingNO);
+        hI.setCcRequired(ccRequired);
+        hI.setName(name);
+        hI.setPrice(price);
+        hI.setReservationService(reservationService);
         
         insert(hI);
     }
@@ -82,7 +90,11 @@ public class HotelDatabase {
     }
     
     public HotelList getHotels(String city, XMLGregorianCalendar arrival, XMLGregorianCalendar departure) {
-        return cityMap.get(city);
+        if (cityMap.containsKey(city)) {
+             return cityMap.get(city);
+        }else {
+            return new HotelList();
+        }
     }
     
     public HotelInformation getHotel(String bookingNo) {
