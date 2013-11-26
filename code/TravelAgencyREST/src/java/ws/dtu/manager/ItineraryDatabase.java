@@ -5,8 +5,7 @@
 package ws.dtu.manager;
 import java.util.HashMap;
 import ws.dtu.model.Itinerary;
-import ws.dtu.model.exceptions.NoSuchCustomerIdentifier;
-import ws.dtu.model.exceptions.NoSuchIdentifier;
+import ws.dtu.model.exceptions;
 
 /**
  *
@@ -14,6 +13,7 @@ import ws.dtu.model.exceptions.NoSuchIdentifier;
  */
 public final class ItineraryDatabase {
     
+
     static HashMap<Integer,HashMap<Integer, Itinerary>> data = new HashMap<Integer, HashMap<Integer, Itinerary>>();
     
     private static ItineraryDatabase db;
@@ -26,12 +26,12 @@ public final class ItineraryDatabase {
         return db;
     }
     
-    public Itinerary get(int customerID, int itinerary_id) throws NoSuchIdentifier, NoSuchCustomerIdentifier {
+    public Itinerary get(int customerID, int itinerary_id) {
         if(!data.containsKey(customerID)) {
-            throw new NoSuchCustomerIdentifier();
+            throw new exceptions.NoSuchCustomerException();
         }
         if(!data.get(customerID).containsKey(itinerary_id)) {
-            throw new NoSuchIdentifier();
+            throw new exceptions.NoSuchItineraryException();
         }
         
         return data.get(customerID).get(itinerary_id);
@@ -50,15 +50,19 @@ public final class ItineraryDatabase {
         data.put(new Integer(customer_id), map);
     }
     
-    public void delete (int customer_id, int itinerary_id) throws NoSuchIdentifier, NoSuchCustomerIdentifier {
+    public void delete (int customer_id, int itinerary_id) {
         if(!data.containsKey(customer_id)) {
-            throw new NoSuchCustomerIdentifier();
+            throw new exceptions.NoSuchCustomerException();
         }
         if(!data.get(customer_id).containsKey(itinerary_id)) {
-            throw new NoSuchIdentifier();
+            throw new exceptions.NoSuchItineraryException();
         }
         
         data.get(customer_id).remove(itinerary_id);
         data.remove(new Integer(itinerary_id));
+    }
+    
+    public void reset() {
+        data.clear();
     }
 }

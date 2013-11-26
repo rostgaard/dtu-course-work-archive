@@ -42,7 +42,7 @@ public class Customer {
     }
 
     public void setCreditcard(CreditCardInfoType cr1) {
-        this.creditcard = creditcard;
+        this.creditcard = cr1;
     }
     
 }

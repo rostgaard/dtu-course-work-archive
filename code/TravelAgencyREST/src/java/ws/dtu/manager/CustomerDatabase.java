@@ -9,7 +9,6 @@ import dk.dtu.imm.fastmoney.types.ExpirationDateType;
 import java.util.HashMap;
 import ws.dtu.model.Customer;
 import ws.dtu.model.exceptions;
-import ws.dtu.model.exceptions.NoSuchCustomerIdentifier;
 
 /**
  *
@@ -35,11 +34,12 @@ public class CustomerDatabase {
         add(2, "Klinkby Poul",3,10,"50408817");
         add(3, "Donovan Jasper",6,9,"50408818");
         add(4, "Dirach Anne-Louise",1,10,"50408819");
-        add(5, "Brorson Bodil",2,10,"50408820");
-        add(6, "Bech Camilla",7,9,"50408822");
-        add(7, "Tobiasen Inge",9,10,"50408823");
-        add(7, "Tick Joachim",2,11,"50408824");
-        add(7, "Thor-Jensen Claus",5,9,"50408825");
+        add(5, "Brorson Bodil",7,11,"50408820");
+        add(6, "Bruhn Brigitte",2,10,"50408821");
+        add(7, "Bech Camilla",7,9,"50408822");
+        add(8, "Tobiasen Inge",9,10,"50408823");
+        add(9, "Tick Joachim",2,11,"50408824");
+        add(10, "Thor-Jensen Claus",5,9,"50408825");
     }
     
     private void add(int customerID, String name, int expirationMonth, int expirationYear, String cardNumber) {
@@ -50,13 +50,14 @@ public class CustomerDatabase {
         edt.setYear(expirationYear);
         cr.setExpirationDate(edt);
         cr.setNumber(cardNumber);
+        cr.setName(name);
         c.setCreditcard(cr);
         customers.put(c.getCustomerID(), c);
     }
     
-    public Customer get(int customerID) throws NoSuchCustomerIdentifier {
+    public Customer get(int customerID)  {
         if(!customers.containsKey(customerID)) {
-            throw new exceptions.NoSuchCustomerIdentifier();
+            throw new exceptions.NoSuchCustomerException();
         }
         
         return customers.get(customerID);

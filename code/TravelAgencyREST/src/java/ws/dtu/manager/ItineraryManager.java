@@ -12,7 +12,6 @@ import ws.dtu.lameduck.LameDuckService;
 import ws.dtu.model.Customer;
 import ws.dtu.model.FlightBooking;
 import ws.dtu.model.Itinerary;
-import ws.dtu.model.exceptions.NoSuchCustomerIdentifier;
 import ws.dtu.resources.utils.Sequencer;
 
 /**
@@ -31,11 +30,12 @@ public class ItineraryManager {
         return itinerary;
     }
     
-    public void bookItinerary(Itinerary itinerary) throws NoSuchCustomerIdentifier {
+    public void bookItinerary(Itinerary itinerary) {
         Customer customer = CustomerDatabase.getInstance().get(itinerary.getCustomerID());
         for(FlightBooking fb : itinerary.getFlightBookings().getFlights()) {
             try {
                 lameDuckPort.bookFlight(fb.getFlightInformation().getBookingNo(), customer.getCreditcard());
+                fb.setBookingState(FlightBooking.FlightBookingState.BOOKED);
             } catch (BookFlightFault ex) {
                 Logger.getLogger(ItineraryManager.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -43,7 +43,7 @@ public class ItineraryManager {
     }
     
     public void cancelItinerary(Itinerary itinerary) {
-        
+       
     }
     
 }

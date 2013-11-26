@@ -24,8 +24,6 @@ import ws.dtu.model.HotelBookingList;
 import ws.dtu.manager.ItineraryDatabase;
 import ws.dtu.model.Itinerary;
 import ws.dtu.manager.ItineraryManager;
-import ws.dtu.model.exceptions.NoSuchCustomerIdentifier;
-import ws.dtu.model.exceptions.NoSuchIdentifier;
 
 /**
  *
@@ -42,12 +40,8 @@ public class ItineraryResource {
     
     @GET
     @Path("{id}")
-    public Itinerary getItinerary(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID) throws NoSuchCustomerIdentifier {
-        try {
-            return ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier);
-        } catch (NoSuchIdentifier ex) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
+    public Itinerary getItinerary(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID) {
+        return ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier);
     }
     
     @POST
@@ -59,60 +53,36 @@ public class ItineraryResource {
     
     @PUT
     @Path("{id}")
-    public Response bookItinerary(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID) {
-        try {
-            Itinerary itinerary = ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier);
-            itineraryManager.bookItinerary(itinerary);
-            return Response.ok().build();
-        } catch (NoSuchIdentifier ex) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        } catch(NoSuchCustomerIdentifier ex) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
+    public Response bookItinerary(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID) {        
+        Itinerary itinerary = ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier);
+        itineraryManager.bookItinerary(itinerary);
+        return Response.ok().build();
     }
     
     @DELETE
     @Path("{id}")
-    public void deleteItinerary(@PathParam("id") int itineraryIdentifier,@QueryParam("customer_id") int customerID) throws NoSuchCustomerIdentifier {
-        try {
-            ItineraryDatabase.getInstance().delete(customerID,itineraryIdentifier);
-        } catch (NoSuchIdentifier ex) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
+    public void deleteItinerary(@PathParam("id") int itineraryIdentifier,@QueryParam("customer_id") int customerID) {
+        ItineraryDatabase.getInstance().delete(customerID,itineraryIdentifier);
     }
     
     @GET
     @Path("{id}/flight")
-    public FlightBookingList getFlights(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID) throws NoSuchIdentifier, NoSuchCustomerIdentifier {
-        try {
+    public FlightBookingList getFlights(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID) {
             return ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier).getFlightBookings();
-        } catch (NoSuchIdentifier ex) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
     }
     
     @PUT
     @Consumes("application/itinerary+xml")
     @Path("{id}/flight")
     public Response addFlight(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID, FlightBooking flightBooking) {
-        try {
         ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier).addFlightBooking(flightBooking);
         return Response.ok().build();
-        } catch (NoSuchIdentifier ex) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        } catch (NoSuchCustomerIdentifier ex) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
     }
     
     @GET
     @Path("{id}/hotel")
-    public HotelBookingList getHotels(@PathParam("id") int itineraryIdentifier,@QueryParam("customer_id") int customerID) throws NoSuchCustomerIdentifier {
-        try {
-            return ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier).getHotelBookings();
-        } catch (NoSuchIdentifier ex) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }         
+    public HotelBookingList getHotels(@PathParam("id") int itineraryIdentifier,@QueryParam("customer_id") int customerID) {
+            return ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier).getHotelBookings();        
     }
     
     @PUT

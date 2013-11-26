@@ -34,9 +34,11 @@ public class TravelAgencyRESTTest {
     private WebResource flightResource;
     private WebResource hotelResource;
     private WebResource itineraryResource;
+    private WebResource resetResource;
+
     private Client client;
     
-    private final String customerID = "1";
+    private final String customerID = "9";
     
     
     public TravelAgencyRESTTest() {
@@ -49,13 +51,13 @@ public class TravelAgencyRESTTest {
         flightResource = client.resource(baseURL+"flight");
         hotelResource = client.resource(baseURL+"hotel");
         itineraryResource = client.resource(baseURL+"itinerary");
-
+        resetResource = client.resource(baseURL+"reset");
     }
     
     @After
     public void tearDown() {
+        resetResource.post();
     }
-
     
      @Test
      public void testCreateItinerary() {
@@ -102,15 +104,15 @@ public class TravelAgencyRESTTest {
      @Test
      public void testP1() {
          // Create itineraty
-         ClientResponse createIitneratyRsponse = itineraryResource.queryParam("customer_id", customerID).post(ClientResponse.class);
-         WebResource itineraryResourceLocation = client.resource(createIitneratyRsponse.getLocation()).queryParam("customer_id", customerID);
+         ClientResponse createIitneraryRsponse = itineraryResource.queryParam("customer_id", customerID).post(ClientResponse.class);
+         WebResource itineraryResourceLocation = client.resource(createIitneraryRsponse.getLocation()).queryParam("customer_id", customerID);
          Itinerary preItinerary = itineraryResourceLocation.get(Itinerary.class);         
          
          MultivaluedMap queryParams = new MultivaluedMapImpl();
          queryParams.add("date", "2013-11-17");
          queryParams.add("origin", "Kastrup");
          queryParams.add("destination", "Kabul");
-         WebResource flightResource1 = flightResource.queryParams(queryParams).queryParam("customer_id", customerID);
+         WebResource flightResource1 = flightResource.queryParams(queryParams);
          FlightBookingList flightBookingList = flightResource1.get(FlightBookingList.class);
          FlightBooking flightBooking = flightBookingList.getFlights().get(0);
 
@@ -146,11 +148,41 @@ public class TravelAgencyRESTTest {
              assertTrue(hb.getBookingState()==HotelBooking.HotelBookingState.BOOKED);
          }
      } 
-//     
-//     @Test
-//     public void testP2() {
-//         
-//     }
+     
+     @Test
+     public void testP2() {
+         // Create itinerary
+         ClientResponse createIitneraryRsponse = itineraryResource.queryParam("customer_id", customerID).post(ClientResponse.class);
+         WebResource itineraryResourceLocation = client.resource(createIitneraryRsponse.getLocation()).queryParam("customer_id", customerID);
+         Itinerary preItinerary = itineraryResourceLocation.get(Itinerary.class);  
+         
+         // Get flights
+         MultivaluedMap queryParams = new MultivaluedMapImpl();
+         queryParams.add("date", "2013-11-17");
+         queryParams.add("origin", "Kastrup");
+         queryParams.add("destination", "Kabul");
+         WebResource flightResource1 = flightResource.queryParams(queryParams).queryParam("customer_id", customerID);
+         FlightBookingList flightBookingList = flightResource1.get(FlightBookingList.class);
+         
+         // Add flight to itinerary
+         FlightBooking flightBooking = flightBookingList.getFlights().get(0);
+         WebResource itineraryFlightResource = itineraryResource.path(preItinerary.getID()+"/flight").queryParam("customer_id", customerID);
+         itineraryFlightResource.accept(MEDIATYPE).type(MEDIATYPE).put(flightBooking);
+         
+         // Get the itinerary
+         Itinerary intermediaItinerary = itineraryResourceLocation.get(Itinerary.class);
+         
+         // Verify that the flight was added
+         FlightBooking flightBookingActual = intermediaItinerary.getFlightBookings().getFlights().get(0);
+         assertEquals(flightBookingActual.getFlightInformation().getBookingNo(), flightBooking.getFlightInformation().getBookingNo());
+         
+         // Cancel the itinerary
+         itineraryResourceLocation.delete();
+         
+         // Verify that itinerary does not exist anymore
+         ClientResponse response = itineraryResourceLocation.get(ClientResponse.class);
+         assertEquals(404, response.getStatus());
+     }
 //     
 //     @Test
 //     public void testB() {
