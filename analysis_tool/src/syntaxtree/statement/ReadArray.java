@@ -7,6 +7,7 @@ import java.util.TreeSet;
 import analysis.Definition;
 import analysis.DefinitionSet;
 import analysis.Lattice;
+import analysis.RDLattice;
 import analysis.RDProgramState;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
@@ -106,7 +107,10 @@ public class ReadArray extends Statement {
 
     @Override
     public Lattice transferFunction(Lattice lattice) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ((RDLattice) lattice).kill(id).union(
+                ((RDLattice) lattice).gen(id, this.toNode()));
+        System.out.println("transferFunction:" + lattice);
+        return lattice;
     }
     
 }

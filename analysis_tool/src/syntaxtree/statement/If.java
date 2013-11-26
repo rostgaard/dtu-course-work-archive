@@ -165,10 +165,4 @@ public class If extends Statement {
     public VariableSet getVariable() {
         return VariableSet.emptySet;
     }
-
-    @Override
-    public Lattice transferFunction(Lattice lattice) {
-
-        return lattice;
-    }
 }

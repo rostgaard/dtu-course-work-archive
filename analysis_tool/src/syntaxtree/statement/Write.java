@@ -84,10 +84,5 @@ public class Write extends Statement{
     public VariableSet getVariable() {
     	return expr.getVariable();
     }
-
-    @Override
-    public Lattice transferFunction(Lattice lattice) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
      
 }

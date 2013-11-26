@@ -67,25 +67,25 @@ public class ArrayAssignment extends Statement {
     }
 
     public String toStringWithLabel() {
-        return Symbols.LSQPARAN + this.toString() + Symbols.RSQPARAN + 
-                Symbols.SEPERATOR + this.getLabel();
+        return Symbols.LSQPARAN + this.toString() + Symbols.RSQPARAN
+                + Symbols.SEPERATOR + this.getLabel();
     }
 
     @Override
     public RDProgramState RD(RDProgramState currentState) {
-    	//RDentry
-        DefinitionSet exit = currentState.getRDExit(getLabel()-1);
-    	currentState.addRDentry(getLabel(), exit);
+        //RDentry
+        DefinitionSet exit = currentState.getRDExit(getLabel() - 1);
+        currentState.addRDentry(getLabel(), exit);
 
-    	//RDexit
+        //RDexit
         DefinitionSet entry = currentState.getRDEntry(getLabel());
-    	//killRD(read A[a]) = {(A, l'}| b(l') is a declaration or an assignment to A[]}    	
-    	entry.removeAll(currentState.kill(id, entry));
-    	//genRD(read A[a]) = {(A[a], l)}
-    	entry.addAll(currentState.gen(id, new Node(this)));
+        //killRD(read A[a]) = {(A, l'}| b(l') is a declaration or an assignment to A[]}    	
+        entry.removeAll(currentState.kill(id, entry));
+        //genRD(read A[a]) = {(A[a], l)}
+        entry.addAll(currentState.gen(id, new Node(this)));
 
-    	currentState.addRDexit(getLabel(), entry);
-    	return currentState;
+        currentState.addRDexit(getLabel(), entry);
+        return currentState;
     }
 
     @Override
@@ -118,21 +118,19 @@ public class ArrayAssignment extends Statement {
     public FlowSet flow() {
         return FlowSet.emptySet;
     }
-    
+
     @Override
     public VariableSet getVariable() {
-    	return VariableSet.factory().addVariable(id)
-    			.union(idx.getVariable())
-    			.union(expr.getVariable());
+        return VariableSet.factory().addVariable(id)
+                .union(idx.getVariable())
+                .union(expr.getVariable());
     }
 
     @Override
     public Lattice transferFunction(Lattice lattice) {
-        if (lattice instanceof RDLattice) {
-            System.out.println("Doing the Kill/Gen dance for" + this);
-            return ((RDLattice)lattice).kill(this.id);
-        }
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ((RDLattice) lattice).kill(id).union(
+                ((RDLattice) lattice).gen(id, this.toNode()));
+        System.out.println("transferFunction:" + lattice);
+        return lattice;
     }
-       
 }

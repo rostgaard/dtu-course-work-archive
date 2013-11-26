@@ -139,9 +139,4 @@ public class While extends Statement {
     	return VariableSet.emptySet;
     }
 
-    @Override
-    public Lattice transferFunction(Lattice lattice) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }
