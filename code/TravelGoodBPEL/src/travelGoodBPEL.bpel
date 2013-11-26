@@ -375,10 +375,6 @@
                             <variable name="CancelHotelIn" messageType="nv:CancelHotelRequest"/>
                             <variable name="BookHotelOut" messageType="nv:BookHotelResponse"/>
                             <variable name="BookHotelIn" messageType="nv:BookHotelRequest"/>
-                            <variable name="CancelFlightOut" messageType="ld:cancelFlightResponse"/>
-                            <variable name="CancelFlightIn" messageType="ld:cancelFlightRequest"/>
-                            <variable name="BookFlightOut" messageType="ld:bookFlightResponse"/>
-                            <variable name="BookFlightIn" messageType="ld:bookFlightRequest"/>
                         </variables>
                         <compensationHandler>
                             <sequence name="Sequence8">
