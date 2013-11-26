@@ -69,6 +69,12 @@ public class TravelGoodTest {
         assertEquals(0,hotelBookings.value.getHotelBooking().size());
     }
     
+    @Test
+    public void testAddHotel(){
+        client.createItinerary(testId);
+        client.getHotels(testId, testId, date1, date1);
+    }
+    
     private boolean compareFlightInformation(FlightInformation info1, FlightInformation info2){
         return info1.getBookingNo().equals(info2.getBookingNo()) &&
                 compareFlights(info1.getFlight(), info2.getFlight()) &&

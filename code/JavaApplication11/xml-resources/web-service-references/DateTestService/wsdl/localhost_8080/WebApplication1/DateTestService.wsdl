@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.1.1 (branches/2.1-6844; 2011-07-29T12:07:24+0000) JAXWS-RI/2.2.5 JAXWS/2.2. --><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" name="DateTest" targetNamespace="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL">
+<wsdl:import namespace="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL" location="http://localhost:8080/WebApplication1/DateTestService?wsdl=1"/>
+<wsdl:binding name="DateTestPortTypeBinding" type="tns:DateTestPortType">
+        <soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+        <wsdl:operation name="MyOperation">
+            <soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="MyOperation_action"/>
+            <wsdl:input name="input1">
+                <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" namespace="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL" use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="output1">
+                <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" namespace="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+	<wsdl:service name="DateTestService">
+        <wsdl:port name="DateTestPortTypeBindingPort" binding="tns:DateTestPortTypeBinding">
+            <soap:address xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" location="http://localhost:8080/WebApplication1/DateTestService"/>
+        </wsdl:port>
+    </wsdl:service>
+</definitions>

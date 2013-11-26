@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="DateTest" targetNamespace="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL">
+<import namespace="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL" location="DateTest.wsdl"/>
+<binding name="DateTestPortTypeBinding" type="tns:DateTestPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+        <operation name="MyOperation">
+            <soap:operation soapAction="MyOperation_action"/>
+            <input name="input1">
+                <soap:body  namespace="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL" use="literal"/>
+            </input>
+            <output name="output1">
+                <soap:body  namespace="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL" use="literal"/>
+            </output>
+        </operation>
+    </binding>
+	<service name="DateTestService">
+        <port name="DateTestPortTypeBindingPort" binding="tns:DateTestPortTypeBinding">
+            <soap:address  location="REPLACE_WITH_ACTUAL_URL"/>
+        </port>
+    </service>
+</definitions>

@@ -1,13 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<definitions name="newWSDL" targetNamespace="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL"
-    xmlns="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.1.1 (branches/2.1-6844; 2011-07-29T12:07:24+0000) JAXWS-RI/2.2.5 JAXWS/2.2. --><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="newWSDL" targetNamespace="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL">
     <types>
-        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL" xmlns:tns="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL">
+        <xsd:schema xmlns:tns="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL" targetNamespace="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL">
             <xsd:complexType name="newComplexType">
                 <xsd:sequence>
-                    <xsd:element name="newElement" type="xsd:dateTime"></xsd:element>
+                    <xsd:element name="newElement" type="xsd:string"/>
                 </xsd:sequence>
             </xsd:complexType>
         </xsd:schema>
@@ -36,7 +32,7 @@
     </binding>
     <service name="newWSDLService">
         <port name="newWSDLPort" binding="tns:newWSDLBinding">
-            <soap:address location="http://localhost:${HttpDefaultPort}/newWSDLService/newWSDLPort"/>
+            <soap:address location="http://localhost:8070/WebApplication1/newWSDLService"/>
         </port>
     </service>
     <plnk:partnerLinkType name="newWSDL">
