@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="DateTest" targetNamespace="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL">
+    <types>
+        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL" xmlns:tns="http://j2ee.netbeans.org/wsdl/WebApplication1/java/newWSDL">
+            <xsd:complexType name="MyComplexType">
+                <xsd:sequence>
+                    <xsd:element name="MyDate" type="xsd:date"></xsd:element>
+                    <xsd:element name="myString" type="xsd:string"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </types>
+    <message name="DateTestOperationRequest">
+		
+    </message>
+    <message name="DateTestOperationResponse">
+        <part name="part1" type="tns:MyComplexType"/>
+    </message>
+    <portType name="DateTestPortType">
+        <operation name="MyOperation">
+            <input name="input1" message="tns:DateTestOperationRequest"/>
+            <output name="output1" message="tns:DateTestOperationResponse"/>
+        </operation>
+    </portType>
+</definitions>

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="file:/C:/Users/Mikkel/Documents/Kurser/webservice/newWSDLService.wsdl" uri="xml-resources/web-service-references/newWSDLService/wsdl/newWSDLService.wsdl"/>
+    <system systemId="http://localhost:8070/WebApplication1/newWSDLService?wsdl" uri="xml-resources/web-service-references/newWSDLService/wsdl/localhost_8070/WebApplication1/newWSDLService.wsdl"/>
+    <system systemId="http://localhost:8080/LameDuck/LameDuckWSDLService?wsdl" uri="xml-resources/web-service-references/LameDuckWSDLService/wsdl/localhost_8080/LameDuck/LameDuckWSDLService.wsdl"/>
+    <system systemId="http://localhost:8080/LameDuck/LameDuckWSDLService?wsdl=1" uri="xml-resources/web-service-references/LameDuckWSDLService/wsdl/localhost_8080/LameDuck/LameDuckWSDLService.wsdl_1.wsdl"/>
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="xml-resources/web-service-references/LameDuckWSDLService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/WebApplication1/DateTestService?wsdl" uri="xml-resources/web-service-references/DateTestService/wsdl/localhost_8080/WebApplication1/DateTestService.wsdl"/>
+    <system systemId="http://localhost:8080/WebApplication1/DateTestService?wsdl=1" uri="xml-resources/web-service-references/DateTestService/wsdl/localhost_8080/WebApplication1/DateTestService.wsdl_1.wsdl"/>
 </catalog>

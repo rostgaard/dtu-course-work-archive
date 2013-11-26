@@ -3,9 +3,12 @@
  * and open the template in the editor.
  */
 
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import javax.xml.datatype.XMLGregorianCalendar;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.netbeans.j2ee.wsdl.webapplication1.java.newwsdl.MyComplexType;
+import org.netbeans.j2ee.wsdl.webapplication1.java.newwsdl.Response;
+import ws.lameduck.FlightInformations;
 
 /**
  *
@@ -18,12 +21,35 @@ public class NewEmptyJUnitTest {
     
     @Test
     public void test(){
-        newWSDLOperation();
+        XMLGregorianCalendar date1 = new XMLGregorianCalendarImpl();
+        date1.setMonth(12);
+        date1.setDay(20);
+        date1.setYear(2012);
+
+        XMLGregorianCalendar date2 = new XMLGregorianCalendarImpl();
+        date2.setMonth(12);
+        date2.setDay(21);
+        date2.setYear(2012);
+        
+        MyComplexType resp = myOperation();
+        
+        
+        
     }
 
-    private static XMLGregorianCalendar newWSDLOperation() {
-        org.netbeans.j2ee.wsdl.webapplication1.java.newwsdl.NewWSDLService service = new org.netbeans.j2ee.wsdl.webapplication1.java.newwsdl.NewWSDLService();
-        org.netbeans.j2ee.wsdl.webapplication1.java.newwsdl.NewWSDLPortType port = service.getNewWSDLPort();
-        return port.newWSDLOperation();
+    private static MyComplexType myOperation() {
+        org.netbeans.j2ee.wsdl.webapplication1.java.newwsdl.DateTestService service = new org.netbeans.j2ee.wsdl.webapplication1.java.newwsdl.DateTestService();
+        org.netbeans.j2ee.wsdl.webapplication1.java.newwsdl.DateTestPortType port = service.getDateTestPortTypeBindingPort();
+        return port.myOperation();
     }
+
+    private static FlightInformations getFlight(java.lang.String startAirport, java.lang.String destinationAirport, javax.xml.datatype.XMLGregorianCalendar date) {
+        ws.lameduck.LameDuckWSDLService service = new ws.lameduck.LameDuckWSDLService();
+        ws.lameduck.LameDuckWSDLPortType port = service.getLameDuckWSDLPort();
+        return port.getFlight(startAirport, destinationAirport, date);
+    }
+
+ 
+
+    
 }

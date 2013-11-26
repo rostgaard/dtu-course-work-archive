@@ -16,22 +16,39 @@
             <classpath path="${libs.jaxws21.classpath}"/>
         </taskdef>
     </target>
-    <target name="wsimport-client-newWSDLService" depends="wsimport-init">
-        <mkdir dir="${build.generated.dir}/jax-wsCache/newWSDLService"/>
-        <property name="wsdl-newWSDLService" location="xml-resources/web-service-references/newWSDLService/wsdl/newWSDLService.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/newWSDLService" destdir="${build.generated.dir}/jax-wsCache/newWSDLService" wsdl="${wsdl-newWSDLService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="file:/C:/Users/Mikkel/Documents/Kurser/webservice/newWSDLService.wsdl" xnocompile="true" xendorsed="true">
-            <depends file="${wsdl-newWSDLService}"/>
-            <produces dir="${build.generated.dir}/jax-wsCache/newWSDLService"/>
+    <target name="wsimport-client-DateTestService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/DateTestService"/>
+        <property name="wsdl-DateTestService" location="xml-resources/web-service-references/DateTestService/wsdl/localhost_8080/WebApplication1/DateTestService.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/DateTestService" destdir="${build.generated.dir}/jax-wsCache/DateTestService" wsdl="${wsdl-DateTestService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/WebApplication1/DateTestService?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${wsdl-DateTestService}"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/DateTestService"/>
         </wsimport>
         <copy todir="${build.generated.sources.dir}/jax-ws">
-            <fileset dir="${build.generated.dir}/jax-wsCache/newWSDLService">
+            <fileset dir="${build.generated.dir}/jax-wsCache/DateTestService">
                 <include name="**/*.java"/>
             </fileset>
         </copy>
     </target>
-    <target name="wsimport-client-clean-newWSDLService" depends="-init-project">
-        <delete dir="${build.generated.dir}/jax-wsCache/newWSDLService"/>
+    <target name="wsimport-client-clean-DateTestService" depends="-init-project">
+        <delete dir="${build.generated.dir}/jax-wsCache/DateTestService"/>
         <delete dir="${build.generated.sources.dir}/jax-ws/org/netbeans/j2ee/wsdl/webapplication1/java/newwsdl"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-newWSDLService"/>
+    <target name="wsimport-client-LameDuckWSDLService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/LameDuckWSDLService"/>
+        <property name="wsdl-LameDuckWSDLService" location="xml-resources/web-service-references/LameDuckWSDLService/wsdl/localhost_8080/LameDuck/LameDuckWSDLService.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/LameDuckWSDLService" destdir="${build.generated.dir}/jax-wsCache/LameDuckWSDLService" wsdl="${wsdl-LameDuckWSDLService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/LameDuck/LameDuckWSDLService?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${wsdl-LameDuckWSDLService}"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/LameDuckWSDLService"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/LameDuckWSDLService">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-LameDuckWSDLService" depends="-init-project">
+        <delete dir="${build.generated.dir}/jax-wsCache/LameDuckWSDLService"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/ws/lameduck"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-DateTestService, wsimport-client-LameDuckWSDLService"/>
 </project>
