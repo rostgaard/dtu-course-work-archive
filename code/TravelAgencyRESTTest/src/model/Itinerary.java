@@ -16,7 +16,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Itinerary {
 
     private int ID;
-    private ItineraryState currentState = ItineraryState.UNBOOKED;
     
     private FlightBookingList flightBookings = new FlightBookingList();
     private HotelBookingList  hotelBookings  = new HotelBookingList();
@@ -44,17 +43,8 @@ public class Itinerary {
         return hotelBookings;
     }
     
-    @XmlElement
-    public ItineraryState getCurrentState() {
-        return currentState;
-    }
-
     public void setID(int ID) {
         this.ID = ID;
-    }
-
-    public void setCurrentState(ItineraryState currentState) {
-        this.currentState = currentState;
     }
 
     public void setFlightBookings(FlightBookingList flights) {

@@ -25,7 +25,15 @@ public final class exceptions {
             super(Response.status(Response.Status.NOT_FOUND).entity( new ErrorBean(message,Response.Status.NOT_FOUND.getStatusCode())).build());
         }
 
-    }  
+    } 
+    
+    public static class BookingException extends WebApplicationException{
+        
+        public BookingException() {
+            super(Response.status(Response.Status.NOT_ACCEPTABLE).entity( new ErrorBean("Failed to book",Response.Status.NOT_FOUND.getStatusCode())).build());
+        }
+
+    } 
     
     public static class NoSuchCustomerException extends NotFoundException{
         public NoSuchCustomerException() {

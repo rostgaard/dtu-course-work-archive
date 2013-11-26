@@ -70,13 +70,13 @@ public final class FlightDatabase {
         
         
         Flight newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight,"SAS0001", 200.0, serviceName ));
+        insert(generateFlightInformation(newFlight,"SAS0001", 2.0, serviceName ));
         
         newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "Norwegian");
-        insert(generateFlightInformation(newFlight, "NOR0001", 400.0, serviceName));
+        insert(generateFlightInformation(newFlight, "NOR0001", 2.0, serviceName));
         
         newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "Kabul Air");
-        insert(generateFlightInformation(newFlight, "NOR0001", 100.0, serviceName));
+        insert(generateFlightInformation(newFlight, "NOR0002", 2.0, serviceName));
         
         newFlight = generateFlight("Kabul", "Kastrup", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight, "SAS0002", 250.0, serviceName));
@@ -143,9 +143,6 @@ public final class FlightDatabase {
        
         return retList;
     }
-    
-
-    
 
     private  FlightInformation generateFlightInformation(Flight newFlight, String bookingNo, double price, String serviceName) {
         FlightInformation flightInfo = new FlightInformation();

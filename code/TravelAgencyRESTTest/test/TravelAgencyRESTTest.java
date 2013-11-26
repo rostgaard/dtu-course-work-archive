@@ -14,12 +14,10 @@ import model.FlightBookingList;
 import model.HotelBooking;
 import model.HotelBookingList;
 import model.Itinerary;
-import model.ItineraryState;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import ws.dtu.resources.model.*;
+import org.junit.Before;
 
 
 
@@ -38,7 +36,7 @@ public class TravelAgencyRESTTest {
 
     private Client client;
     
-    private final String customerID = "9";
+    private final String customerID = "1";
     
     
     public TravelAgencyRESTTest() {
@@ -108,42 +106,75 @@ public class TravelAgencyRESTTest {
          WebResource itineraryResourceLocation = client.resource(createIitneraryRsponse.getLocation()).queryParam("customer_id", customerID);
          Itinerary preItinerary = itineraryResourceLocation.get(Itinerary.class);         
          
-         MultivaluedMap queryParams = new MultivaluedMapImpl();
-         queryParams.add("date", "2013-11-17");
-         queryParams.add("origin", "Kastrup");
-         queryParams.add("destination", "Kabul");
-         WebResource flightResource1 = flightResource.queryParams(queryParams);
+         // Get flights
+         MultivaluedMap queryParamsFlight = new MultivaluedMapImpl();
+         queryParamsFlight.add("date", "2013-11-17");
+         queryParamsFlight.add("origin", "Kastrup");
+         queryParamsFlight.add("destination", "Kabul");
+         WebResource flightResource1 = flightResource.queryParams(queryParamsFlight);
          FlightBookingList flightBookingList = flightResource1.get(FlightBookingList.class);
-         FlightBooking flightBooking = flightBookingList.getFlights().get(0);
+         FlightBooking flightBooking1 = flightBookingList.getFlights().get(0);
+         FlightBooking flightBooking2 = flightBookingList.getFlights().get(1);
+         FlightBooking flightBooking3 = flightBookingList.getFlights().get(2);
 
+         // Get hotels
+         MultivaluedMap queryParamsHotel = new MultivaluedMapImpl();
+         queryParamsHotel.add("origin", "Kabul");
+         queryParamsHotel.add("arrival_date", "2013-11-17");
+         queryParamsHotel.add("departure_date", "2013-11-18");
+         WebResource hotelResource1 = hotelResource.queryParams(queryParamsHotel);
+         HotelBookingList hotelBookingList = hotelResource1.get(HotelBookingList.class);
+         HotelBooking hotelBooking1 = hotelBookingList.getHotels().get(0);
+         HotelBooking hotelBooking2 = hotelBookingList.getHotels().get(1);
+
+         // Book flight
          WebResource itineraryFlightResource = itineraryResource.path(preItinerary.getID()+"/flight").queryParam("customer_id", customerID);
-         itineraryFlightResource.accept(MEDIATYPE).type(MEDIATYPE).put(flightBooking);
+         itineraryFlightResource.accept(MEDIATYPE).type(MEDIATYPE).put(flightBooking1);
          
+         // Book hotel
+         WebResource itineraryHotelResource = itineraryResource.path(preItinerary.getID()+"/hotel").queryParam("customer_id", customerID);
+         itineraryHotelResource.accept(MEDIATYPE).type(MEDIATYPE).put(hotelBooking1);
+         
+         // Two more flights
+        itineraryFlightResource.accept(MEDIATYPE).type(MEDIATYPE).put(flightBooking2);
+        itineraryFlightResource.accept(MEDIATYPE).type(MEDIATYPE).put(flightBooking3);
+
+        // Finally, another hotel
+        itineraryHotelResource.accept(MEDIATYPE).type(MEDIATYPE).put(hotelBooking2);
+
+         // Get the flight and hotels in the itinerary
          Itinerary intermediaItinerary = itineraryResourceLocation.get(Itinerary.class);
          flightBookingList = intermediaItinerary.getFlightBookings();
-         HotelBookingList hotelBookingList = intermediaItinerary.getHotelBookings();
+         hotelBookingList = intermediaItinerary.getHotelBookings();
          
-         assertTrue(intermediaItinerary.getCurrentState()==ItineraryState.UNBOOKED);
-         
+         // Verify that flights and hotels were added
+         assertEquals(3, flightBookingList.getFlights().size());
+         assertEquals(2, hotelBookingList.getHotels().size());
+           
+         // Verify status of flights
          for(FlightBooking fb : flightBookingList.getFlights()) {
              assertTrue(fb.getBookingState()==FlightBookingState.UNBOOKED);
          }
-         
+         // Verify status of hotels
          for(HotelBooking hb : hotelBookingList.getHotels()) {
              assertTrue(hb.getBookingState()==HotelBooking.HotelBookingState.UNBOOKED);
          }
          
+         // Book the itinerary
          WebResource bookItineraryResource = itineraryResource.path(""+intermediaItinerary.getID()).queryParam("customer_id", customerID);;
          bookItineraryResource.put();
          
+         // Get the itinerary again
          Itinerary finaltinerary = itineraryResourceLocation.get(Itinerary.class);
          flightBookingList = finaltinerary.getFlightBookings();
          hotelBookingList = finaltinerary.getHotelBookings();
 
+         // Verify status of flights
          for(FlightBooking fb : flightBookingList.getFlights()) {
              assertTrue(fb.getBookingState()==FlightBookingState.BOOKED);
          }
          
+         // Verify status of hotels
          for(HotelBooking hb : hotelBookingList.getHotels()) {
              assertTrue(hb.getBookingState()==HotelBooking.HotelBookingState.BOOKED);
          }

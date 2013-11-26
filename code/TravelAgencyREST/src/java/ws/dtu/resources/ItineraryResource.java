@@ -24,6 +24,7 @@ import ws.dtu.model.HotelBookingList;
 import ws.dtu.manager.ItineraryDatabase;
 import ws.dtu.model.Itinerary;
 import ws.dtu.manager.ItineraryManager;
+import ws.dtu.model.HotelBooking;
 
 /**
  *
@@ -87,8 +88,9 @@ public class ItineraryResource {
     
     @PUT
     @Path("{id}/hotel")
-    public Response addHotel(@PathParam("id") int itineraryIdentifier, @QueryParam("fid") int hotelIdentifier) {
-        
-        return null;
+    @Consumes("application/itinerary+xml")
+    public Response addHotel(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID, HotelBooking hotelBooking) {
+        ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier).addHotelBooking(hotelBooking);
+        return Response.ok().build();
     }   
 }
