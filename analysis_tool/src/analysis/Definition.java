@@ -20,10 +20,17 @@ public class Definition implements Comparable {
         this.label = label;
     }
 
-
+    /**
+     *
+     * @param The object
+     * @return A string representation of the object.
+     */
     @Override
-    public boolean equals(Object arg) {
-        return this.label == ((Definition) arg).label;
+    public boolean equals(Object otherDefinition) {
+        if (otherDefinition instanceof Definition) {
+            return this.label.getLabel() == ((Definition) otherDefinition).label.getLabel();
+        }
+        return false;
     }
 
     @Override
@@ -38,5 +45,10 @@ public class Definition implements Comparable {
     @Override
     public int compareTo(Object arg) {
         return this.label.compareTo(((Definition) arg).label);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.label.getLabel();
     }
 }

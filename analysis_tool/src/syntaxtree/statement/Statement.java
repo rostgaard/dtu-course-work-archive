@@ -52,6 +52,8 @@ public abstract class Statement implements analysis.Analysable {
         return generated;
     }
     
-    public abstract Lattice transferFunction(Lattice lattice);
+    public Lattice transferFunction(Lattice lattice) {
+        return lattice;
+    }
     
 }
