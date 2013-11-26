@@ -98,7 +98,7 @@ public class TravelAgencyRESTTest {
          WebResource resource = flightResource.queryParams(queryParams);
          FlightBookingList flightBookingList = resource.get(FlightBookingList.class);
          
-         assertEquals(1, flightBookingList.getFlights().size());
+         assertEquals(3, flightBookingList.getFlights().size());
      }
      
      @Test

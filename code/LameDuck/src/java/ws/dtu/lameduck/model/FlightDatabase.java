@@ -70,28 +70,34 @@ public final class FlightDatabase {
         
         
         Flight newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight,"b0001", 200.0, serviceName ));
+        insert(generateFlightInformation(newFlight,"SAS0001", 200.0, serviceName ));
+        
+        newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "Norwegian");
+        insert(generateFlightInformation(newFlight, "NOR0001", 400.0, serviceName));
+        
+        newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "Kabul Air");
+        insert(generateFlightInformation(newFlight, "NOR0001", 100.0, serviceName));
         
         newFlight = generateFlight("Kabul", "Kastrup", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight, "b0002", 250.0, serviceName));
+        insert(generateFlightInformation(newFlight, "SAS0002", 250.0, serviceName));
         
           newFlight = generateFlight("Kabul", "Kastrup", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight, "b0008", 250.0, serviceName));
+        insert(generateFlightInformation(newFlight, "SAS0003", 250.0, serviceName));
         
         newFlight = generateFlight("Kastrup", "Moscow", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight, "b0003", 300.0, serviceName));
+        insert(generateFlightInformation(newFlight, "SAS0004", 300.0, serviceName));
         
         newFlight = generateFlight("Kastrup", "Afganistan", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight, "b0004", 200.0, serviceName));
+        insert(generateFlightInformation(newFlight, "SAS0005", 200.0, serviceName));
         
         newFlight = generateFlight("Kastrup", "Irak", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight, "b0005", 220.0, serviceName));
+        insert(generateFlightInformation(newFlight, "SAS0006", 220.0, serviceName));
         
         newFlight = generateFlight("Kastrup", "Libya", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight, "b0006", 150.0, serviceName));
+        insert(generateFlightInformation(newFlight, "SAS0007", 150.0, serviceName));
         
         newFlight = generateFlight("Kastrup", "Kazakhstan", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight, "b0007", 200.0, serviceName));
+        insert(generateFlightInformation(newFlight, "SAS0008", 200.0, serviceName));
         
         
         
