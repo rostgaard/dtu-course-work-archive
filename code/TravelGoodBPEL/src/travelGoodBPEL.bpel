@@ -27,7 +27,12 @@
         <partnerLink name="TravelGoodPartnerLink" xmlns:tns="http://travelgoodbpel.ws" partnerLinkType="tns:TravelGood" myRole="TravelGoodPortTypeRole"/>
     </partnerLinks>
     <variables>
-        <variable name="hotelBookings" type="ns0:hotelBookings"/>
+        <variable name="hotelBookings" type="ns0:hotelBookings">
+            <sxed:editor>
+                <sxed:predicate path="$hotelBookings/hotelBooking[$flightCounter]" source="from"/>
+                <sxed:predicate path="$hotelBookings/hotelBooking[$flightCounter]" source="to"/>
+            </sxed:editor>
+        </variable>
         <variable name="flightBookings" type="ns0:flightBookings">
             <sxed:editor>
                 <sxed:predicate path="$flightBookings/flightBooking[$flightCounter]" source="from"/>
@@ -282,7 +287,7 @@
             </sequence>
         </scope>
         <flow name="BookFlow">
-            <sequence name="FlowSequence">
+            <sequence name="FlightFlowSequence">
                 <forEach name="ForEachFlight" parallel="no" counterName="flightCounter">
                     <startCounterValue>1</startCounterValue>
                     <finalCounterValue>count($flightBookings/flightBooking)</finalCounterValue>
@@ -297,12 +302,24 @@
                             <sequence name="Sequence8">
                                 <assign name="Assign16">
                                     <copy>
-                                        <from variable="BookFlightIn" part="bookingNumber"/>
-                                        <to variable="CancelFlightIn" part="bookingNumber"/>
+                                        <from variable="BookItineraryIn" part="ccInformation"/>
+                                        <to variable="CancelFlightIn" part="creditCardInfo"/>
                                     </copy>
                                     <copy>
-                                        <from variable="BookFlightIn" part="creditCardInfo"/>
-                                        <to variable="CancelFlightIn" part="creditCardInfo"/>
+                                        <from>$flightBookings/flightBooking[$flightCounter]/flightInformation/ldt:price
+                                            <sxed:editor>
+                                                <sxed:predicate path="$flightBookings/flightBooking[$flightCounter]" source="from"/>
+                                            </sxed:editor>
+                                        </from>
+                                        <to variable="CancelFlightIn" part="price"/>
+                                    </copy>
+                                    <copy>
+                                        <from>$flightBookings/flightBooking[$flightCounter]/flightInformation/ldt:bookingNo
+                                            <sxed:editor>
+                                                <sxed:predicate path="$flightBookings/flightBooking[$flightCounter]" source="from"/>
+                                            </sxed:editor>
+                                        </from>
+                                        <to variable="CancelFlightIn" part="bookingNumber"/>
                                     </copy>
                                 </assign>
                                 <invoke name="CancelFlightInvoke" partnerLink="LameDuckPartnerLink" operation="cancelFlight" portType="ld:LameDuckPortType" inputVariable="CancelFlightIn" outputVariable="CancelFlightOut"/>
@@ -340,6 +357,72 @@
                                     <to>$flightBookings/flightBooking[$flightCounter]/status
                                         <sxed:editor>
                                             <sxed:predicate path="$flightBookings/flightBooking[$flightCounter]" source="to"/>
+                                        </sxed:editor>
+                                    </to>
+                                </copy>
+                            </assign>
+                        </sequence>
+                    </scope>
+                </forEach>
+            </sequence>
+            <sequence name="HotelFlowSequence">
+                <forEach name="ForEachHotel" parallel="no" counterName="flightCounter">
+                    <startCounterValue>1</startCounterValue>
+                    <finalCounterValue>count($flightBookings/flightBooking)</finalCounterValue>
+                    <scope name="BookHotelScope">
+                        <variables>
+                            <variable name="CancelHotelOut" messageType="nv:CancelHotelResponse"/>
+                            <variable name="CancelHotelIn" messageType="nv:CancelHotelRequest"/>
+                            <variable name="BookHotelOut" messageType="nv:BookHotelResponse"/>
+                            <variable name="BookHotelIn" messageType="nv:BookHotelRequest"/>
+                        </variables>
+                        <compensationHandler>
+                            <sequence name="Sequence8">
+                                <assign name="Assign16">
+                                    <copy>
+                                        <from>$hotelBookings/hotelBooking[$flightCounter]/hotelBookingNo
+                                            <sxed:editor>
+                                                <sxed:predicate path="$hotelBookings/hotelBooking[$flightCounter]" source="from"/>
+                                            </sxed:editor>
+                                        </from>
+                                        <to variable="CancelHotelIn" part="bookingNo"/>
+                                    </copy>
+                                </assign>
+                                <invoke name="CancelHotelInvoke" partnerLink="NiceViewPartnerLink" operation="CancelHotel" portType="nv:NiceViewPortType" inputVariable="CancelHotelIn" outputVariable="CancelHotelOut"/>
+                                <assign name="Assign17">
+                                    <copy>
+                                        <from>'Canceled'</from>
+                                        <to>$hotelBookings/hotelBooking[$flightCounter]/status
+                                            <sxed:editor>
+                                                <sxed:predicate path="$hotelBookings/hotelBooking[$flightCounter]" source="to"/>
+                                            </sxed:editor>
+                                        </to>
+                                    </copy>
+                                </assign>
+                            </sequence>
+                        </compensationHandler>
+                        <sequence name="Sequence7">
+                            <assign name="Assign14">
+                                <copy>
+                                    <from variable="BookItineraryIn" part="ccInformation"/>
+                                    <to variable="BookHotelIn" part="ccInformation"/>
+                                </copy>
+                                <copy>
+                                    <from>$hotelBookings/hotelBooking[$flightCounter]/hotelBookingNo
+                                        <sxed:editor>
+                                            <sxed:predicate path="$hotelBookings/hotelBooking[$flightCounter]" source="from"/>
+                                        </sxed:editor>
+                                    </from>
+                                    <to variable="BookHotelIn" part="bookingNo"/>
+                                </copy>
+                            </assign>
+                            <invoke name="Invoke2" partnerLink="NiceViewPartnerLink" operation="BookHotel" portType="nv:NiceViewPortType" inputVariable="BookHotelIn" outputVariable="BookHotelOut"/>
+                            <assign name="Assign15">
+                                <copy>
+                                    <from>'Confirmed'</from>
+                                    <to>$hotelBookings/hotelBooking[$flightCounter]/status
+                                        <sxed:editor>
+                                            <sxed:predicate path="$hotelBookings/hotelBooking[$flightCounter]" source="to"/>
                                         </sxed:editor>
                                     </to>
                                 </copy>

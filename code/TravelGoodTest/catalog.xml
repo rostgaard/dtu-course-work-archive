@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="file:/C:/Users/Martin/git/Webservices/code/TravelGoodBPEL/src/TravelGood.wsdl" uri="xml-resources/web-service-references/TravelGood/wsdl/TravelGood.wsdl"/>
     <system systemId="http://localhost:9080/TravelGoodService/TravelGoodPort?wsdl" uri="xml-resources/web-service-references/TravelGoodPort/wsdl/localhost_9080/TravelGoodService/TravelGoodPort.wsdl"/>
     <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="xml-resources/web-service-references/TravelGoodPort/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/LameDuck/LameDuckService?xsd=1" uri="xml-resources/web-service-references/TravelGoodPort/wsdl/localhost_8080/LameDuck/LameDuckService.xsd_1.xsd"/>

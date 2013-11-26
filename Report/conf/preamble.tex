@@ -188,7 +188,7 @@
 }
 % Get formatted name of author
 \newcommand{\authorname}[1]{%
-    \csuse{author_fname#1} \csuse{author_lname#1}%
+    \csuse{author_fname#1} \textsc{\csuse{author_lname#1}}%
 }
 % Get study number of author
 \newcommand{\authorsno}[1]{%

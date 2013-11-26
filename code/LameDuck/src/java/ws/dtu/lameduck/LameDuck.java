@@ -9,7 +9,11 @@ import dk.dtu.imm.fastmoney.BankService;
 import dk.dtu.imm.fastmoney.CreditCardFaultMessage;
 import dk.dtu.imm.fastmoney.types.AccountType;
 import dk.dtu.imm.fastmoney.types.CreditCardInfoType;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.jws.WebService;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import ws.dtu.lameduck.model.FlightDatabase;
 import ws.dtu.lameduck.types.FlightInformation;
@@ -26,19 +30,24 @@ public class LameDuck {
     private AccountType account;
     private static final int GROUP = 3;
     private BankService service = new BankService();
-    private FlightDatabase db = FlightDatabase.getInstance();
+    private FlightDatabase db;
     
-    public LameDuck(){
+    public LameDuck() throws DatatypeConfigurationException{
+        db = FlightDatabase.getInstance();
         account = new AccountType();
         account.setName("LameDuck");
         account.setNumber("50208812");
     }
+    
 
     public FlightList getFlights(String origin, String destination, XMLGregorianCalendar datetime) {
-        return db.getFlights(origin, destination, datetime);
+        FlightList list = db.getFlights(origin, destination, datetime);
+        
+        return list;
     }
 
     public boolean bookFlight(String bookingNumber, CreditCardInfoType creditCardInfo) throws BookFlightFault {
+
         FlightInformation fi = db.bookFlight(bookingNumber);
         try {
             return chargeCreditCard(GROUP, creditCardInfo, (int)fi.getPrice(), account);
@@ -48,6 +57,8 @@ public class LameDuck {
     }
 
     public boolean cancelFlight(java.lang.String bookingNumber, double price, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInfo) throws CancelFlightFault {
+
+        
          try {
             refundCreditCard(GROUP,creditCardInfo,(int)price, account);
             db.cancelFlight(bookingNumber);

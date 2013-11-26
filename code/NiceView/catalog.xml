@@ -3,6 +3,7 @@
     <system systemId="file:/C:/Users/Martin/git/Webservices/NiceView/src/java/xml/NiceView.wsdl" uri="src/conf/xml-resources/web-services/NiceView/wsdl/NiceView.wsdl"/>
     <nextCatalog catalog="nbproject/private/retriever/catalog.xml"/>
     <system systemId="file:/C:/Users/Martin/git/Webservices/code/NiceView/src/java/ws/dtu/niceview/xml/NiceView.wsdl" uri="src/conf/xml-resources/web-services/NiceView/wsdl/NiceView.wsdl"/>
-    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="src/conf/xml-resources/web-services/NiceView/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
     <system systemId="file:/C:/Users/Martin/git/Webservices/code/NiceView/src/java/ws/dtu/niceview/xml/NiceView.xsd" uri="src/conf/xml-resources/web-services/NiceView/wsdl/NiceView.xsd"/>
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?wsdl" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl"/>
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
 </catalog>

@@ -31,7 +31,7 @@ public final class FlightDatabase {
     
     private static FlightDatabase db;
     
-    public static synchronized FlightDatabase getInstance() {
+    public static synchronized FlightDatabase getInstance() throws DatatypeConfigurationException {
         if(db == null){
             db = new FlightDatabase();
             db.loadDatabase();
@@ -46,7 +46,7 @@ public final class FlightDatabase {
         flightInfoByBooking = new HashMap<String, FlightInformation>();
     }
     
-    public void reset() {
+    public void reset() throws DatatypeConfigurationException {
         flightInformations = new HashMap<String,List<FlightInformation>>();
         bookings = new ArrayList<String>();
         flightInfoByBooking = new HashMap<String, FlightInformation>();
@@ -55,14 +55,18 @@ public final class FlightDatabase {
     }
     
     private  void loadDatabase() {
-        DatatypeFactory df = null;
+        
+        DatatypeFactory df;
         try {
             df = DatatypeFactory.newInstance();
         } catch (DatatypeConfigurationException ex) {
-            Logger.getLogger(FlightDatabase.class.getName()).log(Level.SEVERE, null, ex);
+           throw new NullPointerException();
         }
+        
         XMLGregorianCalendar date1 = df.newXMLGregorianCalendar("2013-11-17");
+        
         XMLGregorianCalendar date2 = df.newXMLGregorianCalendar("2013-11-18");
+        
         
         
         Flight newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "SAS");
@@ -94,6 +98,7 @@ public final class FlightDatabase {
     }
     
     private  Flight generateFlight(String origin, String destination, XMLGregorianCalendar liftOff, XMLGregorianCalendar arrival, String carrier){
+        
         Flight newFlight = new Flight();
         newFlight.setOrigin(origin);
         newFlight.setDestination(destination);
@@ -154,7 +159,7 @@ public final class FlightDatabase {
 
     public  FlightInformation bookFlight(String bookingNo) throws BookFlightFault {
         if(!flightInfoByBooking.containsKey(bookingNo)){
-            throw new BookFlightFault("No such booking number", "No such booking number");
+            throw new BookFlightFault("No such booking number: "+bookingNo, "No such booking number: "+bookingNo);
         }
         else if(bookings.contains(bookingNo)){
             throw new BookFlightFault("Trip has already been booked", "Trip has already been booked");
