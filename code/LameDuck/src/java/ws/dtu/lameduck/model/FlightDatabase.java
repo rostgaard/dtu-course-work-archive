@@ -96,11 +96,8 @@ public final class FlightDatabase {
         newFlight = generateFlight("Kastrup", "Libya", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight, "SAS0007", 150.0, serviceName));
         
-        newFlight = generateFlight("Kastrup", "Kazakhstan", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight, "SAS0008", 200.0, serviceName));
-        
-        
-        
+        newFlight = generateFlight("Kastrup", "Kazakhstan", date1, date2, "Fail Airlines");
+        insert(generateFlightInformation(newFlight, "FAIL0001", 200.0, serviceName));
     }
     
     private  Flight generateFlight(String origin, String destination, XMLGregorianCalendar liftOff, XMLGregorianCalendar arrival, String carrier){
@@ -166,6 +163,8 @@ public final class FlightDatabase {
         }
         else if(bookings.contains(bookingNo)){
             throw new BookFlightFault("Trip has already been booked", "Trip has already been booked");
+        } else if (bookingNo.equals("FAIL0001")) {
+            throw new BookFlightFault("Airline is to unstable to fly", "Please try another airline");
         } else {
                 bookings.add(bookingNo); 
                 return flightInfoByBooking.get(bookingNo);

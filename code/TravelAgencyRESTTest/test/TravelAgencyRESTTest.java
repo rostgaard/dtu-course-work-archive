@@ -26,17 +26,8 @@ import org.junit.Before;
  * @author peter
  */
 public class TravelAgencyRESTTest {
-    private static String baseURL = "http://localhost:8080/ta/webresources/";
-    String MEDIATYPE = "application/itinerary+xml";
-
-    private WebResource flightResource;
-    private WebResource hotelResource;
-    private WebResource itineraryResource;
-    private WebResource resetResource;
-
-    private Client client;
     
-    private final String customerID = "1";
+    private final static  String customerID = "1";
     
     
     public TravelAgencyRESTTest() {
@@ -45,21 +36,17 @@ public class TravelAgencyRESTTest {
     
     @Before
     public void setUp() {
-        client = new Client();
-        flightResource = client.resource(baseURL+"flight");
-        hotelResource = client.resource(baseURL+"hotel");
-        itineraryResource = client.resource(baseURL+"itinerary");
-        resetResource = client.resource(baseURL+"reset");
+
     }
     
     @After
     public void tearDown() {
-        resetResource.post();
+        RestService.reset();
     }
     
      @Test
      public void testCreateItinerary() {
-         ClientResponse response = itineraryResource.queryParam("customer_id", customerID).post(ClientResponse.class);
+         ClientResponse response = RestService.createItinerary(customerID);
         
          assertEquals(201, response.getStatus());
          assertNotNull(response.getLocation());
@@ -67,34 +54,22 @@ public class TravelAgencyRESTTest {
      
      @Test
      public void testGetItinerary() {
-         ClientResponse response = itineraryResource.queryParam("customer_id", customerID).post(ClientResponse.class);
+         ClientResponse response = RestService.createItinerary(customerID);
+         Itinerary itinerary = RestService.getItinerary(customerID, response.getLocation()).getEntity(Itinerary.class);
          
-         WebResource resource = client.resource(response.getLocation()).queryParam("customer_id", customerID);
-         Itinerary itinerary = resource.get(Itinerary.class);
          assertNotNull(itinerary.getID());
      }
      
      @Test
      public void testGetFlightsNone() {
-         MultivaluedMap queryParams = new MultivaluedMapImpl();
-         queryParams.add("date", "2013-11-17");
-         queryParams.add("origin", "Kastrup");
-         queryParams.add("destination", "Aalborg");
-
-         WebResource resource = flightResource.queryParams(queryParams);
-         FlightBookingList flightBookingList = resource.get(FlightBookingList.class);
+         FlightBookingList flightBookingList = RestService.getFlights("Kastrup", "Aalborg", "2013-11-17").getEntity(FlightBookingList.class);
          
          assertEquals(0, flightBookingList.getFlights().size());
      }
      
      @Test
      public void testGetFlights() {
-         MultivaluedMap queryParams = new MultivaluedMapImpl();
-         queryParams.add("date", "2013-11-17");
-         queryParams.add("origin", "Kastrup");
-         queryParams.add("destination", "Kabul");
-         WebResource resource = flightResource.queryParams(queryParams);
-         FlightBookingList flightBookingList = resource.get(FlightBookingList.class);
+         FlightBookingList flightBookingList = RestService.getFlights("Kastrup", "Kabul", "2013-11-17").getEntity(FlightBookingList.class);
          
          assertEquals(3, flightBookingList.getFlights().size());
      }
@@ -102,48 +77,35 @@ public class TravelAgencyRESTTest {
      @Test
      public void testP1() {
          // Create itineraty
-         ClientResponse createIitneraryRsponse = itineraryResource.queryParam("customer_id", customerID).post(ClientResponse.class);
-         WebResource itineraryResourceLocation = client.resource(createIitneraryRsponse.getLocation()).queryParam("customer_id", customerID);
-         Itinerary preItinerary = itineraryResourceLocation.get(Itinerary.class);         
+         ClientResponse createIitneraryRsponse = RestService.createItinerary(customerID);  
+         Itinerary preItinerary = RestService.getItinerary(customerID, createIitneraryRsponse.getLocation()).getEntity(Itinerary.class);         
          
          // Get flights
-         MultivaluedMap queryParamsFlight = new MultivaluedMapImpl();
-         queryParamsFlight.add("date", "2013-11-17");
-         queryParamsFlight.add("origin", "Kastrup");
-         queryParamsFlight.add("destination", "Kabul");
-         WebResource flightResource1 = flightResource.queryParams(queryParamsFlight);
-         FlightBookingList flightBookingList = flightResource1.get(FlightBookingList.class);
+         FlightBookingList flightBookingList = RestService.getFlights("Kastrup", "Kabul", "2013-11-17").getEntity(FlightBookingList.class);
          FlightBooking flightBooking1 = flightBookingList.getFlights().get(0);
          FlightBooking flightBooking2 = flightBookingList.getFlights().get(1);
          FlightBooking flightBooking3 = flightBookingList.getFlights().get(2);
 
          // Get hotels
-         MultivaluedMap queryParamsHotel = new MultivaluedMapImpl();
-         queryParamsHotel.add("origin", "Kabul");
-         queryParamsHotel.add("arrival_date", "2013-11-17");
-         queryParamsHotel.add("departure_date", "2013-11-18");
-         WebResource hotelResource1 = hotelResource.queryParams(queryParamsHotel);
-         HotelBookingList hotelBookingList = hotelResource1.get(HotelBookingList.class);
+         HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Kabul", "2013-11-17", "2013-11-18").getEntity(HotelBookingList.class);
          HotelBooking hotelBooking1 = hotelBookingList.getHotels().get(0);
          HotelBooking hotelBooking2 = hotelBookingList.getHotels().get(1);
 
-         // Book flight
-         WebResource itineraryFlightResource = itineraryResource.path(preItinerary.getID()+"/flight").queryParam("customer_id", customerID);
-         itineraryFlightResource.accept(MEDIATYPE).type(MEDIATYPE).put(flightBooking1);
+         // Add flight
+         RestService.addFlight(customerID, preItinerary.getID(), flightBooking1);
          
-         // Book hotel
-         WebResource itineraryHotelResource = itineraryResource.path(preItinerary.getID()+"/hotel").queryParam("customer_id", customerID);
-         itineraryHotelResource.accept(MEDIATYPE).type(MEDIATYPE).put(hotelBooking1);
+         // Add hotel
+         RestService.addHotel(customerID, preItinerary.getID(), hotelBooking1);
          
          // Two more flights
-        itineraryFlightResource.accept(MEDIATYPE).type(MEDIATYPE).put(flightBooking2);
-        itineraryFlightResource.accept(MEDIATYPE).type(MEDIATYPE).put(flightBooking3);
+         RestService.addFlight(customerID, preItinerary.getID(), flightBooking2);
+         RestService.addFlight(customerID, preItinerary.getID(), flightBooking2);
 
         // Finally, another hotel
-        itineraryHotelResource.accept(MEDIATYPE).type(MEDIATYPE).put(hotelBooking2);
+        RestService.addHotel(customerID, preItinerary.getID(), hotelBooking2);
 
          // Get the flight and hotels in the itinerary
-         Itinerary intermediaItinerary = itineraryResourceLocation.get(Itinerary.class);
+         Itinerary intermediaItinerary = RestService.getItinerary(customerID, createIitneraryRsponse.getLocation()).getEntity(Itinerary.class);
          flightBookingList = intermediaItinerary.getFlightBookings();
          hotelBookingList = intermediaItinerary.getHotelBookings();
          
@@ -161,11 +123,10 @@ public class TravelAgencyRESTTest {
          }
          
          // Book the itinerary
-         WebResource bookItineraryResource = itineraryResource.path(""+intermediaItinerary.getID()).queryParam("customer_id", customerID);;
-         bookItineraryResource.put();
+         RestService.bookItinerary(customerID, intermediaItinerary.getID());
          
          // Get the itinerary again
-         Itinerary finaltinerary = itineraryResourceLocation.get(Itinerary.class);
+         Itinerary finaltinerary = RestService.getItinerary(customerID, createIitneraryRsponse.getLocation()).getEntity(Itinerary.class);
          flightBookingList = finaltinerary.getFlightBookings();
          hotelBookingList = finaltinerary.getHotelBookings();
 
@@ -183,42 +144,57 @@ public class TravelAgencyRESTTest {
      @Test
      public void testP2() {
          // Create itinerary
-         ClientResponse createIitneraryRsponse = itineraryResource.queryParam("customer_id", customerID).post(ClientResponse.class);
-         WebResource itineraryResourceLocation = client.resource(createIitneraryRsponse.getLocation()).queryParam("customer_id", customerID);
-         Itinerary preItinerary = itineraryResourceLocation.get(Itinerary.class);  
+         ClientResponse createIitneraryRsponse = RestService.createItinerary(customerID);
+         Itinerary preItinerary = RestService.getItinerary(customerID, createIitneraryRsponse.getLocation()).getEntity(Itinerary.class);
          
          // Get flights
-         MultivaluedMap queryParams = new MultivaluedMapImpl();
-         queryParams.add("date", "2013-11-17");
-         queryParams.add("origin", "Kastrup");
-         queryParams.add("destination", "Kabul");
-         WebResource flightResource1 = flightResource.queryParams(queryParams).queryParam("customer_id", customerID);
-         FlightBookingList flightBookingList = flightResource1.get(FlightBookingList.class);
-         
-         // Add flight to itinerary
+         FlightBookingList flightBookingList = RestService.getFlights("Kastrup", "Kabul", "2013-11-17").getEntity(FlightBookingList.class);
          FlightBooking flightBooking = flightBookingList.getFlights().get(0);
-         WebResource itineraryFlightResource = itineraryResource.path(preItinerary.getID()+"/flight").queryParam("customer_id", customerID);
-         itineraryFlightResource.accept(MEDIATYPE).type(MEDIATYPE).put(flightBooking);
+
+         // Add flight to itinerary
+         RestService.addFlight(customerID, preItinerary.getID(), flightBooking);
          
          // Get the itinerary
-         Itinerary intermediaItinerary = itineraryResourceLocation.get(Itinerary.class);
+         Itinerary intermediaItinerary = RestService.getItinerary(customerID, createIitneraryRsponse.getLocation()).getEntity(Itinerary.class);
          
          // Verify that the flight was added
          FlightBooking flightBookingActual = intermediaItinerary.getFlightBookings().getFlights().get(0);
          assertEquals(flightBookingActual.getFlightInformation().getBookingNo(), flightBooking.getFlightInformation().getBookingNo());
          
          // Cancel the itinerary
-         itineraryResourceLocation.delete();
+         RestService.cancelItinerary(customerID, intermediaItinerary.getID());
          
          // Verify that itinerary does not exist anymore
-         ClientResponse response = itineraryResourceLocation.get(ClientResponse.class);
+         ClientResponse response = RestService.getItinerary(customerID, createIitneraryRsponse.getLocation());
          assertEquals(404, response.getStatus());
      }
-//     
-//     @Test
-//     public void testB() {
-//         
-//     }
+     
+     @Test
+     public void testB() {
+         // Get hotels
+         HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Kabul", "2013-11-17", "2013-11-18").getEntity(HotelBookingList.class);
+         HotelBooking hotelBooking1 = hotelBookingList.getHotels().get(0);
+         HotelBooking hotelBooking2 = hotelBookingList.getHotels().get(1);
+         
+         // Get flights
+         FlightBookingList flightBookingList = RestService.getFlights("Kastrup", "Kazakhstan", "2013-11-17").getEntity(FlightBookingList.class);
+         FlightBooking flightBooking = flightBookingList.getFlights().get(0);
+         
+         // Create itinerary
+         ClientResponse itineraryClientResponse = RestService.createItinerary(customerID);
+         Itinerary itinerary = RestService.getItinerary(customerID, itineraryClientResponse.getLocation()).getEntity(Itinerary.class);
+         
+         // Add hotel to itinerary
+         RestService.addHotel(customerID, itinerary.getID(), hotelBooking1);
+         
+         // Add flight to itinerary
+         RestService.addFlight(customerID, itinerary.getID(), flightBooking);
+
+         // Add another hotel
+         RestService.addHotel(customerID, itinerary.getID(), hotelBooking2);
+
+         
+     }
 //     
 //     @Test
 //     public void testC1() {
