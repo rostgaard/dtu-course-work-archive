@@ -1,6 +1,7 @@
 package syntaxtree.statement;
 
 import analysis.DefinitionSet;
+import analysis.IntervalLattice;
 import analysis.Lattice;
 import analysis.RDLattice;
 import analysis.RDProgramState;
@@ -115,7 +116,10 @@ public class Assignment extends Statement {
             return this.transferFunction((SignsLattice) lattice);
         }
 
-
+        if (lattice instanceof IntervalLattice) {
+            return this.transferFunction((IntervalLattice) lattice);
+        }
+        
         throw new UnsupportedOperationException("Analysis not supported yet.");
     }
 
@@ -124,6 +128,11 @@ public class Assignment extends Statement {
                 ((RDLattice) lattice).gen(id, this.toNode()));
         return lattice;
 
+    }
+
+    private IntervalLattice transferFunction(IntervalLattice lattice) {
+        lattice.get(id).merge(this.expr.evalulate(lattice));
+        return lattice;
     }
 
     private SignsLattice transferFunction(SignsLattice lattice) {

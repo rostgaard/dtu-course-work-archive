@@ -9,5 +9,9 @@ package analysis;
  * @author krc
  */
 public enum Sign {
-        POSTIVE, ZERO, NEGATIVE
+
+    P,
+    Z,
+    N
+    
 }

@@ -44,16 +44,16 @@ public class NegationExpression extends Expression {
         SignSet set = new SignSet();
         SignSet eval = this.expr.evalulate(lattice);
 
-        if (eval.contains((Sign) Sign.ZERO)) {
-            set.add((Sign) Sign.ZERO);
+        if (eval.contains((Sign) Sign.Z)) {
+            set.add((Sign) Sign.Z);
         }
 
-        if (eval.contains((Sign) Sign.NEGATIVE)) {
-            set.add((Sign) Sign.POSTIVE);
+        if (eval.contains((Sign) Sign.N)) {
+            set.add((Sign) Sign.P);
         }
 
-        if (eval.contains((Sign) Sign.POSTIVE)) {
-            set.add((Sign) Sign.NEGATIVE);
+        if (eval.contains((Sign) Sign.P)) {
+            set.add((Sign) Sign.N);
         }
         return set;
     }

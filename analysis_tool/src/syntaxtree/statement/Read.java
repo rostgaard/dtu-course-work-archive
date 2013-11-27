@@ -6,6 +6,8 @@ import java.util.TreeSet;
 
 import analysis.Definition;
 import analysis.DefinitionSet;
+import analysis.Interval;
+import analysis.IntervalLattice;
 import analysis.Lattice;
 import analysis.RDLattice;
 import analysis.RDProgramState;
@@ -106,10 +108,12 @@ public class Read extends Statement {
             return this.transferFunction((RDLattice) lattice);
         }
 
-        if (lattice instanceof SignsLattice) {
+        else if (lattice instanceof SignsLattice) {
             return this.transferFunction((SignsLattice) lattice);
         }
-
+        else if (lattice instanceof IntervalLattice) {
+            return this.transferFunction((IntervalLattice) lattice);
+        }
 
         throw new UnsupportedOperationException("Analysis not supported yet.");
     }
@@ -119,7 +123,11 @@ public class Read extends Statement {
                 ((RDLattice) lattice).gen(id, this.toNode()));
         return lattice;
     }
-
+    
+    private IntervalLattice transferFunction(IntervalLattice lattice) {
+        lattice.get(id).merge(new Interval(0, 0));
+        return lattice;
+    }
     private SignsLattice transferFunction(SignsLattice lattice) {
         lattice.get(id).merge(SignSet.pnz);
         return lattice;

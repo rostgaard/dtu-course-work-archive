@@ -18,7 +18,7 @@ public final class RDLattice extends HashMap<Variable, DefinitionSet> implements
 
     DeclarationList declarations;
     private RDLattice BottomElement = null;
-
+    
     public RDLattice(DeclarationList declarations) {
         this.declarations = declarations;
         BottomElement = (RDLattice) factory();

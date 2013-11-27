@@ -40,11 +40,11 @@ public class Constant extends Expression {
 
         SignSet signSet = new SignSet();
         if (this.n == 0) {
-            signSet.add(Sign.ZERO);
+            signSet.add(Sign.Z);
         } else if (this.n <= 0) {
-            signSet.add(Sign.NEGATIVE);
+            signSet.add(Sign.N);
         } else if (this.n >= 0) {
-            signSet.add(Sign.POSTIVE);
+            signSet.add(Sign.P);
         }
         return signSet;
     }

@@ -51,7 +51,6 @@ public class OperationExpression extends Expression {
                 result.merge(evaluationTable(lhs, rhs));
             }
         }
-        System.out.println("OPexp eval" + result);
         return result;
     }
 

@@ -41,7 +41,7 @@ public final class SignsLattice extends HashMap<Variable, SignSet> implements La
         SignsLattice retval = new SignsLattice();
         for (Declaration decl : declarations) {
             SignSet ss = new SignSet();
-            ss.add(Sign.ZERO);
+            ss.add(Sign.Z);
             retval.put(decl.getId(), ss);
         }
         return retval;

@@ -1,4 +1,5 @@
 
+import analysis.IntervalLattice;
 import analysis.ProgramSlicing;
 import analysis.RDLattice;
 import flowgraph.WorklistAlgorithm;
@@ -74,6 +75,9 @@ public class Main {
 
                 System.out.println("==== Signs analysis =====");
                 System.out.println(program.calculate(new SignsLattice(program.getDecls())));
+                
+                System.out.println("==== Interval analysis =====");
+                System.out.println(program.calculate(new IntervalLattice(program.getDecls())));
 
             }
         } catch (RecognitionException e) {

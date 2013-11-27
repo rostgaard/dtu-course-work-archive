@@ -5,22 +5,22 @@ import java.util.HashSet;
 
 public class SignSet extends HashSet<Sign> {
 
-    public static final SignSet p = new SignSet().put(Sign.POSTIVE);
-    public static final SignSet z = new SignSet().put(Sign.ZERO);
-    public static final SignSet n = new SignSet().put(Sign.NEGATIVE);
-    public static final SignSet pz = new SignSet().put(Sign.POSTIVE, Sign.ZERO);
-    public static final SignSet p_n = new SignSet().put(Sign.POSTIVE, Sign.NEGATIVE);
-    public static final SignSet pnz = new SignSet().put(Sign.POSTIVE, Sign.ZERO, Sign.NEGATIVE);
-    public static final SignSet nz = new SignSet().put(Sign.ZERO, Sign.NEGATIVE);
+    public static final SignSet p = new SignSet().put(Sign.P);
+    public static final SignSet z = new SignSet().put(Sign.Z);
+    public static final SignSet n = new SignSet().put(Sign.N);
+    public static final SignSet pz = new SignSet().put(Sign.P, Sign.Z);
+    public static final SignSet p_n = new SignSet().put(Sign.P, Sign.N);
+    public static final SignSet pnz = new SignSet().put(Sign.P, Sign.Z, Sign.N);
+    public static final SignSet nz = new SignSet().put(Sign.Z, Sign.N);
     public static final SignSet empty = new SignSet();
 
     public static int indexOf(Sign s) {
         switch (s) {
-            case NEGATIVE:
+            case N:
                 return 0;
-            case ZERO:
+            case Z:
                 return 1;
-            case POSTIVE:
+            case P:
                 return 2;
         }
         return -1;

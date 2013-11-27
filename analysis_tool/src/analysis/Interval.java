@@ -10,8 +10,8 @@ public class Interval {
     IntervalExtremes exMax;
 
     public Interval setInterval(int minValue, int maxValue) {
-        this.minValue = minValue;
-        this.maxValue = maxValue;
+        this.lowerValue = minValue;
+        this.upperValue = maxValue;
         return this;
     }
 
@@ -24,6 +24,28 @@ public class Interval {
 
     }
 
+    @Override
+    public String toString() {
+        String buffer = "[";
+        if (this.exMin == IntervalExtremes.IN_RANGE) {
+            buffer += this.lowerValue;
+        } 
+        else {
+            buffer += this.exMin;
+        }
+        
+        buffer += ";";
+        
+        if (this.exMax == IntervalExtremes.IN_RANGE) {
+            buffer += this.upperValue;
+        } 
+        else {
+            buffer += this.exMax;
+        }
+        
+        return buffer + "]";
+    }
+    
     public Interval put(Sign s) {
 //        if (!this.contains((Sign) s)) {
 //            this.add(s);
