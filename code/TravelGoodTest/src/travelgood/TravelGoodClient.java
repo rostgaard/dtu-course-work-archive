@@ -19,21 +19,21 @@ import ws.travelgoodbpel.HotelBookings;
  */
 public interface TravelGoodClient {
     
-    public boolean addFlight(String itineraryID, FlightInformation flightInformation);
+    public boolean addFlight(String customerID, String itineraryID, FlightInformation flightInformation);
     
-    public String addHotel(String itineraryID, String hotelBookingNo);
+    public String addHotel(String customerID, String itineraryID, String hotelBookingNo);
     
-    public String bookItinerary(String itineraryID, CreditCardInfoType ccInformation);
+    public boolean bookItinerary(String customerID, String itineraryID, CreditCardInfoType ccInformation);
     
-    public String cancelPlanning(String itineraryID);
+    public String cancelPlanning(String customerID, String itineraryID);
     
-    public boolean createItinerary(String itineraryID);
+    public boolean createItinerary(String customerID, String itineraryID);
     
-    public FlightList getFlights(String itineraryID, String origin, String destination, XMLGregorianCalendar datetime);
+    public FlightList getFlights(String customerID, String itineraryID, String origin, String destination, XMLGregorianCalendar datetime);
     
-    public HotelList getHotels(String itineraryID, String city, XMLGregorianCalendar arrival, XMLGregorianCalendar departure);
+    public HotelList getHotels(String customerID, String itineraryID, String city, XMLGregorianCalendar arrival, XMLGregorianCalendar departure);
     
-    public void getItinerary(String itineraryID, Holder<FlightBookings> flights, Holder<HotelBookings> hotels);
+    public void getItinerary(String customerID, String itineraryID, Holder<FlightBookings> flights, Holder<HotelBookings> hotels);
     
     
     

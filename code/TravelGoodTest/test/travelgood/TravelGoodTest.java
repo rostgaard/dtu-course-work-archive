@@ -25,42 +25,41 @@ import ws.travelgoodbpel.HotelBookings;
 public class TravelGoodTest {
     
     protected TravelGoodClient client;
+    protected String customerID = "customer007";
+    protected String itineraryID = "itinerary42";
     
-    private String testId = "TestId";
     private XMLGregorianCalendar date1;
     public TravelGoodTest() {
         client = new BPELWrapper();
     }
     
-    @After
-    public void after(){
-        client.cancelPlanning(testId);
-    }
-    
     @Test
     public void testCreateItinerary(){
-        client.createItinerary(testId);
+        client.createItinerary(customerID, itineraryID);
+        
         Holder<FlightBookings> flights = new Holder<FlightBookings>();
         Holder<HotelBookings> hotels = new Holder<HotelBookings>();
-        client.getItinerary(testId, flights, hotels);
+        client.getItinerary(customerID, itineraryID, flights, hotels);
         assertEquals(0,flights.value.getFlightBooking().size());
         assertEquals(0,hotels.value.getHotelBooking().size());
+        client.cancelPlanning(customerID, itineraryID);
     }
     
     @Test
     public void testAddFlight() throws DatatypeConfigurationException{
-        client.createItinerary(testId);
+        client.createItinerary(customerID, itineraryID);
+        
         String origin = "Kastrup";
         String destination = "Kabul";
         DatatypeFactory df = DatatypeFactory.newInstance();
         date1 = df.newXMLGregorianCalendar("2013-11-17");
-        FlightList flights = client.getFlights(testId, origin, destination, date1);
+        FlightList flights = client.getFlights(customerID, itineraryID, origin, destination, date1);
         assertEquals(1, flights.getFlights().size());
-        client.addFlight(testId, flights.getFlights().get(0));
+        client.addFlight(customerID, itineraryID, flights.getFlights().get(0));
         
         Holder<FlightBookings> flightBookings = new Holder<FlightBookings>();
         Holder<HotelBookings> hotelBookings = new Holder<HotelBookings>();       
-        client.getItinerary(testId, flightBookings, hotelBookings);
+        client.getItinerary(customerID, itineraryID, flightBookings, hotelBookings);
         
         assertEquals(1,flightBookings.value.getFlightBooking().size());
         FlightInformation info1 = flights.getFlights().get(0);
@@ -84,10 +83,11 @@ public class TravelGoodTest {
     }
     
     private boolean compareFlights(Flight flight1, Flight flight2){
-        return flight1.getArrival().equals(flight2.getArrival()) &&
+        return  flight1.getArrival().equals(flight2.getArrival()) &&
                 flight1.getCarrier().equals(flight2.getCarrier()) &&
                 flight1.getDestination().equals(flight2.getDestination()) &&
                 flight1.getLiftOff().equals(flight2.getLiftOff()) &&
                 flight1.getOrigin().equals(flight2.getOrigin());
     }
+
 }
