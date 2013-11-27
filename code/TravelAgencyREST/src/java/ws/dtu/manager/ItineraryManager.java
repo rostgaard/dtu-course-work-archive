@@ -54,7 +54,7 @@ public class ItineraryManager {
                 niceViewPort.bookHotel(hb.getHotelInformation().getBookingNo(), customer.getCreditcard());
                 hb.setBookingState(HotelBooking.HotelBookingState.BOOKED);
             } catch (BookHotelFault ex) {
-                Logger.getLogger(ItineraryManager.class.getName()).log(Level.SEVERE, null, ex);
+                throw new exceptions.BookingException();
             }
         }
     }

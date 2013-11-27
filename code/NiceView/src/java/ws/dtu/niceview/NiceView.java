@@ -40,10 +40,10 @@ public class NiceView {
     }
 
     public boolean bookHotel(String bookingNo, CreditCardInfoType ccInformation) throws CreditCardFaultMessage, BookHotelFault {
-//        HotelInformation hotel = db.bookHotel(bookingNo, ccInformation);
-//        if (hotel.isCcRequired()) {
-//            return validateCreditCard(GROUP, ccInformation, (int)hotel.getPrice());
-//        }
+        HotelInformation hotel = db.bookHotel(bookingNo, ccInformation);
+        if (hotel.isCcRequired()) {
+            return validateCreditCard(GROUP, ccInformation, (int)hotel.getPrice());
+        }
         
         return true;
     }
