@@ -7,6 +7,7 @@ package ws.dtu.manager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ws.dtu.lameduck.BookFlightFault;
+import ws.dtu.lameduck.CancelFlightFault;
 import ws.dtu.lameduck.LameDuckPortType;
 import ws.dtu.lameduck.LameDuckService;
 import ws.dtu.model.Customer;
@@ -15,6 +16,7 @@ import ws.dtu.model.HotelBooking;
 import ws.dtu.model.Itinerary;
 import ws.dtu.model.exceptions;
 import ws.dtu.niceview.BookHotelFault;
+import ws.dtu.niceview.CancelHotelFault;
 import ws.dtu.niceview.NiceViewPortType;
 import ws.dtu.niceview.NiceViewService;
 import ws.dtu.resources.utils.Sequencer;
@@ -45,16 +47,45 @@ public class ItineraryManager {
                 lameDuckPort.bookFlight(fb.getFlightInformation().getBookingNo(), customer.getCreditcard());
                 fb.setBookingState(FlightBooking.FlightBookingState.BOOKED);
             } catch (BookFlightFault ex) {
+                revertBooking(itinerary);
                 throw new exceptions.BookingException();
+            } 
+        }
+        
+        for(HotelBooking hb : itinerary.getHotelBookings().getHotels()) {
+            try {
+                niceViewPort.bookHotel(hb.getHotelInformation().getBookingNo(), customer.getCreditcard());
+                hb.setBookingState(HotelBooking.HotelBookingState.BOOKED);
+            } catch (BookHotelFault ex) {
+                
+                revertBooking(itinerary);
+                throw new exceptions.BookingException();
+            }
+        }
+    }
+    
+    private void revertBooking(Itinerary itinerary) {
+        Customer customer = CustomerDatabase.getInstance().get(itinerary.getCustomerID());
+
+        for(FlightBooking fb : itinerary.getFlightBookings().getFlights()) {
+            if(fb.getBookingState()==FlightBooking.FlightBookingState.BOOKED) {
+                try {
+                    lameDuckPort.cancelFlight(fb.getFlightInformation().getBookingNo(), customer.getCreditcard(), fb.getFlightInformation().getPrice());
+                    fb.setBookingState(FlightBooking.FlightBookingState.CANCELLED);
+                } catch (CancelFlightFault ex) {
+                    throw new exceptions.CancelException();
+                }
             }
         }
         
         for(HotelBooking hb : itinerary.getHotelBookings().getHotels()) {
-             try {
-                niceViewPort.bookHotel(hb.getHotelInformation().getBookingNo(), customer.getCreditcard());
-                hb.setBookingState(HotelBooking.HotelBookingState.BOOKED);
-            } catch (BookHotelFault ex) {
-                throw new exceptions.BookingException();
+            if (hb.getBookingState()==HotelBooking.HotelBookingState.BOOKED) {
+                try {
+                    niceViewPort.cancelHotel(hb.getHotelInformation().getBookingNo());
+                    hb.setBookingState(HotelBooking.HotelBookingState.CANCELLED);
+                } catch (CancelHotelFault ex) {
+                    throw new exceptions.CancelException();
+                }
             }
         }
     }

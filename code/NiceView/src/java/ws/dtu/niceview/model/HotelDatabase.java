@@ -45,6 +45,7 @@ public class HotelDatabase {
     private void init() {
         bookingNoMap = new HashMap<String, HotelInformation>();
         cityMap = new HashMap<String, HotelList>();
+        bookings = new HashSet<String>();
     }
     
     public void reset() {

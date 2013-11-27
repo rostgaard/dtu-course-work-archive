@@ -175,9 +175,7 @@ public final class FlightDatabase {
     }
     
     public  void cancelFlight(String bookingNo) {
-        
-           bookings.remove(bookingNo);   
-        
+           bookings.remove(bookingNo);
     }
 
 }

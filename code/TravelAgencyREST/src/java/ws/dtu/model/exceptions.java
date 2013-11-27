@@ -35,6 +35,14 @@ public final class exceptions {
 
     } 
     
+    public static class CancelException extends WebApplicationException{
+        
+        public CancelException() {
+            super(Response.status(Response.Status.NOT_ACCEPTABLE).entity( new ErrorBean("Failed to cancel",Response.Status.NOT_FOUND.getStatusCode())).build());
+        }
+
+    } 
+    
     public static class NoSuchCustomerException extends NotFoundException{
         public NoSuchCustomerException() {
             super("Customer not found");

@@ -50,9 +50,7 @@ private AccountType account;
         }
     }
 
-    public boolean cancelFlight(java.lang.String bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInfo, int price) throws CancelFlightFault {
-
-        
+    public boolean cancelFlight(java.lang.String bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInfo, int price) throws CancelFlightFault { 
          try {
             refundCreditCard(GROUP,creditCardInfo,price, account);
             db.cancelFlight(bookingNumber);
