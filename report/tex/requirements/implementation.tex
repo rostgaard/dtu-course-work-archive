@@ -1,0 +1,100 @@
+\section{Implementation}
+This section will first present the implementation of the parser for the \texttt{While} language. Thne the implementations of the analysis' described in the previous section will be discussed.
+\\\\
+The Java language has been chosen as the implementation language.
+ 
+\subsection{Parsing a program}
+ANTLR is used as the framework for constructing a lexer and a parser that can take a program written in the extended \texttt{While} language and construct an abstract syntax tree (AST) using the data structures described in section~\ref{section:Abstractsyntaxtreedatastructure}. 
+
+\subsection{Constructing the intermediate representation}
+As described in section~\ref{section:CreatingFlowGraphs} we use an unbalanced tree for containing our abstract syntax tree, which serves as our intermediate representation (IR).
+The implementation architecture for the IR is seen in Figure 1 - Figure 5. This architecture is mapped into java objects representing the program, each declaration, each statement etc.
+
+\subsection{Function Mapping}
+In order to access information about each statement (block) we have implemented the smallest steps of each analysis to the individual classes (blocks) in the IR.
+\\\\
+For each \texttt{Statement} class we have implemented following functions:
+\begin{itemize}
+\item Label(s) - returns the set of label for the statement 		
+\item Init(s) - returns the initial label for the statement
+\item Final(s) - returns the set of final labels for the statement 
+\item Flow(s) - returns the flow for the statement
+\item Variable(s) - returns the set of variables for the statement
+\item Kill - returns the set of definitions to be killed	
+\item Gen - returns the set of definitions to be generated
+\end{itemize}
+As an example for assignments and skip-statement we would have the following results when looking the statements \texttt{assignment} and \texttt{skip}.:
+\\
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Statement}&		[x:=a]l&												[skip]l\\
+\hline
+\hline
+Label(s)&		\{l\}&													\{l\}	\\
+\hline
+Init(s)&			\{l\}&													\{l\}\\
+\hline
+Final(s)&		\{l\}&													\{l\}\\
+\hline
+Flow(s)&		Ø&													Ø\\
+\hline
+Variable(s)&		variable(a)&									Ø\\
+\hline
+Kill&			RDentry(l)\textbackslash\{x, l' | Bl' is an assignment to A\}&		Ø\\							
+\hline
+Gen&				\{x, l\}&												Ø\\
+\hline
+\end{tabular}
+
+We have discusses most of the function above in the previous sections of the report. However the Variable function is new. The variable function is used to get variables for a particular statement. It returns a set of variables if any is represented.
+
+If the statement is a declaration, we have defined the variable-function as following:\\
+
+\begin{tabular}{|l|l|}
+\hline
+variable(decl)&:\\
+\hline\hline
+(Integer)&			x -> \{x\}\\
+\hline
+(Array)&				A[n] -> \{A\}\\
+\hline
+\end{tabular}
+
+For expressions it is defined as:
+variable(expr):
+	(constant) 			n -> Ø
+	(variable)			x -> {x}
+	(Array expr.)		A[x] -> {A} U var(x)
+	(Arithmetic opr.)	a1 opa a2 -> var(a1) U var(a2)
+	(Negation)			-a -> var(a)
+	(Parenthesis)		(a) -> var(a)
+
+And finally the statements:
+variable(stmt):
+	(Assignment) 		x := a -> {x} U variable(x)	
+	(Skip)				skip -> Ø
+	(Array assignment)	A[a1] := a2 -> {A} U variable(a1) U variable(a2)
+	(Read)				read x -> {x}
+	(Read array)		read A[a] -> {A} U variable(a)
+	(Write)				write a -> variable(a)
+	(composition)		S1 S2 -> variable(S1) U variable(S2)
+	(if-stmt)			if b then s1 else s2 fi -> Ø
+	(while loop)		while b do S od -> Ø
+	
+The variable-function is used for the Program Slicing algorithm.
+	
+The functions explained above will give us the equations that is going to be solved.
+
+\subsection{Implementation of the analysis}
+On top of the functions explained above we have implemented the algorithms which is able to perform the analysis as Reaching definitions, Program slicing, detection of signs and interval analysis. 
+Mode details of each analysis is explained below.
+
+Implementation of the Reaching Definition analysis:
+The class WorklistAlgorithm.java implements the Reaching Definition analysis.
+It is an implementation of the pseudo-code presented in the slides for the course.
+
+Implementation of the Program slice analysis:
+The class ProgramSlicing.java implements the program slice algorithm.
+It takes two parameters, a point of interest and the the result from reaching definition.
+It is an implementation of the pseudo-code presented in section 3.5 Program slice calculation algorithm.
+

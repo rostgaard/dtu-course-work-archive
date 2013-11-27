@@ -1,7 +1,7 @@
 \section{Data structures}
 The first problems we need to solve is which data structures should be used for our abstract syntax tree, which will serve as the first step of our intermediate representation.
 
-\subsection{Abstract syntax tree data structure}
+\subsection{Abstract syntax tree data structure}\label{section:Abstractsyntaxtreedatastructure}
 \label{sec:constructing_ast}
 We have decided that we could use an unbalanced tree for storage of our abstract syntax tree in our target programming language. Constraining the tree construction will give us the necessary check for syntax errors.
 A simple tree-traversal will give us the appropriate unique label numbers - or the ability to assign labels to statements in the right order.
@@ -63,7 +63,7 @@ Figure~\ref{fig:flowgraph} shows the classes used to represent a flow graph. The
 	\label{fig:flowgraph}
 \end{figure}
 
-\subsubsection{Creating flow graphs}
+\subsubsection{Creating flow graphs}\label{section:CreatingFlowGraphs}
 Using the intermediate representation of the abstract syntax tree, we are now familiar with the types of the individual statements. Rather than explicitly parsing the AST, we instead define a function for each statement and let every statement handle it's own branch by recursion. These functions are defined in table \ref{table:flow_graph_functions}, which is an extension of the table from \cite{02242_slides}.
 
 \begin{table}
