@@ -8,6 +8,10 @@ package analysis;
  *
  * @author krc
  */
-public enum Sign {
-        POSTIVE, ZERO, NEGATIVE
+public enum IntervalExtremes {
+    IN_RANGE,
+    MINUS_INF,
+    INF,
+    MIN,
+    MAX
 }

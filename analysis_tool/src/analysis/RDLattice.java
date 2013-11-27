@@ -54,10 +54,6 @@ public final class RDLattice extends HashMap<Variable, DefinitionSet> implements
         return (Lattice) this.BottomElement;
     }
 
-    public void addEntry(Node node, Lattice BOTTOM) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     @Override
     public boolean subsetOf(Lattice lattice) {
         RDLattice rl = (RDLattice) lattice;
@@ -76,7 +72,6 @@ public final class RDLattice extends HashMap<Variable, DefinitionSet> implements
         }
 
         return true;
-
     }
 
     @Override

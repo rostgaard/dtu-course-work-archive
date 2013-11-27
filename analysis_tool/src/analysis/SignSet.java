@@ -7,12 +7,12 @@ public class SignSet extends HashSet<Sign> {
 
     public static final SignSet p = new SignSet().put(Sign.POSTIVE);
     public static final SignSet z = new SignSet().put(Sign.ZERO);
-    public static final  SignSet n = new SignSet().put(Sign.NEGATIVE);
-    public static final  SignSet pz = new SignSet().put(Sign.POSTIVE).put(Sign.ZERO);
-    public static final  SignSet p_n = new SignSet().put(Sign.POSTIVE).put(Sign.NEGATIVE);
-    public static final  SignSet pnz = new SignSet().put(Sign.POSTIVE).put(Sign.ZERO).put(Sign.NEGATIVE);
-    public static final  SignSet nz = new SignSet().put(Sign.ZERO).put(Sign.NEGATIVE);
-    public static final  SignSet empty = new SignSet();
+    public static final SignSet n = new SignSet().put(Sign.NEGATIVE);
+    public static final SignSet pz = new SignSet().put(Sign.POSTIVE, Sign.ZERO);
+    public static final SignSet p_n = new SignSet().put(Sign.POSTIVE, Sign.NEGATIVE);
+    public static final SignSet pnz = new SignSet().put(Sign.POSTIVE, Sign.ZERO, Sign.NEGATIVE);
+    public static final SignSet nz = new SignSet().put(Sign.ZERO, Sign.NEGATIVE);
+    public static final SignSet empty = new SignSet();
 
     public static int indexOf(Sign s) {
         switch (s) {
@@ -25,31 +25,32 @@ public class SignSet extends HashSet<Sign> {
         }
         return -1;
     }
-    
     public static final SignSet[][] plusMatrix = {
         {n, n, pnz},
         {n, z, p},
         {pnz, p, p}
     };
-    public static final  SignSet[][] subtractionMatrix = {
+    public static final SignSet[][] subtractionMatrix = {
         {pnz, n, n},
         {n, z, n},
         {p, p, pnz}
     };
-    public static final  SignSet[][] multiplicationMatrix = {
+    public static final SignSet[][] multiplicationMatrix = {
         {p, z, n},
         {z, z, z},
         {n, z, p}
     };
-    public static final  SignSet[][] divisionMatrix = {
+    public static final SignSet[][] divisionMatrix = {
         {p, empty, n},
         {z, empty, z},
         {n, empty, p}
     };
 
-    public SignSet put(Sign s) {
-        if (!this.contains((Sign) s)) {
-            this.add(s);
+    public SignSet put(Sign... signs) {
+        for (Sign sign : signs) {
+            if (!this.contains((sign))) {
+                this.add(sign);
+            }
         }
         return this;
     }

@@ -81,8 +81,8 @@ public class Program {
             Node destinationNode = flow.getTarget();
 
             Lattice L = sourceNode.getStatement()
-                    .transferFunction(analysis.get(flow.getSource()));
-            Lattice Lprime = analysis.get(flow.getTarget());
+                    .transferFunction(analysis.get(sourceNode));
+            Lattice Lprime = analysis.get(destinationNode);
 
             if (!L.subsetOf(Lprime)) {
                 Lprime.union(L);
