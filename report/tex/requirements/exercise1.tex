@@ -1,15 +1,26 @@
-\section{Data structures}
-The first problems we need to solve is which data structures should be used for our abstract syntax tree, which will serve as the first step of our intermediate representation.
+\section{Data structures and parsing}
+This section will cover the language considered followed by the selected data structures which will be used for the abstract syntax tree, which will serve as the first step of our intermediate representation. Furthermore it will cover the data structures used to store the flow graph.
+
+\subsection{The WHILE language}
+For the project the \texttt{WHILE} language will be used. It is defined below.
+\\\\
+a ::= n | x | A[a] | $a_1$ $op_a$ $a_2$ | -a | (a)\\
+b ::= true | false | $a_1$ $op_r$ $a_2$ | $b_1$ $op_b$ $b_2$ | !b | (b)\\
+S ::= x :=a; | skip; | A[$a_1$]:= $a_2$; | read x; | read A[a]; | write a; | S1 S2 | if b then S1 else S2 fi | while b do S od\\
+L ::= $\epsilon$ | high | low\\
+D ::= L int x; | L int A[n]; | $\epsilon$ | $D_1$ $D_2$\\
+P ::= program D S end\\
 
 \subsection{Abstract syntax tree data structure}\label{section:Abstractsyntaxtreedatastructure}
 \label{sec:constructing_ast}
+Before any analysis can be performed on a program written in the language in the previous section it needs to be parsed into an abstract syntax tree.\\\\
 We have decided that we could use an unbalanced tree for storage of our abstract syntax tree in our target programming language. Constraining the tree construction will give us the necessary check for syntax errors.
 A simple tree-traversal will give us the appropriate unique label numbers - or the ability to assign labels to statements in the right order.
 
 \subsection{Data structure}
-In our implementation language the statements from the \texttt{WHILE} language will be mapped into objects. 
+In our implementation language the statements from the \texttt{WHILE} language will be mapped into the following  
 \\\\
-We will have the following objects.
+We will have the following structures.
 \begin{itemize}
 	\item \textbf{Statement} - Figure~\ref{fig:statement} shows the structures of statements.
 	\item \textbf{Variable} - Figure~\ref{fig:variable} shows the structures of variables.
@@ -51,7 +62,7 @@ Declarations will be handled separately from statements, and will be held in a d
 For the flow graph, we have chosen a network graph data structure. This gives an intuitive way of linking statements to potential paths.
 \\
 \\
-It is convenient to transform the abstract syntax tree into a flow graph when performing a program analysis. For that reason a data structure for the flow graph as well as mapping from a abstract syntax tree to a flow graph is needed 
+It is convenient to transform the abstract syntax tree into a flow graph when performing an analysis. For that reason a data structure for the flow graph as well as mapping from a abstract syntax tree to a flow graph is needed 
 \\
 \\
 Figure~\ref{fig:flowgraph} shows the classes used to represent a flow graph. The idea is that there exists two kinds of nodes that both inherits from the abstract \texttt{Node} class. Each \texttt{Node} has a \texttt{label} and a \texttt{prev}, which is the previous node in the graph. The first node in the program will not have a previous node. A \texttt{Statement Node} is a node that contains a \texttt{statement} and it is used for everything that does not use branching. It has a pointer to the next node in the flow graph. A \texttt{Branching Node} is used for if statements and while loops where branching is needed. It contains a \texttt{condition} and a pointer to two possible next nodes.

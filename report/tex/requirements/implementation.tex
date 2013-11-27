@@ -1,10 +1,10 @@
 \section{Implementation}
-This section will first present the implementation of the parser for the \texttt{While} language. Thne the implementations of the analysis' described in the previous section will be discussed.
+This section will first present the implementation of the parser for the \texttt{While} language. Then the implementations of the analysis' described in the previous section will be discussed.
 \\\\
 The Java language has been chosen as the implementation language.
  
 \subsection{Parsing a program}
-ANTLR is used as the framework for constructing a lexer and a parser that can take a program written in the extended \texttt{While} language and construct an abstract syntax tree (AST) using the data structures described in section~\ref{section:Abstractsyntaxtreedatastructure}. 
+Before any analysis can take place it necessary that the program is parsed. This is done by having a parser. ANTLR is used as the framework for constructing a lexer and a parser that can take a program written in the extended \texttt{While} language and construct an abstract syntax tree (AST) using the data structures described in section~\ref{section:Abstractsyntaxtreedatastructure}. 
 
 \subsection{Constructing the intermediate representation}
 As described in section~\ref{section:CreatingFlowGraphs} we use an unbalanced tree for containing our abstract syntax tree, which serves as our intermediate representation (IR).
@@ -23,6 +23,7 @@ For each \texttt{Statement} class we have implemented following functions:
 \item Kill - returns the set of definitions to be killed	
 \item Gen - returns the set of definitions to be generated
 \end{itemize}
+
 As an example for assignments and skip-statement we would have the following results when looking the statements \texttt{assignment} and \texttt{skip}.:
 \\
 \begin{tabular}{|l|l|l|}
