@@ -1,4 +1,4 @@
-\section{Exercise 3 - Buffer overflow with sign detection} \label{sec:exercise3}
+\section{Buffer overflow with sign detection} \label{sec:exercise3}
 Buffer overflow is historically one of the most common programming errors. It is the cause of security breaches, data corruption and program crashes. Detecting them is therefore preferred.\\\\
 We start by defining a test case in the WHILE language, seen in figure \ref{code:array_example}.
 \begin{figure}
@@ -170,13 +170,13 @@ $
 \begin{table}[H]
 \begin{tabular}{| r | c | c | c |}
 \hline
-    & -           & 0 & + \\
+ +   & -           & 0 & + \\
 \hline
  -  & $\{-\}$     & $\{-\}$ & $\{-,0,+\}$ \\
 \hline
  0  & $\{-\}$     & $\{0\}$ & $\{+\}$ \\
 \hline
- +  & $\{-,0,+\}$ & $\{+\}$ & $\{-\}$ \\
+ +  & $\{-,0,+\}$ & $\{+\}$ & $\{+\}$ \\
 \hline
 \end{tabular}
 \centering
@@ -186,7 +186,7 @@ $
 \begin{table}[H]
 \begin{tabular}{| r | c | c | c |}
 \hline
-    & -           & 0 & + \\
+  -  & -           & 0 & + \\
 \hline
  -  & $\{-,0,+\}$ & $\{-\}$ & $\{-\}$ \\
 \hline
@@ -202,7 +202,7 @@ $
 \begin{table}[H]
 \begin{tabular}{| r | c | c | c |}
 \hline
-    & -           & 0 & + \\
+ x   & -           & 0 & + \\
 \hline
  -  & $\{+\}$ & $\{0\}$ & $\{-\}$ \\
 \hline
@@ -218,7 +218,7 @@ $
 \begin{table}[H]
 \begin{tabular}{| r | c | c | c |}
 \hline
-    & -           & 0 & + \\
+ \textbackslash   & -           & 0 & + \\
 \hline
  -  & $\{+\}$ & $\emptyset$ & $\{-\}$ \\
 \hline
