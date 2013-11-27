@@ -27,7 +27,7 @@ import ws.dtu.model.FlightBookingList;
 public class FlightResource {
  
     private static final LameDuckService lameDuckService = new LameDuckService();
-    private static final LameDuckPortType lameDuckPort = lameDuckService.getLameDuckPort();
+    private static final LameDuckPortType lameDuckPort = lameDuckService.getLameDuckPortTypeBindingPort();
     
     @GET
     public FlightBookingList getFlights(@QueryParam("origin")String origin, @QueryParam("destination")String destination, @QueryParam("date")String dateString) {

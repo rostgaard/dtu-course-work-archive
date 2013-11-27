@@ -43,7 +43,6 @@ private AccountType account;
 
     public boolean bookFlight(String bookingNumber, CreditCardInfoType creditCardInfo) throws BookFlightFault {
         FlightInformation fi = db.bookFlight(bookingNumber);
-        
         try {
             return chargeCreditCard(GROUP, creditCardInfo, (int)fi.getPrice(), account);
         } catch (CreditCardFaultMessage ex) {

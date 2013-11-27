@@ -26,7 +26,7 @@ import ws.dtu.resources.utils.Sequencer;
 public class ItineraryManager {
     
     private static final LameDuckService lameDuckService = new LameDuckService();
-    private static final LameDuckPortType lameDuckPort = lameDuckService.getLameDuckPort();   
+    private static final LameDuckPortType lameDuckPort = lameDuckService.getLameDuckPortTypeBindingPort();   
     
     private static final NiceViewService niceViewService = new NiceViewService();
     private static final NiceViewPortType niceViewPort = niceViewService.getNiceViewPort();  

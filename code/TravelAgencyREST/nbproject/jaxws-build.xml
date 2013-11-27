@@ -44,22 +44,6 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/ws/dtu/niceview"/>
         <delete dir="${build.generated.dir}/jax-wsCache/NiceViewService"/>
     </target>
-    <target name="wsimport-client-LameDuckService" depends="wsimport-init">
-        <mkdir dir="${build.generated.dir}/jax-wsCache/LameDuckService"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/LameDuckService" destdir="${build.generated.dir}/jax-wsCache/LameDuckService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuck/LameDuckService.wsdl" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/LameDuck/LameDuckService?wsdl" xnocompile="true" xendorsed="true" target="2.1">
-            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuck/LameDuckService.wsdl"/>
-            <produces dir="${build.generated.dir}/jax-wsCache/LameDuckService"/>
-        </wsimport>
-        <copy todir="${build.generated.sources.dir}/jax-ws">
-            <fileset dir="${build.generated.dir}/jax-wsCache/LameDuckService">
-                <include name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="wsimport-client-clean-LameDuckService" depends="-init-project">
-        <delete dir="${build.generated.sources.dir}/jax-ws/ws/dtu/lameduck"/>
-        <delete dir="${build.generated.dir}/jax-wsCache/LameDuckService"/>
-    </target>
     <target name="wsimport-client-LameDuckResetService" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/LameDuckResetService"/>
         <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/LameDuckResetService" destdir="${build.generated.dir}/jax-wsCache/LameDuckResetService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/LameDuckResetService/wsdl/localhost_8080/LameDuck/LameDuckResetService.wsdl" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/LameDuck/LameDuckResetService?wsdl" xnocompile="true" xendorsed="true" target="2.1">
@@ -92,5 +76,21 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/reset/niceview/dtu/ws"/>
         <delete dir="${build.generated.dir}/jax-wsCache/NiceViewResetService"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-NiceViewService, wsimport-client-LameDuckService, wsimport-client-LameDuckResetService, wsimport-client-NiceViewResetService"/>
+    <target name="wsimport-client-LameDuckService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/LameDuckService"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/LameDuckService" destdir="${build.generated.dir}/jax-wsCache/LameDuckService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuck/LameDuckService.wsdl" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/LameDuck/LameDuckService?wsdl" xnocompile="true" xendorsed="true" target="2.1">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuck/LameDuckService.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/LameDuckService"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/LameDuckService">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-LameDuckService" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/ws/dtu/lameduck"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/LameDuckService"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-NiceViewService, wsimport-client-LameDuckResetService, wsimport-client-NiceViewResetService, wsimport-client-LameDuckService"/>
 </project>

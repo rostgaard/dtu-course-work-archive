@@ -1,29 +1,26 @@
 <?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.1.1 (branches/2.1-6844; 2011-07-29T12:07:24+0000) JAXWS-RI/2.2.5 JAXWS/2.2. --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn://types.lameduck.dtu.ws/" targetNamespace="urn://types.lameduck.dtu.ws/" elementFormDefault="qualified">
-    <xsd:complexType name="flightInformation">
-        <xsd:sequence>
-            <xsd:element name="bookingNo" type="tns:flightBookingNo"/>
-            <xsd:element name="price" type="xsd:double"/>
-            <xsd:element name="reservationService" type="xsd:string"/>
-            <xsd:element name="flight" type="tns:flight"/>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:complexType name="flight">
+    <xsd:complexType name="Flight">
         <xsd:sequence>
             <xsd:element name="origin" type="xsd:string"/>
             <xsd:element name="destination" type="xsd:string"/>
-            <xsd:element name="liftOff" type="xsd:dateTime"/>
-            <xsd:element name="arrival" type="xsd:dateTime"/>
+            <xsd:element name="liftOff" type="xsd:date"/>
+            <xsd:element name="arrival" type="xsd:date"/>
             <xsd:element name="carrier" type="xsd:string"/>
         </xsd:sequence>
     </xsd:complexType>
-    <xsd:complexType name="flightList">
+    <xsd:complexType name="FlightInformation">
         <xsd:sequence>
-            <xsd:element name="flights" type="tns:flightInformation" maxOccurs="unbounded" minOccurs="0"/>
+            <xsd:element name="flight" type="tns:Flight"/>
+            <xsd:element name="price" type="xsd:int"/>
+            <xsd:element name="bookingNo" type="xsd:string"/>
+            <xsd:element name="reservationSevice" type="xsd:string"/>
         </xsd:sequence>
     </xsd:complexType>
-    <xsd:simpleType name="flightBookingNo">
-        <xsd:restriction base="xsd:string"/>
-    </xsd:simpleType>
-    <xsd:element name="cancelFault" type="xsd:string"/>
-    <xsd:element name="bookFault" type="xsd:string"/>
+    <xsd:complexType name="FlightList">
+        <xsd:sequence>
+            <xsd:element name="flights" type="tns:FlightInformation" maxOccurs="unbounded" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="CancelFault" type="xsd:string"/>
+    <xsd:element name="BookFault" type="xsd:string"/>
 </xsd:schema>

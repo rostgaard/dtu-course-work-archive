@@ -99,7 +99,7 @@ public class TravelAgencyRESTTest {
          
          // Two more flights
          RestService.addFlight(customerID, preItinerary.getID(), flightBooking2);
-         RestService.addFlight(customerID, preItinerary.getID(), flightBooking2);
+         RestService.addFlight(customerID, preItinerary.getID(), flightBooking3);
 
         // Finally, another hotel
         RestService.addHotel(customerID, preItinerary.getID(), hotelBooking2);

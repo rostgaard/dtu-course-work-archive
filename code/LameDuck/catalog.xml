@@ -9,6 +9,9 @@
     <system systemId="file:/C:/Users/Mikkel/Documents/GitHub/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuckWrapper.wsdl" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/LameDuckWrapper.wsdl"/>
     <system systemId="file:/C:/Users/Mikkel/Documents/GitHub/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuck.wsdl" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/LameDuck.wsdl"/>
     <system systemId="file:/C:/Users/Mikkel/Documents/GitHub/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuck.xsd" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/LameDuck.xsd"/>
-    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
     <system systemId="file:/C:/Users/Mikkel/Documents/GitHub/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuckReset.wsdl" uri="src/conf/xml-resources/web-services/LameDuckReset/wsdl/LameDuckReset.wsdl"/>
+    <system systemId="file:/Volumes/02267/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuckWrapper.wsdl" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/LameDuckWrapper.wsdl"/>
+    <system systemId="file:/Volumes/02267/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuck.wsdl" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/LameDuck.wsdl"/>
+    <system systemId="file:/Volumes/02267/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuck.xsd" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/LameDuck.xsd"/>
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
 </catalog>

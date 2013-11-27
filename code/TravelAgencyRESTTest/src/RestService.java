@@ -88,6 +88,6 @@ public class RestService {
     }
     
     public static void reset() {
-        
+        resetResource.put();
     }
 }

@@ -100,7 +100,7 @@ public final class FlightDatabase {
         insert(generateFlightInformation(newFlight, "SAS0008", 200, serviceName));
         
         newFlight = generateFlight("Kastrup", "Kazakhstan", date1, date2, "Fail Airlines");
-        insert(generateFlightInformation(newFlight, "FAIL0001", 200.0, serviceName));
+        insert(generateFlightInformation(newFlight, "FAIL0001", 200, serviceName));
         
     }
     

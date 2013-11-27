@@ -35,7 +35,7 @@ import ws.dtu.model.HotelBooking;
 @Produces("application/itinerary+xml")
 public class ItineraryResource {
     private static final LameDuckService lameDuckService = new LameDuckService();
-    private static final LameDuckPortType lameDuckPort = lameDuckService.getLameDuckPort();    
+    private static final LameDuckPortType lameDuckPort = lameDuckService.getLameDuckPortTypeBindingPort();    
     
     private static final ItineraryManager itineraryManager = new ItineraryManager();
     
