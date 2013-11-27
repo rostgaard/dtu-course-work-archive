@@ -17,7 +17,7 @@
     </binding>
     <service name="LameDuckResetService">
         <port name="LameDuckResetPort" binding="tns:LameDuckResetBinding">
-            <soap:address location="http://localhost:8080/LameDuckWSDL/LameDuckResetService"/>
+            <soap:address location="http://localhost:8080/LameDuck/LameDuckResetService"/>
         </port>
     </service>
     <plnk:partnerLinkType name="LameDuckReset">

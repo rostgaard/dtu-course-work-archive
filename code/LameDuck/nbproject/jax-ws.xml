@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
   <services>
-    <service name="LameDuckReset">
-      <implementation-class>ws.dtu.lameduck.LameDuckReset</implementation-class>
-      <wsdl-url>file:/C:/Users/Mikkel/Documents/GitHub/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuckReset.wsdl</wsdl-url>
-      <local-wsdl-file>LameDuckReset.wsdl</local-wsdl-file>
-      <service-name>LameDuckResetService</service-name>
-      <port-name>LameDuckResetPort</port-name>
-      <package-name>reset.lameduck.dtu.ws</package-name>
+    <service name="LameDuck">
+      <implementation-class>ws.dtu.lameduck.LameDuck</implementation-class>
+      <wsdl-url>file:/C:/Users/Mikkel/Documents/GitHub/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuckWrapper.wsdl</wsdl-url>
+      <local-wsdl-file>LameDuckWrapper.wsdl</local-wsdl-file>
+      <service-name>LameDuckService</service-name>
+      <port-name>LameDuckPortTypeBindingPort</port-name>
+      <package-name>ws.dtu.lameduck</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <use-provider>false</use-provider>
       <wsimport-options>
@@ -33,13 +33,13 @@
         </wsimport-option>
       </wsimport-options>
     </service>
-    <service name="LameDuck">
-      <implementation-class>ws.dtu.lameduck.LameDuck</implementation-class>
-      <wsdl-url>file:/C:/Users/Mikkel/Documents/GitHub/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuckWrapper.wsdl</wsdl-url>
-      <local-wsdl-file>LameDuckWrapper.wsdl</local-wsdl-file>
-      <service-name>LameDuckService</service-name>
-      <port-name>LameDuckPortType</port-name>
-      <package-name>ws.dtu.lameduck</package-name>
+    <service name="LameDuckReset">
+      <implementation-class>ws.dtu.lameduck.LameDuckReset</implementation-class>
+      <wsdl-url>file:/C:/Users/Mikkel/Documents/GitHub/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuckReset.wsdl</wsdl-url>
+      <local-wsdl-file>LameDuckReset.wsdl</local-wsdl-file>
+      <service-name>LameDuckResetService</service-name>
+      <port-name>LameDuckResetPort</port-name>
+      <package-name>reset.lameduck.dtu.ws</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <use-provider>false</use-provider>
       <wsimport-options>
