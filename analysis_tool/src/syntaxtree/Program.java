@@ -1,5 +1,12 @@
 package syntaxtree;
 
+import analysis.Lattice;
+import analysis.LatticeSet;
+import analysis.RDLattice;
+import analysis.Worklist;
+import flowgraph.datastructure.Flow;
+import flowgraph.datastructure.FlowSet;
+import flowgraph.datastructure.Node;
 import java.util.List;
 
 import flowgraph.datastructure.VariableSet;
@@ -49,6 +56,46 @@ public class Program {
         }
 
         return variableSet;
+    }
+
+    public LatticeSet calculate(Lattice analysisSpace) {
+        Worklist worklist     = new Worklist();
+        LatticeSet analysis   = new LatticeSet();
+        FlowSet S             = this.getStmts().flow();
+
+        for (Flow flow : this.getStmts().flow()) {
+            worklist.add(flow);
+        }
+
+        for (Node node : this.getStmts().lables()) {
+            if (node.equals(this.getStmts().init())) {
+                analysis.put(node, analysisSpace.iota());
+            } else {
+                analysis.put(node, analysisSpace.factory());
+            }
+        }
+
+        while (!worklist.isEmpty()) {
+            Flow flow = worklist.removeFirst();
+            Node sourceNode = flow.getSource();
+            Node destinationNode = flow.getTarget();
+
+            Lattice L = sourceNode.getStatement()
+                    .transferFunction(analysis.get(flow.getSource()));
+            Lattice Lprime = analysis.get(flow.getTarget());
+
+            if (!L.subsetOf(Lprime)) {
+                Lprime.union(L);
+
+                // Push more work to the worklist.
+                FlowSet newFlows = S.flows(destinationNode);
+                for (Flow f : newFlows) {
+                    worklist.add(f);
+                }
+            }
+        }
+        
+        return analysis;
     }
     
 }

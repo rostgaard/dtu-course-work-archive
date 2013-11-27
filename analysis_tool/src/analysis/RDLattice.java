@@ -89,4 +89,9 @@ public final class RDLattice extends HashMap<Variable, DefinitionSet> implements
         
         return this;
     }
+
+    @Override
+    public Lattice iota() {
+        return this.factory();
+    }
 }

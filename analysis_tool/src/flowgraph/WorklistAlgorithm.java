@@ -15,7 +15,7 @@ public final class WorklistAlgorithm {
     //}
     public static void calculate(FlowSet S, Program program) {
         Worklist worklist = new Worklist();
-        Lattice analysisSpace = new RDLattice(program.getDecls()); //RDProgramState(program.getDecls());
+        Lattice analysisSpace = new RDLattice (program.getDecls());
         LatticeSet analysis = new LatticeSet();
 
         for (Flow flow : program.getStmts().flow()) {

@@ -1,5 +1,8 @@
 package syntaxtree.expression;
 
+import analysis.Lattice;
+import analysis.SignSet;
+import analysis.SignsLattice;
 import flowgraph.datastructure.VariableSet;
 
 /**
@@ -8,6 +11,7 @@ import flowgraph.datastructure.VariableSet;
  */
 public abstract class Expression {
 
-	public abstract VariableSet getVariable();
-	
+    public abstract VariableSet getVariable();
+
+    public abstract SignSet evalulate(SignsLattice lattice);
 }
