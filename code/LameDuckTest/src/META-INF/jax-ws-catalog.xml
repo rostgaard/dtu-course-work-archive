@@ -5,4 +5,8 @@
     <system systemId="http://localhost:8080/LameDuck/LameDuckService?xsd=1" uri="wsdl/localhost_8080/LameDuck/LameDuckService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/LameDuck/LameDuckResetService?wsdl" uri="wsdl/localhost_8080/LameDuck/LameDuckResetService.wsdl"/>
     <system systemId="file:/C:/Users/Mikkel/Documents/Kurser/webservice/LameDuckService.wsdl" uri="wsdl/LameDuckService.wsdl"/>
+    <system systemId="http://localhost:8080/LameDuckWSDL/LameDuckService?wsdl" uri="wsdl/localhost_8080/LameDuckWSDL/LameDuckService.wsdl"/>
+    <system systemId="http://localhost:8080/LameDuckWSDL/LameDuckService?wsdl=1" uri="wsdl/localhost_8080/LameDuckWSDL/LameDuckService.wsdl_1.wsdl"/>
+    <system systemId="http://localhost:8080/LameDuckWSDL/LameDuckService?xsd=1" uri="wsdl/localhost_8080/LameDuckWSDL/LameDuckService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/LameDuckWSDL/LameDuckResetService?wsdl" uri="wsdl/localhost_8080/LameDuckWSDL/LameDuckResetService.wsdl"/>
 </catalog>

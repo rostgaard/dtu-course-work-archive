@@ -18,8 +18,8 @@
     </target>
     <target name="wsimport-client-LameDuckResetService" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/LameDuckResetService"/>
-        <property name="wsdl-LameDuckResetService" location="xml-resources/web-service-references/LameDuckResetService/wsdl/localhost_8080/LameDuck/LameDuckResetService.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/LameDuckResetService" destdir="${build.generated.dir}/jax-wsCache/LameDuckResetService" wsdl="${wsdl-LameDuckResetService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/LameDuck/LameDuckResetService?wsdl" xnocompile="true" xendorsed="true">
+        <property name="wsdl-LameDuckResetService" location="xml-resources/web-service-references/LameDuckResetService/wsdl/localhost_8080/LameDuckWSDL/LameDuckResetService.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/LameDuckResetService" destdir="${build.generated.dir}/jax-wsCache/LameDuckResetService" wsdl="${wsdl-LameDuckResetService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/LameDuckWSDL/LameDuckResetService?wsdl" xnocompile="true" xendorsed="true">
             <depends file="${wsdl-LameDuckResetService}"/>
             <produces dir="${build.generated.dir}/jax-wsCache/LameDuckResetService"/>
         </wsimport>
@@ -35,8 +35,8 @@
     </target>
     <target name="wsimport-client-LameDuckService" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/LameDuckService"/>
-        <property name="wsdl-LameDuckService" location="xml-resources/web-service-references/LameDuckService/wsdl/LameDuckService.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/LameDuckService" destdir="${build.generated.dir}/jax-wsCache/LameDuckService" wsdl="${wsdl-LameDuckService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="file:/C:/Users/Mikkel/Documents/Kurser/webservice/LameDuckService.wsdl" xnocompile="true" xendorsed="true">
+        <property name="wsdl-LameDuckService" location="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuckWSDL/LameDuckService.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/LameDuckService" destdir="${build.generated.dir}/jax-wsCache/LameDuckService" wsdl="${wsdl-LameDuckService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/LameDuckWSDL/LameDuckService?wsdl" xnocompile="true" xendorsed="true">
             <depends file="${wsdl-LameDuckService}"/>
             <produces dir="${build.generated.dir}/jax-wsCache/LameDuckService"/>
         </wsimport>

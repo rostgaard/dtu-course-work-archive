@@ -7,7 +7,6 @@ import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl
 import javax.xml.datatype.XMLGregorianCalendar;
 import org.junit.Test;
 import org.netbeans.j2ee.wsdl.webapplication1.java.newwsdl.MyComplexType;
-import org.netbeans.j2ee.wsdl.webapplication1.java.newwsdl.Response;
 import ws.lameduck.FlightInformations;
 
 /**
@@ -32,7 +31,7 @@ public class NewEmptyJUnitTest {
         date2.setYear(2012);
         
         MyComplexType resp = myOperation();
-        
+        int i = 0;
         
         
     }

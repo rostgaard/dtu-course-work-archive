@@ -3,8 +3,8 @@
   <services/>
   <clients>
     <client name="LameDuckResetService">
-      <wsdl-url>http://localhost:8080/LameDuck/LameDuckResetService?wsdl</wsdl-url>
-      <local-wsdl-file>localhost_8080/LameDuck/LameDuckResetService.wsdl</local-wsdl-file>
+      <wsdl-url>http://localhost:8080/LameDuckWSDL/LameDuckResetService?wsdl</wsdl-url>
+      <local-wsdl-file>localhost_8080/LameDuckWSDL/LameDuckResetService.wsdl</local-wsdl-file>
       <package-name>reset.lameduck.dtu.ws</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
@@ -18,7 +18,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://localhost:8080/LameDuck/LameDuckResetService?wsdl</wsimport-option-value>
+          <wsimport-option-value>http://localhost:8080/LameDuckWSDL/LameDuckResetService?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>
@@ -31,8 +31,8 @@
       </wsimport-options>
     </client>
     <client name="LameDuckService">
-      <wsdl-url>file:/C:/Users/Mikkel/Documents/Kurser/webservice/LameDuckService.wsdl</wsdl-url>
-      <local-wsdl-file>LameDuckService.wsdl</local-wsdl-file>
+      <wsdl-url>http://localhost:8080/LameDuckWSDL/LameDuckService?wsdl</wsdl-url>
+      <local-wsdl-file>localhost_8080/LameDuckWSDL/LameDuckService.wsdl</local-wsdl-file>
       <package-name>ws.dtu.lameduck</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
@@ -46,7 +46,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>file:/C:/Users/Mikkel/Documents/Kurser/webservice/LameDuckService.wsdl</wsimport-option-value>
+          <wsimport-option-value>http://localhost:8080/LameDuckWSDL/LameDuckService?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>

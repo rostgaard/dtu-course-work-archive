@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
   <services>
+    <service name="NewWebServiceFromWSDL">
+      <implementation-class>qweqwe.NewWebServiceFromWSDL</implementation-class>
+      <wsdl-url>file:/C:/Users/Mikkel/Documents/GitHub/02267/code/WebApplication1/src/java/DateTestWrapped.wsdl</wsdl-url>
+      <local-wsdl-file>DateTestWrapped.wsdl</local-wsdl-file>
+      <service-name>DateTestService</service-name>
+      <port-name>DateTestPortTypeBindingPort</port-name>
+      <package-name>org.netbeans.j2ee.wsdl.webapplication1.java.newwsdl</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+      <use-provider>false</use-provider>
+      <wsimport-options>
+        <wsimport-option>
+          <wsimport-option-name>extension</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>verbose</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xnocompile</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xendorsed</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>target</wsimport-option-name>
+          <wsimport-option-value>2.1</wsimport-option-value>
+        </wsimport-option>
+      </wsimport-options>
+    </service>
   </services>
   <clients/>
   <jsr109>true</jsr109>

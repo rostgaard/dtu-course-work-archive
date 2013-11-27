@@ -3,6 +3,9 @@
     <type>org.netbeans.modules.web.project</type>
     <configuration>
         <buildExtensions xmlns="http://www.netbeans.org/ns/ant-build-extender/1">
+            <extension file="rest-build.xml" id="rest.4">
+                <dependency dependsOn="generate-rest-config" target="-pre-pre-compile"/>
+            </extension>
             <extension file="jaxws-build.xml" id="jaxws">
                 <dependency dependsOn="wsimport-client-generate" target="-pre-pre-compile"/>
                 <dependency dependsOn="wsimport-service-generate" target="-pre-pre-compile"/>
