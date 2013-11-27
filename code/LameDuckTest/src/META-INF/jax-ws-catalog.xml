@@ -9,4 +9,5 @@
     <system systemId="http://localhost:8080/LameDuckWSDL/LameDuckService?wsdl=1" uri="wsdl/localhost_8080/LameDuckWSDL/LameDuckService.wsdl_1.wsdl"/>
     <system systemId="http://localhost:8080/LameDuckWSDL/LameDuckService?xsd=1" uri="wsdl/localhost_8080/LameDuckWSDL/LameDuckService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/LameDuckWSDL/LameDuckResetService?wsdl" uri="wsdl/localhost_8080/LameDuckWSDL/LameDuckResetService.wsdl"/>
+    <system systemId="http://localhost:8080/LameDuck/LameDuckService?wsdl=1" uri="wsdl/localhost_8080/LameDuck/LameDuckService.wsdl_1.wsdl"/>
 </catalog>

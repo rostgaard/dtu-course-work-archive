@@ -70,34 +70,38 @@ public final class FlightDatabase {
         
         
         Flight newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight,"SAS0001", 2.0, serviceName ));
+        insert(generateFlightInformation(newFlight,"SAS0001", 2, serviceName ));
         
         newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "Norwegian");
-        insert(generateFlightInformation(newFlight, "NOR0001", 2.0, serviceName));
+        insert(generateFlightInformation(newFlight, "NOR0001", 2, serviceName));
         
         newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "Kabul Air");
-        insert(generateFlightInformation(newFlight, "NOR0002", 2.0, serviceName));
+        insert(generateFlightInformation(newFlight, "NOR0002", 2, serviceName));
         
         newFlight = generateFlight("Kabul", "Kastrup", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight, "SAS0002", 250.0, serviceName));
+        insert(generateFlightInformation(newFlight, "SAS0002", 250, serviceName));
         
           newFlight = generateFlight("Kabul", "Kastrup", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight, "SAS0003", 250.0, serviceName));
+        insert(generateFlightInformation(newFlight, "SAS0003", 250, serviceName));
         
         newFlight = generateFlight("Kastrup", "Moscow", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight, "SAS0004", 300.0, serviceName));
+        insert(generateFlightInformation(newFlight, "SAS0004", 300, serviceName));
         
         newFlight = generateFlight("Kastrup", "Afganistan", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight, "SAS0005", 200.0, serviceName));
+        insert(generateFlightInformation(newFlight, "SAS0005", 200, serviceName));
         
         newFlight = generateFlight("Kastrup", "Irak", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight, "SAS0006", 220.0, serviceName));
+        insert(generateFlightInformation(newFlight, "SAS0006", 220, serviceName));
         
         newFlight = generateFlight("Kastrup", "Libya", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight, "SAS0007", 150.0, serviceName));
+        insert(generateFlightInformation(newFlight, "SAS0007", 150, serviceName));
+        
+        newFlight = generateFlight("Kastrup", "Kazakhstan", date1, date2, "SAS");
+        insert(generateFlightInformation(newFlight, "SAS0008", 200, serviceName));
         
         newFlight = generateFlight("Kastrup", "Kazakhstan", date1, date2, "Fail Airlines");
         insert(generateFlightInformation(newFlight, "FAIL0001", 200.0, serviceName));
+        
     }
     
     private  Flight generateFlight(String origin, String destination, XMLGregorianCalendar liftOff, XMLGregorianCalendar arrival, String carrier){
@@ -141,12 +145,13 @@ public final class FlightDatabase {
         return retList;
     }
 
-    private  FlightInformation generateFlightInformation(Flight newFlight, String bookingNo, double price, String serviceName) {
+    private  FlightInformation generateFlightInformation(Flight newFlight, String bookingNo, int price, String serviceName) {
         FlightInformation flightInfo = new FlightInformation();
         flightInfo.setBookingNo(bookingNo);
         flightInfo.setFlight(newFlight);
         flightInfo.setPrice(price);
-        flightInfo.setReservationService(serviceName);
+        flightInfo.setReservationSevice(serviceName);
+        
         return flightInfo;
         
     }

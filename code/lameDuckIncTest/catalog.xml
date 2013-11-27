@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:8070/LameDuckInc/LameDuckService?wsdl" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8070/LameDuckInc/LameDuckService.wsdl"/>
+    <system systemId="http://localhost:8070/LameDuckInc/LameDuckService?wsdl=1" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8070/LameDuckInc/LameDuckService.wsdl_1.wsdl"/>
+    <system systemId="http://localhost:8070/LameDuckInc/LameDuckService?xsd=1" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8070/LameDuckInc/LameDuckService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/LameDuckInc/LameDuckService?wsdl" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuckInc/LameDuckService.wsdl"/>
+    <system systemId="http://localhost:8080/LameDuckInc/LameDuckService?wsdl=1" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuckInc/LameDuckService.wsdl_1.wsdl"/>
+    <system systemId="http://localhost:8080/LameDuckInc/LameDuckService?xsd=1" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuckInc/LameDuckService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/LameDuckInc2/LameDuckService?wsdl" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuckInc2/LameDuckService.wsdl"/>
+    <system systemId="http://localhost:8080/LameDuckInc2/LameDuckService?wsdl=1" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuckInc2/LameDuckService.wsdl_1.wsdl"/>
+    <system systemId="http://localhost:8080/LameDuckInc2/LameDuckService?xsd=1" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuckInc2/LameDuckService.xsd_1.xsd"/>
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="xml-resources/web-service-references/LameDuckService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
+</catalog>

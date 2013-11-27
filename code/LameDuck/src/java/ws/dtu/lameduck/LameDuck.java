@@ -9,11 +9,8 @@ import dk.dtu.imm.fastmoney.BankService;
 import dk.dtu.imm.fastmoney.CreditCardFaultMessage;
 import dk.dtu.imm.fastmoney.types.AccountType;
 import dk.dtu.imm.fastmoney.types.CreditCardInfoType;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.jws.WebService;
 import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import ws.dtu.lameduck.model.FlightDatabase;
 import ws.dtu.lameduck.types.FlightInformation;
@@ -23,11 +20,9 @@ import ws.dtu.lameduck.types.FlightList;
  *
  * @author Mikkel
  */
-@WebService(serviceName = "LameDuckService", portName = "LameDuckPort", endpointInterface = "ws.dtu.lameduck.LameDuckPortType", targetNamespace = "http://lameduck.dtu.ws/", wsdlLocation = "WEB-INF/wsdl/LameDuck/LameDuck.wsdl")
+@WebService(serviceName = "LameDuckService", portName = "LameDuckPortTypeBindingPort", endpointInterface = "ws.dtu.lameduck.LameDuckPortType", targetNamespace = "http://lameduck.dtu.ws", wsdlLocation = "WEB-INF/wsdl/LameDuck/LameDuckWrapper.wsdl")
 public class LameDuck {
-    
-    
-    private AccountType account;
+private AccountType account;
     private static final int GROUP = 3;
     private BankService service = new BankService();
     private FlightDatabase db;
@@ -56,11 +51,11 @@ public class LameDuck {
         }
     }
 
-    public boolean cancelFlight(java.lang.String bookingNumber, double price, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInfo) throws CancelFlightFault {
+    public boolean cancelFlight(java.lang.String bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInfo, int price) throws CancelFlightFault {
 
         
          try {
-            refundCreditCard(GROUP,creditCardInfo,(int)price, account);
+            refundCreditCard(GROUP,creditCardInfo,price, account);
             db.cancelFlight(bookingNumber);
             return true;
         } catch (dk.dtu.imm.fastmoney.CreditCardFaultMessage ex) {

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="http://localhost:8080/LameDuck/LameDuckService?wsdl" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuck/LameDuckService.wsdl"/>
     <system systemId="file:/C:/Users/Mikkel/Documents/Kurser/webservice/LameDuckService.wsdl" uri="xml-resources/web-service-references/LameDuckService/wsdl/LameDuckService.wsdl"/>
-    <system systemId="http://localhost:8080/LameDuck/LameDuckService?xsd=1" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuck/LameDuckService.xsd_1.xsd"/>
-    <system systemId="http://localhost:8080/LameDuck/LameDuckResetService?wsdl" uri="xml-resources/web-service-references/LameDuckResetService/wsdl/localhost_8080/LameDuck/LameDuckResetService.wsdl"/>
     <system systemId="http://localhost:8080/LameDuckWSDL/LameDuckResetService?wsdl" uri="xml-resources/web-service-references/LameDuckResetService/wsdl/localhost_8080/LameDuckWSDL/LameDuckResetService.wsdl"/>
     <system systemId="http://localhost:8080/LameDuckWSDL/LameDuckService?wsdl" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuckWSDL/LameDuckService.wsdl"/>
     <system systemId="http://localhost:8080/LameDuckWSDL/LameDuckService?wsdl=1" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuckWSDL/LameDuckService.wsdl_1.wsdl"/>
-    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="xml-resources/web-service-references/LameDuckService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/LameDuckWSDL/LameDuckService?xsd=1" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuckWSDL/LameDuckService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/LameDuck/LameDuckService?wsdl" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuck/LameDuckService.wsdl"/>
+    <system systemId="http://localhost:8080/LameDuck/LameDuckService?wsdl=1" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuck/LameDuckService.wsdl_1.wsdl"/>
+    <system systemId="http://localhost:8080/LameDuck/LameDuckService?xsd=1" uri="xml-resources/web-service-references/LameDuckService/wsdl/localhost_8080/LameDuck/LameDuckService.xsd_1.xsd"/>
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="xml-resources/web-service-references/LameDuckService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/LameDuck/LameDuckResetService?wsdl" uri="xml-resources/web-service-references/LameDuckResetService/wsdl/localhost_8080/LameDuck/LameDuckResetService.wsdl"/>
 </catalog>
