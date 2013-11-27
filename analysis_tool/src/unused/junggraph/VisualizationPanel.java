@@ -1,4 +1,4 @@
-package junggraph;
+package unused.junggraph;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

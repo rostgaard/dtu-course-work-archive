@@ -1,4 +1,4 @@
-package junggraph;
+package unused.junggraph;
 
 import edu.uci.ics.jung.algorithms.layout.CircleLayout;
 import edu.uci.ics.jung.algorithms.layout.Layout;
@@ -50,7 +50,7 @@ public class NetworkGraph {
 	 * Constructor
 	 * @param graph - graph containing nodes and edges
 	 */
-	public NetworkGraph(junggraph.Graph graph) {
+	public NetworkGraph(unused.junggraph.Graph graph) {
 		// create graph - undirected graph
 		g = new UndirectedSparseMultigraph<String, String>();
 

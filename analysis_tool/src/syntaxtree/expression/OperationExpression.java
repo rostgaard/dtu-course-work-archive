@@ -4,7 +4,6 @@ import analysis.Sign;
 import analysis.SignSet;
 import analysis.SignsLattice;
 import flowgraph.datastructure.VariableSet;
-import java.util.HashMap;
 import syntaxtree.*;
 
 /**
@@ -17,11 +16,11 @@ public class OperationExpression extends Expression {
     private Expression expr2;
     private ArithmeticOperation ao;
 
-
     /**
-     * Returns the list of possible signs from an operation.
+     * Returns the list of possible signs from an operation. This is based on
+     * the operation type given in the current object. It performs lookups in 
+     * tables defined in {@link SignSet}.
      *
-     * @param op The arithmetic operation to perform
      * @param lhs The left hand side of the operation
      * @param rhs The right hand side of the operation
      * @return
@@ -37,6 +36,8 @@ public class OperationExpression extends Expression {
             case DIVISION:
                 return SignSet.divisionMatrix[SignSet.indexOf(lhs)][SignSet.indexOf(rhs)];
         }
+        
+        // If we don't know the operator, is better to cowardly quit.
         return SignSet.empty;
     }
 
@@ -47,7 +48,7 @@ public class OperationExpression extends Expression {
         SignSet result = new SignSet();
 
         for (Sign lhs : lhsSigns) {
-            for(Sign rhs : rhsSigns) {
+            for (Sign rhs : rhsSigns) {
                 result.merge(evaluationTable(lhs, rhs));
             }
         }
@@ -55,7 +56,7 @@ public class OperationExpression extends Expression {
     }
 
     public OperationExpression(Expression expr1, Expression expr2, ArithmeticOperation ao) {
-        
+
         this.expr1 = expr1;
         this.expr2 = expr2;
         this.ao = ao;

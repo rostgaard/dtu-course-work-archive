@@ -1,4 +1,4 @@
-package junggraph;
+package unused.junggraph;
 
 import java.util.ArrayList;
 import java.util.List;

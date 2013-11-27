@@ -1,4 +1,4 @@
-package junggraph;
+package unused.junggraph;
 
 import javax.swing.SwingUtilities;
 

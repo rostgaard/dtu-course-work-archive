@@ -1,4 +1,4 @@
-package junggraph;
+package unused.junggraph;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
