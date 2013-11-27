@@ -1,5 +1,6 @@
 
 import analysis.ProgramSlicing;
+import analysis.RDLattice;
 import flowgraph.WorklistAlgorithm;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.NodeSet;
@@ -7,12 +8,12 @@ import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
 
 import analysis.RDProgramState;
+import analysis.SignsLattice;
 import output.TheLangLexer;
 import output.TheLangParser;
 import syntaxtree.Program;
 import syntaxtree.statement.Statement;
 import utilities.Sequencer;
-
 
 public class Main {
 
@@ -49,37 +50,30 @@ public class Main {
         try {
             TheLangParser.program_return parserResult = parser.program();
             if (parserResult != null) {
-                Program tree = parserResult.value;
+                Program program = parserResult.value;
                 Sequencer seq = new Sequencer();
 
                 // Intially set the labels.
-                for(Statement s : tree.getStmts()) {
+                for (Statement s : program.getStmts()) {
                     s.setLabel(seq);
                 }
 
-                System.out.println (tree.getStmts().toStringWithLabel());
-//                System.out.println("Flow");
-//                System.out.println (tree.getStmts().flow());
-//                System.out.println("RD result:");
-//                System.out.println(currentState.getDefinitions());
-//                System.out.println("RDentry:");
-//                System.out.println(currentState.getRDentry().toString());
-//                System.out.println("RDexit:");
-//                System.out.println(currentState.getRDexit().toString());
-                                   
-                //System.out.println (tree.getStmts().labelTable());
+                System.out.println("==== Program =====");
+                System.out.println(program.getStmts().toStringWithLabel());
+                System.out.println("==== End program =====");
                 
-                //System.out.println(tree.toString());
-//				printTree(tree,0);
-                FlowSet flows = tree.getStmts().flow();
-                WorklistAlgorithm.calculate(flows, tree);
-                System.out.println("Reaching definitions:");
-                //System.out.println(analysis.getRDentry());
-
-                System.out.println("");
-                System.out.println("Program slice:");
+                System.out.println("==== Labels =====");
+                System.out.println(program.getStmts().lables());
+                
+                System.out.println("==== Reaching definitions =====");
+                System.out.println(program.calculate(new RDLattice(program.getDecls())));
+                
+                //System.out.println("==== Program slice ====");
                 //NodeSet programSlice = ProgramSlicing.execute(flows.get(2).getSource(), analysis);
                 //ystem.out.println(programSlice);
+
+                System.out.println("==== Signs analysis =====");
+                System.out.println(program.calculate(new SignsLattice(program.getDecls())));
 
             }
         } catch (RecognitionException e) {

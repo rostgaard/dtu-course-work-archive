@@ -1,12 +1,6 @@
 package syntaxtree.statement;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.TreeSet;
-
-import analysis.Definition;
 import analysis.DefinitionSet;
-import analysis.Lattice;
 import analysis.RDProgramState;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;

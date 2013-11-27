@@ -1,5 +1,8 @@
 package syntaxtree.expression;
 
+import analysis.Sign;
+import analysis.SignSet;
+import analysis.SignsLattice;
 import flowgraph.datastructure.VariableSet;
 import syntaxtree.Type;
 
@@ -11,6 +14,12 @@ public class Variable extends Expression {
 
     private Type type;
     private String id;
+
+    @Override
+    public SignSet evalulate(SignsLattice lattice) {
+        
+        return lattice.get(new Variable(type, id));
+    }
 
     public Variable(Type type, String id) {
         this.type = type;
@@ -60,11 +69,11 @@ public class Variable extends Expression {
     @Override
     public int hashCode() {
         int hash = 7;
-        
+
         for (int i = 0; i < id.length(); i++) {
             hash = hash * 31 + id.charAt(i);
         }
-        
+
         return hash;
     }
 }

@@ -18,4 +18,6 @@ public abstract interface Lattice {
 
     public Lattice union(Lattice lattice);
 
+    public Lattice iota();
+
 }
