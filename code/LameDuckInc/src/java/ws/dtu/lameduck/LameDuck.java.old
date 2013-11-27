@@ -1,0 +1,33 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ws.dtu.lameduck;
+
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import javax.jws.WebService;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+/**
+ *
+ * @author Mikkel
+ */
+@WebService(serviceName = "LameDuckService", portName = "LameDuckPortTypeBindingPort", endpointInterface = "ws.dtu.lameduck.LameDuckPortType", targetNamespace = "http://lameduck.dtu.ws", wsdlLocation = "WEB-INF/wsdl/LameDuck/LameDuckWrapper.wsdl")
+public class LameDuck {
+
+    public ws.dtu.lameduck.FlightList getFlights(java.lang.String part1) {
+        Flight fl = new Flight();
+        XMLGregorianCalendar date = new XMLGregorianCalendarImpl();
+        date.setDay(1);
+        date.setMonth(1);
+        date.setYear(2011);
+        fl.setLiftOff(date);
+        FlightInformation fi = new FlightInformation();
+        fi.setFlight(fl);
+        fl.setArrival(date);
+        FlightList flights = new FlightList();
+        flights.getFlightInfos().add(fi);
+        return flights;
+    }
+    
+}
