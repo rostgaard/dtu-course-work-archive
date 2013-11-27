@@ -41,18 +41,20 @@ public class NegationExpression extends Expression {
 
     @Override
     public SignSet evalulate(SignsLattice lattice) {
-        SignSet set = this.expr.evalulate(lattice);
+        SignSet set = new SignSet();
+        SignSet eval = this.expr.evalulate(lattice);
 
-        if (set.contains((Sign) Sign.NEGATIVE)) {
-            set.remove((Sign) Sign.NEGATIVE);
+        if (eval.contains((Sign) Sign.ZERO)) {
+            set.add((Sign) Sign.ZERO);
+        }
+
+        if (eval.contains((Sign) Sign.NEGATIVE)) {
             set.add((Sign) Sign.POSTIVE);
         }
 
-        if (set.contains((Sign) Sign.POSTIVE)) {
-            set.remove((Sign) Sign.POSTIVE);
+        if (eval.contains((Sign) Sign.POSTIVE)) {
             set.add((Sign) Sign.NEGATIVE);
         }
-
         return set;
     }
 }

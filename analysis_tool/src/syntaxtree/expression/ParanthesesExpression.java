@@ -39,7 +39,8 @@ public class ParanthesesExpression extends Expression {
         return expr.getVariable();
     }
 
+    @Override
     public SignSet evalulate(SignsLattice lattice) {
-        return new SignSet();
+        return expr.evalulate(lattice);
     }
 }

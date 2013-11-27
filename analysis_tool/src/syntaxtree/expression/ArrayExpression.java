@@ -3,6 +3,7 @@ package syntaxtree.expression;
 import analysis.SignSet;
 import analysis.SignsLattice;
 import flowgraph.datastructure.VariableSet;
+import syntaxtree.Type;
 
 /**
  * Data representation for array expressions
@@ -49,8 +50,9 @@ public class ArrayExpression extends Expression {
                 .union(idx.getVariable());
     }
 
-    public SignSet evalulate(SignsLattice lattice) {
-        return new SignSet();
+    @Override
+    public SignSet evalulate(SignsLattice lattice) {        
+        return lattice.get(id);
     }
     
 }

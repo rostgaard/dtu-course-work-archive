@@ -17,65 +17,6 @@ public class OperationExpression extends Expression {
     private Expression expr2;
     private ArithmeticOperation ao;
 
-    class OperatorVector extends HashMap<Sign, SignSet> {
-
-        public OperatorVector(Sign[] negative, Sign[] zero, Sign[] positive) {
-        }
-    }
-
-    class OperatorMatrix extends HashMap<Sign, OperatorVector> {
-
-        public OperatorMatrix() {
-        }
-    }
-
-    private SignSet set(Sign[] signs) {
-        SignSet set = new SignSet();
-        for (Sign s : signs) {
-            set.add(s);
-        }
-        return set;
-    }
-    private SignSet p = new SignSet().put(Sign.POSTIVE);
-    private SignSet z = new SignSet().put(Sign.ZERO);
-    private SignSet n = new SignSet().put(Sign.NEGATIVE);
-    private SignSet pz = new SignSet().put(Sign.POSTIVE).put(Sign.ZERO);
-    private SignSet p_n = new SignSet().put(Sign.POSTIVE).put(Sign.NEGATIVE);
-    private SignSet pnz = new SignSet().put(Sign.POSTIVE).put(Sign.ZERO).put(Sign.NEGATIVE);
-    private SignSet nz = new SignSet().put(Sign.ZERO).put(Sign.NEGATIVE);
-    private SignSet empty = new SignSet();
-
-    private int indexOf(Sign s) {
-        switch (s) {
-            case NEGATIVE:
-                return 0;
-            case ZERO:
-                return 1;
-            case POSTIVE:
-                return 2;
-        }
-        return -1;
-    }
-    private final SignSet[][] plusMatrix = {
-        {n, n, pnz},
-        {n, z, p},
-        {pnz, p, p}
-    };
-    private final SignSet[][] subtractionMatrix = {
-        {pnz, n, n},
-        {n, z, n},
-        {p, p, pnz}
-    };
-    private final SignSet[][] multiplicationMatrix = {
-        {p, z, n},
-        {z, z, z},
-        {n, z, p}
-    };
-    private final SignSet[][] divisionMatrix = {
-        {p, empty, n},
-        {z, empty, z},
-        {n, empty, p}
-    };
 
     /**
      * Returns the list of possible signs from an operation.
@@ -88,15 +29,15 @@ public class OperationExpression extends Expression {
     public SignSet evaluationTable(Sign lhs, Sign rhs) {
         switch (this.ao) {
             case PLUS:
-                return plusMatrix[indexOf(lhs)][indexOf(rhs)];
+                return SignSet.plusMatrix[SignSet.indexOf(lhs)][SignSet.indexOf(rhs)];
             case MINUS:
-                return subtractionMatrix[indexOf(lhs)][indexOf(rhs)];
+                return SignSet.subtractionMatrix[SignSet.indexOf(lhs)][SignSet.indexOf(rhs)];
             case MULTIPLICATION:
-                return multiplicationMatrix[indexOf(lhs)][indexOf(rhs)];
+                return SignSet.multiplicationMatrix[SignSet.indexOf(lhs)][SignSet.indexOf(rhs)];
             case DIVISION:
-                return divisionMatrix[indexOf(lhs)][indexOf(rhs)];
+                return SignSet.divisionMatrix[SignSet.indexOf(lhs)][SignSet.indexOf(rhs)];
         }
-        return empty;
+        return SignSet.empty;
     }
 
     @Override

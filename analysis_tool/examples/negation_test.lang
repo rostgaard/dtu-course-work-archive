@@ -5,11 +5,13 @@ int y;
 x:= 0;
 x:= 3;
 if z=x then
-  z:=0;
+  z:=-2;
 else
   z:= -x;
 fi
 y:= x;
 x:=y+z;
+read z;
+skip;
 end
 

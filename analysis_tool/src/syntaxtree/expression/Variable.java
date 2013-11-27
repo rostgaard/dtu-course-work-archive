@@ -17,7 +17,6 @@ public class Variable extends Expression {
 
     @Override
     public SignSet evalulate(SignsLattice lattice) {
-        
         return lattice.get(new Variable(type, id));
     }
 

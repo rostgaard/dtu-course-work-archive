@@ -9,6 +9,8 @@ import analysis.DefinitionSet;
 import analysis.Lattice;
 import analysis.RDLattice;
 import analysis.RDProgramState;
+import analysis.SignSet;
+import analysis.SignsLattice;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
@@ -100,10 +102,26 @@ public class Read extends Statement {
 
     @Override
     public Lattice transferFunction(Lattice lattice) {
+        if (lattice instanceof RDLattice) {
+            return this.transferFunction((RDLattice) lattice);
+        }
+
+        if (lattice instanceof SignsLattice) {
+            return this.transferFunction((SignsLattice) lattice);
+        }
+
+
+        throw new UnsupportedOperationException("Analysis not supported yet.");
+    }
+
+    private RDLattice transferFunction(RDLattice lattice) {
         ((RDLattice) lattice).kill(id).union(
                 ((RDLattice) lattice).gen(id, this.toNode()));
-        System.out.println("transferFunction:" + lattice);
         return lattice;
     }
-    
+
+    private SignsLattice transferFunction(SignsLattice lattice) {
+        lattice.get(id).merge(SignSet.pnz);
+        return lattice;
+    }
 }
