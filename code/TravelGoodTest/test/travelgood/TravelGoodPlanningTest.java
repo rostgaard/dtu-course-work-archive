@@ -27,10 +27,7 @@ public class TravelGoodPlanningTest extends TravelGoodTest {
 
     @Test
     public void testAddFlight() {
-        String origin = "Copenhagen";
-        String destination = "Kabul";
-
-        FlightList flights = client.getFlights(customerID, itineraryID, origin, destination, date1);
+        FlightList flights = client.getFlights(customerID, itineraryID, "CPH", "SFO", date1);
         assertEquals(3, flights.getFlights().size());
         client.addFlight(customerID, itineraryID, flights.getFlights().get(0));
 
