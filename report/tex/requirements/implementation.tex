@@ -102,17 +102,84 @@ It is an implementation of the pseudo-code presented in section 3.5 Program slic
 
 \section{Interval analysis}
 
-The transfers are depicted in 
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,
+%TODO Add more meat on this. Something about keeping track of the values internally, even when going out of bounds.
+The valid transitions -- and their states -- are depicted in figure \ref{figure:interval_states}, which illustrates the dead-end of $-\infty$ and $\infty$ quite efficient.
+\begin{figure}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.0cm,
                     semithick]
   \tikzstyle{every state}=[fill=none,draw=black,text=black]
 
   \node[state] (IR)                     {In range};
-  \node[state] (MM) [above right of=IR]       {Min/Max};
-  \node[state] (II) [below right of=IR] {$-\infty$/$\infty$};
+  \node[state] (MM) [right of=IR,xshift=1.0cm]       {Min/Max};
+  \node[state] (II) [below of=IR,xshift=1.5cm] {$-\infty$/$\infty$};
 
   \path (IR) edge [bend left] node {} (MM)
              edge  node {} (II)
         (MM) edge [bend left] node {} (IR)
              edge  node {} (II);
 \end{tikzpicture}
+\centering
+\caption{Interval states}
+\label{figure:interval_states}
+\end{figure}
+\section{Improving precision}
+\subsection{Deriving information from boolean expressions}
+As the analysis is now, we have a crude over-approximation, and in order to improve that, we can harvest more information from the flow graph.\\\\
+Up until now, we did not care about the conditions for loops or branches. For instance, given the code in figure \ref{fig:if_flow_example}, we \emph{could} derive information about the state of the variable y, depending on which branch we take. In essence, if we take the true branch, we know for certain that the value of y, is indeed the value of x - which is 5 (but that is less interesting in this case). If -- on the other hand -- we take the false branch, we know for certain that the value of y is \emph{every other value} than those of x.\\\\
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.5cm,
+                    semithick]
+   \tikzstyle{block} = [rectangle, draw, fill=none, 
+    text width=5em, text centered, rounded corners, minimum height=3em]
+    
+  \node[block] (1) {[x:=5]$^1$};
+  \node[block] (2) [below of=2]  {if [x=y]$^2$};
+  \node[block] (3) [below left of=2]  {[y:=x+2]$^3$};
+  \node[block] (4) [below right of=2]  {[y:=x-2]$^4$};
+  \node[block] (5) [below right of=3]  {[write~y]$^5$};
+
+  
+  \path (1) edge  node {} (2)
+        (2) edge  node {} (3)
+            edge  node {} (4)
+        (3) edge  node {} (5)
+        (4) edge  node {} (5);
+
+\end{tikzpicture}
+ \caption{}
+ \label{fig:if_flow_example}
+\end{figure} In order to raise this to a more general level, we follow the suggestion from \cite{02242_slides} and map two transfer functions to the statements corresponding to if and while, rather than one.
+
+%TODO More stuff about this, and link it together with the paragraph above. (and stuff).
+
+We will then use the functions defined table \ref{table:expression_mapping}. The basic idea, starting from $a_1 = a_2$, is that if we have two sets with definitions; then we can only enter the true branch if $\mathcal{A_S}[\![a_1]\!]$ and $\mathcal{A_S}[\![a_2]\!]$ have the same values. Thus, the only viable definitions that are allow to be passed along to the true branch, are the definitions that are both in $\mathcal{A_S}[\![a_1]\!]$ and $\mathcal{A_S}[\![a_2]\!]$. Hence, the intersection.\\\\
+The $a_1 \neq a_2$ then becomes the complimentary set to the one from $a_1 = a_2$, the $a_1 < a_2$ %TODO complete this, and verify the table.
+
+\subsubsection{Handling arithmetic expressions}
+\begin{table}
+\centering
+\begin{tabular}{|r|l|}
+\hline
+Expression & Definition \\
+\hline
+$ a_1 = a_ 2$     & $ \mathcal{A_S}[\![a_1]\!] \bigcap \mathcal{A_S}[\![a_2]\!] $ \\
+$ a_1 \neq a_ 2$  &  $ \left(\mathcal{A_S}[\![a_1]\!] \bigcap \mathcal{A_S}[\![a_2]\!]\right) \setminus \left(\mathcal{A_S}[\![a_1]\!]) \bigcup (B_{=} \setminus \mathcal{A_S}[\![a_2]\!]\right) $ \\
+$ a_1 < a_ 2$     & $ \mathcal{A_S}[\![a_1]\!] \bigcup \left(\mathcal{A_S}[\![a_1]\!] \setminus \mathcal{A_S}[\![a_2]\!]\right) $ \\
+$ a_1 > a_ 2$     & $ \mathcal{A_S}[\![a_2]\!] \bigcup \left(\mathcal{A_S}[\![a_2]\!] \setminus \mathcal{A_S}[\![a_1]\!]\right) $ \\
+$ a_1 \leq a_ 2$  & $ \mathcal{A_S}[\![a_1]\!] \bigcup \left(\mathcal{A_S}[\![a_1]\!] \setminus \mathcal{A_S}[\![a_2]\!]\right) \bigcup \left(\mathcal{A_S}[\![a_1]\!] \bigcap \mathcal{A_S}[\![a_2]\!]\right) $ \\
+$ a_1 \geq a_2$   & $ \mathcal{A_S}[\![a_2]\!] \bigcup \left(\mathcal{A_S}[\![a_2]\!] \setminus \mathcal{A_S}[\![a_1]\!]\right) \bigcup  \left(\mathcal{A_S}[\![a_1]\!] \bigcap \mathcal{A_S}[\![a_2]\!]\right)$ \\
+
+%Beq  ::= A[a1] intersect A[a2]
+%Bneq ::= (Beq \ A[a1]) U (Beq \ A[a2])
+%Blt  ::= A[a1] U (A[a1] \ A[a2])
+%Bgt  ::= A[a2] U (A[a2] \ A[a1])
+%Bleq ::= Beq U Blt
+%Blgt ::= Beq U Bgt
+
+%        & \text{if } \mathcal{A}_S [\![a]\!]\widehat{\sigma} = \{-\}$ \\
+\hline
+\end{tabular}
+\caption{Expression mapping}
+\label{table:expression_mapping}
+\end{table}
