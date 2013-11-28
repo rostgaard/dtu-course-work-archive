@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ws.dtu.niceview.model;
 
 import dk.dtu.imm.fastmoney.types.CreditCardInfoType;
@@ -16,11 +12,11 @@ import ws.dtu.niceview.types.Address;
 import ws.dtu.niceview.types.HotelInformation;
 import ws.dtu.niceview.types.HotelList;
 
-/**
- *
- * @author Martin
- */
 public class HotelDatabase {
+    
+    public static final String Copenhagen = "Copenhagen";
+    public static final String Kabul = "Kabul";
+    public static final String Paris = "Paris";
     
     private Map<String, HotelInformation> bookingNoMap = new HashMap<String, HotelInformation>();
     private Map<String, HotelList> cityMap = new HashMap<String, HotelList>();
@@ -58,7 +54,7 @@ public class HotelDatabase {
         add("Copenhagen", "Nørregade 21", "CPH2", true, "Radison Blue Hotel", 500, "NiceView");
         add("Kabul", "Smokestreet 13", "KAB1", true, "Clear sky Hotel", 230, "NiceView");
         add("Kabul", "Hotalley 4", "KAB2", true, "Air Hotel", 900, "NiceView");
-        add("Moscow", "Coldway 124", "MOS1", true, "Burning Hotel", 300, "NiceView");
+        add("Paris", "Beautifulway 124", "MOS1", true, "Burning Hotel", 300, "NiceView");
     }
     
     private void add(String city, String street, String bookingNO, Boolean ccRequired, String name, double price, String reservationService) {

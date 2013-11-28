@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package banktest;
 
 import dk.dtu.imm.fastmoney.CreditCardFaultMessage;
@@ -13,10 +9,6 @@ import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Mikkel
- */
 public class BankServiceTest {
     
     private int group = 3;
