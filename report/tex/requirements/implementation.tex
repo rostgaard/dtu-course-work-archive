@@ -99,3 +99,20 @@ The class ProgramSlicing.java implements the program slice algorithm.
 It takes two parameters, a point of interest and the the result from reaching definition.
 It is an implementation of the pseudo-code presented in section 3.5 Program slice calculation algorithm.
 
+
+\section{Interval analysis}
+
+The transfers are depicted in 
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,
+                    semithick]
+  \tikzstyle{every state}=[fill=none,draw=black,text=black]
+
+  \node[state] (IR)                     {In range};
+  \node[state] (MM) [above right of=IR]       {Min/Max};
+  \node[state] (II) [below right of=IR] {$-\infty$/$\infty$};
+
+  \path (IR) edge [bend left] node {} (MM)
+             edge  node {} (II)
+        (MM) edge [bend left] node {} (IR)
+             edge  node {} (II);
+\end{tikzpicture}

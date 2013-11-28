@@ -115,8 +115,8 @@ public class Interval {
     public static Interval negate(Interval interval) {
         Interval retval = new Interval(interval.lattice);
         
-        retval.lowerBound = -retval.lowerBound;
-        retval.upperBound = -retval.upperBound;
+        retval.lowerBound = -interval.upperBound;
+        retval.upperBound = -interval.lowerBound;
         
         retval.updateRanges();
         
