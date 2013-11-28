@@ -158,4 +158,10 @@ public class ArrayAssignment extends Statement {
 
         return lattice;
     }
+    
+    private IntervalLattice transferFunction(IntervalLattice lattice) {
+        lattice.get(id).set(this.expr.evalulate(lattice));
+        return lattice;
+    }
+    
 }
