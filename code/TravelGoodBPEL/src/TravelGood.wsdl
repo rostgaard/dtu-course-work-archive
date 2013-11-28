@@ -105,7 +105,7 @@
         <part name="itineraryID" type="tns:itineraryID"/>
         <part name="origin" type="xsd:string"/>
         <part name="destination" type="xsd:string"/>
-        <part name="datetime" type="xsd:dateTime"/>
+        <part name="date" type="xsd:dateTime"/>
     </message>
     <message name="GetFlightsResponse">
         <part name="flights" type="ld:flightList"/>
@@ -262,6 +262,7 @@
     <vprop:propertyAlias propertyName="tns:itineraryID" messageType="tns:GetFlightsRequest" part="itineraryID"/>
     <vprop:propertyAlias propertyName="tns:itineraryID" messageType="tns:GetHotelsRequest" part="itineraryID"/>
     <vprop:propertyAlias propertyName="tns:itineraryID" messageType="tns:BookItineraryRequest" part="itineraryID"/>
+    <vprop:propertyAlias propertyName="tns:itineraryID" messageType="tns:CancelItineraryRequest" part="itineraryID"/>
     <vprop:property name="customerID" type="tns:customerID"/>
     <vprop:propertyAlias propertyName="tns:customerID" messageType="tns:CreateItineraryRequest" part="customerID"/>
     <vprop:propertyAlias propertyName="tns:customerID" messageType="tns:AddFlightRequest" part="customerID"/>
@@ -271,4 +272,5 @@
     <vprop:propertyAlias propertyName="tns:customerID" messageType="tns:GetFlightsRequest" part="customerID"/>
     <vprop:propertyAlias propertyName="tns:customerID" messageType="tns:GetHotelsRequest" part="customerID"/>
     <vprop:propertyAlias propertyName="tns:customerID" messageType="tns:BookItineraryRequest" part="customerID"/>
+    <vprop:propertyAlias propertyName="tns:customerID" messageType="tns:CancelItineraryRequest" part="customerID"/>
 </definitions>

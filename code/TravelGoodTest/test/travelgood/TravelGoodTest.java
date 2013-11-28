@@ -8,7 +8,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.Holder;
-import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import servicewrappers.BPELWrapper;
@@ -52,7 +51,7 @@ public class TravelGoodTest {
         String origin = "Kastrup";
         String destination = "Kabul";
         DatatypeFactory df = DatatypeFactory.newInstance();
-        date1 = df.newXMLGregorianCalendar("2013-11-17");
+        date1 = df.newXMLGregorianCalendar("2013-11-17T00:00:00");
         FlightList flights = client.getFlights(customerID, itineraryID, origin, destination, date1);
         assertEquals(1, flights.getFlights().size());
         client.addFlight(customerID, itineraryID, flights.getFlights().get(0));
@@ -67,19 +66,15 @@ public class TravelGoodTest {
         assertTrue(compareFlightInformation(info1, info2));
         assertEquals(0,hotelBookings.value.getHotelBooking().size());
     }
-    
-    @Test
-    public void testAddHotel(){
-        client.createItinerary(testId);
-        client.getHotels(testId, testId, date1, date1);
-    }
+   
     
     private boolean compareFlightInformation(FlightInformation info1, FlightInformation info2){
         return info1.getBookingNo().equals(info2.getBookingNo()) &&
                 compareFlights(info1.getFlight(), info2.getFlight()) &&
-                info1.getPrice() == info2.getPrice() &&
+                info1.getPrice() == info2.getPrice();
+       /* &&
                 info1.getReservationService().equals(info2.getReservationService());
-                
+                */
     }
     
     private boolean compareFlights(Flight flight1, Flight flight2){

@@ -63,9 +63,9 @@ public final class FlightDatabase {
            throw new NullPointerException();
         }
         
-        XMLGregorianCalendar date1 = df.newXMLGregorianCalendar("2013-11-17");
+        XMLGregorianCalendar date1 = df.newXMLGregorianCalendar("2013-11-17T00:00:00");
         
-        XMLGregorianCalendar date2 = df.newXMLGregorianCalendar("2013-11-18");
+        XMLGregorianCalendar date2 = df.newXMLGregorianCalendar("2013-11-18T00:00:00");
         
         
         

@@ -35,8 +35,8 @@ public class LameDuckTest {
         lameDuckResetOperation();
         
         DatatypeFactory df = DatatypeFactory.newInstance();
-        date1 = df.newXMLGregorianCalendar("2013-11-17");
-        date2 = df.newXMLGregorianCalendar("2013-11-18");
+        date1 = df.newXMLGregorianCalendar("2013-11-17T00:00:00");
+        date2 = df.newXMLGregorianCalendar("2013-11-18T00:00:00");
         
         cc.setName("Tick Joachim");
         cc.setNumber("50408824");
@@ -119,7 +119,7 @@ public class LameDuckTest {
         assertTrue(result);
         assertEquals(flights.getFlights().size(),0);
         try {
-            cancelFlight(bookingNumber, cc, price);
+            cancelFlight(bookingNumber, price, cc);
         } catch (CancelFlightFault ex) {
             fail();
         }
@@ -164,7 +164,7 @@ public class LameDuckTest {
     @Test(expected = CancelFlightFault.class)
     public void testCancelFail() throws CancelFlightFault{
         cc.setNumber("91876523");
-        cancelFlight("Some Number", cc, 900);
+        cancelFlight("Some Number", 900, cc);
     }
     
     @Test
@@ -184,7 +184,7 @@ public class LameDuckTest {
         
         assertEquals(flights2.getFlights().size(), 0);
         String cancelNumber = flights.getFlights().get(0).getBookingNo();
-        cancelFlight(cancelNumber, cc, 999);
+        cancelFlight(cancelNumber, 999, cc);
         
         FlightList flights3 = getFlights(origin, destination, date1);
         assertEquals(flights3.getFlights().size(),1);
@@ -202,26 +202,20 @@ public class LameDuckTest {
 
     private static boolean bookFlight(java.lang.String bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInfo) throws BookFlightFault {
         ws.dtu.lameduck.LameDuckService service = new ws.dtu.lameduck.LameDuckService();
-        ws.dtu.lameduck.LameDuckPortType port = service.getLameDuckPortTypeBindingPort();
+        ws.dtu.lameduck.LameDuckPortType port = service.getLameDuckPort();
         return port.bookFlight(bookingNumber, creditCardInfo);
     }
 
-    private static boolean cancelFlight(java.lang.String bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInfo, int price) throws CancelFlightFault {
+    private static boolean cancelFlight(java.lang.String bookingNumber, int price, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInfo) throws CancelFlightFault {
         ws.dtu.lameduck.LameDuckService service = new ws.dtu.lameduck.LameDuckService();
-        ws.dtu.lameduck.LameDuckPortType port = service.getLameDuckPortTypeBindingPort();
-        return port.cancelFlight(bookingNumber, creditCardInfo, price);
+        ws.dtu.lameduck.LameDuckPortType port = service.getLameDuckPort();
+        return port.cancelFlight(bookingNumber, price, creditCardInfo);
     }
 
     private static FlightList getFlights(java.lang.String origin, java.lang.String destination, javax.xml.datatype.XMLGregorianCalendar liftOff) {
         ws.dtu.lameduck.LameDuckService service = new ws.dtu.lameduck.LameDuckService();
-        ws.dtu.lameduck.LameDuckPortType port = service.getLameDuckPortTypeBindingPort();
+        ws.dtu.lameduck.LameDuckPortType port = service.getLameDuckPort();
         return port.getFlights(origin, destination, liftOff);
     }
 
-    
-
-  
-
-    
-    
 }
