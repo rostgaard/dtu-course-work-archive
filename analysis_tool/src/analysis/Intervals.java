@@ -8,7 +8,7 @@ package analysis;
  *
  * @author krc
  */
-public enum IntervalExtremes {
+public enum Intervals {
     IN_RANGE,
     MINUS_INF,
     INF,

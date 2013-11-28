@@ -58,18 +58,21 @@ public class Main {
                 System.out.println(program.getStmts().toStringWithLabel());
                 System.out.println("==== End program =====");
                 
-                System.out.println("==== Labels =====");
-                System.out.println(program.getStmts().lables());
-                
-                System.out.println("==== Reaching definitions =====");
-                System.out.println(program.calculate(new RDLattice(program.getDecls())));
+//                System.out.println("==== Labels =====");
+//                System.out.println(program.getStmts().lables());
+//                
+//                System.out.println("==== Flows =====");
+//                System.out.println(program.getStmts().flow());
+//
+//                System.out.println("==== Reaching definitions =====");
+//                System.out.println(program.calculate(new RDLattice(program.getDecls())));
                 
                 //System.out.println("==== Program slice ====");
                 //NodeSet programSlice = ProgramSlicing.execute(flows.get(2).getSource(), analysis);
                 //ystem.out.println(programSlice);
 
-                System.out.println("==== Signs analysis =====");
-                System.out.println(program.calculate(new SignsLattice(program.getDecls())));
+//                System.out.println("==== Signs analysis =====");
+//                System.out.println(program.calculate(new SignsLattice(program.getDecls())));
                 
                 System.out.println("==== Interval analysis =====");
                 System.out.println(program.calculate(new IntervalLattice(program.getDecls())));

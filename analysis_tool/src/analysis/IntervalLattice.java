@@ -37,7 +37,7 @@ public final class IntervalLattice extends HashMap<Variable, Interval> implement
     public Lattice factory() {
         IntervalLattice retval = new IntervalLattice();
         for (Declaration decl : declarations) {
-            retval.put(decl.getId(), new Interval(Minimum, Maximum));
+            retval.put(decl.getId(), new Interval(this));
         }
         return retval;
     }
@@ -46,7 +46,7 @@ public final class IntervalLattice extends HashMap<Variable, Interval> implement
     public Lattice iota() {
         IntervalLattice retval = new IntervalLattice();
         for (Declaration decl : declarations) {
-            retval.put(decl.getId(), new Interval(Minimum, Maximum).setInterval(0, 0));
+            retval.put(decl.getId(), new Interval(this).setInterval(0, 0));
         }
         return retval;
     }

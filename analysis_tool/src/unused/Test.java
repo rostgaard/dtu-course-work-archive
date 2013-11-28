@@ -4,16 +4,13 @@ package unused;
 import analysis.Definition;
 import analysis.DefinitionSet;
 import analysis.RDLattice;
-import edu.uci.ics.jung.graph.Tree;
 import flowgraph.datastructure.Node;
 import syntaxtree.AbstractSyntaxTree;
 import syntaxtree.DeclarationList;
 import syntaxtree.Type;
-import syntaxtree.declaration.Declaration;
 import syntaxtree.declaration.Int;
 import syntaxtree.declaration.Level;
 import syntaxtree.expression.Variable;
-import syntaxtree.statement.Assignment;
 import syntaxtree.statement.Skip;
 
 /*

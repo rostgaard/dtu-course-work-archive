@@ -1,5 +1,7 @@
 package syntaxtree.expression;
 
+import analysis.Interval;
+import analysis.IntervalLattice;
 import analysis.Sign;
 import analysis.SignSet;
 import analysis.SignsLattice;
@@ -18,7 +20,7 @@ public class OperationExpression extends Expression {
 
     /**
      * Returns the list of possible signs from an operation. This is based on
-     * the operation type given in the current object. It performs lookups in 
+     * the operation type given in the current object. It performs lookups in
      * tables defined in {@link SignSet}.
      *
      * @param lhs The left hand side of the operation
@@ -36,7 +38,7 @@ public class OperationExpression extends Expression {
             case DIVISION:
                 return SignSet.divisionMatrix[SignSet.indexOf(lhs)][SignSet.indexOf(rhs)];
         }
-        
+
         // If we don't know the operator, is better to cowardly quit.
         return SignSet.empty;
     }
@@ -52,6 +54,23 @@ public class OperationExpression extends Expression {
                 result.merge(evaluationTable(lhs, rhs));
             }
         }
+        return result;
+    }
+
+    /**
+     *
+     * @param lattice
+     * @return
+     */
+    @Override
+    public Interval evalulate(IntervalLattice lattice) {
+        Interval lhsInterval = this.expr1.evalulate(lattice);
+        Interval rhsInterval = this.expr2.evalulate(lattice);
+        Interval result = new Interval(lattice);
+
+        // TODO: Take into account arithmetic operations.
+        result.merge(lhsInterval);
+        result.merge(rhsInterval);
         return result;
     }
 

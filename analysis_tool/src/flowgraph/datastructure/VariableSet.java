@@ -12,20 +12,27 @@ public class VariableSet extends ArrayList<Variable> {
         return new VariableSet();
     }
 
-    public VariableSet addVariable(Variable v) {
-        super.add(v);
+    /**
+     * Chaining version of add. Enables us to chain procedure on a set, instead
+     * of having instantiate an object and push-by-procedure.
+     *
+     * @param variable The new variable to push to the set.
+     * @return The reference to the same object.
+     */
+    public VariableSet addVariable(Variable variable) {
+        super.add(variable);
 
         return this;
     }
 
     /**
-     * Horribly inefficient Union operation, please fix prior to actual release
+     * Horribly inefficient Union operation. Please fix prior to actual release
      * upon the world.
      *
-     * @param nset
+     * @param otherSet The rhs of the union operation.
      */
-    public VariableSet union(VariableSet vset) {
-        for (Variable v : vset) {
+    public VariableSet union(VariableSet otherSet) {
+        for (Variable v : otherSet) {
             if (!this.contains(v)) {
                 this.add(v);
             }

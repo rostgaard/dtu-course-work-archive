@@ -6,8 +6,8 @@ public class Interval {
     int upperValue;
     int minValue;
     int maxValue;
-    IntervalExtremes exMin;
-    IntervalExtremes exMax;
+    Intervals exMin;
+    Intervals exMax;
 
     public Interval setInterval(int minValue, int maxValue) {
         this.lowerValue = minValue;
@@ -15,108 +15,94 @@ public class Interval {
         return this;
     }
 
-    public Interval(int minimumValue, int maximumValue) {
-        this.minValue = minimumValue;
-        this.maxValue = maximumValue;
-        
-        this.exMin = IntervalExtremes.IN_RANGE;
-        this.exMax = IntervalExtremes.IN_RANGE;
+    public Interval(IntervalLattice lattice) {
+        this.minValue = lattice.Minimum;
+        this.maxValue = lattice.Maximum;
 
+        this.exMin = Intervals.IN_RANGE;
+        this.exMax = Intervals.IN_RANGE;
     }
 
     @Override
     public String toString() {
         String buffer = "[";
-        if (this.exMin == IntervalExtremes.IN_RANGE) {
+        if (this.exMin == Intervals.IN_RANGE) {
             buffer += this.lowerValue;
-        } 
-        else {
+        } else {
             buffer += this.exMin;
         }
-        
+
         buffer += ";";
-        
-        if (this.exMax == IntervalExtremes.IN_RANGE) {
+
+        if (this.exMax == Intervals.IN_RANGE) {
             buffer += this.upperValue;
-        } 
-        else {
+        } else {
             buffer += this.exMax;
         }
-        
+
         return buffer + "]";
     }
-    
-    public Interval put(Sign s) {
-//        if (!this.contains((Sign) s)) {
-//            this.add(s);
-//        }
+
+    public Interval set(Interval interval) {
+        this.lowerValue = interval.lowerValue;
+        this.upperValue = interval.upperValue;
+        this.minValue   = interval.minValue;
+        this.maxValue   = interval.maxValue;
+        this.exMin      = interval.exMin;
+        this.exMax      = interval.exMax;
+        
         return this;
     }
 
     public boolean subsetOf(Interval otherInterval) {
-        if (this.exMin == IntervalExtremes.IN_RANGE
-                && otherInterval.exMin == IntervalExtremes.IN_RANGE
-                && this.exMax == IntervalExtremes.IN_RANGE
-                && otherInterval.exMax == IntervalExtremes.IN_RANGE) {
-            return (this.minValue >= otherInterval.minValue) &&
-                    (this.maxValue <= otherInterval.maxValue);
+        if (this.exMin == Intervals.IN_RANGE
+                && otherInterval.exMin == Intervals.IN_RANGE
+                && this.exMax == Intervals.IN_RANGE
+                && otherInterval.exMax == Intervals.IN_RANGE) {
+            return (this.lowerValue >= otherInterval.lowerValue)
+                    && (this.upperValue <= otherInterval.upperValue);
         }
-        
+
         //TODO Handle extremum cases.
 
         return false;
     }
 
     public Interval merge(Interval otherInterval) {
-        if (this.exMin == IntervalExtremes.IN_RANGE
-                && otherInterval.exMin == IntervalExtremes.IN_RANGE) {
+        if (this.exMin == Intervals.IN_RANGE
+                && otherInterval.exMin == Intervals.IN_RANGE) {
 
-            this.minValue = Math.min(this.minValue, otherInterval.minValue);
-        }
-
-        if (this.exMax == IntervalExtremes.IN_RANGE
-                && otherInterval.exMax == IntervalExtremes.IN_RANGE) {
-
-            this.maxValue = Math.max(this.maxValue, otherInterval.maxValue);
+            this.lowerValue = Math.min(this.lowerValue, otherInterval.lowerValue);
         }
 
-        else if (this.exMax == IntervalExtremes.INF || 
-                otherInterval.exMax == IntervalExtremes.INF) {
-            this.exMax = IntervalExtremes.INF;
-        }
+        if (this.exMax == Intervals.IN_RANGE
+                && otherInterval.exMax == Intervals.IN_RANGE) {
 
-        else if (this.exMin == IntervalExtremes.INF || 
-                otherInterval.exMin == IntervalExtremes.INF) {
-            this.exMin = IntervalExtremes.INF;
-        }
-        
-        else if (this.exMax == IntervalExtremes.MINUS_INF || 
-                otherInterval.exMax == IntervalExtremes.MINUS_INF) {
-            this.exMax = IntervalExtremes.MINUS_INF;
-        }
-
-        else if (this.exMin == IntervalExtremes.MINUS_INF || 
-                otherInterval.exMin == IntervalExtremes.MINUS_INF) {
-            this.exMin = IntervalExtremes.MINUS_INF;
-        }
-        else if (this.exMax == IntervalExtremes.MAX || 
-                otherInterval.exMax == IntervalExtremes.MAX) {
-            this.exMax = IntervalExtremes.MAX;
-        }
-
-        else if (this.exMin == IntervalExtremes.MAX || 
-                otherInterval.exMin == IntervalExtremes.MAX) {
-            this.exMin = IntervalExtremes.MAX;
-        }
-        
-        else if (this.exMax == IntervalExtremes.MIN || 
-                otherInterval.exMax == IntervalExtremes.MIN) {
-            this.exMax = IntervalExtremes.MIN;
-        }
-
-        else if (this.exMin == IntervalExtremes.MIN || 
-                otherInterval.exMin == IntervalExtremes.MIN) {
-            this.exMin = IntervalExtremes.MIN;
+            this.upperValue = Math.max(this.upperValue, otherInterval.upperValue);
+        } else if (this.exMax == Intervals.INF
+                || otherInterval.exMax == Intervals.INF) {
+            this.exMax = Intervals.INF;
+        } else if (this.exMin == Intervals.INF
+                || otherInterval.exMin == Intervals.INF) {
+            this.exMin = Intervals.INF;
+        } else if (this.exMax == Intervals.MINUS_INF
+                || otherInterval.exMax == Intervals.MINUS_INF) {
+            this.exMax = Intervals.MINUS_INF;
+        } else if (this.exMin == Intervals.MINUS_INF
+                || otherInterval.exMin == Intervals.MINUS_INF) {
+            this.exMin = Intervals.MINUS_INF;
+        } else if (this.exMax == Intervals.MAX
+                || otherInterval.exMax == Intervals.MAX) {
+            this.exMax = Intervals.MAX;
+        } else if (this.exMin == Intervals.MAX
+                || otherInterval.exMin == Intervals.MAX) {
+            this.exMin = Intervals.MAX;
+        } else if (this.exMax == Intervals.MIN
+                || otherInterval.exMax == Intervals.MIN) {
+            this.exMax = Intervals.MIN;
+        } else if (this.exMin == Intervals.MIN
+                || otherInterval.exMin == Intervals.MIN) {
+            this.exMin = Intervals.MIN;
         }
 
         return this;

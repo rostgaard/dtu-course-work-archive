@@ -16,6 +16,6 @@ public abstract class Expression {
 
     public abstract SignSet evalulate(SignsLattice lattice);
     public Interval evalulate(IntervalLattice lattice) {
-        return new Interval(0, 0);
+        return new Interval(lattice);
     }
 }

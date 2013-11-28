@@ -131,7 +131,7 @@ public class Assignment extends Statement {
     }
 
     private IntervalLattice transferFunction(IntervalLattice lattice) {
-        lattice.get(id).merge(this.expr.evalulate(lattice));
+        lattice.get(id).set(this.expr.evalulate(lattice));
         return lattice;
     }
 

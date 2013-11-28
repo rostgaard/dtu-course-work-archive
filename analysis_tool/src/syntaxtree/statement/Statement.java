@@ -19,16 +19,6 @@ public abstract class Statement implements analysis.Analysable {
 
     private int label = -1; // Default value for an unassigned statement.
 
-    public abstract NodeSet labels();
-
-    public abstract NodeSet finalNodes();
-
-    public abstract Node init();
-
-    public abstract FlowSet flow();
-
-    public abstract VariableSet getVariable();
-
     public String toStringWithLabel() {
         return Symbols.LSQPARAN + this.toString() + Symbols.RSQPARAN + this.label;
     }
