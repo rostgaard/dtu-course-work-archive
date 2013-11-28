@@ -183,13 +183,13 @@ public class TravelAgencyRESTTest {
          ClientResponse itineraryClientResponse = RestService.createItinerary(customerID);
          Itinerary itinerary = RestService.getItinerary(customerID, itineraryClientResponse.getLocation()).getEntity(Itinerary.class);
          
-         // Add hotel to itinerary
-         RestService.addHotel(customerID, itinerary.getID(), hotelBooking);
-         
          // Add flight to itinerary
          RestService.addFlight(customerID, itinerary.getID(), flightBooking);
 
-         // Add the same hotel again
+         // Add the flight again. Should not be allowed to book.
+         RestService.addFlight(customerID, itinerary.getID(), flightBooking);
+         
+         // Add hotel to itinerary
          RestService.addHotel(customerID, itinerary.getID(), hotelBooking);
          
          //Get itinerary
@@ -214,15 +214,15 @@ public class TravelAgencyRESTTest {
           //Get itinerary
          itinerary = RestService.getItinerary(customerID, itineraryClientResponse.getLocation()).getEntity(Itinerary.class);
          
-         // verify fligt is cancelled
+         // verify second fligt and  hotel unbooked
+         FlightBooking flightBooking2 = itinerary.getFlightBookings().getFlights().get(1);
+         assertEquals(FlightBookingState.UNBOOKED, flightBooking2.getBookingState());
+         HotelBooking hotelBooking1 = itinerary.getHotelBookings().getHotels().get(0);
+         assertEquals(HotelBooking.HotelBookingState.UNBOOKED, hotelBooking1.getBookingState());
+         
+         // verify first flight is cancelled
          FlightBooking flightBooking1 = itinerary.getFlightBookings().getFlights().get(0);
          assertEquals(FlightBookingState.CANCELLED, flightBooking1.getBookingState());
-         
-         // verify hotels are unconfirmed
-         HotelBooking hotelBooking1 = itinerary.getHotelBookings().getHotels().get(0);
-         HotelBooking hotelBooking2 = itinerary.getHotelBookings().getHotels().get(1);
-         assertEquals(HotelBooking.HotelBookingState.UNBOOKED, hotelBooking1.getBookingState());
-         assertEquals(HotelBooking.HotelBookingState.UNBOOKED, hotelBooking2.getBookingState());
      }
 //     
 //     @Test

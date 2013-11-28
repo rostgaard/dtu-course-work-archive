@@ -70,13 +70,13 @@ public final class FlightDatabase {
         
         
         Flight newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight,"SAS0001", 2, serviceName ));
+        insert(generateFlightInformation(newFlight,"SAS0001", 200, serviceName ));
         
         newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "Norwegian");
-        insert(generateFlightInformation(newFlight, "NOR0001", 2, serviceName));
+        insert(generateFlightInformation(newFlight, "NOR0001", 200, serviceName));
         
         newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "Kabul Air");
-        insert(generateFlightInformation(newFlight, "NOR0002", 2, serviceName));
+        insert(generateFlightInformation(newFlight, "NOR0002", 200, serviceName));
         
         newFlight = generateFlight("Kabul", "Kastrup", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight, "SAS0002", 250, serviceName));
@@ -97,7 +97,7 @@ public final class FlightDatabase {
         insert(generateFlightInformation(newFlight, "SAS0007", 150, serviceName));
         
         newFlight = generateFlight("Kastrup", "Kazakhstan", date1, date2, "SAS");
-        insert(generateFlightInformation(newFlight, "SAS0008", 200, serviceName)); 
+        insert(generateFlightInformation(newFlight, "SAS0008", 300, serviceName)); 
     }
     
     private  Flight generateFlight(String origin, String destination, XMLGregorianCalendar liftOff, XMLGregorianCalendar arrival, String carrier){

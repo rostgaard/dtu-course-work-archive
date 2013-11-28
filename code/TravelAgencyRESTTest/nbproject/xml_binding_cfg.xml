@@ -1,20 +1,20 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <schemas xmlns='http://xml.netbeans.org/schema/JAXBWizConfig' destdir='build/generated-sources/jaxb' projectName='TravelAgencyRESTTest' version='1.0'>
-	<schema type='-xmlschema' package='' name='LameDuckBinding'>
-		<xjc-options>
-		</xjc-options>
-		<schema-sources>
-			<schema-source location='xml-resources/jaxb/LameDuckBinding/LameDuck.xsd' origLocation='../LameDuck/src/java/ws/dtu/lameduck/xml/LameDuck.xsd'/>
-		</schema-sources>
-		<bindings>
-		</bindings>
-		<catalog/>
-	</schema>
 	<schema type='-xmlschema' package='' name='NiceViewBinding'>
 		<xjc-options>
 		</xjc-options>
 		<schema-sources>
 			<schema-source location='xml-resources/jaxb/NiceViewBinding/NiceView.xsd' origLocation='../NiceView/src/java/ws/dtu/niceview/xml/NiceView.xsd'/>
+		</schema-sources>
+		<bindings>
+		</bindings>
+		<catalog/>
+	</schema>
+	<schema type='-xmlschema' package='' name='LameDuckBinding'>
+		<xjc-options>
+		</xjc-options>
+		<schema-sources>
+			<schema-source location='xml-resources/jaxb/LameDuckBinding/LameDuck.xsd' origLocation='../LameDuck/src/java/ws/dtu/lameduck/xml/LameDuck.xsd'/>
 		</schema-sources>
 		<bindings>
 		</bindings>
