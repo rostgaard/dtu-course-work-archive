@@ -26,10 +26,10 @@ public class BPELWrapper implements TravelGoodClient  {
     }
 
     @Override
-    public FlightList getFlights(java.lang.String customerID, java.lang.String itineraryID, java.lang.String origin, java.lang.String destination, javax.xml.datatype.XMLGregorianCalendar datetime) {
+    public FlightList getFlights(java.lang.String customerID, java.lang.String itineraryID, java.lang.String origin, java.lang.String destination, javax.xml.datatype.XMLGregorianCalendar liftOff) {
         ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
         ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
-        return port.getFlights(customerID, itineraryID, origin, destination, datetime);
+        return port.getFlights(customerID, itineraryID, origin, destination, liftOff);
     }
 
     @Override

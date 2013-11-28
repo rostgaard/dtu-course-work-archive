@@ -17,7 +17,7 @@
     <message name="getFlightsRequest">
         <part name="origin" type="xsd:string"/>
         <part name="destination" type="xsd:string"/>
-        <part name="liftOff" type="xsd:dateTime"/>
+        <part name="liftOff" type="xsd:date"/>
     </message>
     <message name="getFlightsResponse">
         <part name="flights" type="ns0:flightList"/>

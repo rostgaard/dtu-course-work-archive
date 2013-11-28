@@ -3,8 +3,8 @@
         <xsd:sequence>
             <xsd:element name="origin" type="xsd:string"/>
             <xsd:element name="destination" type="xsd:string"/>
-            <xsd:element name="liftOff" type="xsd:date"/>
-            <xsd:element name="arrival" type="xsd:date"/>
+            <xsd:element name="liftOff" type="xsd:dateTime"/>
+            <xsd:element name="arrival" type="xsd:dateTime"/>
             <xsd:element name="carrier" type="xsd:string"/>
         </xsd:sequence>
     </xsd:complexType>

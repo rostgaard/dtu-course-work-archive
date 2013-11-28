@@ -108,12 +108,12 @@
                         <sequence name="Sequence1">
                             <assign name="Assign3">
                                 <copy>
-                                    <from variable="flightBookings"/>
-                                    <to variable="GetItineraryOut" part="flights"/>
-                                </copy>
-                                <copy>
                                     <from variable="hotelBookings"/>
                                     <to variable="GetItineraryOut" part="hotels"/>
+                                </copy>
+                                <copy>
+                                    <from variable="flightBookings"/>
+                                    <to variable="GetItineraryOut" part="flights"/>
                                 </copy>
                             </assign>
                             <reply name="Reply3" partnerLink="TravelGoodPartnerLink" operation="GetItinerary" portType="ns0:TravelGoodPortType" variable="GetItineraryOut">                            </reply>
@@ -241,7 +241,7 @@
                                         <to variable="GetFlightsInLameDuck" part="liftOff"/>
                                     </copy>
                                 </assign>
-                                <invoke name="GetFlightsInvoke" partnerLink="LameDuckPartnerLink" operation="getFlights" xmlns:tns="http://lameduck.dtu.ws/" portType="tns:LameDuckPortType" inputVariable="GetFlightsInLameDuck" outputVariable="GetFlightsOutLameDuck"/>
+                                <invoke name="GetFlightsInvoke" partnerLink="LameDuckPartnerLink" operation="getFlights" xmlns:tns="http://lameduck.dtu.ws/" portType="tns:LameDuckPortType" inputVariable="GetFlightsInLameDuck" outputVariable="GetFlightsOutLameDuck"></invoke>
                                 <assign name="Assign12">
                                     <copy>
                                         <from variable="GetFlightsOutLameDuck" part="flights"/>

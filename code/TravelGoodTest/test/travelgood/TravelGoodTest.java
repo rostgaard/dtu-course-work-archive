@@ -8,7 +8,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.Holder;
-import org.junit.Test;
+import org.junit.*;
 import static org.junit.Assert.*;
 import servicewrappers.BPELWrapper;
 import ws.dtu.lameduck.types.Flight;
@@ -28,32 +28,38 @@ public class TravelGoodTest {
     protected String itineraryID = "itinerary42";
     
     private XMLGregorianCalendar date1;
+    
     public TravelGoodTest() {
         client = new BPELWrapper();
     }
     
+    @Before
+    public void beforeStart() {
+        client.createItinerary(customerID, itineraryID);
+    }
+    
+    @After
+    public void after() {
+        client.cancelPlanning(customerID, itineraryID);
+    }
+    
     @Test
     public void testCreateItinerary(){
-        client.createItinerary(customerID, itineraryID);
-        
         Holder<FlightBookings> flights = new Holder<FlightBookings>();
         Holder<HotelBookings> hotels = new Holder<HotelBookings>();
         client.getItinerary(customerID, itineraryID, flights, hotels);
         assertEquals(0,flights.value.getFlightBooking().size());
         assertEquals(0,hotels.value.getHotelBooking().size());
-        client.cancelPlanning(customerID, itineraryID);
     }
     
     @Test
     public void testAddFlight() throws DatatypeConfigurationException{
-        client.createItinerary(customerID, itineraryID);
-        
         String origin = "Kastrup";
         String destination = "Kabul";
         DatatypeFactory df = DatatypeFactory.newInstance();
-        date1 = df.newXMLGregorianCalendar("2013-11-17T00:00:00");
+        date1 = df.newXMLGregorianCalendar("2013-11-17");
         FlightList flights = client.getFlights(customerID, itineraryID, origin, destination, date1);
-        assertEquals(1, flights.getFlights().size());
+        assertEquals(3, flights.getFlights().size());
         client.addFlight(customerID, itineraryID, flights.getFlights().get(0));
         
         Holder<FlightBookings> flightBookings = new Holder<FlightBookings>();
@@ -64,12 +70,12 @@ public class TravelGoodTest {
         FlightInformation info1 = flights.getFlights().get(0);
         FlightInformation info2 = flightBookings.value.getFlightBooking().get(0).getFlightInformation();
         assertTrue(compareFlightInformation(info1, info2));
-        assertEquals(0,hotelBookings.value.getHotelBooking().size());
+        assertEquals(0, hotelBookings.value.getHotelBooking().size());
     }
    
     
     private boolean compareFlightInformation(FlightInformation info1, FlightInformation info2){
-        return info1.getBookingNo().equals(info2.getBookingNo()) &&
+        return  info1.getBookingNo().equals(info2.getBookingNo()) &&
                 compareFlights(info1.getFlight(), info2.getFlight()) &&
                 info1.getPrice() == info2.getPrice();
        /* &&
