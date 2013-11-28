@@ -127,7 +127,6 @@ public class Assignment extends Statement {
         lattice.kill(id).union(
                 ((RDLattice) lattice).gen(id, this.toNode()));
         return lattice;
-
     }
 
     private IntervalLattice transferFunction(IntervalLattice lattice) {

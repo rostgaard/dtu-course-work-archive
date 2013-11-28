@@ -1,5 +1,7 @@
 package syntaxtree.condition;
 
+import analysis.SignSet;
+import analysis.SignsLattice;
 import syntaxtree.RelationOperation;
 import syntaxtree.Symbols;
 import syntaxtree.expression.Expression;
@@ -47,10 +49,35 @@ public class ExpressionOperationCondition extends Condition {
     public String debugInformation() {
         return "\nClass: " + getClass().getSimpleName() + "\nExpression1: " + expr1.toString() + "\nExpression2: " + expr2.toString() + "\nRelation Operation: " + ro.toString() + "\n";
     }
-    
+
     @Override
     public String toString() {
-        return expr1 + Symbols.SEPERATOR + 
-                Symbols.symbolOf(ro) + Symbols.SEPERATOR +  expr2;
+        return expr1 + Symbols.SEPERATOR
+                + Symbols.symbolOf(ro) + Symbols.SEPERATOR + expr2;
+    }
+
+    @Override
+    public SignSet evaluate(SignsLattice lattice) {
+        SignSet lhsSigns = expr1.evalulate(lattice);
+        SignSet rhsSigns = expr2.evalulate(lattice);
+        SignSet retval = new SignSet();
+
+        switch (this.ro) {
+            case EQUAL:
+                // intersection
+                if (lhsSigns.equals(rhsSigns)) {
+                    
+                }
+            case GREATEREQUALTHAN:
+            case GREATERTHAN:
+            case LESSEQUALTHAN:
+            case LESSTHAN:
+            case NOTEQUAL:
+            default:
+                retval.merge(SignSet.pnz);
+                return retval;
+
+        }
+
     }
 }

@@ -1,5 +1,7 @@
 package syntaxtree.condition;
 
+import analysis.SignSet;
+import analysis.SignsLattice;
 import syntaxtree.Symbols;
 
 /**
@@ -29,5 +31,12 @@ public class ParenthesesCondition extends Condition {
     @Override
     public String toString() {
         return Symbols.LPARAN + cond + Symbols.RPARAN;
+    }
+    
+    @Override
+    public SignSet evaluate(SignsLattice lattice) {
+        SignSet retval = new SignSet();
+        retval.merge(this.evaluate(lattice));
+        return retval;
     }
 }

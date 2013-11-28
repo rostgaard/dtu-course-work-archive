@@ -1,31 +1,42 @@
 package syntaxtree.condition;
 
+import analysis.SignSet;
+import analysis.SignsLattice;
+
 /**
  * Data representation for the boolean value "true"
  *
  */
-public class TrueCondition extends Condition{
+public class TrueCondition extends Condition {
 
-	private boolean truee = true;
-		
-	public boolean getTrue(){
-		return truee;
-	}
+    private static final boolean value = true;
 
-	public boolean isTrue() {
-		return truee;
-	}
+    public boolean getTrue() {
+        return value;
+    }
 
-	public void setTrue(boolean truee) {
-		this.truee = truee;
-	}
-	
-	public String debugInformation() {
-		return "\nClass: " + getClass().getSimpleName() + "\nValue: " + truee + "\n";
-	}
-        
-        @Override
-        public String toString() {
-            return "true";
-        }
+    public boolean isTrue() {
+        return value;
+    }
+
+    public String debugInformation() {
+        return "\nClass: " + getClass().getSimpleName() + "\nValue: " + value + "\n";
+    }
+
+    @Override
+    public String toString() {
+        return "true";
+    }
+
+    /**
+     * Tries to evaluate a condition. 
+     * @param lattice
+     * @return 
+     */
+    @Override
+    public SignSet evaluate(SignsLattice lattice) {
+        SignSet retval = new SignSet();
+        retval.merge(SignSet.empty);
+        return retval;
+    }
 }

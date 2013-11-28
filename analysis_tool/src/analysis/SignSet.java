@@ -3,7 +3,7 @@ package analysis;
 import static analysis.Sign.*;
 import java.util.HashSet;
 
-public class SignSet extends HashSet<Sign> {
+public class SignSet extends HashSet<Sign> implements Comparable<SignSet> {
 
     public static final SignSet p = new SignSet().put(Sign.P);
     public static final SignSet z = new SignSet().put(Sign.Z);
@@ -70,6 +70,19 @@ public class SignSet extends HashSet<Sign> {
             if (!this.contains(s)) {
                 this.add(s);
             }
+        }
+    }
+
+    public boolean equals(SignSet set) {
+        return this.subsetOf(set) && set.subsetOf(this);
+    }
+
+    @Override
+    public int compareTo(SignSet set) {
+        if (this.equals(set)) {
+            return 0;
+        } else {
+            return 1;
         }
     }
 }
