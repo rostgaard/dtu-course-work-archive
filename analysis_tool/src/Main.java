@@ -1,6 +1,9 @@
 
 import analysis.IntervalLattice;
+import analysis.LatticeSet;
+import analysis.ProgramSlicing;
 import analysis.RDLattice;
+
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
 
@@ -65,11 +68,11 @@ public class Main {
                 System.out.println(program.getStmts().flow());
 
                 System.out.println("==== Reaching definitions =====");
-                System.out.println(program.calculate(new RDLattice(program.getDecls())));
+                LatticeSet rd = program.calculate(new RDLattice(program.getDecls()));
+                System.out.println(rd);
                 
-                //System.out.println("==== Program slice ====");
-                //NodeSet programSlice = ProgramSlicing.execute(flows.get(2).getSource(), analysis);
-                //System.out.println(programSlice);
+                System.out.println("==== Program slice ====");
+                ProgramSlicing.execute(program.getStmts(), rd);
 
                 System.out.println("==== Signs analysis =====");
                 System.out.println(program.calculate(new SignsLattice(program.getDecls())));
