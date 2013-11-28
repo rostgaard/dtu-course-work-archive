@@ -2,32 +2,35 @@ package analysis;
 
 public class Interval {
 
-    int lowerValue;
-    int upperValue;
-    int minValue;
-    int maxValue;
+    IntervalLattice lattice;
+    int lowerBound;
+    int upperBound;
     Intervals exMin;
     Intervals exMax;
 
-    public Interval setInterval(int minValue, int maxValue) {
-        this.lowerValue = minValue;
-        this.upperValue = maxValue;
+    public Interval setAbsoluteInterval(int newLowerBound, int newUpperBound ) {
+        this.lowerBound = newLowerBound;
+        this.upperBound = newUpperBound;
+
+        this.updateRanges();
         return this;
     }
 
     public Interval(IntervalLattice lattice) {
-        this.minValue = lattice.Minimum;
-        this.maxValue = lattice.Maximum;
+        this.lattice = lattice;
 
         this.exMin = Intervals.IN_RANGE;
         this.exMax = Intervals.IN_RANGE;
+        
+        this.updateRanges();
     }
 
     @Override
     public String toString() {
+        
         String buffer = "[";
         if (this.exMin == Intervals.IN_RANGE) {
-            buffer += this.lowerValue;
+            buffer += this.lowerBound;
         } else {
             buffer += this.exMin;
         }
@@ -35,7 +38,7 @@ public class Interval {
         buffer += ";";
 
         if (this.exMax == Intervals.IN_RANGE) {
-            buffer += this.upperValue;
+            buffer += this.upperBound;
         } else {
             buffer += this.exMax;
         }
@@ -52,78 +55,100 @@ public class Interval {
     }
 
     private Intervals boundOf(int value) {
-        if (value == this.minValue) {
+        if (value == this.lattice.Minimum) {
             return Intervals.MIN;
-        } else if (value == this.maxValue) {
+        } else if (value == this.lattice.Maximum) {
             return Intervals.MAX;
-        } else if (value < this.minValue) {
+        } else if (value < this.lattice.Minimum) {
             return Intervals.MINUS_INF;
-        } else if (value > this.maxValue) {
+        } else if (value > this.lattice.Maximum) {
             return Intervals.MAX;
         }
 
         return Intervals.IN_RANGE;
     }
 
-    private void addition(Interval otherInterval) {
+    public static Interval addition(Interval interval1, Interval interval2) {
+        Interval retval = new Interval(interval1.lattice);
 
-        this.lowerValue += otherInterval.lowerValue;
-        this.upperValue += otherInterval.upperValue;
+        retval.lowerBound = interval1.lowerBound + interval2.lowerBound;
+        retval.upperBound = interval1.upperBound + interval2.upperBound;
 
-        updateRanges();
+        retval.updateRanges();
+
+        return retval;
     }
 
-    private void subtraction(Interval otherInterval) {
+    public static Interval subtraction(Interval interval1, Interval interval2) {
+        Interval retval = new Interval(interval1.lattice);
 
-        this.lowerValue -= otherInterval.lowerValue;
-        this.upperValue -= otherInterval.upperValue;
+        retval.lowerBound = interval1.lowerBound - interval2.lowerBound;
+        retval.upperBound = interval1.upperBound - interval2.upperBound;
 
-        updateRanges();
+        retval.updateRanges();
+
+        return retval;
     }
 
-    private void multiplication(Interval otherInterval) {
+    public static Interval multiplication(Interval interval1, Interval interval2) {
+        Interval retval = new Interval(interval1.lattice);
 
-        this.lowerValue *= otherInterval.lowerValue;
-        this.upperValue *= otherInterval.upperValue;
+        retval.lowerBound = interval1.lowerBound * interval2.lowerBound;
+        retval.upperBound = interval1.upperBound * interval2.upperBound;
 
-        updateRanges();
+        retval.updateRanges();
+
+        return retval;
     }
-    
-    private void division(Interval otherInterval) {
 
-        this.lowerValue /= otherInterval.lowerValue;
-        this.upperValue /= otherInterval.upperValue;
+    public static Interval division(Interval interval1, Interval interval2) {
+        Interval retval = new Interval(interval1.lattice);
 
-        updateRanges();
+        retval.lowerBound = interval1.lowerBound / interval2.lowerBound;
+        retval.upperBound = interval1.upperBound / interval2.upperBound;
+
+        retval.updateRanges();
+
+        return retval;
+    }
+
+    public static Interval negate(Interval interval) {
+        Interval retval = new Interval(interval.lattice);
+        
+        retval.lowerBound = -retval.lowerBound;
+        retval.upperBound = -retval.upperBound;
+        
+        retval.updateRanges();
+        
+        return retval;
     }
 
     private void updateRanges() {
 
         // Lower bound.
         if (!this.lowerBoundIsINF()) {
-            if (this.lowerValue == this.minValue) {
+            if (this.lowerBound == this.lattice.Minimum) {
                 this.exMin = Intervals.MIN;
-            } else if (this.lowerValue < this.minValue) {
+            } else if (this.lowerBound < this.lattice.Minimum) {
                 this.exMin = Intervals.MINUS_INF;
             }
         }
 
         // Upper bound.
-        if (this.upperBoundIsINF()) {
-            if (this.upperValue == this.maxValue) {
+        if (!this.upperBoundIsINF()) {
+            if (this.upperBound == this.lattice.Maximum) {
                 this.exMax = Intervals.MAX;
-            } else if (this.upperValue > this.maxValue) {
+            } else if (this.upperBound > this.lattice.Maximum) {
                 this.exMax = Intervals.INF;
             }
         }
     }
 
     public Interval set(Interval interval) {
-        this.lowerValue = interval.lowerValue;
-        this.upperValue = interval.upperValue;
+        this.lowerBound = interval.lowerBound;
+        this.upperBound = interval.upperBound;
 
-        this.minValue = interval.minValue;
-        this.maxValue = interval.maxValue;
+        this.lattice = interval.lattice;
 
         this.updateRanges();
 
@@ -131,74 +156,20 @@ public class Interval {
     }
 
     /**
-     * See table below.
-     * 
-     *                        rhs
-     *     -----------------------------------------
-     *     | lower |  INF  |  -INF |  MIN  |  Max  |
-     *     -----------------------------------------
-     *     |  INF  |   T
-     *     --------
-     * lhs | -INF  |
-     *     ---------
-     *     |  Min  |
-     *     ----------
-     *     |  Max  |
-     *     ----------
-     * 
      * @param otherInterval
-     * @return 
+     * @return
      */
     public boolean subsetOf(Interval otherInterval) {
-        if (this.exMin == Intervals.IN_RANGE
-                && otherInterval.exMin == Intervals.IN_RANGE
-                && this.exMax == Intervals.IN_RANGE
-                && otherInterval.exMax == Intervals.IN_RANGE) {
-            return (this.lowerValue >= otherInterval.lowerValue)
-                    && (this.upperValue <= otherInterval.upperValue);
-        }
-
-        //TODO Handle extremum cases.
-
-        return false;
+        return (this.lowerBound >= otherInterval.lowerBound
+                && this.upperBound <= otherInterval.upperBound);
     }
 
     public Interval merge(Interval otherInterval) {
-        if (this.exMin == Intervals.IN_RANGE
-                && otherInterval.exMin == Intervals.IN_RANGE) {
 
-            this.lowerValue = Math.min(this.lowerValue, otherInterval.lowerValue);
-        }
+        this.lowerBound = Math.min(this.lowerBound, otherInterval.lowerBound);
+        this.upperBound = Math.max(this.upperBound, otherInterval.upperBound);
 
-        if (this.exMax == Intervals.IN_RANGE
-                && otherInterval.exMax == Intervals.IN_RANGE) {
-
-            this.upperValue = Math.max(this.upperValue, otherInterval.upperValue);
-        } else if (this.exMax == Intervals.INF
-                || otherInterval.exMax == Intervals.INF) {
-            this.exMax = Intervals.INF;
-        } else if (this.exMin == Intervals.INF
-                || otherInterval.exMin == Intervals.INF) {
-            this.exMin = Intervals.INF;
-        } else if (this.exMax == Intervals.MINUS_INF
-                || otherInterval.exMax == Intervals.MINUS_INF) {
-            this.exMax = Intervals.MINUS_INF;
-        } else if (this.exMin == Intervals.MINUS_INF
-                || otherInterval.exMin == Intervals.MINUS_INF) {
-            this.exMin = Intervals.MINUS_INF;
-        } else if (this.exMax == Intervals.MAX
-                || otherInterval.exMax == Intervals.MAX) {
-            this.exMax = Intervals.MAX;
-        } else if (this.exMin == Intervals.MAX
-                || otherInterval.exMin == Intervals.MAX) {
-            this.exMin = Intervals.MAX;
-        } else if (this.exMax == Intervals.MIN
-                || otherInterval.exMax == Intervals.MIN) {
-            this.exMax = Intervals.MIN;
-        } else if (this.exMin == Intervals.MIN
-                || otherInterval.exMin == Intervals.MIN) {
-            this.exMin = Intervals.MIN;
-        }
+        this.updateRanges();
 
         return this;
     }

@@ -1,5 +1,7 @@
 package syntaxtree.expression;
 
+import analysis.Interval;
+import analysis.IntervalLattice;
 import analysis.Sign;
 import analysis.SignSet;
 import analysis.SignsLattice;
@@ -39,6 +41,13 @@ public class NegationExpression extends Expression {
         return expr.getVariable();
     }
 
+    @Override
+    public Interval evalulate(IntervalLattice lattice) {
+        Interval interval = Interval.negate (this.expr.evalulate(lattice));
+        
+        return interval;
+    }
+    
     @Override
     public SignSet evalulate(SignsLattice lattice) {
         SignSet set = new SignSet();

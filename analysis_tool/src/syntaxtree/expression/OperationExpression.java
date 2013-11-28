@@ -64,14 +64,21 @@ public class OperationExpression extends Expression {
      */
     @Override
     public Interval evalulate(IntervalLattice lattice) {
-        Interval lhsInterval = this.expr1.evalulate(lattice);
-        Interval rhsInterval = this.expr2.evalulate(lattice);
-        Interval result = new Interval(lattice);
 
-        // TODO: Take into account arithmetic operations.
-        result.merge(lhsInterval);
-        result.merge(rhsInterval);
-        return result;
+        switch (ao) {
+            case PLUS:
+                return Interval.addition(this.expr1.evalulate(lattice), this.expr2.evalulate(lattice));
+            case MINUS:
+                return Interval.subtraction(this.expr1.evalulate(lattice), this.expr2.evalulate(lattice));
+            case MULTIPLICATION:
+                return Interval.multiplication(this.expr1.evalulate(lattice), this.expr2.evalulate(lattice));
+            case DIVISION:
+                return Interval.division(this.expr1.evalulate(lattice), this.expr2.evalulate(lattice));
+            default:
+                // Undefined operator
+                return null;
+        }
+
     }
 
     public OperationExpression(Expression expr1, Expression expr2, ArithmeticOperation ao) {

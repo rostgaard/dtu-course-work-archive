@@ -39,7 +39,7 @@ public class Constant extends Expression {
 
     @Override
     public Interval evalulate(IntervalLattice lattice) {
-        return new Interval(lattice).setInterval(n, n);
+        return new Interval(lattice).setAbsoluteInterval(n, n);
     }
     
     @Override

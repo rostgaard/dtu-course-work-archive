@@ -4,7 +4,6 @@
  */
 package analysis;
 
-import flowgraph.datastructure.Node;
 import java.util.HashMap;
 import syntaxtree.DeclarationList;
 import syntaxtree.declaration.Declaration;

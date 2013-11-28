@@ -1,5 +1,7 @@
 package syntaxtree.expression;
 
+import analysis.Interval;
+import analysis.IntervalLattice;
 import analysis.SignSet;
 import analysis.SignsLattice;
 import flowgraph.datastructure.VariableSet;
@@ -52,6 +54,11 @@ public class ArrayExpression extends Expression {
 
     @Override
     public SignSet evalulate(SignsLattice lattice) {        
+        return lattice.get(id);
+    }
+
+    @Override
+    public Interval evalulate(IntervalLattice lattice) {        
         return lattice.get(id);
     }
     

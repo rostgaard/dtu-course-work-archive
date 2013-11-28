@@ -17,13 +17,13 @@ public final class IntervalLattice extends HashMap<Variable, Interval> implement
 
     DeclarationList declarations;
     private IntervalLattice BottomElement = null;
-    
-    public final int Maximum =  20;
+    public final int Maximum = 20;
     public final int Minimum = -10;
 
     /**
      * Constructor.
-     * @param declarations 
+     *
+     * @param declarations
      */
     public IntervalLattice(DeclarationList declarations) {
         this.declarations = declarations;
@@ -46,7 +46,7 @@ public final class IntervalLattice extends HashMap<Variable, Interval> implement
     public Lattice iota() {
         IntervalLattice retval = new IntervalLattice();
         for (Declaration decl : declarations) {
-            retval.put(decl.getId(), new Interval(this).setInterval(0, 0));
+            retval.put(decl.getId(), new Interval(this).setAbsoluteInterval(0, 0));
         }
         return retval;
     }
@@ -68,9 +68,10 @@ public final class IntervalLattice extends HashMap<Variable, Interval> implement
                 return false; // Should throw an exception instead.
             }
 
-            if (!currentSet.subsetOf((Interval)sl.get(key))) {
+            if (!currentSet.subsetOf((Interval) sl.get(key))) {
                 return false;
-            }
+
+            } 
         }
 
         return true;
