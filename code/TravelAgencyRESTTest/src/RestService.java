@@ -38,6 +38,11 @@ public class RestService {
     public static ClientResponse createItinerary(String customerID) {
         return itineraryResource.queryParam("customer_id", customerID).post(ClientResponse.class);
     }
+    
+    public static ClientResponse removeItinerary(String customerID, int itineraryID) {
+        WebResource cancelItineraryResource = itineraryResource.path(""+itineraryID).queryParam("customer_id", customerID);;
+        return cancelItineraryResource.delete(ClientResponse.class);
+    } 
        
     public static ClientResponse getItinerary(String customerID, URI location) {
          WebResource resource = client.resource(location).queryParam("customer_id", customerID);
@@ -45,12 +50,12 @@ public class RestService {
     } 
 
     public static ClientResponse bookItinerary(String customerID, int itineraryID) {
-         WebResource bookItineraryResource = itineraryResource.path(""+itineraryID).queryParam("customer_id", customerID);;
+         WebResource bookItineraryResource = itineraryResource.path(itineraryID+"/booking").queryParam("customer_id", customerID);;
          return bookItineraryResource.put(ClientResponse.class);
     }
 
     public static ClientResponse cancelItinerary(String customerID, int itineraryID) {
-         WebResource cancelItineraryResource = itineraryResource.path(""+itineraryID).queryParam("customer_id", customerID);;
+         WebResource cancelItineraryResource = itineraryResource.path(itineraryID+"/booking").queryParam("customer_id", customerID);;
          return cancelItineraryResource.delete(ClientResponse.class);
     }
 

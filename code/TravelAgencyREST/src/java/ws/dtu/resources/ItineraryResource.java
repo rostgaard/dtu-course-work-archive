@@ -37,7 +37,7 @@ public class ItineraryResource {
     private static final LameDuckService lameDuckService = new LameDuckService();
     private static final LameDuckPortType lameDuckPort = lameDuckService.getLameDuckPortTypeBindingPort();    
     
-    private static final ItineraryManager itineraryManager = new ItineraryManager();
+    private static final ItineraryManager itineraryManager = ItineraryManager.getInstance();
     
     @GET
     @Path("{id}")
@@ -52,18 +52,11 @@ public class ItineraryResource {
         return Response.created(new URI(""+itinerary.getID())).build();
     }
     
-    @PUT
-    @Path("{id}")
-    public Response bookItinerary(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID) {        
-        Itinerary itinerary = ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier);
-        itineraryManager.bookItinerary(itinerary);
-        return Response.ok().build();
-    }
-    
     @DELETE
     @Path("{id}")
-    public void deleteItinerary(@PathParam("id") int itineraryIdentifier,@QueryParam("customer_id") int customerID) {
+    public Response removeItinerary(@PathParam("id") int itineraryIdentifier,@QueryParam("customer_id") int customerID) {
         ItineraryDatabase.getInstance().delete(customerID,itineraryIdentifier);
+        return Response.ok().build();
     }
     
     @GET

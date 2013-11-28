@@ -162,7 +162,7 @@ public class TravelAgencyRESTTest {
          assertEquals(flightBookingActual.getFlightInformation().getBookingNo(), flightBooking.getFlightInformation().getBookingNo());
          
          // Cancel the itinerary
-         RestService.cancelItinerary(customerID, intermediaItinerary.getID());
+         RestService.removeItinerary(customerID, intermediaItinerary.getID());
          
          // Verify that itinerary does not exist anymore
          ClientResponse response = RestService.getItinerary(customerID, createIitneraryRsponse.getLocation());
@@ -194,7 +194,9 @@ public class TravelAgencyRESTTest {
          
          //Get itinerary
          itinerary = RestService.getItinerary(customerID, itineraryClientResponse.getLocation()).getEntity(Itinerary.class);
-
+         flightBookingList = itinerary.getFlightBookings();
+         hotelBookingList = itinerary.getHotelBookings();
+         
          // Verify status of flights
          for(FlightBooking fb : flightBookingList.getFlights()) {
              assertTrue(fb.getBookingState()==FlightBookingState.UNBOOKED);
@@ -224,11 +226,62 @@ public class TravelAgencyRESTTest {
          FlightBooking flightBooking1 = itinerary.getFlightBookings().getFlights().get(0);
          assertEquals(FlightBookingState.CANCELLED, flightBooking1.getBookingState());
      }
-//     
-//     @Test
-//     public void testC1() {
-//         
-//     } 
+     
+     @Test
+     public void testC1() {
+         ClientResponse itineraryResponse = RestService.createItinerary(customerID);
+         Itinerary itinerary = RestService.getItinerary(customerID, itineraryResponse.getLocation()).getEntity(Itinerary.class);
+         
+         // Get flights
+         FlightBookingList flightBookingList = RestService.getFlights("Kastrup", "Kazakhstan", "2013-11-17").getEntity(FlightBookingList.class);
+         FlightBooking flightBooking = flightBookingList.getFlights().get(0);
+         
+         // Get hotels
+         HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Kabul", "2013-11-17", "2013-11-18").getEntity(HotelBookingList.class);
+         HotelBooking hotelBooking1 = hotelBookingList.getHotels().get(0);
+         HotelBooking hotelBooking2 = hotelBookingList.getHotels().get(1);
+         
+         // Add flight and hotels
+         RestService.addFlight(customerID, itinerary.getID(), flightBooking);
+         RestService.addHotel(customerID, itinerary.getID(), hotelBooking1);
+         RestService.addHotel(customerID, itinerary.getID(), hotelBooking2);
+
+         // Book itinerary
+         RestService.bookItinerary(customerID, itinerary.getID());
+         
+         //Get itinerary
+         itinerary = RestService.getItinerary(customerID, itineraryResponse.getLocation()).getEntity(Itinerary.class);
+         flightBookingList = itinerary.getFlightBookings();
+         hotelBookingList = itinerary.getHotelBookings();
+         
+         // Verify status of flights
+         for(FlightBooking fb : flightBookingList.getFlights()) {
+             assertTrue(fb.getBookingState()==FlightBookingState.BOOKED);
+         }
+         
+         // Verify status of hotels
+         for(HotelBooking hb : hotelBookingList.getHotels()) {
+             assertTrue(hb.getBookingState()==HotelBooking.HotelBookingState.BOOKED);
+         }
+         
+         // Cancel itinerary
+         RestService.cancelItinerary(customerID, itinerary.getID());
+         
+         //Get itinerary
+         itinerary = RestService.getItinerary(customerID, itineraryResponse.getLocation()).getEntity(Itinerary.class);
+         flightBookingList = itinerary.getFlightBookings();
+         hotelBookingList = itinerary.getHotelBookings();
+         
+         // Verify status of flights
+         for(FlightBooking fb : flightBookingList.getFlights()) {
+             assertTrue(fb.getBookingState()==FlightBookingState.CANCELLED);
+         }
+         
+         // Verify status of hotels
+         for(HotelBooking hb : hotelBookingList.getHotels()) {
+             assertTrue(hb.getBookingState()==HotelBooking.HotelBookingState.CANCELLED);
+         } 
+     } 
 //     
 //     
 //     @Test

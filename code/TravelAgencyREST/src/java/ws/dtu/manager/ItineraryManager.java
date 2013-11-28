@@ -33,6 +33,16 @@ public class ItineraryManager {
     private static final NiceViewService niceViewService = new NiceViewService();
     private static final NiceViewPortType niceViewPort = niceViewService.getNiceViewPort();  
     
+    private static ItineraryManager db;
+    
+    public static synchronized ItineraryManager getInstance() {
+        if(db == null){
+            db = new ItineraryManager();
+        }
+        
+        return db;
+    }
+    
     public Itinerary createItinerary(int customerID) {
         Itinerary itinerary = new Itinerary(Sequencer.getNext());
         itinerary.setCustomerID(customerID);
@@ -91,7 +101,26 @@ public class ItineraryManager {
     }
     
     public void cancelItinerary(Itinerary itinerary) {
-       
+        Customer customer = CustomerDatabase.getInstance().get(itinerary.getCustomerID());
+        for(FlightBooking fb : itinerary.getFlightBookings().getFlights()) {
+            try {
+                lameDuckPort.cancelFlight(fb.getFlightInformation().getBookingNo(), customer.getCreditcard(), fb.getFlightInformation().getPrice());
+                fb.setBookingState(FlightBooking.FlightBookingState.CANCELLED);
+            } catch (CancelFlightFault ex) {
+//                revertBooking(itinerary);
+                throw new exceptions.CancelException();
+            } 
+        }
+        
+        for(HotelBooking hb : itinerary.getHotelBookings().getHotels()) {
+            try {
+                niceViewPort.cancelHotel(hb.getHotelInformation().getBookingNo());
+                hb.setBookingState(HotelBooking.HotelBookingState.CANCELLED);
+            } catch (CancelHotelFault ex) {
+//                revertBooking(itinerary);
+                throw new exceptions.CancelException();
+            }
+        }
     }
     
 }
