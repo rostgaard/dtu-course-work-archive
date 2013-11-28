@@ -6,9 +6,11 @@ import java.util.TreeSet;
 
 import analysis.Definition;
 import analysis.DefinitionSet;
+import analysis.IntervalLattice;
 import analysis.Lattice;
 import analysis.RDLattice;
 import analysis.RDProgramState;
+import analysis.SignsLattice;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
@@ -128,9 +130,32 @@ public class ArrayAssignment extends Statement {
 
     @Override
     public Lattice transferFunction(Lattice lattice) {
+        if (lattice instanceof RDLattice) {
+            return this.transferFunction((RDLattice) lattice);
+        }
+
+        if (lattice instanceof SignsLattice) {
+            return this.transferFunction((SignsLattice) lattice);
+        }
+
+        if (lattice instanceof IntervalLattice) {
+            return this.transferFunction((IntervalLattice) lattice);
+        }
+
+        throw new UnsupportedOperationException("Analysis not supported yet.");
+    }
+
+    private RDLattice transferFunction(RDLattice lattice) {
         ((RDLattice) lattice).kill(id).union(
                 ((RDLattice) lattice).gen(id, this.toNode()));
-        System.out.println("transferFunction:" + lattice);
+
+        return lattice;
+    }
+
+    private SignsLattice transferFunction(SignsLattice lattice) {
+        lattice.get(id).clear(); // Kill all previous definitions.
+        lattice.get(id).merge(this.expr.evalulate(lattice));
+
         return lattice;
     }
 }

@@ -125,7 +125,7 @@ public class Read extends Statement {
     }
     
     private IntervalLattice transferFunction(IntervalLattice lattice) {
-        lattice.get(id).merge(new Interval(lattice).setInterval(0, 0));
+        lattice.get(id).set(new Interval(lattice).setInterval(lattice.Minimum, lattice.Maximum));
         return lattice;
     }
     private SignsLattice transferFunction(SignsLattice lattice) {
