@@ -3,11 +3,7 @@
  * and open the template in the editor.
  */
 
-import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
-import javax.ws.rs.core.MultivaluedMap;
 import model.FlightBooking;
 import model.FlightBooking.FlightBookingState;
 import model.FlightBookingList;
@@ -15,9 +11,9 @@ import model.HotelBooking;
 import model.HotelBookingList;
 import model.Itinerary;
 import org.junit.After;
-import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Test;
 
 
 
@@ -282,10 +278,60 @@ public class TravelAgencyRESTTest {
              assertTrue(hb.getBookingState()==HotelBooking.HotelBookingState.CANCELLED);
          } 
      } 
-//     
-//     
-//     @Test
-//     public void testC2() {
-//         
-//     } 
+          
+     @Test
+     public void testC2() {
+         ClientResponse itineraryResponse = RestService.createItinerary(customerID);
+         Itinerary itinerary = RestService.getItinerary(customerID, itineraryResponse.getLocation()).getEntity(Itinerary.class);
+         
+         // Get flights
+         FlightBookingList flightBookingList = RestService.getFlights("Kastrup", "Kazakhstan", "2013-11-17").getEntity(FlightBookingList.class);
+         FlightBooking flightBooking = flightBookingList.getFlights().get(0);
+         
+         // Get hotels
+         HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Kabul", "2013-11-17", "2013-11-18").getEntity(HotelBookingList.class);
+         HotelBooking hotelBooking1 = hotelBookingList.getHotels().get(0);
+         HotelBooking hotelBooking2 = hotelBookingList.getHotels().get(1);
+         
+         // Add flight and hotels
+         RestService.addFlight(customerID, itinerary.getID(), flightBooking);
+         RestService.addHotel(customerID, itinerary.getID(), hotelBooking1);
+         RestService.addHotel(customerID, itinerary.getID(), hotelBooking2);
+
+         // Book itinerary
+         RestService.bookItinerary(customerID, itinerary.getID());
+         
+         //Get itinerary
+         itinerary = RestService.getItinerary(customerID, itineraryResponse.getLocation()).getEntity(Itinerary.class);
+         flightBookingList = itinerary.getFlightBookings();
+         hotelBookingList = itinerary.getHotelBookings();
+         
+         // Verify status of flights
+         for(FlightBooking fb : flightBookingList.getFlights()) {
+             assertTrue(fb.getBookingState()==FlightBookingState.BOOKED);
+         }
+         
+         // Verify status of hotels
+         for(HotelBooking hb : hotelBookingList.getHotels()) {
+             assertTrue(hb.getBookingState()==HotelBooking.HotelBookingState.BOOKED);
+         }
+         
+         // Cancel itinerary
+         RestService.cancelItinerary(customerID, itinerary.getID());
+         
+         //Get itinerary
+         itinerary = RestService.getItinerary(customerID, itineraryResponse.getLocation()).getEntity(Itinerary.class);
+         flightBookingList = itinerary.getFlightBookings();
+         hotelBookingList = itinerary.getHotelBookings();
+         
+         // Verify status of flights
+         for(FlightBooking fb : flightBookingList.getFlights()) {
+             assertTrue(fb.getBookingState()==FlightBookingState.CANCELLED);
+         }
+         
+         // Verify status of hotels
+         for(HotelBooking hb : hotelBookingList.getHotels()) {
+             assertTrue(hb.getBookingState()==HotelBooking.HotelBookingState.CANCELLED);
+         } 
+     } 
 }

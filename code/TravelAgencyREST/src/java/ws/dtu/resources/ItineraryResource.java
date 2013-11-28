@@ -13,18 +13,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import ws.dtu.lameduck.LameDuckPortType;
 import ws.dtu.lameduck.LameDuckService;
+import ws.dtu.manager.ItineraryDatabase;
+import ws.dtu.manager.ItineraryManager;
 import ws.dtu.model.FlightBooking;
 import ws.dtu.model.FlightBookingList;
-import ws.dtu.model.HotelBookingList;
-
-import ws.dtu.manager.ItineraryDatabase;
-import ws.dtu.model.Itinerary;
-import ws.dtu.manager.ItineraryManager;
 import ws.dtu.model.HotelBooking;
+import ws.dtu.model.HotelBookingList;
+import ws.dtu.model.Itinerary;
 
 /**
  *
