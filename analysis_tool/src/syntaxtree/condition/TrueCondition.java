@@ -2,6 +2,7 @@ package syntaxtree.condition;
 
 import analysis.SignSet;
 import analysis.SignsLattice;
+import analysis.UnderFlowException;
 
 /**
  * Data representation for the boolean value "true"
@@ -39,4 +40,10 @@ public class TrueCondition extends Condition {
         retval.merge(SignSet.empty);
         return retval;
     }
+
+    @Override
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        return false;
+    }
+
 }

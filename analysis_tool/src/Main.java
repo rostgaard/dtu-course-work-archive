@@ -90,7 +90,7 @@ public class Main {
                     System.out.println(program.calculate(new IntervalLattice(program.getDecls())));
 
                 }
-                
+
                 System.out.println("==== Buffer Underflow =====");
                 for (Node node : program.underFlowCheck()) {
                     System.out.println("Potential underflow detected at label: " + node);

@@ -100,7 +100,14 @@ It takes two parameters, a point of interest and the the result from reaching de
 It is an implementation of the pseudo-code presented in section 3.5 Program slice calculation algorithm.
 
 
-\section{Interval analysis}
+\section{General about implementation}
+
+\subsection{The lexer}
+We've implemented the lexer as a grammer file for ANTLR, supplying us with a basic tokenizer that is able to attach extra information to the streamed tokens. The grammer file is located in the appended code for those interested.
+\subsection{The parser}
+The parser is created by extending the grammer file hereby enabling it to expand the grammer to a generated parser. The parser harvests information from the lexer in order to provide an IR
+
+\subsection{Interval analysis}
 
 %TODO Add more meat on this. Something about keeping track of the values internally, even when going out of bounds.
 The valid transitions -- and their states -- are depicted in figure \ref{figure:interval_states}, which illustrates the dead-end of $-\infty$ and $\infty$ quite efficient.

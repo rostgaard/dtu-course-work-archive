@@ -2,6 +2,7 @@ package syntaxtree.condition;
 
 import analysis.SignSet;
 import analysis.SignsLattice;
+import analysis.UnderFlowException;
 import syntaxtree.RelationOperation;
 import syntaxtree.Symbols;
 import syntaxtree.expression.Expression;
@@ -78,6 +79,17 @@ public class ExpressionOperationCondition extends Condition {
                 return retval;
 
         }
-
     }
+    
+    @Override
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        try {
+            this.expr1.checkUnderflow(lattice);
+            this.expr2.checkUnderflow(lattice);
+        } catch (UnderFlowException ex) {
+            return true;
+        }
+        return false;
+    }
+    
 }

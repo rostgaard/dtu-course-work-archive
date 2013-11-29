@@ -162,7 +162,6 @@ public class If extends Statement {
 
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
-        System.out.println("Warning: Skipping IF statement!");
-        return false;
+        return this.cond.hasPotentialUnderFlow(lattice);
     }
 }

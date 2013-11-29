@@ -39,4 +39,9 @@ public class ParenthesesCondition extends Condition {
         retval.merge(this.evaluate(lattice));
         return retval;
     }
+
+    @Override
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        return this.cond.hasPotentialUnderFlow(lattice);
+    }
 }

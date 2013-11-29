@@ -10,5 +10,6 @@ import analysis.SignsLattice;
 public abstract class Condition {
     
     public abstract SignSet evaluate (SignsLattice lattice);
+    public abstract boolean hasPotentialUnderFlow(SignsLattice lattice);
 
 }

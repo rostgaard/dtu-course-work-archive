@@ -60,5 +60,10 @@ public class OperationCondition extends Condition {
         retval.merge(SignSet.empty);
         return retval;
     }
+
+    @Override
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        return this.cond1.hasPotentialUnderFlow(lattice) || this.cond2.hasPotentialUnderFlow(lattice);
+    }
     
 }

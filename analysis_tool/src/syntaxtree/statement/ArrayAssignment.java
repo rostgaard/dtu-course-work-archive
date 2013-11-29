@@ -172,6 +172,5 @@ public class ArrayAssignment extends Statement {
             return true;
         }
         return (this.idx.evalulate(lattice).contains(Sign.N));
-    }
-    
+    }    
 }

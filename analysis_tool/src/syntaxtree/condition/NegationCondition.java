@@ -1,7 +1,9 @@
 package syntaxtree.condition;
 
+import analysis.Sign;
 import analysis.SignSet;
 import analysis.SignsLattice;
+import analysis.UnderFlowException;
 
 /**
  * Data representation for negation of boolean expressions
@@ -37,5 +39,10 @@ public class NegationCondition extends Condition {
         SignSet retval = new SignSet();
         retval.merge(SignSet.empty);
         return retval;
+    }
+
+    @Override
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        return this.cond.hasPotentialUnderFlow(lattice);
     }
 }

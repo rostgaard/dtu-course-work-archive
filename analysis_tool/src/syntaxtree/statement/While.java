@@ -142,8 +142,6 @@ public class While extends Statement {
 
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
-        System.out.println("Warning: Skipping WHILE statement!");
-        return false;
+        return this.cond.hasPotentialUnderFlow(lattice);
     }
-
 }
