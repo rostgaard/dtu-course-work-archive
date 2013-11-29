@@ -101,11 +101,30 @@ It is an implementation of the pseudo-code presented in section 3.5 Program slic
 
 
 \section{General about implementation}
+For the implementation we have chosen to map the label $\ell$ to a Node object instead. The label is still present is still present within the node -- and is used for representation -- but now contains additional information, such as the which statement is maps to.
 
 \subsection{The lexer}
 We've implemented the lexer as a grammer file for ANTLR, supplying us with a basic tokenizer that is able to attach extra information to the streamed tokens. The grammer file is located in the appended code for those interested.
 \subsection{The parser}
-The parser is created by extending the grammer file hereby enabling it to expand the grammer to a generated parser. The parser harvests information from the lexer in order to provide an IR
+The parser is created by extending the grammer file hereby enabling it to expand the grammer to a generated parser. The parser harvests information from the lexer in order to provide an AST containing the information we need for out analysis` later on.
+
+
+\subsection{Generalizing the analysis}
+To abstract away the analysis from the general parser tool, we've created an interface that implemented by our abstract Statement class.
+\begin{figure}
+\centering
+\begin{tikzpicture} 
+\umlclass[type=interface]{Analysable}{}{ 
+%  + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): Boolean}} \\
+  + \umlvirt {labels () : NodeSet} \\
+  + \umlvirt {initial () : Node} \\
+  + \umlvirt {finalNodes () : NodeSet} \\
+  + \umlvirt {flow () : FlowSet } \\
+} 
+\end{tikzpicture}
+\caption{The Analyseable interface}
+\label{fig:analysable_basic_definition}.
+\end{figure}The interface basically maps the \textit{label(S)}, \textit{init(S)}, \textit{final(S)} and \textit{flow(S)} functions from section \ref{section:CreatingFlowGraphs} to abstract statement, so we can use it later on to harvest flows and labels via recursion.
 
 \subsection{Interval analysis}
 
@@ -193,31 +212,50 @@ $ a_1 \geq a_2$   & $ \mathcal{A_S}[\![a_2]\!] \bigcup \left(\mathcal{A_S}[\![a_
 
 
 \subsection{Underflow detection}
-For underflow detection we've extended the abstract classes defining statements, expressions and conditions and mapped 
+
+For underflow detection we've stated by extending the Analysable interface as illustrated in figure \ref{fig:analysable_underflow_extension}.
 \begin{figure}
 \centering
 \begin{tikzpicture} 
-\umlclass[type=abstract]{Expression}{}{ 
-%  + \umlvirt{isOutOfBounds(Analysis[$\ell$]) : Boolean} \\
+\umlclass[type=interface]{Analysable}{}{ 
   + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): Boolean}} \\
-  + \umlvirt{evalulate(Analysis[$\ell$])} : SignSet\\
-  + \umlvirt{evalulate(Analysis[$\ell$]) : Interval}
+  + \umlvirt {labels () : NodeSet} \\
+  $...$
 } 
 \end{tikzpicture}
-\caption{Extension of the Expression class}
+\caption{Extension of the Analyseable interface}
+\label{fig:analysable_underflow_extension}
 \end{figure}
 
-\begin{figure}
-\centering
-\begin{tikzpicture} 
-\umlclass[type=abstract]{Expression}{}{ 
+We then loop through each label in the set of labels of the program, and if the test fails, we push the problematic node to a NodeSet which then can be used to inform the callee (probably Main procedure) of places where problems could arise.
+
+
+%\begin{figure}
+%\centering
+%\begin{tikzpicture} 
+%\umlclass[type=abstract]{Expression}{}{ 
 %  + \umlvirt{isOutOfBounds(Analysis[$\ell$]) : Boolean} \\
-  + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): Boolean}} \\
-  + \umlvirt{evalulate(Analysis[$\ell$])} : SignSet\\
-  + \umlvirt{evalulate(Analysis[$\ell$]) : Interval}
-} 
-\end{tikzpicture}
-\caption{Extension of the Expression class}
-\end{figure}
+%  + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): Boolean}} \\
+%  + \umlvirt{evalulate(Analysis[$\ell$])} : SignSet\\
+%  + \umlvirt{evalulate(Analysis[$\ell$]) : Interval}
+%} 
+%\end{tikzpicture}
+%\caption{Extension of the Expression class}
+%\end{figure}
 
+%\begin{figure}
+%\centering
+%\begin{tikzpicture} 
+%\umlclass[type=abstract]{Statement}{}{ 
+%  + \umlvirt{isOutOfBounds(Analysis[$\ell$]) : Boolean} \\
+%  + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): Boolean}}
+%} 
+%\end{tikzpicture}
+%\caption{Extension of the Statement class}
+%\end{figure}
 
+\subsection{Odds and ends}
+This section is home to the miscellaneous ideas, thoughts, implementations and ramblings that didn't quite fit any other sections.
+
+\subsubsection{Undefined symbols}
+While strictly not within the scope of the project, we found that odd \texttt{NullPointerExceptions} occurred when we tried to access symbols that had not been previously defined in the program. While this job would be best left to the parser\footnote{Which would be rather easy, as we have an elegant ``declarations before statements'' language.}, the pending deadline suggested no to fix what wasn't broken and instead implement a lookup that throws an \texttt{UndefinedVariableException} if the symbol is not known within our analysis'.
