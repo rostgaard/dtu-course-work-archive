@@ -9,6 +9,7 @@ import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
 
 import analysis.SignsLattice;
+import flowgraph.datastructure.Node;
 import output.TheLangLexer;
 import output.TheLangParser;
 import syntaxtree.Program;
@@ -76,11 +77,14 @@ public class Main {
 //                ProgramSlicing.execute(program.getStmts(), rd);
 //
 //                System.out.println("==== Signs analysis =====");
-                LatticeSet signs = program.calculate(new SignsLattice(program.getDecls()));
+//                LatticeSet signs = program.calculate(new SignsLattice(program.getDecls()));
 //                System.out.println(signs);
-                
+
                 System.out.println("==== Buffer Underflow =====");
-                BufferUnderflow.execute(program.getStmts(), signs);
+                for (Node node : program.underFlowCheck()) {
+                    System.out.println("Potential underflow detected at label: " + node);
+                }
+
 //                
 //                System.out.println("==== Interval analysis =====");
 //                System.out.println(program.calculate(new IntervalLattice(program.getDecls())));

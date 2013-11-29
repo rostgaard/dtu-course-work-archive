@@ -1,20 +1,19 @@
 package syntaxtree.statement;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.TreeSet;
-
-import analysis.Definition;
 import analysis.DefinitionSet;
 import analysis.IntervalLattice;
 import analysis.Lattice;
 import analysis.RDLattice;
 import analysis.RDProgramState;
+import analysis.Sign;
 import analysis.SignsLattice;
+import analysis.UnderFlowException;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
 import flowgraph.datastructure.VariableSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import syntaxtree.Symbols;
 import syntaxtree.expression.Variable;
 import syntaxtree.expression.Expression;
@@ -35,7 +34,7 @@ public class ArrayAssignment extends Statement {
         this.expr = expr;
     }
 
-    public Variable getId() {
+    public Variable getIdentifier() {
         return id;
     }
 
@@ -68,6 +67,7 @@ public class ArrayAssignment extends Statement {
         return id + "[" + idx + "] := " + expr + ";";
     }
 
+    @Override
     public String toStringWithLabel() {
         return Symbols.LSQPARAN + this.toString() + Symbols.RSQPARAN
                 + Symbols.SEPERATOR + this.getLabel();
@@ -162,6 +162,16 @@ public class ArrayAssignment extends Statement {
     private IntervalLattice transferFunction(IntervalLattice lattice) {
         lattice.get(id).set(this.expr.evalulate(lattice));
         return lattice;
+    }
+
+    @Override
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        try {
+            this.expr.checkUnderflow(lattice);
+        } catch (UnderFlowException ex) {
+            return true;
+        }
+        return (this.idx.evalulate(lattice).contains(Sign.N));
     }
     
 }

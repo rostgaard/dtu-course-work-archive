@@ -3,10 +3,12 @@ package syntaxtree;
 import analysis.Lattice;
 import analysis.LatticeSet;
 import analysis.RDLattice;
+import analysis.SignsLattice;
 import analysis.Worklist;
 import flowgraph.datastructure.Flow;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
+import flowgraph.datastructure.NodeSet;
 import java.util.List;
 
 import flowgraph.datastructure.VariableSet;
@@ -50,18 +52,18 @@ public class Program {
     public VariableSet getVariables() {
         VariableSet variableSet = new VariableSet();
         for (Declaration declaration : decls) {
-              for(Variable variable : declaration.getVariable()) {
-                  variableSet.add(variable);
-              }
+            for (Variable variable : declaration.getVariable()) {
+                variableSet.add(variable);
+            }
         }
 
         return variableSet;
     }
 
     public LatticeSet calculate(Lattice analysisSpace) {
-        Worklist worklist     = new Worklist();
-        LatticeSet analysis   = new LatticeSet();
-        FlowSet S             = this.getStmts().flow();
+        Worklist worklist = new Worklist();
+        LatticeSet analysis = new LatticeSet();
+        FlowSet S = this.getStmts().flow();
 
         for (Flow flow : this.getStmts().flow()) {
             worklist.add(flow);
@@ -94,8 +96,22 @@ public class Program {
                 }
             }
         }
-        
+
         return analysis;
     }
-    
+
+    public NodeSet underFlowCheck() {
+        NodeSet retval = new NodeSet();
+        LatticeSet analysis = this.calculate(new SignsLattice(this.getDecls()));
+
+        for (Node node : this.stmts.lables()) {
+            SignsLattice sl = (SignsLattice) analysis.get(node);
+
+            if (node.getStatement().hasPotentialUnderFlow(sl)) {
+                retval.add(node);
+            }
+        }
+
+        return retval;
+    }
 }

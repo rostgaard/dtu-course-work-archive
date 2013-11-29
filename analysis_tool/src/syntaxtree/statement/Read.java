@@ -1,10 +1,5 @@
 package syntaxtree.statement;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.TreeSet;
-
-import analysis.Definition;
 import analysis.DefinitionSet;
 import analysis.Interval;
 import analysis.IntervalLattice;
@@ -131,5 +126,10 @@ public class Read extends Statement {
     private SignsLattice transferFunction(SignsLattice lattice) {
         lattice.get(id).merge(SignSet.pnz);
         return lattice;
+    }
+
+    @Override
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        return false;
     }
 }

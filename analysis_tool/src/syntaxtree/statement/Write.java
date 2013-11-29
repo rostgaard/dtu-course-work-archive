@@ -2,6 +2,8 @@ package syntaxtree.statement;
 
 import analysis.DefinitionSet;
 import analysis.RDProgramState;
+import analysis.SignsLattice;
+import analysis.UnderFlowException;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
@@ -10,7 +12,7 @@ import syntaxtree.Symbols;
 import syntaxtree.expression.Expression;
 
 /**
- * Data representation for read statements
+ * Data representation for write statements
  *
  */
 public class Write extends Statement{
@@ -77,6 +79,16 @@ public class Write extends Statement{
     @Override
     public VariableSet getVariable() {
     	return expr.getVariable();
+    }
+
+    @Override
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        try {
+            this.expr.checkUnderflow(lattice);
+        } catch (UnderFlowException ex) {
+            return true;
+        }
+        return false;
     }
      
 }

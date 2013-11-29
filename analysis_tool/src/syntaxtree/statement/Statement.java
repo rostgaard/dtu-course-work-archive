@@ -1,15 +1,12 @@
 package syntaxtree.statement;
 
 import analysis.RDProgramState;
-import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
-import flowgraph.datastructure.NodeSet;
-import flowgraph.datastructure.VariableSet;
 import syntaxtree.Symbols;
 import utilities.Sequencer;
 import analysis.DefinitionSet;
 import analysis.Lattice;
-import analysis.RDLattice;
+import analysis.SignsLattice;
 
 /**
  * Abstract class for statements
@@ -48,5 +45,7 @@ public abstract class Statement implements analysis.Analysable {
     public Lattice transferFunction(Lattice lattice) {
         return lattice;
     }
+
+    public abstract boolean hasPotentialUnderFlow(SignsLattice lattice);
 
 }

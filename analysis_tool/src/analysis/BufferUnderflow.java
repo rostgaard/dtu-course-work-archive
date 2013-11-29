@@ -4,23 +4,21 @@ import syntaxtree.StatementList;
 import syntaxtree.Type;
 import syntaxtree.expression.Variable;
 import flowgraph.datastructure.Node;
-import flowgraph.datastructure.NodeSet;
 import flowgraph.datastructure.VariableSet;
 
 public class BufferUnderflow {
 
     public static void execute(StatementList stmts, LatticeSet lattice) {
-        NodeSet labels = stmts.lables();
-        for (int i = 0; i < labels.size(); i++) {
-            Node node = labels.get(i);
-            SignsLattice signslat = (SignsLattice) lattice.get(node);
-            bufferUnderflow(node, signslat);
+        for (Node node : stmts.lables()) {
+            SignsLattice sl = (SignsLattice) lattice.get(node);
+            
+            if (node.getStatement().hasPotentialUnderFlow(sl)) {
+                System.out.println("Potential underflow detected at label: " + node + " potential values: " + lattice.get(node));
+            }
         }
     }
 
     public static void bufferUnderflow(Node poi, SignsLattice signsLat) {
-//		System.out.println(poi);
-//		System.out.println(signsLat);
         VariableSet variables = poi.getStatement().getVariable();
         for (Variable v : variables) {
             if (v.getType() == Type.ARRAY) {

@@ -2,8 +2,10 @@ package syntaxtree.expression;
 
 import analysis.Interval;
 import analysis.IntervalLattice;
+import analysis.Sign;
 import analysis.SignSet;
 import analysis.SignsLattice;
+import analysis.UnderFlowException;
 import flowgraph.datastructure.VariableSet;
 import syntaxtree.Type;
 
@@ -51,7 +53,6 @@ public class ArrayExpression extends Expression {
         return VariableSet.factory().addVariable(id)
                 .union(idx.getVariable());
     }
-
     @Override
     public SignSet evalulate(SignsLattice lattice) {        
         return lattice.get(id);
@@ -62,4 +63,14 @@ public class ArrayExpression extends Expression {
         return lattice.get(id);
     }
     
+    @Override
+    public void checkBounds(IntervalLattice lattice) {        
+    }
+
+    @Override
+    public void checkUnderflow(SignsLattice lattice) throws UnderFlowException{
+        if (this.idx.evalulate(lattice).contains(Sign.N)) {
+            throw new UnderFlowException("Underflow detected!");
+        }
+    }
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import analysis.Definition;
 import analysis.Lattice;
 import analysis.RDProgramState;
+import analysis.SignsLattice;
 import flowgraph.datastructure.Flow;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
@@ -137,6 +138,12 @@ public class While extends Statement {
     @Override
     public VariableSet getVariable() {
     	return VariableSet.emptySet;
+    }
+
+    @Override
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        System.out.println("Warning: Skipping WHILE statement!");
+        return false;
     }
 
 }

@@ -9,6 +9,7 @@ import analysis.DefinitionSet;
 import analysis.Lattice;
 import analysis.RDLattice;
 import analysis.RDProgramState;
+import analysis.Sign;
 import analysis.SignSet;
 import analysis.SignsLattice;
 import flowgraph.datastructure.FlowSet;
@@ -130,5 +131,10 @@ public class ReadArray extends Statement {
     private SignsLattice transferFunction(SignsLattice lattice) {
         lattice.get(id).merge(SignSet.pnz);
         return lattice;
+    }
+
+    @Override
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        return (this.idx.evalulate(lattice).contains(Sign.N));
     }
 }

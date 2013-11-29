@@ -6,6 +6,7 @@ import analysis.Lattice;
 import analysis.RDLattice;
 import analysis.RDProgramState;
 import analysis.SignsLattice;
+import analysis.UnderFlowException;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
@@ -127,9 +128,11 @@ public class Assignment extends Statement {
         lattice.kill(id).union(
                 ((RDLattice) lattice).gen(id, this.toNode()));
         return lattice;
+
     }
 
     private IntervalLattice transferFunction(IntervalLattice lattice) {
+        System.out.println("IntervalLattice transferFunction:" + this.expr.evalulate(lattice));
         lattice.get(id).set(this.expr.evalulate(lattice));
         return lattice;
     }
@@ -138,5 +141,15 @@ public class Assignment extends Statement {
         lattice.get(id).clear(); // Kill all previous definitions.
         lattice.get(id).merge(this.expr.evalulate(lattice));
         return lattice;
+    }
+
+    @Override
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        try {
+            this.expr.checkUnderflow(lattice);
+        } catch (UnderFlowException ex) {
+            return true;
+        }
+        return false;
     }
 }

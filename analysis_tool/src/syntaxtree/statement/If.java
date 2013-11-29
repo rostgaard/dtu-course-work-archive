@@ -1,19 +1,13 @@
 package syntaxtree.statement;
 
-import analysis.Definition;
-import analysis.DefinitionSet;
-import analysis.Lattice;
-import analysis.RDLattice;
 import analysis.RDProgramState;
+import analysis.SignsLattice;
 import flowgraph.datastructure.Flow;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
 import flowgraph.datastructure.VariableSet;
-
 import java.util.List;
-import java.util.TreeSet;
-
 import syntaxtree.StatementList;
 import syntaxtree.Symbols;
 import syntaxtree.condition.Condition;
@@ -164,5 +158,11 @@ public class If extends Statement {
     @Override
     public VariableSet getVariable() {
         return VariableSet.emptySet;
+    }
+
+    @Override
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        System.out.println("Warning: Skipping IF statement!");
+        return false;
     }
 }

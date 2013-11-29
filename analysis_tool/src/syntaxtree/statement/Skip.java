@@ -1,13 +1,8 @@
 package syntaxtree.statement;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.TreeSet;
-
-import analysis.Definition;
 import analysis.DefinitionSet;
-import analysis.Lattice;
 import analysis.RDProgramState;
+import analysis.SignsLattice;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
@@ -30,19 +25,18 @@ public class Skip extends Statement {
     }
 
     @Override
-    public RDProgramState RD(RDProgramState currentState) {  	
-     	//RDentry
-        DefinitionSet exit = currentState.getRDExit(getLabel()-1);
-    	currentState.addRDentry(getLabel(), exit);
+    public RDProgramState RD(RDProgramState currentState) {
+        //RDentry
+        DefinitionSet exit = currentState.getRDExit(getLabel() - 1);
+        currentState.addRDentry(getLabel(), exit);
 
-    	//RDexit
+        //RDexit
         DefinitionSet entry = currentState.getRDEntry(getLabel());
-    	//killRD([skip]l) = �
-    	//genRD([[skip]l) = �
-    	currentState.addRDexit(getLabel(), entry);
-    	return currentState;
+        //killRD([skip]l) = �
+        //genRD([[skip]l) = �
+        currentState.addRDexit(getLabel(), entry);
+        return currentState;
     }
-
 
     @Override
     public NodeSet labels() {
@@ -63,10 +57,14 @@ public class Skip extends Statement {
     public FlowSet flow() {
         return FlowSet.emptySet;
     }
-    
+
     @Override
     public VariableSet getVariable() {
-    	return VariableSet.emptySet;
+        return VariableSet.emptySet;
     }
-    
+
+    @Override
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        return false;
+    }
 }
