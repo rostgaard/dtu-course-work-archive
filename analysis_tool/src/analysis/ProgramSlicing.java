@@ -11,7 +11,7 @@ import flowgraph.datastructure.VariableSet;
 
 public class ProgramSlicing {
 
-	public static void execute(StatementList stmts, LatticeSet lattice){
+	public static void execute(StatementList stmts, Analysis lattice){
 		NodeSet labels = stmts.lables();
 		for(int i = 0; i<labels.size(); i++){
 			Node node = labels.get(i);

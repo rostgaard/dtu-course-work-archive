@@ -18,6 +18,13 @@ public final class SignsLattice extends HashMap<Variable, SignSet> implements La
     DeclarationList declarations;
     private SignsLattice BottomElement = null;
 
+    public SignSet lookup(Variable key) {
+        if (!this.containsKey(key)) {
+            throw new UndefinedVariableException("Undefined variable: " + key);
+        }
+        return this.get(key);
+    }
+
     public SignsLattice(DeclarationList declarations) {
         this.declarations = declarations;
         BottomElement = (SignsLattice) factory();

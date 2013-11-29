@@ -1,7 +1,7 @@
 package flowgraph.datastructure;
 
 import analysis.Definition;
-import analysis.LatticeSet;
+import analysis.Analysis;
 import java.util.Objects;
 import syntaxtree.statement.Statement;
 

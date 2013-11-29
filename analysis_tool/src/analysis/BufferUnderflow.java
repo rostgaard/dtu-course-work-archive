@@ -8,7 +8,7 @@ import flowgraph.datastructure.VariableSet;
 
 public class BufferUnderflow {
 
-    public static void execute(StatementList stmts, LatticeSet lattice) {
+    public static void execute(StatementList stmts, Analysis lattice) {
         for (Node node : stmts.lables()) {
             SignsLattice sl = (SignsLattice) lattice.get(node);
             

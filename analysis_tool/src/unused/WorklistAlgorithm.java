@@ -1,7 +1,7 @@
 package unused;
 
 import analysis.Lattice;
-import analysis.LatticeSet;
+import analysis.Analysis;
 import analysis.RDLattice;
 import analysis.Worklist;
 import flowgraph.datastructure.Flow;
@@ -16,7 +16,7 @@ public final class WorklistAlgorithm {
     public static void calculate(FlowSet S, Program program) {
         Worklist worklist = new Worklist();
         Lattice analysisSpace = new RDLattice (program.getDecls());
-        LatticeSet analysis = new LatticeSet();
+        Analysis analysis = new Analysis();
 
         for (Flow flow : program.getStmts().flow()) {
             worklist.add(flow);

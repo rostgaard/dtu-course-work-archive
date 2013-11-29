@@ -24,7 +24,7 @@ public class StatementList extends ArrayList<Statement> {
         for (Statement s2 : this) {
             if (s1 != null) {
                 for (Node endNode : s1.finalNodes()) {
-                    retSet.addFlow(new Flow(endNode, s2.init()));
+                    retSet.addFlow(new Flow(endNode, s2.initial()));
                 }
             }
             retSet.union(s2.flow());

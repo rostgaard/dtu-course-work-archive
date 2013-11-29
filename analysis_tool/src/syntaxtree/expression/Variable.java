@@ -2,7 +2,6 @@ package syntaxtree.expression;
 
 import analysis.Interval;
 import analysis.IntervalLattice;
-import analysis.Sign;
 import analysis.SignSet;
 import analysis.SignsLattice;
 import flowgraph.datastructure.VariableSet;
@@ -19,12 +18,12 @@ public class Variable extends Expression {
 
     @Override
     public SignSet evalulate(SignsLattice lattice) {
-        return lattice.get(new Variable(type, id));
+        return lattice.lookup(new Variable(type, id));
     }
     
     @Override
     public Interval evalulate(IntervalLattice lattice) {        
-        return lattice.get(new Variable(type, id));
+        return lattice.lookup(new Variable(type, id));
     }
 
     public Variable(Type type, String id) {

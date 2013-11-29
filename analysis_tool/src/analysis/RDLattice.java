@@ -24,6 +24,11 @@ public final class RDLattice extends HashMap<Variable, DefinitionSet> implements
         BottomElement = (RDLattice) factory();
     }
 
+    public Lattice get () {
+        return null;
+        
+    }
+    
     private RDLattice() {
     }
 

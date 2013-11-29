@@ -53,12 +53,12 @@ public class ArrayExpression extends Expression {
     }
     @Override
     public SignSet evalulate(SignsLattice lattice) {        
-        return lattice.get(id);
+        return lattice.lookup(id);
     }
 
     @Override
     public Interval evalulate(IntervalLattice lattice) {        
-        return lattice.get(id);
+        return lattice.lookup(id);
     }
     
     @Override

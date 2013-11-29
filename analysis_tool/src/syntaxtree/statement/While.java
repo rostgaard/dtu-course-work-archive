@@ -113,7 +113,7 @@ public class While extends Statement {
     }
 
     @Override
-    public Node init() {
+    public Node initial() {
         return this.toNode();
     }
 

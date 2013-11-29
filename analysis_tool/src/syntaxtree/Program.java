@@ -1,7 +1,7 @@
 package syntaxtree;
 
 import analysis.Lattice;
-import analysis.LatticeSet;
+import analysis.Analysis;
 import analysis.RDLattice;
 import analysis.SignsLattice;
 import analysis.Worklist;
@@ -60,9 +60,9 @@ public class Program {
         return variableSet;
     }
 
-    public LatticeSet calculate(Lattice analysisSpace) {
+    public Analysis calculate(Lattice analysisSpace) {
         Worklist worklist = new Worklist();
-        LatticeSet analysis = new LatticeSet();
+        Analysis analysis = new Analysis();
         FlowSet S = this.getStmts().flow();
 
         for (Flow flow : this.getStmts().flow()) {
@@ -102,7 +102,7 @@ public class Program {
 
     public NodeSet underFlowCheck() {
         NodeSet retval = new NodeSet();
-        LatticeSet analysis = this.calculate(new SignsLattice(this.getDecls()));
+        Analysis analysis = this.calculate(new SignsLattice(this.getDecls()));
 
         for (Node node : this.stmts.lables()) {
             SignsLattice sl = (SignsLattice) analysis.get(node);

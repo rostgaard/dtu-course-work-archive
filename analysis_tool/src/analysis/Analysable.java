@@ -17,10 +17,12 @@ public interface Analysable {
 
     public abstract NodeSet finalNodes();
 
-    public abstract Node init();
+    public abstract Node initial();
 
     public abstract FlowSet flow();
 
     public abstract VariableSet getVariable();
+
+    public abstract boolean hasPotentialUnderFlow(SignsLattice lattice);
 
 }

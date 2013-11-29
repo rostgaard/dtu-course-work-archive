@@ -16,6 +16,13 @@ public final class IntervalLattice extends HashMap<Variable, Interval> implement
     public final int Maximum = 20;
     public final int Minimum = -10;
 
+    public Interval lookup(Variable key) {
+        if (!this.containsKey(key)) {
+            throw new UndefinedVariableException("Undefined variable: " + key);
+        }
+        return this.get(key);
+    }
+    
     /**
      * Constructor.
      *

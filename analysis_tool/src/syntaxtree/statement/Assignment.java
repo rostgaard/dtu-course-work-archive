@@ -86,7 +86,7 @@ public class Assignment extends Statement {
     }
 
     @Override
-    public Node init() {
+    public Node initial() {
         return (new Node(this));
     }
 

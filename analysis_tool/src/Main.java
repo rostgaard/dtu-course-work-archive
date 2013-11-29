@@ -1,7 +1,7 @@
 
 import analysis.BufferUnderflow;
 import analysis.IntervalLattice;
-import analysis.LatticeSet;
+import analysis.Analysis;
 import analysis.ProgramSlicing;
 import analysis.RDLattice;
 
@@ -76,14 +76,14 @@ public class Main {
                     System.out.println(program.getStmts().flow());
 
                     System.out.println("==== Reaching definitions =====");
-                    LatticeSet rd = program.calculate(new RDLattice(program.getDecls()));
+                    Analysis rd = program.calculate(new RDLattice(program.getDecls()));
                     System.out.println(rd);
 
                     System.out.println("==== Program slice ====");
                     ProgramSlicing.execute(program.getStmts(), rd);
 
                     System.out.println("==== Signs analysis =====");
-                    LatticeSet signs = program.calculate(new SignsLattice(program.getDecls()));
+                    Analysis signs = program.calculate(new SignsLattice(program.getDecls()));
                     System.out.println(signs);
 
                     System.out.println("==== Interval analysis =====");

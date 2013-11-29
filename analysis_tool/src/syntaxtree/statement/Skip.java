@@ -44,7 +44,7 @@ public class Skip extends Statement {
     }
 
     @Override
-    public Node init() {
+    public Node initial() {
         return (new Node(this));
     }
 

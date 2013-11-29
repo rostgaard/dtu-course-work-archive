@@ -49,6 +49,9 @@ public class OperationExpression extends Expression {
         SignSet rhsSigns = this.expr2.evalulate(lattice);
         SignSet result = new SignSet();
 
+        System.out.println(lhsSigns);
+        System.out.println(rhsSigns);
+
         for (Sign lhs : lhsSigns) {
             for (Sign rhs : rhsSigns) {
                 result.merge(evaluationTable(lhs, rhs));

@@ -61,7 +61,7 @@ public class Write extends Statement {
     }
 
     @Override
-    public Node init() {
+    public Node initial() {
         return (new Node(this));
     }
 

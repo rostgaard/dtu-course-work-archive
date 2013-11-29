@@ -46,6 +46,4 @@ public abstract class Statement implements analysis.Analysable {
         return lattice;
     }
 
-    public abstract boolean hasPotentialUnderFlow(SignsLattice lattice);
-
 }
