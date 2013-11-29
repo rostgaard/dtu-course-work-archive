@@ -42,6 +42,7 @@ public class HotelDatabase {
         bookingNoMap = new HashMap<String, HotelInformation>();
         cityMap = new HashMap<String, HotelList>();
         bookings = new HashSet<String>();
+        bookings.add("AlreadyBooked");
     }
     
     public void reset() {
@@ -52,9 +53,10 @@ public class HotelDatabase {
     private  void loadDatabase() {
         add("Copenhagen", "Istedgade 1", "CPH1", true, "SAS Hotel", 800, "NiceView");
         add("Copenhagen", "Nørregade 21", "CPH2", true, "Radison Blue Hotel", 500, "NiceView");
-        add("Kabul", "Smokestreet 13", "KAB1", true, "Clear sky Hotel", 230, "NiceView");
-        add("Kabul", "Hotalley 4", "KAB2", true, "Air Hotel", 900, "NiceView");
-        add("Paris", "Beautifulway 124", "MOS1", true, "Burning Hotel", 300, "NiceView");
+        add("San Francisco", "Coolstreet 13", "KAB1", true, "Clear sky Hotel", 230, "NiceView");
+        add("San Francisco", "Hotalley 4", "KAB2", true, "Air Hotel", 900, "NiceView");
+        add("Paris", "Beautifulway 124", "MOS1", true, "Tall Hotel", 300, "NiceView");
+        add("Crazy Town", "Whatchamacallit", "AlreadyBooked", true, "Non-existent Hotel", 300, "NiceView");
     }
     
     private void add(String city, String street, String bookingNO, Boolean ccRequired, String name, double price, String reservationService) {

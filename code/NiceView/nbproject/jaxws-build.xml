@@ -43,25 +43,6 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/dk/dtu/imm/fastmoney"/>
         <delete dir="${build.generated.dir}/jax-wsCache/BankService"/>
     </target>
-    <target name="wsimport-service-NiceView" depends="wsimport-init">
-        <mkdir dir="${build.generated.dir}/jax-wsCache/service/NiceView"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/service/NiceView" destdir="${build.generated.dir}/jax-wsCache/service/NiceView" wsdl="${basedir}/${conf-dir}xml-resources/web-services/NiceView/wsdl/NiceView.wsdl" catalog="catalog.xml" extension="true" verbose="true" xnocompile="true" xendorsed="true" target="2.1">
-            <depends file="${basedir}/${conf-dir}xml-resources/web-services/NiceView/wsdl/NiceView.wsdl"/>
-            <produces dir="${build.generated.dir}/jax-wsCache/service/NiceView"/>
-        </wsimport>
-        <copy todir="${build.generated.sources.dir}/jax-ws">
-            <fileset dir="${build.generated.dir}/jax-wsCache/service/NiceView">
-                <include name="**/*.java"/>
-            </fileset>
-        </copy>
-        <copy todir="${build.web.dir}/WEB-INF/wsdl/NiceView">
-            <fileset dir="${basedir}/${conf-dir}xml-resources/web-services/NiceView/wsdl/"/>
-        </copy>
-    </target>
-    <target name="wsimport-service-clean-NiceView" depends="-init-project">
-        <delete dir="${build.generated.sources.dir}/jax-ws/ws/dtu/niceview"/>
-        <delete dir="${build.generated.dir}/jax-wsCache/service/NiceView"/>
-    </target>
     <target name="wsimport-service-NiceViewReset" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/service/NiceViewReset"/>
         <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/service/NiceViewReset" destdir="${build.generated.dir}/jax-wsCache/service/NiceViewReset" wsdl="${basedir}/${conf-dir}xml-resources/web-services/NiceViewReset/wsdl/NiceViewReset.wsdl" catalog="catalog.xml" extension="true" verbose="true" xnocompile="true" xendorsed="true" target="2.1">
@@ -81,6 +62,25 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/reset/niceview/dtu/ws"/>
         <delete dir="${build.generated.dir}/jax-wsCache/service/NiceViewReset"/>
     </target>
+    <target name="wsimport-service-NiceView" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/service/NiceView"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/service/NiceView" destdir="${build.generated.dir}/jax-wsCache/service/NiceView" wsdl="${basedir}/${conf-dir}xml-resources/web-services/NiceView/wsdl/NiceView.wsdl" catalog="catalog.xml" extension="true" verbose="true" xnocompile="true" xendorsed="true" target="2.1">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-services/NiceView/wsdl/NiceView.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/service/NiceView"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/service/NiceView">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy todir="${build.web.dir}/WEB-INF/wsdl/NiceView">
+            <fileset dir="${basedir}/${conf-dir}xml-resources/web-services/NiceView/wsdl/"/>
+        </copy>
+    </target>
+    <target name="wsimport-service-clean-NiceView" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/ws/dtu/niceview"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/service/NiceView"/>
+    </target>
     <target name="wsimport-client-generate" depends="wsimport-client-BankService"/>
-    <target name="wsimport-service-generate" depends="wsimport-service-NiceView, wsimport-service-NiceViewReset"/>
+    <target name="wsimport-service-generate" depends="wsimport-service-NiceViewReset, wsimport-service-NiceView"/>
 </project>

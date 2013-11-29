@@ -35,6 +35,7 @@ public final class FlightDatabase {
     private FlightDatabase(){
         flightInformations = new HashMap<String,List<FlightInformation>>();
         bookings = new ArrayList<String>();
+        bookings.add("AlreadyBooked");
         flightInfoByBooking = new HashMap<String, FlightInformation>();
     }
     
@@ -90,6 +91,9 @@ public final class FlightDatabase {
         
         newFlight = generateFlight("CPH", "GIG", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight, "SAS0008", 300, serviceName)); 
+        
+        newFlight = generateFlight("CPH", "NA", date1, date2, "SAS");
+        insert(generateFlightInformation(newFlight, "AlreadyBooked", 300, serviceName)); 
     }
     
     private Flight generateFlight(String origin, String destination, XMLGregorianCalendar liftOff, XMLGregorianCalendar arrival, String carrier){
