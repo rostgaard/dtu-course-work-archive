@@ -6,7 +6,6 @@ import analysis.Lattice;
 import analysis.RDLattice;
 import analysis.RDProgramState;
 import analysis.SignsLattice;
-import analysis.UnderFlowException;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;

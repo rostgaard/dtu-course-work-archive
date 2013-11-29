@@ -2,7 +2,6 @@ package syntaxtree.condition;
 
 import analysis.SignSet;
 import analysis.SignsLattice;
-import analysis.UnderFlowException;
 import syntaxtree.RelationOperation;
 import syntaxtree.Symbols;
 import syntaxtree.expression.Expression;

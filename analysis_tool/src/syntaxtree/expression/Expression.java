@@ -2,10 +2,8 @@ package syntaxtree.expression;
 
 import analysis.Interval;
 import analysis.IntervalLattice;
-import analysis.OutOfBoundsException;
 import analysis.SignSet;
 import analysis.SignsLattice;
-import analysis.UnderFlowException;
 import flowgraph.datastructure.VariableSet;
 
 /**

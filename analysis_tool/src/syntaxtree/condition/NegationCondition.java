@@ -1,9 +1,7 @@
 package syntaxtree.condition;
 
-import analysis.Sign;
 import analysis.SignSet;
 import analysis.SignsLattice;
-import analysis.UnderFlowException;
 
 /**
  * Data representation for negation of boolean expressions

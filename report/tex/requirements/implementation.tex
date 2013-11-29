@@ -198,12 +198,26 @@ For underflow detection we've extended the abstract classes defining statements,
 \centering
 \begin{tikzpicture} 
 \umlclass[type=abstract]{Expression}{}{ 
-%  + \umlvirt{isOutOfBounds(Analysis[$\ell$]) throws OutOfBoundsException} \\
-  + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): void : throws UnderFlowException}} \\
+%  + \umlvirt{isOutOfBounds(Analysis[$\ell$]) : Boolean} \\
+  + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): Boolean}} \\
   + \umlvirt{evalulate(Analysis[$\ell$])} : SignSet\\
   + \umlvirt{evalulate(Analysis[$\ell$]) : Interval}
 } 
 \end{tikzpicture}
 \caption{Extension of the Expression class}
 \end{figure}
+
+\begin{figure}
+\centering
+\begin{tikzpicture} 
+\umlclass[type=abstract]{Expression}{}{ 
+%  + \umlvirt{isOutOfBounds(Analysis[$\ell$]) : Boolean} \\
+  + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): Boolean}} \\
+  + \umlvirt{evalulate(Analysis[$\ell$])} : SignSet\\
+  + \umlvirt{evalulate(Analysis[$\ell$]) : Interval}
+} 
+\end{tikzpicture}
+\caption{Extension of the Expression class}
+\end{figure}
+
 

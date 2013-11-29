@@ -3,7 +3,6 @@ package syntaxtree.statement;
 import analysis.DefinitionSet;
 import analysis.RDProgramState;
 import analysis.SignsLattice;
-import analysis.UnderFlowException;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;

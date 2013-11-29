@@ -5,9 +5,7 @@ import analysis.IntervalLattice;
 import analysis.Sign;
 import analysis.SignSet;
 import analysis.SignsLattice;
-import analysis.UnderFlowException;
 import flowgraph.datastructure.VariableSet;
-import syntaxtree.Type;
 
 /**
  * Data representation for array expressions

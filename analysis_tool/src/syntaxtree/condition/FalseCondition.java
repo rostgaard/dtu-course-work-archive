@@ -2,7 +2,6 @@ package syntaxtree.condition;
 
 import analysis.SignSet;
 import analysis.SignsLattice;
-import analysis.UnderFlowException;
 
 /**
  * Data representation for the boolean value "false"
