@@ -26,7 +26,7 @@ import ws.dtu.resources.utils.Sequencer;
 public class ItineraryManager {
     
     private static final LameDuckService lameDuckService = new LameDuckService();
-    private static final LameDuckPortType lameDuckPort = lameDuckService.getLameDuckPortTypeBindingPort();   
+    private static final LameDuckPortType lameDuckPort = lameDuckService.getLameDuckPort();   
     
     private static final NiceViewService niceViewService = new NiceViewService();
     private static final NiceViewPortType niceViewPort = niceViewService.getNiceViewPort();  
@@ -85,7 +85,7 @@ public class ItineraryManager {
         for(FlightBooking fb : itinerary.getFlightBookings().getFlights()) {
             if(fb.getBookingState()==FlightBooking.FlightBookingState.CONFIRMED) {
                 try {
-                    lameDuckPort.cancelFlight(fb.getFlightInformation().getBookingNo(), customer.getCreditcard(), fb.getFlightInformation().getPrice());
+                    lameDuckPort.cancelFlight(fb.getFlightInformation().getBookingNo(), fb.getFlightInformation().getPrice(), customer.getCreditcard());
                     fb.setBookingState(FlightBooking.FlightBookingState.CANCELLED);
                 } catch (CancelFlightFault ex) {
                     throw new exceptions.CancelException();
@@ -115,12 +115,10 @@ public class ItineraryManager {
         Customer customer = CustomerDatabase.getInstance().get(itinerary.getCustomerID());
         for(FlightBooking fb : itinerary.getFlightBookings().getFlights()) {
             try {
-                lameDuckPort.cancelFlight(fb.getFlightInformation().getBookingNo(), customer.getCreditcard(), fb.getFlightInformation().getPrice());
+                lameDuckPort.cancelFlight(fb.getFlightInformation().getBookingNo(), fb.getFlightInformation().getPrice(), customer.getCreditcard());
                 fb.setBookingState(FlightBooking.FlightBookingState.CANCELLED);
             } catch (CancelFlightFault ex) {
                 throwException = true;
-//                revertBooking(itinerary);
-//                throw new exceptions.CancelException();
             } 
         }
         
@@ -130,8 +128,6 @@ public class ItineraryManager {
                 hb.setBookingState(HotelBooking.HotelBookingState.CANCELLED);
             } catch (CancelHotelFault ex) {
                 throwException = true;
-//                revertBooking(itinerary);
-//                throw new exceptions.CancelException();
             }
         }
         

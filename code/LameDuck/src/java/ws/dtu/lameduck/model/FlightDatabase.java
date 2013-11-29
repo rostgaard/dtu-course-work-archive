@@ -19,10 +19,6 @@ import ws.dtu.lameduck.types.Flight;
 import ws.dtu.lameduck.types.FlightInformation;
 import ws.dtu.lameduck.types.FlightList;
 
-/**
- *
- * @author krc
- */
 public final class FlightDatabase {
     
     private  Map<String,List<FlightInformation>> flightInformations = new HashMap<String,List<FlightInformation>>();
@@ -44,6 +40,7 @@ public final class FlightDatabase {
     private FlightDatabase(){
         flightInformations = new HashMap<String,List<FlightInformation>>();
         bookings = new ArrayList<String>();
+        bookings.add("AlreadyBooked");
         flightInfoByBooking = new HashMap<String, FlightInformation>();
     }
     
@@ -64,50 +61,52 @@ public final class FlightDatabase {
            throw new NullPointerException();
         }
         
-        XMLGregorianCalendar date1 = df.newXMLGregorianCalendar("2013-11-17");
+        XMLGregorianCalendar date1 = df.newXMLGregorianCalendar("2013-11-17T00:00:00");
         
-        XMLGregorianCalendar date2 = df.newXMLGregorianCalendar("2013-11-18");
+        XMLGregorianCalendar date2 = df.newXMLGregorianCalendar("2013-11-18T00:00:00");
         
+
         
-        
-        Flight newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "SAS");
+        Flight newFlight = generateFlight("CPH", "SFO", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight,"SAS0001", 200, serviceName ));
         
-        newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "Norwegian");
+        newFlight = generateFlight("CPH", "SFO", date1, date2, "Norwegian");
         insert(generateFlightInformation(newFlight, "NOR0001", 200, serviceName));
         
-        newFlight = generateFlight("Kastrup", "Kabul", date1, date2, "Kabul Air");
+        newFlight = generateFlight("CPH", "SFO", date1, date2, "Kabul Air");
         insert(generateFlightInformation(newFlight, "NOR0002", 200, serviceName));
         
-        newFlight = generateFlight("Kabul", "Kastrup", date1, date2, "SAS");
+        newFlight = generateFlight("SFO", "CPH", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight, "SAS0002", 250, serviceName));
         
-        newFlight = generateFlight("Kabul", "Kastrup", date1, date2, "SAS");
+        newFlight = generateFlight("SFO", "CPH", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight, "SAS0003", 250, serviceName));
         
-        newFlight = generateFlight("Kastrup", "Moscow", date1, date2, "SAS");
+        newFlight = generateFlight("CPH", "JFK", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight, "SAS0004", 300, serviceName));
         
-        newFlight = generateFlight("Kastrup", "Afganistan", date1, date2, "SAS");
+        newFlight = generateFlight("CPH", "KBL", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight, "SAS0005", 200, serviceName));
         
-        newFlight = generateFlight("Kastrup", "Irak", date1, date2, "SAS");
+        newFlight = generateFlight("CPH", "IST", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight, "SAS0006", 220, serviceName));
         
-        newFlight = generateFlight("Kastrup", "Libya", date1, date2, "SAS");
+        newFlight = generateFlight("CPH", "CDG", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight, "SAS0007", 150, serviceName));
         
-        newFlight = generateFlight("Kastrup", "Kazakhstan", date1, date2, "SAS");
+        newFlight = generateFlight("CPH", "GIG", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight, "SAS0008", 300, serviceName)); 
+        
+        newFlight = generateFlight("CPH", "NA", date1, date2, "SAS");
+        insert(generateFlightInformation(newFlight, "AlreadyBooked", 300, serviceName)); 
         
         
         // This flight can not be cancelled when booked
-        newFlight = generateFlight("Iran", "London", date1, date2, "Fail Airlines");
+        newFlight = generateFlight("LHR", "CPH", date1, date2, "Fail Airlines");
         insert(generateFlightInformation(newFlight, "FAIL0001", 300, serviceName));         
     }
     
-    private  Flight generateFlight(String origin, String destination, XMLGregorianCalendar liftOff, XMLGregorianCalendar arrival, String carrier){
-        
+    private Flight generateFlight(String origin, String destination, XMLGregorianCalendar liftOff, XMLGregorianCalendar arrival, String carrier){
         Flight newFlight = new Flight();
         newFlight.setOrigin(origin);
         newFlight.setDestination(destination);
@@ -116,7 +115,8 @@ public final class FlightDatabase {
         newFlight.setCarrier(carrier);
         return newFlight;
     }
-    public  void insert (FlightInformation flightInfo) {
+    
+    public void insert (FlightInformation flightInfo) {
         String key = flightInfo.getFlight().getOrigin();
         if(flightInformations.containsKey(key)){
             flightInformations.get(key).add(flightInfo);

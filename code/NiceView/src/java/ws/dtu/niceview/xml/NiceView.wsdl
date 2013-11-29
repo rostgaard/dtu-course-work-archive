@@ -16,8 +16,8 @@
     </types>
     <message name="GetHotelsRequest">
         <part name="city" type="xsd:string"/>
-        <part name="arrival" type="xsd:dateTime"/>
-        <part name="departure" type="xsd:dateTime"/>
+        <part name="arrival" type="xsd:date"/>
+        <part name="departure" type="xsd:date"/>
     </message>
     <message name="GetHotelsResponse">
         <part name="hotels" type="ns0:hotelList"/>

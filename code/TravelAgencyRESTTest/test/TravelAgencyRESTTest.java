@@ -67,14 +67,14 @@ public class TravelAgencyRESTTest {
      
      @Test
      public void testGetFlightsNone() {
-         FlightBookingList flightBookingList = RestService.getFlights("Kastrup", "Aalborg", "2013-11-17").getEntity(FlightBookingList.class);
+         FlightBookingList flightBookingList = RestService.getFlights("CPH", "AAL", "2013-11-17").getEntity(FlightBookingList.class);
          
          assertEquals(0, flightBookingList.getFlights().size());
      }
      
      @Test
      public void testGetFlights() {
-         FlightBookingList flightBookingList = RestService.getFlights("Kastrup", "Kabul", "2013-11-17").getEntity(FlightBookingList.class);
+         FlightBookingList flightBookingList = RestService.getFlights("CPH", "SFO", "2013-11-17").getEntity(FlightBookingList.class);
          
          assertEquals(3, flightBookingList.getFlights().size());
      }
@@ -91,13 +91,13 @@ public class TravelAgencyRESTTest {
          Link hotelLink = itineraryRepresentation.getLinkByRelation(HOTEL_RELATION);
             
          // Get flights
-         FlightBookingList flightBookingList = RestService.getFlights("Kastrup", "Kabul", "2013-11-17").getEntity(FlightBookingList.class);
+         FlightBookingList flightBookingList = RestService.getFlights("CPH", "SFO", "2013-11-17").getEntity(FlightBookingList.class);
          FlightBooking flightBooking1 = flightBookingList.getFlights().get(0);
          FlightBooking flightBooking2 = flightBookingList.getFlights().get(1);
          FlightBooking flightBooking3 = flightBookingList.getFlights().get(2);
 
          // Get hotels
-         HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Kabul", "2013-11-17", "2013-11-18").getEntity(HotelBookingList.class);
+         HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Copenhagen", "2013-11-17", "2013-11-18").getEntity(HotelBookingList.class);
          HotelBooking hotelBooking1 = hotelBookingList.getHotels().get(0);
          HotelBooking hotelBooking2 = hotelBookingList.getHotels().get(1);
 
@@ -162,7 +162,7 @@ public class TravelAgencyRESTTest {
          Link removeLink = itineraryRepresentation.getLinkByRelation(REMOVE_RELATION);
          
          // Get flights
-         FlightBookingList flightBookingList = RestService.getFlights("Kastrup", "Kabul", "2013-11-17").getEntity(FlightBookingList.class);
+         FlightBookingList flightBookingList = RestService.getFlights("CPH", "SFO", "2013-11-17").getEntity(FlightBookingList.class);
          FlightBooking flightBooking = flightBookingList.getFlights().get(0);
 
          // Add flight to itinerary
@@ -186,11 +186,11 @@ public class TravelAgencyRESTTest {
      @Test
      public void testB() {
          // Get hotels
-         HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Kabul", "2013-11-17", "2013-11-18").getEntity(HotelBookingList.class);
+         HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Copenhagen", "2013-11-17", "2013-11-18").getEntity(HotelBookingList.class);
          HotelBooking hotelBooking = hotelBookingList.getHotels().get(0);
          
          // Get flights
-         FlightBookingList flightBookingList = RestService.getFlights("Kastrup", "Kazakhstan", "2013-11-17").getEntity(FlightBookingList.class);
+         FlightBookingList flightBookingList = RestService.getFlights("CPH", "SFO", "2013-11-17").getEntity(FlightBookingList.class);
          FlightBooking flightBooking = flightBookingList.getFlights().get(0);
          
          // Create itinerary
@@ -258,11 +258,11 @@ public class TravelAgencyRESTTest {
          Link hotelLink = itineraryRepresentation.getLinkByRelation(HOTEL_RELATION); 
          
          // Get flights
-         FlightBookingList flightBookingList = RestService.getFlights("Kastrup", "Kazakhstan", "2013-11-17").getEntity(FlightBookingList.class);
+         FlightBookingList flightBookingList = RestService.getFlights("CPH", "SFO", "2013-11-17").getEntity(FlightBookingList.class);
          FlightBooking flightBooking = flightBookingList.getFlights().get(0);
          
          // Get hotels
-         HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Kabul", "2013-11-17", "2013-11-18").getEntity(HotelBookingList.class);
+         HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Copenhagen", "2013-11-17", "2013-11-18").getEntity(HotelBookingList.class);
          HotelBooking hotelBooking1 = hotelBookingList.getHotels().get(0);
          HotelBooking hotelBooking2 = hotelBookingList.getHotels().get(1);
          
@@ -323,11 +323,11 @@ public class TravelAgencyRESTTest {
          Link hotelLink = itineraryRepresentation.getLinkByRelation(HOTEL_RELATION);          
          
          // Get flights
-         FlightBookingList flightBookingList = RestService.getFlights("Iran", "London", "2013-11-17").getEntity(FlightBookingList.class);
+         FlightBookingList flightBookingList = RestService.getFlights("LHR", "CPH", "2013-11-17").getEntity(FlightBookingList.class);
          FlightBooking flightBooking = flightBookingList.getFlights().get(0); // This flight can not be cancelled
          
          // Get hotels
-         HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Kabul", "2013-11-17", "2013-11-18").getEntity(HotelBookingList.class);
+         HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Copenhagen", "2013-11-17", "2013-11-18").getEntity(HotelBookingList.class);
          HotelBooking hotelBooking1 = hotelBookingList.getHotels().get(0);
          HotelBooking hotelBooking2 = hotelBookingList.getHotels().get(1);
          

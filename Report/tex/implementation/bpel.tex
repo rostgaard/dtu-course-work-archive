@@ -4,6 +4,9 @@ This section describes how we have implemented TravelGood as a BPEL process. We 
 \subsection{Data representation}
 Internally in BPEL, we maintain the current itinerary. This is comprised of a list of hotel bookings and flight bookings. Each booking has a status, which can be things like ``Booked'' or ``Planned''. We also maintain some bookkeeping variables, which are not too interesting for the general overview.
 
+\subsection{The Port}
+Since all the services work together on the same process, we have only made one port for TravelGood. We use RPC-literal style for this, with request/response operations. As a client for the service, would need to update the user on the results of all operations, we need to wait for some sort of response for every operation.
+
 \subsection{Business Process}
 We have split the business process into two phases, which corresponds to some of the states shown in Fig.~\ref{fig:protocol}. These phases are
 
@@ -40,3 +43,5 @@ During this phase, BPEL accepts the following messages.
 \item [\texttt{getItinerary}:] BPEL returns the lists of hotels and flights.
 \item [\texttt{cancel}:] BPEL will cancel as many items as possible. If any items fails, we stay in this phase. Otherwise the itinerary is deleted. The client is informed of the result.
 \end{description}
+
+This phase is also implemented as a \texttt{pick} activity. If we get a cancel request, we attempt to cancel all booked items. Any that fails, remain booked, while the others become cancelled. The itinerary is still available. The other possibility of the pick is that a timeout happens. This timeout models that it is one day before the first item on the itinerary and the whole thing is removed and the process is ended.

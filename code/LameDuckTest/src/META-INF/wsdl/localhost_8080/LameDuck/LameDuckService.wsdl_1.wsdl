@@ -11,7 +11,7 @@
         <part name="liftOff" type="xsd:date"/>
     </message>
     <message name="getFlightsResponse">
-        <part name="flights" type="ns0:FlightList"/>
+        <part name="flights" type="ns0:flightList"/>
     </message>
     <message name="bookFlightRequest">
         <part name="bookingNumber" type="xsd:string"/>
@@ -21,7 +21,7 @@
         <part name="result" type="xsd:boolean"/>
     </message>
     <message name="bookFlightFault">
-        <part name="BookFlightFault" element="ns0:BookFault"/>
+        <part name="BookFlightFault" element="ns0:bookFault"/>
     </message>
     <message name="cancelFlightRequest">
         <part name="bookingNumber" type="xsd:string"/>
@@ -32,7 +32,7 @@
         <part name="result" type="xsd:boolean"/>
     </message>
     <message name="cancelFlightFault">
-        <part name="CancelFlightFault" element="ns0:CancelFault"/>
+        <part name="CancelFlightFault" element="ns0:cancelFault"/>
     </message>
     
     <portType name="LameDuckPortType">

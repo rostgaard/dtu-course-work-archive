@@ -66,8 +66,8 @@
     </target>
     <target name="wsimport-service-LameDuck" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/service/LameDuck"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/service/LameDuck" destdir="${build.generated.dir}/jax-wsCache/service/LameDuck" wsdl="${basedir}/${conf-dir}xml-resources/web-services/LameDuck/wsdl/LameDuckWrapper.wsdl" catalog="catalog.xml" extension="true" verbose="true" xnocompile="true" xendorsed="true" target="2.1">
-            <depends file="${basedir}/${conf-dir}xml-resources/web-services/LameDuck/wsdl/LameDuckWrapper.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/service/LameDuck" destdir="${build.generated.dir}/jax-wsCache/service/LameDuck" wsdl="${basedir}/${conf-dir}xml-resources/web-services/LameDuck/wsdl/LameDuck.wsdl" catalog="catalog.xml" extension="true" verbose="true" xnocompile="true" xendorsed="true" target="2.1">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-services/LameDuck/wsdl/LameDuck.wsdl"/>
             <produces dir="${build.generated.dir}/jax-wsCache/service/LameDuck"/>
         </wsimport>
         <copy todir="${build.generated.sources.dir}/jax-ws">

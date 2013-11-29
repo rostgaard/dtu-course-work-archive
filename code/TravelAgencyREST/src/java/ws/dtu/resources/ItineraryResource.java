@@ -36,7 +36,7 @@ import ws.dtu.representation.StatusRepresentation;
 @Produces("application/itinerary+xml")
 public class ItineraryResource extends ws.dtu.resources.Resource {
     private static final LameDuckService lameDuckService = new LameDuckService();
-    private static final LameDuckPortType lameDuckPort = lameDuckService.getLameDuckPortTypeBindingPort();    
+    private static final LameDuckPortType lameDuckPort = lameDuckService.getLameDuckPort();    
     
     private static final ItineraryManager itineraryManager = ItineraryManager.getInstance();
     private static final LinkManager linkManager = LinkManager.getInstance();

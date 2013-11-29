@@ -62,7 +62,7 @@ public class RestService {
     }
     
     public static ClientResponse createItinerary(String customerID) {
-        return itineraryResource.queryParam("customer_id", customerID).post(ClientResponse.class);
+        return itineraryResource.queryParam("customer_id", customerID).accept(MEDIATYPE).type(MEDIATYPE).post(ClientResponse.class);
     }
     
     public static ClientResponse getFlights(String origin, String destination, String dateString) {

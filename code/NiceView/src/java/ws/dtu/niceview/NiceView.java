@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ws.dtu.niceview;
 
 import dk.dtu.imm.fastmoney.BankService;
@@ -14,10 +10,6 @@ import ws.dtu.niceview.model.HotelDatabase;
 import ws.dtu.niceview.types.HotelInformation;
 import ws.dtu.niceview.types.HotelList;
 
-/**
- *
- * @author Martin
- */
 @WebService(serviceName = "NiceViewService", portName = "NiceViewPort", endpointInterface = "ws.dtu.niceview.NiceViewPortType", targetNamespace = "http://niceview.dtu.ws/", wsdlLocation = "WEB-INF/wsdl/NiceView/NiceView.wsdl")
 public class NiceView {
     private static final int GROUP = 3;

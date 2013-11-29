@@ -1,14 +1,36 @@
 \chapter{Advanced Web services technology}
 
-\section{WS-ReliableMessaging}
-WS-ReliableMessaging is a standard TODO:(insert standard) that specifies the design of general communication semantics in SOAP-based web services. The layer is transparent to the business layer, to which they appear as ordinary messages.
+\section{WS-Addressing}
+A normal SOAP message does not contain any information about who sent the message, what it is related to, and who is supposed to get it. This means we are left to rely on the network and the Http header to get the message to the right place and we have to rely on the context that receiver is in, combined with any data in the message to use the message correctly.
+
+WS-Addressing (WSA) tries to remedy this. With WSA, we add information to the SOAP message. This information includes things like intended receiver, the sender, an ID of the message, the ID of messages it might relate to, what sort of action the message is supposed to perform.
+
+This sort of information could have been used in the TravelGood application. For example, we search for hotels and flights through TravelGood, which in turn just delegates this information to NiceView and LameDuck, and return the response without modification. If we use WSA to specify to TravelGood where the response should be sent, this information can be passed on to e.g. LameDuck who can send the response directly to the client.
+
+\section{WS-Reliable Messaging}
+WS-ReliableMessaging (WS-RM) is a standard \todo{insert standard} that specifies the design of general communication semantics in SOAP-based web services. The layer is transparent to the business layer, to which they appear as ordinary messages.
 It follows the standard definitions of message semantics.
 \begin{description}
 \item[At least once:] A message will be resent if no reply is received within a given time frame. The side effect of this, is that it can lead to duplicate messages that needs to be handled within the business layer.
 \item[At most once:] The transmission layer guarantees that no messages are duplicated. They are thus held back until every party agrees that the message is, in fact, received.
 \item[In order] This semantic introduces the concept of a sequencer (still transparent to the application), in order to introduce a total ordering of messages.
 \end{description}
-Whether reliable messaging is applicable on a given scenario, is very specific to the application. It may even provide a false sense of comfort, as guarantees is only provided on the HTTP-SOAP level, and thus does not guarantees that things are done in the right order within the business logic.
+
+In our application, customers of TravelGood books and cancels itineraries and money is involved. So WS-RM could be used to make sure that requests to book and/or cancel itineraries is received and that money has been payed or refunded. Otherwise a customer might sit back after booking his itinerary with no response from TravelGood, wondering if his booking simply failed or if his request to book was lost. Many of the other operations in the system will see no benefit from reliable messaging as the process will have no problem with them being re-sent.
+
+%Whether reliable messaging is applicable on a given scenario, is very specific to the application. It may even provide a false sense of comfort, as guarantees is only provided on the HTTP-SOAP level, and thus does not guarantees that things are done in the right order within the business logic.
+
+\section{WS-Security}
+WS-Security (WS-S) is a standard for encrypting and signing data transmitted with SOAP. It can be used to secure integrity and privacy or for authentication and identification. It adds a security header to the SOAP message, which contains security tokens, references to security tokens, signatures for parts of the message, references to encrypted information and timestamps.
+
+As we handle money and credit card information in our application different aspects of security can be a concern. The customer is interested in his credit card information being kept private. This can be handled with encryption of the relevant parts of the message. The communication between LameDuck/NiceView and the bank is also sensitive. The agencies needs to know that they are communicating with the bank, so when they are told the payment has gone through they can trust it. If the bank signs their responses, we know that it is actually the bank that replies the ok, and the timestamps can ensure that it is not just an old ok that is being resent. The services that simply provides searching functionality would see no benefit from security, as the results does not convey any secret.
+
+\section{WS-Policy}
+WS-Policy (WS-P) is used to define policies on operations. These policies states conditions that must be met in order to use the operations. This could be demands on using WS-Addressing or WS-Security for the SOAP messages.
+
+If we would decide to include the other mentioned advanced technologies for a future version of TravelGood, we could use WS-P to enforce that these technologies are used by clients. While the addressing is merely convenience, the security if deemed necessary must be mandatory.
+
+
 
 %TODO add reference to distributed systems book.
 

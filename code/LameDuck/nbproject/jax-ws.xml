@@ -35,10 +35,10 @@
     </service>
     <service name="LameDuck">
       <implementation-class>ws.dtu.lameduck.LameDuck</implementation-class>
-      <wsdl-url>file:/Volumes/02267/02267/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuckWrapper.wsdl</wsdl-url>
-      <local-wsdl-file>LameDuckWrapper.wsdl</local-wsdl-file>
+      <wsdl-url>file:/C:/Users/Martin/git/Webservices/code/LameDuck/src/java/ws/dtu/lameduck/xml/LameDuck.wsdl</wsdl-url>
+      <local-wsdl-file>LameDuck.wsdl</local-wsdl-file>
       <service-name>LameDuckService</service-name>
-      <port-name>LameDuckPortTypeBindingPort</port-name>
+      <port-name>LameDuckPort</port-name>
       <package-name>ws.dtu.lameduck</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <use-provider>false</use-provider>

@@ -71,9 +71,9 @@
     </part>
     <part name="city" type="xsd:string">
     </part>
-    <part name="arrival" type="xsd:dateTime">
+    <part name="arrival" type="xsd:date">
     </part>
-    <part name="departure" type="xsd:dateTime">
+    <part name="departure" type="xsd:date">
     </part>
   </message>
   <message name="CancelPlanningRequest">
@@ -145,7 +145,7 @@
     </part>
     <part name="destination" type="xsd:string">
     </part>
-    <part name="datetime" type="xsd:dateTime">
+    <part name="date" type="xsd:date">
     </part>
   </message>
   <portType name="TravelGoodPortType">
@@ -290,7 +290,7 @@
   </binding>
   <service name="TravelGoodService">
     <port name="TravelGoodPort" binding="tns:TravelGoodBinding">
-      <soap:address location="http://10.16.162.104:9080/TravelGoodService/TravelGoodPort"/>
+      <soap:address location="http://mktange-yoga:9080/TravelGoodService/TravelGoodPort"/>
     </port>
   </service>
     <plnk:partnerLinkType name="TravelGood">
@@ -308,6 +308,7 @@
     <vprop:propertyAlias messageType="tns:GetFlightsRequest" part="itineraryID" propertyName="tns:itineraryID"/>
     <vprop:propertyAlias messageType="tns:GetHotelsRequest" part="itineraryID" propertyName="tns:itineraryID"/>
     <vprop:propertyAlias messageType="tns:BookItineraryRequest" part="itineraryID" propertyName="tns:itineraryID"/>
+    <vprop:propertyAlias messageType="tns:CancelItineraryRequest" part="itineraryID" propertyName="tns:itineraryID"/>
     <vprop:property name="customerID" type="tns:customerID"/>
     <vprop:propertyAlias messageType="tns:CreateItineraryRequest" part="customerID" propertyName="tns:customerID"/>
     <vprop:propertyAlias messageType="tns:AddFlightRequest" part="customerID" propertyName="tns:customerID"/>
@@ -317,4 +318,5 @@
     <vprop:propertyAlias messageType="tns:GetFlightsRequest" part="customerID" propertyName="tns:customerID"/>
     <vprop:propertyAlias messageType="tns:GetHotelsRequest" part="customerID" propertyName="tns:customerID"/>
     <vprop:propertyAlias messageType="tns:BookItineraryRequest" part="customerID" propertyName="tns:customerID"/>
+    <vprop:propertyAlias messageType="tns:CancelItineraryRequest" part="customerID" propertyName="tns:customerID"/>
 </definitions>
