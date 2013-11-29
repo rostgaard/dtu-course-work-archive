@@ -1,13 +1,9 @@
 package syntaxtree.condition;
 
-import analysis.Lattice;
-import analysis.SignSet;
-import analysis.SignsLattice;
+import analysis.lattices.IntervalLattice;
+import analysis.lattices.SignsLattice;
 import syntaxtree.BooleanOperation;
 import syntaxtree.Symbols;
-import syntaxtree.expression.Variable;
-
-import java.util.Map;
 
 /**
  * Data representation for boolean condition with a boolean operator
@@ -91,6 +87,11 @@ public class OperationCondition extends Condition {
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return this.cond1.hasPotentialUnderFlow(lattice) || this.cond2.hasPotentialUnderFlow(lattice);
+    }
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return this.cond1.isOutOfBounds(lattice) || this.cond2.isOutOfBounds(lattice);
     }
     
 }

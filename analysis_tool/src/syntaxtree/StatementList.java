@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package syntaxtree;
 
 import flowgraph.datastructure.Flow;
@@ -93,10 +89,15 @@ public class StatementList extends ArrayList<Statement> {
         return buffer;
     }
 
-    public String toStringWithLabel() {
+    public String toStringWithLabel(int indention) {
         String buffer = "";
+        String indentionString = "";
+        for (int i = 0; i < indention; i++) {
+            indentionString += Symbols.INDENTION;
+        }
+        
         for (Statement s : this) {
-            buffer += s.toStringWithLabel() + Symbols.NEWLINE;
+            buffer += indentionString + s.toStringWithLabel(indention) + Symbols.NEWLINE;
         }
 
         return buffer;

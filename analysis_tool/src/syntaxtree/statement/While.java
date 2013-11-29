@@ -1,9 +1,9 @@
 package syntaxtree.statement;
 
-import java.security.interfaces.RSAKey;
-import java.util.ArrayList;
-
-import analysis.*;
+import analysis.lattices.IntervalLattice;
+import analysis.lattices.Lattice;
+import analysis.lattices.RDLattice;
+import analysis.lattices.SignsLattice;
 import flowgraph.datastructure.Flow;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
@@ -50,18 +50,14 @@ public class While extends Statement {
     }
 
     @Override
-    public String toStringWithLabel() {
-        String buffer = "";
-        for (Statement s : body) {
-            buffer += Symbols.INDENTION + s.toStringWithLabel() + Symbols.NEWLINE;
-        }
+    public String toStringWithLabel(int indention) {
         return Symbols.WHILE + Symbols.SEPERATOR
                 + Symbols.LSQPARAN + cond + Symbols.RSQPARAN
                 + this.getLabel()
                 + Symbols.SEPERATOR
                 + Symbols.DO
                 + Symbols.NEWLINE
-                + buffer
+                + this.body.toStringWithLabel(indention+1)
                 + Symbols.OD;
     }
 
@@ -75,31 +71,6 @@ public class While extends Statement {
         for (Statement s : this.body) {
             s.setLabel(seq);
         }
-    }
-
-    @Override
-    public RDProgramState RD(RDProgramState currentState) {
-//    	RDProgramState rps = new RDProgramState();
-//    	for(Statement s : body){
-//    		s.RD(rps);
-//    	}
-//    	
-//    	//RDentry (previous union exit of body)
-//    	ArrayList<Definition> exit1 = currentState.getRDExit(getLabel()-1);
-//    	currentState.union(exit1, rps.getRDentry(), rps.getRDexit());
-//    	
-//    	int last = body.get(body.size()-1).getLabel();
-//    	exit1.addAll(rps.getRDExit(last));
-//    	currentState.addRDentry(getLabel(), exit1);
-//    	for(Statement s : body){
-//    		currentState.addRDentry(s.getLabel(), exit1);
-//    	}
-//    	
-//    	//killRD([while b do S od]l) = ?
-//    	//genRD([[while b do S od]l) = ?
-//        ArrayList<Definition> entry = currentState.getRDEntry(getLabel());
-//    	currentState.addRDexit(getLabel(), entry);
-    	return currentState;
     }
 
     @Override
@@ -182,4 +153,10 @@ public class While extends Statement {
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return this.cond.hasPotentialUnderFlow(lattice);
     }
+    
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return this.cond.isOutOfBounds(lattice);
+    }
+    
 }

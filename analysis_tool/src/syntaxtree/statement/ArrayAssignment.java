@@ -2,12 +2,11 @@ package syntaxtree.statement;
 
 import analysis.DefinitionSet;
 import analysis.Interval;
-import analysis.IntervalLattice;
-import analysis.Lattice;
-import analysis.RDLattice;
-import analysis.RDProgramState;
+import analysis.lattices.IntervalLattice;
+import analysis.lattices.Lattice;
+import analysis.lattices.RDLattice;
 import analysis.Sign;
-import analysis.SignsLattice;
+import analysis.lattices.SignsLattice;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
@@ -62,41 +61,7 @@ public class ArrayAssignment extends Statement {
 
     @Override
     public String toString() {
-        return id + "[" + idx + "] := " + expr + ";";
-    }
-
-    @Override
-    public String toStringWithLabel() {
-        return Symbols.LSQPARAN + this.toString() + Symbols.RSQPARAN
-                + Symbols.SEPERATOR + this.getLabel();
-    }
-
-    @Override
-    public RDProgramState RD(RDProgramState currentState) {
-        //RDentry
-        DefinitionSet exit = currentState.getRDExit(getLabel() - 1);
-        currentState.addRDentry(getLabel(), exit);
-
-        //RDexit
-        DefinitionSet entry = currentState.getRDEntry(getLabel());
-        //killRD(read A[a]) = {(A, l'}| b(l') is a declaration or an assignment to A[]}    	
-        entry.removeAll(currentState.kill(id, entry));
-        //genRD(read A[a]) = {(A[a], l)}
-        entry.addAll(currentState.gen(id, new Node(this)));
-
-        currentState.addRDexit(getLabel(), entry);
-        return currentState;
-    }
-
-    @Override
-    public DefinitionSet killed(RDProgramState currentState) {
-        DefinitionSet entry = currentState.getRDEntry(getLabel());
-        return currentState.kill(id, entry);
-    }
-
-    @Override
-    public DefinitionSet generated(RDProgramState currentState) {
-        return currentState.gen(id, new Node(this));
+        return id + Symbols.LSQPARAN + idx + Symbols.RSQPARAN + " := " + expr;
     }
 
     @Override
@@ -169,8 +134,7 @@ public class ArrayAssignment extends Statement {
 
     @Override
     public boolean isOutOfBounds(IntervalLattice lattice) {
-        //TODO Add check of expressions.
         Interval bounds = lattice.declarations.lookup(id).bounds(lattice);
-        return !(this.idx.evalulate(lattice).subsetOf(bounds));
+        return !(this.idx.evalulate(lattice).subsetOf(bounds)) || this.expr.isOutOfBounds(lattice);
     }
 }

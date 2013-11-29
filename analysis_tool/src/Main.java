@@ -1,14 +1,14 @@
 
 import analysis.BufferUnderflow;
-import analysis.IntervalLattice;
+import analysis.lattices.IntervalLattice;
 import analysis.Analysis;
 import analysis.ProgramSlicing;
-import analysis.RDLattice;
+import analysis.lattices.RDLattice;
 
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
 
-import analysis.SignsLattice;
+import analysis.lattices.SignsLattice;
 import flowgraph.datastructure.Node;
 import output.TheLangLexer;
 import output.TheLangParser;
@@ -65,7 +65,7 @@ public class Main {
                 }
 
                 System.out.println("==== Program =====");
-                System.out.println(program.getStmts().toStringWithLabel());
+                System.out.println(program.getStmts().toStringWithLabel(0));
                 System.out.println("==== End program =====");
 
                 if (verbose) {

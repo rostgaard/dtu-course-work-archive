@@ -1,8 +1,7 @@
 package syntaxtree.statement;
 
-import analysis.DefinitionSet;
-import analysis.RDProgramState;
-import analysis.SignsLattice;
+import analysis.lattices.IntervalLattice;
+import analysis.lattices.SignsLattice;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
@@ -40,22 +39,6 @@ public class Write extends Statement {
     }
 
     @Override
-    public RDProgramState RD(RDProgramState currentState) {
-        //RDentry
-        DefinitionSet exit = currentState.getRDExit(getLabel() - 1);
-        currentState.addRDentry(getLabel(), exit);
-
-        //RDexit
-        DefinitionSet entry = currentState.getRDEntry(getLabel());
-        //killRD([write a]l) = �
-        //genRD([[write a]l) = �    	
-        currentState.addRDexit(getLabel(), entry);
-
-        return currentState;
-
-    }
-
-    @Override
     public NodeSet labels() {
         return NodeSet.factory().addNode(new Node(this));
     }
@@ -83,5 +66,10 @@ public class Write extends Statement {
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return this.expr.hasPotentialUnderFlow(lattice);
+    }
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return this.expr.isOutOfBounds(lattice);
     }
 }

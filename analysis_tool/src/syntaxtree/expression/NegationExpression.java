@@ -1,10 +1,10 @@
 package syntaxtree.expression;
 
 import analysis.Interval;
-import analysis.IntervalLattice;
+import analysis.lattices.IntervalLattice;
 import analysis.Sign;
 import analysis.SignSet;
-import analysis.SignsLattice;
+import analysis.lattices.SignsLattice;
 import flowgraph.datastructure.VariableSet;
 
 /**
@@ -43,11 +43,11 @@ public class NegationExpression extends Expression {
 
     @Override
     public Interval evalulate(IntervalLattice lattice) {
-        Interval interval = Interval.negate (this.expr.evalulate(lattice));
-        
+        Interval interval = Interval.negate(this.expr.evalulate(lattice));
+
         return interval;
     }
-    
+
     @Override
     public SignSet evalulate(SignsLattice lattice) {
         SignSet set = new SignSet();
@@ -65,5 +65,10 @@ public class NegationExpression extends Expression {
             set.add((Sign) Sign.N);
         }
         return set;
+    }
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return this.expr.isOutOfBounds(lattice);
     }
 }

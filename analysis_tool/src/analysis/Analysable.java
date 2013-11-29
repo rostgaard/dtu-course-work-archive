@@ -1,17 +1,21 @@
 package analysis;
 
+import analysis.lattices.SignsLattice;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
 import flowgraph.datastructure.VariableSet;
 
 /**
+ * The main interface implemented by statement to enable static analysis on
+ * them. This interface dictates which methods are needed for our different
+ * analysis'. 
  *
  * @author krc
  */
 public interface Analysable {
-    
-    public RDProgramState RD(RDProgramState currentState);
+
+    //public RDProgramState RD(RDProgramState currentState);
 
     public abstract NodeSet labels();
 
@@ -24,5 +28,4 @@ public interface Analysable {
     public abstract VariableSet getVariable();
 
     public abstract boolean hasPotentialUnderFlow(SignsLattice lattice);
-
 }

@@ -1,5 +1,7 @@
 package analysis;
 
+import analysis.lattices.IntervalLattice;
+
 public class Interval {
 
     IntervalLattice lattice;

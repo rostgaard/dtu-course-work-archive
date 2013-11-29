@@ -1,16 +1,14 @@
 package syntaxtree;
 
-import analysis.Lattice;
+import analysis.lattices.Lattice;
 import analysis.Analysis;
-import analysis.IntervalLattice;
-import analysis.RDLattice;
-import analysis.SignsLattice;
+import analysis.lattices.IntervalLattice;
+import analysis.lattices.SignsLattice;
 import analysis.Worklist;
 import flowgraph.datastructure.Flow;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
-import java.util.List;
 
 import flowgraph.datastructure.VariableSet;
 import syntaxtree.declaration.Declaration;

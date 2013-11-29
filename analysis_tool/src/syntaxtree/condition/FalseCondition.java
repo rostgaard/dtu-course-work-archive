@@ -1,7 +1,8 @@
 package syntaxtree.condition;
 
+import analysis.lattices.IntervalLattice;
 import analysis.SignSet;
-import analysis.SignsLattice;
+import analysis.lattices.SignsLattice;
 
 /**
  * Data representation for the boolean value "false"
@@ -48,4 +49,10 @@ public class FalseCondition extends Condition {
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return false;
     }
+    
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return false;
+    }
+    
 }

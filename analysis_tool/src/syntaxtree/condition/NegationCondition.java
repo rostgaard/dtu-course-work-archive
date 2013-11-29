@@ -1,7 +1,8 @@
 package syntaxtree.condition;
 
+import analysis.lattices.IntervalLattice;
 import analysis.SignSet;
-import analysis.SignsLattice;
+import analysis.lattices.SignsLattice;
 
 /**
  * Data representation for negation of boolean expressions
@@ -41,4 +42,10 @@ public class NegationCondition extends Condition {
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return this.cond.hasPotentialUnderFlow(lattice);
     }
+    
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return this.cond.isOutOfBounds(lattice);
+    }
+    
 }

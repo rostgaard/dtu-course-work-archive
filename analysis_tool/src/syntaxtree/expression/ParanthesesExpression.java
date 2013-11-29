@@ -1,9 +1,9 @@
 package syntaxtree.expression;
 
 import analysis.Interval;
-import analysis.IntervalLattice;
+import analysis.lattices.IntervalLattice;
 import analysis.SignSet;
-import analysis.SignsLattice;
+import analysis.lattices.SignsLattice;
 import flowgraph.datastructure.VariableSet;
 import syntaxtree.Symbols;
 
@@ -47,7 +47,12 @@ public class ParanthesesExpression extends Expression {
     }
 
     @Override
-    public Interval evalulate(IntervalLattice lattice) {        
+    public Interval evalulate(IntervalLattice lattice) {
         return this.expr.evalulate(lattice);
     }
-}
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return this.expr.isOutOfBounds(lattice);
+    }
+    }

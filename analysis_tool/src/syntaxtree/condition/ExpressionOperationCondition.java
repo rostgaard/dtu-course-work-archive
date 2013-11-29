@@ -1,7 +1,8 @@
 package syntaxtree.condition;
 
+import analysis.lattices.IntervalLattice;
 import analysis.SignSet;
-import analysis.SignsLattice;
+import analysis.lattices.SignsLattice;
 import syntaxtree.RelationOperation;
 import syntaxtree.Symbols;
 import syntaxtree.expression.Expression;
@@ -118,5 +119,10 @@ public class ExpressionOperationCondition extends Condition {
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return this.expr1.hasPotentialUnderFlow(lattice) || this.expr2.hasPotentialUnderFlow(lattice);
     }
-
+    
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return this.expr1.isOutOfBounds(lattice) || this.expr2.isOutOfBounds(lattice);
+    }
+    
 }

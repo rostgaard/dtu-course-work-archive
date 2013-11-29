@@ -1,9 +1,9 @@
 package syntaxtree.expression;
 
 import analysis.Interval;
-import analysis.IntervalLattice;
+import analysis.lattices.IntervalLattice;
 import analysis.SignSet;
-import analysis.SignsLattice;
+import analysis.lattices.SignsLattice;
 import flowgraph.datastructure.VariableSet;
 import syntaxtree.Type;
 
@@ -20,9 +20,9 @@ public class Variable extends Expression {
     public SignSet evalulate(SignsLattice lattice) {
         return lattice.lookup(new Variable(type, id));
     }
-    
+
     @Override
-    public Interval evalulate(IntervalLattice lattice) {        
+    public Interval evalulate(IntervalLattice lattice) {
         return lattice.lookup(new Variable(type, id));
     }
 
@@ -80,5 +80,10 @@ public class Variable extends Expression {
         }
 
         return hash;
+    }
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return false;
     }
 }

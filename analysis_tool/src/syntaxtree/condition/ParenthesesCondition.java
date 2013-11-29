@@ -1,7 +1,8 @@
 package syntaxtree.condition;
 
+import analysis.lattices.IntervalLattice;
 import analysis.SignSet;
-import analysis.SignsLattice;
+import analysis.lattices.SignsLattice;
 import syntaxtree.Symbols;
 
 /**
@@ -27,12 +28,12 @@ public class ParenthesesCondition extends Condition {
     public String debugInformation() {
         return "\nClass: " + getClass().getSimpleName() + "\nCondition: " + cond.toString() + "\n";
     }
-    
+
     @Override
     public String toString() {
         return Symbols.LPARAN + cond + Symbols.RPARAN;
     }
-    
+
     @Override
     public void evaluate(SignsLattice lattice, Boolean trueBranch) {
         cond.evaluate(lattice,trueBranch);
@@ -41,5 +42,10 @@ public class ParenthesesCondition extends Condition {
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return this.cond.hasPotentialUnderFlow(lattice);
+    }
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return this.cond.isOutOfBounds(lattice);
     }
 }

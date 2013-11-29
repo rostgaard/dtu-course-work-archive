@@ -2,8 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package analysis;
+package analysis.lattices;
 
+import analysis.Sign;
+import analysis.SignSet;
+import analysis.UndefinedVariableException;
 import java.util.HashMap;
 import syntaxtree.DeclarationList;
 import syntaxtree.declaration.Declaration;

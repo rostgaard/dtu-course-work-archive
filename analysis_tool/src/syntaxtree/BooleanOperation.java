@@ -6,6 +6,5 @@ package syntaxtree;
  */
 public enum BooleanOperation {
 
-	AND, OR;
-	
+    AND, OR;
 }

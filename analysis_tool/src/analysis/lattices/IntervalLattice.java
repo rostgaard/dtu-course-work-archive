@@ -1,5 +1,7 @@
-package analysis;
+package analysis.lattices;
 
+import analysis.Interval;
+import analysis.UndefinedVariableException;
 import java.util.HashMap;
 import syntaxtree.DeclarationList;
 import syntaxtree.declaration.Declaration;

@@ -1,13 +1,11 @@
 package syntaxtree.statement;
 
-import analysis.DefinitionSet;
 import analysis.Interval;
-import analysis.IntervalLattice;
-import analysis.Lattice;
-import analysis.RDLattice;
-import analysis.RDProgramState;
+import analysis.lattices.IntervalLattice;
+import analysis.lattices.Lattice;
+import analysis.lattices.RDLattice;
 import analysis.SignSet;
-import analysis.SignsLattice;
+import analysis.lattices.SignsLattice;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
@@ -44,34 +42,6 @@ public class Read extends Statement {
         return Symbols.READ + Symbols.SEPERATOR + id;
     }
 
-    @Override
-    public RDProgramState RD(RDProgramState currentState) {
-    	//RDentry
-        DefinitionSet exit = currentState.getRDExit(getLabel()-1);
-    	currentState.addRDentry(getLabel(), exit);
-
-    	//RDexit
-        DefinitionSet entry = currentState.getRDEntry(getLabel());
-    	//killRD(read x) = {(x, l'}| b(l') is a declaration or an assignment to x}    	
-    	entry.removeAll(currentState.kill(id, entry));
-    	//genRD(read x) = {(A[a], l)}
-    	entry.addAll(currentState.gen(id, new Node(this)));
-
-    	currentState.addRDexit(getLabel(), entry);
-    	return currentState;
-    }
-
-    @Override
-    public DefinitionSet killed(RDProgramState currentState) {
-        DefinitionSet entry = currentState.getRDEntry(getLabel());
-        return currentState.kill(id, entry);
-    }
-
-    @Override
-    public DefinitionSet generated(RDProgramState currentState) {
-        return currentState.gen(id, new Node(this));
-    }
-    
     @Override
     public NodeSet labels() {
         return NodeSet.factory().addNode(new Node(this));
@@ -132,4 +102,10 @@ public class Read extends Statement {
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return false;
     }
+    
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return false;
+    }
+    
 }
