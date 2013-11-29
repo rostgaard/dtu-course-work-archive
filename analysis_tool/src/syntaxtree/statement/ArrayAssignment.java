@@ -62,13 +62,7 @@ public class ArrayAssignment extends Statement {
 
     @Override
     public String toString() {
-        return id + "[" + idx + "] := " + expr + ";";
-    }
-
-    @Override
-    public String toStringWithLabel() {
-        return Symbols.LSQPARAN + this.toString() + Symbols.RSQPARAN
-                + Symbols.SEPERATOR + this.getLabel();
+        return id + Symbols.LSQPARAN + idx + Symbols.RSQPARAN + " := " + expr;
     }
 
     @Override

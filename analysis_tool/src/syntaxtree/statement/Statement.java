@@ -16,7 +16,7 @@ public abstract class Statement implements analysis.Analysable {
 
     private int label = -1; // Default value for an unassigned statement.
 
-    public String toStringWithLabel() {
+    public String toStringWithLabel(int indention) {
         return Symbols.LSQPARAN + this.toString() + Symbols.RSQPARAN + this.label;
     }
 

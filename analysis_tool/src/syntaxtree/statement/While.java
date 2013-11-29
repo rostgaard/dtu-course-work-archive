@@ -55,18 +55,14 @@ public class While extends Statement {
     }
 
     @Override
-    public String toStringWithLabel() {
-        String buffer = "";
-        for (Statement s : body) {
-            buffer += Symbols.INDENTION + s.toStringWithLabel() + Symbols.NEWLINE;
-        }
+    public String toStringWithLabel(int indention) {
         return Symbols.WHILE + Symbols.SEPERATOR
                 + Symbols.LSQPARAN + cond + Symbols.RSQPARAN
                 + this.getLabel()
                 + Symbols.SEPERATOR
                 + Symbols.DO
                 + Symbols.NEWLINE
-                + buffer
+                + this.body.toStringWithLabel(indention+1)
                 + Symbols.OD;
     }
 

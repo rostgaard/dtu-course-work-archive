@@ -65,7 +65,7 @@ public class Main {
                 }
 
                 System.out.println("==== Program =====");
-                System.out.println(program.getStmts().toStringWithLabel());
+                System.out.println(program.getStmts().toStringWithLabel(0));
                 System.out.println("==== End program =====");
 
                 if (verbose) {
