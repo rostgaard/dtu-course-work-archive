@@ -38,7 +38,7 @@ public class Main {
 
     public static void main(String args[]) throws Exception {
 
-        boolean verbose = false;
+        boolean verbose = true;
 
         if (args.length < 1) {
             System.out.println("Please supply a file with source code as argument.");
@@ -75,31 +75,31 @@ public class Main {
                     System.out.println("==== Flows =====");
                     System.out.println(program.getStmts().flow());
 
-                    System.out.println("==== Reaching definitions =====");
-                    Analysis rd = program.calculate(new RDLattice(program.getDecls()));
-                    System.out.println(rd);
+//                    System.out.println("==== Reaching definitions =====");
+//                    Analysis rd = program.calculate(new RDLattice(program.getDecls()));
+//                    System.out.println(rd);
 
-                    System.out.println("==== Program slice ====");
-                    ProgramSlicing.execute(program.getStmts(), rd);
+//                    System.out.println("==== Program slice ====");
+//                    ProgramSlicing.execute(program.getStmts(), rd);
 
                     System.out.println("==== Signs analysis =====");
                     Analysis signs = program.calculate(new SignsLattice(program.getDecls()));
                     System.out.println(signs);
 
-                    System.out.println("==== Interval analysis =====");
-                    System.out.println(program.calculate(new IntervalLattice(program.getDecls())));
+//                    System.out.println("==== Interval analysis =====");
+//                    System.out.println(program.calculate(new IntervalLattice(program.getDecls())));
 
                 }
 
-                System.out.println("==== Buffer Underflow =====");
-                for (Node node : program.underFlowCheck()) {
-                    System.out.println("Potential underflow detected at label: " + node);
-                }
-
-                System.out.println("==== Interval =====");
-                for (Node node : program.rangeCheck()) {
-                    System.out.println("Range check failed at: " + node);
-                }
+//                System.out.println("==== Buffer Underflow =====");
+//                for (Node node : program.underFlowCheck()) {
+//                    System.out.println("Potential underflow detected at label: " + node);
+//                }
+//
+//                System.out.println("==== Interval =====");
+//                for (Node node : program.rangeCheck()) {
+//                    System.out.println("Range check failed at: " + node);
+//                }
 
             }
         } catch (RecognitionException e) {

@@ -1,9 +1,13 @@
 package syntaxtree.condition;
 
+import analysis.Lattice;
 import analysis.SignSet;
 import analysis.SignsLattice;
 import syntaxtree.BooleanOperation;
 import syntaxtree.Symbols;
+import syntaxtree.expression.Variable;
+
+import java.util.Map;
 
 /**
  * Data representation for boolean condition with a boolean operator
@@ -55,10 +59,33 @@ public class OperationCondition extends Condition {
                 + Symbols.symbolOf(bo) + Symbols.SEPERATOR + cond2;
     }
     @Override
-    public SignSet evaluate(SignsLattice lattice) {
-        SignSet retval = new SignSet();
-        retval.merge(SignSet.empty);
-        return retval;
+    public void evaluate(SignsLattice lattice, Boolean trueBranch) {
+        Boolean isAnd = this.bo.equals(BooleanOperation.AND);
+
+        if ((!isAnd && trueBranch) || (isAnd && !trueBranch) ) {
+            // union
+            SignsLattice l1 = (SignsLattice) lattice.factory();
+            l1.putAll(lattice);
+            cond1.evaluate(l1, trueBranch);
+
+            SignsLattice l2 = (SignsLattice) lattice.factory();
+            l2.putAll(lattice);
+            cond2.evaluate(l2, trueBranch);
+
+            SignsLattice l3 = (SignsLattice) l1.union(l2);
+            lattice.putAll(l3);
+        } else if ((isAnd && trueBranch) || (!isAnd && !trueBranch) ) {
+            // intersection
+            SignsLattice l1 = (SignsLattice) lattice.factory();
+            l1.putAll(lattice);
+            cond1.evaluate(l1, trueBranch);
+
+            SignsLattice l2 = (SignsLattice) lattice.factory();
+            l2.putAll(lattice);
+            cond2.evaluate(l2, trueBranch);
+
+            lattice.putAll(l1.intersect(l2));
+        }
     }
 
     @Override

@@ -34,10 +34,7 @@ public class TrueCondition extends Condition {
      * @return 
      */
     @Override
-    public SignSet evaluate(SignsLattice lattice) {
-        SignSet retval = new SignSet();
-        retval.merge(SignSet.empty);
-        return retval;
+    public void evaluate(SignsLattice lattice, Boolean trueBranch) {
     }
 
     @Override

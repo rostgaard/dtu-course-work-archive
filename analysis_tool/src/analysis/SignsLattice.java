@@ -36,6 +36,7 @@ public final class SignsLattice extends HashMap<Variable, SignSet> implements La
     @Override
     public Lattice factory() {
         SignsLattice retval = new SignsLattice();
+        if (declarations==null) return retval;
         for (Declaration decl : declarations) {
             retval.put(decl.getId(), new SignSet());
         }
@@ -94,5 +95,19 @@ public final class SignsLattice extends HashMap<Variable, SignSet> implements La
         }
 
         return this;
+    }
+
+    public SignsLattice intersect(SignsLattice signsLattice) {
+        SignsLattice lattice = (SignsLattice) signsLattice.factory();
+        for (Variable variable : signsLattice.keySet()) {
+            SignSet signSet1 = signsLattice.get(variable);
+            if (this.containsKey(variable)) {
+                SignSet signSet2 = this.get(variable);
+                SignSet intersection = signSet1.intersect(signSet2);
+                lattice.put(variable, intersection);
+            }
+        }
+
+        return lattice;
     }
 }

@@ -5,6 +5,7 @@ import analysis.SignsLattice;
 import syntaxtree.RelationOperation;
 import syntaxtree.Symbols;
 import syntaxtree.expression.Expression;
+import syntaxtree.expression.Variable;
 
 /**
  * Data representation for expressions with a relational operator
@@ -57,30 +58,65 @@ public class ExpressionOperationCondition extends Condition {
     }
 
     @Override
-    public SignSet evaluate(SignsLattice lattice) {
+    public void evaluate(SignsLattice lattice, Boolean trueBranch) {
         SignSet lhsSigns = expr1.evalulate(lattice);
         SignSet rhsSigns = expr2.evalulate(lattice);
-        SignSet retval = new SignSet();
 
-        switch (this.ro) {
-            case EQUAL:
-                // intersection
-                if (lhsSigns.equals(rhsSigns)) {
+        ExpressionOperationCondition thisCopy = new ExpressionOperationCondition(expr1,expr2,ro);
+
+        if (!trueBranch) {
+            thisCopy.setRo(thisCopy.ro.switchOperator());
+        }
+
+        switch (thisCopy.ro) {
+            case EQUAL: {
+                SignSet intersection = lhsSigns.intersect(rhsSigns);
+
+                if (expr1 instanceof Variable) {
+                    Variable variable = (Variable) expr1;
+                    lattice.put(variable, intersection);
                 }
+
+                if (expr2 instanceof Variable) {
+                    Variable variable = (Variable) expr2;
+                    lattice.put(variable, intersection);
+                }
+
+                break;
+            }
+            case NOTEQUAL:  {
+                SignSet intersection = lhsSigns.intersect(rhsSigns);
+                if (expr1 instanceof Variable) {
+                    Variable variable = (Variable) expr1;
+                    SignSet signs = lattice.get(variable);
+                    signs.removeAll(intersection);
+                    lattice.put(variable, signs);
+                }
+
+                if (expr2 instanceof Variable) {
+                    Variable variable = (Variable) expr1;
+                    SignSet signs = lattice.get(variable);
+                    signs.removeAll(intersection);
+                    lattice.put(variable, signs);
+                }
+            }
             case GREATEREQUALTHAN:
+
+
             case GREATERTHAN:
             case LESSEQUALTHAN:
             case LESSTHAN:
-            case NOTEQUAL:
             default:
-                retval.merge(SignSet.pnz);
-                return retval;
+//                retval.merge(SignSet.pnz);
+//                return retval;
 
         }
+
     }
 
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return this.expr1.hasPotentialUnderFlow(lattice) || this.expr2.hasPotentialUnderFlow(lattice);
     }
+
 }

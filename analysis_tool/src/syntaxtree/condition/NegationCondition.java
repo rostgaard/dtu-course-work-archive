@@ -33,10 +33,8 @@ public class NegationCondition extends Condition {
     }
 
     @Override
-    public SignSet evaluate(SignsLattice lattice) {
-        SignSet retval = new SignSet();
-        retval.merge(SignSet.empty);
-        return retval;
+    public void evaluate(SignsLattice lattice, Boolean trueBranch) {
+        cond.evaluate(lattice,!trueBranch);
     }
 
     @Override

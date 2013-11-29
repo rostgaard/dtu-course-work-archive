@@ -1,15 +1,11 @@
 package syntaxtree.statement;
 
-import analysis.DefinitionSet;
-import analysis.IntervalLattice;
-import analysis.Lattice;
-import analysis.RDLattice;
-import analysis.RDProgramState;
-import analysis.SignsLattice;
+import analysis.*;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
 import flowgraph.datastructure.VariableSet;
+import syntaxtree.expression.Constant;
 import syntaxtree.expression.Variable;
 import syntaxtree.expression.Expression;
 
@@ -107,38 +103,41 @@ public class Assignment extends Statement {
     }
 
     @Override
-    public Lattice transferFunction(Lattice lattice) {
+    public Lattice transferFunction(Lattice lattice,int toLabel) {
         if (lattice instanceof RDLattice) {
-            return this.transferFunction((RDLattice) lattice);
+            return this.transferFunction((RDLattice) lattice, toLabel);
         }
 
         if (lattice instanceof SignsLattice) {
-            return this.transferFunction((SignsLattice) lattice);
+            return this.transferFunction((SignsLattice) lattice, toLabel);
         }
 
         if (lattice instanceof IntervalLattice) {
-            return this.transferFunction((IntervalLattice) lattice);
+            return this.transferFunction((IntervalLattice) lattice, toLabel);
         }
 
         throw new UnsupportedOperationException("Analysis not supported yet.");
     }
 
-    private RDLattice transferFunction(RDLattice lattice) {
+    private RDLattice transferFunction(RDLattice lattice, int toLabel) {
         lattice.kill(id).union(
                 ((RDLattice) lattice).gen(id, this.toNode()));
         return lattice;
 
     }
 
-    private IntervalLattice transferFunction(IntervalLattice lattice) {
+    private IntervalLattice transferFunction(IntervalLattice lattice, int toLabel) {
         System.out.println("IntervalLattice transferFunction:" + this.expr.evalulate(lattice));
         lattice.get(id).set(this.expr.evalulate(lattice));
         return lattice;
     }
 
-    private SignsLattice transferFunction(SignsLattice lattice) {
-        lattice.get(id).clear(); // Kill all previous definitions.
-        lattice.get(id).merge(this.expr.evalulate(lattice));
+    private SignsLattice transferFunction(SignsLattice lattice, int toLabel) {
+        if (expr instanceof Constant) {
+            lattice.get(id).clear(); // Kill all previous definitions.
+        }
+        SignSet signs = this.expr.evalulate(lattice);
+        lattice.get(id).merge(signs);
         return lattice;
     }
 

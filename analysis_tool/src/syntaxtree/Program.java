@@ -84,11 +84,12 @@ public class Program {
             Node destinationNode = flow.getTarget();
 
             Lattice L = sourceNode.getStatement()
-                    .transferFunction(analysis.get(sourceNode));
+                    .transferFunction(analysis.get(sourceNode),destinationNode.getLabel());
             Lattice Lprime = analysis.get(destinationNode);
 
             if (!L.subsetOf(Lprime)) {
                 Lprime.union(L);
+                analysis.put(destinationNode, Lprime);
 
                 // Push more work to the worklist.
                 FlowSet newFlows = S.flows(destinationNode);

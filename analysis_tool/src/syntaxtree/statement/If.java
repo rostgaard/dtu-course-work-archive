@@ -1,7 +1,6 @@
 package syntaxtree.statement;
 
-import analysis.RDProgramState;
-import analysis.SignsLattice;
+import analysis.*;
 import flowgraph.datastructure.Flow;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
@@ -158,6 +157,41 @@ public class If extends Statement {
     @Override
     public VariableSet getVariable() {
         return VariableSet.emptySet;
+    }
+
+    @Override
+    public Lattice transferFunction(Lattice lattice, int toLabel) {
+        if (lattice instanceof RDLattice) {
+            return this.transferFunction((RDLattice) lattice, toLabel);
+        }
+
+        if (lattice instanceof SignsLattice) {
+            return this.transferFunction((SignsLattice) lattice, toLabel);
+        }
+
+        if (lattice instanceof IntervalLattice) {
+            return this.transferFunction((IntervalLattice) lattice, toLabel);
+        }
+
+        throw new UnsupportedOperationException("Analysis not supported yet.");
+    }
+
+    private RDLattice transferFunction(RDLattice lattice, int toLabel) {
+        return lattice;
+
+    }
+
+    private IntervalLattice transferFunction(IntervalLattice lattice, int toLabel) {
+        return lattice;
+    }
+
+    private SignsLattice transferFunction(SignsLattice lattice, int toLabel) {
+        SignsLattice signsLattice = lattice;
+
+        Boolean trueBranch = this.trueBranch.init().getLabel()==toLabel;
+        cond.evaluate(lattice, trueBranch);
+
+        return signsLattice;
     }
 
     @Override

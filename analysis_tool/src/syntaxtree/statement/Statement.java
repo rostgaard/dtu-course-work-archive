@@ -43,7 +43,7 @@ public abstract class Statement implements analysis.Analysable {
         return generated;
     }
 
-    public Lattice transferFunction(Lattice lattice) {
+    public Lattice transferFunction(Lattice lattice, int toLabel) {
         return lattice;
     }
 

@@ -39,7 +39,7 @@ public final class WorklistAlgorithm {
             Node destinationNode = flow.getTarget();
 
             Lattice L = sourceNode.getStatement()
-                    .transferFunction(analysis.get(flow.getSource()));
+                    .transferFunction(analysis.get(flow.getSource()),destinationNode.getLabel());
             Lattice Lprime = analysis.get(flow.getTarget());
 
             if (!L.subsetOf(Lprime)) {
