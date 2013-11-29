@@ -30,6 +30,13 @@ public abstract class Statement implements analysis.Analysable {
         return new Node(this);
     }
 
+    /**
+     * Transfer function used in the worklist algorithm. General catch-all
+     * method.
+     *
+     * @param lattice The input state.
+     * @return The input state unchanged.
+     */
     public Lattice transferFunction(Lattice lattice) {
         return lattice;
     }

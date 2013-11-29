@@ -67,6 +67,13 @@ public class Read extends Statement {
     	return VariableSet.factory().addVariable(id);
     }
 
+    /**
+     * Transfer function used in the worklist algorithm. Routes the general
+     * state to the respective specific analysis..
+     *
+     * @param lattice The input state.
+     * @return The result of the specific analysis.
+     */
     @Override
     public Lattice transferFunction(Lattice lattice) {
         if (lattice instanceof RDLattice) {

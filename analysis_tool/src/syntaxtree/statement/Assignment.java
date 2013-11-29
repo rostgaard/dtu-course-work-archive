@@ -77,6 +77,13 @@ public class Assignment extends Statement {
                 .union(expr.getVariable());
     }
 
+    /**
+     * Transfer function used in the worklist algorithm. Routes the general
+     * state to the respective specific analysis..
+     *
+     * @param lattice The input state.
+     * @return The result of the specific analysis.
+     */
     @Override
     public Lattice transferFunction(Lattice lattice) {
         if (lattice instanceof RDLattice) {
@@ -94,6 +101,14 @@ public class Assignment extends Statement {
         throw new UnsupportedOperationException("Analysis not supported yet.");
     }
 
+    /**
+     * Transfer function for Reaching Definitions analysis. An assignment to 
+     * merely kills every previous definitions of the identifier, and
+     * generates a new definition - this.
+     *
+     * @param lattice The RD entry state of an Assignment
+     * @return The RD exit state of state of an Assignment
+     */
     private RDLattice transferFunction(RDLattice lattice) {
         lattice.kill(id).union(
                 ((RDLattice) lattice).gen(id, this.toNode()));
