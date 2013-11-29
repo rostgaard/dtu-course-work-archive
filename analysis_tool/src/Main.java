@@ -96,6 +96,11 @@ public class Main {
                     System.out.println("Potential underflow detected at label: " + node);
                 }
 
+                System.out.println("==== Interval =====");
+                for (Node node : program.rangeCheck()) {
+                    System.out.println("Range check failed at: " + node);
+                }
+
             }
         } catch (RecognitionException e) {
             e.printStackTrace();

@@ -8,7 +8,16 @@ public class Interval {
     Intervals exMin;
     Intervals exMax;
 
-    public Interval setAbsoluteInterval(int newLowerBound, int newUpperBound ) {
+    public static Interval doubleInfinity(IntervalLattice lattice) {
+        Interval retval = new Interval(lattice);
+
+        retval.exMin = Intervals.MINUS_INF;
+        retval.exMax = Intervals.INF;
+
+        return retval;
+    }
+
+    public Interval setAbsoluteInterval(int newLowerBound, int newUpperBound) {
         this.lowerBound = newLowerBound;
         this.upperBound = newUpperBound;
 
@@ -21,13 +30,13 @@ public class Interval {
 
         this.exMin = Intervals.IN_RANGE;
         this.exMax = Intervals.IN_RANGE;
-        
+
         this.updateRanges();
     }
 
     @Override
     public String toString() {
-        
+
         String buffer = "[";
         if (this.exMin == Intervals.IN_RANGE) {
             buffer += this.lowerBound;
@@ -114,12 +123,12 @@ public class Interval {
 
     public static Interval negate(Interval interval) {
         Interval retval = new Interval(interval.lattice);
-        
+
         retval.lowerBound = -interval.upperBound;
         retval.upperBound = -interval.lowerBound;
-        
+
         retval.updateRanges();
-        
+
         return retval;
     }
 

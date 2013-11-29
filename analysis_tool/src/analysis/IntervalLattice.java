@@ -11,7 +11,7 @@ import syntaxtree.expression.Variable;
  */
 public final class IntervalLattice extends HashMap<Variable, Interval> implements Lattice {
 
-    DeclarationList declarations;
+    public DeclarationList declarations;
     private IntervalLattice BottomElement = null;
     public final int Maximum = 20;
     public final int Minimum = -10;

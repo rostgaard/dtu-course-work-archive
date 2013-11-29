@@ -2,6 +2,7 @@ package syntaxtree;
 
 import analysis.Lattice;
 import analysis.Analysis;
+import analysis.IntervalLattice;
 import analysis.RDLattice;
 import analysis.SignsLattice;
 import analysis.Worklist;
@@ -108,6 +109,21 @@ public class Program {
             SignsLattice sl = (SignsLattice) analysis.get(node);
 
             if (node.getStatement().hasPotentialUnderFlow(sl)) {
+                retval.add(node);
+            }
+        }
+
+        return retval;
+    }
+
+    public NodeSet rangeCheck() {
+        NodeSet retval = new NodeSet();
+        Analysis analysis = this.calculate(new IntervalLattice(this.getDecls()));
+
+        for (Node node : this.stmts.lables()) {
+            IntervalLattice il = (IntervalLattice) analysis.get(node);
+            il.declarations = this.getDecls();
+            if (node.getStatement().isOutOfBounds(il)) {
                 retval.add(node);
             }
         }

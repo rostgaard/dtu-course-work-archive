@@ -5,6 +5,7 @@ import flowgraph.datastructure.Node;
 import syntaxtree.Symbols;
 import utilities.Sequencer;
 import analysis.DefinitionSet;
+import analysis.IntervalLattice;
 import analysis.Lattice;
 import analysis.SignsLattice;
 
@@ -46,4 +47,7 @@ public abstract class Statement implements analysis.Analysable {
         return lattice;
     }
 
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return false;
+    }
 }

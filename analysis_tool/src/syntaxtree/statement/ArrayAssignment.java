@@ -1,6 +1,7 @@
 package syntaxtree.statement;
 
 import analysis.DefinitionSet;
+import analysis.Interval;
 import analysis.IntervalLattice;
 import analysis.Lattice;
 import analysis.RDLattice;
@@ -155,7 +156,7 @@ public class ArrayAssignment extends Statement {
 
         return lattice;
     }
-    
+
     private IntervalLattice transferFunction(IntervalLattice lattice) {
         lattice.get(id).set(this.expr.evalulate(lattice));
         return lattice;
@@ -164,5 +165,12 @@ public class ArrayAssignment extends Statement {
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return (this.idx.evalulate(lattice).contains(Sign.N)) || this.expr.hasPotentialUnderFlow(lattice);
-    }    
+    }
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        //TODO Add check of expressions.
+        Interval bounds = lattice.declarations.lookup(id).bounds(lattice);
+        return !(this.idx.evalulate(lattice).subsetOf(bounds));
+    }
 }

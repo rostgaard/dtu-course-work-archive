@@ -119,7 +119,7 @@ public class Assignment extends Statement {
         if (lattice instanceof IntervalLattice) {
             return this.transferFunction((IntervalLattice) lattice);
         }
-        
+
         throw new UnsupportedOperationException("Analysis not supported yet.");
     }
 
@@ -143,6 +143,7 @@ public class Assignment extends Statement {
     }
 
     @Override
-    public boolean hasPotentialUnderFlow(SignsLattice lattice) {        return this.expr.hasPotentialUnderFlow(lattice);
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        return this.expr.hasPotentialUnderFlow(lattice);
     }
 }
