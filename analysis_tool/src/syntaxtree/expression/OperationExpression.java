@@ -49,9 +49,6 @@ public class OperationExpression extends Expression {
         SignSet rhsSigns = this.expr2.evalulate(lattice);
         SignSet result = new SignSet();
 
-        System.out.println(lhsSigns);
-        System.out.println(rhsSigns);
-
         for (Sign lhs : lhsSigns) {
             for (Sign rhs : rhsSigns) {
                 result.merge(evaluationTable(lhs, rhs));
@@ -128,5 +125,10 @@ public class OperationExpression extends Expression {
     public VariableSet getVariable() {
         return expr1.getVariable()
                 .union(expr2.getVariable());
+    }
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return this.expr1.isOutOfBounds(lattice) || this.expr2.isOutOfBounds(lattice);
     }
 }

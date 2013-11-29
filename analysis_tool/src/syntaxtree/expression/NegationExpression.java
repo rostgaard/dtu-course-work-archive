@@ -43,11 +43,11 @@ public class NegationExpression extends Expression {
 
     @Override
     public Interval evalulate(IntervalLattice lattice) {
-        Interval interval = Interval.negate (this.expr.evalulate(lattice));
-        
+        Interval interval = Interval.negate(this.expr.evalulate(lattice));
+
         return interval;
     }
-    
+
     @Override
     public SignSet evalulate(SignsLattice lattice) {
         SignSet set = new SignSet();
@@ -65,5 +65,10 @@ public class NegationExpression extends Expression {
             set.add((Sign) Sign.N);
         }
         return set;
+    }
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return this.expr.isOutOfBounds(lattice);
     }
 }

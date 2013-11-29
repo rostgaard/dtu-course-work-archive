@@ -1,6 +1,8 @@
 package syntaxtree.statement;
 
 import analysis.DefinitionSet;
+import analysis.Interval;
+import analysis.IntervalLattice;
 import analysis.RDProgramState;
 import analysis.SignsLattice;
 import flowgraph.datastructure.FlowSet;
@@ -83,5 +85,10 @@ public class Write extends Statement {
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return this.expr.hasPotentialUnderFlow(lattice);
+    }
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return this.expr.isOutOfBounds(lattice);
     }
 }

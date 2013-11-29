@@ -41,7 +41,7 @@ public class Constant extends Expression {
     public Interval evalulate(IntervalLattice lattice) {
         return new Interval(lattice).setAbsoluteInterval(n, n);
     }
-    
+
     @Override
     public SignSet evalulate(SignsLattice lattice) {
 
@@ -54,5 +54,10 @@ public class Constant extends Expression {
             signSet.add(Sign.P);
         }
         return signSet;
+    }
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return false;
     }
 }

@@ -6,6 +6,8 @@ import java.util.TreeSet;
 
 import analysis.Definition;
 import analysis.DefinitionSet;
+import analysis.Interval;
+import analysis.IntervalLattice;
 import analysis.Lattice;
 import analysis.RDLattice;
 import analysis.RDProgramState;
@@ -56,18 +58,18 @@ public class ReadArray extends Statement {
 
     @Override
     public RDProgramState RD(RDProgramState currentState) {
-     	//RDentry
-        DefinitionSet exit = currentState.getRDExit(getLabel()-1);
-    	currentState.addRDentry(getLabel(), exit);
+        //RDentry
+        DefinitionSet exit = currentState.getRDExit(getLabel() - 1);
+        currentState.addRDentry(getLabel(), exit);
 
-    	//RDexit
+        //RDexit
         DefinitionSet entry = currentState.getRDEntry(getLabel());
-    	//killRD(read A[a]) = {(A, l'}| b(l') is a declaration or an assignment to A[]}    	
-    	entry.removeAll(currentState.kill(id, entry));
-    	//genRD(read A[a]) = {(A[a], l)}
-    	entry.addAll(currentState.gen(id, new Node(this)));
+        //killRD(read A[a]) = {(A, l'}| b(l') is a declaration or an assignment to A[]}    	
+        entry.removeAll(currentState.kill(id, entry));
+        //genRD(read A[a]) = {(A[a], l)}
+        entry.addAll(currentState.gen(id, new Node(this)));
 
-    	currentState.addRDexit(getLabel(), entry);
+        currentState.addRDexit(getLabel(), entry);
         return currentState;
     }
 
@@ -101,11 +103,11 @@ public class ReadArray extends Statement {
     public FlowSet flow() {
         return FlowSet.emptySet;
     }
-    
+
     @Override
     public VariableSet getVariable() {
-    	return VariableSet.factory().addVariable(id)
-    			.union(idx.getVariable());
+        return VariableSet.factory().addVariable(id)
+                .union(idx.getVariable());
     }
 
     @Override
@@ -136,5 +138,11 @@ public class ReadArray extends Statement {
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return (this.idx.evalulate(lattice).contains(Sign.N));
+    }
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        Interval bounds = lattice.declarations.lookup(id).bounds(lattice);
+        return !(this.idx.evalulate(lattice).subsetOf(bounds));
     }
 }

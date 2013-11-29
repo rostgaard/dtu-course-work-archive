@@ -169,8 +169,7 @@ public class ArrayAssignment extends Statement {
 
     @Override
     public boolean isOutOfBounds(IntervalLattice lattice) {
-        //TODO Add check of expressions.
         Interval bounds = lattice.declarations.lookup(id).bounds(lattice);
-        return !(this.idx.evalulate(lattice).subsetOf(bounds));
+        return !(this.idx.evalulate(lattice).subsetOf(bounds)) || this.expr.isOutOfBounds(lattice);
     }
 }

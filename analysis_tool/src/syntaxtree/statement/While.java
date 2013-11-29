@@ -4,6 +4,8 @@ import java.security.interfaces.RSAKey;
 import java.util.ArrayList;
 
 import analysis.Definition;
+import analysis.Interval;
+import analysis.IntervalLattice;
 import analysis.Lattice;
 import analysis.RDProgramState;
 import analysis.SignsLattice;
@@ -144,4 +146,10 @@ public class While extends Statement {
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return this.cond.hasPotentialUnderFlow(lattice);
     }
+    
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return this.cond.isOutOfBounds(lattice);
+    }
+    
 }

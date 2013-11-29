@@ -131,7 +131,6 @@ public class Assignment extends Statement {
     }
 
     private IntervalLattice transferFunction(IntervalLattice lattice) {
-        System.out.println("IntervalLattice transferFunction:" + this.expr.evalulate(lattice));
         lattice.get(id).set(this.expr.evalulate(lattice));
         return lattice;
     }
@@ -145,5 +144,10 @@ public class Assignment extends Statement {
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return this.expr.hasPotentialUnderFlow(lattice);
+    }
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return this.expr.isOutOfBounds(lattice);
     }
 }

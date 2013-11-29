@@ -20,9 +20,9 @@ public class Variable extends Expression {
     public SignSet evalulate(SignsLattice lattice) {
         return lattice.lookup(new Variable(type, id));
     }
-    
+
     @Override
-    public Interval evalulate(IntervalLattice lattice) {        
+    public Interval evalulate(IntervalLattice lattice) {
         return lattice.lookup(new Variable(type, id));
     }
 
@@ -80,5 +80,10 @@ public class Variable extends Expression {
         }
 
         return hash;
+    }
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return false;
     }
 }

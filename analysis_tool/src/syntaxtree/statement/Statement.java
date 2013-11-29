@@ -7,7 +7,6 @@ import utilities.Sequencer;
 import analysis.DefinitionSet;
 import analysis.IntervalLattice;
 import analysis.Lattice;
-import analysis.SignsLattice;
 
 /**
  * Abstract class for statements
@@ -47,6 +46,14 @@ public abstract class Statement implements analysis.Analysable {
         return lattice;
     }
 
+    /**
+     * Determines if a statement contains elements that are out of bounds, given
+     * an Interval state.
+     *
+     * @param lattice The entry state.
+     * @return True if any expression in the condition is out of bounds, false
+     * otherwise.
+     */
     public boolean isOutOfBounds(IntervalLattice lattice) {
         return false;
     }

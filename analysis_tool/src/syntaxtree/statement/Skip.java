@@ -1,6 +1,8 @@
 package syntaxtree.statement;
 
 import analysis.DefinitionSet;
+import analysis.Interval;
+import analysis.IntervalLattice;
 import analysis.RDProgramState;
 import analysis.SignsLattice;
 import flowgraph.datastructure.FlowSet;
@@ -65,6 +67,11 @@ public class Skip extends Statement {
 
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        return false;
+    }
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
         return false;
     }
 }

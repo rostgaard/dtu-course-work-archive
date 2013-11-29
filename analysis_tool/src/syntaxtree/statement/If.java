@@ -1,5 +1,6 @@
 package syntaxtree.statement;
 
+import analysis.IntervalLattice;
 import analysis.RDProgramState;
 import analysis.SignsLattice;
 import flowgraph.datastructure.Flow;
@@ -164,4 +165,10 @@ public class If extends Statement {
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return this.cond.hasPotentialUnderFlow(lattice);
     }
+    
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return this.cond.isOutOfBounds(lattice);
+    }
+    
 }

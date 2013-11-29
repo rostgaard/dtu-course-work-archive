@@ -1,5 +1,7 @@
 package syntaxtree.condition;
 
+import analysis.Interval;
+import analysis.IntervalLattice;
 import analysis.SignSet;
 import analysis.SignsLattice;
 
@@ -43,4 +45,10 @@ public class NegationCondition extends Condition {
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return this.cond.hasPotentialUnderFlow(lattice);
     }
+    
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return this.cond.isOutOfBounds(lattice);
+    }
+    
 }

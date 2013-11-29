@@ -132,4 +132,10 @@ public class Read extends Statement {
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return false;
     }
+    
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        return false;
+    }
+    
 }

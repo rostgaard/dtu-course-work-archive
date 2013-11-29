@@ -51,18 +51,26 @@ public class ArrayExpression extends Expression {
         return VariableSet.factory().addVariable(id)
                 .union(idx.getVariable());
     }
+
     @Override
-    public SignSet evalulate(SignsLattice lattice) {        
+    public SignSet evalulate(SignsLattice lattice) {
         return lattice.lookup(id);
     }
 
     @Override
-    public Interval evalulate(IntervalLattice lattice) {        
+    public Interval evalulate(IntervalLattice lattice) {
         return lattice.lookup(id);
     }
-    
+
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return this.idx.evalulate(lattice).contains(Sign.N);
+    }
+
+    @Override
+    public boolean isOutOfBounds(IntervalLattice lattice) {
+        Interval bounds = lattice.declarations.lookup(id).bounds(lattice);
+//        System.out.println(bounds);
+        return !(this.idx.evalulate(lattice).subsetOf(bounds));
     }
 }
