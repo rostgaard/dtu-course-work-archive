@@ -37,9 +37,14 @@ public class Main {
     }
 
     public static void main(String args[]) throws Exception {
+
+        boolean verbose = false;
+
         if (args.length < 1) {
             System.out.println("Please supply a file with source code as argument.");
             System.exit(1);
+        } else if (args.length > 1) {
+            verbose = true;
         }
 
         String inputfile = args[0];
@@ -62,32 +67,34 @@ public class Main {
                 System.out.println("==== Program =====");
                 System.out.println(program.getStmts().toStringWithLabel());
                 System.out.println("==== End program =====");
-//                
-//                System.out.println("==== Labels =====");
-//                System.out.println(program.getStmts().lables());
-//                
-//                System.out.println("==== Flows =====");
-//                System.out.println(program.getStmts().flow());
-//
-//                System.out.println("==== Reaching definitions =====");
-//                LatticeSet rd = program.calculate(new RDLattice(program.getDecls()));
-//                System.out.println(rd);
-//                
-//                System.out.println("==== Program slice ====");
-//                ProgramSlicing.execute(program.getStmts(), rd);
-//
-//                System.out.println("==== Signs analysis =====");
-//                LatticeSet signs = program.calculate(new SignsLattice(program.getDecls()));
-//                System.out.println(signs);
 
+                if (verbose) {
+                    System.out.println("==== Labels =====");
+                    System.out.println(program.getStmts().lables());
+
+                    System.out.println("==== Flows =====");
+                    System.out.println(program.getStmts().flow());
+
+                    System.out.println("==== Reaching definitions =====");
+                    LatticeSet rd = program.calculate(new RDLattice(program.getDecls()));
+                    System.out.println(rd);
+
+                    System.out.println("==== Program slice ====");
+                    ProgramSlicing.execute(program.getStmts(), rd);
+
+                    System.out.println("==== Signs analysis =====");
+                    LatticeSet signs = program.calculate(new SignsLattice(program.getDecls()));
+                    System.out.println(signs);
+
+                    System.out.println("==== Interval analysis =====");
+                    System.out.println(program.calculate(new IntervalLattice(program.getDecls())));
+
+                }
+                
                 System.out.println("==== Buffer Underflow =====");
                 for (Node node : program.underFlowCheck()) {
                     System.out.println("Potential underflow detected at label: " + node);
                 }
-
-//                
-//                System.out.println("==== Interval analysis =====");
-//                System.out.println(program.calculate(new IntervalLattice(program.getDecls())));
 
             }
         } catch (RecognitionException e) {
