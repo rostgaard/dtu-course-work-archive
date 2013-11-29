@@ -21,12 +21,13 @@ import ws.dtu.manager.ItineraryDatabase;
 @Resource
 @Path("/reset")
 @Produces("application/itinerary+xml")
-public class ResetResource {
+public class ResetResource extends ws.dtu.resources.Resource {
     
     private static final LameDuckResetService lameDuckResetService = new LameDuckResetService();
     private static final LameDuckResetPortType lameDuckResetPort = lameDuckResetService.getLameDuckResetPort(); 
     private static final NiceViewResetService niceViewResetService = new NiceViewResetService();
     private static final NiceViewResetPortType niceViewResetPort = niceViewResetService.getNiceViewResetPort(); 
+    
     @PUT
     public void reset() {
         ItineraryDatabase.getInstance().reset();

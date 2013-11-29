@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package ws.dtu.model;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -18,7 +18,7 @@ import ws.dtu.niceview.types.HotelInformation;
 public class HotelBooking {
 
     public enum HotelBookingState {
-    UNBOOKED, BOOKED, CANCELLED
+    UNCONFIRMED, CONFIRMED, CANCELLED
     }
     
    public HotelBooking() {
@@ -31,7 +31,7 @@ public class HotelBooking {
 
     
     private HotelInformation hotelInformation;
-    private HotelBookingState bookingState = HotelBookingState.UNBOOKED;
+    private HotelBookingState bookingState = HotelBookingState.UNCONFIRMED;
     
     @XmlElement
     public HotelInformation getHotelInformation() {

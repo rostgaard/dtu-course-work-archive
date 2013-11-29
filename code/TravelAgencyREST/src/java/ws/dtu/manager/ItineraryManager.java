@@ -4,8 +4,6 @@
  */
 package ws.dtu.manager;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import ws.dtu.lameduck.BookFlightFault;
 import ws.dtu.lameduck.CancelFlightFault;
 import ws.dtu.lameduck.LameDuckPortType;
@@ -33,29 +31,34 @@ public class ItineraryManager {
     private static final NiceViewService niceViewService = new NiceViewService();
     private static final NiceViewPortType niceViewPort = niceViewService.getNiceViewPort();  
     
-    private static ItineraryManager db;
+    private static ItineraryManager manager;
     
     public static synchronized ItineraryManager getInstance() {
-        if(db == null){
-            db = new ItineraryManager();
+        if(manager == null){
+            manager = new ItineraryManager();
         }
         
-        return db;
+        return manager;
     }
     
     public Itinerary createItinerary(int customerID) {
         Itinerary itinerary = new Itinerary(Sequencer.getNext());
+        itinerary.setState(Itinerary.ItinerayState.PLANNING);
         itinerary.setCustomerID(customerID);
         ItineraryDatabase.getInstance().insert(itinerary,customerID);
         return itinerary;
     }
     
     public void bookItinerary(Itinerary itinerary) {
+        if (itinerary.getState()==Itinerary.ItinerayState.BOOKED) {
+            throw new exceptions.BookingException();
+        }
+        
         Customer customer = CustomerDatabase.getInstance().get(itinerary.getCustomerID());
         for(FlightBooking fb : itinerary.getFlightBookings().getFlights()) {
             try {
                 lameDuckPort.bookFlight(fb.getFlightInformation().getBookingNo(), customer.getCreditcard());
-                fb.setBookingState(FlightBooking.FlightBookingState.BOOKED);
+                fb.setBookingState(FlightBooking.FlightBookingState.CONFIRMED);
             } catch (BookFlightFault ex) {
                 revertBooking(itinerary);
                 throw new exceptions.BookingException();
@@ -65,20 +68,22 @@ public class ItineraryManager {
         for(HotelBooking hb : itinerary.getHotelBookings().getHotels()) {
             try {
                 niceViewPort.bookHotel(hb.getHotelInformation().getBookingNo(), customer.getCreditcard());
-                hb.setBookingState(HotelBooking.HotelBookingState.BOOKED);
+                hb.setBookingState(HotelBooking.HotelBookingState.CONFIRMED);
             } catch (BookHotelFault ex) {
                 
                 revertBooking(itinerary);
                 throw new exceptions.BookingException();
             }
         }
+        
+        itinerary.setState(Itinerary.ItinerayState.BOOKED);
     }
     
     private void revertBooking(Itinerary itinerary) {
         Customer customer = CustomerDatabase.getInstance().get(itinerary.getCustomerID());
 
         for(FlightBooking fb : itinerary.getFlightBookings().getFlights()) {
-            if(fb.getBookingState()==FlightBooking.FlightBookingState.BOOKED) {
+            if(fb.getBookingState()==FlightBooking.FlightBookingState.CONFIRMED) {
                 try {
                     lameDuckPort.cancelFlight(fb.getFlightInformation().getBookingNo(), customer.getCreditcard(), fb.getFlightInformation().getPrice());
                     fb.setBookingState(FlightBooking.FlightBookingState.CANCELLED);
@@ -89,7 +94,7 @@ public class ItineraryManager {
         }
         
         for(HotelBooking hb : itinerary.getHotelBookings().getHotels()) {
-            if (hb.getBookingState()==HotelBooking.HotelBookingState.BOOKED) {
+            if (hb.getBookingState()==HotelBooking.HotelBookingState.CONFIRMED) {
                 try {
                     niceViewPort.cancelHotel(hb.getHotelInformation().getBookingNo());
                     hb.setBookingState(HotelBooking.HotelBookingState.CANCELLED);
@@ -101,14 +106,21 @@ public class ItineraryManager {
     }
     
     public void cancelItinerary(Itinerary itinerary) {
+        if (itinerary.getState()==Itinerary.ItinerayState.PLANNING) {
+            throw new exceptions.CancelException();
+        }       
+        
+        Boolean throwException = false;
+        
         Customer customer = CustomerDatabase.getInstance().get(itinerary.getCustomerID());
         for(FlightBooking fb : itinerary.getFlightBookings().getFlights()) {
             try {
                 lameDuckPort.cancelFlight(fb.getFlightInformation().getBookingNo(), customer.getCreditcard(), fb.getFlightInformation().getPrice());
                 fb.setBookingState(FlightBooking.FlightBookingState.CANCELLED);
             } catch (CancelFlightFault ex) {
+                throwException = true;
 //                revertBooking(itinerary);
-                throw new exceptions.CancelException();
+//                throw new exceptions.CancelException();
             } 
         }
         
@@ -117,10 +129,17 @@ public class ItineraryManager {
                 niceViewPort.cancelHotel(hb.getHotelInformation().getBookingNo());
                 hb.setBookingState(HotelBooking.HotelBookingState.CANCELLED);
             } catch (CancelHotelFault ex) {
+                throwException = true;
 //                revertBooking(itinerary);
-                throw new exceptions.CancelException();
+//                throw new exceptions.CancelException();
             }
         }
+        
+        if (throwException) {
+            throw new exceptions.CancelException();
+        }
+        
+        itinerary.setState(Itinerary.ItinerayState.PLANNING);
     }
     
 }

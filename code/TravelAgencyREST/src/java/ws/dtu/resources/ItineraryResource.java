@@ -18,11 +18,14 @@ import ws.dtu.lameduck.LameDuckPortType;
 import ws.dtu.lameduck.LameDuckService;
 import ws.dtu.manager.ItineraryDatabase;
 import ws.dtu.manager.ItineraryManager;
+import ws.dtu.manager.LinkManager;
 import ws.dtu.model.FlightBooking;
-import ws.dtu.model.FlightBookingList;
 import ws.dtu.model.HotelBooking;
-import ws.dtu.model.HotelBookingList;
 import ws.dtu.model.Itinerary;
+import ws.dtu.representation.FlightRepresentation;
+import ws.dtu.representation.HotelRepresentation;
+import ws.dtu.representation.ItineraryRepresentation;
+import ws.dtu.representation.StatusRepresentation;
 
 /**
  *
@@ -31,23 +34,30 @@ import ws.dtu.model.Itinerary;
 @Resource
 @Path("/itinerary")
 @Produces("application/itinerary+xml")
-public class ItineraryResource {
+public class ItineraryResource extends ws.dtu.resources.Resource {
     private static final LameDuckService lameDuckService = new LameDuckService();
     private static final LameDuckPortType lameDuckPort = lameDuckService.getLameDuckPortTypeBindingPort();    
     
     private static final ItineraryManager itineraryManager = ItineraryManager.getInstance();
+    private static final LinkManager linkManager = LinkManager.getInstance();
     
     @GET
     @Path("{id}")
-    public Itinerary getItinerary(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID) {
-        return ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier);
+    public ItineraryRepresentation getItinerary(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID) {
+        Itinerary itinerary = ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier);
+        ItineraryRepresentation representation = new ItineraryRepresentation(itinerary);
+        linkManager.addLinks(itinerary, representation);        
+        
+        return representation;
     }
     
     @POST
     @Path("")
     public Response createItinerary(@QueryParam("customer_id") int customerID) throws URISyntaxException {
         Itinerary itinerary = itineraryManager.createItinerary(customerID);
-        return Response.created(new URI(""+itinerary.getID())).build();
+        ItineraryRepresentation representation = new ItineraryRepresentation(itinerary);
+        linkManager.addLinks(itinerary, representation);
+        return Response.status(201).entity(representation).build();
     }
     
     @DELETE
@@ -59,29 +69,44 @@ public class ItineraryResource {
     
     @GET
     @Path("{id}/flight")
-    public FlightBookingList getFlights(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID) {
-            return ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier).getFlightBookings();
+    public FlightRepresentation getFlights(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID) {
+        Itinerary itinerary = ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier);
+        FlightRepresentation representation = new FlightRepresentation(itinerary.getFlightBookings());
+        linkManager.addLinks(itinerary, representation);
+        
+        return representation;        
     }
     
     @PUT
     @Consumes("application/itinerary+xml")
     @Path("{id}/flight")
-    public Response addFlight(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID, FlightBooking flightBooking) {
-        ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier).addFlightBooking(flightBooking);
-        return Response.ok().build();
+    public StatusRepresentation addFlight(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID, FlightBooking flightBooking) {
+        Itinerary itinerary = ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier);
+        itinerary.addFlightBooking(flightBooking);
+        StatusRepresentation representation = new StatusRepresentation("Flight added");
+        linkManager.addLinks(itinerary, representation);
+        return representation;
     }
     
     @GET
     @Path("{id}/hotel")
-    public HotelBookingList getHotels(@PathParam("id") int itineraryIdentifier,@QueryParam("customer_id") int customerID) {
-            return ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier).getHotelBookings();        
+    public HotelRepresentation getHotels(@PathParam("id") int itineraryIdentifier,@QueryParam("customer_id") int customerID) {
+        Itinerary itinerary = ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier);
+        HotelRepresentation representation = new HotelRepresentation(itinerary.getHotelBookings());
+        linkManager.addLinks(itinerary, representation);
+
+        return representation;
     }
     
     @PUT
     @Path("{id}/hotel")
     @Consumes("application/itinerary+xml")
-    public Response addHotel(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID, HotelBooking hotelBooking) {
-        ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier).addHotelBooking(hotelBooking);
-        return Response.ok().build();
+    public StatusRepresentation addHotel(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID, HotelBooking hotelBooking) {
+        Itinerary itinerary = ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier);
+        itinerary.addHotelBooking(hotelBooking);
+        StatusRepresentation representation = new StatusRepresentation("Hotel added");
+        linkManager.addLinks(itinerary, representation);
+        
+        return representation;
     }   
 }

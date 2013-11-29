@@ -14,7 +14,7 @@ import ws.dtu.model.exceptions;
 public final class ItineraryDatabase {
     
 
-    static HashMap<Integer,HashMap<Integer, Itinerary>> data = new HashMap<Integer, HashMap<Integer, Itinerary>>();
+    private static HashMap<Integer,HashMap<Integer, Itinerary>> data = new HashMap<Integer, HashMap<Integer, Itinerary>>();
     
     private static ItineraryDatabase db;
     

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package ws.dtu.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -27,11 +27,11 @@ public class FlightBooking {
         this.flightInformation = flight;
     }
     public enum FlightBookingState {
-    UNBOOKED, BOOKED, CANCELLED
+    UNCONFIRMED, CONFIRMED, CANCELLED
     }
     
     private FlightInformation flightInformation;
-    private FlightBookingState bookingState = FlightBookingState.UNBOOKED;
+    private FlightBookingState bookingState = FlightBookingState.UNCONFIRMED;
     
     @XmlElement
     public FlightInformation getFlightInformation() {

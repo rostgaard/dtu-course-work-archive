@@ -5,7 +5,6 @@
 package ws.dtu.model;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -15,11 +14,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement()
 public class Itinerary {
 
+    public enum ItinerayState {
+        PLANNING, BOOKED;
+    }
+    
     private int ID;
     
     private FlightBookingList flightBookings;
     private HotelBookingList  hotelBookings;
     private int customerID;
+    private ItinerayState state = ItinerayState.PLANNING;
 
     public Itinerary() {
         this.flightBookings = new FlightBookingList();
@@ -75,6 +79,13 @@ public class Itinerary {
     public void setCustomerID(int customerID) {
         this.customerID = customerID;
     }
-    
+
+    public ItinerayState getState() {
+        return state;
+    }
+
+    public void setState(ItinerayState state) {
+        this.state = state;
+    }
     
 }

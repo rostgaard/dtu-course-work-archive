@@ -24,7 +24,7 @@ import ws.dtu.model.FlightBookingList;
 @Resource
 @Path("/flight")
 @Produces("application/itinerary+xml")
-public class FlightResource {
+public class FlightResource extends ws.dtu.resources.Resource {
  
     private static final LameDuckService lameDuckService = new LameDuckService();
     private static final LameDuckPortType lameDuckPort = lameDuckService.getLameDuckPortTypeBindingPort();

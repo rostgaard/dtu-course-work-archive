@@ -14,6 +14,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import ws.dtu.lameduck.BookFlightFault;
+import ws.dtu.lameduck.CancelFlightFault;
 import ws.dtu.lameduck.types.Flight;
 import ws.dtu.lameduck.types.FlightInformation;
 import ws.dtu.lameduck.types.FlightList;
@@ -81,7 +82,7 @@ public final class FlightDatabase {
         newFlight = generateFlight("Kabul", "Kastrup", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight, "SAS0002", 250, serviceName));
         
-          newFlight = generateFlight("Kabul", "Kastrup", date1, date2, "SAS");
+        newFlight = generateFlight("Kabul", "Kastrup", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight, "SAS0003", 250, serviceName));
         
         newFlight = generateFlight("Kastrup", "Moscow", date1, date2, "SAS");
@@ -98,6 +99,11 @@ public final class FlightDatabase {
         
         newFlight = generateFlight("Kastrup", "Kazakhstan", date1, date2, "SAS");
         insert(generateFlightInformation(newFlight, "SAS0008", 300, serviceName)); 
+        
+        
+        // This flight can not be cancelled when booked
+        newFlight = generateFlight("Iran", "London", date1, date2, "Fail Airlines");
+        insert(generateFlightInformation(newFlight, "FAIL0001", 300, serviceName));         
     }
     
     private  Flight generateFlight(String origin, String destination, XMLGregorianCalendar liftOff, XMLGregorianCalendar arrival, String carrier){
@@ -164,8 +170,6 @@ public final class FlightDatabase {
         }
         else if(bookings.contains(bookingNo)){
             throw new BookFlightFault("Trip has already been booked", "Trip has already been booked");
-        } else if (bookingNo.equals("FAIL0001")) {
-            throw new BookFlightFault("Airline is to unstable to fly", "Please try another airline");
         } else {
                 bookings.add(bookingNo); 
                 return flightInfoByBooking.get(bookingNo);
@@ -174,8 +178,12 @@ public final class FlightDatabase {
         
     }
     
-    public  void cancelFlight(String bookingNo) {
-           bookings.remove(bookingNo);
+    public  void cancelFlight(String bookingNo) throws CancelFlightFault {
+        if (bookingNo.equals("FAIL0001")) {
+            throw new CancelFlightFault("Airline does not allow flight to be cancelled", "Unable to cancel flight");
+        }
+           
+        bookings.remove(bookingNo);
     }
 
 }

@@ -25,7 +25,7 @@ import ws.dtu.niceview.types.HotelList;
 @Resource
 @Path("/hotel")
 @Produces("application/itinerary+xml")
-public class HotelResource {
+public class HotelResource extends ws.dtu.resources.Resource {
     
     private static final NiceViewService niceViewService = new NiceViewService();
     private static final NiceViewPortType niceViewPort = niceViewService.getNiceViewPort();

@@ -14,7 +14,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import ws.dtu.manager.ItineraryDatabase;
 import ws.dtu.manager.ItineraryManager;
+import ws.dtu.manager.LinkManager;
 import ws.dtu.model.Itinerary;
+import ws.dtu.representation.StatusRepresentation;
 
 /**
  *
@@ -23,22 +25,27 @@ import ws.dtu.model.Itinerary;
 @Resource
 @Path("/itinerary/{id}/booking")
 @Produces("application/itinerary+xml")
-public class ItineraryBookingResource {
+public class ItineraryBookingResource extends ws.dtu.resources.Resource {
     
     private static final ItineraryManager itineraryManager = ItineraryManager.getInstance();
-    
+    private static final LinkManager linkManager = LinkManager.getInstance();
+
     @PUT
-    public Response bookItinerary(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID) {        
+    public StatusRepresentation bookItinerary(@PathParam("id") int itineraryIdentifier, @QueryParam("customer_id") int customerID) {        
         Itinerary itinerary = ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier);
         itineraryManager.bookItinerary(itinerary);
-        return Response.ok().build();
+        StatusRepresentation representation = new StatusRepresentation("Itinerary booked");
+        linkManager.addLinks(itinerary, representation);
+        return representation;
     }
     
     @DELETE
-    public Response cancelItinerary(@PathParam("id") int itineraryIdentifier,@QueryParam("customer_id") int customerID) {
-//        ItineraryDatabase.getInstance().delete(customerID,itineraryIdentifier);
+    public StatusRepresentation cancelItinerary(@PathParam("id") int itineraryIdentifier,@QueryParam("customer_id") int customerID) {
         Itinerary itinerary = ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier);
         itineraryManager.cancelItinerary(itinerary);
-        return Response.ok().build();
+        StatusRepresentation representation = new StatusRepresentation("Itinerary cancelled");
+        linkManager.addLinks(itinerary, representation);
+        
+        return representation;
     } 
 }
