@@ -67,7 +67,6 @@ public class ExpressionOperationCondition extends Condition {
             case EQUAL:
                 // intersection
                 if (lhsSigns.equals(rhsSigns)) {
-                    
                 }
             case GREATEREQUALTHAN:
             case GREATERTHAN:
@@ -80,16 +79,9 @@ public class ExpressionOperationCondition extends Condition {
 
         }
     }
-    
+
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
-        try {
-            this.expr1.checkUnderflow(lattice);
-            this.expr2.checkUnderflow(lattice);
-        } catch (UnderFlowException ex) {
-            return true;
-        }
-        return false;
+        return this.expr1.hasPotentialUnderFlow(lattice) || this.expr2.hasPotentialUnderFlow(lattice);
     }
-    
 }

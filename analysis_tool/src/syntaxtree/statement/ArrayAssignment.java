@@ -166,11 +166,6 @@ public class ArrayAssignment extends Statement {
 
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
-        try {
-            this.expr.checkUnderflow(lattice);
-        } catch (UnderFlowException ex) {
-            return true;
-        }
-        return (this.idx.evalulate(lattice).contains(Sign.N));
+        return (this.idx.evalulate(lattice).contains(Sign.N)) || this.expr.hasPotentialUnderFlow(lattice);
     }    
 }

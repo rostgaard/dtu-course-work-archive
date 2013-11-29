@@ -144,12 +144,6 @@ public class Assignment extends Statement {
     }
 
     @Override
-    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
-        try {
-            this.expr.checkUnderflow(lattice);
-        } catch (UnderFlowException ex) {
-            return true;
-        }
-        return false;
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {        return this.expr.hasPotentialUnderFlow(lattice);
     }
 }

@@ -15,7 +15,7 @@ import syntaxtree.expression.Expression;
  * Data representation for write statements
  *
  */
-public class Write extends Statement{
+public class Write extends Statement {
 
     private Expression expr;
 
@@ -42,20 +42,20 @@ public class Write extends Statement{
 
     @Override
     public RDProgramState RD(RDProgramState currentState) {
-    	//RDentry
-        DefinitionSet exit = currentState.getRDExit(getLabel()-1);
-    	currentState.addRDentry(getLabel(), exit);
+        //RDentry
+        DefinitionSet exit = currentState.getRDExit(getLabel() - 1);
+        currentState.addRDentry(getLabel(), exit);
 
-    	//RDexit
+        //RDexit
         DefinitionSet entry = currentState.getRDEntry(getLabel());
-    	//killRD([write a]l) = �
-    	//genRD([[write a]l) = �    	
-    	currentState.addRDexit(getLabel(), entry);
-    	  	
+        //killRD([write a]l) = �
+        //genRD([[write a]l) = �    	
+        currentState.addRDexit(getLabel(), entry);
+
         return currentState;
 
     }
-    
+
     @Override
     public NodeSet labels() {
         return NodeSet.factory().addNode(new Node(this));
@@ -78,17 +78,11 @@ public class Write extends Statement{
 
     @Override
     public VariableSet getVariable() {
-    	return expr.getVariable();
+        return expr.getVariable();
     }
 
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
-        try {
-            this.expr.checkUnderflow(lattice);
-        } catch (UnderFlowException ex) {
-            return true;
-        }
-        return false;
+        return this.expr.hasPotentialUnderFlow(lattice);
     }
-     
 }

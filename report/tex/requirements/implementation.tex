@@ -190,3 +190,20 @@ $ a_1 \geq a_2$   & $ \mathcal{A_S}[\![a_2]\!] \bigcup \left(\mathcal{A_S}[\![a_
 \caption{Expression mapping}
 \label{table:expression_mapping}
 \end{table}
+
+
+\subsection{Underflow detection}
+For underflow detection we've extended the abstract classes defining statements, expressions and conditions and mapped 
+\begin{figure}
+\centering
+\begin{tikzpicture} 
+\umlclass[type=abstract]{Expression}{}{ 
+%  + \umlvirt{isOutOfBounds(Analysis[$\ell$]) throws OutOfBoundsException} \\
+  + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): void : throws UnderFlowException}} \\
+  + \umlvirt{evalulate(Analysis[$\ell$])} : SignSet\\
+  + \umlvirt{evalulate(Analysis[$\ell$]) : Interval}
+} 
+\end{tikzpicture}
+\caption{Extension of the Expression class}
+\end{figure}
+

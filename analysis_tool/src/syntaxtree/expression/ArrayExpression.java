@@ -64,13 +64,7 @@ public class ArrayExpression extends Expression {
     }
     
     @Override
-    public void checkBounds(IntervalLattice lattice) {        
-    }
-
-    @Override
-    public void checkUnderflow(SignsLattice lattice) throws UnderFlowException{
-        if (this.idx.evalulate(lattice).contains(Sign.N)) {
-            throw new UnderFlowException("Underflow detected!");
-        }
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
+        return this.idx.evalulate(lattice).contains(Sign.N);
     }
 }

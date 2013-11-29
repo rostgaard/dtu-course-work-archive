@@ -22,7 +22,7 @@ public abstract class Expression {
      * @param lattice The definitions reached at the label.
      * @throws OutOfBoundsException
      */
-    public void checkBounds(IntervalLattice lattice) throws OutOfBoundsException {
+    public boolean isOutOfBounds(IntervalLattice lattice) {
         /*
          * Just move along, nothing to see here.
          * All the good stuff happens in the overridden methods anyway.
@@ -30,6 +30,7 @@ public abstract class Expression {
          * This method is only here because the programmer is lazy, and did
          * no felt like overridding methods for every statement.
          */
+        return false;
     }
 
     /**
@@ -39,7 +40,7 @@ public abstract class Expression {
      * @param lattice The definitions reached at the label.
      * @throws UnderFlowException
      */
-    public void checkUnderflow(SignsLattice lattice) throws UnderFlowException {
+    public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         /*
          * Just move along, nothing to see here.
          * All the good stuff happens in the overridden methods anyway.
@@ -47,6 +48,7 @@ public abstract class Expression {
          * This method is only here because the programmer is lazy, and did
          * no felt like overridding methods for every statement.
          */
+        return false;
     }
 
     /**
