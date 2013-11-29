@@ -1,8 +1,7 @@
 package syntaxtree.statement;
 
-import analysis.IntervalLattice;
-import analysis.RDProgramState;
-import analysis.SignsLattice;
+import analysis.lattices.IntervalLattice;
+import analysis.lattices.SignsLattice;
 import flowgraph.datastructure.Flow;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
@@ -65,31 +64,6 @@ public class If extends Statement {
                 + Symbols.ELSE + Symbols.NEWLINE
                 + Symbols.INDENTION + falseBranch
                 + Symbols.FI;
-    }
-
-    @Override
-    public RDProgramState RD(RDProgramState currentState) {
-//    	currentState.addRDentry(getLabel(), currentState.getDefinitions());
-//    	RDProgramState rps1 = new RDProgramState();    	
-//    	for(Statement s : trueBranch){
-//    		currentState.addRDentry(s.getLabel(), rps1.getDefinitions());
-//    		s.RD(rps1);
-//    		currentState.addRDexit(s.getLabel(), rps1.getDefinitions());
-//    	}
-//    	currentState.union(rps1);
-//    	
-//    	RDProgramState rps2 = new RDProgramState();
-//    	for(Statement s : falseBranch){
-//    		currentState.addRDentry(s.getLabel(), rps2.getDefinitions());
-//    		s.RD(rps2);
-//    		currentState.addRDexit(s.getLabel(), rps2.getDefinitions());
-//    	}
-//    	currentState.union(rps2);
-//    	
-//    	//killRD([if b then S1 else S2 fi]l) = ?
-//    	//genRD([[if b then S1 else S2 fi]l) = ?
-//    	currentState.addRDexit(getLabel(), currentState.getDefinitions());
-        return currentState;
     }
 
     @Override

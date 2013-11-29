@@ -6,6 +6,5 @@ package syntaxtree;
  */
 public enum ArithmeticOperation {
 
-	PLUS, MINUS, MULTIPLICATION, DIVISION;
-
+    PLUS, MINUS, MULTIPLICATION, DIVISION;
 }

@@ -1,5 +1,6 @@
 package analysis;
 
+import analysis.lattices.Lattice;
 import flowgraph.datastructure.Node;
 import java.util.HashMap;
 

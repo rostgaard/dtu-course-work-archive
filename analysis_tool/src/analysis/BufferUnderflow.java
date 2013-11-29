@@ -1,5 +1,6 @@
 package analysis;
 
+import analysis.lattices.SignsLattice;
 import syntaxtree.StatementList;
 import syntaxtree.Type;
 import syntaxtree.expression.Variable;

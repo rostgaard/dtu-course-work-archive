@@ -1,7 +1,7 @@
 package syntaxtree.declaration;
 
 import analysis.Interval;
-import analysis.IntervalLattice;
+import analysis.lattices.IntervalLattice;
 import flowgraph.datastructure.VariableSet;
 import syntaxtree.expression.Variable;
 

@@ -1,14 +1,7 @@
 package syntaxtree.statement;
 
-import java.security.interfaces.RSAKey;
-import java.util.ArrayList;
-
-import analysis.Definition;
-import analysis.Interval;
-import analysis.IntervalLattice;
-import analysis.Lattice;
-import analysis.RDProgramState;
-import analysis.SignsLattice;
+import analysis.lattices.IntervalLattice;
+import analysis.lattices.SignsLattice;
 import flowgraph.datastructure.Flow;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
@@ -76,31 +69,6 @@ public class While extends Statement {
         for (Statement s : this.body) {
             s.setLabel(seq);
         }
-    }
-
-    @Override
-    public RDProgramState RD(RDProgramState currentState) {
-//    	RDProgramState rps = new RDProgramState();
-//    	for(Statement s : body){
-//    		s.RD(rps);
-//    	}
-//    	
-//    	//RDentry (previous union exit of body)
-//    	ArrayList<Definition> exit1 = currentState.getRDExit(getLabel()-1);
-//    	currentState.union(exit1, rps.getRDentry(), rps.getRDexit());
-//    	
-//    	int last = body.get(body.size()-1).getLabel();
-//    	exit1.addAll(rps.getRDExit(last));
-//    	currentState.addRDentry(getLabel(), exit1);
-//    	for(Statement s : body){
-//    		currentState.addRDentry(s.getLabel(), exit1);
-//    	}
-//    	
-//    	//killRD([while b do S od]l) = ?
-//    	//genRD([[while b do S od]l) = ?
-//        ArrayList<Definition> entry = currentState.getRDEntry(getLabel());
-//    	currentState.addRDexit(getLabel(), entry);
-    	return currentState;
     }
 
     @Override

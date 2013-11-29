@@ -1,12 +1,10 @@
 package syntaxtree.statement;
 
-import analysis.RDProgramState;
 import flowgraph.datastructure.Node;
 import syntaxtree.Symbols;
 import utilities.Sequencer;
-import analysis.DefinitionSet;
-import analysis.IntervalLattice;
-import analysis.Lattice;
+import analysis.lattices.IntervalLattice;
+import analysis.lattices.Lattice;
 
 /**
  * Abstract class for statements
@@ -30,16 +28,6 @@ public abstract class Statement implements analysis.Analysable {
 
     public Node toNode() {
         return new Node(this);
-    }
-
-    public DefinitionSet killed(RDProgramState currentState) {
-        DefinitionSet killed = currentState.getRDEntry(getLabel());
-        return killed;
-    }
-
-    public DefinitionSet generated(RDProgramState currentState) {
-        DefinitionSet generated = currentState.getRDEntry(getLabel());
-        return generated;
     }
 
     public Lattice transferFunction(Lattice lattice) {

@@ -1,11 +1,10 @@
 package syntaxtree.statement;
 
 import analysis.DefinitionSet;
-import analysis.IntervalLattice;
-import analysis.Lattice;
-import analysis.RDLattice;
-import analysis.RDProgramState;
-import analysis.SignsLattice;
+import analysis.lattices.IntervalLattice;
+import analysis.lattices.Lattice;
+import analysis.lattices.RDLattice;
+import analysis.lattices.SignsLattice;
 import flowgraph.datastructure.FlowSet;
 import flowgraph.datastructure.Node;
 import flowgraph.datastructure.NodeSet;
@@ -50,34 +49,6 @@ public class Assignment extends Statement {
     @Override
     public String toString() {
         return id + " := " + expr;
-    }
-
-    @Override
-    public RDProgramState RD(RDProgramState currentState) {
-        //RDentry
-        DefinitionSet exit = currentState.getRDExit(getLabel() - 1);
-        currentState.addRDentry(getLabel(), exit);
-
-        //RDexit
-        DefinitionSet entry = currentState.getRDEntry(getLabel());
-        //killRD([x:= a]l) = {(x, ?)} u  {(x, l') | B(l') is an assignment to x}    	
-        entry.removeAll(currentState.kill(id, entry));
-        //genRD([x:= a]l) = {(x, l)}
-        entry.addAll(currentState.gen(id, new Node(this)));
-
-        currentState.addRDexit(getLabel(), entry);
-        return currentState;
-    }
-
-    @Override
-    public DefinitionSet killed(RDProgramState currentState) {
-        DefinitionSet entry = currentState.getRDEntry(getLabel());
-        return currentState.kill(id, entry);
-    }
-
-    @Override
-    public DefinitionSet generated(RDProgramState currentState) {
-        return currentState.gen(id, new Node(this));
     }
 
     @Override

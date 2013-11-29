@@ -1,9 +1,8 @@
 package syntaxtree.condition;
 
-import analysis.Interval;
-import analysis.IntervalLattice;
+import analysis.lattices.IntervalLattice;
 import analysis.SignSet;
-import analysis.SignsLattice;
+import analysis.lattices.SignsLattice;
 
 /**
  * Data representation for negation of boolean expressions
