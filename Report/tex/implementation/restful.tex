@@ -1,2 +1,51 @@
 \section{RESTful}
+This section covers the implementation of the RESTful web-service version of TravelGood. First the resources will be presented followed by how the business processes is mapped to HTTP methods. Finally it is discussed how the business logic is implemented.
+
+\subsection{Resources}
+The resources in a RESTful web-service is one of the most fundamental concepts as it defined the API of the web-service. In order to support the requirements for TravelGood it contains resources for managing an itineraries and finding flights or hotels. Each of these resources are explained further in the next sections.
+
+\subsection{Itinerary resource}
+The \texttt{itinerary resource} represents everything that can be done to an itinerary. It is possible to add flights and hotels to an itinerary. More specifically an itinerary resource supports HTTP calls to the following paths.
+\begin{description}
+	\item \texttt{/itinerary/} - Base itinerary. Used only to create a new itinerary.
+	\item \texttt{/itinerary/\{id\}} - Specific itinerary. Used to get or delete an itinerary.
+	\item \texttt{/itinerary/\{id\}/flight} - Used to get or add flights to a specific itinerary.
+	\item \texttt{/itinerary/\{id\}/hotel} - Used to get or add hotels to a specific itinerary.
+	\item \texttt{/itinerary/\{id\}/booking} - Used to book or cancel a specific itinerary.
+\end{description}
+
+\subsection{Flight resource}
+The flight resource is used to search for flight independent of an itinerary. This means that is it possible to get a list of flights without having to create an itinerary first. The flight returned by the flight resource can the be used to add to an itinerary. The flight resource supports HTTP calls to the following path.
+\begin{description}
+	\item \texttt{/flight/} - Used to get a list of flights based on origin, destination and date.
+\end{description}
+
+\subsection{Hotel resource}
+The hotel resource represent looking up hotels. It can like the flight resource be used independently of an itinerary. The hotel resource supports HTTP calls to the following path.
+\begin{description}
+	\item \texttt{/hotel/} - Used to get a list of hotels based on location, arrival date and departure date.
+\end{description}
+
+\subsection{Mapping of business processes}
+In a RESTful web-service the HTTP verbs must be mapped into the business processes that the web-service manages. As with the BPEL implementation of TravelGood two phases is also considered to the RESTFul version. The planning phase and the booked phase. By calling the resources it is possible to change from one phase to another. How the different HTTP methods are mapped to the business process of the web-service is explained below.
+\begin{description}
+	\item \texttt{Create itinerary} - A HTTP POST is associated with creating a new itinerary for a specific customer. The caller will not pass any information about the itinerary being created, hence POST is used instead of a PUT. 
+	\item \texttt{Get itinerary} - A HTTP GET is used to retrieve a specific itinerary based on an unique identifier.
+	\item \texttt{Remove itinerary} - A HTTP DELETE is used to completely remove an itinerary. Notice that this call will only succeed if the itinerary is in the planning phase. If it is in the booked state it should first be cancelled before it can be removed.
+	\item \texttt{Get flights} - A HTTP GET is used for getting all the flights in the itinerary. Notice that these flight will also be send as a part of the get itinerary call.
+	\item \texttt{Add flight} - A HTTP PUT is used when adding a flight to an itinerary. A PUT is used instead of a POST since the caller provides the flight that should be added.
+	\item \texttt{Get hotels} -  A HTTP GET is used for getting all the hotels in the itinerary.
+	\item \texttt{Add hotel} - A HTTP PUT is used when adding a hotel to an itinerary. As with the add flights call a PUT is used because the caller provides the hotel to be added.
+	\item \texttt{Book itinerary} - A HTTP PUT is associated with booking an itinerary, since the state of the itinerary will be changed by booking each hotel and flight contained.
+	\item \texttt{Cancel itinerary} - A HTTP DELETE has been associated with canceling an itinerary. The call will not remove the itinerary but change the phase back to planning.
+\end{description}
+For the flight and hotel resources that mapping is as follows
+\begin{description}
+	\item \texttt{Get flights} - A HTTP GET is used to get a list of flights.
+	\item \texttt{Get hotels} - A HTTP GET is used to get a list of hotels.	
+\end{description}
+
+\subsection{Business logic}
+As a standard a RESTFul web-service does not handle business logic.
+\subsubsection{Representations}
 
