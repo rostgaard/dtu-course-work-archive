@@ -1,6 +1,10 @@
 \section{Buffer overflow with sign detection} \label{sec:exercise3}
-Buffer overflow is historically one of the most common programming errors. It is the cause of security breaches, data corruption and program crashes. Detecting them is therefore preferred.\\\\
-We start by defining a test case in the WHILE language, seen in figure \ref{code:array_example}.
+Buffer overflow is historically one of the most common programming errors. It is the cause of security breaches, data corruption and program crashes. Detecting them is therefore preferred.
+\\\\
+A way of doing so is using sign detection analysis. For a point of interest it is possible for each variable to see the signs that the variable may have. Using this information we can detect potential overflows.
+
+\subsection{Example program}
+We start by defining a example program in the \texttt{WHILE} language, seen in figure \ref{code:array_example}.
 \begin{figure}
   \begin{lstlisting}
 program
@@ -14,15 +18,40 @@ od
 end
  \end{lstlisting}
  \label{code:array_example}
- \caption{Code example for demonstrating buffer overflow}
+ \caption{Example program for demonstrating buffer overflow using sign detection}
 \end{figure}
-For the program in figure \ref{code:array_example}, the following cases should fail and thus, optimally be detected in our analysis:
-\begin{description}
-\item[Underflow:] Accessing an index below the base, i.e. any case where i < 0 in A[n].
-\item[Overflow:] Accessing an index after the last element, i.e. any case where i > n-1 in A[n].
-\end{description}
 
-Our instance of the monotone framework becomes; 
+\subsection{Monotone framework}
+To establish our analysis we will define a monotone framework which can be solved using a worklist algorithm.
+\\\\
+The monotone framework is shown in table~\ref{table:sign_detection_instance}.
+\begin{table}[H]
+\begin{tabular}{| l | l |}
+  \hline
+  Instance & $(L,\sqsubseteq,\bigsqcup, \bigsqcap, \top, \bot )$ \\
+  \hline
+  \hline
+  Lattice  & $\{-,0,+\}$ \\
+  \hline
+  $\sqsubseteq$-Ordering  &  $\subseteq$ (subset ordering).\\
+  \hline
+  Partial ordered set    & $\mathcal{P}(\{-,0,+\}, \subseteq)$ \\
+  \hline
+  Least upper bound      & $\bigsqcup Y = \bigcup Y$\\
+  \hline
+  Greatest lower bound   & $\bigsqcap Y = \bigcap Y$\\
+  \hline
+  $\bot$                 & Bottom, least element : $\emptyset$\\
+  \hline
+  $\top$                 & Top, greatest element : $\{-,0,+\}$\\
+\hline   
+\end{tabular}
+  \centering
+  \caption{Sign detection instance}
+  \label{table:sign_detection_instance}
+\end{table}
+\noindent The lattice used in show in figure~\ref{fig:sign_detection_complete_lattice}. This is a complete lattice, as every subset in the partial ordered set have a least upper bound and a greatest lower bound.\\
+It also holds the Ascending Chain Property, because the lattice has a finite height, and will thus, eventually stabilize.\\\\
  \begin{figure}[h]
  \centering
  \begin{tikzpicture}
@@ -60,33 +89,6 @@ Our instance of the monotone framework becomes;
   \label{fig:sign_detection_complete_lattice}
  \end{figure}
 
-\begin{table}
-\begin{tabular}{| l | l |}
-  \hline
-  Instance & $(L,\sqsubseteq,\bigsqcup, \bigsqcap, \top, \bot )$ \\
-  \hline
-  \hline
-  Lattice  & $\{-,0,+\}$ \\
-  \hline
-  $\sqsubseteq$-Ordering  &  $\subseteq$ (subset ordering).\\
-  \hline
-  Partial ordered set    & $\mathcal{P}(\{-,0,+\}, \subseteq)$ \\
-  \hline
-  Least upper bound      & $\bigsqcup Y = \bigcup Y$\\
-  \hline
-  Greatest lower bound   & $\bigsqcap Y = \bigcap Y$\\
-  \hline
-  $\bot$                 & Bottom, least element : $\emptyset$\\
-  \hline
-  $\top$                 & Top, greatest element : $\{-,0,+\}$\\
-\hline   
-\end{tabular}
-  \centering
-  \caption{Sign detection instance}
-  \label{table:sign_detection_instance}
-\end{table}
-This is a complete lattice, as every subset in the partial ordered set have a least upper bound and a greatest lower bound.\\
-It also holds the Ascending Chain Property, because the lattice has a finite height, and will thus, eventually stabilize.\\\\
 We define the flow as 
 \begin{description}
   \item[Flow $F$:] flow ($S_*$) (forward analysis)

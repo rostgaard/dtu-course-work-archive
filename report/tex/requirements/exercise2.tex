@@ -50,20 +50,30 @@ Table~\ref{table:rd_equations} shows the \texttt{kill} and \texttt{gen} function
                               & gen$_{RD}$([A[n]$^l$) = $\{(A,l)\}$ \\
 
     \hline
-    \textbf{read x} & kill$_{RD}$(read x) = $\{(x,l' \}$ | $B^{l'}$ is an assignment to x \} \\
-                              & gen$_{RD}$(read x) = $\{(x,l)\}$ \\
+    \textbf{read x} & kill$_{RD}$([read x]$^\ell$) = $\{(x,l' \}$ | $B^{l'}$ is an assignment to x \} \\
+                              & gen$_{RD}$([read x]$^\ell$) = $\{(x,l)\}$ \\
 							  
     \hline
-    \textbf{read A[a]} & kill$_{RD}$(read A[a]) = \{ (A[a],l' \}|$B^{l'}$ is a declaration or an assignment to A[a] \} \\
-                              & gen$_{RD}$(read A[a]) = $\{(A[a],l)\}$ \\
+    \textbf{read A[a]} & kill$_{RD}$([read A[a]]$^\ell$) = $\emptyset$ \\
+                              & gen$_{RD}$([read A[a]]$^\ell$) = $\{(A,l)\}$ \\
 							  
     \hline
     \textbf{write a} &  kill$_{RD}$([write a]$^l$) = $\emptyset$ \\
-                   &  gen$_{RD}$([[write a]$^l$) = $\emptyset$ \\
+                   &  gen$_{RD}$([write a]$^l$) = $\emptyset$ \\
 
     \hline
-    \textbf{x:=a} & kill$_{RD}$(x:=a) = \{ (x,l' \}|$B^{l'}$ is a declaration or an assignment to x \} \\
-                              & gen$_{RD}$(x:=a) = $\{(x,l)\}$ \\
+    \textbf{write A[a]} &  kill$_{RD}$([write A[a]]$^l$) = $\emptyset$ \\
+                   &  gen$_{RD}$([write a]$^l$) = $\emptyset$ \\
+
+    \hline
+    \textbf{x:=a} & kill$_{RD}$([x:=a]$^\ell$) = \{ (x,l' \}|$B^{l'}$ is an assignment to x \} \\
+                              & gen$_{RD}$([x:=a]$^\ell$) = $\{(x,l)\}$ \\
+	\hline
+	\textbf{skip} & kill$_{RD}$([skip]$^l$) = $\emptyset$ \\
+				&  gen$_{RD}$([skip]$^l$) = $\emptyset$ \\
+	\hline
+	\textbf{b} & kill$_{RD}$([b]$^l$) = $\emptyset$ \\
+				&  gen$_{RD}$([b]$^l$) = $\emptyset$ \\
     \end{tabular}
     \centering
 	\caption{RD Equations}
