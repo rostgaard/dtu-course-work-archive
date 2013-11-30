@@ -1,6 +1,7 @@
 
 import analysis.Analysis;
 import analysis.ProgramSlicing;
+import analysis.UndefinedVariableException;
 import analysis.lattices.IntervalLattice;
 import analysis.lattices.RDLattice;
 import analysis.lattices.SignsLattice;
@@ -109,6 +110,8 @@ public class Main {
 
         } catch (RecognitionException ex) {
             logger.log(Level.SEVERE, "Could not parse file " + inputfile, ex);
+        } catch (UndefinedVariableException ex) {
+            logger.log(Level.SEVERE, ex.getMessage());          
         }
     }
 

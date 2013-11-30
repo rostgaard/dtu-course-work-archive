@@ -261,3 +261,4 @@ This section is home to the miscellaneous ideas, thoughts, implementations and r
 While strictly not within the scope of the project, we found that odd \texttt{NullPointerExceptions} occurred when we tried to access symbols that had not been previously defined in the program. While this job would be best left to the parser\footnote{Which would be rather easy, as we have an elegant ``declarations before statements'' language.}, the pending deadline suggested no to fix what wasn't broken and instead implement a lookup that throws an \texttt{UndefinedVariableException} if the symbol is not known within our analysis'.
 
 %TODO Write about strategies for handling arrays; treating them as a single variable versus expanding the array to n variables - where n is the size.
+%TODO Something about the worklist and iota.

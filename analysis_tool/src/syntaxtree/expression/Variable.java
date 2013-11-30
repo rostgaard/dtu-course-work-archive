@@ -82,6 +82,14 @@ public class Variable extends Expression {
         return hash;
     }
 
+    /**
+     * Gives the bounds of a Variable. As the variable is not an array,
+     * everything is within bounds.
+     *
+     * @param lattice The input state.
+     * @return True if an array access is potentially out of bounds, false
+     * otherwise.
+     */
     @Override
     public boolean isOutOfBounds(IntervalLattice lattice) {
         return false;

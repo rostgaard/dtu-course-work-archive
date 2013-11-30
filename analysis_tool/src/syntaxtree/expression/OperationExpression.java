@@ -127,6 +127,12 @@ public class OperationExpression extends Expression {
                 .union(expr2.getVariable());
     }
 
+    /**
+     * 
+     * @param lattice The input state.
+     * @return True if an array access is potentially out of bounds, false
+     * otherwise.
+     */
     @Override
     public boolean isOutOfBounds(IntervalLattice lattice) {
         return this.expr1.isOutOfBounds(lattice) || this.expr2.isOutOfBounds(lattice);

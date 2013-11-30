@@ -67,6 +67,12 @@ public class NegationExpression extends Expression {
         return set;
     }
 
+    /**
+     * 
+     * @param lattice The input state.
+     * @return True if an array access is potentially out of bounds, false
+     * otherwise.
+     */
     @Override
     public boolean isOutOfBounds(IntervalLattice lattice) {
         return this.expr.isOutOfBounds(lattice);
