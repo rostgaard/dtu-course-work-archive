@@ -234,7 +234,7 @@ $RD_\bullet(9)=(RD_\circ(9)\backslash\{(y,2),(y,4),(y,8),(y,9)\})\cup \{(y,9)\}$
 \end{table}
 
 \subsection{Program slice calculation algorithm}
-Now with the result of a reaching definitions analysis available it is possible to use that result to calculate a program slice for our program at a point of interest. An algorithm for doing so is given in figure~\ref{fig:programslicealgorithm}.
+Now with the result of a reaching definitions analysis available it is possible to use that result to calculate a program slice for our program at a point of interest. An algorithm for doing so is given in algorithm~\ref{fig:programslicealgorithm}.
 \\
 \\
 The algorithm takes the label of the point of interest as input. The output is an array with the labels that is a part of the program slice. It is assumed that the Reaching Definitions Analysis has been performed beforehand and the result is available in the variable \texttt{RD}. The algorithm uses a queue where the point of interest is added to and continues until the queue is empty. For every iteration the label in the queue is added to the \texttt{result} array. Then all the variables that this label depends on is retrieved. The labels where these variables are used from the result of the Reaching Definitions Analysis is added to the queue. It is assumed that once a label has been added to the queue it can not be added again. This will then guarantee that the algorithm terminates.
@@ -272,9 +272,9 @@ The algorithm can calculate the Program Slice for the example program from secti
 	\item The condition is checked again. The first element from the queue is removed and added to the result. $queue=[]$, $result=[8,4]$
 	\item The variables from label 4 is retrieved. This is $x$.
 	\item The result of the reaching definition analysis for label 4 is retrieved. This is $\{(x, 1), (y, 2), (z, 3)\}$.
-	\item Each of these labels are iterated. If any of them contains the variable $x$ they will be added to the queue. This is 1. $queue=[]$, $result=[1]$.
+	\item Each of these labels are iterated. If any of them contains the variable $x$ they will be added to the queue. This is 1. $queue=[1]$, $result=[8,4]$.
 	\item The condition is checked again. The first element from the queue is removed and added to the result. $queue=[]$, $result=[8,4,1]$
-	\item The variables from label 4 is retrieved. There is none.
+	\item The variables from label 1 is retrieved. There is none.
 	\item The condition is checked again. It evaluates to false and the result is returned. $result=[8,4,1]$
 \end{itemize}
 The reached result is the same as the presented solution in section~\ref{sec:exampleprogram}.
