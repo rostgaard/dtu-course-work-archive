@@ -19,12 +19,20 @@
 \usepackage{MnSymbol}
 \usepackage{algpseudocode}
 \usepackage{algorithm}
-\definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.2,0.2,0.2}
-\definecolor{mymauve}{rgb}{0.58,0,0.82}
 
-\lstset{escapechar=\@}
-
+\lstset{
+  frame=single,language=bash,
+  morekeywords={od},
+   basicstyle=\footnotesize,
+  escapechar=\@,
+  basicstyle=\footnotesize, frame=tb,
+  numbers=left,
+  stepnumber=2,
+  numbersep=5pt, 
+  numberstyle=\tiny\color{mygray},
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth
+}
 % Define block styles
 \tikzstyle{block} = [rectangle, draw, fill=white!20, 
     text width=3.2em, text centered, rounded corners, minimum height=3em]

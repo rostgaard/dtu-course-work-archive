@@ -254,29 +254,105 @@ We then loop through each label in the set of labels of the program, and if the 
 %\caption{Extension of the Statement class}
 %\end{figure}
 
+\section{Trying it out}
 \begin{figure}
-\begin{verbatim}
-program 
-low int a[2]; 
-low int i; 
-i := -1; 
-while i<2 do 
-   a[i] := i+1; 
-i := i+1; 
+  \begin{lstlisting}
+[i:=-1]@$^1$@
+while [i<2]@$^2$@ do
+  [a[i]:=i+1]@$^3$@
+  [i:=i+1]@$^4$@
 od
-a[-1] := 1;
-if a[i] = 0 then
-  skip;
+[a[-1]:=1]@$^5$@
+if [a[i]=0]@$^6$@ then
+  [skip]@$^7$@
 else
-  skip;
+  [skip]@$^8$@
 fi
-while a[i] < 0 do
-  i := i+a[3];
+while [a[i]<0]@$^9$@ do
+  [i:=i+a[3]]@$^10$@
 od
-skip;
-end
-\end{verbatim}
+ \end{lstlisting}
+ \caption{Juicy array example}
+\label{code:juicy_array_example}
 \end{figure}
+
+Where \texttt{a} is defined as an array with two elements and \texttt{i} is in integer variable. The thing -- or rather things -- that make this program extra interesting is that is contains loads of errors. Jumping the gun, we can observe the output (see figure \ref{code:juicy_array_example_output}) our tool given this program as input.
+\begin{figure}
+  \begin{lstlisting}[numbers=none]
+==== Buffer Underflow =====
+Potential underflow detected at label: 3
+Potential underflow detected at label: 5
+==== Interval =====
+Range check failed at: 3
+Range check failed at: 5
+Range check failed at: 6
+Range check failed at: 9
+Range check failed at: 10
+\end{lstlisting}
+\caption{Output from analysis on code from figure \ref{code:juicy_array_example}}
+\label{code:juicy_array_example_output}
+\end{figure}We correctly detect the potential underflows on the assignments at label 3 and 5. However, the analysis does not detect the potential errors at label 6 and 9. Inspecting this issues closer we observe that the analysis may have an error in the transfer functions mapped to while. The range check detects everything we should be able to detect.
+
+
+\subsection{Functions for underflow detection}
+\begin{table}[h]
+\begin{tabular}{| l | l |}
+  \hline
+  Statement & Function \\
+  \hline
+  \hline
+  [A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^{UF} (\widehat{\sigma}) = 
+     \begin{cases} 
+        \widehat{\sigma}[true   & \text{if } \{-\} \in \mathcal{A}_S [\![\text{a}]\!]\widehat{\sigma}\\
+        \widehat{\sigma}[false  & \text{otherwise} \\
+     \end{cases}$\\
+  \hline
+  [read A[a]]$^\ell$ & f$_\ell^{UF} (\widehat{\sigma}) = 
+     \begin{cases} 
+        \widehat{\sigma}[true   & \text{if } \{-\} \in  \mathcal{A}_S [\![\text{a}_1]\!]\widehat{\sigma}\text{ } \vee \text{ f}_\ell^{UF} (\text{a}_2,\widehat{\sigma}) \\
+        \widehat{\sigma}[false  & \text{otherwise} \\
+     \end{cases}$\\
+  \hline
+  [write A[n]]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}$\\
+  \hline
+\end{tabular}
+\centering
+\caption{Underflow functions for statements}
+\label{table:underflow_functions_statements}
+\end{table}
+
+
+\begin{table}[h]
+\begin{tabular}{| l | l |}
+  \hline
+  Expression & Motivation\\
+  \hline
+  \hline
+  $\text{f}_\ell^{UF} (\text{x},\widehat{\sigma}) = false $ & No underflow can happen in \\ 
+                                                            & identifiers for variables.\\
+  \hline
+  $\text{f}_\ell^{UF} (\text{n},\widehat{\sigma}) = false $ & Numerals don't underflow.\\
+  \hline
+  $\text{f}_\ell^{UF} ((\text{a}),\widehat{\sigma}) = \text{f}_\ell^{UF} (\text{a},\widehat{\sigma}) $ & Parentheses expression merely forwards.\\
+  \hline
+  $\text{f}_\ell^{UF} (\text{a}_1 \text{ op}_R \text{ a}_2,\widehat{\sigma}) = \text{f}_\ell^{UF} (\text{a}_1,\widehat{\sigma}) \vee \text{f}_\ell^{UF} (\text{a}_2,\widehat{\sigma}) $ & If either expression has an overflow,\\
+                                & the entire expression overflows.\\
+  \hline
+  $\text{f}_\ell^{UF} (-\text{a},\widehat{\sigma}) = \text{f}_\ell^{UF} (\text{a},\widehat{\sigma}) $ & Underflow is unaffected by negation.\\
+  \hline
+  $\text{f}_\ell^{UF} (\text{A}[\text{a}],\widehat{\sigma}) = 
+     \begin{cases} 
+        \widehat{\sigma}[true   & \text{if } \{-\} \in \mathcal{A}_S [\![\text{a}]\!]\widehat{\sigma}\\
+        \widehat{\sigma}[false  & \text{otherwise} \\
+     \end{cases}
+   $ & An index is defined as being non-negative.\\
+  \hline
+\end{tabular}
+\centering
+\caption{Underflow functions for expressions}
+\label{table:underflow_functions_expressions}
+\end{table}
+
 
 \subsection{Odds and ends}
 This section is home to the miscellaneous ideas, thoughts, implementations and ramblings that didn't quite fit any other sections.
