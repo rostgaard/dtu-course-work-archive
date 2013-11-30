@@ -158,7 +158,7 @@ We define the mapping of labels to transfer functions for the analysis in table~
 \label{table:sign_detection_functions}
 \end{table}
 
-\subsection{Determine sign}
+\subsection{Determine signs}
 For the analysis to work the signs need to be determined for a given program. This is done by evaluating arithmetic expressions and boolean expressions.
 
 \subsubsection{Evaluate arithmetic expressions}
@@ -174,7 +174,7 @@ $\mathcal{A}_S [\![x]\!]\widehat{\sigma} = \widehat{\sigma} (x)\\
    \end{cases}\\
 \mathcal{A}_S [\![a_1 \text{ op}_A a_2 ]\!] = \mathcal{A}_S [\![a_1]\!] \widehat{\sigma} \widehat{\text{ op}_A} \mathcal{A}_S [\![a_2]\!] \widehat{\sigma}, \text{where} \widehat{\text{ op}_A} : \textbf{Sign} \times \textbf{Sign} \rightarrow \textbf{Sign} \text{ is given by}:\\
 \widehat{\text{ op}_A} (S_1, S_2) = \{ s_1 \text{ op}_A s_2 | s_1 \in S_1, s_2 \in S_2\}\\
-\widehat{\text{ op}_A} \text {is a specific arithmetic operator from the set op}_a(\text{op}_a = \{+,-,*,/\}).
+\widehat{\text{ op}_A} \text {is a specific arithmetic operator from the set op}_a \{+,-,*,/\}.
 $\\
 Table~\ref{table:arithmetic_plus}, \ref{table:arithmetic_minus}, \ref{table:arithmetic_multiply}, \ref{table:arithmetic_division} define each of the operators.
 
@@ -247,6 +247,145 @@ Table~\ref{table:arithmetic_plus}, \ref{table:arithmetic_minus}, \ref{table:arit
 \end{table}
 
 \subsubsection{Evaluate boolean expressions}
+Similarly booleans expressions should be evaluated. We that that:\\
+$BExp \rightarrow \widehat{\textbf{State}_S} \rightarrow \textbf{P(\{tt,ff\})}$ which will be given by:\\
+$\mathcal{B}_S [\![a_1op_ra_2]\!]\widehat{\sigma}' = \mathcal{A}_S [\![a_1]\!]\widehat{\sigma}'\widehat{op_r}\mathcal{A}_S [\![a_2]\!]\widehat{\sigma}'$\\
+$\mathcal{B}_S [\![a_1op_ba_2]\!]\widehat{\sigma}' = \mathcal{B}_S [\![b_1]\!]\widehat{\sigma}'\widehat{op_b}\mathcal{B}_S [\![b_2]\!]\widehat{\sigma}'$\\
+$\mathcal{B}_S [\![\neg b]\!]\widehat{\sigma}' =\{\neg t|t\in \mathcal{B}_S[\![b]\!]\widehat{\sigma}'\}$\\
+\\
+Where $\widehat{\text{op}_r}$ is a specific  operator from the set op$_r$ \{ $\leq,\geq,\neq,=,>,<$ \}, and where $\widehat{\text{op}_b}$ is a specific operator from the set op$_b$ \{$\&,|\}$.
+
+\begin{table}
+\begin{tabular}{| r | c | c |}
+\hline
+ \&   & tt   & ff  \\
+\hline
+ tt  & $\{tt\}$ & $\{ff\}$  \\
+\hline
+ ff  & $\{ff\}$ & $\{ff\}$ \\
+\hline
+\end{tabular}
+\centering
+\caption{Possible outcomes of AND operator.}
+\label{table:and_operator}
+\end{table}
+
+\begin{table}
+\begin{tabular}{| r | c | c |}
+\hline
+ |   & tt   & ff  \\
+\hline
+ tt  & $\{tt\}$ & $\{ff\}$  \\
+\hline
+ ff  & $\{tt\}$ & $\{ff\}$ \\
+\hline
+\end{tabular}
+\centering
+\caption{Possible outcomes of OR operator.}
+\label{table:or_operator}
+\end{table}
+
+\begin{table}
+\begin{tabular}{| r | c | c | c |}
+\hline
+ <   & -   & 0 & +  \\
+\hline
+ -  & $\{tt,ff\}$ & $\{tt\}$ & $\{tt\}$  \\
+\hline
+ 0  & $\{ff\}$ & $\{ff\}$ & $\{tt\}$ \\
+\hline
+ +  & $\{ff\}$ & $\{ff\}$ & $\{tt,ff\}$ \\
+ \hline
+\end{tabular}
+\centering
+\caption{Possible outcomes of < operator.}
+\label{table:less_than_operator}
+\end{table}
+
+\begin{table}
+\begin{tabular}{| r | c | c | c |}
+\hline
+ >   & -   & 0 & +  \\
+\hline
+ -  & $\{tt,ff\}$ & $\{ff\}$ & $\{ff\}$  \\
+\hline
+ 0  & $\{tt\}$ & $\{ff\}$ & $\{ff\}$ \\
+\hline
+ +  & $\{tt\}$ & $\{tt\}$ & $\{tt,ff\}$ \\
+ \hline
+\end{tabular}
+\centering
+\caption{Possible outcomes of > operator.}
+\label{table:greater_than_operator}
+\end{table}
+
+\begin{table}
+\begin{tabular}{| r | c | c | c |}
+\hline
+ $\leq$   & -   & 0 & +  \\
+\hline
+ -  & $\{tt,ff\}$ & $\{tt\}$ & $\{tt\}$  \\
+\hline
+ 0  & $\{ff\}$ & $\{tt\}$ & $\{tt\}$ \\
+\hline
+ +  & $\{ff\}$ & $\{ff\}$ & $\{tt,ff\}$ \\
+ \hline
+\end{tabular}
+\centering
+\caption{Possible outcomes of $\leq$ operator.}
+\label{table:less_than_equal_operator}
+\end{table}
+
+\begin{table}
+\begin{tabular}{| r | c | c | c |}
+\hline
+ $\geq$   & -   & 0 & +  \\
+\hline
+ -  & $\{tt,ff\}$ & $\{ff\}$ & $\{ff\}$  \\
+\hline
+ 0  & $\{tt\}$ & $\{tt\}$ & $\{ff\}$ \\
+\hline
+ +  & $\{tt\}$ & $\{tt\}$ & $\{tt,ff\}$ \\
+ \hline
+\end{tabular}
+\centering
+\caption{Possible outcomes of $\geq$ operator.}
+\label{table:greater_than_equal_operator}
+\end{table}
+
+\begin{table}
+\begin{tabular}{| r | c | c | c |}
+\hline
+ $=$   & -   & 0 & +  \\
+\hline
+ -  & $\{tt,ff\}$ & $\{ff\}$ & $\{ff\}$  \\
+\hline
+ 0  & $\{ff\}$ & $\{tt\}$ & $\{ff\}$ \\
+\hline
+ +  & $\{ff\}$ & $\{ff\}$ & $\{tt,ff\}$ \\
+ \hline
+\end{tabular}
+\centering
+\caption{Possible outcomes of $=$ operator.}
+\label{table:equal_operator}
+\end{table}
+
+\begin{table}
+\begin{tabular}{| r | c | c | c |}
+\hline
+ $\neq$   & -   & 0 & +  \\
+\hline
+ -  & $\{tt,ff\}$ & $\{tt\}$ & $\{tt\}$  \\
+\hline
+ 0  & $\{tt\}$ & $\{ff\}$ & $\{tt\}$ \\
+\hline
+ +  & $\{tt\}$ & $\{tt\}$ & $\{tt,ff\}$ \\
+ \hline
+\end{tabular}
+\centering
+\caption{Possible outcomes of $=$ operator.}
+\label{table:not_equal_operator}
+\end{table}
 
 
 \subsection{Lower bound detection}
