@@ -3,24 +3,6 @@ Buffer overflow is historically one of the most common programming errors. It is
 \\\\
 A way of doing so is using sign detection analysis. For a point of interest it is possible for each variable to see the signs that the variable may have. Using this information we can detect potential overflows.
 
-\subsection{Example program}
-We start by defining a example program in the \texttt{WHILE} language, seen in figure \ref{code:array_example}.
-\begin{figure}
-  \begin{lstlisting}
-program
-[int A[2]]@$^1$@
-[int i]@$^2$@
-[i := -1]@$^3$@
-while [i<3]@$^4$@ do
-   [A[i] := i+1]@$^5$@
-   [i := i+1]@$^6$@
-od
-end
- \end{lstlisting}
- \label{code:array_example}
- \caption{Example program for demonstrating buffer overflow using sign detection}
-\end{figure}
-
 \subsection{Monotone framework}
 To establish our analysis we will define a monotone framework as generic framework that can be used to solve several analysis using a generic worklist algorithm.
 \\\\
@@ -357,113 +339,47 @@ Where $\widehat{\text{op}_r}$ is a specific  operator from the set op$_r$ \{ $\l
 \end{table}
 
 
-% \begin{table}
-% \begin{tabular}{| r | c | c | c |}
-% \hline
-%  <   & -   & 0 & +  \\
-% \hline
-%  -  & $\{tt,ff\}$ & $\{tt\}$ & $\{tt\}$  \\
-% \hline
-%  0  & $\{ff\}$ & $\{ff\}$ & $\{tt\}$ \\
-% \hline
-%  +  & $\{ff\}$ & $\{ff\}$ & $\{tt,ff\}$ \\
-%  \hline
-% \end{tabular}
-% \centering
-% \caption{Possible outcomes of < operator.}
-% \label{table:less_than_operator}
-% \end{table}
+\subsection{Buffer underflow calculation algorithm}
+Based on the detection of signs analysis described above, we can suggest an algorithm that using the result of a detection of signs analysis can warn about possible underflows. This is done by checking for an assignment which includes an operation with an array and determine looking at the possible signs for the expression used as the index. Algorithm~\ref{algorithm:bufferoverflow1} shows how this could be implemented.
 
-% \begin{table}
-% \begin{tabular}{| r | c | c | c |}
-% \hline
-%  >   & -   & 0 & +  \\
-% \hline
-%  -  & $\{tt,ff\}$ & $\{ff\}$ & $\{ff\}$  \\
-% \hline
-%  0  & $\{tt\}$ & $\{ff\}$ & $\{ff\}$ \\
-% \hline
-%  +  & $\{tt\}$ & $\{tt\}$ & $\{tt,ff\}$ \\
-%  \hline
-% \end{tabular}
-% \centering
-% \caption{Possible outcomes of > operator.}
-% \label{table:greater_than_operator}
-% \end{table}
+\begin{algorithm}
+ \begin{algorithmic}[1]
+ \Procedure{Buffer underflow}{$l$}
+\State A:=$l.get\_array()$
+\State a:=$A.get\_index\_expression()$
+\State $signs:=A_S[a]$
+\If {$signs==\{-\}$}
+\State \textbf{return} Bufer\_Underflow
+\ElsIf {$signs.contains(-)$}
+\State \textbf{return} Potential\_Bufer\_Underflow
+\Else
+\State \textbf{return} No\_Buffer\_Underflow
+\EndIf 
+ \EndProcedure
+ \end{algorithmic}
+ \caption{Calculate buffer underflow based on detection of signs analysis.}
+ \label{algorithm:bufferoverflow1}
+\end{algorithm}
 
-% \begin{table}
-% \begin{tabular}{| r | c | c | c |}
-% \hline
-%  $\leq$   & -   & 0 & +  \\
-% \hline
-%  -  & $\{tt,ff\}$ & $\{tt\}$ & $\{tt\}$  \\
-% \hline
-%  0  & $\{ff\}$ & $\{tt\}$ & $\{tt\}$ \\
-% \hline
-%  +  & $\{ff\}$ & $\{ff\}$ & $\{tt,ff\}$ \\
-%  \hline
-% \end{tabular}
-% \centering
-% \caption{Possible outcomes of $\leq$ operator.}
-% \label{table:less_than_equal_operator}
-% \end{table}
-
-% \begin{table}
-% \begin{tabular}{| r | c | c | c |}
-% \hline
-%  $\geq$   & -   & 0 & +  \\
-% \hline
-%  -  & $\{tt,ff\}$ & $\{ff\}$ & $\{ff\}$  \\
-% \hline
-%  0  & $\{tt\}$ & $\{tt\}$ & $\{ff\}$ \\
-% \hline
-%  +  & $\{tt\}$ & $\{tt\}$ & $\{tt,ff\}$ \\
-%  \hline
-% \end{tabular}
-% \centering
-% \caption{Possible outcomes of $\geq$ operator.}
-% \label{table:greater_than_equal_operator}
-% \end{table}
-
-% \begin{table}
-% \begin{tabular}{| r | c | c | c |}
-% \hline
-%  $=$   & -   & 0 & +  \\
-% \hline
-%  -  & $\{tt,ff\}$ & $\{ff\}$ & $\{ff\}$  \\
-% \hline
-%  0  & $\{ff\}$ & $\{tt\}$ & $\{ff\}$ \\
-% \hline
-%  +  & $\{ff\}$ & $\{ff\}$ & $\{tt,ff\}$ \\
-%  \hline
-% \end{tabular}
-% \centering
-% \caption{Possible outcomes of $=$ operator.}
-% \label{table:equal_operator}
-% \end{table}
-% 
-% \begin{table}
-% \begin{tabular}{| r | c | c | c |}
-% \hline
-%  $\neq$   & -   & 0 & +  \\
-% \hline
-%  -  & $\{tt,ff\}$ & $\{tt\}$ & $\{tt\}$  \\
-% \hline
-%  0  & $\{tt\}$ & $\{ff\}$ & $\{tt\}$ \\
-% \hline
-%  +  & $\{tt\}$ & $\{tt\}$ & $\{tt,ff\}$ \\
-%  \hline
-% \end{tabular}
-% \centering
-% \caption{Possible outcomes of $=$ operator.}
-% \label{table:not_equal_operator}
-% \end{table}
-
-\subsection{Lower bound detection}
-Check for an assignment which includes an operation with an array, that the sign of the array is not $\emptyset$. If so, we know that the index parameter is invalid according to the lower bounds.
-
-\subsection{Constraints}
-\begin{table}[H]
+\subsection{Example}
+We start by defining a example program in the \texttt{WHILE} language, seen in figure \ref{code:array_example}.\\
+\begin{figure}
+  \begin{lstlisting}
+program
+[int A[2]]@$^1$@
+[int i]@$^2$@
+[i := -1]@$^3$@
+while [i<3]@$^4$@ do
+   [A[i] := i+1]@$^5$@
+   [i := i+1]@$^6$@
+od
+end
+ \end{lstlisting}
+ \caption{Example program for demonstrating buffer overflow using sign detection}
+ \label{code:array_example}
+\end{figure}
+Then the equations can be established. They are shown in table~\ref{tabel:signs_example_equations}.\\
+\begin{table}
 \begin{tabular}{| l | l |}
 \hline
 A$_\circ (1) = \iota \{\text{init}(S_*) \} $ & A$_\bullet(1) = \text{f}_{\text{int A[2]}} (\text{A}_\circ (1))$ \\
@@ -477,24 +393,27 @@ A$_\circ (4) = $A$_\bullet(3) \bigcup $A$_\bullet(6) $ & A$_\bullet(4) = \text{f
 A$_\circ (5) = $A$_\bullet(4)$ & A$_\bullet(5) = \text{f}_{\text{A[i] := i + 1}} (\text{A}_\circ (5))$ \\
 \hline
 A$_\circ (6) = $A$_\bullet(5)$ & A$_\bullet(6) = \text{f}_{\text{i := i + 1}} (\text{A}_\circ (6))$ \\
-
 \hline
 \end{tabular}
 \centering
+\caption{Equations for example program}
+\label{tabel:signs_example_equations}
 \end{table}
+The solution to these constrains can be found in table~\ref{tabel:signs_example_equations_solution}.
 
-\begin{table}[H]
+
+\begin{table}
 \begin{tabular}{| r | c | c | c |}
 \hline
-A$_\bullet (\cdot) $ & A[0]        & A[1]        & i \\
+A$_\bullet (\cdot) $ & A   & i \\
 \hline
-1                    & $\{0\}$     & $\{0\} $    & $\emptyset$ \\
-2                    & $\{0\}$     & $\{0\} $    & $\{0\}$ \\
-3                    & $\{0\}$     & $\{0\} $    & $\{-\}$ \\
-4                    & $\{-,0,+\}$ & $\{-,0,+\}$ & $\{-,0,+\}$ \\
-5                    & $\{-,0,+\}$ & $\{-,0,+\}$ & $\{-,0,+\}$ \\
-6                    & $\{-,0,+\}$ & $\{-,0,+\}$ & $\{-,0,+\}$ \\
+3         & $\{0\} $    & $\{-\}$ \\
+4         & $\{-,0,+\}$ & $\{-,0,+\}$ \\
+5         & $\{-,0,+\}$ & $\{-,0,+\}$ \\
+6         & $\{-,0,+\}$ & $\{-,0,+\}$ \\
 \hline
 \end{tabular}
 \centering
+\caption{Solution to equations}
+\label{tabel:signs_example_equations_solution}
 \end{table}
