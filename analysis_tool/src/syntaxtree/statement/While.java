@@ -57,7 +57,7 @@ public class While extends Statement {
                 + Symbols.SEPERATOR
                 + Symbols.DO
                 + Symbols.NEWLINE
-                + this.body.toStringWithLabel(indention+1)
+                + this.body.toStringWithLabel(indention + 1)
                 + Symbols.OD;
     }
 
@@ -89,23 +89,23 @@ public class While extends Statement {
     public NodeSet finalNodes() {
         return NodeSet.factory().addNode(new Node(this));
     }
-    
+
     @Override
     public FlowSet flow() {
         FlowSet retSet = FlowSet.factory()
-                .addFlow(new Flow (this.toNode(), this.body.init()))
+                .addFlow(new Flow(this.toNode(), this.body.init()))
                 .union(this.body.flow());
-        
+
         for (Node n : this.body.finalLabels()) {
-            retSet.addFlow(new Flow (n, this.toNode()));
+            retSet.addFlow(new Flow(n, this.toNode()));
         }
-        
+
         return retSet;
     }
-    
+
     @Override
     public VariableSet getVariable() {
-    	return VariableSet.emptySet;
+        return VariableSet.emptySet;
     }
 
     @Override
@@ -141,22 +141,23 @@ public class While extends Statement {
     private SignsLattice transferFunction(SignsLattice lattice, int toLabel) {
         SignsLattice signsLattice = lattice;
 
-        Boolean bodyBranch = body.init().getLabel()==toLabel;
-        cond.evaluate(lattice, bodyBranch);
+        Boolean bodyBranch = body.init().getLabel() == toLabel;
 
-        return signsLattice;
+        if (bodyBranch) {
+            cond.evaluate(lattice, bodyBranch);
+            return signsLattice;
+        }
+        
+        return lattice;
     }
-
-
 
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return this.cond.hasPotentialUnderFlow(lattice);
     }
-    
+
     @Override
     public boolean isOutOfBounds(IntervalLattice lattice) {
         return this.cond.isOutOfBounds(lattice);
     }
-    
 }
