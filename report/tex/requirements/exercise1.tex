@@ -31,7 +31,7 @@ Declarations will be handled separately from statements, and will be held in a d
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=.3]{../fig/Statement}
+	\includegraphics[scale=0.5]{../fig/Statement}
 	\caption{Statement}
 	\label{fig:statement}
 \end{figure}
@@ -74,70 +74,64 @@ Figure~\ref{fig:flowgraph} shows the data structure used to represent a flow gra
 	\label{fig:flowgraph}
 \end{figure}
 
-\subsubsection{Creating flow graphs}\label{section:CreatingFlowGraphs}
-Using the intermediate representation of the abstract syntax tree, we are now familiar with the types of the individual statements. Rather than explicitly parsing the AST, we instead define a function for each statement and let every statement handle it's own branch by recursion. These functions are defined in table \ref{table:flow_graph_functions}, which is an extension of the table from \cite{02242_slides}.
-
+\subsubsection{Defining flow graphs}\label{section:CreatingFlowGraphs}
+Before any analysis can take place we need to create a flow graph based on our abstract syntax tree. A flow graph should consists of the elements presented in table~\ref{table:flow_graph_definitions}.
 \begin{table}
-\begin{tabular}{| l | l | l | l |}
-\hline	
-\textsl{S}                              & \textsl{labels(S)}                                    & \textsl{init(S)}     & \textsl{final(S)} \\ 
-\hline
-[x := a]$^\ell$                         & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
-\hline
-[int A[a$_1$] := a$_2$]$^\ell$          & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
-\hline
-[skip]$^\ell$                           & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
-\hline
-\textsl{S}$_1$;\textsl{S}$_2$           & \textsl{labels(S$_1$)} $\cup$ \textsl{labels(S$_2$)}  & \textsl{init(S$_1$)} & {final(S$_2$)} \\ %S1;S2
-\hline
-if [\textsl{b}]$^\ell$ then             & $\{\ell\}$ $\cup$  \textsl{labels(S$_1$)}             &$\ell$                & \textsl{final(S$_1$)} \\
-  \textsl{S}$_1$ else \textsl{S}$_2$    &  $\cup$ \textsl{labels(S$_2$)}                        &                      & $\cup$ \textsl{final(S$_2$)} \\
-\hline
-while [\textsl{b}]$^\ell$ do \textsl{S} & $\{\ell\}$ $\cup$  \textsl{labels(S)}                 &$\ell$                & $\{\ell\}$ \\
-\hline
-[read \textsl{x}]$^\ell$                & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
-\hline
-[write \textsl{x}]$^\ell$               & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
-\hline
-\end{tabular}
-\centering
-\caption{Flow graph function definitions}
-\label{table:flow_graph_functions}
+    \begin{tabular}{l | l }
+    \textsl{label(S)} & The set of nodes of the flow graph $S$ \\
+    \hline    
+    \textsl{init(S)}  & The initial node of the flow graph $S$.\\
+               & Unique node where the execution of the program starts.\\
+    \hline
+    \textsl{final(S)}   & The final node of the flow graph $S$.\\
+                 & A set of nodes where the execution of the program may terminate.\\
+    \hline
+    \textsl{flow(S)} & The edges of the flow graph for $S$. A set of pairs is returned. \\
+	\hline
+    \textsl{block(S)}   & A set of the blocks/statements in the program under inquisition.\\
+    \end{tabular}
+    \centering
+	\caption{Function definitions}
+	\label{table:flow_graph_definitions}
 \end{table}
-
-The flows in the flow graph is constructed the following way:
 \\\\
+The objective is to establish a flow graph using the abstract syntax tree. Using the intermediate representation of the abstract syntax tree, the types of different individual statements is defined. Rather than explicitly parsing the AST to a flow graph, we instead define a function for each statement and let every statement handle it's own branch by recursion using the function defined in table~\ref{table:flow_graph_functions}.
+
 \begin{table}
-\begin{tabular}{| l | l | l | l |}
+\begin{tabular}{| l | l | l | l | l | l |}
 \hline	
-\textsl{S}      & \textsl{flow(S)}            & \textsl{blocks(S)}  \\ 
+\textsl{S}                              & \textsl{labels(S)}                                    & \textsl{init(S)}     & \textsl{final(S)}  & \textsl{flow(S)}            & \textsl{blocks(S)}  \\ 
 \hline
-[x := a]$^\ell$       & $\emptyset$        &$\ell$  \\
+[x := a]$^\ell$                         & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ & $\emptyset$        &\{[x := a]$^\ell$\}   \\
 \hline
-[int A[a$_1$] := a$_2$]$^\ell$   & $\emptyset$      &$\ell$   \\
+[A[a$_1$] := a$_2$]$^\ell$          & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ & $\emptyset$      &\{[A[a$_1$] := a$_2$]$^\ell$\}\\
 \hline
-[skip]$^\ell$   & $\emptyset$       &$\ell$             \\
+[skip]$^\ell$                           & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$   & $\emptyset$       &\{[skip]$^\ell$\}  \\
 \hline
-\textsl{S}$_1$;\textsl{S}$_2$  & \textsl{flow(S$_1$)} $\cup$ \textsl{flow(S$_2$)} & \textsl{init(S$_1$)}  \\ 
-& & 
+\textsl{S}$_1$;\textsl{S}$_2$           & \textsl{labels(S$_1$)} $\cup$ \textsl{labels(S$_2$)}  & \textsl{init(S$_1$)} & {final(S$_2$)} & \textsl{flow(S$_1$)} $\cup$ \textsl{flow(S$_2$)} & \textsl{block(S$_1$)}  \\ 
+&&&&$\cup$\{($\ell$,\textsl{init(S$_2$)}) | $\ell\in$\textsl{final(S$_1$)} \}& $\cup$ \textsl{block(S$_2$)}\\
 \hline
-if [\textsl{b}]$^\ell$ then             & $\{\ell\}$ $\cup$  \textsl{labels(S$_1$)}             &$\ell$    \\
-  \textsl{S}$_1$ else \textsl{S}$_2$    &  $\cup$ \textsl{labels(S$_2$)}    &  $\cup$ \textsl{final(S$_2$)} \\
+if [\textsl{b}]$^\ell$ then             & $\{\ell\}$ $\cup$  \textsl{labels(S$_1$)}             &$\ell$                & \textsl{final(S$_1$)} & \textsl{flow(S$_1$)} $\cup$ \textsl{flow(S$_2$)}  & \{[\textsl{b}]$^\ell$\} $\cup$\ \textsl{block(S$_1$)} \\
+  \textsl{S}$_1$ else \textsl{S}$_2$    &  $\cup$ \textsl{labels(S$_2$)}                        &                      & $\cup$ \textsl{final(S$_2$)} & $\cup$\{($\ell$,\textsl{init(S$_1$)}),($\ell$,\textsl{init(S$_2$)} \}&  $\cup$ \textsl{block(S$_2$)}\\
 \hline
-while [\textsl{b}]$^\ell$ do \textsl{S} & $\{\ell\}$ $\cup$  \textsl{labels(S)}                 &$\ell$  \\
+while [\textsl{b}]$^\ell$ do \textsl{S} & $\{\ell\}$ $\cup$  \textsl{labels(S)}                 &$\ell$                & $\{\ell\}$ & \{($\ell$,\textsl{init(S)})\} $\cup$\textsl{flow(S)}                 & \{[\textsl{b}]$^\ell$\} $\cup$\ \textsl{block(S)} \\
+&&&&$\cup$ \{($\ell^{'}$,$\ell$) |  $\ell^{'}\in$ \textsl{final(S)} \}&\\
 \hline
-[read \textsl{x}]$^\ell$                & $\{\ell\}$                                            &$\ell$  \\
+[read \textsl{x}]$^\ell$                & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ & $\emptyset$                                            &\{[read \textsl{x}]$^\ell$ \}  \\
 \hline
-[write \textsl{x}]$^\ell$               & $\{\ell\}$                                            &$\ell$    \\
+[read A[a$_1$]]$^\ell$                & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$  & $\emptyset$                                            &\{[read A[a$_1$]]$^\ell$ \}   \\
+\hline
+[write \textsl{x}]$^\ell$               & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$  & $\emptyset$                                          &\{[write \textsl{x}]$^\ell$ \} \\
+\hline
+[write A[a$_1$]]$^\ell$               & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$  & $\emptyset$                                          &\{[write A[a$_1$]]$^\ell$\} \\
 \hline
 \end{tabular}
 \centering
 \caption{Flow graph function definitions}
 \label{table:flow_graph_functions}
 \end{table}
-
 
 \subsection{Program graph data structure}
 Another approach for structuring a program is to use a program graph which is similar to flow graphs but instead of storing the statements in the nodes they are stored in the edges. This has some advantages in certain analysis but in general both flow graph and programs graph can be used since it is possible to convert between the two.
-////
+\\\\
 In the rest of the report the focus will be on flow graphs.

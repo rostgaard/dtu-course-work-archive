@@ -12,6 +12,18 @@ public enum Sign {
 
     P,
     Z,
-    N
-    
+    N;
+
+    public int toIndex() {
+        switch (this) {
+            case P:
+                return 2;
+            case Z:
+                return 1;
+            case N:
+                return 0;
+        }
+
+        return 0;
+    }
 }

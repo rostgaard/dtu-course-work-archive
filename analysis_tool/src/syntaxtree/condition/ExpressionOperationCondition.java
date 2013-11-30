@@ -1,5 +1,7 @@
 package syntaxtree.condition;
 
+import analysis.BoolSet;
+import analysis.Sign;
 import analysis.lattices.IntervalLattice;
 import analysis.SignSet;
 import analysis.lattices.SignsLattice;
@@ -69,48 +71,30 @@ public class ExpressionOperationCondition extends Condition {
             thisCopy.setRo(thisCopy.ro.switchOperator());
         }
 
-        switch (thisCopy.ro) {
-            case EQUAL: {
-                SignSet intersection = lhsSigns.intersect(rhsSigns);
+        BoolSet[][] matrix = thisCopy.getRo().getMatrix();
 
-                if (expr1 instanceof Variable) {
-                    Variable variable = (Variable) expr1;
-                    lattice.put(variable, intersection);
-                }
+        SignSet resultSet1 = new SignSet();
+        SignSet resultSet2 = new SignSet();
 
-                if (expr2 instanceof Variable) {
-                    Variable variable = (Variable) expr2;
-                    lattice.put(variable, intersection);
-                }
-
-                break;
-            }
-            case NOTEQUAL:  {
-                SignSet intersection = lhsSigns.intersect(rhsSigns);
-                if (expr1 instanceof Variable) {
-                    Variable variable = (Variable) expr1;
-                    SignSet signs = lattice.get(variable);
-                    signs.removeAll(intersection);
-                    lattice.put(variable, signs);
-                }
-
-                if (expr2 instanceof Variable) {
-                    Variable variable = (Variable) expr1;
-                    SignSet signs = lattice.get(variable);
-                    signs.removeAll(intersection);
-                    lattice.put(variable, signs);
+        for (Sign sign1 : lhsSigns) {
+            int index1 = sign1.toIndex();
+            for(Sign sign2 : rhsSigns) {
+                int index2 = sign2.toIndex();
+                if(matrix[index1][index2].containsTrue()) {
+                    resultSet1.add(sign1);
+                    resultSet2.add(sign2);
                 }
             }
-            case GREATEREQUALTHAN:
+         }
 
+        if (expr1 instanceof Variable) {
+            Variable variable = (Variable) expr1;
+            lattice.put(variable, resultSet1);
+        }
 
-            case GREATERTHAN:
-            case LESSEQUALTHAN:
-            case LESSTHAN:
-            default:
-//                retval.merge(SignSet.pnz);
-//                return retval;
-
+        if (expr2 instanceof Variable) {
+            Variable variable = (Variable) expr2;
+            lattice.put(variable, resultSet2);
         }
 
     }

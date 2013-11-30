@@ -25,6 +25,9 @@ public class If extends Statement {
     private StatementList trueBranch;
     private StatementList falseBranch;
 
+    private SignsLattice trueLattice;
+    private SignsLattice falseLattice;
+
     public If(Condition cond, StatementList tBranch, StatementList fBranch) {
         this.cond = cond;
         this.trueBranch = tBranch;
@@ -156,10 +159,21 @@ public class If extends Statement {
     }
 
     private SignsLattice transferFunction(SignsLattice lattice, int toLabel) {
-        SignsLattice signsLattice = lattice;
-
         Boolean trueBranch = this.trueBranch.init().getLabel()==toLabel;
-        cond.evaluate(lattice, trueBranch);
+        SignsLattice signsLattice;
+
+        if (trueBranch) {
+            trueLattice = (SignsLattice) lattice.factory();
+            trueLattice.putAll(lattice);
+            signsLattice = trueLattice;
+        } else {
+            falseLattice = (SignsLattice) lattice.factory();
+            falseLattice.putAll(lattice);
+            signsLattice = falseLattice;
+
+        }
+
+        cond.evaluate(signsLattice, trueBranch);
 
         return signsLattice;
     }
