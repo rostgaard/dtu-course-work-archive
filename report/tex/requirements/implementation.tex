@@ -282,6 +282,8 @@ Where \texttt{a} is defined as an array with two elements and \texttt{i} is in i
 ==== Buffer Underflow =====
 Potential underflow detected at label: 3
 Potential underflow detected at label: 5
+Potential underflow detected at label: 6
+Potential underflow detected at label: 9
 ==== Interval =====
 Range check failed at: 3
 Range check failed at: 5
@@ -291,8 +293,7 @@ Range check failed at: 10
 \end{lstlisting}
 \caption{Output from analysis on code from figure \ref{code:juicy_array_example}}
 \label{code:juicy_array_example_output}
-\end{figure}We correctly detect the potential underflows on the assignments at label 3 and 5. However, the analysis does not detect the potential errors at label 6 and 9. Inspecting this issues closer we observe that the analysis may have an error in the transfer functions mapped to while. The range check detects everything we should be able to detect.
-
+\end{figure}We correctly detect the potential underflows on the assignments at label 3, 5, 6 and 9, which we can verify is correct by manually inspecting the code. What is more interesting however, is the fact that we detect the same labels with the interval analysis -- plus a fifth one; the one with the overflow.
 
 \subsection{Functions for underflow detection}
 \begin{table}[h]
