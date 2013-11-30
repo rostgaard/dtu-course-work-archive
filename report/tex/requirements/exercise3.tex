@@ -22,10 +22,43 @@ end
 \end{figure}
 
 \subsection{Monotone framework}
-To establish our analysis we will define a monotone framework which can be solved using a worklist algorithm.
+To establish our analysis we will define a monotone framework as generic framework that can be used to solve several analysis using a generic worklist algorithm.
 \\\\
+A monotone framework consists of the following:
+\begin{itemize}
+	\item L - A complete lattice satisfying the Ascending Chain Condition.
+	\item $\mathcal{F}$ - A set of monotone functions.
+	\item F - A flow
+	\item E - A set of extremal labels
+	\item $\iota$ - An extremal value for the extremal labels.
+	\item f - Mapping of labels and transfer functions in $\mathcal{F}$.
+\end{itemize}
+In our analysis the flow \texttt{F} will be defined as:
+\begin{description}
+  \item[Flow $F$:] flow ($S_*$) (forward analysis)
+\end{description}
+The extremal labels \texttt{E} will be defined as:
+\begin{description}
+    \item[Extremal label $E$:] \{init($S_*$)\}
+\end{description}
+\noindent Table~\ref{table:signs_analysis_definition} defines the analysis.
+\begin{table}
+\begin{tabular}{| l | l |}
+  \hline
+  Analysis$_\circ(\ell)$ & $ \bigsqcup \{$ Analysis$_\bullet (\ell') | (\ell', \ell) \in F \} \bigcup \iota_E^{\ell} $ \\
+                         & where $\iota_E^{\ell} = \begin{cases} \iota & \text{if } \ell \in E \\ 
+                                                                 \bot  & \text{if } \ell \notin E
+                                                   \end{cases}$\\
+  \hline
+  Analysis$_\bullet(\ell)$ & f$_\ell$(Analysis$_\circ(\ell)$)\\
+  \hline
+\end{tabular}
+\centering
+\caption{Analysis definitions}
+\label{table:signs_analysis_definition}
+\end{table}
 The monotone framework is shown in table~\ref{table:sign_detection_instance}.
-\begin{table}[H]
+\begin{table}
 \begin{tabular}{| l | l |}
   \hline
   Instance & $(L,\sqsubseteq,\bigsqcup, \bigsqcap, \top, \bot )$ \\
@@ -52,7 +85,7 @@ The monotone framework is shown in table~\ref{table:sign_detection_instance}.
 \end{table}
 \noindent The lattice used in show in figure~\ref{fig:sign_detection_complete_lattice}. This is a complete lattice, as every subset in the partial ordered set have a least upper bound and a greatest lower bound.\\
 It also holds the Ascending Chain Property, because the lattice has a finite height, and will thus, eventually stabilize.\\\\
- \begin{figure}[h]
+ \begin{figure}
  \centering
  \begin{tikzpicture}
    \tikzstyle{line} = [draw, -latex'] 
@@ -88,66 +121,36 @@ It also holds the Ascending Chain Property, because the lattice has a finite hei
  
   \label{fig:sign_detection_complete_lattice}
  \end{figure}
-
-We define the flow as 
-\begin{description}
-  \item[Flow $F$:] flow ($S_*$) (forward analysis)
-  \item[Extremal label $E$:] \{init($S_*$)\}
-\end{description}
-
-The analysis is defined as :
-\begin{table}
+\noindent The top of the lattice gives the least precise solution and the bottom the most precise.
+\\\\
+We define the mapping of labels to transfer functions for the analysis in table~\ref{table:sign_detection_functions}.
+\begin{table}[h]
 \begin{tabular}{| l | l |}
   \hline
-  Analysis$_\circ(\ell)$ & $ \bigsqcup \{$ Analysis$_\bullet (\ell') | (\ell', \ell) \in F \} \bigcup \iota_E^{\ell} $ \\
-                         & where $\iota_E^{\ell} = \begin{cases} \iota & \text{if } \ell \in E \\ 
-                                                                 \bot  & \text{if } \ell \notin E
-                                                   \end{cases}$\\
-  \hline
-  Analysis$_\bullet(\ell)$ & f$_\ell$(Analysis$_\circ(\ell)$)\\
-  \hline
-\end{tabular}
-\centering
-\caption{Analysis definitions}
-\end{table}
-
-\subsection{Transfer functions}
-%We define our transfer functions as
-\begin{table}
-\begin{tabular}{| l | l | l |}
-  \hline
-  \# & Statement & Function \\
+  Statement & Function \\
   \hline
   \hline
-  1 & [int x]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto {0}]$ \\
+  [x := a]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto \mathcal{A}_S[\![a]\!] \widehat{\sigma} ]$ \\
   \hline
-  2 & [int A[n]]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = 
-     \begin{cases} 
-        \widehat{\sigma}[$A[n]$ \mapsto \bot] & \text{if } \mathcal{A}_S [\![n]\!] \widehat{a} \subseteq \{-,0\} \textbf{Feedback please!} \\
-        \widehat{\sigma}[$A[i]$ \mapsto {0} | \forall i \in \{0, ..., n-1 \} & \text{if } \mathcal{A}_S [\![n]\!] \widehat{a} = \{+\} \\
-     \end{cases}$\\
+ [skip]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
-  3 & [x := a]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto \mathcal{A}_S[\![a]\!] \widehat{\sigma} ]$ \\
+ [b]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
-  4 & [skip]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}$\\
-  \hline
-  5 & [b]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}$\\
-  \hline
-  6 & [int A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = 
+  [int A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = 
      \begin{cases} 
         \widehat{\sigma}[$A[a$_1$]$ \mapsto \bot]        & \text{if } \mathcal{A}_S [\![a_1]\!] \widehat{a} = \{-\} \\
         \widehat{\sigma}[$A[a$_1$]$ \mapsto A_I[\![a_2]\!] & \text{if }\mathcal{A}_S [\![a_1]\!] \widehat{a} \subseteq \{0,+\} \\
      \end{cases}$\\
   \hline
-  7 & [read x]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = [x \mapsto \mathcal{A}_S [\![n]\!] \widehat{\sigma}]$ \\
+  [read x]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = [x \mapsto \mathcal{A}_S [\![n]\!] \widehat{\sigma}]$ \\
   \hline
-  8 & [read A[a]]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = 
+  [read A[a]]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = 
      \begin{cases} 
         \widehat{\sigma}[$A[a]$ \mapsto \bot]        & \text{if } \mathcal{A}_S [\![a]\!]\widehat{\sigma} = \{-\} \\
         \widehat{\sigma}[$A[a]$ \mapsto \mathcal{A}_S[\![n]\!]\widehat{\sigma} & \text{if } \mathcal{A}_S [\![a]\!]\widehat{\sigma} = \{0,+\} \\
      \end{cases}$\\
   \hline
-  9 & [write A[n]]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}$\\
+  [write A[n]]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
 \end{tabular}
 \centering
@@ -155,9 +158,14 @@ The analysis is defined as :
 \label{table:sign_detection_functions}
 \end{table}
 
-$
-\mathcal{A}_S [\![a]\!]: \widehat{\textbf{State}_S} \rightarrow \textbf{Sign}\\
-\mathcal{A}_S [\![x]\!]\widehat{\sigma} = \widehat{\sigma} (x)\\
+\subsection{Determine sign}
+For the analysis to work the signs need to be determined for a given program. This is done by evaluating arithmetic expressions and boolean expressions.
+
+\subsubsection{Evaluate arithmetic expressions}
+In order to determine the sign of an expression we need to define the semantics of expressions in the \texttt{WHILE} language for the signs analysis.
+$\mathcal{A}_S [\![a]\!]: \widehat{\textbf{State}_S} \rightarrow \textbf{Sign}$\\
+We have the following monotone functions:\\
+$\mathcal{A}_S [\![x]\!]\widehat{\sigma} = \widehat{\sigma} (x)\\
 \mathcal{A}_S [\![n]\!]= 
    \begin{cases} 
       \{-\} & \text{ if } n < 0 \\
@@ -166,10 +174,11 @@ $
    \end{cases}\\
 \mathcal{A}_S [\![a_1 \text{ op}_A a_2 ]\!] = \mathcal{A}_S [\![a_1]\!] \widehat{\sigma} \widehat{\text{ op}_A} \mathcal{A}_S [\![a_2]\!] \widehat{\sigma}, \text{where} \widehat{\text{ op}_A} : \textbf{Sign} \times \textbf{Sign} \rightarrow \textbf{Sign} \text{ is given by}:\\
 \widehat{\text{ op}_A} (S_1, S_2) = \{ s_1 \text{ op}_A s_2 | s_1 \in S_1, s_2 \in S_2\}\\
-\widehat{\text{ op}_A} \text {is a specific arithmatic operator from the set op}_a(\text{op}_a = \{+,-,*,/\}).
-$
+\widehat{\text{ op}_A} \text {is a specific arithmetic operator from the set op}_a(\text{op}_a = \{+,-,*,/\}).
+$\\
+Table~\ref{table:arithmetic_plus}, \ref{table:arithmetic_minus}, \ref{table:arithmetic_multiply}, \ref{table:arithmetic_division} define each of the operators.
 
-\begin{table}[H]
+\begin{table}[h]
 \begin{tabular}{| r | c | c | c |}
 \hline
  +   & -           & 0 & + \\
@@ -183,9 +192,10 @@ $
 \end{tabular}
 \centering
 \caption{Addition effects on variable state}
+\label{table:arithmetic_plus}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[h]
 \begin{tabular}{| r | c | c | c |}
 \hline
   -  & -           & 0 & + \\
@@ -199,9 +209,10 @@ $
 \end{tabular}
 \centering
 \caption{Subtraction effects on variable state}
+\label{table:arithmetic_minus}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[h]
 \begin{tabular}{| r | c | c | c |}
 \hline
  x   & -           & 0 & + \\
@@ -215,9 +226,10 @@ $
 \end{tabular}
 \centering
 \caption{Multiplication effects on variable state}
+\label{table:arithmetic_multiply}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[h]
 \begin{tabular}{| r | c | c | c |}
 \hline
  \textbackslash   & -           & 0 & + \\
@@ -231,7 +243,10 @@ $
 \end{tabular}
 \centering
 \caption{Division effects on variable state}
+\label{table:arithmetic_division}
 \end{table}
+
+\subsubsection{Evaluate boolean expressions}
 
 
 \subsection{Lower bound detection}
