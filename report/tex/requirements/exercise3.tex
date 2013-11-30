@@ -136,19 +136,13 @@ We define the mapping of labels to transfer functions for the analysis in table~
   \hline
  [b]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
-  [int A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = 
-     \begin{cases} 
-        \widehat{\sigma}[$A[a$_1$]$ \mapsto \bot]        & \text{if } \mathcal{A}_S [\![a_1]\!] \widehat{a} = \{-\} \\
-        \widehat{\sigma}[$A[a$_1$]$ \mapsto A_I[\![a_2]\!] & \text{if }\mathcal{A}_S [\![a_1]\!] \widehat{a} \subseteq \{0,+\} \\
-     \end{cases}$\\
+  [A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}[A\mapsto \widehat{\sigma}(A)\cup \mathcal{A}_S[\![a_2]\!] \widehat{\sigma}]$\\
   \hline
-  [read x]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = [x \mapsto \mathcal{A}_S [\![n]\!] \widehat{\sigma}]$ \\
+  [read x]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = [x \mapsto \top]$ \\
   \hline
-  [read A[a]]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = 
-     \begin{cases} 
-        \widehat{\sigma}[$A[a]$ \mapsto \bot]        & \text{if } \mathcal{A}_S [\![a]\!]\widehat{\sigma} = \{-\} \\
-        \widehat{\sigma}[$A[a]$ \mapsto \mathcal{A}_S[\![n]\!]\widehat{\sigma} & \text{if } \mathcal{A}_S [\![a]\!]\widehat{\sigma} = \{0,+\} \\
-     \end{cases}$\\
+  [read A[a]]$^\ell$ & f$_\ell^S (\widehat{\sigma}) =  \widehat{\sigma}[A\mapsto \widehat{\sigma}(A)\cup \top]$\\
+  \hline
+  [write x]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
   [write A[n]]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
@@ -164,87 +158,80 @@ For the analysis to work the signs need to be determined for a given program. Th
 \subsubsection{Evaluate arithmetic expressions}
 In order to determine the sign of an expression we need to define the semantics of expressions in the \texttt{WHILE} language for the signs analysis.
 $\mathcal{A}_S [\![a]\!]: \widehat{\textbf{State}_S} \rightarrow \textbf{Sign}$\\
+Where $\textbf{Sign}=P(\{-,0,+\})$\\
 We have the following monotone functions:\\
 $\mathcal{A}_S [\![x]\!]\widehat{\sigma} = \widehat{\sigma} (x)\\
-\mathcal{A}_S [\![n]\!]= 
+\mathcal{A}_S [\![n]\!]\widehat{\sigma}= 
    \begin{cases} 
       \{-\} & \text{ if } n < 0 \\
       \{0\} & \text{ if } n = 0 \\
       \{+\} & \text{ if } n > 0 \\
    \end{cases}\\
-\mathcal{A}_S [\![a_1 \text{ op}_A a_2 ]\!] = \mathcal{A}_S [\![a_1]\!] \widehat{\sigma} \widehat{\text{ op}_A} \mathcal{A}_S [\![a_2]\!] \widehat{\sigma}, \text{where} \widehat{\text{ op}_A} : \textbf{Sign} \times \textbf{Sign} \rightarrow \textbf{Sign} \text{ is given by}:\\
+\mathcal{A}_S [\![a_1 \text{ op}_A a_2 ]\!]\widehat{\sigma} = \mathcal{A}_S [\![a_1]\!] \widehat{\sigma} \widehat{\text{ op}_A} \mathcal{A}_S [\![a_2]\!] \widehat{\sigma}, \text{where} \widehat{\text{ op}_A} : \textbf{Sign} \times \textbf{Sign} \rightarrow \textbf{Sign} \text{ is given by}:\\
 \widehat{\text{ op}_A} (S_1, S_2) = \{ s_1 \text{ op}_A s_2 | s_1 \in S_1, s_2 \in S_2\}\\
 \widehat{\text{ op}_A} \text {is a specific arithmetic operator from the set op}_a \{+,-,*,/\}.
 $\\
-Table~\ref{table:arithmetic_plus}, \ref{table:arithmetic_minus}, \ref{table:arithmetic_multiply}, \ref{table:arithmetic_division} define each of the operators.
+Table~\ref{table:arithmetic_operators} defines for each of the operators what possible signs may be the outcome when evaluating an expression.
 
-\begin{table}[h]
-\begin{tabular}{| r | c | c | c |}
-\hline
- +   & -           & 0 & + \\
-\hline
- -  & $\{-\}$     & $\{-\}$ & $\{-,0,+\}$ \\
-\hline
- 0  & $\{-\}$     & $\{0\}$ & $\{+\}$ \\
-\hline
- +  & $\{-,0,+\}$ & $\{+\}$ & $\{+\}$ \\
-\hline
+\begin{table}
+\begin{tabular}{cc}
+    \begin{minipage}{0.4\linewidth}
+		\begin{tabular}{| r | c | c | c |}
+		\hline
+		 \textbf{+}   & -           & 0 & + \\
+		\hline
+		 -  & $\{-\}$     & $\{-\}$ & $\{-,0,+\}$ \\
+		\hline
+		 0  & $\{-\}$     & $\{0\}$ & $\{+\}$ \\
+		\hline
+		 +  & $\{-,0,+\}$ & $\{+\}$ & $\{+\}$ \\
+		\hline
+		\end{tabular}
+		\\\\\\
+		\begin{tabular}{| r | c | c | c |}
+		\hline
+		  \textbf{-}  & -           & 0 & + \\
+		\hline
+		 -  & $\{-,0,+\}$ & $\{-\}$ & $\{-\}$ \\
+		\hline
+		 0  & $\{-\}$     & $\{0\}$ & $\{-\}$ \\
+		\hline
+		 +  & $\{+\}$     & $\{+\}$ & $\{-,0,+\}$ \\
+		\hline
+		\end{tabular}
+    \end{minipage} &
+
+    \begin{minipage}{0.4\linewidth}
+		\begin{tabular}{| r | c | c | c |}
+		\hline
+		 \textbf{x}   & -           & 0 & + \\
+		\hline
+		 -  & $\{+\}$ & $\{0\}$ & $\{-\}$ \\
+		\hline
+		 0  & $\{0\}$ & $\{0\}$ & $\{0\}$ \\
+		\hline
+		 +  & $\{-\}$ & $\{0\}$ & $\{+\}$ \\
+		\hline
+		\end{tabular}
+		\\\\\\
+		\begin{tabular}{| r | c | c | c |}
+		\hline
+		 \textbf{\textbackslash}   & -           & 0 & + \\
+		\hline
+		 -  & $\{+\}$ & $\emptyset$ & $\{-\}$ \\
+		\hline
+		 0  & $\{0\}$ & $\emptyset$ & $\{0\}$ \\
+		\hline
+		 +  & $\{-\}$ & $\emptyset$ & $\{+\}$ \\
+		\hline
+		\end{tabular}
+    \end{minipage}
 \end{tabular}
 \centering
-\caption{Addition effects on variable state}
-\label{table:arithmetic_plus}
+\caption{Operator effect on variable state.}
+\label{table:arithmetic_operators}
 \end{table}
 
-\begin{table}[h]
-\begin{tabular}{| r | c | c | c |}
-\hline
-  -  & -           & 0 & + \\
-\hline
- -  & $\{-,0,+\}$ & $\{-\}$ & $\{-\}$ \\
-\hline
- 0  & $\{-\}$     & $\{0\}$ & $\{-\}$ \\
-\hline
- +  & $\{+\}$     & $\{+\}$ & $\{-,0,+\}$ \\
-\hline
-\end{tabular}
-\centering
-\caption{Subtraction effects on variable state}
-\label{table:arithmetic_minus}
-\end{table}
-
-\begin{table}[h]
-\begin{tabular}{| r | c | c | c |}
-\hline
- x   & -           & 0 & + \\
-\hline
- -  & $\{+\}$ & $\{0\}$ & $\{-\}$ \\
-\hline
- 0  & $\{0\}$ & $\{0\}$ & $\{0\}$ \\
-\hline
- +  & $\{-\}$ & $\{0\}$ & $\{+\}$ \\
-\hline
-\end{tabular}
-\centering
-\caption{Multiplication effects on variable state}
-\label{table:arithmetic_multiply}
-\end{table}
-
-\begin{table}[h]
-\begin{tabular}{| r | c | c | c |}
-\hline
- \textbackslash   & -           & 0 & + \\
-\hline
- -  & $\{+\}$ & $\emptyset$ & $\{-\}$ \\
-\hline
- 0  & $\{0\}$ & $\emptyset$ & $\{0\}$ \\
-\hline
- +  & $\{-\}$ & $\emptyset$ & $\{+\}$ \\
-\hline
-\end{tabular}
-\centering
-\caption{Division effects on variable state}
-\label{table:arithmetic_division}
-\end{table}
 
 \subsubsection{Evaluate boolean expressions}
 Similarly booleans expressions should be evaluated. We that that:\\
@@ -253,140 +240,224 @@ $\mathcal{B}_S [\![a_1op_ra_2]\!]\widehat{\sigma}' = \mathcal{A}_S [\![a_1]\!]\w
 $\mathcal{B}_S [\![a_1op_ba_2]\!]\widehat{\sigma}' = \mathcal{B}_S [\![b_1]\!]\widehat{\sigma}'\widehat{op_b}\mathcal{B}_S [\![b_2]\!]\widehat{\sigma}'$\\
 $\mathcal{B}_S [\![\neg b]\!]\widehat{\sigma}' =\{\neg t|t\in \mathcal{B}_S[\![b]\!]\widehat{\sigma}'\}$\\
 \\
-Where $\widehat{\text{op}_r}$ is a specific  operator from the set op$_r$ \{ $\leq,\geq,\neq,=,>,<$ \}, and where $\widehat{\text{op}_b}$ is a specific operator from the set op$_b$ \{$\&,|\}$.
+Where $\widehat{\text{op}_r}$ is a specific  operator from the set op$_r$ \{ $\leq,\geq,\neq,=,>,<$ \}, and where $\widehat{\text{op}_b}$ is a specific operator from the set op$_b$ \{$\&,|\}$. The possible outcome of these operators are define in table~\ref{table:or_operator} and table~\ref{table:boolean_operator}.
 
 \begin{table}
-\begin{tabular}{| r | c | c |}
-\hline
- \&   & tt   & ff  \\
-\hline
- tt  & $\{tt\}$ & $\{ff\}$  \\
-\hline
- ff  & $\{ff\}$ & $\{ff\}$ \\
-\hline
-\end{tabular}
-\centering
-\caption{Possible outcomes of AND operator.}
-\label{table:and_operator}
-\end{table}
+\begin{tabular}{cc}
+    \begin{minipage}{0.3\linewidth}
+		\begin{tabular}{| r | c | c |}
+		\hline
+		 \&   & tt   & ff  \\
+		\hline
+		 tt  & $\{tt\}$ & $\{ff\}$  \\
+		\hline
+		 ff  & $\{ff\}$ & $\{ff\}$ \\
+		\hline
+		\end{tabular}
+    \end{minipage} &
 
-\begin{table}
-\begin{tabular}{| r | c | c |}
-\hline
- |   & tt   & ff  \\
-\hline
- tt  & $\{tt\}$ & $\{ff\}$  \\
-\hline
- ff  & $\{tt\}$ & $\{ff\}$ \\
-\hline
+    \begin{minipage}{0.3\linewidth}
+		\begin{tabular}{| r | c | c |}
+		\hline
+		 |   & tt   & ff  \\
+		\hline
+		 tt  & $\{tt\}$ & $\{ff\}$  \\
+		\hline
+		 ff  & $\{tt\}$ & $\{ff\}$ \\
+		\hline
+		\end{tabular}
+    \end{minipage}
 \end{tabular}
 \centering
-\caption{Possible outcomes of OR operator.}
+\caption{Possible outcomes of AND and OR operator.}
 \label{table:or_operator}
 \end{table}
 
 \begin{table}
-\begin{tabular}{| r | c | c | c |}
-\hline
- <   & -   & 0 & +  \\
-\hline
- -  & $\{tt,ff\}$ & $\{tt\}$ & $\{tt\}$  \\
-\hline
- 0  & $\{ff\}$ & $\{ff\}$ & $\{tt\}$ \\
-\hline
- +  & $\{ff\}$ & $\{ff\}$ & $\{tt,ff\}$ \\
- \hline
+\begin{tabular}{cc}
+    \begin{minipage}{0.4\linewidth}
+		\begin{tabular}{| r | c | c | c |}
+		\hline
+		 <   & -   & 0 & +  \\
+		\hline
+		 -  & $\{tt,ff\}$ & $\{tt\}$ & $\{tt\}$  \\
+		\hline
+		 0  & $\{ff\}$ & $\{ff\}$ & $\{tt\}$ \\
+		\hline
+		 +  & $\{ff\}$ & $\{ff\}$ & $\{tt,ff\}$ \\
+		 \hline
+		\end{tabular}
+		\\\\\\
+		\begin{tabular}{| r | c | c | c |}
+		\hline
+		 $\leq$   & -   & 0 & +  \\
+		\hline
+		 -  & $\{tt,ff\}$ & $\{tt\}$ & $\{tt\}$  \\
+		\hline
+		 0  & $\{ff\}$ & $\{tt\}$ & $\{tt\}$ \\
+		\hline
+		 +  & $\{ff\}$ & $\{ff\}$ & $\{tt,ff\}$ \\
+		 \hline
+		\end{tabular}
+		\\\\\\
+		\begin{tabular}{| r | c | c | c |}
+		\hline
+		 $=$   & -   & 0 & +  \\
+		\hline
+		 -  & $\{tt,ff\}$ & $\{ff\}$ & $\{ff\}$  \\
+		\hline
+		 0  & $\{ff\}$ & $\{tt\}$ & $\{ff\}$ \\
+		\hline
+		 +  & $\{ff\}$ & $\{ff\}$ & $\{tt,ff\}$ \\
+		 \hline
+		\end{tabular}
+    \end{minipage} &
+
+    \begin{minipage}{0.4\linewidth}
+		\begin{tabular}{| r | c | c | c |}
+		\hline
+		 >   & -   & 0 & +  \\
+		\hline
+		 -  & $\{tt,ff\}$ & $\{ff\}$ & $\{ff\}$  \\
+		\hline
+		 0  & $\{tt\}$ & $\{ff\}$ & $\{ff\}$ \\
+		\hline
+		 +  & $\{tt\}$ & $\{tt\}$ & $\{tt,ff\}$ \\
+		 \hline
+		\end{tabular}
+		\\\\\\
+		\begin{tabular}{| r | c | c | c |}
+		\hline
+		 $\geq$   & -   & 0 & +  \\
+		\hline
+		 -  & $\{tt,ff\}$ & $\{ff\}$ & $\{ff\}$  \\
+		\hline
+		 0  & $\{tt\}$ & $\{tt\}$ & $\{ff\}$ \\
+		\hline
+		 +  & $\{tt\}$ & $\{tt\}$ & $\{tt,ff\}$ \\
+		 \hline
+		\end{tabular}
+		\\\\\\
+		\begin{tabular}{| r | c | c | c |}
+		\hline
+		 $\neq$   & -   & 0 & +  \\
+		\hline
+		 -  & $\{tt,ff\}$ & $\{tt\}$ & $\{tt\}$  \\
+		\hline
+		 0  & $\{tt\}$ & $\{ff\}$ & $\{tt\}$ \\
+		\hline
+		 +  & $\{tt\}$ & $\{tt\}$ & $\{tt,ff\}$ \\
+		 \hline
+		\end{tabular}
+    \end{minipage}
 \end{tabular}
 \centering
-\caption{Possible outcomes of < operator.}
-\label{table:less_than_operator}
+\caption{Possible outcomes of compare operators.}
+\label{table:boolean_operator}
 \end{table}
 
-\begin{table}
-\begin{tabular}{| r | c | c | c |}
-\hline
- >   & -   & 0 & +  \\
-\hline
- -  & $\{tt,ff\}$ & $\{ff\}$ & $\{ff\}$  \\
-\hline
- 0  & $\{tt\}$ & $\{ff\}$ & $\{ff\}$ \\
-\hline
- +  & $\{tt\}$ & $\{tt\}$ & $\{tt,ff\}$ \\
- \hline
-\end{tabular}
-\centering
-\caption{Possible outcomes of > operator.}
-\label{table:greater_than_operator}
-\end{table}
 
-\begin{table}
-\begin{tabular}{| r | c | c | c |}
-\hline
- $\leq$   & -   & 0 & +  \\
-\hline
- -  & $\{tt,ff\}$ & $\{tt\}$ & $\{tt\}$  \\
-\hline
- 0  & $\{ff\}$ & $\{tt\}$ & $\{tt\}$ \\
-\hline
- +  & $\{ff\}$ & $\{ff\}$ & $\{tt,ff\}$ \\
- \hline
-\end{tabular}
-\centering
-\caption{Possible outcomes of $\leq$ operator.}
-\label{table:less_than_equal_operator}
-\end{table}
+% \begin{table}
+% \begin{tabular}{| r | c | c | c |}
+% \hline
+%  <   & -   & 0 & +  \\
+% \hline
+%  -  & $\{tt,ff\}$ & $\{tt\}$ & $\{tt\}$  \\
+% \hline
+%  0  & $\{ff\}$ & $\{ff\}$ & $\{tt\}$ \\
+% \hline
+%  +  & $\{ff\}$ & $\{ff\}$ & $\{tt,ff\}$ \\
+%  \hline
+% \end{tabular}
+% \centering
+% \caption{Possible outcomes of < operator.}
+% \label{table:less_than_operator}
+% \end{table}
 
-\begin{table}
-\begin{tabular}{| r | c | c | c |}
-\hline
- $\geq$   & -   & 0 & +  \\
-\hline
- -  & $\{tt,ff\}$ & $\{ff\}$ & $\{ff\}$  \\
-\hline
- 0  & $\{tt\}$ & $\{tt\}$ & $\{ff\}$ \\
-\hline
- +  & $\{tt\}$ & $\{tt\}$ & $\{tt,ff\}$ \\
- \hline
-\end{tabular}
-\centering
-\caption{Possible outcomes of $\geq$ operator.}
-\label{table:greater_than_equal_operator}
-\end{table}
+% \begin{table}
+% \begin{tabular}{| r | c | c | c |}
+% \hline
+%  >   & -   & 0 & +  \\
+% \hline
+%  -  & $\{tt,ff\}$ & $\{ff\}$ & $\{ff\}$  \\
+% \hline
+%  0  & $\{tt\}$ & $\{ff\}$ & $\{ff\}$ \\
+% \hline
+%  +  & $\{tt\}$ & $\{tt\}$ & $\{tt,ff\}$ \\
+%  \hline
+% \end{tabular}
+% \centering
+% \caption{Possible outcomes of > operator.}
+% \label{table:greater_than_operator}
+% \end{table}
 
-\begin{table}
-\begin{tabular}{| r | c | c | c |}
-\hline
- $=$   & -   & 0 & +  \\
-\hline
- -  & $\{tt,ff\}$ & $\{ff\}$ & $\{ff\}$  \\
-\hline
- 0  & $\{ff\}$ & $\{tt\}$ & $\{ff\}$ \\
-\hline
- +  & $\{ff\}$ & $\{ff\}$ & $\{tt,ff\}$ \\
- \hline
-\end{tabular}
-\centering
-\caption{Possible outcomes of $=$ operator.}
-\label{table:equal_operator}
-\end{table}
+% \begin{table}
+% \begin{tabular}{| r | c | c | c |}
+% \hline
+%  $\leq$   & -   & 0 & +  \\
+% \hline
+%  -  & $\{tt,ff\}$ & $\{tt\}$ & $\{tt\}$  \\
+% \hline
+%  0  & $\{ff\}$ & $\{tt\}$ & $\{tt\}$ \\
+% \hline
+%  +  & $\{ff\}$ & $\{ff\}$ & $\{tt,ff\}$ \\
+%  \hline
+% \end{tabular}
+% \centering
+% \caption{Possible outcomes of $\leq$ operator.}
+% \label{table:less_than_equal_operator}
+% \end{table}
 
-\begin{table}
-\begin{tabular}{| r | c | c | c |}
-\hline
- $\neq$   & -   & 0 & +  \\
-\hline
- -  & $\{tt,ff\}$ & $\{tt\}$ & $\{tt\}$  \\
-\hline
- 0  & $\{tt\}$ & $\{ff\}$ & $\{tt\}$ \\
-\hline
- +  & $\{tt\}$ & $\{tt\}$ & $\{tt,ff\}$ \\
- \hline
-\end{tabular}
-\centering
-\caption{Possible outcomes of $=$ operator.}
-\label{table:not_equal_operator}
-\end{table}
+% \begin{table}
+% \begin{tabular}{| r | c | c | c |}
+% \hline
+%  $\geq$   & -   & 0 & +  \\
+% \hline
+%  -  & $\{tt,ff\}$ & $\{ff\}$ & $\{ff\}$  \\
+% \hline
+%  0  & $\{tt\}$ & $\{tt\}$ & $\{ff\}$ \\
+% \hline
+%  +  & $\{tt\}$ & $\{tt\}$ & $\{tt,ff\}$ \\
+%  \hline
+% \end{tabular}
+% \centering
+% \caption{Possible outcomes of $\geq$ operator.}
+% \label{table:greater_than_equal_operator}
+% \end{table}
 
+% \begin{table}
+% \begin{tabular}{| r | c | c | c |}
+% \hline
+%  $=$   & -   & 0 & +  \\
+% \hline
+%  -  & $\{tt,ff\}$ & $\{ff\}$ & $\{ff\}$  \\
+% \hline
+%  0  & $\{ff\}$ & $\{tt\}$ & $\{ff\}$ \\
+% \hline
+%  +  & $\{ff\}$ & $\{ff\}$ & $\{tt,ff\}$ \\
+%  \hline
+% \end{tabular}
+% \centering
+% \caption{Possible outcomes of $=$ operator.}
+% \label{table:equal_operator}
+% \end{table}
+% 
+% \begin{table}
+% \begin{tabular}{| r | c | c | c |}
+% \hline
+%  $\neq$   & -   & 0 & +  \\
+% \hline
+%  -  & $\{tt,ff\}$ & $\{tt\}$ & $\{tt\}$  \\
+% \hline
+%  0  & $\{tt\}$ & $\{ff\}$ & $\{tt\}$ \\
+% \hline
+%  +  & $\{tt\}$ & $\{tt\}$ & $\{tt,ff\}$ \\
+%  \hline
+% \end{tabular}
+% \centering
+% \caption{Possible outcomes of $=$ operator.}
+% \label{table:not_equal_operator}
+% \end{table}
 
 \subsection{Lower bound detection}
 Check for an assignment which includes an operation with an array, that the sign of the array is not $\emptyset$. If so, we know that the index parameter is invalid according to the lower bounds.
