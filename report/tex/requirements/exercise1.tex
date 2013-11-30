@@ -1,4 +1,4 @@
-\section{Data structures and parsing}
+\section{Data structures}
 This section will cover the language considered followed by the selected data structures which will be used for the abstract syntax tree, which will serve as the first step of our intermediate representation. Furthermore it will cover the data structures used to store the flow graph.
 
 \subsection{The WHILE language}
@@ -16,8 +16,8 @@ P ::= program D S end\\
 Before any analysis can be performed on a program written in the language in the previous section it needs to be parsed into an abstract syntax tree.\\\\
 We have decided that we could use an unbalanced tree for storage of our abstract syntax tree in our target programming language. Constraining the tree construction will give us the necessary check for syntax errors.
 A simple tree-traversal will give us the appropriate unique label numbers - or the ability to assign labels to statements in the right order.
-
-\subsection{Data structure}
+\\
+\\
 In our implementation language the statements from the \texttt{WHILE} language will be mapped into the following  
 \\\\
 We will have the following structures.
@@ -65,11 +65,11 @@ For the flow graph, we have chosen a network graph data structure. This gives an
 It is convenient to transform the abstract syntax tree into a flow graph when performing an analysis. For that reason a data structure for the flow graph as well as mapping from a abstract syntax tree to a flow graph is needed 
 \\
 \\
-Figure~\ref{fig:flowgraph} shows the classes used to represent a flow graph. The idea is that there exists two kinds of nodes that both inherits from the abstract \texttt{Node} class. Each \texttt{Node} has a \texttt{label} and a \texttt{prev}, which is the previous node in the graph. The first node in the program will not have a previous node. A \texttt{Statement Node} is a node that contains a \texttt{statement} and it is used for everything that does not use branching. It has a pointer to the next node in the flow graph. A \texttt{Branching Node} is used for if statements and while loops where branching is needed. It contains a \texttt{condition} and a pointer to two possible next nodes.
+Figure~\ref{fig:flowgraph} shows the data structure used to represent a flow graph. The idea is that a flow graph consists of a set of flow. Each flow is between two nodes. A source and a target node. A node can be a part of several flows. Each node contains a statement.	
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=1.0]{../img/flow_graph}
+	\includegraphics[scale=0.6]{../img/flow_graph}
 	\caption{Data structures used to represent a flow graph}
 	\label{fig:flowgraph}
 \end{figure}
@@ -78,7 +78,8 @@ Figure~\ref{fig:flowgraph} shows the classes used to represent a flow graph. The
 Using the intermediate representation of the abstract syntax tree, we are now familiar with the types of the individual statements. Rather than explicitly parsing the AST, we instead define a function for each statement and let every statement handle it's own branch by recursion. These functions are defined in table \ref{table:flow_graph_functions}, which is an extension of the table from \cite{02242_slides}.
 
 \begin{table}
-\begin{tabular}{ l | l | l | l }
+\begin{tabular}{| l | l | l | l |}
+\hline	
 \textsl{S}                              & \textsl{labels(S)}                                    & \textsl{init(S)}     & \textsl{final(S)} \\ 
 \hline
 [x := a]$^\ell$                         & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
@@ -97,22 +98,46 @@ while [\textsl{b}]$^\ell$ do \textsl{S} & $\{\ell\}$ $\cup$  \textsl{labels(S)} 
 [read \textsl{x}]$^\ell$                & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
 \hline
 [write \textsl{x}]$^\ell$               & $\{\ell\}$                                            &$\ell$                & $\{\ell\}$ \\
+\hline
 \end{tabular}
 \centering
 \caption{Flow graph function definitions}
 \label{table:flow_graph_functions}
 \end{table}
 
+The flows in the flow graph is constructed the following way:
+\\\\
+\begin{table}
+\begin{tabular}{| l | l | l | l |}
+\hline	
+\textsl{S}      & \textsl{flow(S)}            & \textsl{blocks(S)}  \\ 
+\hline
+[x := a]$^\ell$       & $\emptyset$        &$\ell$  \\
+\hline
+[int A[a$_1$] := a$_2$]$^\ell$   & $\emptyset$      &$\ell$   \\
+\hline
+[skip]$^\ell$   & $\emptyset$       &$\ell$             \\
+\hline
+\textsl{S}$_1$;\textsl{S}$_2$  & \textsl{flow(S$_1$)} $\cup$ \textsl{flow(S$_2$)} & \textsl{init(S$_1$)}  \\ 
+& & 
+\hline
+if [\textsl{b}]$^\ell$ then             & $\{\ell\}$ $\cup$  \textsl{labels(S$_1$)}             &$\ell$    \\
+  \textsl{S}$_1$ else \textsl{S}$_2$    &  $\cup$ \textsl{labels(S$_2$)}    &  $\cup$ \textsl{final(S$_2$)} \\
+\hline
+while [\textsl{b}]$^\ell$ do \textsl{S} & $\{\ell\}$ $\cup$  \textsl{labels(S)}                 &$\ell$  \\
+\hline
+[read \textsl{x}]$^\ell$                & $\{\ell\}$                                            &$\ell$  \\
+\hline
+[write \textsl{x}]$^\ell$               & $\{\ell\}$                                            &$\ell$    \\
+\hline
+\end{tabular}
+\centering
+\caption{Flow graph function definitions}
+\label{table:flow_graph_functions}
+\end{table}
+
+
 \subsection{Program graph data structure}
-For some types of analysis it is more convenient to use a program graph compared to a flow graph. In that case a way of transforming a abstract syntax tree into a program graph is needed. Figure~\ref{fig:programgraph} shows a data structure for a program graph. It is a bit more complicated than flow graphs since we need to introduce both nodes and edges. A node has a \texttt{label}. If it is a \texttt{Branch Node} then it contains two \texttt{Branch Edge}s. A \texttt{Branch Edge} is an edge that contains a \texttt{condition}. If it is a \texttt{Statement Node} is contains a \texttt{Statement Edge}. A \texttt{Statement Edge} is an edge that contains a \texttt{statement}.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=1.0]{../img/program_graph}
-	\caption{Data structures used to represent a program graph}
-	\label{fig:programgraph}
-\end{figure}
-
-\subsubsection{Creating program graphs}
-%TODO Make a similar table as for flow graph.
-A program graph can be created much in the same way as a flow graph by going through all the statements in the program. Basically the only difference is that the labels are stored in nodes and code blocks and conditions are stored in edges.
+Another approach for structuring a program is to use a program graph which is similar to flow graphs but instead of storing the statements in the nodes they are stored in the edges. This has some advantages in certain analysis but in general both flow graph and programs graph can be used since it is possible to convert between the two.
+////
+In the rest of the report the focus will be on flow graphs.

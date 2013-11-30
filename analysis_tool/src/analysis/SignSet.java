@@ -85,4 +85,17 @@ public class SignSet extends HashSet<Sign> implements Comparable<SignSet> {
             return 1;
         }
     }
+
+    public SignSet intersect(SignSet signSet) {
+        SignSet selfCopy = new SignSet();
+        selfCopy.addAll(this);
+        for(Sign sign : this) {
+            if (!signSet.contains(sign)) {
+                selfCopy.remove(sign);
+            }
+        }
+
+        return selfCopy;
+
+    }
 }

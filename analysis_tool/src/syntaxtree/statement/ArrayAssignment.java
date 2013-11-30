@@ -104,17 +104,17 @@ public class ArrayAssignment extends Statement {
      * @return The result of the specific analysis.
      */
     @Override
-    public Lattice transferFunction(Lattice lattice) {
+    public Lattice transferFunction(Lattice lattice, int toLabel) {
         if (lattice instanceof RDLattice) {
-            return this.transferFunction((RDLattice) lattice);
+            return this.transferFunction((RDLattice) lattice, toLabel);
         }
 
         if (lattice instanceof SignsLattice) {
-            return this.transferFunction((SignsLattice) lattice);
+            return this.transferFunction((SignsLattice) lattice, toLabel);
         }
 
         if (lattice instanceof IntervalLattice) {
-            return this.transferFunction((IntervalLattice) lattice);
+            return this.transferFunction((IntervalLattice) lattice, toLabel);
         }
 
         throw new UnsupportedOperationException("Analysis not supported yet.");

@@ -84,26 +84,26 @@ public class ReadArray extends Statement {
      * @return The result of the specific analysis.
      */
     @Override
-    public Lattice transferFunction(Lattice lattice) {
+    public Lattice transferFunction(Lattice lattice, int toLabel) {
         if (lattice instanceof RDLattice) {
-            return this.transferFunction((RDLattice) lattice);
+            return this.transferFunction((RDLattice) lattice, toLabel);
         }
 
         if (lattice instanceof SignsLattice) {
-            return this.transferFunction((SignsLattice) lattice);
+            return this.transferFunction((SignsLattice) lattice, toLabel);
         }
 
 
         throw new UnsupportedOperationException("Analysis not supported yet.");
     }
 
-    private RDLattice transferFunction(RDLattice lattice) {
+    private RDLattice transferFunction(RDLattice lattice, int toLabel) {
         ((RDLattice) lattice).kill(id).union(
                 ((RDLattice) lattice).gen(id, this.toNode()));
         return lattice;
     }
 
-    private SignsLattice transferFunction(SignsLattice lattice) {
+    private SignsLattice transferFunction(SignsLattice lattice, int toLabel) {
         lattice.get(id).merge(SignSet.pnz);
         return lattice;
     }

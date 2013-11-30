@@ -9,9 +9,8 @@ import analysis.lattices.SignsLattice;
  *
  */
 public abstract class Condition {
-
-    public abstract SignSet evaluate(SignsLattice lattice);
-
+    
+    public abstract void evaluate (SignsLattice lattice, Boolean trueBranch);
     public abstract boolean hasPotentialUnderFlow(SignsLattice lattice);
 
     /**

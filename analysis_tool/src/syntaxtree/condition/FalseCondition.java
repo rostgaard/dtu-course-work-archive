@@ -42,10 +42,7 @@ public class FalseCondition extends Condition {
      * @return
      */
     @Override
-    public SignSet evaluate(SignsLattice lattice) {
-        SignSet retval = new SignSet();
-        retval.merge(SignSet.pnz);
-        return retval;
+    public void evaluate(SignsLattice lattice, Boolean trueBranch) {
     }
 
     @Override

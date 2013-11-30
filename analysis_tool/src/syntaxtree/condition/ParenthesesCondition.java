@@ -35,10 +35,8 @@ public class ParenthesesCondition extends Condition {
     }
 
     @Override
-    public SignSet evaluate(SignsLattice lattice) {
-        SignSet retval = new SignSet();
-        retval.merge(this.evaluate(lattice));
-        return retval;
+    public void evaluate(SignsLattice lattice, Boolean trueBranch) {
+        cond.evaluate(lattice,trueBranch);
     }
 
     @Override

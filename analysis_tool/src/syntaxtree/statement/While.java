@@ -1,6 +1,8 @@
 package syntaxtree.statement;
 
 import analysis.lattices.IntervalLattice;
+import analysis.lattices.Lattice;
+import analysis.lattices.RDLattice;
 import analysis.lattices.SignsLattice;
 import flowgraph.datastructure.Flow;
 import flowgraph.datastructure.FlowSet;
@@ -105,6 +107,47 @@ public class While extends Statement {
     public VariableSet getVariable() {
     	return VariableSet.emptySet;
     }
+
+    @Override
+    public Lattice transferFunction(Lattice lattice, int toLabel) {
+        if (lattice instanceof RDLattice) {
+            return this.transferFunction((RDLattice) lattice, toLabel);
+        }
+
+        if (lattice instanceof SignsLattice) {
+            return this.transferFunction((SignsLattice) lattice, toLabel);
+        }
+
+        if (lattice instanceof IntervalLattice) {
+            return this.transferFunction((IntervalLattice) lattice, toLabel);
+        }
+
+        throw new UnsupportedOperationException("Analysis not supported yet.");
+    }
+
+    private RDLattice transferFunction(RDLattice lattice, int toLabel) {
+//        lattice.kill(id).union(
+//                ((RDLattice) lattice).gen(id, this.toNode()));
+        return lattice;
+
+    }
+
+    private IntervalLattice transferFunction(IntervalLattice lattice, int toLabel) {
+//        System.out.println("IntervalLattice transferFunction:" + this.expr.evalulate(lattice));
+//        lattice.get(id).set(this.expr.evalulate(lattice));
+        return lattice;
+    }
+
+    private SignsLattice transferFunction(SignsLattice lattice, int toLabel) {
+        SignsLattice signsLattice = lattice;
+
+        Boolean bodyBranch = body.init().getLabel()==toLabel;
+        cond.evaluate(lattice, bodyBranch);
+
+        return signsLattice;
+    }
+
+
 
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
