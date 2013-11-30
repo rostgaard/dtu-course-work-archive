@@ -76,6 +76,13 @@ public class ReadArray extends Statement {
                 .union(idx.getVariable());
     }
 
+    /**
+     * Transfer function used in the worklist algorithm. Routes the general
+     * state to the respective specific analysis..
+     *
+     * @param lattice The input state.
+     * @return The result of the specific analysis.
+     */
     @Override
     public Lattice transferFunction(Lattice lattice, int toLabel) {
         if (lattice instanceof RDLattice) {

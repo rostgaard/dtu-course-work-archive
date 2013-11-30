@@ -3,6 +3,9 @@ package analysis;
 import flowgraph.datastructure.Node;
 
 /**
+ * A definition used in Reaching Definitions analysis. Is merely a holder class
+ * between DefinitionSet and Node, and could probably be replaced by Node if we
+ * can rid the identifier field.
  *
  * @author krc
  */

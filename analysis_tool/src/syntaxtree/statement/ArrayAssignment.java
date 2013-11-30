@@ -79,6 +79,11 @@ public class ArrayAssignment extends Statement {
         return NodeSet.factory().addNode(new Node(this));
     }
 
+    /**
+     * Flow for a array statement. An array, being a singular node has no flow.
+     *
+     * @return A set of flows for the array - merely the empty set.
+     */
     @Override
     public FlowSet flow() {
         return FlowSet.emptySet;
@@ -91,6 +96,13 @@ public class ArrayAssignment extends Statement {
                 .union(expr.getVariable());
     }
 
+    /**
+     * Transfer function used in the worklist algorithm. Routes the general
+     * state to the respective specific analysis..
+     *
+     * @param lattice The input state.
+     * @return The result of the specific analysis.
+     */
     @Override
     public Lattice transferFunction(Lattice lattice, int toLabel) {
         if (lattice instanceof RDLattice) {
@@ -108,6 +120,14 @@ public class ArrayAssignment extends Statement {
         throw new UnsupportedOperationException("Analysis not supported yet.");
     }
 
+    /**
+     * Transfer function for Reaching Definitions analysis. An assignment to an
+     * array merely kills every previous definitions of the identifier, and
+     * generates a new definition - this.
+     *
+     * @param lattice The RD entry state of an ArrayAssignment
+     * @return The RD exit state of state of an ArrayAssignment
+     */
     private RDLattice transferFunction(RDLattice lattice, int toLabel) {
         ((RDLattice) lattice).kill(id).union(
                 ((RDLattice) lattice).gen(id, this.toNode()));
@@ -115,6 +135,11 @@ public class ArrayAssignment extends Statement {
         return lattice;
     }
 
+    /**
+     *
+     * @param lattice The Sign entry state of an ArrayAssignment
+     * @return The Sign exit state of state of an ArrayAssignment
+     */
     private SignsLattice transferFunction(SignsLattice lattice, int toLabel) {
         lattice.get(id).clear(); // Kill all previous definitions.
         lattice.get(id).merge(this.expr.evalulate(lattice));
@@ -122,16 +147,32 @@ public class ArrayAssignment extends Statement {
         return lattice;
     }
 
+    /**
+     *
+     * @param lattice The Interval entry state of an ArrayAssignment
+     * @return The Interval exit state of state of an ArrayAssignment
+     */
     private IntervalLattice transferFunction(IntervalLattice lattice, int toLabel) {
         lattice.get(id).set(this.expr.evalulate(lattice));
         return lattice;
     }
 
+    /**
+     *
+     * @param lattice The Sign entry state of an ArrayAssignment
+     * @return True if a potential overflow is detected, false otherwise.
+     */
     @Override
     public boolean hasPotentialUnderFlow(SignsLattice lattice) {
         return (this.idx.evalulate(lattice).contains(Sign.N)) || this.expr.hasPotentialUnderFlow(lattice);
     }
 
+    /**
+     *
+     * @param lattice
+     * @return True if an array access is potentially out of bounds, false
+     * otherwise.
+     */
     @Override
     public boolean isOutOfBounds(IntervalLattice lattice) {
         Interval bounds = lattice.declarations.lookup(id).bounds(lattice);

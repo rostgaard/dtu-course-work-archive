@@ -51,8 +51,16 @@ public class ParanthesesExpression extends Expression {
         return this.expr.evalulate(lattice);
     }
 
+    /**
+     * Gives the bounds of a ParanthesesExpression. Merely forwards the check to
+     * the expression contained within the parentheses.
+     *
+     * @param lattice The input state.
+     * @return True if an array access is potentially out of bounds, false
+     * otherwise.
+     */
     @Override
     public boolean isOutOfBounds(IntervalLattice lattice) {
         return this.expr.isOutOfBounds(lattice);
     }
-    }
+}

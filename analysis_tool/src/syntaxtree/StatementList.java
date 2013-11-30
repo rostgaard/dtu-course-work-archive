@@ -14,26 +14,7 @@ import syntaxtree.statement.Statement;
 public class StatementList extends ArrayList<Statement> {
 
     public FlowSet flow() {
-//        FlowSet retSet = FlowSet.emptySet;
-////        Statement s1 = null;
-//
-//        for (Statement s2 : this) {
-////            s2.flow();
-////
-////            if (s1 != null) {
-////                for (Node endNode : s1.finalNodes()) {
-////                    retSet.addFlow(new Flow(endNode, s2.initial()));
-////                }
-////            }
-//            retSet.union(s2.flow());
-//
-//
-//        }
-//
-//        return FlowSet.emptySet;
-
-
-        FlowSet retSet = FlowSet.emptySet;
+        FlowSet retSet = new FlowSet();
         Statement s1 = null;
 
         for (Statement s2 : this) {
@@ -48,11 +29,11 @@ public class StatementList extends ArrayList<Statement> {
 
         }
 
-        return FlowSet.emptySet;
+        return retSet;
     }
 
     public NodeSet lables() {
-        NodeSet retval = NodeSet.emptySet;
+        NodeSet retval = new NodeSet();
 
         for (Statement s : this) {
             retval.union(s.labels());
