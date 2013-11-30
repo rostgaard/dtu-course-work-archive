@@ -254,6 +254,30 @@ We then loop through each label in the set of labels of the program, and if the 
 %\caption{Extension of the Statement class}
 %\end{figure}
 
+\begin{figure}
+\begin{verbatim}
+program 
+low int a[2]; 
+low int i; 
+i := -1; 
+while i<2 do 
+   a[i] := i+1; 
+i := i+1; 
+od
+a[-1] := 1;
+if a[i] = 0 then
+  skip;
+else
+  skip;
+fi
+while a[i] < 0 do
+  i := i+a[3];
+od
+skip;
+end
+\end{verbatim}
+\end{figure}
+
 \subsection{Odds and ends}
 This section is home to the miscellaneous ideas, thoughts, implementations and ramblings that didn't quite fit any other sections.
 

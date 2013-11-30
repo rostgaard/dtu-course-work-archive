@@ -128,7 +128,7 @@ public class ArrayAssignment extends Statement {
      * @param lattice The RD entry state of an ArrayAssignment
      * @return The RD exit state of state of an ArrayAssignment
      */
-    private RDLattice transferFunction(RDLattice lattice) {
+    private RDLattice transferFunction(RDLattice lattice, int toLabel) {
         ((RDLattice) lattice).kill(id).union(
                 ((RDLattice) lattice).gen(id, this.toNode()));
 
@@ -140,7 +140,7 @@ public class ArrayAssignment extends Statement {
      * @param lattice The Sign entry state of an ArrayAssignment
      * @return The Sign exit state of state of an ArrayAssignment
      */
-    private SignsLattice transferFunction(SignsLattice lattice) {
+    private SignsLattice transferFunction(SignsLattice lattice, int toLabel) {
         lattice.get(id).clear(); // Kill all previous definitions.
         lattice.get(id).merge(this.expr.evalulate(lattice));
 
@@ -152,7 +152,7 @@ public class ArrayAssignment extends Statement {
      * @param lattice The Interval entry state of an ArrayAssignment
      * @return The Interval exit state of state of an ArrayAssignment
      */
-    private IntervalLattice transferFunction(IntervalLattice lattice) {
+    private IntervalLattice transferFunction(IntervalLattice lattice, int toLabel) {
         lattice.get(id).set(this.expr.evalulate(lattice));
         return lattice;
     }

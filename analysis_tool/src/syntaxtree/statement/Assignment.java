@@ -110,14 +110,14 @@ public class Assignment extends Statement {
      * @param lattice The RD entry state of an Assignment
      * @return The RD exit state of state of an Assignment
      */
-    private RDLattice transferFunction(RDLattice lattice) {
+    private RDLattice transferFunction(RDLattice lattice, int toLabel) {
         lattice.kill(id).union(
                 ((RDLattice) lattice).gen(id, this.toNode()));
         return lattice;
 
     }
 
-    private IntervalLattice transferFunction(IntervalLattice lattice) {
+    private IntervalLattice transferFunction(IntervalLattice lattice, int toLabel) {
         lattice.get(id).set(this.expr.evalulate(lattice));
         return lattice;
     }

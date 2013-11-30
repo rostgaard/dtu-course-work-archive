@@ -33,12 +33,8 @@ public class Main {
      */
     public static void main(String args[]) {
 
-<<<<<<< HEAD
         // Verbose output?
         boolean verbose = false;
-=======
-        boolean verbose = true;
->>>>>>> 7556076b5e97f7969de28bb45eac39ed761d205d
 
         // We require at least one parameter - the input file.
         if (args.length < 1) {
@@ -79,7 +75,6 @@ public class Main {
 
             Analysis rd = program.calculate(new RDLattice(program.getDecls()));
 
-<<<<<<< HEAD
             // These are extra results that are nice to have, but mostly for
             // debugging purposes.
             if (verbose) {
@@ -88,31 +83,16 @@ public class Main {
 
                 System.out.println("==== Flows =====");
                 System.out.println(program.getStmts().flow());
-=======
-//                    System.out.println("==== Reaching definitions =====");
-//                    Analysis rd = program.calculate(new RDLattice(program.getDecls()));
-//                    System.out.println(rd);
-
-//                    System.out.println("==== Program slice ====");
-//                    ProgramSlicing.execute(program.getStmts(), rd);
->>>>>>> 7556076b5e97f7969de28bb45eac39ed761d205d
-
                 System.out.println("==== Reaching definitions =====");
                 System.out.println(rd);
 
-<<<<<<< HEAD
                 System.out.println("==== Signs analysis =====");
                 Analysis signs = program.calculate(new SignsLattice(program.getDecls()));
                 System.out.println(signs);
-=======
-//                    System.out.println("==== Interval analysis =====");
-//                    System.out.println(program.calculate(new IntervalLattice(program.getDecls())));
->>>>>>> 7556076b5e97f7969de28bb45eac39ed761d205d
 
                 System.out.println("==== Interval analysis =====");
                 System.out.println(program.calculate(new IntervalLattice(program.getDecls())));
 
-<<<<<<< HEAD
             }
             System.out.println("==== Program slice ====");
             ProgramSlicing.execute(program.getStmts(), rd);
@@ -121,17 +101,6 @@ public class Main {
             for (Node node : program.underFlowCheck()) {
                 System.out.println("Potential underflow detected at label: " + node);
             }
-=======
-//                System.out.println("==== Buffer Underflow =====");
-//                for (Node node : program.underFlowCheck()) {
-//                    System.out.println("Potential underflow detected at label: " + node);
-//                }
-//
-//                System.out.println("==== Interval =====");
-//                for (Node node : program.rangeCheck()) {
-//                    System.out.println("Range check failed at: " + node);
-//                }
->>>>>>> 7556076b5e97f7969de28bb45eac39ed761d205d
 
             System.out.println("==== Interval =====");
             for (Node node : program.rangeCheck()) {
