@@ -31,12 +31,14 @@ For both services, we have developed a small suite of unit tests, that can be us
 
 
 \subsection{LameDuck}
-The LameDuck service, has been implemented with a wrapper class that implements the web service related things. The actual data is stored in a hard coded database, which is initialised by the webservice class. This way we separate the business logic of communicating with the world from the business logic of maintaining the flights and the bookings. The webservice class is also responsible for communicating with the bank when necessary, separating handling of money from handling flights.
+The LameDuck service has been implemented with a wrapper class that implements the web service related things. The actual data is stored in a hard coded database, which is initialized by the web service class. This way we separate the business logic of communicating with the world from the business logic of maintaining the flights and the bookings. The web service class is also responsible for communicating with the bank when necessary, separating handling of money from handling flights.
 
 We have created some hardcoded test data, which can be reset using a separate web service, that should only be used during testing. As such this web service is implemented with a separate wsdl. To allow both services to access the database, it has been implemented as a singleton object.
 
 
 \subsection{NiceView}
-\todo{Beskriv niceview}
+The NiceView service has been implemented similarly to that of our LameDuck service, just with hotels instead of flights.
+
+It also has a separate reset service from which one can reset our database to the initial state.
 
 

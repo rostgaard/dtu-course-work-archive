@@ -29,7 +29,6 @@
     <variables>
         <variable name="CancelItineraryIn" messageType="ns0:CancelItineraryRequest"/>
         <variable name="CancelItineraryOut" messageType="ns0:CancelItineraryResponse"/>
-        <variable name="itineraryIDcounter" type="xsd:int"/>
         <variable name="cancelSuccess" type="xsd:boolean"/>
         <variable name="hotelBookings" type="ns0:hotelBookings">
             <sxed:editor>
@@ -630,9 +629,12 @@
                         <exit name="Exit2"/>
                     </onAlarm>
                 </pick>
-                <wait name="Wait1">
-                    <for>'P0Y0M0DT0H0M10.0S'</for>
-                </wait>
+                <if name="IfCancelSuccess">
+                    <condition>not($cancelSuccess)</condition>
+                    <wait name="Wait1">
+                        <for>'P0Y0M0DT0H0M5.0S'</for>
+                    </wait>
+                </if>
             </sequence>
         </scope>
     </sequence>

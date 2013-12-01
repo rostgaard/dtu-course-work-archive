@@ -32,7 +32,7 @@ public class MandatoryTests {
     
     public MandatoryTests() {
         Random r = new Random();
-        customerID += r.nextInt(10000);
+        customerID += String.format("%04d", r.nextInt(10000));
     }
     
     @Before
