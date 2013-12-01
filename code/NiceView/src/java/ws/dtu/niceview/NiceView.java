@@ -10,6 +10,10 @@ import ws.dtu.niceview.model.HotelDatabase;
 import ws.dtu.niceview.types.HotelInformation;
 import ws.dtu.niceview.types.HotelList;
 
+/**
+ * 
+ * @author martin
+ */
 @WebService(serviceName = "NiceViewService", portName = "NiceViewPort", endpointInterface = "ws.dtu.niceview.NiceViewPortType", targetNamespace = "http://niceview.dtu.ws/", wsdlLocation = "WEB-INF/wsdl/NiceView/NiceView.wsdl")
 public class NiceView {
 

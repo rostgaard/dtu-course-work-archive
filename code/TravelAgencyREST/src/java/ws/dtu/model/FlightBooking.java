@@ -8,7 +8,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import ws.dtu.lameduck.types.FlightInformation;
 
-
+/**
+ * 
+ * @author peter
+ */
 @XmlRootElement
 public class FlightBooking {
 

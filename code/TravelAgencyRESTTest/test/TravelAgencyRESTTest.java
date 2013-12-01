@@ -13,6 +13,10 @@ import ws.dtu.model.FlightBooking.FlightBookingState;
 import ws.dtu.representation.ItineraryRepresentation;
 import ws.dtu.representation.Link;
 
+/**
+ * 
+ * @author peter
+ */
 
 public class TravelAgencyRESTTest {
     

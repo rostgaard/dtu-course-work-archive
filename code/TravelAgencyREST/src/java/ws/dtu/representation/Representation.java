@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author peter
+ * @author mikkel
  */
 @XmlRootElement
 public abstract class Representation {

@@ -8,7 +8,10 @@ import ws.dtu.model.Itinerary;
 import ws.dtu.representation.Link;
 import ws.dtu.representation.Representation;
 
-
+/**
+ * 
+ * @author peter
+ */
 public class LinkManager {
     
     private static final String MEDIATYPE = "application/itinerary+xml";

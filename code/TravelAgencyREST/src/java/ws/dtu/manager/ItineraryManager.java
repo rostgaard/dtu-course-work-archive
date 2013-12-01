@@ -12,6 +12,7 @@ import ws.dtu.model.Customer;
 import ws.dtu.model.FlightBooking;
 import ws.dtu.model.HotelBooking;
 import ws.dtu.model.Itinerary;
+import ws.dtu.model.Itinerary.ItinerayState;
 import ws.dtu.model.exceptions;
 import ws.dtu.niceview.BookHotelFault;
 import ws.dtu.niceview.CancelHotelFault;
@@ -19,7 +20,10 @@ import ws.dtu.niceview.NiceViewPortType;
 import ws.dtu.niceview.NiceViewService;
 import ws.dtu.resources.utils.Sequencer;
 
-
+/**
+ * 
+ * @author peter
+ */
 public class ItineraryManager {
     
     private static final LameDuckService lameDuckService = new LameDuckService();
@@ -132,7 +136,7 @@ public class ItineraryManager {
             throw new exceptions.CancelException();
         }
         
-        itinerary.setState(Itinerary.ItinerayState.Cancelled);
+        itinerary.setState(ItinerayState.CANCELLED);
     }
     
 }

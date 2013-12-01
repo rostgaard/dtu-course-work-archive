@@ -20,7 +20,7 @@ import ws.dtu.niceview.types.HotelList;
 
 /**
  *
- * @author peter
+ * @author kim
  */
 @Resource
 @Path("/hotel")

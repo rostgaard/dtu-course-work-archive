@@ -19,7 +19,7 @@ import ws.dtu.model.FlightBookingList;
 
 /**
  *
- * @author peter
+ * @author kim
  */
 @Resource
 @Path("/flight")

@@ -7,7 +7,10 @@ package ws.dtu.representation;
 import javax.xml.bind.annotation.XmlElement;
 import ws.dtu.model.HotelBookingList;
 
-
+/**
+ * 
+ * @author peter
+ */
 public class HotelRepresentation extends Representation {
     
     private HotelBookingList hotelBookings;

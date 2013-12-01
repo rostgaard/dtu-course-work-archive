@@ -4,10 +4,7 @@
  */
 package ws.dtu.resources.utils;
 
-/**
- *
- * @author krc
- */
+
 public final class Sequencer {
 
     protected static int sequence = 0;

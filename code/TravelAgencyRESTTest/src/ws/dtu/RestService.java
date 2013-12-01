@@ -9,7 +9,10 @@ import javax.ws.rs.core.MultivaluedMap;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
+/**
+ * 
+ * @author kim
+ */
 public class RestService {
     
     private final static String baseURL = "http://localhost:8080/ta/webresources/";

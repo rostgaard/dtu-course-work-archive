@@ -11,7 +11,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import ws.dtu.lameduck.types.FlightInformation;
 import ws.dtu.lameduck.types.FlightList;
 
-
+/**
+ * 
+ * @author kim
+ */
 @XmlRootElement
 public class FlightBookingList {
     

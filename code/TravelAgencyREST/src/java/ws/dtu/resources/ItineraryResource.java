@@ -29,7 +29,7 @@ import ws.dtu.representation.StatusRepresentation;
 
 /**
  *
- * @author peter
+ * @author mikkel
  */
 @Resource
 @Path("/itinerary")

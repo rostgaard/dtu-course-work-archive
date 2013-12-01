@@ -11,7 +11,10 @@ import ws.dtu.niceview.CancelHotelFault;
 import ws.dtu.niceview.types.Address;
 import ws.dtu.niceview.types.HotelInformation;
 import ws.dtu.niceview.types.HotelList;
-
+/**
+ * 
+ * @author mikkel
+ */
 public class HotelDatabase {
     
     private Map<String, HotelInformation> bookingNoMap = new HashMap<String, HotelInformation>();

@@ -16,7 +16,7 @@ import ws.dtu.manager.ItineraryDatabase;
 
 /**
  *
- * @author peter
+ * @author martin
  */
 @Resource
 @Path("/reset")

@@ -4,10 +4,7 @@
  */
 package ws.dtu.resources;
 
-/**
- *
- * @author peter
- */
+
 public class Resource {
       
 

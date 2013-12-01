@@ -8,7 +8,10 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import ws.dtu.entities.ErrorBean;
 
-
+/**
+ * 
+ * @author mikkel
+ */
 public final class exceptions {
 
         

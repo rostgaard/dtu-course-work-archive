@@ -8,10 +8,12 @@ import ws.dtu.model.Customer;
 import ws.dtu.model.Itinerary;
 import ws.dtu.model.exceptions;
 
-
+/**
+ * 
+ * @author kim
+ */
 public final class ItineraryDatabase {
     
-
     private static HashMap<Customer,HashMap<Integer, Itinerary>> data = new HashMap<Customer, HashMap<Integer, Itinerary>>();
     
     private static ItineraryDatabase db;

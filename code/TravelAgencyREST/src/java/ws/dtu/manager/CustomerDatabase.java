@@ -10,7 +10,10 @@ import java.util.HashMap;
 import ws.dtu.model.Customer;
 import ws.dtu.model.exceptions;
 
-
+/**
+ * 
+ * @author mikkel
+ */
 public class CustomerDatabase {
     
     HashMap<Integer, Customer> customers = new HashMap<Integer, Customer>();

@@ -15,6 +15,10 @@ import ws.dtu.niceview.CancelHotelFault;
 import ws.dtu.niceview.types.HotelInformation;
 import ws.dtu.niceview.types.HotelList;
 
+/**
+ * 
+ * @author kim
+ */
 public class NiceViewTest {
 
     private XMLGregorianCalendar date1;
