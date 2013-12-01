@@ -72,6 +72,8 @@ Booked & \texttt{self}, \texttt{cancel}\\
 
 To indicate that the messages used has a specific form the mime type \texttt{application/itinerary+xml} has been defined. The web-service will only accept request where the \texttt{Content-Type} and \texttt{Accept} header is set to this mime type.
 
+According to the requirements the storage of a itinerary should be released the day before an itinerary starts. This is not implemented in the provided version of the RESTful TravelGood. In order for this to be implemented the web-service would have to run a cron job at some time checking if any itineraries should be released. Java EE supports this by providing a notation for setting up a \texttt{Scheduler}.
+
 \subsubsection{Representations}
 A representation is used to wrap resources and links together into a single representation. 
 The implementation has the following representations.
