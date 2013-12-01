@@ -3,12 +3,12 @@
 }
 
 \section{Data structures}
-In this section, we describe the data structures used for the implementation. We cover the data contained in LameDuck and NiceView, followed by the more advanced BPEL and REST implementations.
+In this section, we describe the data structures used in our implementation. We cover the data contained in LameDuck and NiceView, followed by the more advanced BPEL and REST implementations.
 
 \subsection{LameDuck}
-The LameDuck implementations implement the data described in the project description. To store this, we save all Flight Information both as lists of Flight Informations with the same origin airport and store a link from the Booking Number to the matching Flight Information. This is done to make lookups easier to perform. It does add some extra book-keeping at initialization of the data. The overall data structure is shown in Fig.~\ref{fig:lameduck_class}
+LameDuck implement the data as described in the project description. To store this, we save all Flight Information both as lists of Flight Informations with the same origin airport and store a link from the Booking Number to the matching Flight Information. This is done to make lookups easier to perform. It does add some extra bookkeeping at initialization of the data. The overall data structure is shown in Fig.~\ref{fig:lameduck_class}
 
-\begin{figure}[htb]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{LameDuckClass}
 \caption{Datamodel of LameDuck}
