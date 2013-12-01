@@ -33,6 +33,7 @@ Also, following the rationale from \cite{papazoglou2008web}, this implementation
 
 For both services, we have developed a small suite of unit tests, that can be used to ensure that both services are implemented correctly, before running tests for the BPEL/RESTful implementations. For this purpose, we have added a service along with the required one, to reset the databases for the services.
 
+The databases for each service is a small example with only a few entries that have been hard-coded in to suit the needs we have for our unit tests. An actual implementation of these would be much more complex, i.e. booking numbers are generated on a per-user basis and not just stored directly in the database.
 
 \subsection{LameDuck}
 The LameDuck service has been implemented with a wrapper class that implements the web service related things. The actual data is stored in a hard coded database, which is initialized by the web service class. This way we separate the business logic of communicating with the world from the business logic of maintaining the flights and the bookings. The web service class is also responsible for communicating with the bank when necessary, separating handling of money from handling flights.
