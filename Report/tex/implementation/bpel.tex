@@ -30,14 +30,18 @@ During this phase, BPEL accepts the following messages
 \item [\texttt{bookItinerary}:] BPEL attempts to book all the planned flights and hotels. If successful, we move on the next phase. If any items fails to book, we compensate the ones that have been booked and stay in the planning phase. The client is informed of the result.
 \end{description}
 
-We have implemented these as a \texttt{pick} activity, inside a loop that runs as long as a boolean variable indicates that we are in the planning phase. The actual booking happens inside a scope with an attached compensation handler, that will compensate all booked items. On the scope where the \texttt{pick} activity resides, we have a fault handler that will compensate when booking fails.
+We have implemented these as a \texttt{pick} activity, inside a loop that runs as long as a boolean variable indicates that we are in the planning phase. The actual booking happens inside a scope which first loops over each flight, and then each hotel and books them if possible. It has been done sequentially with flights first and then hotels, such that we can reliable make a certain booking fail in order to comply with a few of the mandatory unit tests. 
+
+A compensation handler is attached on the scope of each flight and hotel booking, such that it can be compensated if necessary. On the scope where the planning \texttt{pick} activity resides, we have a fault handler that will call the corresponding compensation handlers when a booking fails.
 
 \subsubsection{Booked}
 During this phase, BPEL accepts the following messages.
 
 \begin{description}
 \item [\texttt{getItinerary}:] BPEL returns the lists of hotels and flights along with the current status of them.
-\item [\texttt{cancelItinerary}:] BPEL will cancel as many items as possible. The client is informed is any of the cancellations failed by returning false. It will remain in the \textbf{Booked} phase until one day before the travel was to start, such that the user can query the status of the itinerary until then.
+\item [\texttt{cancelItinerary}:] BPEL will cancel as many items as possible. The client is informed if any of the cancellations failed by returning false, and the process will remain active until one day before the travel was to start. If it was successful the process will terminate.
 \end{description}
 
-This phase is also implemented as a \texttt{pick} activity. If we get a \texttt{cancelItinerary} request, we attempt to cancel all booked items. Any that fails, remain booked, while the others get the status ``\texttt{cancelled}''. The itinerary information will remain available upon request. The other possibility of the pick is that a timeout happens. This timeout models that it is one day before the first item on the itinerary and the whole thing is removed and the process is ended.
+This phase is also implemented as a \texttt{pick} activity. If we get a \texttt{cancelItinerary} request, we attempt to cancel all booked items. Any that fails, remain booked, while the others get the status ``\texttt{cancelled}''. If any cancellations fails the itinerary information will remain available upon request until one day before the travel was meant to begin. 
+
+The other possibility of the pick is that a timeout happens. This timeout models that it is one day before the first item on the itinerary and the whole thing is removed and the process is ended.
