@@ -28,7 +28,9 @@ LameDuck implement the data as described in the project description. To store th
 \todo{BPEL klasse diagram}
 
 \subsection{TravelGood - RESTful}
-The RESTful version of TravelGood uses the data structures shown in figure~\ref{fig:rest_class}. All customers are contained in the \texttt{CustomerDatabase}. This is done in a map where the key is the identifier of the customer. This is done so a customer can be found quickly. Similarly the \texttt{ItineraryDatabase} holds all the itineraries in a map where the identifier of the itinerary is the key in order to quickly look up an itinerary.
+The RESTful version of TravelGood uses the data structures shown in figure~\ref{fig:rest_class}. A \texttt{Customer} represents the user of a system. All customers are contained in the \texttt{CustomerDatabase}. This is done in a map where the key is the identifier of the customer. This is done so a customer can be found quickly. Each \texttt{Customer} can be connected with itineraries. This is handled in \texttt{ItineraryDatabase}. The \texttt{ItineraryDatabase} holds all the itineraries in a map where the identifier of the itinerary is the key in order to quickly look up an itinerary. An \texttt{Itinerary} contains a \texttt{FlightBookingList} and a \texttt{HotelBookingList} to keep track of \texttt{FlightBooking}s and \texttt{HotelBooking}s respectively.
+
+\todo{REST klasse diagram}
 
 
 \section{Airline- and hotel services}
