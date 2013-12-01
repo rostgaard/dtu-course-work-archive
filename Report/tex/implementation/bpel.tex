@@ -49,4 +49,4 @@ The other possibility of the pick is that a timeout happens. This timeout models
 
 \subsection{Implementation details}
 
-In this implementation we have simplified the part of "wait until one day before travel begins before ending process", since this would make it harder to unit test it. In our case we have just implemented a wait of 10 seconds before it ends the process.\todo{Beskriv noget tydeligere}
+In this implementation we have simplified the part of "wait until one day before travel begins before ending process", since this would make it harder to unit test it. In our case we have just implemented a wait of 10 seconds before it ends the process. If we wanted to implement the proper wait, we would use the XPath expression \texttt{hours-from-dateTime} to get the time the itinerary should be terminated and set the wait activity to fire at this time.
