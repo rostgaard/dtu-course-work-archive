@@ -1,3 +1,4 @@
+package ws.dtu;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -59,6 +60,16 @@ public class RestService {
     
     public static ClientResponse createItinerary(String customerID) {
         return itineraryResource.queryParam("customer_id", customerID).accept(MEDIATYPE).type(MEDIATYPE).post(ClientResponse.class);
+    }
+
+    public static ClientResponse bookItinerary(String customerID, int itineraryID) {
+         WebResource bookItineraryResource = itineraryResource.path(""+itineraryID).queryParam("customer_id", customerID);;
+         return bookItineraryResource.put(ClientResponse.class);
+    }
+
+    public static ClientResponse cancelItinerary(String customerID, int itineraryID) {
+         WebResource cancelItineraryResource = itineraryResource.path(""+itineraryID).queryParam("customer_id", customerID);;
+         return cancelItineraryResource.delete(ClientResponse.class);
     }
     
     public static ClientResponse getFlights(String origin, String destination, String dateString) {

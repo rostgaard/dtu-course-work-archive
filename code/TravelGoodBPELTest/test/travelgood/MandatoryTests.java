@@ -44,8 +44,8 @@ public class MandatoryTests {
         niceViewResetOperation();
 
         DatatypeFactory df = DatatypeFactory.newInstance();
-        date1 = df.newXMLGregorianCalendar("2013-11-17T00:00:00");
-        date2 = df.newXMLGregorianCalendar("2013-11-18T00:00:00");
+        date1 = df.newXMLGregorianCalendar("2013-11-24T00:00:00");
+        date2 = df.newXMLGregorianCalendar("2013-11-25T00:00:00");
 
         cc.setName("Tick Joachim");
         cc.setNumber("50408824");

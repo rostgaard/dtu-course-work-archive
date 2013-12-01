@@ -45,8 +45,8 @@ public abstract class TravelGoodTest {
         niceViewResetOperation();
         
         DatatypeFactory df = DatatypeFactory.newInstance();
-        date1 = df.newXMLGregorianCalendar("2013-11-17");
-        date2 = df.newXMLGregorianCalendar("2013-11-18");
+        date1 = df.newXMLGregorianCalendar("2013-11-24");
+        date2 = df.newXMLGregorianCalendar("2013-11-25");
 
         TravelGoodClient.createItinerary(customerID, itineraryID);
     }
