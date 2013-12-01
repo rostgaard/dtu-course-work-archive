@@ -68,6 +68,12 @@ public class LameDuckTest {
     }
     
     @Test
+    public void getEmpty(){
+        FlightList flights = getFlights("Somewhere", "Nowhere", date1);
+        assertEquals(flights.getFlights().size(),0);
+    }
+    
+    @Test
     public void testBooking(){
         FlightList flights = getFlights(CPH, CDG, date1);
         assertEquals(flights.getFlights().size(),1);
@@ -168,6 +174,10 @@ public class LameDuckTest {
         
     }
 
+    @Test(expected=BookFlightFault.class)
+    public void illegalBooking() throws BookFlightFault{
+            bookFlight("VeryWrongBookingNumber", cc);
+    }
    
 
     private static void lameDuckResetOperation() {

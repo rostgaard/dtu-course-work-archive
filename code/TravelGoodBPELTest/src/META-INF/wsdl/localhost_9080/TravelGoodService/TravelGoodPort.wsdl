@@ -290,7 +290,7 @@
   </binding>
   <service name="TravelGoodService">
     <port name="TravelGoodPort" binding="tns:TravelGoodBinding">
-      <soap:address location="http://mktange-yoga:9080/TravelGoodService/TravelGoodPort"/>
+      <soap:address location="http://Mikkel-THINK:9080/TravelGoodService/TravelGoodPort"/>
     </port>
   </service>
     <plnk:partnerLinkType name="TravelGood">
