@@ -15,6 +15,10 @@ import ws.dtu.lameduck.CancelFlightFault;
 import ws.dtu.lameduck.types.FlightInformation;
 import ws.dtu.lameduck.types.FlightList;
 
+/**
+ * 
+ * @author mikkel
+ */
 public class LameDuckTest {
     
     private XMLGregorianCalendar date1;

@@ -12,7 +12,10 @@ import ws.dtu.lameduck.model.FlightDatabase;
 import ws.dtu.lameduck.types.FlightInformation;
 import ws.dtu.lameduck.types.FlightList;
 
-
+/**
+ * 
+ * @author mikkel
+ */
 @WebService(serviceName = "LameDuckService", portName = "LameDuckPort", endpointInterface = "ws.dtu.lameduck.LameDuckPortType", targetNamespace = "http://lameduck.dtu.ws/", wsdlLocation = "WEB-INF/wsdl/LameDuck/LameDuck.wsdl")
 public class LameDuck {
 private AccountType account;

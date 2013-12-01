@@ -19,6 +19,10 @@ import ws.dtu.lameduck.types.Flight;
 import ws.dtu.lameduck.types.FlightInformation;
 import ws.dtu.lameduck.types.FlightList;
 
+/**
+ * 
+ * @author peter
+ */
 public final class FlightDatabase {
 
     private Map<String, List<FlightInformation>> flightInformations = new HashMap<String, List<FlightInformation>>();

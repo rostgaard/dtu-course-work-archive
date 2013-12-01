@@ -4,11 +4,13 @@ import dk.dtu.imm.fastmoney.CreditCardFaultMessage;
 import dk.dtu.imm.fastmoney.types.AccountType;
 import dk.dtu.imm.fastmoney.types.CreditCardInfoType;
 import dk.dtu.imm.fastmoney.types.ExpirationDateType;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
+/**
+ * 
+ * @author mikkel
+ */
 public class BankServiceTest {
     
     private int group = 3;

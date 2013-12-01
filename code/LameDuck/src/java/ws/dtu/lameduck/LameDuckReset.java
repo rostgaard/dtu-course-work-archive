@@ -10,7 +10,7 @@ import ws.dtu.lameduck.model.FlightDatabase;
 
 /**
  *
- * @author Mikkel
+ * @author martin
  */
 @WebService(serviceName = "LameDuckResetService", portName = "LameDuckResetPort", endpointInterface = "reset.lameduck.dtu.ws.LameDuckResetPortType", targetNamespace = "http://ws.dtu.lameduck.reset", wsdlLocation = "WEB-INF/wsdl/LameDuckReset/LameDuckReset.wsdl")
 public class LameDuckReset {
