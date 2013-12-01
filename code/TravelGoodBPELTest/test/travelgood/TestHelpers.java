@@ -12,7 +12,7 @@ import ws.dtu.niceview.types.HotelInformation;
 
 /**
  *
- * @author Mikkel
+ * @author kim
  */
 public class TestHelpers {
     

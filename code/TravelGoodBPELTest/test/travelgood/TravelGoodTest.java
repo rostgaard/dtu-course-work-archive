@@ -12,6 +12,10 @@ import org.junit.Ignore;
 import ws.travelgoodbpel.FlightBookings;
 import ws.travelgoodbpel.HotelBookings;
 
+/**
+ * 
+ * @author kim
+ */
 @Ignore
 public abstract class TravelGoodTest {
 

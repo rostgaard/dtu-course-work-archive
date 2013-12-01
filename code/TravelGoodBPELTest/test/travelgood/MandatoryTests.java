@@ -19,6 +19,10 @@ import ws.travelgoodbpel.FlightBookings;
 import ws.travelgoodbpel.HotelBooking;
 import ws.travelgoodbpel.HotelBookings;
 
+/**
+ * 
+ * @author peter
+ */
 public class MandatoryTests {
 
     private String customerID = "customer";

@@ -4,18 +4,12 @@
  */
 package travelgood;
 
-import dk.dtu.imm.fastmoney.types.CreditCardInfoType;
-import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.ws.Holder;
-import ws.dtu.lameduck.types.FlightInformation;
 import ws.dtu.lameduck.types.FlightList;
 import ws.dtu.niceview.types.HotelList;
-import ws.travelgoodbpel.FlightBookings;
-import ws.travelgoodbpel.HotelBookings;
 
 /**
  *
- * @author Mikkel
+ * @author peter
  */
 public class TravelGoodClient {
 

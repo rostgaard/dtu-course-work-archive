@@ -6,7 +6,10 @@ import static org.junit.Assert.*;
 import ws.dtu.lameduck.types.FlightList;
 import ws.dtu.niceview.types.HotelList;
 
-
+/**
+ * 
+ * @author mikkel
+ */
 public class TravelGoodBookingTest extends TravelGoodTest {
     HotelList hotels;
     FlightList flights;
