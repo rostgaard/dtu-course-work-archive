@@ -17,24 +17,59 @@ import ws.travelgoodbpel.HotelBookings;
  *
  * @author Mikkel
  */
-public interface TravelGoodClient {
-    
-    public boolean addFlight(String customerID, String itineraryID, FlightInformation flightInformation);
-    
-    public String addHotel(String customerID, String itineraryID, String hotelBookingNo);
-    
-    public boolean bookItinerary(String customerID, String itineraryID, CreditCardInfoType ccInformation);
-    
-    public String cancelPlanning(String customerID, String itineraryID);
-    
-    public boolean createItinerary(String customerID, String itineraryID);
-    
-    public FlightList getFlights(String customerID, String itineraryID, String origin, String destination, XMLGregorianCalendar datetime);
-    
-    public HotelList getHotels(String customerID, String itineraryID, String city, XMLGregorianCalendar arrival, XMLGregorianCalendar departure);
-    
-    public void getItinerary(String customerID, String itineraryID, Holder<FlightBookings> flights, Holder<HotelBookings> hotels);
-    
-    
-    
+public class TravelGoodClient {
+
+    protected static boolean addFlight(java.lang.String customerID, java.lang.String itineraryID, ws.dtu.lameduck.types.FlightInformation flightInformation) {
+        ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
+        ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
+        return port.addFlight(customerID, itineraryID, flightInformation);
+    }
+
+    protected static String addHotel(java.lang.String customerID, java.lang.String itineraryID, java.lang.String hotelBookingNo) {
+        ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
+        ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
+        return port.addHotel(customerID, itineraryID, hotelBookingNo);
+    }
+
+    protected static boolean bookItinerary(java.lang.String customerID, java.lang.String itineraryID, dk.dtu.imm.fastmoney.types.CreditCardInfoType ccInformation) {
+        ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
+        ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
+        return port.bookItinerary(customerID, itineraryID, ccInformation);
+    }
+
+    protected static boolean cancelItinerary(java.lang.String customerID, java.lang.String itineraryID, dk.dtu.imm.fastmoney.types.CreditCardInfoType ccInformation) {
+        ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
+        ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
+        return port.cancelItinerary(customerID, itineraryID, ccInformation);
+    }
+
+    protected static String cancelPlanning(java.lang.String customerID, java.lang.String itineraryID) {
+        ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
+        ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
+        return port.cancelPlanning(customerID, itineraryID);
+    }
+
+    protected static boolean createItinerary(java.lang.String customerID, java.lang.String itineraryID) {
+        ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
+        ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
+        return port.createItinerary(customerID, itineraryID);
+    }
+
+    protected static FlightList getFlights(java.lang.String customerID, java.lang.String itineraryID, java.lang.String origin, java.lang.String destination, javax.xml.datatype.XMLGregorianCalendar datetime) {
+        ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
+        ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
+        return port.getFlights(customerID, itineraryID, origin, destination, datetime);
+    }
+
+    protected static HotelList getHotels(java.lang.String customerID, java.lang.String itineraryID, java.lang.String city, javax.xml.datatype.XMLGregorianCalendar arrival, javax.xml.datatype.XMLGregorianCalendar departure) {
+        ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
+        ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
+        return port.getHotels(customerID, itineraryID, city, arrival, departure);
+    }
+
+    protected static void getItinerary(java.lang.String customerID, java.lang.String itineraryID, javax.xml.ws.Holder<ws.travelgoodbpel.FlightBookings> flights, javax.xml.ws.Holder<ws.travelgoodbpel.HotelBookings> hotels) {
+        ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
+        ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
+        port.getItinerary(customerID, itineraryID, flights, hotels);
+    }
 }

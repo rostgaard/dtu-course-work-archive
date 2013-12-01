@@ -14,10 +14,6 @@ import ws.dtu.niceview.types.HotelList;
 
 public class HotelDatabase {
     
-    public static final String Copenhagen = "Copenhagen";
-    public static final String Kabul = "Kabul";
-    public static final String Paris = "Paris";
-    
     private Map<String, HotelInformation> bookingNoMap = new HashMap<String, HotelInformation>();
     private Map<String, HotelList> cityMap = new HashMap<String, HotelList>();
     private Set<String> bookings = new HashSet<String>();
@@ -55,6 +51,7 @@ public class HotelDatabase {
         add("Copenhagen", "Nørregade 21", "CPH2", true, "Radison Blue Hotel", 500, "NiceView");
         add("San Francisco", "Coolstreet 13", "KAB1", true, "Clear sky Hotel", 230, "NiceView");
         add("San Francisco", "Hotalley 4", "KAB2", true, "Air Hotel", 900, "NiceView");
+        add("San Francisco", "Hotalley 4", "CanNotCancel", true, "Air Hotel", 900, "NiceView");
         add("Paris", "Beautifulway 124", "MOS1", true, "Tall Hotel", 300, "NiceView");
         add("Crazy Town", "Whatchamacallit", "AlreadyBooked", true, "Non-existent Hotel", 300, "NiceView");
     }
@@ -117,6 +114,9 @@ public class HotelDatabase {
     }
     
     public void cancelHotel(String bookingNo) throws CancelHotelFault {
+        if (bookingNo.equals("CanNotCancel")) {
+            throw new CancelHotelFault("Unable to cancel hotel booking", "Unable to cancel hotel booking");
+        }
         if (!bookingNoMap.containsKey(bookingNo)) {
             throw new CancelHotelFault("No such booking number: "+bookingNo, "No such booking number: "+bookingNo);
         }

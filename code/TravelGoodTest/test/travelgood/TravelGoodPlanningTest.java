@@ -2,7 +2,6 @@ package travelgood;
 
 import org.junit.*;
 import static org.junit.Assert.*;
-import servicewrappers.BPELWrapper;
 import ws.dtu.lameduck.types.Flight;
 import ws.dtu.lameduck.types.FlightInformation;
 import ws.dtu.lameduck.types.FlightList;
@@ -10,7 +9,7 @@ import ws.dtu.lameduck.types.FlightList;
 public class TravelGoodPlanningTest extends TravelGoodTest {
 
     public TravelGoodPlanningTest() {
-        client = new BPELWrapper();
+        client = new TravelGoodClient();
     }
 
     @After

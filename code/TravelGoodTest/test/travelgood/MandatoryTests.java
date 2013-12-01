@@ -3,13 +3,13 @@ package travelgood;
 import dk.dtu.imm.fastmoney.types.CreditCardInfoType;
 import dk.dtu.imm.fastmoney.types.ExpirationDateType;
 import java.util.List;
+import java.util.Random;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.Holder;
 import org.junit.*;
 import static org.junit.Assert.*;
-import servicewrappers.BPELWrapper;
 import ws.dtu.lameduck.types.FlightInformation;
 import ws.dtu.lameduck.types.FlightList;
 import ws.dtu.niceview.types.HotelInformation;
@@ -21,15 +21,19 @@ import ws.travelgoodbpel.HotelBookings;
 
 public class MandatoryTests {
     
-    private TravelGoodClient client;
-    private String customerID = "customer007";
+    private String customerID = "customer";
     private FlightList flights;
     private HotelList hotels;
-    private Holder<FlightBookings> flightBookings = new Holder<FlightBookings>();
-    private Holder<HotelBookings> hotelBookings = new Holder<HotelBookings>();
+    private Holder<FlightBookings> flightBookings = new Holder<>();
+    private Holder<HotelBookings> hotelBookings = new Holder<>();
     private XMLGregorianCalendar date1, date2;
     
     private CreditCardInfoType cc = new CreditCardInfoType();
+    
+    public MandatoryTests() {
+        Random r = new Random();
+        customerID += r.nextInt(10000);
+    }
     
     @Before
     public void setup() throws DatatypeConfigurationException {
@@ -48,45 +52,41 @@ public class MandatoryTests {
         cc.setExpirationDate(exp);
     }
     
-    public MandatoryTests() {
-        client = new BPELWrapper();
-    }
-    
     @Test
     public void testP1(){
         String itineraryID = "itineraryP1";
         
-        client.createItinerary(customerID, itineraryID);
+        TravelGoodClient.createItinerary(customerID, itineraryID);
         FlightInformation[] flightInfo = new FlightInformation[3];
         HotelInformation[] hotelInfo = new HotelInformation[2];
         
         // Plan first flight
-        flights = client.getFlights(customerID, itineraryID, "CPH", "SFO", date1);
+        flights = TravelGoodClient.getFlights(customerID, itineraryID, "CPH", "SFO", date1);
         flightInfo[0] = flights.getFlights().get(0);
-        client.addFlight(customerID, itineraryID, flightInfo[0]);
+        TravelGoodClient.addFlight(customerID, itineraryID, flightInfo[0]);
         
         // Plan first hotel
-        hotels = client.getHotels(customerID, itineraryID, "San Francisco", date1, date2);
+        hotels = TravelGoodClient.getHotels(customerID, itineraryID, "San Francisco", date1, date2);
         hotelInfo[0] = hotels.getHotels().get(0);
-        client.addHotel(customerID, itineraryID, hotelInfo[0].getBookingNo());
+        TravelGoodClient.addHotel(customerID, itineraryID, hotelInfo[0].getBookingNo());
         
         // Plan second flight
-        flights = client.getFlights(customerID, itineraryID, "SFO", "CPH", date1);
+        flights = TravelGoodClient.getFlights(customerID, itineraryID, "SFO", "CPH", date1);
         flightInfo[1] = flights.getFlights().get(0);
-        client.addFlight(customerID, itineraryID, flightInfo[1]);
+        TravelGoodClient.addFlight(customerID, itineraryID, flightInfo[1]);
         
         // Plan third flight
-        flights = client.getFlights(customerID, itineraryID, "CPH", "CDG", date1);
+        flights = TravelGoodClient.getFlights(customerID, itineraryID, "CPH", "CDG", date1);
         flightInfo[2] = flights.getFlights().get(0);
-        client.addFlight(customerID, itineraryID, flightInfo[2]);
+        TravelGoodClient.addFlight(customerID, itineraryID, flightInfo[2]);
         
         // Plan second hotel
-        hotels = client.getHotels(customerID, itineraryID, "Paris", date1, date2);
+        hotels = TravelGoodClient.getHotels(customerID, itineraryID, "Paris", date1, date2);
         hotelInfo[1] = hotels.getHotels().get(0);
-        client.addHotel(customerID, itineraryID, hotelInfo[1].getBookingNo());
+        TravelGoodClient.addHotel(customerID, itineraryID, hotelInfo[1].getBookingNo());
         
         // Check itinerary
-        client.getItinerary(customerID, itineraryID, flightBookings, hotelBookings);
+        TravelGoodClient.getItinerary(customerID, itineraryID, flightBookings, hotelBookings);
         
         List<FlightBooking> flightBookingList = flightBookings.value.getFlightBooking();
         FlightBooking flightBooking;
@@ -111,11 +111,11 @@ public class MandatoryTests {
         }
         
         // Book itinerary
-        client.bookItinerary(customerID, itineraryID, cc);
+        TravelGoodClient.bookItinerary(customerID, itineraryID, cc);
         
         
         // Check itinerary after booking
-        client.getItinerary(customerID, itineraryID, flightBookings, hotelBookings);
+        TravelGoodClient.getItinerary(customerID, itineraryID, flightBookings, hotelBookings);
         
         flightBookingList = flightBookings.value.getFlightBooking();
         for (int i = 0; i < flightBookingList.size(); i++) {
@@ -141,57 +141,120 @@ public class MandatoryTests {
     @Test
     public void testP2(){
         String itineraryID = "itineraryP2";
-        client.createItinerary(customerID, itineraryID);
+        TravelGoodClient.createItinerary(customerID, itineraryID);
         
         // Plan first flight
-        flights = client.getFlights(customerID, itineraryID, "CPH", "SFO", date1);
+        flights = TravelGoodClient.getFlights(customerID, itineraryID, "CPH", "SFO", date1);
         FlightInformation info = flights.getFlights().get(0);
-        client.addFlight(customerID, itineraryID, info);
+        TravelGoodClient.addFlight(customerID, itineraryID, info);
         
-        client.cancelPlanning(customerID, itineraryID);
+        TravelGoodClient.cancelPlanning(customerID, itineraryID);
     }
     
     @Test
     public void testB(){
         String itineraryID = "itineraryB";
-        client.createItinerary(customerID, itineraryID);
+        TravelGoodClient.createItinerary(customerID, itineraryID);
         
         // Plan first flight
-        flights = client.getFlights(customerID, itineraryID, "CPH", "SFO", date1);
+        flights = TravelGoodClient.getFlights(customerID, itineraryID, "CPH", "SFO", date1);
         FlightInformation canceledFlightInfo = flights.getFlights().get(0);
-        client.addFlight(customerID, itineraryID, canceledFlightInfo);
+        TravelGoodClient.addFlight(customerID, itineraryID, canceledFlightInfo);
         
         // Plan first hotel
-        hotels = client.getHotels(customerID, itineraryID, "Crazy Town", date1, date2);
+        hotels = TravelGoodClient.getHotels(customerID, itineraryID, "Crazy Town", date1, date2);
         HotelInformation alreadyBookedHotel = hotels.getHotels().get(0);
-        client.addHotel(customerID, itineraryID, alreadyBookedHotel.getBookingNo());
+        TravelGoodClient.addHotel(customerID, itineraryID, alreadyBookedHotel.getBookingNo());
         
-        // Plan second flight
-        flights = client.getFlights(customerID, itineraryID, "SFO", "CPH", date1);
-        FlightInformation unconfirmedFlightInfo = flights.getFlights().get(0);
-        client.addFlight(customerID, itineraryID, unconfirmedFlightInfo);
+        // Plan second hotel
+        hotels = TravelGoodClient.getHotels(customerID, itineraryID, "San Francisco", date1, date2);
+        HotelInformation unconfirmedHotelInfo = hotels.getHotels().get(0);
+        TravelGoodClient.addHotel(customerID, itineraryID, unconfirmedHotelInfo.getBookingNo());
         
-        client.bookItinerary(customerID, itineraryID, cc);
+        assertFalse(TravelGoodClient.bookItinerary(customerID, itineraryID, cc));
         
         // Check statuses
-        client.getItinerary(customerID, itineraryID, flightBookings, hotelBookings);
+        TravelGoodClient.getItinerary(customerID, itineraryID, flightBookings, hotelBookings);
         assertEquals(flightBookings.value.getFlightBooking().get(0).getStatus(), "canceled");
         assertEquals(hotelBookings.value.getHotelBooking().get(0).getStatus(), "unconfirmed");
-        assertEquals(flightBookings.value.getFlightBooking().get(1).getStatus(), "unconfirmed");
+        assertEquals(hotelBookings.value.getHotelBooking().get(1).getStatus(), "unconfirmed");
+        
     }
     
     @Test
     public void testC1(){
         String itineraryID = "itineraryC1";
-        client.createItinerary(customerID, itineraryID);
+        TravelGoodClient.createItinerary(customerID, itineraryID);
         
+        // Plan first flight
+        flights = TravelGoodClient.getFlights(customerID, itineraryID, "CPH", "SFO", date1);
+        FlightInformation canceledFlightInfo = flights.getFlights().get(0);
+        TravelGoodClient.addFlight(customerID, itineraryID, canceledFlightInfo);
+        
+        // Plan two hotels
+        hotels = TravelGoodClient.getHotels(customerID, itineraryID, "San Francisco", date1, date2);
+        HotelInformation firstHotel = hotels.getHotels().get(0);
+        HotelInformation secondHotel = hotels.getHotels().get(1);
+        
+        TravelGoodClient.addHotel(customerID, itineraryID, firstHotel.getBookingNo());
+        TravelGoodClient.addHotel(customerID, itineraryID, secondHotel.getBookingNo());
+        
+        
+        // Book itinerary
+        assertTrue(TravelGoodClient.bookItinerary(customerID, itineraryID, cc));
+        
+        // Check statuses
+        TravelGoodClient.getItinerary(customerID, itineraryID, flightBookings, hotelBookings);
+        assertEquals(flightBookings.value.getFlightBooking().get(0).getStatus(), "confirmed");
+        assertEquals(hotelBookings.value.getHotelBooking().get(0).getStatus(), "confirmed");
+        assertEquals(hotelBookings.value.getHotelBooking().get(1).getStatus(), "confirmed");
+        
+        
+        // Cancel itinerary
+        assertTrue(TravelGoodClient.cancelItinerary(customerID, itineraryID, cc));
+        
+        TravelGoodClient.getItinerary(customerID, itineraryID, flightBookings, hotelBookings);
+        assertEquals(flightBookings.value.getFlightBooking().get(0).getStatus(), "canceled");
+        assertEquals(hotelBookings.value.getHotelBooking().get(0).getStatus(), "canceled");
+        assertEquals(hotelBookings.value.getHotelBooking().get(1).getStatus(), "canceled");
     }
     
     @Test
     public void testC2(){
         String itineraryID = "itineraryC2";
-        client.createItinerary(customerID, itineraryID);
+        TravelGoodClient.createItinerary(customerID, itineraryID);
         
+        // Plan first flight
+        flights = TravelGoodClient.getFlights(customerID, itineraryID, "CPH", "SFO", date1);
+        FlightInformation canceledFlightInfo = flights.getFlights().get(0);
+        TravelGoodClient.addFlight(customerID, itineraryID, canceledFlightInfo);
+        
+        // Plan two hotels
+        hotels = TravelGoodClient.getHotels(customerID, itineraryID, "San Francisco", date1, date2);
+        HotelInformation firstHotel = hotels.getHotels().get(2); // Unable to cancel this hotel
+        HotelInformation secondHotel = hotels.getHotels().get(1);
+        
+        TravelGoodClient.addHotel(customerID, itineraryID, firstHotel.getBookingNo());
+        TravelGoodClient.addHotel(customerID, itineraryID, secondHotel.getBookingNo());
+        
+        
+        // Book itinerary
+        assertTrue(TravelGoodClient.bookItinerary(customerID, itineraryID, cc));
+        
+        // Check statuses
+        TravelGoodClient.getItinerary(customerID, itineraryID, flightBookings, hotelBookings);
+        assertEquals(flightBookings.value.getFlightBooking().get(0).getStatus(), "confirmed");
+        assertEquals(hotelBookings.value.getHotelBooking().get(0).getStatus(), "confirmed");
+        assertEquals(hotelBookings.value.getHotelBooking().get(1).getStatus(), "confirmed");
+        
+        
+        // Cancel itinerary (which fails, returns false)
+        assertFalse(TravelGoodClient.cancelItinerary(customerID, itineraryID, cc));
+        
+        TravelGoodClient.getItinerary(customerID, itineraryID, flightBookings, hotelBookings);
+        assertEquals(flightBookings.value.getFlightBooking().get(0).getStatus(), "canceled");
+        assertEquals(hotelBookings.value.getHotelBooking().get(0).getStatus(), "confirmed");
+        assertEquals(hotelBookings.value.getHotelBooking().get(1).getStatus(), "canceled");        
     }
     
     private void compareFlightInformation(FlightInformation f1, FlightInformation f2) {
@@ -217,4 +280,5 @@ public class MandatoryTests {
         reset.niceview.dtu.ws.NiceViewResetPortType port = service.getNiceViewResetPort();
         port.niceViewResetOperation();
     }
+
 }
