@@ -4,7 +4,7 @@ This section covers the implementation of the RESTful web-service version of Tra
 \subsection{Resources}
 The resources in a RESTful web-service is one of the most fundamental concepts as it defined the API of the web-service. In order to support the requirements for TravelGood it contains resources for managing an itineraries and finding flights or hotels. Each of these resources are explained further in the next sections.
 
-\subsection{Itinerary resource}
+\subsubsection{Itinerary resource}
 The \texttt{itinerary resource} represents everything that can be done to an itinerary. It is possible to add flights and hotels to an itinerary. More specifically an itinerary resource supports HTTP calls to the following paths.
 \begin{description}
 	\item \texttt{/itinerary/} - Base itinerary. Used only to create a new itinerary.
@@ -14,16 +14,22 @@ The \texttt{itinerary resource} represents everything that can be done to an iti
 	\item \texttt{/itinerary/\{id\}/booking} - Used to book or cancel a specific itinerary.
 \end{description}
 
-\subsection{Flight resource}
+\subsubsection{Flight resource}
 The flight resource is used to search for flight independent of an itinerary. This means that is it possible to get a list of flights without having to create an itinerary first. The flight returned by the flight resource can the be used to add to an itinerary. The flight resource supports HTTP calls to the following path.
 \begin{description}
 	\item \texttt{/flight/} - Used to get a list of flights based on origin, destination and date.
 \end{description}
 
-\subsection{Hotel resource}
+\subsubsection{Hotel resource}
 The hotel resource represent looking up hotels. It can like the flight resource be used independently of an itinerary. The hotel resource supports HTTP calls to the following path.
 \begin{description}
 	\item \texttt{/hotel/} - Used to get a list of hotels based on location, arrival date and departure date.
+\end{description}
+
+\subsubsection{Reset resource}
+In order to reset the web-service and also the two web-services NiceView and LameDuck that TravelGood depends on a separate reset resource has been created. This is used before each of the implemented test of the RESTful version of TravelGood. The resource supports calls to the following path.
+\begin{description}
+	\item \texttt{/reset/} - Used to clear the web-service. It will remove all itineraries and reset LameDuck and NiceView.
 \end{description}
 
 \subsection{Mapping of business processes}
@@ -46,6 +52,33 @@ For the flight and hotel resources that mapping is as follows
 \end{description}
 
 \subsection{Business logic}
-As a standard a RESTFul web-service does not handle business logic.
-\subsubsection{Representations}
+Out of the box a RESTFul web-service does not handle business logic. In order to deal with this \texttt{Link}s are used. A link contains a relation, an URI and a MediaType. By providing links to the next possible actions the business logic can be handled this way. This allows a client to follow the business logic of the web-service. The test cases of TravelGood uses these links to perform the required actions.
 
+Table~\ref{table:rest_business_logic} shows links returned in the representations for the two different phases. Performing a call while in a phase where it is not supported will result in an error response.
+\begin{table}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Phase} & \textbf{Links} \\
+\hline
+Planning & \texttt{self}, \texttt{remove}, \texttt{add flight},\\
+		 &\texttt{add hotel}, \texttt{book}\\
+\hline
+Booked & \texttt{self}, \texttt{cancel}\\
+\hline
+\end{tabular}
+\caption{Links returned in the two phases of an itinerary}
+\label{table:rest_business_logic}
+\end{table}
+
+To indicate that the messages used has a specific form the mime type \texttt{application/itinerary+xml} has been defined. The web-service will only accept request where the \texttt{Content-Type} and \texttt{Accept} header is set to this mime type.
+
+\subsubsection{Representations}
+A representation is used to wrap resources and links together into a single representation. 
+The implementation has the following representations.
+\begin{description}
+	\item \texttt{ItineraryRepresentation} - Represents an itinerary resource. 
+	\item \texttt{FlightRepresentation} - Represents a flight resource.
+	\item \texttt{HotelRepresentation} - Represents a hotel resource.
+	\item \texttt{StatusRepresentation} - Represents a status message. Used to indicate status when booking, canceling or adding flights and hotels.
+\end{description}
+The API of the web-service returns an instance of one of these representations when a call concerning an itinerary.
