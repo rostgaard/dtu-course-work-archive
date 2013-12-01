@@ -12,19 +12,19 @@ import ws.dtu.niceview.types.HotelList;
 
 @WebService(serviceName = "NiceViewService", portName = "NiceViewPort", endpointInterface = "ws.dtu.niceview.NiceViewPortType", targetNamespace = "http://niceview.dtu.ws/", wsdlLocation = "WEB-INF/wsdl/NiceView/NiceView.wsdl")
 public class NiceView {
+
     private static final int GROUP = 3;
-    
     private AccountType account;
     private BankService service = new BankService();
     private HotelDatabase db;
 
     public NiceView() {
         db = HotelDatabase.getInstance();
-        
+
         account = new AccountType();
         account.setName("NiceView");
         account.setNumber("50308815");
-        
+
     }
 
     public HotelList getHotels(String city, XMLGregorianCalendar arrival, XMLGregorianCalendar departure) {
@@ -32,11 +32,15 @@ public class NiceView {
     }
 
     public boolean bookHotel(String bookingNo, CreditCardInfoType ccInformation) throws CreditCardFaultMessage, BookHotelFault {
-        HotelInformation hotel = db.bookHotel(bookingNo, ccInformation);
+        HotelInformation hotel = db.bookHotel(bookingNo);
         if (hotel.isCcRequired()) {
-            return validateCreditCard(GROUP, ccInformation, (int)hotel.getPrice());
+            try {
+                return validateCreditCard(GROUP, ccInformation, (int) hotel.getPrice());
+            } catch (CreditCardFaultMessage e) {
+                throw new BookHotelFault("Credit card validation failed", "Credit card validation failed", e);
+            }
         }
-        
+
         return true;
     }
 
@@ -49,5 +53,4 @@ public class NiceView {
         dk.dtu.imm.fastmoney.BankPortType port = service.getBankPort();
         return port.validateCreditCard(group, creditCardInfo, amount);
     }
-    
 }

@@ -27,8 +27,7 @@ public class LameDuckTest {
     private static final String GIG = "GIG";
     
     @Before
-    public void setup() throws DatatypeConfigurationException{
-        
+    public void setup() throws DatatypeConfigurationException {
         lameDuckResetOperation();
         
         DatatypeFactory df = DatatypeFactory.newInstance();
@@ -41,12 +40,10 @@ public class LameDuckTest {
         exp.setMonth(2);
         exp.setYear(11);
         cc.setExpirationDate(exp);
-        
     }
     
     @Test
     public void testGetFlight(){
-        
         // Test that a single flight can be found
         FlightList flights = getFlights(CPH, SFO, date1);
         
@@ -56,11 +53,11 @@ public class LameDuckTest {
     }
     
     @Test
-    public void testMultipleFlights(){
-        
+    public void testMultipleFlights(){        
         FlightList flights = getFlights(SFO, CPH, date1);
         
-        assertEquals(flights.getFlights().size(),2);      
+        assertEquals(2, flights.getFlights().size());
+        
         // Check that the correct flights are found
         for(FlightInformation fi : flights.getFlights()){
             assertTrue(fi.getBookingNo().equals("SAS0002") || fi.getBookingNo().equals("SAS0003"));
@@ -70,16 +67,14 @@ public class LameDuckTest {
     @Test
     public void getEmpty(){
         FlightList flights = getFlights("Somewhere", "Nowhere", date1);
-        assertEquals(flights.getFlights().size(),0);
+        assertEquals(0, flights.getFlights().size());
     }
     
     @Test
     public void testBooking(){
         FlightList flights = getFlights(CPH, CDG, date1);
-        assertEquals(flights.getFlights().size(),1);
-        String bookingNumber = flights.getFlights().get(0).getBookingNo();
-
-        
+        assertEquals(1, flights.getFlights().size());
+        String bookingNumber = flights.getFlights().get(0).getBookingNo();        
         
         boolean result = false;
         try {
@@ -89,14 +84,13 @@ public class LameDuckTest {
         }
         flights = getFlights(CPH, CDG, date1);
         assertTrue(result);
-        assertEquals(flights.getFlights().size(),0);
-        
+        assertEquals(0, flights.getFlights().size());
     }
     
     @Test
     public void testCancel(){
         FlightList flights = getFlights(CPH, GIG, date1);
-        assertEquals(flights.getFlights().size(),1);
+        assertEquals(1, flights.getFlights().size());
         String bookingNumber = flights.getFlights().get(0).getBookingNo();
         int price = flights.getFlights().get(0).getPrice();
         
@@ -108,14 +102,15 @@ public class LameDuckTest {
         }
         flights = getFlights(CPH, GIG,date1);
         assertTrue(result);
-        assertEquals(flights.getFlights().size(),0);
+        assertEquals(0, flights.getFlights().size());
+        
         try {
             cancelFlight(bookingNumber, price, cc);
         } catch (CancelFlightFault ex) {
             fail();
         }
         flights = getFlights(CPH, GIG, date1);
-        assertEquals(flights.getFlights().size(), 1);
+        assertEquals(1, flights.getFlights().size());
     }
     
     @Test(expected = BookFlightFault.class)
@@ -126,12 +121,11 @@ public class LameDuckTest {
         String bookingNo = flights.getFlights().get(0).getBookingNo();
         try {
             bookFlight(bookingNo, cc);
-        } catch (BookFlightFault ex) {
+        } catch (BookFlightFault e) {
             // This should not happen
             fail();
         }
          bookFlight(bookingNo, cc);   
-
     }
     
     @Test(expected = BookFlightFault.class)
@@ -156,7 +150,7 @@ public class LameDuckTest {
     public void multiBookingCancel() throws BookFlightFault, CancelFlightFault{
         FlightList flights = getFlights(SFO, CPH, date1);
         
-        assertEquals(flights.getFlights().size(), 2);
+        assertEquals(2, flights.getFlights().size());
         
         for(FlightInformation fi : flights.getFlights()){
             bookFlight(fi.getBookingNo(), cc);
@@ -164,17 +158,17 @@ public class LameDuckTest {
         
         FlightList flights2 = getFlights(SFO, CPH, date1);
         
-        assertEquals(flights2.getFlights().size(), 0);
+        assertEquals(0, flights2.getFlights().size());
         String cancelNumber = flights.getFlights().get(0).getBookingNo();
         cancelFlight(cancelNumber, 999, cc);
         
         FlightList flights3 = getFlights(SFO, CPH, date1);
-        assertEquals(flights3.getFlights().size(), 1);
-        assertEquals(flights3.getFlights().get(0).getBookingNo(), cancelNumber);
+        assertEquals(1, flights3.getFlights().size());
+        assertEquals(cancelNumber, flights3.getFlights().get(0).getBookingNo());
         
     }
 
-    @Test(expected=BookFlightFault.class)
+    @Test(expected = BookFlightFault.class)
     public void illegalBooking() throws BookFlightFault{
             bookFlight("VeryWrongBookingNumber", cc);
     }
