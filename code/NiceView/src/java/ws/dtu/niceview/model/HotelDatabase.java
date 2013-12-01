@@ -37,7 +37,6 @@ public class HotelDatabase {
         bookingNoMap = new HashMap<String, HotelInformation>();
         cityMap = new HashMap<String, HotelList>();
         bookings = new HashSet<String>();
-        bookings.add("AlreadyBooked");
     }
     
     public void reset() {
@@ -110,7 +109,7 @@ public class HotelDatabase {
         if (!bookingNoMap.containsKey(bookingNo)) {
             throw new BookHotelFault("No such booking number: " + bookingNo, "No such booking number: " + bookingNo);
         }
-        if (bookings.contains(bookingNo)) {
+        if (bookings.contains(bookingNo) || bookingNo.equals("AlreadyBooked")) {
             throw new BookHotelFault("Hotel room has already been booked", "Hotel room has already been booked");
         }
         

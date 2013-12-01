@@ -45,3 +45,8 @@ During this phase, BPEL accepts the following messages.
 This phase is also implemented as a \texttt{pick} activity. If we get a \texttt{cancelItinerary} request, we attempt to cancel all booked items. Any that fails, remain booked, while the others get the status ``\texttt{cancelled}''. If any cancellations fails the itinerary information will remain available upon request until one day before the travel was meant to begin. 
 
 The other possibility of the pick is that a timeout happens. This timeout models that it is one day before the first item on the itinerary and the whole thing is removed and the process is ended.
+
+
+\subsection{Implementation details}
+
+In this implementation we have simplified the part of "wait until one day before travel begins before ending process", since this would make it harder to unit test it. In our case we have just implemented a wait of 10 seconds before it ends the process.

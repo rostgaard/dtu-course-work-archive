@@ -1,22 +1,13 @@
 package travelgood;
 
-import java.util.Random;
 import javax.xml.ws.soap.SOAPFaultException;
 import org.junit.*;
 import static org.junit.Assert.*;
-import ws.dtu.lameduck.types.Flight;
 import ws.dtu.lameduck.types.FlightInformation;
 import ws.dtu.lameduck.types.FlightList;
-import ws.dtu.niceview.types.HotelInformation;
 import ws.dtu.niceview.types.HotelList;
 
 public class TravelGoodPlanningTest extends TravelGoodTest {
-    private HotelList HotelList;
-    
-    public TravelGoodPlanningTest() {
-        Random r = new Random();
-        customerID += r.nextInt(10000);
-    }
 
     @After
     public void after() {
@@ -73,15 +64,13 @@ public class TravelGoodPlanningTest extends TravelGoodTest {
     @Test
     public void testAddHotel(){
         HotelList hotels = TravelGoodClient.getHotels(customerID, itineraryID, "San Francisco", date1, date2);
-        assertEquals(hotels.getHotels().size(), 3);
+        assertEquals(3, hotels.getHotels().size());
         
         TravelGoodClient.addHotel(customerID, itineraryID, hotels.getHotels().get(0));
-        
         TravelGoodClient.getItinerary(customerID, itineraryID, flightBookings, hotelBookings);
         
         assertEquals(hotelBookings.value.getHotelBooking().size(),1);
         TestHelpers.compareHotelInformation(hotelBookings.value.getHotelBooking().get(0).getHotelInformation(), hotels.getHotels().get(0));
-        
     }
     
     @Test
