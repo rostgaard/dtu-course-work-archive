@@ -25,12 +25,12 @@ LameDuck implement the data as described in the project description. To store th
 \end{figure}
 
 \subsection{TravelGood - BPEL}
-Internally BPEL does not really need many data structures as it mostly just relays the relevant information further to whoever needs it. The main data structures used in our BPEL implementation are two lists, one for flights and one for hotels. Each of these bookings in each list hold a status which indicates whether the flight/hotel is ``unconfirmed'', ``confirmed'' or ``canceled'' as well as information about the wanted flight/hotel.
+Internally BPEL does not really need many data structures as it mostly just relays the relevant information further to whoever needs it. The main data structures used in our BPEL implementation are two lists, one for flights and one for hotels for each running process. Each of these bookings in each list hold a status which indicates whether the flight/hotel is ``unconfirmed'', ``confirmed'' or ``canceled'' as well as information about the wanted flight/hotel.
 
-Besides these we also need a few extra variables, mostly used for controlling how long each loop should continue running.
+Besides these we also need a few extra variables, mostly used for controlling how long each loop should continue running. Two variables are also used for the correlation sets, namely an itinerary ID and customer ID.
 
 \subsection{TravelGood - RESTful}
-The RESTful version of TravelGood uses the data structures shown in figure~\ref{fig:rest_class}. A \texttt{Customer} represents the user of a system. All customers are contained in the \texttt{CustomerDatabase}. This is done in a map where the key is the identifier of the customer. This is done so a customer can be found quickly. Each \texttt{Customer} can be connected with itineraries. This is handled in \texttt{ItineraryDatabase}. The \texttt{ItineraryDatabase} holds all the itineraries in a map where the identifier of the itinerary is the key in order to quickly look up an itinerary. An \texttt{Itinerary} contains a \texttt{FlightBookingList} and a \texttt{HotelBookingList} to keep track of \texttt{FlightBooking}s and \texttt{HotelBooking}s respectively.
+The RESTful version of TravelGood uses the data structures shown in figure~\ref{fig:rest_class}. A \texttt{Customer} represents the user of a system. All customers are contained in the \texttt{Customer\-Database}. This is done in a map where the key is the identifier of the customer. This is done so a customer can be found quickly. Each \texttt{Customer} can be connected with itineraries. This is handled in \texttt{ItineraryDatabase}. The \texttt{ItineraryDatabase} holds all the itineraries in a map where the identifier of the itinerary is the key in order to quickly look up an itinerary. An \texttt{Itinerary} contains a \texttt{FlightBookingList} and a \texttt{HotelBookingList} to keep track of \texttt{FlightBooking}s and \texttt{HotelBooking}s respectively.
 
 \begin{figure}[H]
 \centering
