@@ -2,46 +2,42 @@
 This section describes how we have implemented TravelGood as a BPEL process. We will go over the datatypes we have used, how we designed the process as well as general design decisions we made.
 
 \subsection{Data representation}
-Internally in BPEL, we maintain the current itinerary. This is comprised of a list of hotel bookings and flight bookings. Each booking has a status, which can be things like ``Booked'' or ``Planned''. We also maintain some bookkeeping variables, which are not too interesting for the general overview.
+Internally in BPEL, we maintain the current itinerary. This is comprised of a list of hotel bookings and flight bookings. Each booking has a status, which can be either ``unconfirmed'', ``confirmed'' or ``canceled''. We also maintain some internal bookkeeping variables, which are not too interesting for the general overview.
 
 \subsection{The Port}
 Since all the services work together on the same process, we have only made one port for TravelGood. We use RPC-literal style for this, with request/response operations. As a client for the service, would need to update the user on the results of all operations, we need to wait for some sort of response for every operation.
 
 \subsection{Business Process}
-We have split the business process into two phases, which corresponds to some of the states shown in Fig.~\ref{fig:protocol}. These phases are
+We have split the business process into two phases, which corresponds to some of the states shown in Fig.~\ref{fig:protocol}. These phases are:
 
 \begin{description}
 \item [Planning:] In this phase, the user is planning his travel and can freely add hotels and flights he find using the appropriate search methods. He can, at any point choose to cancel the itinerary. Once he is done, he can book the itinerary to move to the next phase.
 
-\item[Booked:] If the booking succeeds, the process moves to this phase, where all hotels and flights have been booked successfully. The user can attempt to cancel the bookings, but it might not work for all. If the cancellation works, the process ends. If the cancellation fails for one or more of the items on the itinerary, we stay in this state, where the status of items that could be cancelled is updated. We always leave this phase and end the process at latest, one day before the first item on the itinerary.
+\item[Booked:] If the booking of all hotels and flights was successful, the process moves to this phase. The user can now cancel the bookings, but it might not work for all bookings. If the cancellation was successful, the process is passive until one day before the first day of travel. If the cancellation fails for one or more of the items on the itinerary, we stay in this state, where the status of items that could be cancelled is updated. We always leave this phase and end the process at latest, one day before the first item on the itinerary.
 
 \end{description}
 
 \subsubsection{Planning}
 During this phase, BPEL accepts the following messages
 
-\todo{Check at navne på BPEL beskeder er korrekte}
-
 \begin{description}
-\item [\texttt{getFlights}:] BPEL simply forwards the call to LameDuck and returns the result to the client.
-\item [\texttt{getHotels}:] BPEL simply forwards the call to NiceView and returns the result to the client.
-\item [\texttt{addFlight}:] BPEL adds the flight to the itinerary, LameDuck is not contacted yet.
-\item [\texttt{addHotel}:] BPEL adds the hotel to the itinerary, NiceView is not contacted yet.
-\item [\texttt{getItinerary}:] BPEL returns the lists of hotels and flights that are planned.
-\item [\texttt{cancel}:] BPEL deletes the itinerary and ends the process.
-\item [\texttt{book}:] BPEL attempts to book all the planned flights and hotels. If successful, we move on the next phase. If any items fails to book, we compensate the ones that have been booked and stay in the planning phase. The client is informed of the result.
+\item [\texttt{getFlights}:] BPEL forwards the relevant information to LameDuck and returns the result to the client.
+\item [\texttt{getHotels}:] BPEL forwards the relevant information to NiceView and returns the result to the client.
+\item [\texttt{addFlight}:] BPEL adds the flight to the planned flights in the itinerary, LameDuck is not contacted in this step.
+\item [\texttt{addHotel}:] BPEL adds the hotel to the planned hotels in the itinerary, NiceView is not contacted in step.
+\item [\texttt{getItinerary}:] BPEL returns the lists of hotels and flights along with the current status of them (``\texttt{unconfirmed}'').
+\item [\texttt{cancelPlanning}:] BPEL ends the process which in turn drops the current planned bookings.
+\item [\texttt{bookItinerary}:] BPEL attempts to book all the planned flights and hotels. If successful, we move on the next phase. If any items fails to book, we compensate the ones that have been booked and stay in the planning phase. The client is informed of the result.
 \end{description}
 
-We have implemented these as a \texttt{pick} activity, inside a loop that runs as long as a boolean variable states that we are in the planning phase. The actual booking happens inside a scope with an attached compensation handler, that will compensate all booked items. On the scope where the \texttt{pick} activity resides, we have a fault handler that will compensate when booking fails.
+We have implemented these as a \texttt{pick} activity, inside a loop that runs as long as a boolean variable indicates that we are in the planning phase. The actual booking happens inside a scope with an attached compensation handler, that will compensate all booked items. On the scope where the \texttt{pick} activity resides, we have a fault handler that will compensate when booking fails.
 
 \subsubsection{Booked}
 During this phase, BPEL accepts the following messages.
 
-\todo{Check at dette er rigtigt}
-
 \begin{description}
-\item [\texttt{getItinerary}:] BPEL returns the lists of hotels and flights.
-\item [\texttt{cancel}:] BPEL will cancel as many items as possible. If any items fails, we stay in this phase. Otherwise the itinerary is deleted. The client is informed of the result.
+\item [\texttt{getItinerary}:] BPEL returns the lists of hotels and flights along with the current status of them.
+\item [\texttt{cancelItinerary}:] BPEL will cancel as many items as possible. The client is informed is any of the cancellations failed by returning false. It will remain in the \textbf{Booked} phase until one day before the travel was to start, such that the user can query the status of the itinerary until then.
 \end{description}
 
-This phase is also implemented as a \texttt{pick} activity. If we get a cancel request, we attempt to cancel all booked items. Any that fails, remain booked, while the others become cancelled. The itinerary is still available. The other possibility of the pick is that a timeout happens. This timeout models that it is one day before the first item on the itinerary and the whole thing is removed and the process is ended.
+This phase is also implemented as a \texttt{pick} activity. If we get a \texttt{cancelItinerary} request, we attempt to cancel all booked items. Any that fails, remain booked, while the others get the status ``\texttt{cancelled}''. The itinerary information will remain available upon request. The other possibility of the pick is that a timeout happens. This timeout models that it is one day before the first item on the itinerary and the whole thing is removed and the process is ended.
