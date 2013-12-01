@@ -35,7 +35,7 @@
             </xsd:complexType>
             <xsd:complexType name="hotelBooking">
                 <xsd:sequence>
-                    <xsd:element name="hotelBookingNo" type="nv:hotelBookingNo"></xsd:element>
+                    <xsd:element name="hotelInformation" type="nv:hotelInformation"></xsd:element>
                     <xsd:element name="status" type="xsd:string"></xsd:element>
                 </xsd:sequence>
             </xsd:complexType>
@@ -64,7 +64,7 @@
     <message name="AddHotelRequest">
         <part name="customerID" type="tns:customerID"/>
         <part name="itineraryID" type="tns:itineraryID"/>
-        <part name="hotelBookingNo" type="nv:hotelBookingNo"/>
+        <part name="hotelInformation" type="nv:hotelInformation"/>
     </message>
     <message name="AddHotelResponse">
         <part name="status" type="xsd:string"/>
