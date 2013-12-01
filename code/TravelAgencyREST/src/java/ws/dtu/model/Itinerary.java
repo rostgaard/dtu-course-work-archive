@@ -4,8 +4,14 @@
  */
 package ws.dtu.model;
 
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  *
@@ -86,6 +92,36 @@ public class Itinerary {
 
     public void setState(ItinerayState state) {
         this.state = state;
+    }
+    
+    private Boolean canCancelFlights() {
+        try {
+            GregorianCalendar gregorianCalendar = new GregorianCalendar();
+            DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
+            
+            XMLGregorianCalendar now = datatypeFactory.newXMLGregorianCalendar(gregorianCalendar);
+        
+            for (FlightBooking fb : flightBookings.getFlights()) {
+                XMLGregorianCalendar date = fb.getFlightInformation().getFlight().getLiftOff();
+                if (now.toGregorianCalendar().compareTo(date.toGregorianCalendar())>=0) {
+                    return false;
+                }
+            }
+            
+        } catch (DatatypeConfigurationException ex) {
+            Logger.getLogger(Itinerary.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return true;
+    }
+    
+    
+    public Boolean canCancel() {
+        if (this.state==ItinerayState.PLANNING || !canCancelFlights()) {
+            return false;
+        }else {
+            return true;
+        }
     }
     
 }

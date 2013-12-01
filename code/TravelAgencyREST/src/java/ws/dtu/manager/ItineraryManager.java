@@ -106,16 +106,16 @@ public class ItineraryManager {
     }
     
     public void cancelItinerary(Itinerary itinerary) {
-        if (itinerary.getState()==Itinerary.ItinerayState.PLANNING) {
-            throw new exceptions.CancelException();
-        }       
+        if (itinerary.canCancel()) {
+            throw new exceptions.CancelException();    
+        }
         
         Boolean throwException = false;
         
         Customer customer = CustomerDatabase.getInstance().get(itinerary.getCustomerID());
         for(FlightBooking fb : itinerary.getFlightBookings().getFlights()) {
             try {
-                lameDuckPort.cancelFlight(fb.getFlightInformation().getBookingNo(), fb.getFlightInformation().getPrice(), customer.getCreditcard());
+                lameDuckPort.cancelFlight(fb.getFlightInformation().getBookingNo(), fb.getFlightInformation().getPrice()/2, customer.getCreditcard());
                 fb.setBookingState(FlightBooking.FlightBookingState.CANCELLED);
             } catch (CancelFlightFault ex) {
                 throwException = true;
