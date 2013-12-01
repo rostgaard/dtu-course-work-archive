@@ -133,6 +133,7 @@ public class ItineraryManager {
         }
         
         if (throwException) {
+            itinerary.setState(ItinerayState.PLANNING);
             throw new exceptions.CancelException();
         }
         

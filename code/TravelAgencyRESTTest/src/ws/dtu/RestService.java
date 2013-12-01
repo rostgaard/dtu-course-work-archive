@@ -82,7 +82,7 @@ public class RestService {
          return resource.get(ClientResponse.class);
     }
     
-    public static ClientResponse getHotels(java.lang.String customerID, String city, String arrival, String departure) {
+    public static ClientResponse getHotels(String city, String arrival, String departure) {
          MultivaluedMap queryParamsHotel = new MultivaluedMapImpl();
          queryParamsHotel.add("origin", city);
          queryParamsHotel.add("arrival_date", arrival);

@@ -1,3 +1,5 @@
+package travelgood;
+
 
 import com.sun.jersey.api.client.ClientResponse;
 import static org.junit.Assert.*;
@@ -68,7 +70,7 @@ public class TravelGoodPlanningTest extends TravelGoodRESTTest {
     @Test
     public void testAddHotel(){
         ItineraryRepresentation itineraryRepresentation = RestService.createItinerary(customerID).getEntity(ItineraryRepresentation.class);        
-        HotelBookingList hotelBookingList = RestService.getHotels(customerID,"San Francisco", date1, date2).getEntity(HotelBookingList.class);
+        HotelBookingList hotelBookingList = RestService.getHotels("San Francisco", date1, date2).getEntity(HotelBookingList.class);
         assertEquals(3, hotelBookingList.getHotels().size());
         
         Link hotelLink = itineraryRepresentation.getLinkByRelation(HOTEL_RELATION);
@@ -102,10 +104,8 @@ public class TravelGoodPlanningTest extends TravelGoodRESTTest {
 
     @Test
     public void getHotelsEmpty(){
-        HotelBookingList hotels = RestService.getHotels(customerID, "SillyTown666", date1, date2).getEntity(HotelBookingList.class);
+        HotelBookingList hotels = RestService.getHotels("SillyTown666", date1, date2).getEntity(HotelBookingList.class);
         assertEquals(hotels.getHotels().size(), 0);
-    }
-
-    
+    }  
     
 }

@@ -1,3 +1,5 @@
+package travelgood;
+
 
 import com.sun.jersey.api.client.ClientResponse;
 import org.junit.After;
@@ -39,7 +41,7 @@ public class MandatoryTestsREST extends TravelGoodRESTTest {
         FlightBooking flightBooking3 = flightBookingList.getFlights().get(2);
 
         // Get hotels
-        HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Copenhagen", date1, date2).getEntity(HotelBookingList.class);
+        HotelBookingList hotelBookingList = RestService.getHotels("Copenhagen", date1, date2).getEntity(HotelBookingList.class);
         HotelBooking hotelBooking1 = hotelBookingList.getHotels().get(0);
         HotelBooking hotelBooking2 = hotelBookingList.getHotels().get(1);
 
@@ -128,7 +130,7 @@ public class MandatoryTestsREST extends TravelGoodRESTTest {
     @Test
     public void testB() {
         // Get hotels
-        HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Copenhagen", date1, date2).getEntity(HotelBookingList.class);
+        HotelBookingList hotelBookingList = RestService.getHotels("Copenhagen", date1, date2).getEntity(HotelBookingList.class);
         HotelBooking hotelBooking = hotelBookingList.getHotels().get(0);
 
         // Get flights
@@ -204,7 +206,7 @@ public class MandatoryTestsREST extends TravelGoodRESTTest {
         FlightBooking flightBooking = flightBookingList.getFlights().get(0);
 
         // Get hotels
-        HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Copenhagen", date1, date2).getEntity(HotelBookingList.class);
+        HotelBookingList hotelBookingList = RestService.getHotels("Copenhagen", date1, date2).getEntity(HotelBookingList.class);
         HotelBooking hotelBooking1 = hotelBookingList.getHotels().get(0);
         HotelBooking hotelBooking2 = hotelBookingList.getHotels().get(1);
 
@@ -269,7 +271,7 @@ public class MandatoryTestsREST extends TravelGoodRESTTest {
         FlightBooking flightBooking = flightBookingList.getFlights().get(0); // This flight can not be cancelled
 
         // Get hotels
-        HotelBookingList hotelBookingList = RestService.getHotels(customerID, "Copenhagen", date1, date2).getEntity(HotelBookingList.class);
+        HotelBookingList hotelBookingList = RestService.getHotels("Copenhagen", date1, date2).getEntity(HotelBookingList.class);
         HotelBooking hotelBooking1 = hotelBookingList.getHotels().get(0);
         HotelBooking hotelBooking2 = hotelBookingList.getHotels().get(1);
 
