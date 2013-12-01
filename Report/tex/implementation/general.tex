@@ -25,7 +25,7 @@ LameDuck implement the data as described in the project description. To store th
 \end{figure}
 
 \subsection{TravelGood - BPEL}
-\todo{BPEL klasse diagram}
+BPEL does not really use many data structures as it mostly just relays the relevant information further to whoever needs it. The main data structures used in our BPEL implementation are two lists, one for the planned flights and one for the planned hotels. Besides these the only other things stored are loop-variables that are to be determined based on execution.
 
 \subsection{TravelGood - RESTful}
 The RESTful version of TravelGood uses the data structures shown in figure~\ref{fig:rest_class}. A \texttt{Customer} represents the user of a system. All customers are contained in the \texttt{CustomerDatabase}. This is done in a map where the key is the identifier of the customer. This is done so a customer can be found quickly. Each \texttt{Customer} can be connected with itineraries. This is handled in \texttt{ItineraryDatabase}. The \texttt{ItineraryDatabase} holds all the itineraries in a map where the identifier of the itinerary is the key in order to quickly look up an itinerary. An \texttt{Itinerary} contains a \texttt{FlightBookingList} and a \texttt{HotelBookingList} to keep track of \texttt{FlightBooking}s and \texttt{HotelBooking}s respectively.
@@ -43,11 +43,10 @@ The RESTful version of TravelGood uses the data structures shown in figure~\ref{
 \section{Airline- and hotel services}
 Both LameDuck and NiceView are implemented using RPC-Literal style, which has been done for the simplicity of the format. We do miss out on good things from the document style binding, such as reduced overhead in the SOAP message as well as the ability to validate the SOAP message -- we simply assume that the messages are formatted correctly. 
 Also, following the rationale from \cite{papazoglou2008web}, this implementation is a synchronous service with parameter passing rather than an asynchronous document passing service.
-\todo{Vi bør have en bedre grund til at vi ikke bruger Document style. Er denne ok? (KRC)}
 
-For both services, we have developed a small suite of unit tests, that can be used to ensure that both services are implemented correctly, before running tests for the BPEL/RESTful implementations. For this purpose, we have added a service along with the required one, to reset the databases for the services.
+For both services, we have developed a small suite of unit tests, that can be used to ensure that both services are implemented correctly, before running tests for the BPEL/RESTful implementations. For this purpose, we have added a service along with the required one, to reset the databases for the services.\medskip
 
-The databases for each service is a small example with only a few entries that have been hard-coded in to suit the needs we have for our unit tests. An actual implementation of these would be much more complex, i.e. booking numbers are generated on a per-user basis and not just stored directly in the database.
+The databases for both services is a small example with only a few entries which have been hard-coded in to suit the needs we have for the necessary unit tests. An actual implementation of these would be much more complex, i.e. booking numbers are generated on a per-user basis and not just stored directly in the database.
 
 \subsection{LameDuck}
 The LameDuck service has been implemented with a wrapper class that implements the web service related things. The actual data is stored in a hard coded database, which is initialized by the web service class. This way we separate the business logic of communicating with the world from the business logic of maintaining the flights and the bookings. The web service class is also responsible for communicating with the bank when necessary, separating handling of money from handling flights.
