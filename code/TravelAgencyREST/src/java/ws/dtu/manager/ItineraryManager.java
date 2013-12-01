@@ -19,10 +19,7 @@ import ws.dtu.niceview.NiceViewPortType;
 import ws.dtu.niceview.NiceViewService;
 import ws.dtu.resources.utils.Sequencer;
 
-/**
- *
- * @author peter
- */
+
 public class ItineraryManager {
     
     private static final LameDuckService lameDuckService = new LameDuckService();
@@ -135,7 +132,7 @@ public class ItineraryManager {
             throw new exceptions.CancelException();
         }
         
-        itinerary.setState(Itinerary.ItinerayState.PLANNING);
+        itinerary.setState(Itinerary.ItinerayState.Cancelled);
     }
     
 }

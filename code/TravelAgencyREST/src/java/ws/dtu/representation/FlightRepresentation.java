@@ -4,17 +4,11 @@
  */
 package ws.dtu.representation;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import ws.dtu.model.FlightBooking;
 import ws.dtu.model.FlightBookingList;
 
-/**
- *
- * @author peter
- */
+
 @XmlRootElement
 public class FlightRepresentation extends Representation {
     

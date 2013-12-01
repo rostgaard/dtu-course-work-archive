@@ -13,15 +13,12 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-/**
- *
- * @author krc
- */
+
 @XmlRootElement()
 public class Itinerary {
 
     public enum ItinerayState {
-        PLANNING, BOOKED;
+        PLANNING, BOOKED, CANCELLED;
     }
     
     private int ID;

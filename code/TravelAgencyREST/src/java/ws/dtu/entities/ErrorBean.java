@@ -6,10 +6,7 @@ package ws.dtu.entities;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author peter
- */
+
 @XmlRootElement(name = "error")
 public class ErrorBean {
 

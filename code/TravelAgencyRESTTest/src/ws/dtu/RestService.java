@@ -3,20 +3,13 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
-import java.net.URI;
 import javax.ws.rs.core.MultivaluedMap;
-import ws.dtu.model.FlightBooking;
-import ws.dtu.model.HotelBooking;
 
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
-/**
- *
- * @author peter
- */
 public class RestService {
     
     private final static String baseURL = "http://localhost:8080/ta/webresources/";

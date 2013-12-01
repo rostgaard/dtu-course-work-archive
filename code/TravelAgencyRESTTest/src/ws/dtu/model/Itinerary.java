@@ -7,15 +7,12 @@ package ws.dtu.model;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author krc
- */
+
 @XmlRootElement()
 public class Itinerary {
 
     public enum ItinerayState {
-        PLANNING, BOOKED;
+        PLANNING, BOOKED, CANCELLED;
     }
     
     private int ID;

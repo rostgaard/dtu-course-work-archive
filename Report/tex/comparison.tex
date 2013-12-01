@@ -1,17 +1,22 @@
 {\setlength{\chapterfontsize}{26pt}
 \chapter{Comparison of RESTful and SOAP/BPEL web services}
 }
-As we have implemented the TravelGood business process using both RESTful and WSDL, a number of strengths and weaknesses has been experienced, which is discussed in this section.\\\\
-In general, while implementing the business process, as specified in the requirements, has clearly been simpler using REST, it is our impression that the solution maps better to the business process when using BEPL.
 
-\section{Ease of under standing}
-The BEPL implementation reads better for people with non-technical background due to the visual representation.
+As we have implemented the TravelGood business process using both RESTful and SOAP/BPEL, a number of strengths and weaknesses has been experienced, which is discussed in this section. 
+
+
+\section{Understanding the implementation}
+In general the basics of a RESTful web-service is easy to understand for anyone familiar with the HTTP verbs, however the business logic in a complicated RESTFul web-service can be hard to get an overview of. There is not a single place where a complete overview of the web-service can be found but instead it is required to go through each of the resources in order to try to get an understanding of the processes. Usually a RESTful web-service will rely on some documentation describing the API. This documentation would have to be kept maintained according to the implementation. The BEPL implementation reads better for people with non-technical background due to the visual representation of the processes. Furthermore the visual representation makes it possible to get an overview of all processes from a single place. This might be a disadvantage if the BPEL web-service is large since 
 
 \section{Adaptability to change}
-Changed requirement are part of every project, in this aspect maintainability a critical factor. With REST, if there is a change to the public API, you have to make everyone agree manually on the interface, or handle arbitrary failures. With WSDL
+Changing the requirements is something that are realistic and a are part of almost every project, further from a point of view of maintainability it is a critical factor that the web-service adapts well to such changes.
+
+For REST there is no standard metadata format which means that changes in the REST interface or the format returned will require services using the web-service to adapt to these changes as well. What usually happens today when a RESTful web-service in production is changed is that a new version of the web-service next to the old version, which will be kept running until all users has adapted to the new version. Several solutions exist for providing metadata for a RESTful web-service including \texttt{WADL}, but none of these has been widely adapted yet. Furthermore as a developer of a RESTful web-service new resources will have to be introduced.
+
+In SOAP/BPEL the \texttt{WSDL} files makes it easier for services using the web-service to adapt to the changes since the interface is specified in the \texttt{WSDL}. The other web-services would still have to adapt for the changes though.
 
 \section{Scalability}
-As RESTful is by-design specified to be scalable.
+Both SOAP and RESTful web-services are deployed in large setups in the industry which indicates that both solutions are scaleable. The transmission overhead in a RESTful web-service is significantly lower especially when using JSON compared to SOAP/BPEL. When using advanced web-service technologies such as WS-Addressing and WS-Security more overhead is introduced, however in practice does not have that much impact on the performance. 
 
 \section{Other notes}
-Other comparison parameters are the transmission and parsing overhead, where REST+JSON clearly surpasses SOAP messaging -- especially if extensions such as WS-Addressing and WS-Security are used, as the problems solved by these technologies are not tacked by REST, but by other layers of the application.
+% Other comparison parameters are the transmission and parsing overhead, where REST+JSON clearly surpasses SOAP messaging -- especially if extensions such as WS-Addressing and WS-Security are used, as the problems solved by these technologies are not tacked by REST, but by other layers of the application.

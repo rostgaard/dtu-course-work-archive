@@ -21,6 +21,8 @@ LameDuck implement the data as described in the project description. To store th
 \todo{BPEL klasse diagram}
 
 \subsection{TravelGood - RESTful}
+The RESTful version of TravelGood uses the data structures shown in figure~\ref{fig:rest_class}. All customers are contained in the \texttt{CustomerDatabase}. This is done in a map where the key is the identifier of the customer. This is done so a customer can be found quickly. Similarly the \texttt{ItineraryDatabase} holds all the itineraries in a map where the identifier of the itinerary is the key in order to quickly look up an itinerary.
+
 \todo{REST klasse diagram}
 \section{Airline- and hotel services}
 Both LameDuck and NiceView are implemented using RPC-Literal style. This has been done for the simplicity of the format, while we sacrifice things from the document style binding, such as reduced overhead in the SOAP message as well as the ability to validate the SOAP message. We simply assume that the messages are formatted correctly.

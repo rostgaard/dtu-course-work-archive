@@ -8,10 +8,7 @@ import ws.dtu.model.Customer;
 import ws.dtu.model.Itinerary;
 import ws.dtu.model.exceptions;
 
-/**
- *
- * @author krc
- */
+
 public final class ItineraryDatabase {
     
 
@@ -64,7 +61,6 @@ public final class ItineraryDatabase {
         }
         
         data.get(customer).remove(itinerary_id);
-        data.remove(customer);
     }
     
     public void reset() {

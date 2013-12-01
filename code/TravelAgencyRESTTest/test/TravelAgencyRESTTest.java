@@ -14,10 +14,6 @@ import ws.dtu.representation.ItineraryRepresentation;
 import ws.dtu.representation.Link;
 
 
-/**
- *
- * @author peter
- */
 public class TravelAgencyRESTTest {
     
     private final static  String customerID = "1";

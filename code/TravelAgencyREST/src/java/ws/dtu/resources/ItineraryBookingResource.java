@@ -44,7 +44,6 @@ public class ItineraryBookingResource extends ws.dtu.resources.Resource {
         Itinerary itinerary = ItineraryDatabase.getInstance().get(customerID,itineraryIdentifier);
         itineraryManager.cancelItinerary(itinerary);
         StatusRepresentation representation = new StatusRepresentation("Itinerary cancelled");
-        linkManager.addLinks(itinerary, representation);
         
         return representation;
     } 

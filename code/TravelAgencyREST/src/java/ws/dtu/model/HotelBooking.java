@@ -6,14 +6,9 @@ package ws.dtu.model;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import ws.dtu.lameduck.types.FlightInformation;
 import ws.dtu.niceview.types.HotelInformation;
 
 
-/**
- *
- * @author peter
- */
 @XmlRootElement
 public class HotelBooking {
 

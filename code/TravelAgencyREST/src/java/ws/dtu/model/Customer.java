@@ -6,10 +6,7 @@ package ws.dtu.model;
 
 import dk.dtu.imm.fastmoney.types.CreditCardInfoType;
 
-/**
- *
- * @author peter
- */
+
 public class Customer {
     
     private String name;

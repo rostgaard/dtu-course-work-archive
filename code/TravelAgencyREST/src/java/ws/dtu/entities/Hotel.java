@@ -6,10 +6,7 @@ package ws.dtu.entities;
 
 import javax.xml.bind.annotation.XmlElement;
 
-/**
- *
- * @author peter
- */
+
 public class Hotel {
     @XmlElement(required = true)
     protected String name;

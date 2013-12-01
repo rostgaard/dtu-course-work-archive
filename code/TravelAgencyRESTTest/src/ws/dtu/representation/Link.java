@@ -7,10 +7,7 @@ package ws.dtu.representation;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author peter
- */
+
 @XmlRootElement
 public class Link {
 

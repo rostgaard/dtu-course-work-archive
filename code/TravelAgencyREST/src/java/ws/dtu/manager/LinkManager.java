@@ -8,10 +8,7 @@ import ws.dtu.model.Itinerary;
 import ws.dtu.representation.Link;
 import ws.dtu.representation.Representation;
 
-/**
- *
- * @author peter
- */
+
 public class LinkManager {
     
     private static final String MEDIATYPE = "application/itinerary+xml";
@@ -43,7 +40,7 @@ public class LinkManager {
             addBookedStateLinks(itinerary.getID(), representation);
         }
     }
-    
+        
     private void addPlanningStateLinks(int itineraryID, Representation representation) {
         addSelfLink(itineraryID, representation);
         addRemoveLink(itineraryID, representation);

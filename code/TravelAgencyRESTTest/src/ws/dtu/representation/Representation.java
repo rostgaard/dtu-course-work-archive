@@ -9,10 +9,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author peter
- */
+
 @XmlRootElement
 public abstract class Representation {
 

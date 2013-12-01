@@ -11,10 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import ws.dtu.niceview.types.HotelInformation;
 import ws.dtu.niceview.types.HotelList;
 
-/**
- *
- * @author peter
- */
+
 @XmlRootElement
 public class HotelBookingList {
     
