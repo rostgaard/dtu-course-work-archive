@@ -25,7 +25,7 @@
             </xsd:complexType>
             <xsd:complexType name="hotelBooking">
                 <xsd:sequence>
-                    <xsd:element name="hotelBookingNo" type="nv:hotelBookingNo"/>
+                    <xsd:element name="hotelInformation" type="nv:hotelInformation"/>
                     <xsd:element name="status" type="xsd:string"/>
                 </xsd:sequence>
             </xsd:complexType>
@@ -95,7 +95,7 @@
     </part>
     <part name="itineraryID" type="tns:itineraryID">
     </part>
-    <part name="hotelBookingNo" type="nv:hotelBookingNo">
+    <part name="hotelInformation" type="nv:hotelInformation">
     </part>
   </message>
   <message name="AddFlightRequest">

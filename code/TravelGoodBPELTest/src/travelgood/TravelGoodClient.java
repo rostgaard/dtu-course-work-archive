@@ -25,10 +25,10 @@ public class TravelGoodClient {
         return port.addFlight(customerID, itineraryID, flightInformation);
     }
 
-    protected static String addHotel(java.lang.String customerID, java.lang.String itineraryID, java.lang.String hotelBookingNo) {
+    protected static String addHotel(java.lang.String customerID, java.lang.String itineraryID, ws.dtu.niceview.types.HotelInformation hotelInformation) {
         ws.travelgoodbpel.TravelGoodService service = new ws.travelgoodbpel.TravelGoodService();
         ws.travelgoodbpel.TravelGoodPortType port = service.getTravelGoodPort();
-        return port.addHotel(customerID, itineraryID, hotelBookingNo);
+        return port.addHotel(customerID, itineraryID, hotelInformation);
     }
 
     protected static boolean bookItinerary(java.lang.String customerID, java.lang.String itineraryID, dk.dtu.imm.fastmoney.types.CreditCardInfoType ccInformation) {

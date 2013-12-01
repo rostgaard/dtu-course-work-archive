@@ -1,27 +1,28 @@
-<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.1.1 (branches/2.1-6844; 2011-07-29T12:07:24+0000) JAXWS-RI/2.2.5 JAXWS/2.2. --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn://types.niceview.dtu.ws/" targetNamespace="urn://types.niceview.dtu.ws/" elementFormDefault="qualified">
-    <xsd:complexType name="hotelInformation">
-        <xsd:sequence>
-            <xsd:element name="name" type="xsd:string"/>
-            <xsd:element name="address" type="tns:address"/>
-            <xsd:element name="bookingNo" type="tns:hotelBookingNo"/>
-            <xsd:element name="price" type="xsd:double"/>
-            <xsd:element name="ccRequired" type="xsd:boolean"/>
-            <xsd:element name="reservationService" type="xsd:string"/>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:complexType name="address">
-        <xsd:sequence>
-            <xsd:element name="city" type="xsd:string"/>
-            <xsd:element name="streetAddress" type="xsd:string"/>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:complexType name="hotelList">
-        <xsd:sequence>
-            <xsd:element name="hotels" type="tns:hotelInformation" maxOccurs="unbounded" minOccurs="0"/>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:element name="fault" type="xsd:string"/>
-    <xsd:simpleType name="hotelBookingNo">
-        <xsd:restriction base="xsd:string"/>
-    </xsd:simpleType>
-</xsd:schema>
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.1.1 (branches/2.1-6844; 2011-07-29T12:07:24+0000) JAXWS-RI/2.2.5 JAXWS/2.2. --><xs:schema xmlns:tns="urn://types.niceview.dtu.ws/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="urn://types.niceview.dtu.ws/">
+
+<xs:element name="fault" type="xs:string"/>
+
+<xs:complexType name="hotelList">
+<xs:sequence>
+<xs:element name="hotels" type="tns:hotelInformation" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="hotelInformation">
+<xs:sequence>
+<xs:element name="name" type="xs:string"/>
+<xs:element name="address" type="tns:address"/>
+<xs:element name="bookingNo" type="xs:string"/>
+<xs:element name="price" type="xs:double"/>
+<xs:element name="ccRequired" type="xs:boolean"/>
+<xs:element name="reservationService" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="address">
+<xs:sequence>
+<xs:element name="city" type="xs:string"/>
+<xs:element name="streetAddress" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

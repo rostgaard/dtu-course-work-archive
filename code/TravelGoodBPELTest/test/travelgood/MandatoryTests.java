@@ -68,7 +68,7 @@ public class MandatoryTests {
         // Plan first hotel
         hotels = TravelGoodClient.getHotels(customerID, itineraryID, "San Francisco", date1, date2);
         hotelInfo[0] = hotels.getHotels().get(0);
-        TravelGoodClient.addHotel(customerID, itineraryID, hotelInfo[0].getBookingNo());
+        TravelGoodClient.addHotel(customerID, itineraryID, hotelInfo[0]);
         
         // Plan second flight
         flights = TravelGoodClient.getFlights(customerID, itineraryID, "SFO", "CPH", date1);
@@ -83,7 +83,7 @@ public class MandatoryTests {
         // Plan second hotel
         hotels = TravelGoodClient.getHotels(customerID, itineraryID, "Paris", date1, date2);
         hotelInfo[1] = hotels.getHotels().get(0);
-        TravelGoodClient.addHotel(customerID, itineraryID, hotelInfo[1].getBookingNo());
+        TravelGoodClient.addHotel(customerID, itineraryID, hotelInfo[1]);
         
         // Check itinerary
         TravelGoodClient.getItinerary(customerID, itineraryID, flightBookings, hotelBookings);
@@ -107,7 +107,7 @@ public class MandatoryTests {
             assertEquals(hotelBooking.getStatus(), "unconfirmed");
 
             // Check information
-            assertEquals(hotelBooking.getHotelBookingNo(), hotelInfo[i].getBookingNo());
+            compareHotelInformation(hotelBooking.getHotelInformation(), hotelInfo[i]);
         }
         
         // Book itinerary
@@ -134,7 +134,7 @@ public class MandatoryTests {
             assertEquals(hotelBooking.getStatus(), "confirmed");
 
             // Check information
-            assertEquals(hotelBooking.getHotelBookingNo(), hotelInfo[i].getBookingNo());
+            compareHotelInformation(hotelBooking.getHotelInformation(), hotelInfo[i]);
         }
     }
     
@@ -164,12 +164,12 @@ public class MandatoryTests {
         // Plan first hotel
         hotels = TravelGoodClient.getHotels(customerID, itineraryID, "Crazy Town", date1, date2);
         HotelInformation alreadyBookedHotel = hotels.getHotels().get(0);
-        TravelGoodClient.addHotel(customerID, itineraryID, alreadyBookedHotel.getBookingNo());
+        TravelGoodClient.addHotel(customerID, itineraryID, alreadyBookedHotel);
         
         // Plan second hotel
         hotels = TravelGoodClient.getHotels(customerID, itineraryID, "San Francisco", date1, date2);
         HotelInformation unconfirmedHotelInfo = hotels.getHotels().get(0);
-        TravelGoodClient.addHotel(customerID, itineraryID, unconfirmedHotelInfo.getBookingNo());
+        TravelGoodClient.addHotel(customerID, itineraryID, unconfirmedHotelInfo);
         
         assertFalse(TravelGoodClient.bookItinerary(customerID, itineraryID, cc));
         
@@ -196,8 +196,8 @@ public class MandatoryTests {
         HotelInformation firstHotel = hotels.getHotels().get(0);
         HotelInformation secondHotel = hotels.getHotels().get(1);
         
-        TravelGoodClient.addHotel(customerID, itineraryID, firstHotel.getBookingNo());
-        TravelGoodClient.addHotel(customerID, itineraryID, secondHotel.getBookingNo());
+        TravelGoodClient.addHotel(customerID, itineraryID, firstHotel);
+        TravelGoodClient.addHotel(customerID, itineraryID, secondHotel);
         
         
         // Book itinerary
@@ -234,8 +234,8 @@ public class MandatoryTests {
         HotelInformation firstHotel = hotels.getHotels().get(2); // Unable to cancel this hotel
         HotelInformation secondHotel = hotels.getHotels().get(1);
         
-        TravelGoodClient.addHotel(customerID, itineraryID, firstHotel.getBookingNo());
-        TravelGoodClient.addHotel(customerID, itineraryID, secondHotel.getBookingNo());
+        TravelGoodClient.addHotel(customerID, itineraryID, firstHotel);
+        TravelGoodClient.addHotel(customerID, itineraryID, secondHotel);
         
         
         // Book itinerary
@@ -268,6 +268,16 @@ public class MandatoryTests {
         assertEquals(f1.getFlight().getLiftOff(), f2.getFlight().getLiftOff());
         assertEquals(f1.getFlight().getOrigin(), f2.getFlight().getOrigin());
     }
+    
+    private void compareHotelInformation(HotelInformation h1, HotelInformation h2) {
+        assertEquals(h1.getAddress(), h2.getAddress());
+        assertEquals(h1.getBookingNo(), h2.getBookingNo());
+        assertEquals(h1.getName(), h2.getName());
+        assertTrue(h1.getPrice() == h2.getPrice());
+        assertEquals(h1.getReservationService(), h2.getReservationService());
+        assertEquals(h1.isCcRequired(), h2.isCcRequired());
+    }
+
 
     private static void lameDuckResetOperation() {
         reset.lameduck.dtu.ws.LameDuckResetService service = new reset.lameduck.dtu.ws.LameDuckResetService();
@@ -280,5 +290,4 @@ public class MandatoryTests {
         reset.niceview.dtu.ws.NiceViewResetPortType port = service.getNiceViewResetPort();
         port.niceViewResetOperation();
     }
-
 }
