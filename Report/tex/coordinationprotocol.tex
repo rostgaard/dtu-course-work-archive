@@ -7,7 +7,6 @@ This chapter describes the protocol the client has to follow when using the Trav
 \caption{Protocol for the TravelGood service}
 \label{fig:protocol}
 \end{figure}
-\todo{Update protocol state machine to include passive state after cancel fails}
 
 The protocol sits idle, until the client creates an itinerary. At this point we enter a planning state, where it is possible to search for flights and hotels, and add some of them to the itinerary. During this phase, the client is free to cancel planning and thus ending the protocol. If the client does not cancel, the itinerary can be booked, which will then be attempted. If the booking fails on any item in the itinerary, we return to the planning state and inform the client. 
 
