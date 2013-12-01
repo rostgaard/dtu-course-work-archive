@@ -1,5 +1,5 @@
 \section{BPEL}
-This section describes how we have implemented TravelGood as a BPEL process. We will go over the datatypes we have used, how we designed the process as well as general design decisions we made.
+This section describes how we have implemented TravelGood as a BPEL process. We will go over the data types we have used, how we designed the process as well as general design decisions we made.
 
 \subsection{Data representation}
 Internally in BPEL, we maintain the current itinerary. This is comprised of a list of hotel bookings and flight bookings. Each booking has a status, which can be either ``unconfirmed'', ``confirmed'' or ``canceled''. We also maintain some internal bookkeeping variables, which are not too interesting for the general overview.
