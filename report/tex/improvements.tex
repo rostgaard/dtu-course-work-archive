@@ -1,6 +1,6 @@
 
 \chapter{Improving precision}
-\section{Deriving information from boolean expressions}
+% \section{Deriving information from boolean expressions}
 %As the analysis is now, we have a crude over-approximation, and in order to improve that, we can harvest more %information from the flow graph.\\\\
 %Up until now, we did not care about the conditions for loops or branches. For instance, given the code in figure %\ref{fig:if_flow_example}, we \emph{could} derive information about the state of the variable y, depending on %which branch we take. In essence, if we take the true branch, we know for certain that the value of y, is indeed %the value of x - which is 5 (but that is less interesting in this case). If -- on the other hand -- we take the %false branch, we know for certain that the value of y is \emph{every other value} than those of x.\\\\
 %\begin{figure}[h]
@@ -65,8 +65,6 @@ For underflow detection we've started by extending the Analyzable interface as i
 We then loop through each label in the set of labels of the program, and if the test fails, we push the problematic node to a NodeSet which then can be used to inform the callee (probably Main procedure) of places where problems could arise.
 This problem is handled for each program statements as well for the boolean expressions as those can contain array operations. Table~\ref{table:underflow_functions_statements}, Table~\ref{table:underflow_functions_expressions} and Table~\ref{table:underflow_functions_boolean_expressions} shows the functions for underflow detection.
 
-
-\section{Functions for underflow detection}
 \begin{table}[h]
 \begin{tabular}{| l | l |}
   \hline
