@@ -4,14 +4,15 @@
 \kim
 
 \noindent
-In general technologies covered in this project are standardized, interoperability is much less of a hassle than if every protocol should be implemented from scratch. Using formalized languages -- such as WSDL, SOAP and BEPL -- provides additional non-quantifiable benefits such as implicit documentation.\\\\
+In general technologies covered in this project are standardized, interoperability is much less of a hassle than if every protocol should be implemented from scratch. Using formalized languages -- such as WSDL, SOAP and BPEL -- provides additional non-quantifiable benefits such as implicit documentation.
+
 As we have implemented the TravelGood business process using both RESTful and SOAP/BPEL, a number of strengths and weaknesses have been experienced, which will be discussed in this chapter.
 
 \section{Implementation}
 \mrb
 
 \noindent
-Beginning with the tool chain, the easiest technology to get started with is REST. As a lot of concepts and tool-dependant processes are linked to BEPL. Since the actual syntax of BPEL is in XML format, it is very hard for humans to write it without tooling. On the other hand, REST is ``just code'', all you really need is an editor and a compiler (and preferably a framework). When implementing RESTful, the developer has to make sure that he comply with the design decisions on how to use the http verbs and there is no static check. Using BPEL, all types are locked based on the wsdl file, so the developer can focus on the actual logic of the system. 
+Beginning with the tool chain, the easiest technology to get started with is REST. As a lot of concepts and tool-dependant processes are linked to BPEL. Since the actual syntax of BPEL is in XML format, it is very hard for humans to write it without tooling. On the other hand, REST is ``just code'', all you really need is an editor and a compiler (and preferably a framework). When implementing RESTful, the developer has to make sure that he comply with the design decisions on how to use the http verbs and there is no static check. Using BPEL, all types are locked based on the wsdl file, so the developer can focus on the actual logic of the system. 
 
 \section{Understanding the implementation}
 \mkt
