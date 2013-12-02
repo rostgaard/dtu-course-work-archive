@@ -10,7 +10,7 @@ The analysis is based on a monotone framework, which has the form:
   \label{eq:monotone_framework}
 \end{equation}
 \\\\
-In table~\ref{table:latticedefinition} we our lattice for the analysis. This is a complete lattice, as every subset in the partial ordered set have a least upper bound and a greatest lower bound.\\
+Table~\ref{table:latticedefinition} define our lattice for this analysis. In figure~\ref{fig:interval_analysis_complete_lattice} the lattice for the analysis is shown. This is a complete lattice, as every subset in the partial ordered set have a least upper bound and a greatest lower bound.\\
 It also holds the Ascending Chain Property, because the lattice has a finite height, and will thus, eventually stabilize.
 \begin{table}[H]
 \begin{tabular}{| l | l |}
@@ -138,8 +138,6 @@ It also holds the Ascending Chain Property, because the lattice has a finite hei
  
   \label{fig:interval_analysis_complete_lattice}
  \end{figure}
-
-\todo{Argumenter for at det er en komplet lattice}
 
 Table~\ref{table:interval_analysis_functions} shows our transfer function for the extended \texttt{WHILE} language.
 \begin{table}[h]
