@@ -99,8 +99,9 @@ The class ProgramSlicing.java implements the program slice algorithm.
 It takes two parameters, a point of interest and the the result from reaching definition.
 It is an implementation of the pseudo-code presented in section 3.5 Program slice calculation algorithm.
 
-
+{\setlength{\chapterfontsize}{24pt}
 \chapter{General about implementation}
+}
 For the implementation we have chosen to map the label $\ell$ to a Node object instead. The label is still present is still present within the node -- and is used for representation -- but now contains additional information, such as the which statement is maps to.
 
 \section{The lexer}
@@ -213,7 +214,7 @@ $ a_1 \geq a_2$   & $ \mathcal{A_S}[\![a_2]\!] \bigcup \left(\mathcal{A_S}[\![a_
 
 \section{Underflow detection}
 
-For underflow detection we've stated by extending the Analysable interface as illustrated in figure \ref{fig:analysable_underflow_extension}.
+For underflow detection we've stated by extending the Analyzable interface as illustrated in figure \ref{fig:analysable_underflow_extension}.
 \begin{figure}
 \centering
 \begin{tikzpicture} 
