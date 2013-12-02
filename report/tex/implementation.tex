@@ -145,12 +145,7 @@ In order to perform the analysis an abstract interface \texttt{Lattice} has been
 If a new similar analysis needed to be implemented I would be easy to add a new class implementing this interface.
 
 \subsection{Calculating a solution}
-In order to solve the equations provided by the analysis' the general worklist algorithm for computing the MFP solution has been implemented. The algorithm is placed as the method \texttt{execute} in a \texttt{Program}. It takes a specific analysis as a parameter and returns a result of the analysis for each label in the program as a result.
-
-%TODO Add more meat on this. Something about keeping track of the values internally, even when going out of bounds.
-% The valid transitions -- and their states -- are depicted in figure \ref{figure:interval_states}, which illustrates the dead-end of $-\infty$ and $\infty$ quite efficient.
-% 
-
+In order to solve the equations provided by the analysis' the general worklist algorithm for computing the MFP solution has been implemented. The algorithm is placed as the method \texttt{execute} in a \texttt{Program}. It takes a specific analysis as a parameter and returns a result of the analysis for each label in the program as a result. All the flows are added to the worklist. In running time of the algorithm could be optimized by sorting the flow according to reverse post order. The transfer functions are called on the nodes during execution of the algorithm in order to calculate the result of the analysis. As an addition compared to how we defined the analysis, also the label of the node that the flows goes to is send when using the transfer function. This is done in order to have two different transfer functions for \texttt{if} and \texttt{while} statements. An \texttt{if} statement can then check if the flow is going to the true or the false branch and then use determine the new state by evaluating the condition. This makes a more precise solution.
 
 \chapter{Improving precision}
 \section{Deriving information from boolean expressions}
@@ -199,15 +194,6 @@ $ a_1 < a_ 2$     & $ \mathcal{A_S}[\![a_1]\!] \bigcup \left(\mathcal{A_S}[\![a_
 $ a_1 > a_ 2$     & $ \mathcal{A_S}[\![a_2]\!] \bigcup \left(\mathcal{A_S}[\![a_2]\!] \setminus \mathcal{A_S}[\![a_1]\!]\right) $ \\
 $ a_1 \leq a_ 2$  & $ \mathcal{A_S}[\![a_1]\!] \bigcup \left(\mathcal{A_S}[\![a_1]\!] \setminus \mathcal{A_S}[\![a_2]\!]\right) \bigcup \left(\mathcal{A_S}[\![a_1]\!] \bigcap \mathcal{A_S}[\![a_2]\!]\right) $ \\
 $ a_1 \geq a_2$   & $ \mathcal{A_S}[\![a_2]\!] \bigcup \left(\mathcal{A_S}[\![a_2]\!] \setminus \mathcal{A_S}[\![a_1]\!]\right) \bigcup  \left(\mathcal{A_S}[\![a_1]\!] \bigcap \mathcal{A_S}[\![a_2]\!]\right)$ \\
-
-%Beq  ::= A[a1] intersect A[a2]
-%Bneq ::= (Beq \ A[a1]) U (Beq \ A[a2])
-%Blt  ::= A[a1] U (A[a1] \ A[a2])
-%Bgt  ::= A[a2] U (A[a2] \ A[a1])
-%Bleq ::= Beq U Blt
-%Blgt ::= Beq U Bgt
-
-%        & \text{if } \mathcal{A}_S [\![a]\!]\widehat{\sigma} = \{-\}$ \\
 \hline
 \end{tabular}
 \caption{Expression mapping}
@@ -217,19 +203,7 @@ $ a_1 \geq a_2$   & $ \mathcal{A_S}[\![a_2]\!] \bigcup \left(\mathcal{A_S}[\![a_
 
 \section{Underflow detection}
 
-For underflow detection we've stated by extending the Analyzable interface as illustrated in figure \ref{fig:analysable_underflow_extension}.
-\begin{figure}
-\centering
-\begin{tikzpicture} 
-\umlclass[type=interface]{Analysable}{}{ 
-  + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): Boolean}} \\
-  + \umlvirt {labels () : NodeSet} \\
-  $...$
-} 
-\end{tikzpicture}
-\caption{Extension of the Analyseable interface}
-\label{fig:analysable_underflow_extension}
-\end{figure}
+For underflow detection we've stated by extending the Analyzable interface as illustrated in figure~\ref{fig:analysable_basic_definition}
 
 We then loop through each label in the set of labels of the program, and if the test fails, we push the problematic node to a NodeSet which then can be used to inform the callee (probably Main procedure) of places where problems could arise.
 
