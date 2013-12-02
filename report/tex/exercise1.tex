@@ -25,17 +25,16 @@ In our implementation language the statements from the \texttt{WHILE} language w
 	\item \textbf{Condition} - Figure~\ref{fig:condition} shows the structures of conditions.
 	\item \textbf{Expression} - Figure~\ref{fig:expression} shows the structures of expressions.
 \end{itemize}
-Each token from the grammer is then mapped to a realization of a class corresponding to its defined type. E.g. an Assignment class will derive from a Statement class.
+Each token from the grammar is then mapped to a realization of a class corresponding to its defined type. E.g. an Assignment class will derive from a Statement class.
 \\\\
 Declarations will be handled separately from statements, and will be held in a dedicated declaration list until needed. Only one constraint exists for declarations: Their identifiers must be unique.
 
-\todo{Indsæt statement figure}
-% \begin{figure}[h]
-% 	\centering
-% 	\includegraphics[scale=0.5]{../fig/Statement}
-% 	\caption{Statements and their derived types}
-% 	\label{fig:statement}
-% \end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{../fig/Statement}
+	\caption{Statements and their derived types}
+	\label{fig:statement}
+\end{figure}
 
 \begin{figure}[h]
 	\centering

@@ -66,7 +66,79 @@ It also holds the Ascending Chain Property, because the lattice has a finite hei
 \caption{Analysis definitions}
 \end{table}
 
-\todo{Indsæt lattice for interval analysis}
+ \begin{figure}
+ \centering
+ \begin{tikzpicture}
+   \tikzstyle{line} = [draw, -latex'] 
+   \node (top) at (6,8)  {$[-\infty,\infty]$};
+   \node (minusinfmax) at (3,6)  {$[-\infty,max]$};
+   \node (mininf) at (9,6)  {$[min,\infty]$};
+
+   \node (bot) at (6,0)  {$\bot$};
+   \node (minusinfminusinf) at (0,2)  {$[-\infty,-\infty]$};
+   \node (minmin) at (2,2)  {$[min,min]$};
+   \node (minusoneminusone) at (4,2)  {$[-1,-1]$};
+   \node (zerozero) at (6,2)  {$[0,0]$};
+   \node (oneone) at (8,2)  {$[1,1]$};
+   \node (maxmax) at (10,2)  {$[max,max]$};
+   \node (infinf) at (12,2)  {$[\infty,\infty]$};
+   
+   \node (minusinfmin) at (1,3)  {$[-\infty,min]$};
+   \node (minusonezero) at (5,3)  {$[-1,0]$};
+   \node (zeroone) at (7,3)  {$[0,1]$};
+   \node (maxinf) at (11,3)  {$[max,\infty]$};
+   
+   \node (minustwozero) at (4,4)  {$[-2,0]$};
+   \node (minusoneone) at (6,4)  {$[-1,1]$};
+   \node (zerotwo) at (8,4)  {$[0,2]$};
+ 
+   
+   \path [-] (bot) edge (minusinfminusinf);
+   \path [-] (bot) edge (minmin);
+   \path [-] (bot) edge (minusoneminusone);
+   \path [-] (bot) edge (zerozero);
+   \path [-] (bot) edge (oneone);
+   \path [-] (bot) edge (maxmax);
+   \path [-] (bot) edge (infinf);
+   \path [dotted] (minmin) edge (minusoneminusone);
+   \path [dotted] (oneone) edge (maxmax);
+   
+   \path [-] (minusinfminusinf) edge (minusinfmin);
+   \path [-] (minmin) edge (minusinfmin);
+ \path [-] (minusoneminusone) edge (minusonezero);
+ \path [-] (zerozero) edge (minusonezero);
+ \path [-] (zerozero) edge (zeroone);
+ \path [-] (oneone) edge (zeroone);
+   \path [-] (maxmax) edge (maxinf);
+   \path [-] (infinf) edge (maxinf);
+   \path [dotted] (maxinf) edge (zeroone);
+   \path [dotted] (minusinfmin) edge (minusonezero);
+   
+   \path [-] (minusonezero) edge (minustwozero);
+   \path [-] (minusonezero) edge (minusoneone);
+   \path [-] (zeroone) edge (minusoneone);
+   \path [-] (zeroone) edge (zerotwo);
+   
+   \path [-] (minustwozero) edge (3,5);
+   \path [-] (minustwozero) edge (5,5);
+   \path [-] (minusoneone) edge (5,5);
+   \path [-] (minusoneone) edge (7,5);
+   \path [-] (zerotwo) edge (7,5);
+   \path [-] (zerotwo) edge (9,5);
+   
+   \path [dotted] (minusinfmin) edge (minusinfmax);
+   \path [dotted] (maxinf) edge (mininf);
+   
+   \path [-] (minusinfmax) edge (top);
+   \path [-] (mininf) edge (top);
+   
+   
+ \end{tikzpicture}
+  \caption{Complete lattice of interval analysis instance}
+ 
+  \label{fig:interval_analysis_complete_lattice}
+ \end{figure}
+
 \todo{Argumenter for at det er en komplet lattice}
 
 Table~\ref{table:interval_analysis_functions} shows our transfer function for the extended \texttt{WHILE} language.
