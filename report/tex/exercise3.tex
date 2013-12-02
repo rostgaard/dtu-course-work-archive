@@ -364,8 +364,9 @@ Based on the detection of signs analysis described above, we can suggest an algo
  \label{algorithm:bufferoverflow1}
 \end{algorithm}
 
-\subsection{Example}
-We start by defining a example program in the \texttt{WHILE} language, seen in figure \ref{code:array_example}.\\
+\subsection{Example solution}
+The analysis described above can be used in practice to determine the potential buffer underflow in a program. In figure~\ref{code:array_example} is defined a program written in the \texttt{WHILE} language. The analysis should be performed on this program in order to establish equations. They are shown in table~\ref{tabel:signs_example_equations}. The solution to these equations if shown in table~\ref{tabel:signs_example_equations_solution}. It can be seen that there may be a buffer underflow at label 5 since the value of $i$ may be negative.
+
 \begin{figure}
   \begin{lstlisting}
 program
@@ -381,7 +382,6 @@ end
  \caption{Example program for demonstrating buffer overflow using sign detection}
  \label{code:array_example}
 \end{figure}
-Then the equations can be established. They are shown in table~\ref{tabel:signs_example_equations}.\\
 \begin{table}
 \begin{tabular}{| l | l |}
 \hline
@@ -402,7 +402,6 @@ A$_\circ (6) = $A$_\bullet(5)$ & A$_\bullet(6) = \text{f}_{\text{i := i + 1}} (\
 \caption{Equations for example program}
 \label{tabel:signs_example_equations}
 \end{table}
-The solution to these constrains can be found in table~\ref{tabel:signs_example_equations_solution}.
 
 
 \begin{table}

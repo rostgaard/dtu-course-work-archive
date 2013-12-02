@@ -1,8 +1,7 @@
 {\setlength{\chapterfontsize}{24pt}
 \chapter{Buffer Overflow Interval Analysis}
 }
-
-The sign detection analysis from section~\ref{sec:exercise3} provided a solution to the buffer overflow problem by only considering the lower bound. Using interval analysis it is possible to consider the upper bound as well.
+Interval analysis establishes intervals. In the sign detection analysis from chapter~\ref{sec:exercise3} a solution to the buffer overflow problem by only considering the lower bound was provided. Using interval analysis it is possible to consider the upper bound as well by keeping intervals for each variable as determine if the max of the interval is potentially larger than the bounds.
 
 \section{Monotone framework}
 The analysis is based on a monotone framework, which has the form:
@@ -44,7 +43,7 @@ It also holds the Ascending Chain Property, because the lattice has a finite hei
   \caption{Lattice definition}
   \label{table:latticedefinition}
 \end{table}
-\noindent We define the flow as:
+\noindent For this analysis we define the flow as:
 
 \begin{description}
   \item[Flow $F$:] flow ($S_*$) (forward analysis)
@@ -67,8 +66,7 @@ It also holds the Ascending Chain Property, because the lattice has a finite hei
 \caption{Analysis definitions}
 \end{table}
 
-\section{Transfer functions}
-Table~\ref{table:transferfunctions} shows our transfer function for the extended \texttt{WHILE} language.
+Table~\ref{table:interval_analysis_functions} shows our transfer function for the extended \texttt{WHILE} language.
 \begin{table}[h]
 \begin{tabular}{| l | l |}
   \hline
@@ -94,12 +92,18 @@ Table~\ref{table:transferfunctions} shows our transfer function for the extended
 \end{tabular}
 \centering
 \caption{Transfer functions for sign detection}
-\label{table:sign_detection_functions}
+\label{table:interval_analysis_functions}
 \end{table}
 
 
-Where A$_I$ : AExp$ \rightarrow (\widehat{\text{State}_{\text{I}}} \rightarrow \text{Interval})$ determines the interval for the value of an expression. It is defined below.\\\\
-
+\subsection{Evaluate arithmetic expressions}
+In order to determine the interval of an expression we need to define the semantics of expressions in the \texttt{WHILE} language for the interval analysis.
+\begin{equation}
+A_I : AExp \rightarrow (\widehat{\text{State}_{\text{I}}} \rightarrow \textbf{Interval})
+\end{equation} 
+Where  \textbf{Interval}$=\{\bot\}\cup\{[z_1,z_2]|z_1\leq z_2,z_1,z_2\in Z'\cup\{-\infty,\infty\}\}$
+\\\\
+Further we define the following functions:\\
 $A_I[\![x]\!]\widehat{\sigma} = \widehat{\sigma}(x)$ \\
 $A_I[\![n]\!]\widehat{\sigma} = 
      \begin{cases} 
@@ -107,10 +111,9 @@ $A_I[\![n]\!]\widehat{\sigma} =
         [-\infty;-\infty] & \text{if } n < \min\\
         [\infty;\infty] & \text{if } n > \max\\
      \end{cases}$\\
-
-$A_I[\![a_1 op_a a_2 ]\!] = A_I[\![a_1]\!] \widehat{\text{op}_a} A_I[\![a_1]\!]\sigma $, where $  \widehat{\text{op}_a} : \text{interval} \times \text{interval} \rightarrow $  interval is an abstract operator on intervals.\\
-\\
-We support the addition, subtraction, multiplication and division. The definitions for these operators are listed below.
+$A_I[\![a_1 op_a a_2 ]\!] = A_I[\![a_1]\!] \widehat{\text{op}_a} A_I[\![a_1]\!]\sigma $\\
+where $\widehat{\text{op}_a}$ : interval $\times$ interval $\rightarrow$ interval is an abstract operator on intervals and $\widehat{\text{ op}_A}$ is a specific arithmetic operator from the set op$_a \{+,-,*,/\}$.
+The definitions for these operators at listen below.
 
 \subsection{Addition on intervals}
 $[Z_{11},Z_{12}] + [Z_{21},Z_{22}] = [Z_{1},Z_{2}] =
@@ -177,7 +180,7 @@ The result of an interval analysis can be used to calculate whenever a buffer ov
  \begin{algorithmic}[1]
  \Procedure{Buffer overflow}{$l$}
 \State A:=$l.get\_array()$
-\State a:=$A.get\_index_expression()$
+\State a:=$A.get\_index\_expression()$
 \State $index\_interval:=A_I[a]$
 \State $array\_bounds:=[0,A.get\_size()-1]$
 \If {$index\_interval.is\_within(array\_bounds)$}
@@ -191,8 +194,8 @@ The result of an interval analysis can be used to calculate whenever a buffer ov
  \label{algorithm:bufferoverflow2}
 \end{algorithm}
 
-
 \section{Example solution}
+The above analysis can be used to check for buffer overflows in the program from figure~\ref{code:array_example}.
 \begin{table}[H]
 \begin{tabular}{| l | l |}
 \hline
