@@ -66,6 +66,9 @@ It also holds the Ascending Chain Property, because the lattice has a finite hei
 \caption{Analysis definitions}
 \end{table}
 
+\todo{Indsæt lattice for interval analysis}
+\todo{Argumenter for at det er en komplet lattice}
+
 Table~\ref{table:interval_analysis_functions} shows our transfer function for the extended \texttt{WHILE} language.
 \begin{table}[h]
 \begin{tabular}{| l | l |}
@@ -174,6 +177,25 @@ Z_2 =
      \end{cases}
 $
 
+\begin{figure}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.0cm,
+                    semithick]
+  \tikzstyle{every state}=[fill=none,draw=black,text=black]
+
+  \node[state] (IR)                     {In range};
+  \node[state] (MM) [right of=IR,xshift=1.0cm]       {Min/Max};
+  \node[state] (II) [below of=IR,xshift=1.5cm] {$-\infty$/$\infty$};
+
+  \path (IR) edge [bend left] node {} (MM)
+             edge  node {} (II)
+        (MM) edge [bend left] node {} (IR)
+             edge  node {} (II);
+\end{tikzpicture}
+\centering
+\caption{Interval states}
+\label{figure:interval_states}
+\end{figure}
+
 \section{Algorithm for calculating buffer overflow}
 The result of an interval analysis can be used to calculate whenever a buffer overflow is present. Algorithm~\ref{algorithm:bufferoverflow2} returns true if a buffer overflow is present for a specific label. It is assumed that the provided label contains an array operation.
 \begin{algorithm}
@@ -194,29 +216,31 @@ The result of an interval analysis can be used to calculate whenever a buffer ov
  \label{algorithm:bufferoverflow2}
 \end{algorithm}
 
-% \section{Example solution}
-% The above analysis can be used to check for buffer overflows in the program from figure~\ref{code:array_example}.
-% \begin{table}[H]
-% \begin{tabular}{| l | l |}
-% \hline
-% A$_\circ (1) = \iota \{\text{init}(S_*) \} $ & A$_\bullet(1) = \text{f}_{\text{int A[2]}} (\text{A}_\circ (1))$ \\
-% \hline
-% A$_\circ (2) =$A$_\bullet(1) $ & A$_\bullet(2) = \text{f}_{\text{int i}} (\text{A}_\circ (2))$ \\
-% \hline
-% A$_\circ (3) = $A$_\bullet(2)$ & A$_\bullet(3) = \text{f}_{\text{i := -1}} (\text{A}_\circ (3))$  \\
-% \hline
-% A$_\circ (4) = $A$_\bullet(3) \bigcup $A$_\bullet(6) $ & A$_\bullet(4) = \text{f}_{\text{i < 3}} (\text{A}_\circ (4))$ \\
-% \hline
-% A$_\circ (5) = $A$_\bullet(4)$ & A$_\bullet(5) = \text{f}_{\text{A[i] := i + 1}} (\text{A}_\circ (5))$ \\
-% \hline
-% A$_\circ (6) = $A$_\bullet(5)$ & A$_\bullet(6) = \text{f}_{\text{i := i + 1}} (\text{A}_\circ (6))$ \\
-% 
-% \hline
-% \end{tabular}
-% \centering
-% \caption{Equations for the program from figure~\ref{code:array_example}}
-% \label{table:}
-% \end{table}
+\section{Example solution}
+The above analysis can be used to check for buffer overflows in the program from figure~\ref{code:array_example}.
+\begin{table}[H]
+\begin{tabular}{| l | l |}
+\hline
+A$_\circ (1) = \iota \{\text{init}(S_*) \} $ & A$_\bullet(1) = \text{f}_{\text{int A[2]}} (\text{A}_\circ (1))$ \\
+\hline
+A$_\circ (2) =$A$_\bullet(1) $ & A$_\bullet(2) = \text{f}_{\text{int i}} (\text{A}_\circ (2))$ \\
+\hline
+A$_\circ (3) = $A$_\bullet(2)$ & A$_\bullet(3) = \text{f}_{\text{i := -1}} (\text{A}_\circ (3))$  \\
+\hline
+A$_\circ (4) = $A$_\bullet(3) \bigcup $A$_\bullet(6) $ & A$_\bullet(4) = \text{f}_{\text{i < 3}} (\text{A}_\circ (4))$ \\
+\hline
+A$_\circ (5) = $A$_\bullet(4)$ & A$_\bullet(5) = \text{f}_{\text{A[i] := i + 1}} (\text{A}_\circ (5))$ \\
+\hline
+A$_\circ (6) = $A$_\bullet(5)$ & A$_\bullet(6) = \text{f}_{\text{i := i + 1}} (\text{A}_\circ (6))$ \\
+
+\hline
+\end{tabular}
+\centering
+\caption{Equations for the program from figure~\ref{code:array_example}}
+\label{table:}
+\end{table}
+
+\todo{Tilføj løsning til equations}
 
 % \subsection*{Notes}
 % Branches: We can assume, on branches that includes an a = b in the boolean expression, that -- on the true branch --  that both a and b is now the intersection of a and b.

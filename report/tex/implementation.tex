@@ -1,113 +1,121 @@
-\chapter{Implementation}
-This section will first present the implementation of the parser for the \texttt{While} language. Then the implementations of the analysis' described in the previous section will be discussed.
-\\\\
-The Java language has been chosen as the implementation language.
- 
-\section{Parsing a program}
-Before any analysis can take place it necessary that the program is parsed. This is done by having a parser. ANTLR is used as the framework for constructing a lexer and a parser that can take a program written in the extended \texttt{While} language and construct an abstract syntax tree (AST) using the data structures described in section~\ref{section:Abstractsyntaxtreedatastructure}. 
-
-\section{Constructing the intermediate representation}
-As described in section~\ref{section:CreatingFlowGraphs} we use an unbalanced tree for containing our abstract syntax tree, which serves as our intermediate representation (IR).
-The implementation architecture for the IR is seen in Figure 1 - Figure 5. This architecture is mapped into java objects representing the program, each declaration, each statement etc.
-
-\section{Function Mapping}
-In order to access information about each statement (block) we have implemented the smallest steps of each analysis to the individual classes (blocks) in the IR.
-\\\\
-For each \texttt{Statement} class we have implemented following functions:
-\begin{itemize}
-\item Label(s) - returns the set of label for the statement 		
-\item Init(s) - returns the initial label for the statement
-\item Final(s) - returns the set of final labels for the statement 
-\item Flow(s) - returns the flow for the statement
-\item Variable(s) - returns the set of variables for the statement
-\item Kill - returns the set of definitions to be killed	
-\item Gen - returns the set of definitions to be generated
-\end{itemize}
-
-As an example for assignments and skip-statement we would have the following results when looking the statements \texttt{assignment} and \texttt{skip}.:
-\\
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{Statement}&		[x:=a]l&												[skip]l\\
-\hline
-\hline
-Label(s)&		\{l\}&													\{l\}	\\
-\hline
-Init(s)&			\{l\}&													\{l\}\\
-\hline
-Final(s)&		\{l\}&													\{l\}\\
-\hline
-Flow(s)&		Ø&													Ø\\
-\hline
-Variable(s)&		variable(a)&									Ø\\
-\hline
-Kill&			RDentry(l)\textbackslash\{x, l' | Bl' is an assignment to A\}&		Ø\\							
-\hline
-Gen&				\{x, l\}&												Ø\\
-\hline
-\end{tabular}
-
-We have discusses most of the function above in the previous sections of the report. However the Variable function is new. The variable function is used to get variables for a particular statement. It returns a set of variables if any is represented.
-
-If the statement is a declaration, we have defined the variable-function as following:\\
-
-\begin{tabular}{|l|l|}
-\hline
-variable(decl)&:\\
-\hline\hline
-(Integer)&			x -> \{x\}\\
-\hline
-(Array)&				A[n] -> \{A\}\\
-\hline
-\end{tabular}
-
-For expressions it is defined as:
-variable(expr):
-	(constant) 			n -> Ø
-	(variable)			x -> {x}
-	(Array expr.)		A[x] -> {A} U var(x)
-	(Arithmetic opr.)	a1 opa a2 -> var(a1) U var(a2)
-	(Negation)			-a -> var(a)
-	(Parenthesis)		(a) -> var(a)
-
-And finally the statements:
-variable(stmt):
-	(Assignment) 		x := a -> {x} U variable(x)	
-	(Skip)				skip -> Ø
-	(Array assignment)	A[a1] := a2 -> {A} U variable(a1) U variable(a2)
-	(Read)				read x -> {x}
-	(Read array)		read A[a] -> {A} U variable(a)
-	(Write)				write a -> variable(a)
-	(composition)		S1 S2 -> variable(S1) U variable(S2)
-	(if-stmt)			if b then s1 else s2 fi -> Ø
-	(while loop)		while b do S od -> Ø
-	
-The variable-function is used for the Program Slicing algorithm.
-	
-The functions explained above will give us the equations that is going to be solved.
-
-\section{Implementation of the analysis}
-On top of the functions explained above we have implemented the algorithms which is able to perform the analysis as Reaching definitions, Program slicing, detection of signs and interval analysis. 
-Mode details of each analysis is explained below.
-
-Implementation of the Reaching Definition analysis:
-The class WorklistAlgorithm.java implements the Reaching Definition analysis.
-It is an implementation of the pseudo-code presented in the slides for the course.
-
-Implementation of the Program slice analysis:
-The class ProgramSlicing.java implements the program slice algorithm.
-It takes two parameters, a point of interest and the the result from reaching definition.
-It is an implementation of the pseudo-code presented in section 3.5 Program slice calculation algorithm.
+% % \chapter{Implementation}
+% % This section will first present the implementation of the parser for the \texttt{While} language. Then the implementations of the analysis' described in the previous section will be discussed.
+% % \\\\
+% % The Java language has been chosen as the implementation language.
+% %  
+% % \section{Parsing a program}
+% % Before any analysis can take place it necessary that the program is parsed. This is done by having a parser. ANTLR is used as the framework for constructing a lexer and a parser that can take a program written in the extended \texttt{While} language and construct an abstract syntax tree (AST) using the data structures described in section~\ref{section:Abstractsyntaxtreedatastructure}. 
+% 
+% \section{Constructing the intermediate representation}
+% As described in section~\ref{section:CreatingFlowGraphs} we use an unbalanced tree for containing our abstract syntax tree, which serves as our intermediate representation (IR).
+% The implementation architecture for the IR is seen in Figure 1 - Figure 5. This architecture is mapped into java objects representing the program, each declaration, each statement etc.
+% 
+% \section{Function Mapping}
+% In order to access information about each statement (block) we have implemented the smallest steps of each analysis to the individual classes (blocks) in the IR.
+% \\\\
+% For each \texttt{Statement} class we have implemented following functions:
+% \begin{itemize}
+% \item Label(s) - returns the set of label for the statement 		
+% \item Init(s) - returns the initial label for the statement
+% \item Final(s) - returns the set of final labels for the statement 
+% \item Flow(s) - returns the flow for the statement
+% \item Variable(s) - returns the set of variables for the statement
+% \item Kill - returns the set of definitions to be killed	
+% \item Gen - returns the set of definitions to be generated
+% \end{itemize}
+% 
+% As an example for assignments and skip-statement we would have the following results when looking the statements \texttt{assignment} and \texttt{skip}.:
+% \\
+% \begin{tabular}{|l|l|l|}
+% \hline
+% \textbf{Statement}&		[x:=a]l&												[skip]l\\
+% \hline
+% \hline
+% Label(s)&		\{l\}&													\{l\}	\\
+% \hline
+% Init(s)&			\{l\}&													\{l\}\\
+% \hline
+% Final(s)&		\{l\}&													\{l\}\\
+% \hline
+% Flow(s)&		Ø&													Ø\\
+% \hline
+% Variable(s)&		variable(a)&									Ø\\
+% \hline
+% Kill&			RDentry(l)\textbackslash\{x, l' | Bl' is an assignment to A\}&		Ø\\							
+% \hline
+% Gen&				\{x, l\}&												Ø\\
+% \hline
+% \end{tabular}
+% 
+% We have discusses most of the function above in the previous sections of the report. However the Variable function is new. The variable function is used to get variables for a particular statement. It returns a set of variables if any is represented.
+% 
+% If the statement is a declaration, we have defined the variable-function as following:\\
+% 
+% \begin{tabular}{|l|l|}
+% \hline
+% variable(decl)&:\\
+% \hline\hline
+% (Integer)&			x -> \{x\}\\
+% \hline
+% (Array)&				A[n] -> \{A\}\\
+% \hline
+% \end{tabular}
+% 
+% For expressions it is defined as:
+% variable(expr):
+% 	(constant) 			n -> Ø
+% 	(variable)			x -> {x}
+% 	(Array expr.)		A[x] -> {A} U var(x)
+% 	(Arithmetic opr.)	a1 opa a2 -> var(a1) U var(a2)
+% 	(Negation)			-a -> var(a)
+% 	(Parenthesis)		(a) -> var(a)
+% 
+% And finally the statements:
+% variable(stmt):
+% 	(Assignment) 		x := a -> {x} U variable(x)	
+% 	(Skip)				skip -> Ø
+% 	(Array assignment)	A[a1] := a2 -> {A} U variable(a1) U variable(a2)
+% 	(Read)				read x -> {x}
+% 	(Read array)		read A[a] -> {A} U variable(a)
+% 	(Write)				write a -> variable(a)
+% 	(composition)		S1 S2 -> variable(S1) U variable(S2)
+% 	(if-stmt)			if b then s1 else s2 fi -> Ø
+% 	(while loop)		while b do S od -> Ø
+% 	
+% The variable-function is used for the Program Slicing algorithm.
+% 	
+% The functions explained above will give us the equations that is going to be solved.
+% 
+% \section{Implementation of the analysis}
+% On top of the functions explained above we have implemented the algorithms which is able to perform the analysis as Reaching definitions, Program slicing, detection of signs and interval analysis. 
+% Mode details of each analysis is explained below.
+% 
+% Implementation of the Reaching Definition analysis:
+% The class WorklistAlgorithm.java implements the Reaching Definition analysis.
+% It is an implementation of the pseudo-code presented in the slides for the course.
+% 
+% Implementation of the Program slice analysis:
+% The class ProgramSlicing.java implements the program slice algorithm.
+% It takes two parameters, a point of interest and the the result from reaching definition.
+% It is an implementation of the pseudo-code presented in section 3.5 Program slice calculation algorithm.
+% 
+% ===========================================================================================================================
 
 {\setlength{\chapterfontsize}{24pt}
 \chapter{General about implementation}
 }
-For the implementation we have chosen to map the label $\ell$ to a Node object instead. The label is still present is still present within the node -- and is used for representation -- but now contains additional information, such as the which statement is maps to.
+This chapter will first present the implementation of the parser for the \texttt{While} language. Then the implementations of the analysis' described in the previous section will be discussed.
+\\\\
+The Java language has been chosen as the implementation language.
+\\\\
+For the implementation we have chosen to map the label $\ell$ to a Node object. The label is still present within the node and is used for representation but also contains additional information, such as the which statement it maps to.
 
-\section{The lexer}
-We've implemented the lexer as a grammer file for ANTLR, supplying us with a basic tokenizer that is able to attach extra information to the streamed tokens. The grammer file is located in the appended code for those interested.
-\section{The parser}
-The parser is created by extending the grammer file hereby enabling it to expand the grammer to a generated parser. The parser harvests information from the lexer in order to provide an AST containing the information we need for out analysis` later on.
+\section{Parsing the program}
+Before any analysis can take place it necessary that the program is parsed. This is done by having a parser. ANTLR is used as the framework for constructing a lexer and a parser that can take a program written in the extended \texttt{While} language and construct an abstract syntax tree (AST) using the data structures described in section~\ref{section:Abstractsyntaxtreedatastructure}. 
+\begin{itemize}
+	\item \textbf{The Lexer} - We've implemented the lexer as a grammar file for ANTLR, supplying us with a basic tokenizer that is able to attach extra information to the streamed tokens. The grammar file is located in the appended code for those interested.
+	\item \textbf{The parser} - The parser is created by extending the grammar file hereby enabling it to expand the grammar to a generated parser. The parser harvests information from the lexer in order to provide an AST containing the information we need for out analysis` later on.
+\end{itemize}
 
 
 \section{Generalizing the analysis}
@@ -115,7 +123,7 @@ To abstract away the analysis from the general parser tool, we've created an int
 \begin{figure}
 \centering
 \begin{tikzpicture} 
-\umlclass[type=interface]{Analysable}{}{ 
+\umlclass[type=interface]{Analyzable}{}{ 
 %  + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): Boolean}} \\
   + \umlvirt {labels () : NodeSet} \\
   + \umlvirt {initial () : Node} \\
@@ -123,32 +131,27 @@ To abstract away the analysis from the general parser tool, we've created an int
   + \umlvirt {flow () : FlowSet } \\
 } 
 \end{tikzpicture}
-\caption{The Analyseable interface}
+\caption{The Analyzable interface}
 \label{fig:analysable_basic_definition}.
-\end{figure}The interface basically maps the \textit{label(S)}, \textit{init(S)}, \textit{final(S)} and \textit{flow(S)} functions from section \ref{section:CreatingFlowGraphs} to abstract statement, so we can use it later on to harvest flows and labels via recursion.
+\end{figure}The interface basically maps the \textit{label(S)}, \textit{init(S)}, \textit{final(S)} and \textit{flow(S)} functions from table~\ref{table:flow_graph_functions} to abstract statement, so we can use it later on to harvest flows and labels via recursion. This is done using the interface \texttt{Analyzable} as defined in figure~\ref{fig:analysable_basic_definition}.
+Specific objects has been created to hold all the definitions and statements. The class \texttt{StatementList} holds all the statements in the program. By simple asking for the \texttt{flow} of the \texttt{statementSet} the complete flow graph will be returned.
+\\\\
+In order to perform the analysis an abstract interface \texttt{Lattice} has been created. This defines the basic elements for performing an analysis such as $\iota$ and $\bot$. For each of the tree analysis' a class that implements this interface has been created.
+\begin{itemize}
+	\item \texttt{RDLattice} - Reaching definitions analysis.
+	\item \texttt{SignsLattice} - Detection of signs analysis.
+	\item \texttt{IntervalLattice} - Interval analysis.
+\end{itemize}
+If a new similar analysis needed to be implemented I would be easy to add a new class implementing this interface.
 
-\section{Interval analysis}
+\subsection{Calculating a solution}
+In order to solve the equations provided by the analysis' the general worklist algorithm for computing the MFP solution has been implemented. The algorithm is placed as the method \texttt{execute} in a \texttt{Program}. It takes a specific analysis as a parameter and returns a result of the analysis for each label in the program as a result.
 
 %TODO Add more meat on this. Something about keeping track of the values internally, even when going out of bounds.
-The valid transitions -- and their states -- are depicted in figure \ref{figure:interval_states}, which illustrates the dead-end of $-\infty$ and $\infty$ quite efficient.
-\begin{figure}
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.0cm,
-                    semithick]
-  \tikzstyle{every state}=[fill=none,draw=black,text=black]
+% The valid transitions -- and their states -- are depicted in figure \ref{figure:interval_states}, which illustrates the dead-end of $-\infty$ and $\infty$ quite efficient.
+% 
 
-  \node[state] (IR)                     {In range};
-  \node[state] (MM) [right of=IR,xshift=1.0cm]       {Min/Max};
-  \node[state] (II) [below of=IR,xshift=1.5cm] {$-\infty$/$\infty$};
 
-  \path (IR) edge [bend left] node {} (MM)
-             edge  node {} (II)
-        (MM) edge [bend left] node {} (IR)
-             edge  node {} (II);
-\end{tikzpicture}
-\centering
-\caption{Interval states}
-\label{figure:interval_states}
-\end{figure}
 \chapter{Improving precision}
 \section{Deriving information from boolean expressions}
 As the analysis is now, we have a crude over-approximation, and in order to improve that, we can harvest more information from the flow graph.\\\\
@@ -230,6 +233,11 @@ For underflow detection we've stated by extending the Analyzable interface as il
 
 We then loop through each label in the set of labels of the program, and if the test fails, we push the problematic node to a NodeSet which then can be used to inform the callee (probably Main procedure) of places where problems could arise.
 
+\section{Overflow detection optimizations}
+The interval analysis we are performing for while-loops only takes account that the body is executed once, hence the result of the interval analysis performed in the body is an under approximation, since there is potential for that the body will be executed multiple times. However the obtained results are indeed a part of the precise result, but on the other hand we might omit some of the results for interval analysis which might result an unprecise result for detection of buffer overflow.
+If we could guarantee a number of iterations that the body would execute, we could do an optimization such as we could get a more exact result for the interval analysis by performing the analysis as the same number of iterations for the statements in the body.   
+A reason for why we can not calculate the number of iterations for how many times the loop is executed is because it might be depended on the body, and it would require advanced analysis to calculate this number.
+Another approach for how the interval analysis could be performed for while-loop is to a assume that the body will run infinity often. However, during the analysis the statements of the body has to know that they are in the context of a while-loop. The result obtain form this analysis will be an over approximation.
 
 %\begin{figure}
 %\centering
@@ -255,46 +263,6 @@ We then loop through each label in the set of labels of the program, and if the 
 %\caption{Extension of the Statement class}
 %\end{figure}
 
-\section{Trying it out}
-\begin{figure}
-  \begin{lstlisting}
-[i:=-1]@$^1$@
-while [i<2]@$^2$@ do
-  [a[i]:=i+1]@$^3$@
-  [i:=i+1]@$^4$@
-od
-[a[-1]:=1]@$^5$@
-if [a[i]=0]@$^6$@ then
-  [skip]@$^7$@
-else
-  [skip]@$^8$@
-fi
-while [a[i]<0]@$^9$@ do
-  [i:=i+a[3]]@$^10$@
-od
- \end{lstlisting}
- \caption{Juicy array example}
-\label{code:juicy_array_example}
-\end{figure}
-
-Where \texttt{a} is defined as an array with two elements and \texttt{i} is in integer variable. The thing -- or rather things -- that make this program extra interesting is that is contains loads of errors. Jumping the gun, we can observe the output (see figure \ref{code:juicy_array_example_output}) our tool given this program as input.
-\begin{figure}
-  \begin{lstlisting}[numbers=none]
-==== Buffer Underflow =====
-Potential underflow detected at label: 3
-Potential underflow detected at label: 5
-Potential underflow detected at label: 6
-Potential underflow detected at label: 9
-==== Interval =====
-Range check failed at: 3
-Range check failed at: 5
-Range check failed at: 6
-Range check failed at: 9
-Range check failed at: 10
-\end{lstlisting}
-\caption{Output from analysis on code from figure \ref{code:juicy_array_example}}
-\label{code:juicy_array_example_output}
-\end{figure}We correctly detect the potential underflows on the assignments at label 3, 5, 6 and 9, which we can verify is correct by manually inspecting the code. What is more interesting however, is the fact that we detect the same labels with the interval analysis -- plus a fifth one; the one with the overflow.
 
 \section{Functions for underflow detection}
 \begin{table}[h]
@@ -374,3 +342,6 @@ While strictly not within the scope of the project, we found that odd \texttt{Nu
 
 %TODO Write about strategies for handling arrays; treating them as a single variable versus expanding the array to n variables - where n is the size.
 %TODO Something about the worklist and iota.
+
+
+\todo{Udvid implementations afsnit}
