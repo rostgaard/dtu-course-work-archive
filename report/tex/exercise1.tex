@@ -18,42 +18,42 @@ We have decided that we could use an unbalanced tree for storage of our abstract
 A simple tree-traversal will give us the appropriate unique label numbers - or the ability to assign labels to statements in the right order.
 \\
 \\
-In our implementation language the statements from the \texttt{WHILE} language will be mapped into the following  
-\\\\
-We will have the following structures.
+In our implementation language the statements from the \texttt{WHILE} language will be mapped into the following abstract classes.
 \begin{itemize}
 	\item \textbf{Statement} - Figure~\ref{fig:statement} shows the structures of statements.
 	\item \textbf{Variable} - Figure~\ref{fig:variable} shows the structures of variables.
 	\item \textbf{Condition} - Figure~\ref{fig:condition} shows the structures of conditions.
 	\item \textbf{Expression} - Figure~\ref{fig:expression} shows the structures of expressions.
 \end{itemize}
-Declarations will be handled separately from statements, and will be held in a dedicated declarations list until needed. Only one constraint exists for declarations: Their identifiers must be unique.
+Each token from the grammer is then mapped to a realization of a class corresponding to its defined type. E.g. an Assignment class will derive from a Statement class.
+\\\\
+Declarations will be handled separately from statements, and will be held in a dedicated declaration list until needed. Only one constraint exists for declarations: Their identifiers must be unique.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.5]{../fig/Statement}
-	\caption{Statement}
+	\caption{Statements and their derived types}
 	\label{fig:statement}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=.3]{../fig/Variable}
-	\caption{Variable}
+	\includegraphics[scale=.5]{../fig/Variable}
+	\caption{Variables and their derived types}
 	\label{fig:variable}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=.3]{../fig/Condition}
-	\caption{Condition}
+	\includegraphics[scale=.5]{../fig/Condition}
+	\caption{Conditions and their derived types}
 	\label{fig:condition}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=.3]{../fig/Expression}
-	\caption{Expression}
+	\includegraphics[scale=.5]{../fig/Expression}
+	\caption{Expressions and their derived types}
 	\label{fig:expression}
 \end{figure}
 
@@ -76,6 +76,7 @@ Figure~\ref{fig:flowgraph} shows the data structure used to represent a flow gra
 
 \subsection{Defining flow graphs}\label{section:CreatingFlowGraphs}
 Before any analysis can take place we need to create a flow graph based on our abstract syntax tree. A flow graph should consists of the elements presented in table~\ref{table:flow_graph_definitions}.
+\begin{
 \begin{table}
     \begin{tabular}{l | l }
     \textsl{label(S)} & The set of nodes of the flow graph $S$ \\
@@ -94,7 +95,8 @@ Before any analysis can take place we need to create a flow graph based on our a
 	\caption{Function definitions}
 	\label{table:flow_graph_definitions}
 \end{table}
-\\\\
+
+\end{footnotesize}\\\\
 The objective is to establish a flow graph using the abstract syntax tree. Using the intermediate representation of the abstract syntax tree, the types of different individual statements is defined. Rather than explicitly parsing the AST to a flow graph, we instead define a function for each statement and let every statement handle it's own branch by recursion using the function defined in table~\ref{table:flow_graph_functions}.
 
 \begin{table}
