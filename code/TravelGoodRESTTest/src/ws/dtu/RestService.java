@@ -63,12 +63,12 @@ public class RestService {
     }
 
     public static ClientResponse bookItinerary(String customerID, int itineraryID) {
-         WebResource bookItineraryResource = itineraryResource.path(""+itineraryID).queryParam("customer_id", customerID);;
+         WebResource bookItineraryResource = itineraryResource.path(""+itineraryID).queryParam("customer_id", customerID);
          return bookItineraryResource.put(ClientResponse.class);
     }
 
     public static ClientResponse cancelItinerary(String customerID, int itineraryID) {
-         WebResource cancelItineraryResource = itineraryResource.path(""+itineraryID).queryParam("customer_id", customerID);;
+         WebResource cancelItineraryResource = itineraryResource.path(""+itineraryID).queryParam("customer_id", customerID);
          return cancelItineraryResource.delete(ClientResponse.class);
     }
     
