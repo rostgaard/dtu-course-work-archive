@@ -1,7 +1,7 @@
-\section{Program Slicing}
+\chapter{Program Slicing}
 A program slicing is a set of statements that may affect the values at some point of interest. Is often used in debugging to find errors.
 
-\subsection{Example program}\label{sec:exampleprogram}
+\section{Example program}\label{sec:exampleprogram}
 Figure~\ref{fig:codeexample} shows an example program written in the \texttt{WHILE} language. This example program will be used as an example for this section. The program consists of 3 declared variables which are assigned several times and a while loop.
 \begin{figure}
 	\begin{lstlisting}
@@ -28,7 +28,7 @@ For this program the program slice can be calculated for a point of interest. Be
 	\item If instead the point of interest is label 7.  The result of program slice analysis would be; [y:=x]$^4$, [z:=1]$^5$, [z:=z*y]$^7$, [y := y-1]$^8$.
 \end{itemize}
 
-\subsection{Reaching Definitions Analysis}
+\section{Reaching Definitions Analysis}
 Our algorithm for calculating the Program Slice will use the result of a Reaching Definition Analysis. So first we need to define what a reaching definition analysis is and how to compute it. A reaching definition analysis determines statically which definitions may reach a point of interests.
 \\\\
 Table~\ref{table:rd_equations} shows the Reaching Definitions Analysis table for the extended \texttt{WHILE} language. The \texttt{kill} follows the function:
@@ -103,7 +103,7 @@ Furthermore table~\ref{table:rd_analysis} shows the Reaching Definitions Analysi
 \end{table}
 
 
-\subsection{Flow graph for program}
+\section{Flow graph for program}
 In order to determine the reaching definitions for our example program written in the \texttt{WHILE} language the definitions for table~\ref{table:flow_graph_definitions} must be used. Table~\ref{table:example_flow_table} shows the flow graph for our specific program. Notice how there is a flow from the last final block in the while (label 8) to the condition in the while (label 6).
 \begin{table}
     \begin{tabular}{l | l }
@@ -157,7 +157,7 @@ A nice property of flow graphs is that they can easily be presented visually. Fi
  \label{fig:flowgraph2}
 \end{figure}
 
-\subsection{Equations}
+\section{Equations}
 Using the analysis definitions from table~\ref{table:rd_analysis} we can establish a set of equations for the reaching definitions of our example program. They are shown in table~\ref{table:equations}.
 \begin{table}[H]
 	\begin{tabular}{| l |}
@@ -233,7 +233,7 @@ $RD_\bullet(9)=(RD_\circ(9)\backslash\{(y,2),(y,4),(y,8),(y,9)\})\cup \{(y,9)\}$
 	\label{table:solution2}
 \end{table}
 
-\subsection{Program slice calculation algorithm}
+\section{Program slice calculation algorithm}
 Now with the result of a reaching definitions analysis available it is possible to use that result to calculate a program slice for our program at a point of interest. An algorithm for doing so is given in algorithm~\ref{fig:programslicealgorithm}.
 \\
 \\

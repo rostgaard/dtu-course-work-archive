@@ -1,4 +1,4 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[11pt,a4paper]{report}
 \newcommand{\confdir}{../conf/} % Set the folder which contains preamble.tex, titlepage.tex and the general img/ folder
 \newcommand{\imgdir}{../img/} % Set the folder which contains the specific images for the report
 \newcommand{\texdir}{../tex/} % Set the folder which contains the content (.tex files)
@@ -64,8 +64,6 @@
 	\addauthor{s084283}{Kim Rostgaard}{Christensen}
 	\addauthor{s093263}{Peter Gammelgaard}{Poulsen}
 
-	\setmoretext{}
-
 %%%% END OF SETUP
 
 
@@ -74,21 +72,23 @@
 %% Insert titlepage
 \inserttitlepage
 
-
-\begin{abstract}
-This is the report documenting and describing the work done on the project handed out in the course 02242: Program Analysis at the Technical University of Denmark. It documents the theory and design applied in a program analysis tool. The tool is intended to perform a minor set of analysis’s using a monotone framework and a worklist algorithm for solving equations and calculating a solution. The analysis' considered are reaching definition, sign detection and interval analysis. The results of these are used to calculate program slice and buffer overflow.
-\end{abstract}
-
-\clearpage
+%% Insert list of todos
+\listoftodos
 
 %% Insert table-of-contents
 \inserttoc
 
 %% Input files for the report
-\import{\texdir}{requirements}
+\import{\texdir}{introduction}
+\import{\texdir}{exercise1}
+\import{\texdir}{exercise2}
+\import{\texdir}{exercise3}
+\import{\texdir}{exercise4}
+\import{\texdir}{implementation}
 
 \bibliographystyle{plain}
 \bibliography{references}
-\nocite{02242_slides}
+
+\nocite{*}
 
 \end{document}

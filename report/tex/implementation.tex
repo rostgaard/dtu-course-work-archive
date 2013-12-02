@@ -1,16 +1,16 @@
-\section{Implementation}
+\chapter{Implementation}
 This section will first present the implementation of the parser for the \texttt{While} language. Then the implementations of the analysis' described in the previous section will be discussed.
 \\\\
 The Java language has been chosen as the implementation language.
  
-\subsection{Parsing a program}
+\section{Parsing a program}
 Before any analysis can take place it necessary that the program is parsed. This is done by having a parser. ANTLR is used as the framework for constructing a lexer and a parser that can take a program written in the extended \texttt{While} language and construct an abstract syntax tree (AST) using the data structures described in section~\ref{section:Abstractsyntaxtreedatastructure}. 
 
-\subsection{Constructing the intermediate representation}
+\section{Constructing the intermediate representation}
 As described in section~\ref{section:CreatingFlowGraphs} we use an unbalanced tree for containing our abstract syntax tree, which serves as our intermediate representation (IR).
 The implementation architecture for the IR is seen in Figure 1 - Figure 5. This architecture is mapped into java objects representing the program, each declaration, each statement etc.
 
-\subsection{Function Mapping}
+\section{Function Mapping}
 In order to access information about each statement (block) we have implemented the smallest steps of each analysis to the individual classes (blocks) in the IR.
 \\\\
 For each \texttt{Statement} class we have implemented following functions:
@@ -86,7 +86,7 @@ The variable-function is used for the Program Slicing algorithm.
 	
 The functions explained above will give us the equations that is going to be solved.
 
-\subsection{Implementation of the analysis}
+\section{Implementation of the analysis}
 On top of the functions explained above we have implemented the algorithms which is able to perform the analysis as Reaching definitions, Program slicing, detection of signs and interval analysis. 
 Mode details of each analysis is explained below.
 
@@ -100,16 +100,16 @@ It takes two parameters, a point of interest and the the result from reaching de
 It is an implementation of the pseudo-code presented in section 3.5 Program slice calculation algorithm.
 
 
-\section{General about implementation}
+\chapter{General about implementation}
 For the implementation we have chosen to map the label $\ell$ to a Node object instead. The label is still present is still present within the node -- and is used for representation -- but now contains additional information, such as the which statement is maps to.
 
-\subsection{The lexer}
+\section{The lexer}
 We've implemented the lexer as a grammer file for ANTLR, supplying us with a basic tokenizer that is able to attach extra information to the streamed tokens. The grammer file is located in the appended code for those interested.
-\subsection{The parser}
+\section{The parser}
 The parser is created by extending the grammer file hereby enabling it to expand the grammer to a generated parser. The parser harvests information from the lexer in order to provide an AST containing the information we need for out analysis` later on.
 
 
-\subsection{Generalizing the analysis}
+\section{Generalizing the analysis}
 To abstract away the analysis from the general parser tool, we've created an interface that implemented by our abstract Statement class.
 \begin{figure}
 \centering
@@ -126,7 +126,7 @@ To abstract away the analysis from the general parser tool, we've created an int
 \label{fig:analysable_basic_definition}.
 \end{figure}The interface basically maps the \textit{label(S)}, \textit{init(S)}, \textit{final(S)} and \textit{flow(S)} functions from section \ref{section:CreatingFlowGraphs} to abstract statement, so we can use it later on to harvest flows and labels via recursion.
 
-\subsection{Interval analysis}
+\section{Interval analysis}
 
 %TODO Add more meat on this. Something about keeping track of the values internally, even when going out of bounds.
 The valid transitions -- and their states -- are depicted in figure \ref{figure:interval_states}, which illustrates the dead-end of $-\infty$ and $\infty$ quite efficient.
@@ -148,8 +148,8 @@ The valid transitions -- and their states -- are depicted in figure \ref{figure:
 \caption{Interval states}
 \label{figure:interval_states}
 \end{figure}
-\section{Improving precision}
-\subsection{Deriving information from boolean expressions}
+\chapter{Improving precision}
+\section{Deriving information from boolean expressions}
 As the analysis is now, we have a crude over-approximation, and in order to improve that, we can harvest more information from the flow graph.\\\\
 Up until now, we did not care about the conditions for loops or branches. For instance, given the code in figure \ref{fig:if_flow_example}, we \emph{could} derive information about the state of the variable y, depending on which branch we take. In essence, if we take the true branch, we know for certain that the value of y, is indeed the value of x - which is 5 (but that is less interesting in this case). If -- on the other hand -- we take the false branch, we know for certain that the value of y is \emph{every other value} than those of x.\\\\
 \begin{figure}[h]
@@ -182,7 +182,7 @@ Up until now, we did not care about the conditions for loops or branches. For in
 We will then use the functions defined table \ref{table:expression_mapping}. The basic idea, starting from $a_1 = a_2$, is that if we have two sets with definitions; then we can only enter the true branch if $\mathcal{A_S}[\![a_1]\!]$ and $\mathcal{A_S}[\![a_2]\!]$ have the same values. Thus, the only viable definitions that are allow to be passed along to the true branch, are the definitions that are both in $\mathcal{A_S}[\![a_1]\!]$ and $\mathcal{A_S}[\![a_2]\!]$. Hence, the intersection.\\\\
 The $a_1 \neq a_2$ then becomes the complimentary set to the one from $a_1 = a_2$, the $a_1 < a_2$ %TODO complete this, and verify the table.
 
-\subsubsection{Handling arithmetic expressions}
+\subsection{Handling arithmetic expressions}
 \begin{table}
 \centering
 \begin{tabular}{|r|l|}
@@ -211,7 +211,7 @@ $ a_1 \geq a_2$   & $ \mathcal{A_S}[\![a_2]\!] \bigcup \left(\mathcal{A_S}[\![a_
 \end{table}
 
 
-\subsection{Underflow detection}
+\section{Underflow detection}
 
 For underflow detection we've stated by extending the Analysable interface as illustrated in figure \ref{fig:analysable_underflow_extension}.
 \begin{figure}
@@ -295,7 +295,7 @@ Range check failed at: 10
 \label{code:juicy_array_example_output}
 \end{figure}We correctly detect the potential underflows on the assignments at label 3, 5, 6 and 9, which we can verify is correct by manually inspecting the code. What is more interesting however, is the fact that we detect the same labels with the interval analysis -- plus a fifth one; the one with the overflow.
 
-\subsection{Functions for underflow detection}
+\section{Functions for underflow detection}
 \begin{table}[h]
 \begin{tabular}{| l | l |}
   \hline
@@ -355,10 +355,10 @@ Range check failed at: 10
 \end{table}
 
 
-\subsection{Odds and ends}
+\section{Odds and ends}
 This section is home to the miscellaneous ideas, thoughts, implementations and ramblings that didn't quite fit any other sections.
 
-\subsubsection{Undefined symbols}
+\subsection{Undefined symbols}
 While strictly not within the scope of the project, we found that odd \texttt{NullPointerExceptions} occurred when we tried to access symbols that had not been previously defined in the program. While this job would be best left to the parser\footnote{Which would be rather easy, as we have an elegant ``declarations before statements'' language.}, the pending deadline suggested no to fix what wasn't broken and instead implement a lookup that throws an \texttt{UndefinedVariableException} if the symbol is not known within our analysis'.
 
 %TODO Write about strategies for handling arrays; treating them as a single variable versus expanding the array to n variables - where n is the size.

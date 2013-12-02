@@ -1,7 +1,7 @@
-\section{Buffer Overflow Interval Analysis}
+\chapter{Buffer Overflow Interval Analysis}
 The sign detection analysis from section~\ref{sec:exercise3} provided a solution to the buffer overflow problem by only considering the lower bound. Using interval analysis it is possible to consider the upper bound as well.
 
-\subsection{Monotone framework}
+\section{Monotone framework}
 The analysis is based on a monotone framework, which has the form:
 \begin{equation}
   \left(L, \mathcal{F}, F, E, \iota, \mathrm{f}.  \right)
@@ -64,49 +64,36 @@ It also holds the Ascending Chain Property, because the lattice has a finite hei
 \caption{Analysis definitions}
 \end{table}
 
-\subsection{Transfer functions}
+\section{Transfer functions}
 Table~\ref{table:transferfunctions} shows our transfer function for the extended \texttt{WHILE} language.
-\begin{table}[H]
-\begin{tabular}{| l | l | l |}
+\begin{table}[h]
+\begin{tabular}{| l | l |}
   \hline
-  \# & Statement & Function \\
+  Statement & Function \\
   \hline
   \hline
-  1 & [int x]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto [0,0]]$ \\
+  [x := a]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto \mathcal{A}_I[\![a]\!] \widehat{\sigma} ]$ \\
   \hline
-  2 & [int A[n]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = 
-     \begin{cases} 
-        \widehat{\sigma}[$A[n]$ \mapsto \bot] & \text{if } n \leq 0] \\
-        \widehat{\sigma}[$A[i]$ \mapsto [0,0] | \forall i \in \{0, ..., n-1 \} & \text{if } n > 0] \\
-     \end{cases}$\\
+ [skip]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
-  3 & [x := a]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto A_I[\![a]\!] \widehat{\sigma} ]$ \\
+ [b]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
-  4 & [skip]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
+  [A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[A\mapsto \widehat{\sigma}(A)\cup \mathcal{A}_I[\![a_2]\!] \widehat{\sigma}]$\\
   \hline
-  5 & [b]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
+  [read x]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = [x \mapsto \top]$ \\
   \hline
-  6 & [int A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = 
-     \begin{cases} 
-        \widehat{\sigma}[$A[a$_1$]$ \mapsto \bot]        & \text{if } $A$_I[\![a]\!] \subsetneq [0, n-1] \\
-        \widehat{\sigma}[$A[a$_1$]$ \mapsto A_I[\![a_2]\!] & \text{if } 0 \leq a_1 < n \\
-     \end{cases}$\\
+  [read A[a]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) =  \widehat{\sigma}[A\mapsto \widehat{\sigma}(A)\cup \top]$\\
   \hline
-  7 & [read x]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = [x \mapsto $A$_I[\![n]\!] \widehat{\sigma})$  \\
+  [write x]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
-  8 & [read A[a]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = 
-     \begin{cases} 
-        \widehat{\sigma}[$A[a]$ \mapsto \bot]        & \text{if } 0 < a \leq n \\ %TODO ??
-        \widehat{\sigma}[$A[a]$ \mapsto A_I[\![n]\!] & \text{if } 0 \leq a_1 < n \\
-     \end{cases}$\\
-  \hline
-  9 & [write A[n]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
+  [write A[n]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
 \end{tabular}
 \centering
-\caption{Transfer functions}
-\label{table:transferfunctions}
+\caption{Transfer functions for sign detection}
+\label{table:sign_detection_functions}
 \end{table}
+
 
 Where A$_I$ : AExp$ \rightarrow (\widehat{\text{State}_{\text{I}}} \rightarrow \text{Interval})$ determines the interval for the value of an expression. It is defined below.\\\\
 
@@ -122,7 +109,7 @@ $A_I[\![a_1 op_a a_2 ]\!] = A_I[\![a_1]\!] \widehat{\text{op}_a} A_I[\![a_1]\!]\
 \\
 We support the addition, subtraction, multiplication and division. The definitions for these operators are listed below.
 
-\subsubsection{Addition on intervals}
+\subsection{Addition on intervals}
 $[Z_{11},Z_{12}] + [Z_{21},Z_{22}] = [Z_{1},Z_{2}] =
      \begin{cases} 
         Z_{1i} + Z_{2i} & \text{if } \min \leq Z_{1i} + Z_{2i} \leq \max \\
@@ -131,7 +118,7 @@ $[Z_{11},Z_{12}] + [Z_{21},Z_{22}] = [Z_{1},Z_{2}] =
      \end{cases}
 $
 
-\subsubsection{Subtraction on intervals}
+\subsection{Subtraction on intervals}
 $[Z_{11},Z_{12}] - [Z_{21},Z_{22}] = [Z_{1},Z_{2}] =
      \begin{cases} 
         Z_{1i} - Z_{2i} & \text{if } \min \leq Z_{1i} - Z_{2i} \leq \max \\
@@ -140,7 +127,7 @@ $[Z_{11},Z_{12}] - [Z_{21},Z_{22}] = [Z_{1},Z_{2}] =
      \end{cases}
 $
 
-\subsubsection{Multiplication on intervals}
+\subsection{Multiplication on intervals}
 First, we define:\\
 $
 a = \min(z_{11} \cdot z_{21}, z_{11} \cdot z_{22}, z_{12} \cdot z_{21}, z_{12} \cdot z_{22})\\
@@ -159,7 +146,7 @@ z_2 =
         \infty & \text{if } b > \max \text{, or } \exists (i,j) : {Z_{ij} = \infty} \\
      \end{cases}
 $
-\subsubsection{Division on intervals}
+\subsection{Division on intervals}
 First, we define:\\
 $
 [z_{11}, z_{12}] / [z_{21}, z_{22}] = [z_{1}, z_{2}]\
@@ -181,7 +168,7 @@ Z_2 =
      \end{cases}
 $
 
-\subsection{Algorithm for calculating buffer overflow}
+\section{Algorithm for calculating buffer overflow}
 The result of an interval analysis can be used to calculate whenever a buffer overflow is present. Algorithm~\ref{algorithm:bufferoverflow2} returns true if a buffer overflow is present for a specific label. It is assumed that the provided label contains an array operation.
 \begin{algorithm}
  \begin{algorithmic}[1]
@@ -202,7 +189,7 @@ The result of an interval analysis can be used to calculate whenever a buffer ov
 \end{algorithm}
 
 
-\subsection{Example solution}
+\section{Example solution}
 \begin{table}[H]
 \begin{tabular}{| l | l |}
 \hline

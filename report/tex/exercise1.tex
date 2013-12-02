@@ -1,7 +1,7 @@
-\section{Data structures}
+\chapter{Data structures}
 This section will cover the language considered followed by the selected data structures which will be used for the abstract syntax tree, which will serve as the first step of our intermediate representation. Furthermore it will cover the data structures used to store the flow graph.
 
-\subsection{The WHILE language}
+\section{The WHILE language}
 For the project the \texttt{WHILE} language will be used. It is defined below.
 \\\\
 a ::= n | x | A[a] | $a_1$ $op_a$ $a_2$ | -a | (a)\\
@@ -11,7 +11,7 @@ L ::= $\epsilon$ | high | low\\
 D ::= L int x; | L int A[n]; | $\epsilon$ | $D_1$ $D_2$\\
 P ::= program D S end\\
 
-\subsection{Abstract syntax tree data structure}\label{section:Abstractsyntaxtreedatastructure}
+\section{Abstract syntax tree data structure}\label{section:Abstractsyntaxtreedatastructure}
 \label{sec:constructing_ast}
 Before any analysis can be performed on a program written in the language in the previous section it needs to be parsed into an abstract syntax tree.\\\\
 We have decided that we could use an unbalanced tree for storage of our abstract syntax tree in our target programming language. Constraining the tree construction will give us the necessary check for syntax errors.
@@ -57,7 +57,7 @@ Declarations will be handled separately from statements, and will be held in a d
 	\label{fig:expression}
 \end{figure}
 
-\subsection{Flow graph data structure}
+\section{Flow graph data structure}
 \label{sec:constructing_flow_graphs}
 For the flow graph, we have chosen a network graph data structure. This gives an intuitive way of linking statements to potential paths.
 \\
@@ -74,7 +74,7 @@ Figure~\ref{fig:flowgraph} shows the data structure used to represent a flow gra
 	\label{fig:flowgraph}
 \end{figure}
 
-\subsubsection{Defining flow graphs}\label{section:CreatingFlowGraphs}
+\subsection{Defining flow graphs}\label{section:CreatingFlowGraphs}
 Before any analysis can take place we need to create a flow graph based on our abstract syntax tree. A flow graph should consists of the elements presented in table~\ref{table:flow_graph_definitions}.
 \begin{table}
     \begin{tabular}{l | l }
@@ -131,7 +131,7 @@ while [\textsl{b}]$^\ell$ do \textsl{S} & $\{\ell\}$ $\cup$  \textsl{labels(S)} 
 \label{table:flow_graph_functions}
 \end{table}
 
-\subsection{Program graph data structure}
+\section{Program graph data structure}
 Another approach for structuring a program is to use a program graph which is similar to flow graphs but instead of storing the statements in the nodes they are stored in the edges. This has some advantages in certain analysis but in general both flow graph and programs graph can be used since it is possible to convert between the two.
 \\\\
 In the rest of the report the focus will be on flow graphs.
