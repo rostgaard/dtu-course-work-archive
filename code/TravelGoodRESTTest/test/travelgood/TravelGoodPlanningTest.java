@@ -1,7 +1,9 @@
 package travelgood;
 
 
+import helpers.TravelGoodRESTTest;
 import com.sun.jersey.api.client.ClientResponse;
+import helpers.TestHelpers;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import ws.dtu.RestService;

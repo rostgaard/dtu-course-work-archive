@@ -1,4 +1,4 @@
-package travelgood;
+package helpers;
 
 /*
  * To change this template, choose Tools | Templates
@@ -7,6 +7,7 @@ package travelgood;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 import ws.dtu.RestService;
 
 /**
@@ -44,6 +45,11 @@ public class TravelGoodRESTTest {
     @After
     public void tearDown() {
         RestService.reset();
+    }
+    
+    @Test
+    public void testMock(){
+        
     }
     
 }

@@ -4,6 +4,7 @@
  */
 package travelgood;
 
+import helpers.TravelGoodRESTTest;
 import org.junit.Before;
 import org.junit.Test;
 import ws.dtu.RestService;
