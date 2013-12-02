@@ -273,20 +273,21 @@ Another approach for how the interval analysis could be performed for while-loop
   \hline
   [A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^{UF} (\widehat{\sigma}) = 
      \begin{cases} 
-        \widehat{\sigma}[true   & \text{if } \{-\} \in \mathcal{A}_S [\![\text{a}]\!]\widehat{\sigma}\\
-        \widehat{\sigma}[false  & \text{otherwise} \\
+        true   & \text{if } \{-\} \in \mathcal{A}_S [\![\text{a}_1]\!]\widehat{\sigma}\text{ }
+        \vee \text{f}_\ell^{UF} (\text{a}_2,\widehat{\sigma}) \\
+        false  & \text{otherwise} \\
      \end{cases}$\\
   \hline
   [read A[a]]$^\ell$ & f$_\ell^{UF} (\widehat{\sigma}) = 
      \begin{cases} 
-        \widehat{\sigma}[true   & \text{if } \{-\} \in  \mathcal{A}_S [\![\text{a}_1]\!]\widehat{\sigma}\text{ } \vee \text{ f}_\ell^{UF} (\text{a}_2,\widehat{\sigma}) \\
-        \widehat{\sigma}[false  & \text{otherwise} \\
+		true   & \text{if } \{-\} \in  \mathcal{A}_S [\![\text{a}]\!]\widehat{\sigma} \\
+        false  & \text{otherwise} \\
      \end{cases}$\\
   \hline
   [write A[n]]$^\ell$ & f$_\ell^{UF} (\widehat{\sigma}) = 
  \begin{cases} 
-        \widehat{\sigma}[true   & \text{if } \{-\} \in \mathcal{A}_S [\![\text{n}]\!]\widehat{\sigma}\\
-        \widehat{\sigma}[false  & \text{otherwise} \\
+        true   & \text{if } \{-\} \in \mathcal{A}_S [\![\text{n}]\!]\widehat{\sigma}\\
+        false  & \text{otherwise} \\
      \end{cases}$\\	  
   \hline
   [write a]$^\ell$ & f$_\ell^{UF} (\widehat{\sigma})$ = f$_\ell^{UF} (a, \widehat{\sigma})$\\
@@ -319,15 +320,15 @@ Another approach for how the interval analysis could be performed for while-loop
   \hline
   $\text{f}_\ell^{UF} ((\text{a}),\widehat{\sigma}) = \text{f}_\ell^{UF} (\text{a},\widehat{\sigma}) $ & Parentheses expression merely forwards.\\
   \hline
-  $\text{f}_\ell^{UF} (\text{a}_1 \text{op}_a \text{a}_2, \widehat{\sigma}) = \text{f}_\ell^{UF} (\text{a}_1,\widehat{\sigma}) \vee \text{f}_\ell^{UF} (\text{a}_2,\widehat{\sigma}) $ & If either expression has an overflow,\\
+  $\text{f}_\ell^{UF} (\text{a}_1 \text{op}_a \text{a}_2, \widehat{\sigma}) = \text{f}_\ell^{UF} (\text{a}_1,\widehat{\sigma}) \vee \text{f}_\ell^{UF} (\text{a}_2,\widehat{\sigma}) $ & If either expression has an underflow,\\
                                 & the entire expression overflows.\\
   \hline
   $\text{f}_\ell^{UF} (-\text{a},\widehat{\sigma}) = \text{f}_\ell^{UF} (\text{a},\widehat{\sigma}) $ & Underflow is unaffected by negation.\\
   \hline
   $\text{f}_\ell^{UF} (\text{A}[\text{a}],\widehat{\sigma}) = 
      \begin{cases} 
-        \widehat{\sigma}[true   & \text{if } \{-\} \in \mathcal{A}_S [\![\text{a}]\!]\widehat{\sigma}\\
-        \widehat{\sigma}[false  & \text{otherwise} \\
+        true   & \text{if } \{-\} \in \mathcal{A}_S [\![\text{a}]\!]\widehat{\sigma}\\
+        false  & \text{otherwise} \\
      \end{cases}
    $ & An index is defined as being non-negative.\\
   \hline
@@ -352,9 +353,9 @@ Another approach for how the interval analysis could be performed for while-loop
   \hline
     $\text{f}_\ell^{UF} (\text{!b},\widehat{\sigma}) = \text{f}_\ell^{UF} (\text{b}, \widehat{\sigma}) $ & Negation merely forwards.\\ 
   \hline
-   $\text{f}_\ell^{UF} (\text{b}_1 \text{op}_b \text{b}_2, \widehat{\sigma}) = \text{f}_\ell^{UF} (\text{b}_1, \widehat{\sigma}) \vee \text{f}_\ell^{UF} (\text{b}_2, \widehat{\sigma})$ & If either expression has an overflow,the entire expression overflows.\\     
+   $\text{f}_\ell^{UF} (\text{b}_1 \text{op}_b \text{b}_2, \widehat{\sigma}) = \text{f}_\ell^{UF} (\text{b}_1, \widehat{\sigma}) \vee \text{f}_\ell^{UF} (\text{b}_2, \widehat{\sigma})$ & If either expression has an underflow, 	\\ & the entire expression underflows.\\        
   \hline
-     $\text{f}_\ell^{UF} (\text{a}_1 \text{op}_r \text{a}_2, \widehat{\sigma}) = \text{f}_\ell^{UF} (\text{a}_1, \widehat{\sigma}) \vee \text{f}_\ell^{UF} (\text{a}_2, \widehat{\sigma})$ & If either expression has an overflow,the entire expression overflows.\\     
+     $\text{f}_\ell^{UF} (\text{a}_1 \text{op}_r \text{a}_2, \widehat{\sigma}) = \text{f}_\ell^{UF} (\text{a}_1, \widehat{\sigma}) \vee \text{f}_\ell^{UF} (\text{a}_2, \widehat{\sigma})$ & If either expression has an overflow, \\ & the entire expression overflows.\\     
   \hline
 \end{tabular}
 \centering
@@ -373,23 +374,23 @@ Another approach for how the interval analysis could be performed for while-loop
   \hline
   [A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^{OB} (\widehat{\sigma}) = 
      \begin{cases} 
-     \widehat{\sigma}[true   & \text{if } \mathcal{A}_I [\![\text{a}_1]\!]\widehat{\sigma}\text{ } \nsubseteq
+     true   & \text{if } \mathcal{A}_I [\![\text{a}_1]\!]\widehat{\sigma}\text{ } \nsubseteq
      \mathcal{A}_I [\![\text{A}]\!]\widehat{\sigma} \vee f_\ell^{OB} (\text{a}_2, \widehat{\sigma}) \\
-     \widehat{\sigma}[false  & \text{otherwise} \\
+     false  & \text{otherwise} \\
      \end{cases}$\\
   \hline
   [read A[a]]$^\ell$ & f$_\ell^{OB} (\widehat{\sigma}) = 
      \begin{cases} 
-	 \widehat{\sigma}[true & \text{if } \mathcal{A}_I [\![\text{a}]\!]\widehat{\sigma}\text{ } \nsubseteq
+	 true & \text{if } \mathcal{A}_I [\![\text{a}]\!]\widehat{\sigma}\text{ } \nsubseteq
  	 \mathcal{A}_I [\![\text{A}]\!]\widehat{\sigma} \\
-     \widehat{\sigma}[false  & \text{otherwise} \\
+     false  & \text{otherwise} \\
      \end{cases}$\\
   \hline
   [write A[n]]$^\ell$ & f$_\ell^{OB} (\widehat{\sigma}) = 
   \begin{cases} 
-	\widehat{\sigma}[true & \text{if } \mathcal{A}_I [\![\text{a}]\!]\widehat{\sigma}\text{ } \nsubseteq
+	true & \text{if } \mathcal{A}_I [\![\text{n}]\!]\widehat{\sigma}\text{ } \nsubseteq
 	\mathcal{A}_I [\![\text{A}]\!]\widehat{\sigma} \\
-    \widehat{\sigma}[false  & \text{otherwise} \\
+    false  & \text{otherwise} \\
   \end{cases}$\\	  
   \hline
   [write a]$^\ell$ & f$_\ell^{OB} (\widehat{\sigma})$ = f$_\ell^{OB} (a, \widehat{\sigma})$\\
@@ -433,7 +434,7 @@ Another approach for how the interval analysis could be performed for while-loop
         \widehat{\sigma}[true   & \text{if } \mathcal{A}_I [\![\text{a}]\!]\widehat{\sigma} \nsubseteq \mathcal{A}_I [\![\text{A}]\!]\widehat{\sigma} \\
         \widehat{\sigma}[false  & \text{otherwise} \\
      \end{cases}
-   $ & An index is defined as being non-negative.\\
+   $ & An index is defined as being subset of the interval for A.\\
   \hline
 \end{tabular}
 \centering
@@ -456,9 +457,11 @@ Another approach for how the interval analysis could be performed for while-loop
   \hline
     $\text{f}_\ell^{OB} (\text{!b},\widehat{\sigma}) = \text{f}_\ell^{OB} (\text{b}, \widehat{\sigma}) $ & Negation merely forwards.\\ 
   \hline
-   $\text{f}_\ell^{OB} (\text{b}_1 \text{op}_b \text{b}_2, \widehat{\sigma}) = \text{f}_\ell^{OB} (\text{b}_1, \widehat{\sigma}) \vee \text{f}_\ell^{OB} (\text{b}_2, \widehat{\sigma})$ & If either expression has an overflow,the entire expression overflows.\\     
+   $\text{f}_\ell^{OB} (\text{b}_1 \text{op}_b \text{b}_2, \widehat{\sigma}) = \text{f}_\ell^{OB} (\text{b}_1, \widehat{\sigma}) \vee \text{f}_\ell^{OB} (\text{b}_2, \widehat{\sigma})$ & If either expression has an overflow,\\
+                                & the entire expression overflows.\\   
   \hline
-     $\text{f}_\ell^{OB} (\text{a}_1 \text{op}_r \text{a}_2, \widehat{\sigma}) = \text{f}_\ell^{OB} (\text{a}_1, \widehat{\sigma}) \vee \text{f}_\ell^{OB} (\text{a}_2, \widehat{\sigma})$ & If either expression has an overflow,the entire expression overflows.\\     
+     $\text{f}_\ell^{OB} (\text{a}_1 \text{op}_r \text{a}_2, \widehat{\sigma}) = \text{f}_\ell^{OB} (\text{a}_1, \widehat{\sigma}) \vee \text{f}_\ell^{OB} (\text{a}_2, \widehat{\sigma})$ & If either expression has an overflow,\\
+                                & the entire expression overflows.\\   
   \hline
 \end{tabular}
 \centering
