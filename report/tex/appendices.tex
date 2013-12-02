@@ -1,0 +1,35 @@
+\begin{appendices}
+\chapter{How to run the application?}
+Open the command line from the application folder and type in:
+\begin{description}
+	\item java -jar AnalysisTool.jar $<programfile>$
+\end{description}
+
+Replace $"<programfile>"$ with the name of your while-language program file.
+\\\\
+\textbf{Example:}\\
+java -jar AnalysisTool.jar sample.lang
+\\\\
+The output to the console will be formatted as following:
+\\\\
+\begin{figure}[H]
+\begin{lstlisting}
+==== Program =====
+(While-language code)
+
+==== End program =====
+==== Program slice ====
+(Result of program slice)
+==== Buffer Underflow =====
+(Result of buffer underflow)
+==== Interval =====
+(Result of buffer overflow)
+ \end{lstlisting}
+ \caption{Example program for demonstrating buffer overflow using sign detection}
+ \label{code:array_example}
+\end{figure}
+\noindent The first part will print the input source file with labels.\\
+The second part will print the result of program slicing together with point of interest (POI)\\
+The third part print results for found buffer overflows and finally the last part will print the results for buffer overflow.
+
+\end{appendices}

@@ -194,29 +194,29 @@ The result of an interval analysis can be used to calculate whenever a buffer ov
  \label{algorithm:bufferoverflow2}
 \end{algorithm}
 
-\section{Example solution}
-The above analysis can be used to check for buffer overflows in the program from figure~\ref{code:array_example}.
-\begin{table}[H]
-\begin{tabular}{| l | l |}
-\hline
-A$_\circ (1) = \iota \{\text{init}(S_*) \} $ & A$_\bullet(1) = \text{f}_{\text{int A[2]}} (\text{A}_\circ (1))$ \\
-\hline
-A$_\circ (2) =$A$_\bullet(1) $ & A$_\bullet(2) = \text{f}_{\text{int i}} (\text{A}_\circ (2))$ \\
-\hline
-A$_\circ (3) = $A$_\bullet(2)$ & A$_\bullet(3) = \text{f}_{\text{i := -1}} (\text{A}_\circ (3))$  \\
-\hline
-A$_\circ (4) = $A$_\bullet(3) \bigcup $A$_\bullet(6) $ & A$_\bullet(4) = \text{f}_{\text{i < 3}} (\text{A}_\circ (4))$ \\
-\hline
-A$_\circ (5) = $A$_\bullet(4)$ & A$_\bullet(5) = \text{f}_{\text{A[i] := i + 1}} (\text{A}_\circ (5))$ \\
-\hline
-A$_\circ (6) = $A$_\bullet(5)$ & A$_\bullet(6) = \text{f}_{\text{i := i + 1}} (\text{A}_\circ (6))$ \\
-
-\hline
-\end{tabular}
-\centering
-\caption{Equations for the program from figure~\ref{code:array_example}}
-\label{table:}
-\end{table}
+% \section{Example solution}
+% The above analysis can be used to check for buffer overflows in the program from figure~\ref{code:array_example}.
+% \begin{table}[H]
+% \begin{tabular}{| l | l |}
+% \hline
+% A$_\circ (1) = \iota \{\text{init}(S_*) \} $ & A$_\bullet(1) = \text{f}_{\text{int A[2]}} (\text{A}_\circ (1))$ \\
+% \hline
+% A$_\circ (2) =$A$_\bullet(1) $ & A$_\bullet(2) = \text{f}_{\text{int i}} (\text{A}_\circ (2))$ \\
+% \hline
+% A$_\circ (3) = $A$_\bullet(2)$ & A$_\bullet(3) = \text{f}_{\text{i := -1}} (\text{A}_\circ (3))$  \\
+% \hline
+% A$_\circ (4) = $A$_\bullet(3) \bigcup $A$_\bullet(6) $ & A$_\bullet(4) = \text{f}_{\text{i < 3}} (\text{A}_\circ (4))$ \\
+% \hline
+% A$_\circ (5) = $A$_\bullet(4)$ & A$_\bullet(5) = \text{f}_{\text{A[i] := i + 1}} (\text{A}_\circ (5))$ \\
+% \hline
+% A$_\circ (6) = $A$_\bullet(5)$ & A$_\bullet(6) = \text{f}_{\text{i := i + 1}} (\text{A}_\circ (6))$ \\
+% 
+% \hline
+% \end{tabular}
+% \centering
+% \caption{Equations for the program from figure~\ref{code:array_example}}
+% \label{table:}
+% \end{table}
 
 % \subsection*{Notes}
 % Branches: We can assume, on branches that includes an a = b in the boolean expression, that -- on the true branch --  that both a and b is now the intersection of a and b.
