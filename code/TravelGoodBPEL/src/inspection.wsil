@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<inspection xmlns="http://schemas.xmlsoap.org/ws/2001/10/inspection/">
+    <service>
+        <name>TravelGood</name>
+        <abstract>
+            <br/> The NiceView webservice offers a  range of operations related to searching the hotel database, booking and cancelling hotels
+        </abstract>
+        <description referencedNamespace="http://schemas.xmlsoap.org/wsdl/"
+                     location="http://localhost:9080/TravelGoodService/TravelGoodPort?wsdl"/>
+    </service>
+    <link referencedNamespace="http://schemas.xmlsoap.org/ws/2001/10/inspection/"
+          location="http://localhost:8080/LameDuck/inspection.wsil"/>
+    <link referencedNamespace="http://schemas.xmlsoap.org/ws/2001/10/inspection/"
+          location="http://localhost:8080/NiceView/inspection.wsil"/>
+</inspection>
