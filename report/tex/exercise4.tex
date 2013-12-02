@@ -173,7 +173,7 @@ Table~\ref{table:interval_analysis_functions} shows our transfer function for th
 In order to determine the interval of an expression we need to define the semantics of expressions in the \texttt{WHILE} language for the interval analysis.
 \begin{equation}
 A_I : AExp \rightarrow (\widehat{\text{State}_{\text{I}}} \rightarrow \textbf{Interval})
-\end{equation} 
+\end{equation}
 Where  \textbf{Interval}$=\{\bot\}\cup\{[z_1,z_2]|z_1\leq z_2,z_1,z_2\in Z'\cup\{-\infty,\infty\}\}$
 \\\\
 Further we define the following functions:\\
@@ -184,7 +184,7 @@ $A_I[\![n]\!]\widehat{\sigma} =
         [-\infty;-\infty] & \text{if } n < \min\\
         [\infty;\infty] & \text{if } n > \max\\
      \end{cases}$\\
-$A_I[\![a_1 op_a a_2 ]\!] = A_I[\![a_1]\!] \widehat{\text{op}_a} A_I[\![a_1]\!]\sigma $\\
+$A_I[\![a_1 op_a a_2 ]\!] = A_I[\![a_1]\!] \widehat{\text{op}_a} A_I[\![a_1]\!]\sigma $\\\\
 where $\widehat{\text{op}_a}$ : interval $\times$ interval $\rightarrow$ interval is an abstract operator on intervals and $\widehat{\text{ op}_A}$ is a specific arithmetic operator from the set op$_a \{+,-,*,/\}$.
 The definitions for these operators at listen below.
 
@@ -245,7 +245,7 @@ Z_2 =
         -\infty & \text{if } b < \min \text{, or } \exists (i,j) : {Z_{ij} = -\infty} \\
         \infty & \text{if } b > \max \text{, or } \exists (i,j) : {Z_{ij} = \infty} \\
      \end{cases}
-$
+$\\
 
 \begin{figure}
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.0cm,
@@ -265,6 +265,8 @@ $
 \caption{Interval states}
 \label{figure:interval_states}
 \end{figure}
+
+A property if the interval is that once it has exceeded the extremal values of it's bounds, and gone to $-\infty$ or $\infty$, there is not going back, as this could result in false positives. The states and transitions of interval states is illustrated in figure \ref{figure:interval_states}.
 
 \section{Algorithm for calculating buffer overflow}
 The result of an interval analysis can be used to calculate whenever a buffer overflow is present. Algorithm~\ref{algorithm:bufferoverflow2} returns true if a buffer overflow is present for a specific label. It is assumed that the provided label contains an array operation.
@@ -304,7 +306,7 @@ A$_\circ (5) = $A$_\bullet(4)$ & A$_\bullet(5) = \text{f}_{\text{A[i] := i + 1}}
 A$_\circ (6) = $A$_\bullet(5)$ & A$_\bullet(6) = \text{f}_{\text{i := i + 1}} (\text{A}_\circ (6))$ \\
 
 \hline
-\end{tabular}[h]
+\end{tabular}
 \centering
 \caption{Equations for the program from figure~\ref{code:array_example}}
 \label{table:interval_equations}

@@ -1,13 +1,11 @@
 {\setlength{\chapterfontsize}{24pt}
 \chapter{Buffer overflowwith sign detection}
-}\label{sec:exercise3}
-
-Buffer overflow is historically one of the most common programming errors. It is the cause of security breaches, data corruption and program crashes. Detecting them is therefore preferred.
+}\label{sec:exercise3}Buffer overflow is historically one of the most common programming errors. It is the cause of security breaches, data corruption and program crashes. Detecting them before programs are released into the wild can therefore save money, time and headaches.
 \\\\
 A way of doing so is using sign detection analysis. For a point of interest it is possible for each variable to see the signs that the variable may have. Using this information we can detect potential overflows.
 
 \section{Monotone framework}
-To establish our analysis we will define a monotone framework as generic framework that can be used to solve several analysis using a generic worklist algorithm.
+To establish our analysis we move up the abstraction ladder and apply a monotone framework as generic framework that can be used to solve several analysis using a generic worklist algorithm.
 \\\\
 A monotone framework consists of the following:
 \begin{itemize}
@@ -144,7 +142,7 @@ We define the mapping of labels to transfer functions for the analysis in table~
 % \end{description}
 
 \section{Determine signs}
-For the analysis to work the signs need to be determined for a given program. This is done by evaluating arithmetic expressions and boolean expressions.
+To make the analysis actually work, the signs need to be determined for a given program. This is done by deriving information from arithmetic expressions and boolean expressions.
 
 \subsection{Evaluate arithmetic expressions}
 In order to determine the sign of an expression we need to define the semantics of expressions in the \texttt{WHILE} language for the signs analysis.

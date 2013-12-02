@@ -25,13 +25,14 @@ To abstract away the analysis from the general parser tool, we've created an int
   + \umlvirt {initial () : Node} \\
   + \umlvirt {finalNodes () : NodeSet} \\
   + \umlvirt {flow () : FlowSet } \\
-  + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): Boolean}} \\
+  + \umlvirt{transferfunction(Analysis[$\ell$]): Boolean} \\
+%  + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): Boolean}} \\
 } 
 \end{tikzpicture}
 \caption{The Analyzable interface}
 \label{fig:analysable_basic_definition}.
 \end{figure}The interface basically maps the \textit{label(S)}, \textit{init(S)}, \textit{final(S)} and \textit{flow(S)} functions from table~\ref{table:flow_graph_functions} to abstract statement, so we can use it later on to harvest flows and labels via recursion. This is done using the interface \texttt{Analyzable} as defined in figure~\ref{fig:analysable_basic_definition}.
-Specific objects has been created to hold all the definitions and statements. The class \texttt{StatementList} holds all the statements in the program. By simple asking for the \texttt{flow} of the \texttt{statementSet} the complete flow graph will be returned.
+Specific objects has been created to hold all the definitions and statements. The class \texttt{StatementList} holds all the statements in the program. By simple asking for the \texttt{flow} of the \texttt{statementSet} the complete flow graph will be returned as a \texttt{FlowSet}.
 \\\\
 In order to perform the analysis an abstract interface \texttt{Lattice} has been created. This defines the basic elements for performing an analysis such as $\iota$ and $\bot$. For each of the tree analysis' a class that implements this interface has been created.
 \begin{itemize}
@@ -43,4 +44,5 @@ If a new similar analysis needed to be implemented I would be easy to add a new 
 
 
 \subsection{Calculating a solution}
-In order to solve the equations provided by the analysis' the general worklist algorithm for computing the MFP solution has been implemented. The algorithm is placed as the method \texttt{execute} in a \texttt{Program}. It takes a specific analysis as a parameter and returns a result of the analysis for each label in the program as a result. All the flows are added to the worklist. In running time of the algorithm could be optimized by sorting the flow according to reverse post order. The transfer functions are called on the nodes during execution of the algorithm in order to calculate the result of the analysis. As an addition compared to how we defined the analysis, also the label of the node that the flows goes to is send when using the transfer function. This is done in order to have two different transfer functions for \texttt{if} and \texttt{while} statements. An \texttt{if} statement can then check if the flow is going to the true or the false branch and then use determine the new state by evaluating the condition. This makes a more precise solution.
+In order to solve the equations provided by the analysis' the general worklist algorithm for computing the MFP solution has been implemented. The algorithm is placed as the method \texttt{execute} in a \texttt{Program}. It takes a specific analysis as a parameter and returns a result of the analysis for each label in the program as a result, based on the class of the input. All the flows are added to the worklist.\\
+In running time of the algorithm could be optimized by sorting the flow according to reverse post order. The transfer functions are called on the nodes during execution of the algorithm in order to calculate the result of the analysis. As an addition compared to how we defined the analysis, also the label of the node that the flows goes to is send when using the transfer function. This is done in order to have two different transfer functions for \texttt{if} and \texttt{while} statements. An \texttt{if} statement can then check if the flow is going to the true or the false branch and then use determine the new state by evaluating the condition. This makes a more precise solution.
