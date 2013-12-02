@@ -1,13 +1,18 @@
 \chapter{Web services discovery}
+\mrb
 
-To aid in the discovery of our services, we have provided WSIL (Web Service Inspection Language) files for each. These files contains a short description of the service and the operations it offers. It also shows where to find the relevant WSDL files for the service(s) on that server. While all of our services are deployed to the same server, this might not be the case, so we provide a WSIL file for each business entity. They all contain a link to the other services, using the \texttt{link} element of WSIL.
+\noindent
+To aid in the discovery of our services, we have provided WSIL (Web Service Inspection Language) files for each. These files contains a short description of the service and the operations it offers. It also shows where to find the relevant WSDL files for the service(s) on that server. While all of our services are deployed to the same server, this might not be the case, so we provide a WSIL file for each business entity. They all contain a link to the other services, using the \texttt{link} element of WSIL. If we were to deploy this system in production, we would add information on where to find the inspection files in the \texttt{meta} tag of the root html file on the web server.
 
 \begin{description}
-\item [LameDuck:] This WSIL, describes which services LameDuck offers for business use, as well as which faults the operations might generate. As the business part uses multiple services, we describe all in the abstract for this service. We also include an element for the service that resets the test data.\todo{Lav LameDuck WSIL}
+\item [LameDuck:] This WSIL, describes which services LameDuck offers for business use, as well as which faults the operations might generate. This file can be found at the url: \url{http://localhost:8080/LameDuck/inspection.wsil} after the LameDuck project has been deployed, by \kim{}.
 
-\item [NiceView:] This WSIL, describes which services NiceView offers for business use, as well as the faults that can be thrown. All services are described in a few words in the abstract element. \todo{Lav NiceView WSIL}
+\item [NiceView:] This WSIL, describes which services NiceView offers for business use, as well as the faults that can be thrown. All services are described in a few words in the abstract element. This file can be found at the url: \url{http://localhost:8080/NiceView/inspection.wsil} after the NiceView project has been deployed, by \mkt{}.
 
-\item [TravelGood:] \todo{Beskriv TravelGood WSIL} \todo{Lav TravelGood WSIL}
+\item [TravelGood:] The TravelGood WSIL is not deployed with the project, as it is not a web application. Instead we would for production add it to the file system of the web server and include a link in the meta tag of the root html page. As such, all links in the other WSIL files are described as \texttt{http:// \{ bpelinspectionaddress \}}. The WSIL file is located in the TravelGoodBPEL project, by \pet{}.
 
 
 \end{description}
+
+\todo{Lav en readme}
+\todo{Læs WSIL afsnittet igennem, en eller anden}

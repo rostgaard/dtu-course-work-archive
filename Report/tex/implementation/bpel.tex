@@ -2,9 +2,15 @@
 This section describes how we have implemented TravelGood as a BPEL process. We will go over the data types we have used, how we designed the process as well as general design decisions we made.
 
 \subsection{The Port}
+\pet
+
+\noindent
 Since all the services work together on the same process, we have only made one port for TravelGood. We use RPC-literal style for this, with request/response operations. As a client for the service, would need to update the user on the results of all operations, we need to wait for some sort of response for every operation.
 
 \subsection{Business Process}
+\mrb
+
+\noindent
 We have split the business process into two phases, which corresponds to some of the states shown in Fig.~\ref{fig:protocol}. These phases are:
 
 \begin{description}
@@ -15,6 +21,9 @@ We have split the business process into two phases, which corresponds to some of
 \end{description}
 
 \subsubsection{Planning}
+\pet
+
+\noindent
 During this phase, BPEL accepts the following messages
 
 \begin{description}
@@ -32,6 +41,9 @@ We have implemented these as a \texttt{pick} activity, inside a loop that runs a
 A compensation handler is attached on the scope of each flight and hotel booking, such that it can be compensated if necessary. On the scope where the planning \texttt{pick} activity resides, we have a fault handler that will call the corresponding compensation handlers when a booking fails.
 
 \subsubsection{Booked}
+\mkt
+
+\noindent
 During this phase, BPEL accepts the following messages.
 
 \begin{description}
@@ -45,5 +57,7 @@ The other possibility of the pick is that a timeout happens. This timeout models
 
 
 \subsection{Implementation details}
+\kim
 
+\noindent
 In this implementation we have simplified the part of "wait until one day before travel begins before ending process", since this would make it harder to unit test it. In our case we have just implemented a wait of 10 seconds before it ends the process. If we wanted to implement the proper wait, we would use the XPath expression \texttt{hours-from-dateTime} to get the time the itinerary should be terminated and set the wait activity to fire at this time.

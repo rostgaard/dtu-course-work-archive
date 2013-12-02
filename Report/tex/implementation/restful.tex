@@ -1,10 +1,19 @@
 \section{RESTful}
+\pet
+
+\noindent
 This section covers the implementation of the RESTful web-service version of TravelGood. First the resources will be presented followed by how the business processes is mapped to HTTP methods. Finally it is discussed how the business logic is implemented.
 
 \subsection{Resources}
+\pet
+
+\noindent
 The resources in a RESTful web-service is one of the most fundamental concepts as it defined the API of the web-service. In order to support the requirements for TravelGood it contains resources for managing an itineraries and finding flights or hotels. Each of these resources are explained further in the next sections.
 
 \subsubsection{Itinerary resource}
+\kim
+
+\noindent
 The \texttt{itinerary resource} represents everything that can be done to an itinerary. It is possible to add flights and hotels to an itinerary. More specifically an itinerary resource supports HTTP calls to the following paths.
 \begin{description}
 	\item \texttt{/itinerary/} - Base itinerary. Used only to create a new itinerary.
@@ -15,24 +24,36 @@ The \texttt{itinerary resource} represents everything that can be done to an iti
 \end{description}
 
 \subsubsection{Flight resource}
+\mrb
+
+\noindent
 The flight resource is used to search for flight independent of an itinerary. This means that is it possible to get a list of flights without having to create an itinerary first. The flight returned by the flight resource can the be used to add to an itinerary. The flight resource supports HTTP calls to the following path.
 \begin{description}
 	\item \texttt{/flight/} - Used to get a list of flights based on origin, destination and date.
 \end{description}
 
 \subsubsection{Hotel resource}
+\mkt
+
+\noindent
 The hotel resource represent looking up hotels. It can like the flight resource be used independently of an itinerary. The hotel resource supports HTTP calls to the following path.
 \begin{description}
 	\item \texttt{/hotel/} - Used to get a list of hotels based on location, arrival date and departure date.
 \end{description}
 
 \subsubsection{Reset resource}
+\pet
+
+\noindent
 In order to reset the web-service and also the two web-services NiceView and LameDuck that TravelGood depends on a separate reset resource has been created. This is used before each of the implemented test of the RESTful version of TravelGood. The resource supports calls to the following path.
 \begin{description}
 	\item \texttt{/reset/} - Used to clear the web-service. It will remove all itineraries and reset LameDuck and NiceView.
 \end{description}
 
 \subsection{Mapping of business processes}
+\pet
+
+\noindent
 In a RESTful web-service the HTTP verbs must be mapped into the business processes that the web-service manages. As with the BPEL implementation of TravelGood two phases is also considered to the RESTFul version. The planning phase and the booked phase. By calling the resources it is possible to change from one phase to another. How the different HTTP methods are mapped to the business process of the web-service is explained below.
 \begin{description}
 	\item \texttt{Create itinerary} - A HTTP POST is associated with creating a new itinerary for a specific customer. The caller will not pass any information about the itinerary being created, hence POST is used instead of a PUT. 
@@ -52,10 +73,14 @@ For the flight and hotel resources that mapping is as follows
 \end{description}
 
 \subsection{Business logic}
+\kim
+
+\noindent
 Out of the box a RESTFul web-service does not handle business logic. In order to deal with this \texttt{Link}s are used. A link contains a relation, an URI and a MediaType. By providing links to the next possible actions the business logic can be handled this way. This allows a client to follow the business logic of the web-service. The test cases of TravelGood uses these links to perform the required actions.
 
 Table~\ref{table:rest_business_logic} shows links returned in the representations for the two different phases. Performing a call while in a phase where it is not supported will result in an error response.
 \begin{table}
+\centering
 \begin{tabular}{|c|c|}
 \hline
 \textbf{Phase} & \textbf{Links} \\
@@ -75,6 +100,9 @@ To indicate that the messages used has a specific form the mime type \texttt{app
 According to the requirements the storage of a itinerary should be released the day before an itinerary starts. This is not implemented in the provided version of the RESTful TravelGood. In order for this to be implemented the web-service would have to run a cron job at some time checking if any itineraries should be released. Java EE supports this by providing a notation for setting up a \texttt{Scheduler}.
 
 \subsubsection{Representations}
+\mkt
+
+\noindent
 A representation is used to wrap resources and links together into a single representation. 
 The implementation has the following representations.
 \begin{description}
