@@ -15,7 +15,6 @@ import flowgraph.datastructure.VariableSet;
  */
 public interface Analysable {
 
-    //public RDProgramState RD(RDProgramState currentState);
 
     public abstract NodeSet labels();
 

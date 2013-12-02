@@ -217,8 +217,8 @@ The result of an interval analysis can be used to calculate whenever a buffer ov
 \end{algorithm}
 
 \section{Example solution}
-The above analysis can be used to check for buffer overflows in the program from figure~\ref{code:array_example}.
-\begin{table}[H]
+The above analysis can be used to check for buffer overflows in the program from figure~\ref{code:array_example}. The equations is shown in figure~\ref{table:interval_equations}. The solution to these constraints is shown in table~\ref{tabel:interval_example_equations_solution}. It can be seen that there might be an underflow at label 5.
+\begin{table}[h]
 \begin{tabular}{| l | l |}
 \hline
 A$_\circ (1) = \iota \{\text{init}(S_*) \} $ & A$_\bullet(1) = \text{f}_{\text{int A[2]}} (\text{A}_\circ (1))$ \\
@@ -234,13 +234,26 @@ A$_\circ (5) = $A$_\bullet(4)$ & A$_\bullet(5) = \text{f}_{\text{A[i] := i + 1}}
 A$_\circ (6) = $A$_\bullet(5)$ & A$_\bullet(6) = \text{f}_{\text{i := i + 1}} (\text{A}_\circ (6))$ \\
 
 \hline
-\end{tabular}
+\end{tabular}[h]
 \centering
 \caption{Equations for the program from figure~\ref{code:array_example}}
-\label{table:}
+\label{table:interval_equations}
 \end{table}
 
-\todo{Tilføj løsning til equations}
-
-% \subsection*{Notes}
-% Branches: We can assume, on branches that includes an a = b in the boolean expression, that -- on the true branch --  that both a and b is now the intersection of a and b.
+\begin{table}
+\begin{tabular}{| r | c | c | c |}
+\hline
+A$_\bullet (\cdot) $ & A   & i \\
+\hline
+1         & $[0,2]$    & $\bot$ \\
+2         & $[0,2]$ & $[0,0]$ \\
+3         & $[0,2]$ & $[-1,0]$ \\
+4         & $[-1,2]$ & $[-1,1]$ \\
+5         & $[-1,2]$ & $[-1,1]$ \\
+6         & $[-1,2]$ & $[-1,1]$ \\
+\hline
+\end{tabular}
+\centering
+\caption{Solution to equations}
+\label{tabel:interval_example_equations_solution}
+\end{table}

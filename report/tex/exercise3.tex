@@ -137,6 +137,12 @@ We define the mapping of labels to transfer functions for the analysis in table~
 \label{table:sign_detection_functions}
 \end{table}
 
+In order to prove that this is a monotone framework we have to argue that.
+\begin{description}
+	\item The lattice is complete and satisfies the Ascending Chain Condition.
+	\item Each transfer function must describe a set of executions leading to a certain program point.
+\end{description}
+
 \section{Determine signs}
 For the analysis to work the signs need to be determined for a given program. This is done by evaluating arithmetic expressions and boolean expressions.
 
@@ -216,7 +222,6 @@ Table~\ref{table:arithmetic_operators} defines for each of the operators what po
 \caption{Operator effect on variable state.}
 \label{table:arithmetic_operators}
 \end{table}
-
 
 \subsection{Evaluate boolean expressions}
 Similarly booleans expressions should be evaluated. We that that:\\
