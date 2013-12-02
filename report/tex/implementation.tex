@@ -317,6 +317,16 @@ Range check failed at: 10
   \hline
   [write A[n]]$^\ell$ & f$_\ell^S (\widehat{\sigma}) = \widehat{\sigma}$\\
   \hline
+  [write a]$^\ell$ & f$_\ell^{UF} (\widehat{\sigma})$ = f$_\ell^{UF} (a, \widehat{\sigma})$\\
+  \hline
+  [b]$^\ell$ & f$_\ell^{UF} (\widehat{\sigma})$ = f$_\ell^{UF} (b, \widehat{\sigma})$\\
+  \hline
+  [skip]$^\ell$ & f$_\ell^{UF} (\widehat{\sigma})$ = false\\
+  \hline
+  [read x]$^\ell$ & f$_\ell^{UF} (\widehat{\sigma})$ = false\\
+  \hline
+  [x := a]$^\ell$ & f$_\ell^{UF} (\widehat{\sigma})$ = false\\
+  \hline
 \end{tabular}
 \centering
 \caption{Underflow functions for statements}
