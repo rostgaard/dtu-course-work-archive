@@ -1,0 +1,8 @@
+Optimazations
+
+Interval analysis for while-loop
+
+The interval analysis we are performing for while-loops only takes account that the body is executed once, hence the result of the interval analysis performed in the body is an under approximation, since there is potential for that the body will be executed multiple times. However the obtained results are indeed a part of the precise result, but on the otherhand we might omit some of the results for interval analysi which might result an unprecise result for detection of buffer overflow.
+If we could guarantee a number of iterations that the body would execute, we could do an optimazation such as we could get a more exact result for the interval analysis by performing the analysis as the same number of iterations for the statements in the body.   
+A reason for why we can not calculate the number of iterations for how many times the loop is executed is because it might be depended on the body, and it would require advanced analysis to calculate this number.
+Another approach for how the interval analysis could be performed for while-loop is to a assume that the body will run inifity often. However, during the analysis the statmenets of the body has to know that they are in the context of a while-loop. The result obtain form this analysis will be an overapprox.  
