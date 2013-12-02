@@ -65,30 +65,6 @@ If we could guarantee a number of iterations that the body would execute, we cou
 A reason for why we can not calculate the number of iterations for how many times the loop is executed is because it might be depended on the body, and it would require advanced analysis to calculate this number.
 Another approach for how the interval analysis could be performed for while-loop is to a assume that the body will run infinity often. However, during the analysis the statements of the body has to know that they are in the context of a while-loop. The result obtain form this analysis will be an over approximation.
 
-%\begin{figure}
-%\centering
-%\begin{tikzpicture} 
-%\umlclass[type=abstract]{Expression}{}{ 
-%  + \umlvirt{isOutOfBounds(Analysis[$\ell$]) : Boolean} \\
-%  + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): Boolean}} \\
-%  + \umlvirt{evalulate(Analysis[$\ell$])} : SignSet\\
-%  + \umlvirt{evalulate(Analysis[$\ell$]) : Interval}
-%} 
-%\end{tikzpicture}
-%\caption{Extension of the Expression class}
-%\end{figure}
-
-%\begin{figure}
-%\centering
-%\begin{tikzpicture} 
-%\umlclass[type=abstract]{Statement}{}{ 
-%  + \umlvirt{isOutOfBounds(Analysis[$\ell$]) : Boolean} \\
-%  + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): Boolean}}
-%} 
-%\end{tikzpicture}
-%\caption{Extension of the Statement class}
-%\end{figure}
-
 
 \section{Functions for underflow detection}
 \begin{table}[h]
