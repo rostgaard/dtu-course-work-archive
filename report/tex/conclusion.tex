@@ -1,3 +1,14 @@
 \chapter{Conclusion}
 
-\todo{Skriv konklusion}
+%\todo{Skriv konklusion}
+
+%skriv generalt om program analyse
+Program analysis is principles for analysing source-code and derive information out of it which can give some useful information, before the code it actually executed. This is useful when debugging errors in the source code. It can also be used for optimizing the source code in various ways such as reducing the execution time or memory space consumptions.
+
+%skriv hvad vi har lavet i projektet
+We have during this project focused on various kinds of program analysis' in order to solve problems like buffer overflows and program slicing. Here we have used analysis as reaching definitions, detection of signs analysis and interval analysis, where each analysis has been implemented as instances of the Monotone framework, with complete lattices and a set of transfer functions.
+The results of the analysis has then been calculated by implementing the MFP (Maximum Fixed Point) algorithm.
+
+%skriv de resultater we har opnået
+The results we have obtained is documented throughout this report.
+We have also successfully implemented a program that is able to run the analysis explained in the report based on the theory gained in this course. Our analysis' are based on approximations that can be improved. For instance the lack of context awareness in the body of a while statement is limited by our under approximated solution.
