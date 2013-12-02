@@ -297,7 +297,7 @@ Another approach for how the interval analysis could be performed for while-loop
   \hline
   [read x]$^\ell$ & f$_\ell^{UF} (\widehat{\sigma})$ = false\\
   \hline
-  [x := a]$^\ell$ & f$_\ell^{UF} (\widehat{\sigma})$ = false\\
+  [x := a]$^\ell$ & f$_\ell^{UF} (\widehat{\sigma})$ = f$_\ell^{UF} (a, \widehat{\sigma})$\\
   \hline
 \end{tabular}
 \centering
@@ -374,7 +374,7 @@ Another approach for how the interval analysis could be performed for while-loop
   [A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^{OB} (\widehat{\sigma}) = 
      \begin{cases} 
      \widehat{\sigma}[true   & \text{if } \mathcal{A}_I [\![\text{a}_1]\!]\widehat{\sigma}\text{ } \nsubseteq
-     \mathcal{A}_I [\![\text{A}]\!]\widehat{\sigma}$ \vee f$_\ell^{OB} (\text{a}_2, \widehat{\sigma}) \\
+     \mathcal{A}_I [\![\text{A}]\!]\widehat{\sigma} \vee f_\ell^{OB} (\text{a}_2, \widehat{\sigma}) \\
      \widehat{\sigma}[false  & \text{otherwise} \\
      \end{cases}$\\
   \hline

@@ -23,7 +23,7 @@
 *.out
 *.synctex.gz
 .idea/
-report/Main/final.pdf
+# report/Main/final.pdf
 report/report.pdf
 
 #java specific
