@@ -29,8 +29,9 @@
 *.mtc1
 *.out
 *.synctex.gz
+*.nav
 
-
+presentation/presentation.pdf
 Report/Main/final.pdf
 
 # Netbeans #

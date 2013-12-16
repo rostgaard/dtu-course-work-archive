@@ -2,6 +2,7 @@
 \section{Overview}
 \begin{frame}{Overview}
 COMPONENT DIAGRAM
+\movie{Click me!}{fejres.wav}
 \end{frame}
 
 
@@ -54,22 +55,21 @@ COMPONENT DIAGRAM
 \subsection{BPEL}
 \begin{frame}{Overview - BPEL}
 \begin{itemize}[<+->]
-\item Correlation set: \texttt{itineraryID} and \texttt{customerID}
+	\item Correlation set: \texttt{itineraryID} and \texttt{customerID}
 
-\medskip\item Planning/Booking phase
-\begin{itemize}
-\item Get flights/hotels
-\item<3-> Plan flights/hotels -- kept in global variables
-\item Attempt booking, loops all planned flights/hotels
-\item Compensation handler on each booking attempt
-\end{itemize}
+	\medskip\item Planning/Booking phase
+	\begin{itemize}
+		\item Get flights/hotels
+		\item<3-> Plan flights/hotels -- kept in global variables
+		\item Attempt booking, loops all planned flights/hotels
+		\item Compensation handler on each booking attempt
+	\end{itemize}
 
-\medskip\item Cancel phase
-\begin{itemize}
-\item Attempts to cancel all flights/hotels
-\item<7-> Times out after a certain point in time
-\end{itemize}
-
+	\medskip\item Cancel phase
+	\begin{itemize}
+		\item Attempts to cancel all flights/hotels
+		\item<7-> Times out after a certain point in time
+	\end{itemize}
 \end{itemize}
 \end{frame}
 
