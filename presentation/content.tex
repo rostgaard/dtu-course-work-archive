@@ -19,32 +19,45 @@ COMPONENT DIAGRAM
 \begin{frame}{Overview - REST}
 \begin{itemize}[<+->]
 	
-	\medskip\item Resources
-	\begin{itemize}
-		\item Itinerary
-		\item Flight
-		\item Hotel
+	\item Resources
+	\begin{itemize}[<2->]
+		\item ItineraryResource
+		\item ItineraryBookingResource
+		\item FlightResource
+		\item HotelResource
+		\item ResetResource
 	\end{itemize}
 		
-	\medskip\item Representations
-	\begin{itemize}
+	\medskip\item <3-> Representations - Data and links
+	\begin{itemize}[<4->]
 		\item ItineraryRepresentation
 		\item FlightRepresentation
 		\item HotelRepresentation
 		\item StatusRepresentation
 	\end{itemize}
+	
+	\item <5-> Mime type: \texttt{application/itinerary+xml}
 
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Overview - REST}
 \begin{itemize}[<+->]
+	
+	\item Mapping to HTTP verbs
+	\begin{itemize}	[<2->]
+		\item \texttt{GET} for idempotent
+		\item \texttt{PUT} for updating
+		\item \texttt{POST} for creation
+		\item \texttt{DELETE} for removal
+	\end{itemize}
 		
-	\medskip\item Interface mapping
-	\begin{itemize}
+	\medskip\item <3-> Itinerary mapping example
+	\begin{itemize}[<4->]
 		\item createItinerary (POST) creates the itinerary
 		\item getItinerary (GET) gives the idempotent state of the itinerary
 		\item addFlight (PUT) adds a new flight to the itinerary
+		\item addHotel (PUT) adds a new hotel to the itinerary
 		\item removeItinerary (DELETE) removes the itinerary
 	\end{itemize}
 
