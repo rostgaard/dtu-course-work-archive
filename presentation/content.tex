@@ -17,10 +17,39 @@ COMPONENT DIAGRAM
 
 \subsection{REST}
 \begin{frame}{Overview - REST}
+\begin{itemize}[<+->]
+	
+	\medskip\item Resources
+	\begin{itemize}
+		\item Itinerary
+		\item Flight
+		\item Hotel
+	\end{itemize}
+		
+	\medskip\item Representations
+	\begin{itemize}
+		\item ItineraryRepresentation
+		\item FlightRepresentation
+		\item HotelRepresentation
+		\item StatusRepresentation
+	\end{itemize}
 
+\end{itemize}
 \end{frame}
 
+\begin{frame}{Overview - REST}
+\begin{itemize}[<+->]
+		
+	\medskip\item Interface mapping
+	\begin{itemize}
+		\item createItinerary (POST) creates the itinerary
+		\item getItinerary (GET) gives the idempotent state of the itinerary
+		\item addFlight (PUT) adds a new flight to the itinerary
+		\item removeItinerary (DELETE) removes the itinerary
+	\end{itemize}
 
+\end{itemize}
+\end{frame}
 
 \subsection{BPEL}
 \begin{frame}{Overview - BPEL}
