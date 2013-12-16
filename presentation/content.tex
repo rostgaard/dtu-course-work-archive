@@ -1,4 +1,60 @@
 
-\begin{frame}{Blah}
-Test
+\section{Overview}
+\begin{frame}{Overview}
+COMPONENT DIAGRAM
 \end{frame}
+
+
+\begin{frame}{Dummy Services}
+\begin{itemize}[<+->]
+\item LameDuck and NiceView
+\item Defined by WSDL/XSD documents
+\item Communicates with BankService
+\item Implemented to fit wanted unit tests
+\end{itemize}
+\end{frame}
+
+
+\subsection{REST}
+\begin{frame}{Overview - REST}
+
+\end{frame}
+
+
+
+\subsection{BPEL}
+\begin{frame}{Overview - BPEL}
+\begin{itemize}[<+->]
+\item Correlation set: \texttt{itineraryID} and \texttt{customerID}
+
+\medskip\item Planning/Booking phase
+\begin{itemize}
+\item Get flights/hotels
+\item<3-> Plan flights/hotels -- kept in global variables
+\item Attempt booking, loops all planned flights/hotels
+\item Compensation handler on each booking attempt
+\end{itemize}
+
+\medskip\item Cancel phase
+\begin{itemize}
+\item Attempts to cancel all flights/hotels
+\item<7-> Times out after a certain point in time
+\end{itemize}
+
+\end{itemize}
+\end{frame}
+
+
+
+\section{Comparison}
+\begin{frame}{Comparison BPEL vs REST}
+
+\end{frame}
+
+
+\section{Who did what}
+\begin{frame}{Who did what}
+
+\end{frame}
+
+
