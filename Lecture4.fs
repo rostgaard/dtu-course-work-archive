@@ -32,6 +32,9 @@ let test5_3_2 = sum (fun x -> x >= 2) [1;2;3];;
 assert (test5_3_2 = 5);;
 
 //HR 5.5
+//5.5 Consider the map colouring example in Section 4.6. 
+// Give declarations for the functions areNb canBeExtBy, extColouring, countries and colCntrs using higher-order list functions.
+// Are there cases where the old declaration from Section 4.6 is preferable?
 // Example: Map colouring
 
 type Country = string;;
