@@ -1,3 +1,0 @@
-http://localhost:8080/Assignment4/rest/events/addEvent?value=3&id=1
-http://localhost:8080/Assignment4/rest/events/getEvents?&id=1
-http://localhost:8080/Assignment4/rest/events/awaitEvent?&id=1
