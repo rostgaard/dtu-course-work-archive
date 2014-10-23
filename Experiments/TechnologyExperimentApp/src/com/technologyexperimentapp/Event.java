@@ -10,6 +10,8 @@ public class Event {
 	private float value;
 	@JsonProperty("time")
 	private long time;
+	@JsonProperty("eventType")
+	private EventType eventType;
 	
 	public Event() {
 		
@@ -43,6 +45,18 @@ public class Event {
 	
 	public void setTime(long time) {
 		this.time = time;
+	}
+	
+	public EventType getEventType() {
+		return eventType;
+	}
+	
+	public void setEventType(EventType eventType) {
+		this.eventType = eventType;
+	}
+	
+	public static enum EventType {
+		SHAKE, HUMIDITY, PLAY_SOUND;
 	}
 
 }
