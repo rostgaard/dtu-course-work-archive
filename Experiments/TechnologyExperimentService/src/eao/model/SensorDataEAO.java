@@ -51,6 +51,19 @@ public class SensorDataEAO {
 		
 		return sensor.getEvents();
 	}
+	
+	
+	final private static String querytextGetAll = "SELECT * FROM EventEntity";
+	public List<EventEntity> getAllEventlist() {
+		TypedQuery<EventEntity> query = em.createQuery(querytextGetAll, EventEntity.class);	
+		List<EventEntity> result = query.getResultList();
+
+		if (result != null) {
+			return result;
+		} else {
+			return Collections.emptyList();
+		}
+	}
 
 	
 	final private static String querytext =

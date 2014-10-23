@@ -65,6 +65,18 @@ public class EventWebService {
 	}
 	
 	@GET
+	@Path("/getAllEvents")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Event> getAllEventList() {
+		List<EventEntity> eventEntities = new ArrayList<EventEntity>();
+		List<Event> events = new ArrayList<Event>();
+		eventEntities = eao.getAllEventlist();
+		events = eao.convertEventEntityList(eventEntities);
+		return events;
+	}
+	
+	@GET
 	@Path("/getEventsByType")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
