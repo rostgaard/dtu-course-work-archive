@@ -17,6 +17,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
+import sun.reflect.CallerSensitive;
 import dto.model.Event;
 import eao.model.SensorDataEAO;
 import entity.model.EventEntity;
@@ -47,7 +48,6 @@ public class EventWebService {
 				tempList.notifyAll();
 			}
 		}
-		
 		return eao.convertEventEntity(eventEntity);
 	}
 	
@@ -56,6 +56,7 @@ public class EventWebService {
 	@Path("/getEvents")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
+	
 	public List<Event> getEventList(@QueryParam("id") int id) {
 		List<EventEntity> eventEntities = new ArrayList<EventEntity>();
 		List<Event> events = new ArrayList<Event>();

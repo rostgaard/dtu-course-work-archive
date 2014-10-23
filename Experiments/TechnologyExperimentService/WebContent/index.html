@@ -44,7 +44,7 @@
     <div id="wrapper">
         <div id="page-wrapper">
             <div class="row">
-            	<h1 class="page-header">Technology Experiment</h1>
+			<h1 class="page-header">Technology Experiment</h1>
 			<br>
                 <div class="col-lg-4">
                     <div class="panel panel-default">
@@ -55,7 +55,9 @@
                         <div class="panel-body">
                             <div class="list-group" id="box">
                                
+							
                             </div>
+							   <button class="btn btn-primary btn-block" id="more">Show more</button>
                             <!-- /.list-group -->
                             
                         </div>
@@ -65,7 +67,7 @@
                 </div>
                 <!-- /.col-lg-4 -->
 				<div class="well col-xs-2">
-				<button type="button" class="btn btn-default btn-lg btn-block">Play Sound </button>
+				<button type="button" id="play" class="btn btn-default btn-lg btn-block">Play Sound </button>
 				
 				</div>
             </div>
@@ -81,17 +83,27 @@
 	<script src="js/jquery.timeago.js"></script>
 	<script type="text/javascript">
 	var items;
-		$.getJSON( "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/TechnologyExperimentService/rest/events/getAllEvents", function( data ) {
+	$.getJSON( "http://se-se2-e14-glassfish-c.compute.dtu.dk:8080/TechnologyExperimentService/rest/events/getAllEvents", function( data ) {
 		items = data;
-		for(var i in items.reverse())
+	for(var i in items.reverse())
 		{
 		var type = items[i].eventType;
 		var time = jQuery.timeago(new Date(items[i].time));
-		var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+type.replace("SHAKE","Door moved")+'<span class="pull-right text-muted small"><em>'+time+'</em></span></a>';
+		var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+type.replace("SHAKE","Door moved").replace("PLAY_SOUND","Sound played")+'<span class="pull-right text-muted small"><em>'+time+'</em></span></a>';
 		$('#box').append(element);
 		}
 	});
-	
+	$('.list-group-item:gt(4)').hide().last().after(
+    $('#more').click(function(){
+        var a = this;
+        $('.list-group-item:not(:visible):lt(5)').fadeIn(function(){
+         if ($('.list-group-item:not(:visible)').length == 0) $(a).remove();   
+        }); return false;
+    })
+	);
+	$('#play').on('click', function(event) {
+	$.get("http://se-se2-e14-glassfish-c.compute.dtu.dk:8080/TechnologyExperimentService/rest/events/addEvent?id=1337&eventType=PLAY_SOUND");
+	});
 	</script>
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
