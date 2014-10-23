@@ -1,12 +1,9 @@
 package com.technologyexperimentapp;
 
-import java.util.HashMap;
-
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -99,7 +96,7 @@ public class MainActivity extends ActionBarActivity {
 			
 			awaitSound();
 			
-			//awaitEvent();
+			awaitEvent();
 		}
 		
 //		@Override
@@ -154,11 +151,16 @@ public class MainActivity extends ActionBarActivity {
 			
 			Thread thread = new Thread(){
 				 public void run() {
-					 Event event;
+					 Event event = null;
 					 while(true) {
-						 event = WebServiceConnection.invokeAwaitEventWebServer(1337, Event.EventType.PLAY_SOUND);
+						 try {
+							 event = WebServiceConnection.invokeAwaitEventWebServer(1337, Event.EventType.PLAY_SOUND);							 
+						 } catch (Exception e) {
+							 
+						 }
 						 if (event != null) {
 							 soundPool.play(sound, 0, 100, 1, 0, 1f);
+							 event = null;
 						 }
 					 }
 				 }
