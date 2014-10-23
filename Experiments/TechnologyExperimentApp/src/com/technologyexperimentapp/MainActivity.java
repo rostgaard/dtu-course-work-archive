@@ -1,15 +1,22 @@
 package com.technologyexperimentapp;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -47,9 +54,13 @@ public class MainActivity extends ActionBarActivity {
 	 */
 	public static class PlaceholderFragment extends Fragment {
 
+		private SensorManager sensorManager;
+		private AccelerometerEventListener accelerometerListener;
+		private AwaitEventThread awaitEventThread;
+
 		public PlaceholderFragment() {
 		}
-
+	
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
@@ -57,5 +68,78 @@ public class MainActivity extends ActionBarActivity {
 					false);
 			return rootView;
 		}
+		
+		@Override
+		public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+			super.onViewCreated(view, savedInstanceState);
+			
+			if (sensorManager == null)
+				sensorManager = (SensorManager) this.getActivity().getSystemService(Context.SENSOR_SERVICE);
+		}
+		
+		@Override
+		public void onResume() {
+			super.onResume();
+			
+			EditText editText = (EditText)getActivity().findViewById(R.id.editText1);
+			TextView textView = (TextView)  getActivity().findViewById(R.id.textView1);	
+			accelerometerListener = new AccelerometerEventListener(textView, editText);
+			
+			sensorManager.registerListener(accelerometerListener,
+					sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+					SensorManager.SENSOR_DELAY_NORMAL);
+			
+			
+			awaitEvent();
+		}
+		
+//		@Override
+//		public void onDestroy() {
+//			super.onDestroy();
+//			sensorManager.unregisterListener(accelerometerListener);
+//			accelerometerListener = null;
+//		}
+		
+		private synchronized void awaitEvent() {
+			
+			if (awaitEventThread != null) {
+				awaitEventThread.terminate();
+				awaitEventThread = null;
+			}
+			
+			final EditText editText = (EditText) getActivity().findViewById(R.id.editText2);
+			final TextView textView = (TextView) getActivity().findViewById(R.id.textView2);
+			awaitEventThread = new AwaitEventThread(editText, textView);
+			
+			if (!textView.getText().equals(""))
+				awaitEventThread.start();
+			
+			editText.setOnFocusChangeListener(new OnFocusChangeListener() {
+				
+				@Override
+				public void onFocusChange(View v, boolean hasFocus) {
+					if (!hasFocus) {
+						textView.setText("Current Sensor ID: " + editText.getText());
+						awaitEvent();
+					}
+				}
+			});
+			
+			editText.setOnKeyListener(new OnKeyListener() {
+				
+				@Override
+				public boolean onKey(View v, int keyCode, KeyEvent event) {
+					if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+						textView.setText("Current Sensor ID: " + editText.getText());
+						awaitEvent();
+					}
+					return false;
+				}
+			});
+			
+		}
+		
+		
+
 	}
 }

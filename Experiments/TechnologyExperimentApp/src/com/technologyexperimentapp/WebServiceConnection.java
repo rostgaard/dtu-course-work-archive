@@ -10,7 +10,7 @@ import com.technologyexperimentapp.Event.EventType;
 
 public class WebServiceConnection {
 	
-	private static final String BASE_URL = "http://http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/TechnologyExperimentService/rest/events";
+	private static final String BASE_URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/TechnologyExperimentService/rest/events";
 	
 	public static Event invokeAddEventWebServer(int id, float value, EventType eventType) {
 		final String url = BASE_URL + "/addEvent?id={id}&value={value}&eventType={eventType}";
