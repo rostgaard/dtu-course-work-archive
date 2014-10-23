@@ -1,8 +1,13 @@
 package com.technologyexperimentapp;
 
+import java.util.HashMap;
+
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -57,6 +62,9 @@ public class MainActivity extends ActionBarActivity {
 		private SensorManager sensorManager;
 		private AccelerometerEventListener accelerometerListener;
 		private AwaitEventThread awaitEventThread;
+		
+		public static final int S1 = R.raw.wopwop;
+		private static SoundPool soundPool;
 
 		public PlaceholderFragment() {
 		}
@@ -89,8 +97,9 @@ public class MainActivity extends ActionBarActivity {
 					sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 					SensorManager.SENSOR_DELAY_NORMAL);
 			
+			awaitSound();
 			
-			awaitEvent();
+			//awaitEvent();
 		}
 		
 //		@Override
@@ -136,6 +145,26 @@ public class MainActivity extends ActionBarActivity {
 					return false;
 				}
 			});
+			
+		}
+		
+		private synchronized void awaitSound() {
+			soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 100);
+			final int sound = soundPool.load(getActivity(), R.raw.wopwop, 1);
+			
+			Thread thread = new Thread(){
+				 public void run() {
+					 Event event;
+					 while(true) {
+						 event = WebServiceConnection.invokeAwaitEventWebServer(1337, Event.EventType.PLAY_SOUND);
+						 if (event != null) {
+							 soundPool.play(sound, 0, 100, 1, 0, 1f);
+						 }
+					 }
+				 }
+			};
+			thread.start();			
+			
 			
 		}
 		
