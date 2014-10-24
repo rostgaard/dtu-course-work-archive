@@ -15,7 +15,7 @@ type BExp =                          (* boolean expressions      *)
           | FF                       (* false                    *)
           | Eq of AExp * AExp        (* equality                 *)
           | Lt of AExp * AExp        (* less than                *)
-          | Neg of AExp              (* negation                 *)
+          | Neg of BExp              (* negation                 *)
           | Con of AExp       ;;     (* conjunction              *)
 
 type Stm  =                            (* statements             *)
@@ -45,23 +45,25 @@ let rec B b s =
    match b with 
     | TT          -> true
     | FF          -> false
-    | Eq(e1, e2)  -> A e1 = A e2
-    | Lt(e1, e2)  -> A e1 < A e2
-    | Neg e       -> not (A e)
-    | Con()       -> ?? ;;
+    | Eq(e1, e2)  -> A e1 s = A e2 s
+    | Lt(e1, e2)  -> A e1 s < A e2 s
+    | Neg e       -> not (B e s)
+    | Con e       -> false ;;
 
 (* I: Stm -> State -> State                          *)
 let rec I stm s =
     match stm with 
-    | Ass(x,a)         -> update x (x, A a s) s
+    | Ass(x,a)         -> update x ((A a s)) s
     | Skip             -> s
-    | Seq(stm1, stm2)  -> (I stm1 s).Union (I stm2 s)
-    | ITE(b,tbranch,fbranch) -> if B b
+    | Seq(stm1, stm2)  -> let s' = I stm1 s
+                          I stm2 s'
+                          
+    | ITE(b,tbranch,fbranch) -> if B b s
                                 then I tbranch s
-	                        else I fbranch s
-    | While(b, body)   -> if B b 
-                            then (I body s).Union (I While b s)
-                            else Skip;;
+                                else I fbranch s
+    | While(b, body)         -> if B b s
+                                  then let s' = I body s (While b s')
+                                  else Skip;;
 
 
 (* Factorial computation 
