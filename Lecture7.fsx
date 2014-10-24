@@ -48,22 +48,20 @@ let rec B b s =
     | Eq(e1, e2)  -> A e1 s = A e2 s
     | Lt(e1, e2)  -> A e1 s < A e2 s
     | Neg e       -> not (B e s)
-    | Con e       -> false ;;
+    | Con e       -> failwith ("Not implemented.") ;;
 
 (* I: Stm -> State -> State                          *)
 let rec I stm s =
     match stm with 
-    | Ass(x,a)         -> update x ((A a s)) s
-    | Skip             -> s
-    | Seq(stm1, stm2)  -> let s' = I stm1 s
-                          I stm2 s'
-                          
+    | Ass(x,a)               -> update x ((A a s)) s
+    | Skip                   -> s
+    | Seq(stm1, stm2)        -> I stm2 (I stm1 s)
     | ITE(b,tbranch,fbranch) -> if B b s
-                                then I tbranch s
-                                else I fbranch s
+                                  then I tbranch s
+                                  else I fbranch s
     | While(b, body)         -> if B b s
-                                  then let s' = I body s (While b s')
-                                  else Skip;;
+                                  then I (While (b,body)) (I body s)
+                                  else s;;
 
 
 (* Factorial computation 
@@ -77,7 +75,8 @@ let fac = Seq(Ass("y", N 1),
                     Seq(Ass("y", Mul(V "x", V "y")) , Ass("x", Sub(V "x", N 1)) ))
              );;
 
-
+//B (Neg(Eq(V "x", N 0))) s0;;
+//I (Ass("x", Sub(V "x", N 1))) s0;;
 
 
 (* Define an initial state                           *)
@@ -87,7 +86,5 @@ let s0 = Map.ofList [("x",4)];;
 let s1 = I fac s0;;
 
 (* Inspect the resulting state                       *)
-Map.find "y" s1;;
-
-
-
+let tastVar = Map.find "y" s1;;
+assert (tastVar = 24);;
