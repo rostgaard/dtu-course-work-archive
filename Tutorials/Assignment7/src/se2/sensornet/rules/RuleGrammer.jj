@@ -1,0 +1,236 @@
+/**
+ * @author Kim Rostgaard Christensen - s084283
+ */
+
+options {
+    STATIC = false;
+}
+
+PARSER_BEGIN(Rules)
+
+package se2.sensornet.rules;
+
+import java.util.*;
+
+public class Rules {
+
+    public List<Rule> parse() {
+        try {
+            return RULES();
+        } catch (TokenMgrError e) {
+            return null;
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+}
+
+PARSER_END(Rules)
+
+SKIP:  { 
+	" " | "\t" | "\n" | "\r" |
+	<"//" (~["\n","\r"])* ("\n"|"\r")>
+}
+
+TOKEN: { 
+	"||" | 
+	"&&" | 
+	">=" | "==" |
+	"(" | ")" | 
+	"." |
+	";" | ":" | "," |
+	"when" | "if" | "then" }
+
+TOKEN: {
+    <IDENTIFIER: ["a"-"z", "A"-"Z"](["a"-"z", "A"-"Z", "0"-"9"])*> | 
+	<NUMBER: ("-")?(["0"-"9"])+>
+}
+
+// Token related rules (conversion to objects):
+
+String IDENTIFIER(): {
+	Token identifierToken;
+}{
+	identifierToken = <IDENTIFIER>
+	{ return identifierToken.image; }
+}
+
+int NUMBER(): {
+	Token numberToken;
+}{
+	numberToken = <NUMBER>
+	{ return Integer.parseInt(numberToken.image); }
+}
+
+Operator OP0(): {
+}{
+	( "||" { return new Operator (OperatorType.OR); } )
+}
+
+Operator OP1(): {
+}{
+	( "&&" { return new Operator (OperatorType.AND); } )
+}
+
+Operator OP2(): {
+}{
+	( "=="  { return new Operator (OperatorType.EQUAL);   } ) |
+    ( ">="  { return new Operator (OperatorType.GTEQUAL); } ) 
+}
+
+
+// Actual grammar rules:  
+  
+List<Rule> RULES(): {
+	List<Rule> rules = new ArrayList<Rule>();
+	Rule rule;
+}{ 
+    ( rule = RULE() ";" { rules.add(rule); } )+ <EOF> 
+    { return rules; }
+}	
+
+Rule RULE(): {
+	String identifier;
+ 	Event event;
+ 	Expression condition;
+	List<Action> actions;
+}{
+	identifier = IDENTIFIER()
+	":" "when"
+	event = EVENT()
+	"if" 
+	condition = EXPRESSION()
+	"then"
+	actions = ACTIONS()
+	{
+	  Rule rule = new Rule();
+      rule.setName(identifier);
+	  rule.setEvent(event);
+	  rule.setCondition(condition);
+	  rule.setActions(actions);
+	  return rule;
+	}
+}
+
+Event EVENT(): {
+	String identifier;
+}{
+	identifier = IDENTIFIER()
+	{
+	  return new Event (identifier);
+	}
+}
+
+Expression EXPRESSION(): {
+	Expression expression; 
+}{
+	expression = EXPRESSION0()
+	{ return expression; }	  
+}
+
+Expression EXPRESSION0(): {
+	Expression expression1;
+	Expression expression2;
+	Operator operator;
+}{  expression1 = EXPRESSION1()
+    ( operator = OP0()  
+      expression2 = EXPRESSION1()
+      {
+        Operation operation = new Operation(expression1, expression2, operator);
+        expression1 = operation;
+      }
+    )*
+	{ return expression1; }
+}
+
+Expression EXPRESSION1(): {
+	Expression expression1;
+	Expression expression2;
+	Operator operator;
+}{  expression1 = EXPRESSION2()
+    ( operator = OP1()
+      expression2 = EXPRESSION2()
+      {
+        Operation operation = new Operation(expression1, expression2, operator);
+        expression1 = operation;
+      }
+    )*
+	{ return expression1; }
+}
+
+Expression EXPRESSION2(): {
+	Expression expression1;
+	Expression expression2;
+	Operator operator;
+}{  expression1 = ATOMIC()
+    ( operator = OP2()
+      expression2 = ATOMIC()
+      {
+        Operation operation = new Operation(expression1, expression2, operator);
+        expression1 = operation;
+      }
+    )*
+	{ return expression1; }
+}
+
+Expression ATOMIC(): {
+	Expression expression;
+}{
+	( "(" expression = EXPRESSION() ")" { return expression; } ) |
+	( expression = ATTRIBUTE() {return expression; } ) |
+	( expression = CONSTANT()  {return expression; } )
+}
+
+Attribute ATTRIBUTE(): {
+	String object;
+	String slot;
+}{
+	object = IDENTIFIER()
+	"."
+	slot = IDENTIFIER()
+	{
+	  return new Attribute(object, slot);
+	}
+}
+
+Constant CONSTANT(): {
+	int constantValue;
+}{
+	constantValue = NUMBER()
+	{ 
+	  return new Constant(constantValue);
+	}
+}
+
+List<Action> ACTIONS(): {
+	List<Action> actions = new ArrayList<Action>();
+	Action action;
+}{  ( action = ACTION() { actions.add(action); } ) 
+    ( ","  action = ACTION() { actions.add(action); } )*
+    { return actions; } 
+}
+	
+Action ACTION(): {
+	String actorName;
+	String actionName;
+	List<Expression> parameters;
+}{  actorName = IDENTIFIER()
+    "."
+    actionName = IDENTIFIER()
+    parameters = PARAMETERS()
+	{ 
+	  return new Action(actorName, actionName, parameters);
+	}
+}
+
+List<Expression> PARAMETERS(): {
+	List<Expression> parameters = new ArrayList<Expression>();
+	Expression parameter;
+}{
+	"(" [ parameter = EXPRESSION() { parameters.add(parameter); } 
+	      ( "," parameter = EXPRESSION() { parameters.add(parameter); } )*
+	    ]
+	")"
+	{ return parameters; }    
+}
