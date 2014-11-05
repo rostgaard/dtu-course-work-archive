@@ -105,6 +105,7 @@ let complement = function
  *  inconsistent sets. Thus, we merely have check for the number of 
  *  intersected values to verify consistency.
  *)
+
 let isConsistent ls = Set.count (Set.intersect (Set.map (fun (p) -> complement (p)) ls) ls) = 0; 
 
 let testConsistent = (isConsistent testSet = true);;
