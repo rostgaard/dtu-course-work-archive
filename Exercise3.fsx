@@ -29,27 +29,38 @@ let lsToString = function
   |  x::xs -> List.fold (fun s prop -> s + " && " +  toString (prop)) (toString x) xs;;
 
 (************
- * Part 2
+ * Part 2 - negational normal form.
  *)
+ 
+ (* Returns the proposition in negation normal form.
+    Prop -> Prop *)
 let rec negNormalForm = function 
  | A p         -> A p
- | Dis (p,q)   -> Neg (Con (Neg (negNormalForm p), Neg (negNormalForm q)))
- | Con (p,q)   -> Neg (Dis (Neg (negNormalForm p), Neg (negNormalForm q)))
+ | Neg (Dis (p,q))   -> Con (negNormalForm (Neg (p)), negNormalForm (Neg (q)))
+ | Neg (Con (p,q))   -> Dis (negNormalForm (Neg (p)), negNormalForm (Neg (q)))
+ | Dis (p,q)   -> Dis (negNormalForm (p), negNormalForm (q))
+ | Con (p,q)   -> Con (negNormalForm (p), negNormalForm (q))
  | Neg (Neg p) -> negNormalForm p
  | Neg p       -> Neg (negNormalForm p);;
 
-let prop1 = Dis (A "p", A "q");;
+// Tests
+let prop1     = Neg (Dis (A "p", A "q"));;
 let exptProp1 = Con (Neg (A "p"),Neg (A "q"));;
-let resProp1 = negNormalForm prop1 ;;
+let resProp1  = negNormalForm prop1 ;;
+assert (prop1 = exptProp1);;
 
-let prop2 = Con (A "p", A "q");;
+let prop2 = Neg (Con (A "p", A "q"));;
 let exptProp2 = Dis (Neg (A "p"),Neg (A "q"));;
 let resProp2 = negNormalForm prop2 ;;
+assert (prop2 = exptProp2);;
  
 let prop3 = A "p";;
 let resProp3 = negNormalForm prop3 ;;
+assert (prop3 = resProp3);;
 
-let resProp4 = negNormalForm (Neg prop2) ;;
+// Nested negations
+let prop4 = Neg (Neg (Neg (A "p")));;
+let resProp4 = negNormalForm (prop4) ;;
 
 (************
  * Part 3
