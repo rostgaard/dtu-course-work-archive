@@ -1,0 +1,38 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\author{Kim Rostgaard Christensen - s084283}
+\title{02157: Functional Programming - E14 \\ Exercise 3}
+
+\begin{document}
+\maketitle
+Given the Knights and Knaves puzzle, with three inhabitants ($a$, $b$ and $c$) and the statements;
+ \begin{enumerate}
+   \item $a$ says: ''All of us are knaves.``
+   \item $b$ says: ''Exactly one of us is a knight.``
+ \end{enumerate}
+Statements are interpreted as implications and both the case where the inhabitant tells the truth, and the case where he/she lies, are taken into account.
+ \begin{align}
+   a &\Rightarrow \neg a \wedge \neg b \wedge \neg c\\
+    \neg a &\Rightarrow \left( b \wedge c \right) \vee \left( \neg b \wedge c \right) \vee \left( b \wedge \neg c \right)\\
+   a &\Rightarrow b \wedge \neg a \wedge \neg c\\
+   \neg b &\Rightarrow \left( \neg b \wedge a \wedge c \right) \otimes \left( \neg b \wedge \neg a \wedge \neg c \right)
+ \end{align}
+(1) states that if $a$ tells the truth, then all the inhabitants are knaves. (2) states that if $a$ lies, then \emph{at least} one inhabitant must be a knight.\\ (3) is the statement that if $b$ is a knight, then he must be the only knight. (4) states that if $b$ is a knave then there are $0$ or $2$ knaves on the island -- still knowing that a is a knave. XOR is used here for convenience.\\\\
+Reducing returns the following equations:
+\begin{enumerate}
+ \item $\neg a$
+ \item $a \vee b \vee c $
+ \item $\left(\neg a \wedge \neg c \right) \vee \neg b$
+ \item $\left( a \wedge c \right) \vee \left(\neg a \wedge \neg c \right) \vee b$ 
+
+\end{enumerate}
+Which then again turns up the solution:
+\begin{equation}
+  \neg a \wedge b \wedge \neg c
+\end{equation}
+
+\end{document}
