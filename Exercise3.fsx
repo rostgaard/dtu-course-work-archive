@@ -21,12 +21,15 @@ let rec toString = function
  | Con (p,q) -> "("+toString p + " && " + toString q+")"
  | Neg p     -> "!"+toString p
 
-(* Return a string representation of a literal set.
-   Set<Prop> -> string *)
-let lsToString = function 
+
+let lsToStringAux = function 
   |  []    -> "()"
   |  x::[] -> toString x
   |  x::xs -> List.fold (fun s prop -> s + " && " +  toString (prop)) (toString x) xs;;
+
+(* Return a string representation of a literal set.
+   Set<Prop> -> string *)
+let lsToString ls = lsToStringAux (Set.toList ls);;
 
 (************
  * Part 2 - negational normal form.
@@ -64,18 +67,26 @@ let resProp4 = negNormalForm (prop4) ;;
 
 (************
  * Part 3
+ * The patterns for this one are incorrect, but I could not 
+ * solve the problem in time. 
  *)
 let rec normalForm = function
- | A a                  -> A a
- | Con (a, Con (b, c )) -> Dis (normalForm (Con (normalForm a, normalForm b)), normalForm (Con (normalForm a, normalForm c)))
- | Con (Con (b, c ), a) -> Dis (normalForm (Con (normalForm a, normalForm b)), normalForm (Con (normalForm a, normalForm c)))
- | Con (a, b)           -> Con (normalForm a, normalForm b)
- | Dis (a, b)           -> Dis (normalForm a, normalForm b)
- | Neg (Neg a)          -> normalForm a
- | Neg a                -> Neg (normalForm a);;
+ | A a                 -> A a
+ | Con (a, Dis (b, c)) -> normalForm (Dis (Con (a, b), (Con (a,  c))))
+ | Con (Dis (b, c), a) -> normalForm (Dis (Con (a, b), (Con (a,  c))))
+ | Con (A a, A b)      -> Con (A a, A b);
+ | Con (a, b)          -> Con (normalForm a, normalForm b);
+ | Dis (a, b)          -> Dis (normalForm a, normalForm b)
+ | Neg (Neg a)         -> normalForm a
+ | Neg a               -> Neg (normalForm a);;
 
-let prop4 = Con (A "a", Con ( A "b", Con (A "c", Neg (A "d"))));;
-printf "%s\n" ("normalForm of " + toString prop4 + " => " + toString (normalForm prop4));;
+let temp = Con (Con (Dis (A "a", A "b"), A "c"), A "d");;
+normalForm temp;;
+printf "%s\n" (toString (temp));;
+printf "%s\n" (toString (normalForm temp));;
+
+let prop5 = Con (Con (A "a", Con (Con (A "c", Neg (A "d")), Con (A "b", Neg (A "e")))), A "f");;
+printf "%s\n" ("normalForm of " + toString prop5 + " <=> " + toString (normalForm prop5));;
 
 (************
  * Part 4
@@ -85,13 +96,16 @@ let rec litOfAux p xs =
     | A p         -> Set.add (A p) xs
     | Con (p,q)   -> Set.union (litOfAux p xs) (litOfAux q xs)
     | Neg (Neg p) -> litOfAux p xs
-    | Neg p       -> Set.union (Set.map (fun (p') -> Neg(p)) (litOfAux p Set.empty)) xs
-    | _           -> failwith "Disjunctions allowed in this level.";;
+    | Neg (A p)   -> Set.add (Neg (A p)) xs
+    | Neg (p)     -> failwith "Disjunctions allowed in this level."
+    | _           -> failwith "Disjunctions allowed in this function.";;
 
 let litOf bc = litOfAux bc Set.empty;;
 
 litOf (Con (A "a", Neg (A "b")));;
+printf "%s\n" (lsToString (litOf (Con (A "a", Neg (A "b")))));;
 
+(* Prop -> Set<Set<Prop>> *)
 let rec dnfToSetAux a ls = 
   match a with
     | A p         -> Set.add (litOf (A p)) ls
@@ -100,11 +114,12 @@ let rec dnfToSetAux a ls =
     | Neg (A p)   -> Set.add (litOf (Neg (A p))) ls
     | Neg _       -> failwith "Negations should only be present on atoms!";;
 
-dnfToSetAux (normalForm prop4) Set.empty
+dnfToSetAux (normalForm prop5) Set.empty
 
-//toString (complement (Neg (Neg(A "a"))));;
+let dnfToSet prop = dnfToSetAux (negNormalForm (normalForm prop)) Set.empty
 let testSet = litOf (Con (A "a", Neg (A "b")));;
 
+dnfToSet prop5;;
 (************
  * Part 5
  *)
@@ -139,21 +154,10 @@ let removeInconsistent ls = Set.difference (inconsistenValues ls) ls;;
 assert (not (Set.isEmpty (removeInconsistent testConsistentSet)));;
 assert (Set.isEmpty (removeInconsistent testInconsistentSet));;
 
-
-
-lsToString (Set.toList testConsistentSet);;
+lsToString (testConsistentSet);;
 
  (*//Declare an F# function toDNFsets that transforms an arbitrary proposition into a dns set with just consistent literal sets.*)
 
-(* Prop -> Set<Set<Prop>> *)
-let rec toDNFsetsAux prop set = function
- | A p                 -> Set.add (litOf (A p)) set
- | Con (Con (p,q), r)  -> Set.union (toDNFsetsAux (Con (p,q)) set) (Set.add (litOf (Con (p,q))) set)
- | Con (p, Con (q, r)) -> Set.add (litOf (Con (p,q))) set
- | Con (p,q) -> Set.add (litOf (Con (p,q))) set
- | _         -> set;;
-
- toDNFsetsAux testConsistentSet Set.empty;;
 
 (************
  * Part 6
@@ -161,6 +165,20 @@ let rec toDNFsetsAux prop set = function
 
 (*//Declare a function impl a b for computing the implication a => b
   and a function iff a b for computing the bi-implication a <=> b*)
- let impl = None;;
- let iff = None;;
+ let impl a b = Dis (Neg (a), b);;
+ let iff a b  = Con (impl a b, impl b a);;
 
+  dnfToSet (impl (impl (Neg (A "p")) (Neg (A "q"))) (impl (A "p") (A "q")));;
+
+ (************
+ * Part 7
+ *)
+let rec badProp = function
+ | 1 -> Dis (A "p1", A "q1")
+ | n -> Con (Dis (A ("p"+string(n)), A ("q"+string(n))), badProp (n-1));;
+
+
+let length = 3;
+let expectedLength = int (float(2)**float (length));;
+
+assert (Set.count (dnfToSet (normalForm (badProp length))) = expectedLength);;
