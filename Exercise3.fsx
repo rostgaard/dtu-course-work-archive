@@ -38,13 +38,13 @@ let lsToString ls = lsToStringAux (Set.toList ls);;
  (* Returns the proposition in negation normal form.
     Prop -> Prop *)
 let rec negNormalForm = function 
- | A p         -> A p
- | Neg (Dis (p,q))   -> Con (negNormalForm (Neg (p)), negNormalForm (Neg (q)))
- | Neg (Con (p,q))   -> Dis (negNormalForm (Neg (p)), negNormalForm (Neg (q)))
- | Dis (p,q)   -> Dis (negNormalForm (p), negNormalForm (q))
- | Con (p,q)   -> Con (negNormalForm (p), negNormalForm (q))
- | Neg (Neg p) -> negNormalForm p
- | Neg p       -> Neg (negNormalForm p);;
+ | A p             -> A p
+ | Neg (Dis (p,q)) -> Con (negNormalForm (Neg (p)), negNormalForm (Neg (q)))
+ | Neg (Con (p,q)) -> Dis (negNormalForm (Neg (p)), negNormalForm (Neg (q)))
+ | Dis (p,q)       -> Dis (negNormalForm (p), negNormalForm (q))
+ | Con (p,q)       -> Con (negNormalForm (p), negNormalForm (q))
+ | Neg (Neg p)     -> negNormalForm p
+ | Neg p           -> Neg (negNormalForm p);;
 
 // Tests
 let prop1     = Neg (Dis (A "p", A "q"));;
@@ -67,8 +67,9 @@ let resProp4 = negNormalForm (prop4) ;;
 
 (************
  * Part 3
- * The patterns for this one are incorrect, but I could not 
+ * The patterns for this one are incorrect/incomplete, but I could not 
  * solve the problem in time. 
+ * Prop -> Prop
  *)
 let rec normalForm = function
  | A a                 -> A a
@@ -80,11 +81,7 @@ let rec normalForm = function
  | Neg (Neg a)         -> normalForm a
  | Neg a               -> Neg (normalForm a);;
 
-let temp = Con (Con (Dis (A "a", A "b"), A "c"), A "d");;
-normalForm temp;;
-printf "%s\n" (toString (temp));;
-printf "%s\n" (toString (normalForm temp));;
-
+// Tests
 let prop5 = Con (Con (A "a", Con (Con (A "c", Neg (A "d")), Con (A "b", Neg (A "e")))), A "f");;
 printf "%s\n" ("normalForm of " + toString prop5 + " <=> " + toString (normalForm prop5));;
 
