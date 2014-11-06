@@ -162,22 +162,37 @@ lsToString (testConsistentSet);;
 (************
  * Part 6
  *)
-
-(*//Declare a function impl a b for computing the implication a => b
-  and a function iff a b for computing the bi-implication a <=> b*)
- let impl a b = Dis (Neg (a), b);;
- let iff a b  = Con (impl a b, impl b a);;
+(* Proposition implication *)
+let impl a b = Dis (Neg (a), b);;
+let iff a b  = Con (impl a b, impl b a);;
 
   dnfToSet (impl (impl (Neg (A "p")) (Neg (A "q"))) (impl (A "p") (A "q")));;
 
- (************
+(************
  * Part 7
+ *
+ * See appended .pdf file. As assignment 3 is not correct, neither is this.
  *)
+let eq1 = Neg (A "a");;
+let eq2 = Dis (A "a", Dis (A "b", A "c"));;
+let eq3 = Dis (Neg (A "b"), Con (Neg (A "a"), Neg (A "c")));;
+let eq4 = Dis (Dis (Con (A "a", A "c"), Con (Neg (A "a"), Neg (A "c"))), A "b");;
+
+let eqn = Con (Con (Con (eq1,eq2), eq3), eq4)
+
+toString (normalForm (eqn));;
+
+(************
+ * Part 8
+ *)
+
+(* Generates a Proposition with n conjuntions.
+   int -> Prop *)
 let rec badProp = function
  | 1 -> Dis (A "p1", A "q1")
  | n -> Con (Dis (A ("p"+string(n)), A ("q"+string(n))), badProp (n-1));;
 
-
+// Tests
 let length = 3;
 let expectedLength = int (float(2)**float (length));;
 
