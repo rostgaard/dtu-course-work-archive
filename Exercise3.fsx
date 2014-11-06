@@ -106,20 +106,18 @@ litOf (Con (A "a", Neg (A "b")));;
 printf "%s\n" (lsToString (litOf (Con (A "a", Neg (A "b")))));;
 
 (* Prop -> Set<Set<Prop>> *)
-let rec dnfToSetAux a ls = 
+let rec toDNFsetsAux a ls = 
   match a with
     | A p         -> Set.add (litOf (A p)) ls
-    | Dis (p,q)   -> Set.union (dnfToSetAux p ls) (dnfToSetAux q ls)
+    | Dis (p,q)   -> Set.union (toDNFsetsAux p ls) (toDNFsetsAux q ls)
     | Con (p,q)   -> Set.add (litOf (Con (p,q))) ls
     | Neg (A p)   -> Set.add (litOf (Neg (A p))) ls
     | Neg _       -> failwith "Negations should only be present on atoms!";;
 
-dnfToSetAux (normalForm prop5) Set.empty
-
-let dnfToSet prop = dnfToSetAux (negNormalForm (normalForm prop)) Set.empty
+let toDNFsets prop = toDNFsetsAux (negNormalForm (normalForm prop)) Set.empty
 let testSet = litOf (Con (A "a", Neg (A "b")));;
 
-dnfToSet prop5;;
+toDNFsets prop5;;
 (************
  * Part 5
  *)
@@ -156,17 +154,22 @@ assert (Set.isEmpty (removeInconsistent testInconsistentSet));;
 
 lsToString (testConsistentSet);;
 
- (*//Declare an F# function toDNFsets that transforms an arbitrary proposition into a dns set with just consistent literal sets.*)
-
-
 (************
  * Part 6
  *)
-(* Proposition implication *)
+
+(* Proposition implication 
+   Prop -> Prop -> Prop *)
 let impl a b = Dis (Neg (a), b);;
+(* Proposition bi-implication 
+   Prop -> Prop -> Prop *)
 let iff a b  = Con (impl a b, impl b a);;
 
-  dnfToSet (impl (impl (Neg (A "p")) (Neg (A "q"))) (impl (A "p") (A "q")));;
+let formula1 = impl (impl (Neg (A "p")) (Neg (A "q"))) (impl (A "p") (A "q"));
+let formula2 = impl (impl (Neg (A "p")) (Neg (A "q"))) (impl (A "q") (A "p"));
+
+toDNFsets formula1;;
+toDNFsets formula2;;
 
 (************
  * Part 7
@@ -180,7 +183,7 @@ let eq4 = Dis (Dis (Con (A "a", A "c"), Con (Neg (A "a"), Neg (A "c"))), A "b");
 
 let eqn = Con (Con (Con (eq1,eq2), eq3), eq4)
 
-toString (normalForm (eqn));;
+toDNFsets (eqn);;
 
 (************
  * Part 8
@@ -196,4 +199,4 @@ let rec badProp = function
 let length = 3;
 let expectedLength = int (float(2)**float (length));;
 
-assert (Set.count (dnfToSet (normalForm (badProp length))) = expectedLength);;
+assert (Set.count (toDNFsets (normalForm (badProp length))) = expectedLength);;
