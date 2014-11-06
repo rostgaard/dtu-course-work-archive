@@ -91,6 +91,9 @@ printf "%s\n" ("normalForm of " + toString prop5 + " <=> " + toString (normalFor
 (************
  * Part 4
  *)
+
+(* Helper function for litOf.
+   Prop -> Set<Prop> -> Set<Prop> *)
 let rec litOfAux p xs = 
   match p with
     | A p         -> Set.add (A p) xs
@@ -100,12 +103,12 @@ let rec litOfAux p xs =
     | Neg (p)     -> failwith "Disjunctions allowed in this level."
     | _           -> failwith "Disjunctions allowed in this function.";;
 
+(* Returns the litterals from a Proposition as a Set.
+   Prop -> Set<Prop> *)
 let litOf bc = litOfAux bc Set.empty;;
 
-litOf (Con (A "a", Neg (A "b")));;
-printf "%s\n" (lsToString (litOf (Con (A "a", Neg (A "b")))));;
-
-(* Prop -> Set<Set<Prop>> *)
+(* Helper function for toDNFsets.
+   Prop -> Set<Set<Prop>> *)
 let rec toDNFsetsAux a ls = 
   match a with
     | A p         -> Set.add (litOf (A p)) ls
@@ -114,10 +117,16 @@ let rec toDNFsetsAux a ls =
     | Neg (A p)   -> Set.add (litOf (Neg (A p))) ls
     | Neg _       -> failwith "Negations should only be present on atoms!";;
 
+(* Returns the a Set of litteral Sets from a Proposition.
+   Prop -> Set<Set<Prop>> *)
 let toDNFsets prop = toDNFsetsAux (negNormalForm (normalForm prop)) Set.empty
-let testSet = litOf (Con (A "a", Neg (A "b")));;
 
+// Tests
+litOf (Con (A "a", Neg (A "b")));;
+printf "%s\n" (lsToString (litOf (Con (A "a", Neg (A "b")))));;
+let testSet = litOf (Con (A "a", Neg (A "b")));;
 toDNFsets prop5;;
+
 (************
  * Part 5
  *)
