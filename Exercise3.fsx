@@ -122,12 +122,15 @@ toDNFsets prop5;;
  * Part 5
  *)
 
-
 (* Helper function for consistency checks.*)
 let complement = function
  | Neg (A p) -> A p
  | A p       -> Neg (A p)
  | _         -> failwith "Unsupported operation";;
+
+(* Helper function that return the inconsistent values from a set as a new set.
+   Set<Prop> -> Set<Prop> *)
+let inconsistenValues ls = Set.intersect (Set.map (fun (p) -> complement (p)) ls) ls;;
 
 (* Checks for consistency in literals sets. 
  *  This is done by making a new set of complements to the exisiting set
@@ -135,24 +138,23 @@ let complement = function
  *  og this operation will be the empty set, and non-empty set for 
  *  inconsistent sets. Thus, we merely have check for the number of 
  *  intersected values to verify consistency.
+ *  Set<Prop> -> bool
  *)
-
-let inconsistenValues ls = Set.intersect (Set.map (fun (p) -> complement (p)) ls) ls;;
 let isConsistent ls = Set.isEmpty (inconsistenValues ls); 
 
+(* Removes inconsistent litterals from the set by using the set difference operator.
+   Set<Prop> -> Set<Prop> *)
+let removeInconsistent ls = Set.difference (inconsistenValues ls) ls;;
+
+// Tests
 let testConsistentSet = litOf (Con (A "a", Neg (A "b")));;
 let testInconsistentSet = litOf (Con (A "a", Neg (A "a")));;
 
 assert (isConsistent testConsistentSet = true);;
 assert (isConsistent testInconsistentSet = false);;
 
-(* Removes inconsistent litterals from the set by using the set difference operator.*)
-let removeInconsistent ls = Set.difference (inconsistenValues ls) ls;;
-
 assert (not (Set.isEmpty (removeInconsistent testConsistentSet)));;
 assert (Set.isEmpty (removeInconsistent testInconsistentSet));;
-
-lsToString (testConsistentSet);;
 
 (************
  * Part 6
