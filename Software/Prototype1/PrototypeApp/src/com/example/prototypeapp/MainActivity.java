@@ -1,26 +1,22 @@
 package com.example.prototypeapp;
 
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnFocusChangeListener;
 import android.view.View.OnKeyListener;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.os.Build;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -61,9 +57,10 @@ public class MainActivity extends ActionBarActivity {
 		private SensorManager sensorManager;
 		private AccelerometerEventListener accelerometerListener;
 		private AwaitEventThread awaitEventThread;
+		private PlaySoundActuator playSoundActuator;
 		
-		public static final int S1 = R.raw.wopwop;
-		private static SoundPool soundPool;
+//		public static final int S1 = R.raw.wopwop;
+//		private static SoundPool soundPool;
 
 		public PlaceholderFragment() {
 		}
@@ -96,17 +93,20 @@ public class MainActivity extends ActionBarActivity {
 					sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 					SensorManager.SENSOR_DELAY_NORMAL);
 			
-			awaitSound();
+			playSoundActuator = new PlaySoundActuator(getActivity(), 1337);
+			playSoundActuator.start();
 			
 			awaitEvent();
 		}
 		
-//		@Override
-//		public void onDestroy() {
-//			super.onDestroy();
+		@Override
+		public void onDestroy() {
+			super.onDestroy();
+			playSoundActuator.terminate();
+			playSoundActuator = null;
 //			sensorManager.unregisterListener(accelerometerListener);
 //			accelerometerListener = null;
-//		}
+		}
 		
 		private synchronized void awaitEvent() {
 			
@@ -147,30 +147,6 @@ public class MainActivity extends ActionBarActivity {
 			
 		}
 		
-		private synchronized void awaitSound() {
-			soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 100);
-			final int sound = soundPool.load(getActivity(), R.raw.wopwop, 1);
-			
-			Thread thread = new Thread(){
-				 public void run() {
-					 Event event = null;
-					 while(true) {
-						 try {
-							 event = WebServiceConnection.invokeAwaitEventWebServer(1337, Event.EventType.PLAY_SOUND);							 
-						 } catch (Exception e) {
-							 
-						 }
-						 if (event != null) {
-							 soundPool.play(sound, 0, 100, 1, 0, 1f);
-							 event = null;
-						 }
-					 }
-				 }
-			};
-			thread.start();			
-			
-			
-		}
 		
 		
 
