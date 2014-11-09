@@ -72,9 +72,4 @@ public class EventEntity implements Serializable {
 	public void setEventType(EventType eventType) {
 		this.eventType = eventType;
 	}
-	
-	public static enum EventType {
-		SHAKE, HUMIDITY, PLAY_SOUND;
-	}
-
 }

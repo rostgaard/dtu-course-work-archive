@@ -21,7 +21,7 @@ import sun.reflect.CallerSensitive;
 import dto.model.Event;
 import eao.model.SensorDataEAO;
 import entity.model.EventEntity;
-import entity.model.EventEntity.EventType;
+import entity.model.EventType;
 
 @LocalBean
 @Stateless

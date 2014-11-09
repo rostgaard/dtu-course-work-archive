@@ -12,7 +12,7 @@ import javax.persistence.TypedQuery;
 
 import dto.model.Event;
 import entity.model.EventEntity;
-import entity.model.EventEntity.EventType;
+import entity.model.EventType;
 import entity.model.Sensor;
 
 @LocalBean
