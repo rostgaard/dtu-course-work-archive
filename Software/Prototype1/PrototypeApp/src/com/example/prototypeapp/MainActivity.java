@@ -90,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
 			accelerometerListener = new AccelerometerEventListener(textView, editText);
 			
 			sensorManager.registerListener(accelerometerListener,
-					sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+					sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION),
 					SensorManager.SENSOR_DELAY_NORMAL);
 			
 			playSoundActuator = new PlaySoundActuator(getActivity(), 1337);
