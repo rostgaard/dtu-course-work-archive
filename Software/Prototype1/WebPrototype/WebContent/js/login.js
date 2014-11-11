@@ -1,11 +1,19 @@
 var attempt = 3; // Variable to count number of attempts.
-//Below function Executes on click of login button.
+
 function validate(){
 	var username = document.getElementById("username").value;
 	var password = document.getElementById("password").value;
+
+//	var baseURL = "http://localhost:8080/Prototype1/rest/users/getUserByUserName?userName=";
+//	var buildURL = baseURL.concat(username);
+//	alert(data);
+//	
+//	$.get( buildURL, function(data){
+//		alert(data);
+//	});
+
 	if ( username == "formget" && password == "formget#123"){
-		alert ("Login successfully");
-		window.location = "index.html"; // Redirecting to other page.
+		window.location = "dashboard.html"; // Redirecting to other page.
 		return false;
 	}
 	else{
