@@ -49,6 +49,19 @@ public class Rule {
 		return actions;
 	}
 
+	private String actionsString() {
+		String buffer = "";
+		
+		for (Action a : actions) {
+			buffer += a;
+			if (actions.indexOf(a) != actions.size()-1) {
+				buffer += ", ";
+			}
+		}
+		
+		return buffer;
+	}
+	
 	public void setActions(List<Action> actions) {
 		this.actions = actions;
 	}
@@ -62,6 +75,6 @@ public class Rule {
 	}
 	
 	public String toString() {
-		return name + ":\n when " +this.event + "\n if " + this.condition + "\n then " + this.actions;
+		return name + ":\n when " +this.event + "\n if " + this.condition + "\n then " + this.actionsString() + ";";
 	}
 }

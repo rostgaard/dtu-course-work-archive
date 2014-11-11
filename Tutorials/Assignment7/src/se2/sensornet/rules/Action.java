@@ -38,9 +38,22 @@ public class Action {
 	public void setParameters(List<Expression> parameters) {
 		this.parameters = parameters;
 	}
+
+	private String parameterString() {
+		String buffer = "";
+		
+		for (Expression expr : this.parameters) {
+			buffer += expr;
+			if (this.parameters.indexOf(expr) != this.parameters.size()-1) {
+				buffer += ", ";
+			}
+		}
+		
+		return buffer;
+	}
 	
 	public String toString () {
-		return this.actuator + " " + this.value + "(" + this.parameters +")";
+		return this.actuator + "." + this.value + "(" + this.parameterString() +")";
 	}
 	
 }

@@ -1,30 +1,68 @@
 import se2.sensornet.rules.*;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class testParser {
 	
-	static List<Rule> rules;
 	private static final Logger log = Logger.getLogger(testParser.class.getName());
 	
 	public static void main (String[] args) {
 		File file = new File("/home/krc/DTU/02162 Software Engineering 2 E14/work/repository/Tutorials/Assignment7/testData/example1.rules");
-		FileInputStream iss = null;
 		
 		try {
-			iss = new FileInputStream(file);
+			testStream (new FileInputStream(file));
 	    } catch (FileNotFoundException e) {
 	    	System.out.println("File not found.");
 	    }
 		
-		rules = new Rules (iss).parse();
-		RuleEngine re = new RuleEngine(rules);
+		
+		// This part just tests reading in rules from a string rather than a file.
+		String ruleString = ""
+			   + "test1:\n"
+			   + "  when DoorAlarmEvent\n"
+               + "  if event.source == 1 && event.value >= 50 && system.securitylevel == 1\n"
+               + "  then actorSound1.play(1,30), UserAlert.raise(event.event);\n"
+               + "\n"
+               + "test2:\n"
+               + "  when DoorAlarmEvent\n"
+               + "  if system.securitylevel >= 2 || event.source == 1 && event.value >= 50\n"  
+               + "  then actorSound1.play(1,30), UserAlert.raise(event.event);\n";
+		
+		InputStream stream = new ByteArrayInputStream(ruleString.getBytes());					 
+		
+		testStream (stream);
+		
+		// Tries to serialize the rules back to string and then into a ruleset again.
+		InputStream stringStream = new ByteArrayInputStream(ruleString.getBytes());
+		
+		List<Rule> rules = new Rules (stringStream).parse();
+
+		InputStream ruleStringStream = new ByteArrayInputStream(rulesString (rules).getBytes());
+		
+		System.out.println  (rulesString (new Rules (ruleStringStream).parse()));
+	}
+	public static String rulesString (List<Rule> rules) {
+		String buffer = "";
 		
 		for (Rule rule : rules) {
-		  System.out.println(rule);
+			buffer += rule;
 		}
+		
+		return buffer;
+	}
+	
+	static void testStream (InputStream is ) {
+		List<Rule> rules  = new Rules (is).parse();
+		RuleEngine.systemSecurityLevel = 1;
+
+		RuleEngine re = new RuleEngine(rules);
+		
+		System.out.println("### Parsed rules:");
+		System.out.println(rulesString (rules));
+		System.out.println("### End Parsed rules:");
 		
 		Event testEvent1 = new Event();
 		testEvent1.type = "DoorAlarmEvent";
@@ -66,6 +104,5 @@ public class testParser {
 			System.out.println(" * " + r.getName());
 		};
 	}
-	
 	
 }
