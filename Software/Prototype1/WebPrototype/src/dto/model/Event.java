@@ -2,7 +2,7 @@ package dto.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import entity.model.EventType;
+import enums.EventType;
 
 @XmlRootElement
 public class Event {

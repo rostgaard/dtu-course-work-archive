@@ -21,7 +21,7 @@ import sun.reflect.CallerSensitive;
 import dto.model.Event;
 import eao.model.SensorDataEAO;
 import entity.model.EventEntity;
-import entity.model.EventType;
+import enums.EventType;
 
 @LocalBean
 @Stateless
@@ -32,7 +32,7 @@ public class EventWebService {
 	private static Map<Integer,List<EventEntity>> entitiesWaiting = new HashMap<Integer,List<EventEntity>>();
 	
 	@EJB SensorDataEAO eao;
-
+	
 	@GET
 	@Path("/addEvent")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})

@@ -12,14 +12,14 @@ import javax.persistence.TypedQuery;
 
 import dto.model.Event;
 import entity.model.EventEntity;
-import entity.model.EventType;
 import entity.model.Sensor;
+import enums.EventType;
 
 @LocalBean
 @Stateless
 public class SensorDataEAO {
 	
-	@PersistenceContext(unitName = "TechnologyExperimentService")
+	@PersistenceContext(unitName = "Prototype1")
 	EntityManager em;
 
 	public EventEntity addEvent(float value, int sensorId, EventType eventType) {
