@@ -27,7 +27,7 @@ public class AwaitEventThread extends Thread {
 			
 			try {
 				int id = Integer.parseInt(editText.getText().toString());
-				event = WebServiceConnection.invokeAwaitEventWebServer(id, EventType.DOOR);
+				event = WebServiceConnection.invokeAwaitEventWebServer(id, EventType.ACCELEROMETER);
 			} catch (Exception e) {
 				
 				if(!run || isInterrupted()) break; 

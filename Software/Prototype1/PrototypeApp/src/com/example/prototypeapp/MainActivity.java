@@ -1,8 +1,11 @@
 package com.example.prototypeapp;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,6 +31,20 @@ public class MainActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
+		// Registering the apps with the server
+		PackageManager packageManager = this.getPackageManager();
+		String macAddress = getMacAddress();
+		// Check for accelerometer
+		if (packageManager.hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)){			
+			WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.ACCELEROMETER);
+		}
+		// Check for flashlight
+		if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){			
+			WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.FLASH_LIGHT);
+		}
+		// We assume the device has a speaker (we cannot check it)
+		WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.PLAY_SOUND);
 	}
 
 	@Override
@@ -47,6 +64,12 @@ public class MainActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private String getMacAddress(){
+		WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+		WifiInfo info = manager.getConnectionInfo();
+		return info.getMacAddress();
 	}
 
 	/**

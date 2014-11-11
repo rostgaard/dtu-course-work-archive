@@ -32,5 +32,15 @@ public class WebServiceConnection {
 		restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
 		return restTemplate.getForObject(url, Event.class, parameters);
 	}
+	
+	public static void invokeAddAppToDatabase(String macAddress, EventType eventType){
+		final String url = BASE_URL + "/addAppToDB?macAddress={macAddress}&eventType={eventType}";
+		final Map<String,String> parameters = new HashMap<String,String>();
+		parameters.put("macAddress", String.valueOf(macAddress));
+		parameters.put("eventType", String.valueOf(eventType));
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+		restTemplate.getForObject(url, Event.class, parameters);
+	}
 
 }

@@ -71,7 +71,7 @@ public class AccelerometerEventListener implements SensorEventListener {
 				thread = true;
 				
 				try {
-					Event result = WebServiceConnection.invokeAddEventWebServer(id, value, EventType.DOOR);
+					Event result = WebServiceConnection.invokeAddEventWebServer(id, value, EventType.ACCELEROMETER);
 					
 					final String txt = "Event added to server:\n ID: " + result.getId() + " Value: " + result.getValue() + " Time: " + result.getTime();
 					textView.post(new Runnable() {
