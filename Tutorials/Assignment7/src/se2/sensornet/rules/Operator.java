@@ -1,3 +1,7 @@
+/**
+ * @author Kim Rostgaard Christensen - s084283
+ */
+
 package se2.sensornet.rules;
 
 enum OperatorType { AND, OR, EQUAL, GTEQUAL};

@@ -92,7 +92,7 @@ List<Rule> RULES(): {
 
 Rule RULE(): {
 	String identifier;
- 	Event event;
+ 	EventTrigger event;
  	Expression condition;
 	List<Action> actions;
 }{
@@ -113,12 +113,12 @@ Rule RULE(): {
 	}
 }
 
-Event EVENT(): {
+EventTrigger EVENT(): {
 	String identifier;
 }{
 	identifier = IDENTIFIER()
 	{
-	  return new Event (identifier);
+	  return new EventTrigger (identifier);
 	}
 }
 
