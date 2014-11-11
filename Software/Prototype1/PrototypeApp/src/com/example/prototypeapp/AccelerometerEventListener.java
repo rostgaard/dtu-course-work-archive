@@ -9,7 +9,7 @@ public class AccelerometerEventListener implements SensorEventListener {
 	
 //	private static final int DEFAULT_SENSOR_ID = 1;
 
-	private TextView textView;
+//	private TextView textView;
 //	private EditText editText;
 	private String macAddress;
 	
@@ -19,9 +19,9 @@ public class AccelerometerEventListener implements SensorEventListener {
 	private float x,y,z, oldX, oldY,oldZ;
 	private boolean start = true, thread = false;
 	
-	public AccelerometerEventListener (TextView textView, String macAddress) {
+	public AccelerometerEventListener (String macAddress) {
 		super();
-		this.textView = textView;
+//		this.textView = textView;
 //		this.editText = editText;
 		this.macAddress = macAddress;
 	}
@@ -72,28 +72,28 @@ public class AccelerometerEventListener implements SensorEventListener {
 				thread = true;
 				
 				try {
-					Event result = WebServiceConnection.invokeAddEventWebServer(macAddress, value, EventType.ACCELEROMETER);
+					WebServiceConnection.invokeAddEventWebServer(macAddress, value, EventType.ACCELEROMETER);
 					
-					final String txt = "Event added to server:\n ID: " + result.getId() + " Value: " + result.getValue() + " Time: " + result.getTime();
-					textView.post(new Runnable() {
-						
-						@Override
-						public void run() {						
-							textView.setText(txt);
-							thread = false;
-							
-						}
-					});					
+//					final String txt = "Event added to server:\n ID: " + result.getId() + " Value: " + result.getValue() + " Time: " + result.getTime();
+//					textView.post(new Runnable() {
+//						
+//						@Override
+//						public void run() {						
+//							textView.setText(txt);
+//							thread = false;
+//							
+//						}
+//					});					
 				} catch (Exception e) {
-						textView.post(new Runnable() {
-						
-						@Override
-						public void run() {						
-							textView.setText("Exception");
-							thread = false;
-							
-						}
-					});			
+//						textView.post(new Runnable() {
+//						
+//						@Override
+//						public void run() {						
+//							textView.setText("Exception");
+//							thread = false;
+//							
+//						}
+//					});			
 				}
 			}
 		}).start();

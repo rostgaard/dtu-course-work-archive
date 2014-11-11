@@ -110,8 +110,8 @@ public class MainActivity extends ActionBarActivity {
 			super.onResume();
 			
 //			EditText editText = (EditText)getActivity().findViewById(R.id.editText1);
-			TextView textView = (TextView)  getActivity().findViewById(R.id.textView1);	
-			accelerometerListener = new AccelerometerEventListener(textView, macAddress);
+//			TextView textView = (TextView)  getActivity().findViewById(R.id.textView1);	
+			accelerometerListener = new AccelerometerEventListener(macAddress);
 			
 			sensorManager.registerListener(accelerometerListener,
 					sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION),
@@ -133,8 +133,8 @@ public class MainActivity extends ActionBarActivity {
 			playSoundActuator = null;
 			flashLightActuator.terminate();
 			flashLightActuator = null;
-//			sensorManager.unregisterListener(accelerometerListener);
-//			accelerometerListener = null;
+			sensorManager.unregisterListener(accelerometerListener);
+			accelerometerListener = null;
 		}
 		
 //		private synchronized void awaitEvent() {
