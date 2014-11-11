@@ -1,7 +1,5 @@
 package com.example.prototypeapp;
 
-import com.example.prototypeapp.Event.EventType;
-
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -73,7 +71,7 @@ public class AccelerometerEventListener implements SensorEventListener {
 				thread = true;
 				
 				try {
-					Event result = WebServiceConnection.invokeAddEventWebServer(id, value, EventType.SHAKE);
+					Event result = WebServiceConnection.invokeAddEventWebServer(id, value, EventType.DOOR);
 					
 					final String txt = "Event added to server:\n ID: " + result.getId() + " Value: " + result.getValue() + " Time: " + result.getTime();
 					textView.post(new Runnable() {

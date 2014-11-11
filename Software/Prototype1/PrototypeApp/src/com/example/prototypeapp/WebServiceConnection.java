@@ -6,8 +6,6 @@ import java.util.Map;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import com.example.prototypeapp.Event.EventType;
-
 
 public class WebServiceConnection {
 	

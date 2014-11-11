@@ -22,7 +22,7 @@ public class PlaySoundActuator extends Thread {
 		Event event = null;
 		while (true) {
 			try {
-				event = WebServiceConnection.invokeAwaitEventWebServer(sensorID, Event.EventType.PLAY_SOUND);
+				event = WebServiceConnection.invokeAwaitEventWebServer(sensorID, EventType.PLAY_SOUND);
 			} catch (Exception e) {
 
 			}
