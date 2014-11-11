@@ -19,7 +19,7 @@ public class Action {
 		this.value = value;
 		this.parameters = parameters;
 	}
-	
+
 	public String getActuator() {
 		return actuator;
 	}

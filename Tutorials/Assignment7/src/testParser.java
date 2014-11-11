@@ -26,13 +26,45 @@ public class testParser {
 		  System.out.println(rule);
 		}
 		
-		Event testEvent = new Event();
-		testEvent.type = "DoorAlarmEvent";
+		Event testEvent1 = new Event();
+		testEvent1.type = "DoorAlarmEvent";
+		testEvent1.addAttribute("value", 100);
+		testEvent1.addAttribute("source", 1);
 		
-		for (Action a : re.checkEvent (testEvent)) {
-			System.out.println(a);
+		System.out.println("testEvent1 matches the following rules:");
+		
+		for (Rule r : re.checkEvent (testEvent1)) {
+			System.out.println(" * " + r.getName());
+		};
+
+		Event testEvent2 = new Event();
+		testEvent2.type = "DoorAlarmEvent";
+		testEvent2.addAttribute("value", 10);
+		testEvent2.addAttribute("source", 1);
+		
+		System.out.println("testEvent2 matches the following rules:");
+		
+		for (Rule r : re.checkEvent (testEvent2)) {
+			System.out.println(" * " + r.getName());
 		};
 		
+		Event testEvent3 = new Event();
+		testEvent3.type = "DoorAlarmEvent";
+		testEvent3.addAttribute("value", 100);
+		testEvent3.addAttribute("source", 2);
+		
+		System.out.println("testEvent3 matches the following rules:");
+		
+		for (Rule r : re.checkEvent (testEvent3)) {
+			System.out.println(" * " + r.getName());
+		};
+		
+		System.out.println("Rerunning testEvent1 with new system security level (Only test2 should match)");
+		RuleEngine.systemSecurityLevel = 0;
+		
+		for (Rule r : re.checkEvent (testEvent1)) {
+			System.out.println(" * " + r.getName());
+		};
 	}
 	
 	

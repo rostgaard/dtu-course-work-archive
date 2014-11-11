@@ -21,27 +21,27 @@ public class Rule {
 		/* Early return. There is no need to check the
 		   condition if event doesn't match.*/  
 		if (!this.event.getName().toLowerCase().equals(event.type.toLowerCase())) {
-			log.info("Event does not match type. \"" +this.getEvent().getName() + "\" != \"" +event.type +"\"");
+			log.finest("Event does not match type. \"" +this.getEvent().getName() + "\" != \"" +event.type +"\"");
 			return false;
 		}
-		log.info("Event matches type. " +this.getEvent().getName() + " == " +event.type);
+		log.finest("Event matches type. " +this.getEvent().getName() + " == " +event.type);
 		
 		return this.condition.matches (event);
 	}
 	
-	String getName () {
+	public String getName () {
 		return this.name;
 	}
 	
-	void setName (String name) {
+	public void setName (String name) {
 		this.name = name;
 	}
 
-	EventTrigger getEvent() {
+	public EventTrigger getEvent() {
 		return this.event;
 	}
 	
-	void setEvent (EventTrigger event) {
+	public void setEvent (EventTrigger event) {
 		this.event = event;
 	}
 
