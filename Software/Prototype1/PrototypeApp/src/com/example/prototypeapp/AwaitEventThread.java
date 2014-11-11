@@ -1,17 +1,18 @@
 package com.example.prototypeapp;
 
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class AwaitEventThread extends Thread {
 	
-	private EditText editText;
+//	private EditText editText;
 	private TextView textView;
+	private String macAddress;
 	private boolean run = true;
 	
-	public AwaitEventThread (EditText editText, TextView textView) {
-		this.editText = editText;
+	public AwaitEventThread (TextView textView, String macAddress) {
+//		this.editText = editText;
 		this.textView = textView;
+		this.macAddress = macAddress;
 	}
 	
 	
@@ -26,8 +27,8 @@ public class AwaitEventThread extends Thread {
 			Event event = null;
 			
 			try {
-				int id = Integer.parseInt(editText.getText().toString());
-				event = WebServiceConnection.invokeAwaitEventWebServer(id, EventType.ACCELEROMETER);
+//				int id = Integer.parseInt(editText.getText().toString());
+				event = WebServiceConnection.invokeAwaitEventWebServer(macAddress, EventType.ACCELEROMETER);
 			} catch (Exception e) {
 				
 				if(!run || isInterrupted()) break; 

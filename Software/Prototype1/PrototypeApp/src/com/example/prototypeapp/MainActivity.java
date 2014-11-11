@@ -81,11 +81,15 @@ public class MainActivity extends ActionBarActivity {
 		private AccelerometerEventListener accelerometerListener;
 		private AwaitEventThread awaitEventThread;
 		private PlaySoundActuator playSoundActuator;
+		private String macAddress;
 		
 //		public static final int S1 = R.raw.wopwop;
 //		private static SoundPool soundPool;
 
 		public PlaceholderFragment() {
+			WifiManager manager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
+			WifiInfo info = manager.getConnectionInfo();
+			this.macAddress = info.getMacAddress();
 		}
 	
 		@Override
@@ -108,15 +112,15 @@ public class MainActivity extends ActionBarActivity {
 		public void onResume() {
 			super.onResume();
 			
-			EditText editText = (EditText)getActivity().findViewById(R.id.editText1);
+//			EditText editText = (EditText)getActivity().findViewById(R.id.editText1);
 			TextView textView = (TextView)  getActivity().findViewById(R.id.textView1);	
-			accelerometerListener = new AccelerometerEventListener(textView, editText);
+			accelerometerListener = new AccelerometerEventListener(textView, macAddress);
 			
 			sensorManager.registerListener(accelerometerListener,
 					sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION),
 					SensorManager.SENSOR_DELAY_NORMAL);
 			
-			playSoundActuator = new PlaySoundActuator(getActivity(), 1337);
+			playSoundActuator = new PlaySoundActuator(getActivity(), macAddress);
 			playSoundActuator.start();
 			
 			awaitEvent();
@@ -140,7 +144,7 @@ public class MainActivity extends ActionBarActivity {
 			
 			final EditText editText = (EditText) getActivity().findViewById(R.id.editText2);
 			final TextView textView = (TextView) getActivity().findViewById(R.id.textView2);
-			awaitEventThread = new AwaitEventThread(editText, textView);
+			awaitEventThread = new AwaitEventThread(textView, macAddress);
 			
 			if (!textView.getText().equals(""))
 				awaitEventThread.start();
@@ -169,9 +173,5 @@ public class MainActivity extends ActionBarActivity {
 			});
 			
 		}
-		
-		
-		
-
 	}
 }

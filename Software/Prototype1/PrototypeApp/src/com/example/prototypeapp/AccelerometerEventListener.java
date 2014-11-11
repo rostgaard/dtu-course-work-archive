@@ -3,15 +3,15 @@ package com.example.prototypeapp;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class AccelerometerEventListener implements SensorEventListener {
 	
-	private static final int DEFAULT_SENSOR_ID = 1;
+//	private static final int DEFAULT_SENSOR_ID = 1;
 
 	private TextView textView;
-	private EditText editText;
+//	private EditText editText;
+	private String macAddress;
 	
 //	private float deltaZ = 0.07f;
 	private float deltaX = 5.0f, deltaY = 5.0f, deltaZ = 5.0f;
@@ -19,10 +19,11 @@ public class AccelerometerEventListener implements SensorEventListener {
 	private float x,y,z, oldX, oldY,oldZ;
 	private boolean start = true, thread = false;
 	
-	public AccelerometerEventListener (TextView textView, EditText editText) {
+	public AccelerometerEventListener (TextView textView, String macAddress) {
 		super();
 		this.textView = textView;
-		this.editText = editText;
+//		this.editText = editText;
+		this.macAddress = macAddress;
 	}
 
 	@Override
@@ -45,11 +46,11 @@ public class AccelerometerEventListener implements SensorEventListener {
 		}
 		
 		if (((x - oldX > deltaX) || (oldX - x > deltaX)) && !thread) {
-			invokeAddEventWebServer(getSensorId(editText), x);
+			invokeAddEventWebServer(macAddress, x);
 		} else if (((y - oldY > deltaY) || (oldY - y > deltaY)) && !thread) {
-			invokeAddEventWebServer(getSensorId(editText), y);
+			invokeAddEventWebServer(macAddress, y);
 		} else if (((z - oldZ > deltaZ) || (oldZ - z > deltaZ)) && !thread) {
-			invokeAddEventWebServer(getSensorId(editText), z);
+			invokeAddEventWebServer(macAddress, z);
 		}
 		
 		oldX=x;
@@ -58,20 +59,20 @@ public class AccelerometerEventListener implements SensorEventListener {
 		
 	}
 	
-	private int getSensorId(EditText editText) {
-		if(editText.getText().toString().length() > 0)
-			return Integer.parseInt(editText.getText().toString());
-		return DEFAULT_SENSOR_ID;
-	}
+//	private int getSensorId(EditText editText) {
+//		if(editText.getText().toString().length() > 0)
+//			return Integer.parseInt(editText.getText().toString());
+//		return DEFAULT_SENSOR_ID;
+//	}
 
-	private void invokeAddEventWebServer(final int id, final float value) {
+	private void invokeAddEventWebServer(final String macAddress, final float value) {
 		new Thread(new Runnable() {			
 			@Override
 			public void run() {
 				thread = true;
 				
 				try {
-					Event result = WebServiceConnection.invokeAddEventWebServer(id, value, EventType.ACCELEROMETER);
+					Event result = WebServiceConnection.invokeAddEventWebServer(macAddress, value, EventType.ACCELEROMETER);
 					
 					final String txt = "Event added to server:\n ID: " + result.getId() + " Value: " + result.getValue() + " Time: " + result.getTime();
 					textView.post(new Runnable() {
@@ -97,5 +98,4 @@ public class AccelerometerEventListener implements SensorEventListener {
 			}
 		}).start();
 	}
-
 }

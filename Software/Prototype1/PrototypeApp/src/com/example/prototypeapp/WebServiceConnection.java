@@ -12,10 +12,10 @@ public class WebServiceConnection {
 	//private static final String BASE_URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/TechnologyExperimentService/rest/events";
 	private static final String BASE_URL = "http://se-se2-e14-glassfish-c.compute.dtu.dk:8080/TechnologyExperiment/rest/events";
 	
-	public static Event invokeAddEventWebServer(int id, float value, EventType eventType) {
-		final String url = BASE_URL + "/addEvent?id={id}&value={value}&eventType={eventType}";
+	public static Event invokeAddEventWebServer(String macAddress, float value, EventType eventType) {
+		final String url = BASE_URL + "/addEvent?macAddress={macAddress}&value={value}&eventType={eventType}";
 		final Map<String,String> parameters = new HashMap<String,String>();
-		parameters.put("id", String.valueOf(id));
+		parameters.put("macAddress", String.valueOf(macAddress));
 		parameters.put("value", String.valueOf(value));
 		parameters.put("eventType", String.valueOf(eventType));
 		RestTemplate restTemplate = new RestTemplate();
@@ -23,10 +23,10 @@ public class WebServiceConnection {
 		return restTemplate.getForObject(url, Event.class, parameters);
 	}
 	
-	public static Event invokeAwaitEventWebServer(int id, EventType eventType) {
-		final String url = BASE_URL + "/awaitEvent?id={id}&eventType={eventType}";
+	public static Event invokeAwaitEventWebServer(String macAddress, EventType eventType) {
+		final String url = BASE_URL + "/awaitEvent?macAddress={macAddress}&eventType={eventType}";
 		final Map<String,String> parameters = new HashMap<String,String>();
-		parameters.put("id", String.valueOf(id));
+		parameters.put("macAddress", String.valueOf(macAddress));
 		parameters.put("eventType", String.valueOf(eventType));
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());

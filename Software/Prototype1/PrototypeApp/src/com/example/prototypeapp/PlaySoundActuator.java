@@ -9,12 +9,14 @@ public class PlaySoundActuator extends Thread {
 	private final int S1 = R.raw.wopwop;
 	private SoundPool soundPool;
 	final int sound;
-	private int sensorID;
+//	private int sensorID;
+	private String macAddress;
 	
-	public PlaySoundActuator(Activity activity, int sensorID) {	
+	public PlaySoundActuator(Activity activity, String macAddress) {	
 		soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 100);
 		sound = soundPool.load(activity, S1, 1);
-		this.sensorID = sensorID;
+//		this.sensorID = sensorID;
+		this.macAddress = macAddress;
 	}
 	
 	@Override
@@ -22,7 +24,7 @@ public class PlaySoundActuator extends Thread {
 		Event event = null;
 		while (true) {
 			try {
-				event = WebServiceConnection.invokeAwaitEventWebServer(sensorID, EventType.PLAY_SOUND);
+				event = WebServiceConnection.invokeAwaitEventWebServer(macAddress, EventType.PLAY_SOUND);
 			} catch (Exception e) {
 
 			}
