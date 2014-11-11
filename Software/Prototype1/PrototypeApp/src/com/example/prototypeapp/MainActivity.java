@@ -10,15 +10,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
-import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
@@ -79,8 +75,9 @@ public class MainActivity extends ActionBarActivity {
 
 		private SensorManager sensorManager;
 		private AccelerometerEventListener accelerometerListener;
-		private AwaitEventThread awaitEventThread;
+//		private AwaitEventThread awaitEventThread;
 		private PlaySoundActuator playSoundActuator;
+		private FlashLightActuator flashLightActuator;
 		private String macAddress;
 		
 //		public static final int S1 = R.raw.wopwop;
@@ -123,7 +120,10 @@ public class MainActivity extends ActionBarActivity {
 			playSoundActuator = new PlaySoundActuator(getActivity(), macAddress);
 			playSoundActuator.start();
 			
-			awaitEvent();
+			flashLightActuator = new FlashLightActuator(macAddress);
+			flashLightActuator.start();
+			
+//			awaitEvent();
 		}
 		
 		@Override
@@ -131,47 +131,49 @@ public class MainActivity extends ActionBarActivity {
 			super.onDestroy();
 			playSoundActuator.terminate();
 			playSoundActuator = null;
+			flashLightActuator.terminate();
+			flashLightActuator = null;
 //			sensorManager.unregisterListener(accelerometerListener);
 //			accelerometerListener = null;
 		}
 		
-		private synchronized void awaitEvent() {
-			
-			if (awaitEventThread != null) {
-				awaitEventThread.terminate();
-				awaitEventThread = null;
-			}
-			
-			final EditText editText = (EditText) getActivity().findViewById(R.id.editText2);
-			final TextView textView = (TextView) getActivity().findViewById(R.id.textView2);
-			awaitEventThread = new AwaitEventThread(textView, macAddress);
-			
-			if (!textView.getText().equals(""))
-				awaitEventThread.start();
-			
-			editText.setOnFocusChangeListener(new OnFocusChangeListener() {
-				
-				@Override
-				public void onFocusChange(View v, boolean hasFocus) {
-					if (!hasFocus) {
-						textView.setText("Current Sensor ID: " + editText.getText());
-						awaitEvent();
-					}
-				}
-			});
-			
-			editText.setOnKeyListener(new OnKeyListener() {
-				
-				@Override
-				public boolean onKey(View v, int keyCode, KeyEvent event) {
-					if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-						textView.setText("Current Sensor ID: " + editText.getText());
-						awaitEvent();
-					}
-					return false;
-				}
-			});
-			
-		}
+//		private synchronized void awaitEvent() {
+//			
+//			if (awaitEventThread != null) {
+//				awaitEventThread.terminate();
+//				awaitEventThread = null;
+//			}
+//			
+//			final EditText editText = (EditText) getActivity().findViewById(R.id.editText2);
+//			final TextView textView = (TextView) getActivity().findViewById(R.id.textView2);
+//			awaitEventThread = new AwaitEventThread(textView, macAddress);
+//			
+//			if (!textView.getText().equals(""))
+//				awaitEventThread.start();
+//			
+//			editText.setOnFocusChangeListener(new OnFocusChangeListener() {
+//				
+//				@Override
+//				public void onFocusChange(View v, boolean hasFocus) {
+//					if (!hasFocus) {
+//						textView.setText("Current Sensor ID: " + editText.getText());
+//						awaitEvent();
+//					}
+//				}
+//			});
+//			
+//			editText.setOnKeyListener(new OnKeyListener() {
+//				
+//				@Override
+//				public boolean onKey(View v, int keyCode, KeyEvent event) {
+//					if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+//						textView.setText("Current Sensor ID: " + editText.getText());
+//						awaitEvent();
+//					}
+//					return false;
+//				}
+//			});
+//			
+//		}
 	}
 }
