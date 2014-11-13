@@ -267,14 +267,16 @@
 	</div>
 	</div>
 	<!-- /#wrapper -->
-	
-		<script src="js/jquery-1.11.0.js"></script>
+
+	<script src="js/jquery-1.11.0.js"></script>
 	<script src="js/jquery.timeago.js"></script>
 	<script type="text/javascript">
 	var items;
-	$.getJSON( "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents", function( data ) {
-		items = data;
-		alert(items);
+	//$.getJSON( "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents", function( data ) {
+		//items = data;
+	var temp = '[{"appID":1,"id":1,"time":1415874489932,"value":4.0},{"appID":1,"id":2,"time":1415875767627,"value":9.889431},{"appID":1,"id":3,"time":1415876233632,"value":3.0}]';
+	$.getJSON( temp, function( data ) {		
+	alert(items);
 	for(var i in items.reverse())
 		{
 		var type = items[i].eventType;
@@ -295,8 +297,8 @@
 	$.get("http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/addEventByID?value=10?id=1337&eventType=PLAY_SOUND");
 	});
 	</script>
-	
-	
+
+
 
 	<!-- jQuery Version 1.11.0 -->
 	<script src="js/jquery-1.11.0.js"></script>
