@@ -3,12 +3,25 @@ var attempt = 3; // Variable to count number of attempts.
 function validate(){
 	var username = document.getElementById("username").value;
 	var password = document.getElementById("password").value;
+	
+	/*var user = $.ajax({
+		  type: "GET",
+		  contentType: "application/json; charset=utf-8",
+		  url: "UserWebService.Java/getUserByUsername",
+		  data: JSON.stringify(DTO),
+		  dataType: "json"
+		});*/
+	
+	//service.useService("http://www.extentrix.com/webservices/2.0.0/ExtentrixWebServicesForCPS");
+	
+//	var user;
+//	user = $.getJSON( "http://localhost:8080/Prototype1/rest/users/getUserByUserName?userName="+username)
 
 //	var baseURL = "http://localhost:8080/Prototype1/rest/users/getUserByUserName?userName=";
 //	var buildURL = baseURL.concat(username);
 //	alert(data);
 //	
-//	$.get( buildURL, function(data){
+//	user$.getJSON( buildURL, function(data){
 //		alert(data);
 //	});
 
