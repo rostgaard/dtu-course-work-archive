@@ -2,6 +2,7 @@ package web.services;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -11,7 +12,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
 import dto.model.User;
+import eao.model.Conversion;
 import eao.model.UserEAO;
 import entity.model.UserEntity;
 import enums.Role;
@@ -36,7 +39,7 @@ public class UserWebService {
 		
 		System.out.println("" + userEntity.getUserName());
 
-		return eao.convertUserEntity(userEntity);
+		return Conversion.convertUserEntity(userEntity);
 	}
 	
 	
@@ -49,7 +52,7 @@ public class UserWebService {
 		List<UserEntity> userEntities = new ArrayList<UserEntity>();
 		List<User> users = new ArrayList<User>();
 		userEntities = eao.getAllUsers();
-		users = eao.convertUserEntityList(userEntities);
+		users = Conversion.convertUserEntityList(userEntities);
 		return users;
 	}
 	
@@ -60,7 +63,7 @@ public class UserWebService {
 	public User getUserByUserName(@QueryParam("userName") String userName){
 		UserEntity userEntity = eao.getUserByUserName(userName);
 		
-		return eao.convertUserEntity(userEntity);
+		return Conversion.convertUserEntity(userEntity);
 		
 	}
 	

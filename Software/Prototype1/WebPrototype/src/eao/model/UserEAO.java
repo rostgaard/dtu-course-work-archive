@@ -58,24 +58,6 @@ public class UserEAO {
 		}
 	}
 
-	public User convertUserEntity(UserEntity userEntity){
-		String userName = userEntity.getUserName();
-		String email = userEntity.getEmail();
-		String firstName = userEntity.getFirstName();
-		String lastName = userEntity.getLastName();
-		Role role = userEntity.getRole();
-		String password = userEntity.getPassword();
 
-		return new User(userName, email, firstName, lastName, role, password);
-	}
-	
-	public List<User> convertUserEntityList(List<UserEntity> userEntityList){
-		List<User> users = new ArrayList<User>();
-		for(UserEntity e : userEntityList)
-			users.add(convertUserEntity(e));
-		
-		return users;
-		
-	}
 
 }

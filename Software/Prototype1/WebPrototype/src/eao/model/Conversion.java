@@ -6,8 +6,11 @@ import java.util.List;
 import dto.model.App;
 import dto.model.Event;
 import dto.model.EventType;
+import dto.model.User;
 import entity.model.AppEntity;
 import entity.model.EventEntity;
+import entity.model.UserEntity;
+import enums.Role;
 
 public class Conversion {
 
@@ -53,4 +56,25 @@ public class Conversion {
 		
 		return apps;
 	}
+	
+	public static User convertUserEntity(UserEntity userEntity){
+		String userName = userEntity.getUserName();
+		String email = userEntity.getEmail();
+		String firstName = userEntity.getFirstName();
+		String lastName = userEntity.getLastName();
+		Role role = userEntity.getRole();
+		String password = userEntity.getPassword();
+
+		return new User(userName, email, firstName, lastName, role, password);
+	}
+	
+	public static List<User> convertUserEntityList(List<UserEntity> userEntityList){
+		List<User> users = new ArrayList<User>();
+		for(UserEntity e : userEntityList)
+			users.add(convertUserEntity(e));
+		
+		return users;
+		
+	}
+	
 }
