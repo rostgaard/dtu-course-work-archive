@@ -87,12 +87,6 @@ public class MainActivity extends ActionBarActivity {
 			}
 		}).start();
 	}
-	
-	private String getMacAddress(){
-		WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-		WifiInfo info = manager.getConnectionInfo();
-		return info.getMacAddress();
-	}
 
 	/**
 	 * A placeholder fragment containing a simple view.
