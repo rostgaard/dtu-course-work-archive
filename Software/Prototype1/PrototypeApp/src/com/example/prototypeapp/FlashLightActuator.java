@@ -8,6 +8,7 @@ public class FlashLightActuator extends Thread {
 	private Camera camera;
 	private Parameters parameters;
 	private String macAddress;
+	private boolean run = true;
 	
 	public FlashLightActuator (String macAddress) {
 		camera = Camera.open();
@@ -18,12 +19,14 @@ public class FlashLightActuator extends Thread {
 	@Override
 	public void run(){
 		Event event = null;
-		while (true) {
+		while (run || !isInterrupted()) {
 			try {
 				event = WebServiceConnection.invokeAwaitEventWebServer(macAddress, EventType.FLASH_LIGHT);
 			} catch (Exception e) {
 
 			}
+			if(!run || isInterrupted()) break;
+			
 			// The flashlight is turned on for five seconds if an event is registered
 			if (event != null) {
 				on();
@@ -51,6 +54,7 @@ public class FlashLightActuator extends Thread {
 	}
 	
 	public void terminate() {
+		run = false;
 		if (camera != null)	camera.release();
 	}
 

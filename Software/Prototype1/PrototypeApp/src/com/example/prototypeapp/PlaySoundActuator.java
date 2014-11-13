@@ -11,6 +11,7 @@ public class PlaySoundActuator extends Thread {
 	final int sound;
 //	private int sensorID;
 	private String macAddress;
+	private boolean run = true;
 	
 	public PlaySoundActuator(Activity activity, String macAddress) {	
 		soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 100);
@@ -22,12 +23,14 @@ public class PlaySoundActuator extends Thread {
 	@Override
 	public void run() {
 		Event event = null;
-		while (true) {
+		while (run || !isInterrupted()) {
 			try {
 				event = WebServiceConnection.invokeAwaitEventWebServer(macAddress, EventType.PLAY_SOUND);
 			} catch (Exception e) {
 
 			}
+			if(!run || isInterrupted()) break;
+			
 			if (event != null) {
 				soundPool.play(sound, 0, 100, 1, 0, 1f);
 				event = null;
@@ -40,6 +43,7 @@ public class PlaySoundActuator extends Thread {
 	}
 	
 	public void terminate() {
+		run = false;
 		soundPool.release();
 		this.interrupt();
 	}
