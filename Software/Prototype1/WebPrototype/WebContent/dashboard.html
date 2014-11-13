@@ -283,8 +283,38 @@
   
   
   <div role="tabpanel" class="tab-pane" id="setup">
-  	<h1>hey1</h1>
-  </div>
+   <div id="wrapper">
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">Setup</h1>	
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+			<div class="col-lg-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<i class="fa fa-mobile fa-fw"></i> Active Sensors
+						</div>
+						<!-- /.panel-heading -->
+
+						<div class="panel-body">
+							<div class="list-group" id="sensors"></div>
+							
+							<!-- /.list-group -->
+						</div>
+
+						<!-- /.panel-body -->
+					</div>
+					<!-- /.panel -->
+				
+					</div>
+					<!-- /.panel -->
+				</div>
+			</div>
+		</div>
+	<!-- /#wrapper -->
 
   
   <div role="tabpanel" class="tab-pane" id="users">
@@ -321,9 +351,9 @@
 	items = $.parseJSON(temp);//OUT FOR PRODUCTION
 	for(var i in items.reverse())
 	{
-		var type = items[i].eventType;
+		var type = items[i].id;
 		var time = jQuery.timeago(new Date(items[i].time));
-		var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+"EVENT_NAME"+'<span class="pull-right text-muted small"><em>'+time+'</em></span></a>';
+		var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+type+'<span class="pull-right text-muted small"><em>'+time+'</em></span></a>';
 		$('#box').append(element);
 		}
 	//});
@@ -338,6 +368,19 @@
 	$('#play').on('click', function(event) {
 	$.get("http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/addEventByID?value=10?id=1337&eventType=PLAY_SOUND");
 	});
+	
+	var sensors;
+	var tempSensors = '[{"appID":1,"id":1,"time":1415874489932,"value":4.0},{"appID":1,"id":2,"time":1415875767627,"value":9.889431},{"appID":1,"id":3,"time":1415876233632,"value":3.0}]';//OUT FOR PRODUCTION
+	//$.getJSON( "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAllApps", function( data ) {//IN FOR PRODUCTION
+		//sensors = data; //IN FOR PRODUCTION
+	sensors = $.parseJSON(tempSensors);//OUT FOR PRODUCTION
+	for(var i in items.reverse())
+	{
+		var id = sensors[i].appID;
+		var sensortype = sensors[i].eventType;
+		var element = '<a href="#" class="list-group-item"><i class="fa fa-mobile fa-fw"></i> '+id+ ' '+ sensortype +'</a>';
+		$('#sensors').append(element);
+		}
 	</script>
 
 
