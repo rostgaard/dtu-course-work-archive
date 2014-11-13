@@ -47,6 +47,7 @@
   <li class="active"><a href="#dashboard" role="tab" data-toggle="tab">Dashboard</a></li>
   <li><a href="#setup" role="tab" data-toggle="tab">Setup</a></li>
   <li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
+  <li><a href="#floorplan" role="tab" data-toggle="tab">Floor Plan</a></li>
 </ul>
 
 <div class="tab-content">
@@ -282,11 +283,30 @@
   
   
   <div role="tabpanel" class="tab-pane" id="setup">
-  <h1>hey</h1>
+  	<h1>hey1</h1>
   </div>
-  <div class="tab-pane" id="users">
-   <h2>hey2</h2>
+
+  
+  <div role="tabpanel" class="tab-pane" id="users">
+  	<h1>hey2</h1>
   </div>
+  
+  
+  <div role="tabpanel" class="tab-pane" id="floorplan">
+ 
+
+  		<div id="div1" class="panel-body"  ondrop="drop(event)" ondragover="allowDrop(event)">
+			<img src="floor_plan_example.png" width="49%"> 
+		</div>
+
+		<img id="drag1" src="sensoricon.png" height="15" width="15" draggable="true"
+			ondragstart="drag(event)">
+	
+	</div>
+	
+	
+
+
 </div>
 
 
@@ -338,6 +358,10 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="js/sb-admin-2.js"></script>
+	
+	<!-- Custom DragNDrop JavaScript -->
+	<script src="js/dragndrop.js"></script>
+	
 
 </body>
 
