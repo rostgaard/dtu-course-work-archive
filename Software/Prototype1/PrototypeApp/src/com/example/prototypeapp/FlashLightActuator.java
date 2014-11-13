@@ -37,6 +37,7 @@ public class FlashLightActuator extends Thread {
 					e.printStackTrace();
 				}
 				off();
+				event = null;
 			}
 		}
 	}

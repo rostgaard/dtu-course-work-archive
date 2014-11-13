@@ -1,5 +1,7 @@
 package com.example.prototypeapp;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -7,34 +9,36 @@ import android.hardware.SensorManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
+	
+	public static final String FRAGMENT_ARGUMENT = "mac";
+	public static String macAddress;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.d("ddd", "1");
 		super.onCreate(savedInstanceState);
-		Log.d("ddd", "11");
 		setContentView(R.layout.activity_main);
-		Log.d("ddd", "12");
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//		macAddress = getMacAddress();
+		macAddress = "mac7";
+		registerAppsWithServer(macAddress);
 		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
+//			Bundle bundle = new Bundle();
+//			bundle.putString(FRAGMENT_ARGUMENT, macAddress);
+//			PlaceholderFragment placeholderFragment = new PlaceholderFragment();
+//			placeholderFragment.setArguments(bundle);
+			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		Log.d("ddd", "2");
-		
-		registerAppsWithServer();
-		
-		Log.d("ddd", "3");
+	
 	}
 
 	@Override
@@ -56,11 +60,15 @@ public class MainActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	private void registerAppsWithServer(){
+	private String getMacAddress() {
 		WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		WifiInfo info = manager.getConnectionInfo();
-		final String macAddress = info.getMacAddress();
+		return info.getMacAddress();
+	}
+	
+	private void registerAppsWithServer(String mac){
 		
+		final String macAddress = mac;
 		// Registering the apps with the server
 		final PackageManager packageManager = this.getPackageManager();
 		
@@ -69,18 +77,15 @@ public class MainActivity extends ActionBarActivity {
 			public void run() {					
 				try {
 					// Check for accelerometer
-					if (packageManager.hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)){			
-//						WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.ACCELEROMETER);
-						WebServiceConnection.invokeAddAppToDatabase("macACC1",EventType.ACCELEROMETER);
+					if (packageManager.hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)){
+						WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.ACCELEROMETER);
 					}
 					// Check for flashlight
-					if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){			
-//						WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.FLASH_LIGHT);
-						WebServiceConnection.invokeAddAppToDatabase("macFLASH1",EventType.FLASH_LIGHT);
+					if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
+						WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.FLASH_LIGHT);
 					}
 					// We assume the device has a speaker (we cannot check it)
-//					WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.PLAY_SOUND);
-					WebServiceConnection.invokeAddAppToDatabase("macSOUND1",EventType.PLAY_SOUND);
+					WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.PLAY_SOUND);
 			
 				} catch (Exception e) {
 				}
@@ -92,33 +97,29 @@ public class MainActivity extends ActionBarActivity {
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment {
-
+		
 		private SensorManager sensorManager;
 		private AccelerometerEventListener accelerometerListener;
-//		private AwaitEventThread awaitEventThread;
 		private PlaySoundActuator playSoundActuator;
 		private FlashLightActuator flashLightActuator;
-		private String macAddress;
-		
-//		public static final int S1 = R.raw.wopwop;
-//		private static SoundPool soundPool;
+//		private String macAddress;
 
 		public PlaceholderFragment() {
-			WifiManager manager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
-			WifiInfo info = manager.getConnectionInfo();
-			this.macAddress = info.getMacAddress();
+			Log.d("ourOwnDebug", "before");
+//			this.macAddress = this.getArguments().getString(FRAGMENT_ARGUMENT);
+//			Log.d("ourOwnDebug", this.getArguments().getString(FRAGMENT_ARGUMENT));
+//			this.macAddress = "mac5";
 		}
-	
+
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
+					false);			
 			return rootView;
 		}
-		
 		@Override
-		public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+		public void onViewCreated(View view, Bundle savedInstanceState) {
 			super.onViewCreated(view, savedInstanceState);
 			
 			if (sensorManager == null)
@@ -129,8 +130,6 @@ public class MainActivity extends ActionBarActivity {
 		public void onResume() {
 			super.onResume();
 			
-//			EditText editText = (EditText)getActivity().findViewById(R.id.editText1);
-//			TextView textView = (TextView)  getActivity().findViewById(R.id.textView1);	
 			accelerometerListener = new AccelerometerEventListener(macAddress);
 			
 			sensorManager.registerListener(accelerometerListener,
@@ -142,8 +141,6 @@ public class MainActivity extends ActionBarActivity {
 			
 			flashLightActuator = new FlashLightActuator(macAddress);
 			flashLightActuator.start();
-			
-//			awaitEvent();
 		}
 		
 		@Override
@@ -156,44 +153,5 @@ public class MainActivity extends ActionBarActivity {
 			sensorManager.unregisterListener(accelerometerListener);
 			accelerometerListener = null;
 		}
-		
-//		private synchronized void awaitEvent() {
-//			
-//			if (awaitEventThread != null) {
-//				awaitEventThread.terminate();
-//				awaitEventThread = null;
-//			}
-//			
-//			final EditText editText = (EditText) getActivity().findViewById(R.id.editText2);
-//			final TextView textView = (TextView) getActivity().findViewById(R.id.textView2);
-//			awaitEventThread = new AwaitEventThread(textView, macAddress);
-//			
-//			if (!textView.getText().equals(""))
-//				awaitEventThread.start();
-//			
-//			editText.setOnFocusChangeListener(new OnFocusChangeListener() {
-//				
-//				@Override
-//				public void onFocusChange(View v, boolean hasFocus) {
-//					if (!hasFocus) {
-//						textView.setText("Current Sensor ID: " + editText.getText());
-//						awaitEvent();
-//					}
-//				}
-//			});
-//			
-//			editText.setOnKeyListener(new OnKeyListener() {
-//				
-//				@Override
-//				public boolean onKey(View v, int keyCode, KeyEvent event) {
-//					if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-//						textView.setText("Current Sensor ID: " + editText.getText());
-//						awaitEvent();
-//					}
-//					return false;
-//				}
-//			});
-//			
-//		}
 	}
 }
