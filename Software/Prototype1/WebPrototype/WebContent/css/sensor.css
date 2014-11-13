@@ -1,0 +1,17 @@
+#sensor {
+	width: 25px;
+	height: 25px;
+	background-color: #CC0000;
+	vertical-align: middle;
+	text-align: center;
+	font-family: Arial;
+	line-height: 25px;
+	border: 2px solid;
+	border-radius: 8px;
+	float: left;
+}
+
+ #floorplan {
+	width: 500px;
+	height: 500px;
+} 
