@@ -52,6 +52,19 @@ public class AppWebService {
 	}
 	
 	@GET
+	@Path("/getAppByID")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public App getApp(@QueryParam("id") int id) {		
+		AppEntity appEntity = eao.getAppEntity(id);
+		if (appEntity == null) {
+			return null;
+		}
+			
+		return Conversion.convertAppEntity(appEntity);
+	}
+	
+	@GET
 	@Path("/getApps")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)

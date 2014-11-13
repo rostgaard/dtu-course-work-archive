@@ -72,6 +72,10 @@ public class SensorDataEAO {
 		return event;
 	}	
 	
+	public AppEntity getAppEntity(int id) {
+		return em.find(AppEntity.class, id);
+	}
+	
 	public AppEntity getAppEntity(String mac, EventType eventType) {
 		TypedQuery<AppEntity> query = em.createQuery(Query.queryGetApp, AppEntity.class);
 		query.setParameter("mac", mac);
