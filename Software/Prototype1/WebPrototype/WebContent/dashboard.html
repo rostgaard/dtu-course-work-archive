@@ -147,7 +147,7 @@
 					<div class="panel panel-default">
 						<!-- /.panel-heading -->
 						<button type="button" class="btn btn-warning btn-s"
-							data-toggle="modal" data-target="#myModal"
+							data-toggle="modal" data-target="#jesperModal"
 							style="position: absolute; left: 30%; top: 20%">
 							<i class="fa fa-mobile fa-fw"> 3</i>
 						</button>
@@ -203,37 +203,14 @@
 							<i class="fa fa-bell fa-fw"></i> Notifications Panel
 						</div>
 						<!-- /.panel-heading -->
+
 						<div class="panel-body">
-							<div class="list-group">
-								<a href="#" class="list-group-item"> <i
-									class="fa fa-shield fa-fw"></i> New Security Event <span
-									class="pull-right text-muted small"><em>12 minutes
-											ago</em> </span>
-								</a> <a href="#" class="list-group-item"> <i
-									class="fa fa-warning fa-fw"></i> Police called <span
-									class="pull-right text-muted small"><em>27 minutes
-											ago</em> </span>
-								</a> <a href="#" class="list-group-item"> <i
-									class="fa fa-home fa-fw"></i> Door Opened <span
-									class="pull-right text-muted small"><em>28 minutes
-											ago</em> </span>
-								</a> <a href="#" class="list-group-item"> <i
-									class="fa fa-upload fa-fw"></i> Server Rebooted <span
-									class="pull-right text-muted small"><em>11:32 AM</em> </span>
-								</a> <a href="#" class="list-group-item"> <i
-									class="fa fa-bolt fa-fw"></i> Server Crashed! <span
-									class="pull-right text-muted small"><em>11:13 AM</em> </span>
-								</a> <a href="#" class="list-group-item"> <i
-									class="fa fa-warning fa-fw"></i> Server Not Responding <span
-									class="pull-right text-muted small"><em>10:57 AM</em> </span>
-								</a> <a href="#" class="list-group-item"> <i
-									class="fa fa-gear fa-fw"></i> New device added <span
-									class="pull-right text-muted small"><em>9:49 AM</em> </span>
-								</a>
-							</div>
+							<div class="list-group" id="box"></div>
+							<button class="btn btn-primary btn-block" id="more">Show
+								more</button>
 							<!-- /.list-group -->
-							<a href="#" class="btn btn-default btn-block">View All Alerts</a>
 						</div>
+
 						<!-- /.panel-body -->
 					</div>
 					<!-- /.panel -->
@@ -242,9 +219,9 @@
 			</div>
 			<!-- /.row -->
 		</div>
-		<!-- /#page-wrapper -->
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+
+		<!-- @Jesper play video file in modal window -->
+		<div class="modal fade" id="jesperModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
@@ -255,15 +232,71 @@
 						<h4 class="modal-title" id="myModalLabel">Camera 2</h4>
 					</div>
 					<div class="modal-body">
-						<iframe width="100%" height="720"
-							src="http://www.youtube.com/embed/4i_GFrlaStQ" frameborder="0"
-							allowfullscreen></iframe>
+						<video>
+						</video>
+						hep
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
+
+
+
+	<!-- /#page-wrapper -->
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Camera 2</h4>
+				</div>
+				<div class="modal-body">
+					<iframe width="100%" height="720"
+						src="http://www.youtube.com/embed/4i_GFrlaStQ" frameborder="0"
+						allowfullscreen></iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
 	<!-- /#wrapper -->
+	
+		<script src="js/jquery-1.11.0.js"></script>
+	<script src="js/jquery.timeago.js"></script>
+	<script type="text/javascript">
+	var items;
+	$.getJSON( "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents", function( data ) {
+		items = data;
+		alert(items);
+	for(var i in items.reverse())
+		{
+		var type = items[i].eventType;
+		var time = jQuery.timeago(new Date(items[i].time));
+		var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+type.replace("SHAKE","Door moved").replace("PLAY_SOUND","Sound played")+'<span class="pull-right text-muted small"><em>'+time+'</em></span></a>';
+		$('#box').append(element);
+		}
+	});
+	$('.list-group-item:gt(4)').hide().last().after(
+    $('#more').click(function(){
+        var a = this;
+        $('.list-group-item:not(:visible):lt(5)').fadeIn(function(){
+         if ($('.list-group-item:not(:visible)').length == 0) $(a).remove();   
+        }); return false;
+    })
+	);
+	$('#play').on('click', function(event) {
+	$.get("http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/addEventByID?value=10?id=1337&eventType=PLAY_SOUND");
+	});
+	</script>
+	
+	
 
 	<!-- jQuery Version 1.11.0 -->
 	<script src="js/jquery-1.11.0.js"></script>
