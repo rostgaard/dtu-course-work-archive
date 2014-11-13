@@ -8,12 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import enums.EventType;
-
-/**
- * Entity implementation class for Entity: Event
- *
- */
 @Entity
 public class EventEntity implements Serializable {
 
@@ -23,13 +17,13 @@ public class EventEntity implements Serializable {
 	private Integer id;
 	
 	@ManyToOne
-	private Sensor sensor;
+	private AppEntity appEntity;
 	
 	private float value;
 	
 	private long time;
 	
-	private EventType eventType;
+	//private EventType eventType;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -43,12 +37,12 @@ public class EventEntity implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}   
-	public Sensor getSensor() {
-		return this.sensor;
+	public AppEntity getAppEntity() {
+		return this.appEntity;
 	}
 
-	public void setSensor(Sensor sensor) {
-		this.sensor = sensor;
+	public void setAppEntity(AppEntity appEntity) {
+		this.appEntity = appEntity;
 	}
 	
 	public float getValue() {
@@ -67,11 +61,11 @@ public class EventEntity implements Serializable {
 		this.time = time;
 	}
 	
-	public EventType getEventType() {
-		return this.eventType;
-	}
-	
-	public void setEventType(EventType eventType) {
-		this.eventType = eventType;
-	}
+//	public EventType getEventType() {
+//		return this.eventType;
+//	}
+//	
+//	public void setEventType(EventType eventType) {
+//		this.eventType = eventType;
+//	}
 }

@@ -17,11 +17,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
-import sun.reflect.CallerSensitive;
 import dto.model.Event;
+import dto.model.EventType;
+import eao.model.Conversion;
 import eao.model.SensorDataEAO;
+import entity.model.AppEntity;
 import entity.model.EventEntity;
-import enums.EventType;
 
 @LocalBean
 @Stateless
@@ -32,37 +33,80 @@ public class EventWebService {
 	private static Map<Integer,List<EventEntity>> entitiesWaiting = new HashMap<Integer,List<EventEntity>>();
 	
 	@EJB SensorDataEAO eao;
-	
+
 	@GET
-	@Path("/addEvent")
+	@Path("/addEventByID")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
-	public Event addEvent(@QueryParam("value") float value, @QueryParam("id") int id, @QueryParam("eventType") EventType eventType) {	
-		EventEntity eventEntity = eao.addEvent(value, id, eventType);
+	public Event addEvent(@QueryParam("value") float value, @QueryParam("id") int sensorId, @QueryParam("eventType") EventType eventType) {	
+		EventEntity eventEntity = eao.addEvent(value, sensorId, eventType);
 		
-		List<EventEntity> tempList = entitiesWaiting.get(id);
+		List<EventEntity> tempList = entitiesWaiting.get(sensorId);
 		if (tempList != null) {
 			//tempList = Collections.synchronizedList(tempList);
 			synchronized(tempList) {
-				System.out.println("NOtify");
 				tempList.notifyAll();
 			}
 		}
-		return eao.convertEventEntity(eventEntity);
+		return Conversion.convertEventEntity(eventEntity);
 	}
 	
-	
 	@GET
-	@Path("/getEvents")
+	@Path("/addEventByMac")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
+	public Event addEvent(@QueryParam("mac") String mac, @QueryParam("value") float value, @QueryParam("eventType") EventType eventType) {	
+		EventEntity eventEntity = eao.addEvent(value, mac, eventType);
+		if (eventEntity == null) return null;
+		
+		List<EventEntity> tempList = entitiesWaiting.get(eventEntity.getAppEntity().getId());
+		if (tempList != null) {
+			//tempList = Collections.synchronizedList(tempList);
+			synchronized(tempList) {
+				tempList.notifyAll();
+			}
+		}
+		return Conversion.convertEventEntity(eventEntity);
+	}
 	
+	@GET
+	@Path("/getEventsByID")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)	
 	public List<Event> getEventList(@QueryParam("id") int id) {
 		List<EventEntity> eventEntities = new ArrayList<EventEntity>();
 		List<Event> events = new ArrayList<Event>();
 		eventEntities = eao.getEventlist(id);
-		events = eao.convertEventEntityList(eventEntities);
+		events = Conversion.convertEventEntityList(eventEntities);
 		return events;
+	}
+	
+	@GET
+	@Path("/getEventsByMac")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)	
+	public List<Event> getEventList(@QueryParam("mac") String mac) {
+		List<EventEntity> eventEntities = new ArrayList<EventEntity>();
+		List<AppEntity> appEntites = new ArrayList<AppEntity>();
+		List<Event> events = new ArrayList<Event>();
+		
+		appEntites = eao.getAppEntitylist(mac);
+		for (AppEntity app : appEntites) {
+			eventEntities.addAll(app.getEvents());
+		}
+		
+		events = Conversion.convertEventEntityList(eventEntities);
+		return events;
+	}
+	
+	@GET
+	@Path("/getEventsByMacAndType")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Event> getEventList(@QueryParam("mac") String mac, @QueryParam("eventType") EventType eventType) {
+		AppEntity appEntity = eao.getAppEntity(mac, eventType);		
+		List<EventEntity> eventEntities = appEntity.getEvents();
+		return Conversion.convertEventEntityList(eventEntities);
 	}
 	
 	@GET
@@ -73,7 +117,7 @@ public class EventWebService {
 		List<EventEntity> eventEntities = new ArrayList<EventEntity>();
 		List<Event> events = new ArrayList<Event>();
 		eventEntities = eao.getAllEventlist();
-		events = eao.convertEventEntityList(eventEntities);
+		events = Conversion.convertEventEntityList(eventEntities);
 		return events;
 	}
 	
@@ -85,7 +129,7 @@ public class EventWebService {
 		List<EventEntity> eventEntities = new ArrayList<EventEntity>();
 		List<Event> events = new ArrayList<Event>();
 		eventEntities = eao.getEventlist(id, eventType);
-		events = eao.convertEventEntityList(eventEntities);
+		events = Conversion.convertEventEntityList(eventEntities);
 		return events;
 	}
 	
@@ -97,12 +141,12 @@ public class EventWebService {
 		List<EventEntity> eventEntities = new ArrayList<EventEntity>();
 		List<Event> events = new ArrayList<Event>();
 		eventEntities = eao.getEventlist(id, time);
-		events = eao.convertEventEntityList(eventEntities);
+		events = Conversion.convertEventEntityList(eventEntities);
 		return events;
 	}
 	
 	@GET
-	@Path("/awaitEvent")
+	@Path("/awaitEventByID")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
 	public Event awaitEvent(@QueryParam("id") int id, @QueryParam("eventType") EventType eventType) {
@@ -110,7 +154,24 @@ public class EventWebService {
 		EventEntity eventEntity = awaitEventEntity(id, eventType);
 		
 		if (eventEntity != null) {
-			event = eao.convertEventEntity(eventEntity);
+			event = Conversion.convertEventEntity(eventEntity);
+		}
+		
+		return event;
+	}
+	
+	@GET
+	@Path("/awaitEventByMac")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public Event awaitEvent(@QueryParam("mac") String mac, @QueryParam("eventType") EventType eventType) {
+		AppEntity appEntity = eao.getAppEntity(mac, eventType);
+		
+		Event event = null;
+		EventEntity eventEntity = awaitEventEntity(appEntity.getId(), eventType);
+		
+		if (eventEntity != null) {
+			event = Conversion.convertEventEntity(eventEntity);
 		}
 		
 		return event;

@@ -2,16 +2,16 @@ package dto.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import enums.EventType;
-
 @XmlRootElement
 public class Event {
 	
 	private int id;
 	private float value;
 	private long time;
-	private int sensorId;
-	private EventType eventType;
+	private int appID;
+	//private App app;
+	//private int sensorId;
+	//private EventType eventType;
 	
 	public Event() {
 		
@@ -22,12 +22,12 @@ public class Event {
 		this.value = value;
 	}
 	
-	public Event(int id, float value, long time, int sensorId, EventType eventType) {
+	public Event(int id, float value, long time, int appID) {
 		this.id = id;
 		this.value = value;
 		this.time = time;
-		this.sensorId = sensorId;
-		this.eventType = eventType;
+		this.appID = appID;
+		//this.eventType = eventType;
 	}
 	
 	public int getId() {
@@ -54,20 +54,20 @@ public class Event {
 		this.time = time;
 	}
 	
-	public void setSensorId(int sensorId) {
-		this.sensorId = sensorId;
+	public void setAppID(int appID) {
+		this.appID = appID;
 	}
 	
-	public int getSensoriId() {
-		return sensorId;
+	public int getAppID() {
+		return appID;
 	}
 	
-	public void setEventType(EventType eventType) {
-		this.eventType = eventType;
-	}
-	
-	public EventType getEventType() {
-		return this.eventType;
-	}
+//	public void setEventType(EventType eventType) {
+//		this.eventType = eventType;
+//	}
+//	
+//	public EventType getEventType() {
+//		return this.eventType;
+//	}
 
 }
