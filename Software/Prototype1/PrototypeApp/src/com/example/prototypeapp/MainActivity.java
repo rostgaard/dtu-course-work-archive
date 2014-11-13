@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 //		macAddress = getMacAddress();
-		macAddress = "mac7";
+		macAddress = "macc";
 		registerAppsWithServer(macAddress);
 		if (savedInstanceState == null) {
 //			Bundle bundle = new Bundle();
