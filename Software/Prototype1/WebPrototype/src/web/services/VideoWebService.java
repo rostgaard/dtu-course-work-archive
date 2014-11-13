@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -28,6 +30,8 @@ import com.sun.tools.ws.processor.util.DirectoryUtil;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import com.sun.xml.messaging.saaj.util.Base64;
 
+@LocalBean
+@Stateless
 @Path("/video")
 public class VideoWebService {
 
@@ -36,25 +40,33 @@ public class VideoWebService {
 	@Path("/addVideo")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String addVideo ( VideoPacket in) throws IOException {
+	public String addVideo ( VideoPacket in) {
 	
 		File dir = new File("datastore/"+in.getId()+"/");
-		File file = new File("datastore/"+in.getId()+"/"+dir.list().length+".mp4");
 		dir.mkdirs();
-		file.createNewFile();
-		
-		InputStream inputStream = new ByteInputStream();
-		byte[] decoded = DatatypeConverter.parseBase64Binary(in.getContent());
-		
-		FileOutputStream output = new FileOutputStream(file);
-		output.write(decoded);
-		output.flush();
-		output.close();
-		inputStream.close();
-		inputStream = null;
-		output = null;
-		 
-		return "Got it! " + new Date()+",bytes: "+decoded.length;
+		File file = new File("datastore/"+in.getId()+"/"+dir.list().length+".mp4");
+		try {
+			
+			file.createNewFile();
+			
+			InputStream inputStream = new ByteInputStream();
+			byte[] decoded = DatatypeConverter.parseBase64Binary(in.getContent());
+			
+			FileOutputStream output = new FileOutputStream(file);
+			output.write(decoded);
+			
+			output.close();
+			inputStream.close();
+			inputStream = null;
+			output = null;
+			
+			return "Got it! " + new Date()+",bytes: "+decoded.length;
+		} catch (IOException e) {
+			System.out.println("Error in Create file");
+			e.printStackTrace();
+		}
+		return "";
+	
 	}
 	
 	
@@ -68,8 +80,17 @@ public class VideoWebService {
 	@GET
 	@Path("/getLatest")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getLatest ( @QueryParam("time") int id) throws IOException {
-		return (new File("datastore/"+id+"/").list().length)+"";
+	public String getLatest ( @QueryParam("id") int id) throws IOException {
+		return (new File("datastore/"+id+"/").list().length-1)+"";
+	}
+	
+	@GET
+	@Path("/deleteEVERYTHING")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String delete (@QueryParam("id") int id) throws IOException {
+		for(File file: new File("datastore/"+id).listFiles()) file.delete();
+		
+		return "OK";
 	}
 
 }
