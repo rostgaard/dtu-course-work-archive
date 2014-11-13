@@ -11,6 +11,9 @@
 
 <title>Security System Dashboard</title>
 
+<!-- jQuery Version 1.11.0 -->
+<script src="js/jquery-1.11.0.js"></script>
+
 <link rel="icon" href="\icon.ico">
 
 <!-- Bootstrap Core CSS -->
@@ -160,48 +163,12 @@
 						<button type="button" class="btn btn-warning btn-s"
 							data-toggle="modal" data-target="#jesperModal"
 							style="position: absolute; left: 30%; top: 20%">
-							<i class="fa fa-mobile fa-fw"> 3</i>
-						</button>
-						<button type="button" class="btn btn-warning btn-s"
-							data-toggle="modal" data-target="#myModal"
-							style="position: absolute; left: 56%; top: 10%">
-							<i class="fa fa-mobile fa-fw"> 2</i>
-						</button>
-						<button type="button" class="btn btn-warning btn-s"
-							data-toggle="modal" data-target="#myModal"
-							style="position: absolute; left: 10%; top: 40%">
-							<i class="fa fa-mobile fa-fw"> 1</i>
+							<i class="fa fa-video-camera fa-3x"><h2> 1</h2></i>
 						</button>
 						<div class="panel-body">
 
 							<img src="floor_plan_example.png" width="49%"> <img
 								src="floor_plan_example.png" width="49%">
-						</div>
-						<!-- /.panel-body -->
-					</div>
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<i class="fa fa-bar-chart-o fa-fw"></i> Area Chart Example
-							<div class="pull-right">
-								<div class="btn-group">
-									<button type="button"
-										class="btn btn-default btn-xs dropdown-toggle"
-										data-toggle="dropdown">
-										Actions <span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu pull-right" role="menu">
-										<li><a href="#">Action</a></li>
-										<li><a href="#">Another action</a></li>
-										<li><a href="#">Something else here</a></li>
-										<li class="divider"></li>
-										<li><a href="#">Separated link</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<!-- /.panel-heading -->
-						<div class="panel-body">
-							<div id="morris-area-chart"></div>
 						</div>
 						<!-- /.panel-body -->
 					</div>
@@ -240,12 +207,16 @@
 						<button type="button" class="close" data-dismiss="modal">
 							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 						</button>
-						<h4 class="modal-title" id="myModalLabel">Camera 2</h4>
+						<h4 class="modal-title" id="myModalLabel">Camera</h4>
 					</div>
 					<div class="modal-body">
-						<video>
+						
+						<video width="800" id="player" controls autoplay>
+						  <!--<source src="tmp/video1.mp4"  type="video/mp4" >-->
+						  <!--<source src="mov_bbb.ogg" type="video/ogg">-->
+						  Your browser does not support HTML5 video.
 						</video>
-						hep
+
 					</div>
 				</div>
 			</div>
@@ -266,12 +237,11 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Camera 2</h4>
+					<h4 class="modal-title" id="myModalLabel">Camera</h4>
 				</div>
 				<div class="modal-body">
-					<iframe width="100%" height="720"
-						src="http://www.youtube.com/embed/4i_GFrlaStQ" frameborder="0"
-						allowfullscreen></iframe>
+
+					
 				</div>
 			</div>
 		</div>
@@ -431,10 +401,15 @@
 	//items = $.parseJSON(temp);//OUT FOR PRODUCTION
 	for(var i in items.reverse())
 	{
-		var type = items[i].id;
+		var type;
+		$.getJSON( "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAppByID?id="+items[i].id, function( data ) {
+		type = data;
 		var time = jQuery.timeago(new Date(items[i].time));
-		var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+type+'<span class="pull-right text-muted small"><em>'+time+'</em></span></a>';
+		var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+type.eventType+'<span class="pull-right text-muted small"><em>'+time+'</em></span></a>';
 		$('#box').append(element);
+		
+		});
+		
 		}
 	});
 	$('.list-group-item:gt(4)').hide().last().after(
@@ -445,9 +420,6 @@
         }); return false;
     })
 	);
-	$('#play').on('click', function(event) {
-	$.get("http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/addEventByID?value=10?id=1337&eventType=PLAY_SOUND");
-	});
 	
 	var sensors;
 	//var tempSensors = '[{"appID":1,"id":1,"time":1415874489932,"value":4.0},{"appID":1,"id":2,"time":1415875767627,"value":9.889431},{"appID":1,"id":3,"time":1415876233632,"value":3.0}]';//OUT FOR PRODUCTION
@@ -463,11 +435,28 @@
 		}
 	});
 	</script>
+	<!-- VIDEOPLAYER SCRIPT -->
+	<script>
+	var id = 1;
+	//var latest = parseInt("0");
+	
+	var latest = parseInt($.ajax({type: "GET", url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getLatest?id="+id, async: false}).responseText);
+	//Start the player
+	$("#player")[0].src="http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getVideo?id="+id+"&count="+latest;
+		
+	$("#player").bind("ended", function() {
+		latest++;
+		$("#player")[0].src="http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getVideo?id="+id+"&count="+latest;
+	});
 
+	$("#player").bind("error", function() {
+		latest--;
+		$("#player")[0].src="http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getVideo?id="+id+"&count="+latest;
+	});
 
+	</script>
 
-	<!-- jQuery Version 1.11.0 -->
-	<script src="js/jquery-1.11.0.js"></script>
+	
 
 	<!-- Bootstrap Core JavaScript -->
 	<script src="js/bootstrap.min.js"></script>
