@@ -14,6 +14,8 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint("/endpoint")
 public class EndPoint {
 
+	//Forsøg på websocket endpoint, til brug i med opdatering af liste
+	
 	private static Set<Session> peers = Collections.synchronizedSet(new HashSet<Session>());
 
 	@OnMessage
