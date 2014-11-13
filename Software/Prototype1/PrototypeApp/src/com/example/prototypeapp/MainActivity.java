@@ -32,19 +32,7 @@ public class MainActivity extends ActionBarActivity {
 		}
 		Log.d("ddd", "2");
 		
-		// Registering the apps with the server
-		PackageManager packageManager = this.getPackageManager();
-		String macAddress = getMacAddress();
-		// Check for accelerometer
-		if (packageManager.hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)){			
-			WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.ACCELEROMETER);
-		}
-		// Check for flashlight
-		if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){			
-			WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.FLASH_LIGHT);
-		}
-		// We assume the device has a speaker (we cannot check it)
-		WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.PLAY_SOUND);
+		registerAppsWithServer();
 		
 		Log.d("ddd", "3");
 	}
@@ -66,6 +54,38 @@ public class MainActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private void registerAppsWithServer(){
+		WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+		WifiInfo info = manager.getConnectionInfo();
+		final String macAddress = info.getMacAddress();
+		
+		// Registering the apps with the server
+		final PackageManager packageManager = this.getPackageManager();
+		
+		new Thread(new Runnable() {			
+			@Override
+			public void run() {					
+				try {
+					// Check for accelerometer
+					if (packageManager.hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)){			
+//						WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.ACCELEROMETER);
+						WebServiceConnection.invokeAddAppToDatabase("macACC1",EventType.ACCELEROMETER);
+					}
+					// Check for flashlight
+					if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){			
+//						WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.FLASH_LIGHT);
+						WebServiceConnection.invokeAddAppToDatabase("macFLASH1",EventType.FLASH_LIGHT);
+					}
+					// We assume the device has a speaker (we cannot check it)
+//					WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.PLAY_SOUND);
+					WebServiceConnection.invokeAddAppToDatabase("macSOUND1",EventType.PLAY_SOUND);
+			
+				} catch (Exception e) {
+				}
+			}
+		}).start();
 	}
 	
 	private String getMacAddress(){

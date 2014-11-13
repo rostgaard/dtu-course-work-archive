@@ -10,8 +10,8 @@ public class Event {
 	private float value;
 	@JsonProperty("time")
 	private long time;
-	@JsonProperty("eventType")
-	private EventType eventType;
+	@JsonProperty("appID")
+	private int appID;
 	
 	public Event() {
 		
@@ -47,12 +47,12 @@ public class Event {
 		this.time = time;
 	}
 	
-	public EventType getEventType() {
-		return eventType;
+	public int getAppID() {
+		return appID;
 	}
 	
-	public void setEventType(EventType eventType) {
-		this.eventType = eventType;
+	public void setAppID(int appID) {
+		this.appID = appID;
 	}
 
 }
