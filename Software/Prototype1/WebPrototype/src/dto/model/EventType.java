@@ -4,5 +4,5 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public enum EventType {
-	DOOR, HUMIDITY, PLAY_SOUND;
+	ACCELEROMETER, HUMIDITY, PLAY_SOUND, FLASH_LIGHT, TEMPERATURE;
 }
