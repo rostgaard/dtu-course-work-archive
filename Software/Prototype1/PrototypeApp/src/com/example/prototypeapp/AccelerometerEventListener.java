@@ -3,7 +3,6 @@ package com.example.prototypeapp;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.widget.TextView;
 
 public class AccelerometerEventListener implements SensorEventListener {
 	
@@ -73,7 +72,7 @@ public class AccelerometerEventListener implements SensorEventListener {
 				
 				try {
 					WebServiceConnection.invokeAddEventWebServer(macAddress, value, EventType.ACCELEROMETER);
-					
+					Thread.sleep(10000);
 //					final String txt = "Event added to server:\n ID: " + result.getId() + " Value: " + result.getValue() + " Time: " + result.getTime();
 //					textView.post(new Runnable() {
 //						
