@@ -6,6 +6,8 @@ package rule.engine;
 
 import java.util.logging.Logger;
 
+import dto.model.Event;
+
 public class Operation extends Expression{
 	final Expression lhs, rhs;
 	final Operator   operation;

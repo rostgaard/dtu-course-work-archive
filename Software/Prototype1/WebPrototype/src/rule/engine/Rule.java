@@ -7,6 +7,8 @@ package rule.engine;
 import java.util.List;
 import java.util.logging.*;
 
+import dto.model.Event;
+
 
 public class Rule {
 
@@ -20,11 +22,11 @@ public class Rule {
 	boolean matches (Event event) {
 		/* Early return. There is no need to check the
 		   condition if event doesn't match.*/  
-		if (!this.event.getName().toLowerCase().equals(event.type.toLowerCase())) {
-			log.finest("Event does not match type. \"" +this.getEvent().getName() + "\" != \"" +event.type +"\"");
+		if (!this.event.getName().toLowerCase().equals(event.getEventType().toString().toLowerCase())) {
+			log.finest("Event does not match type. \"" +this.getEvent().getName() + "\" != \"" +event.getEventType() +"\"");
 			return false;
 		}
-		log.finest("Event matches type. " +this.getEvent().getName() + " == " +event.type);
+		log.finest("Event matches type. " +this.getEvent().getName() + " == " +event.getEventType());
 		
 		return this.condition.matches (event);
 	}

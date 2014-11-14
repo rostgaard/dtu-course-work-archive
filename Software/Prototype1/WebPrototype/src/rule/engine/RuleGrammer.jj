@@ -8,7 +8,7 @@ options {
 
 PARSER_BEGIN(Rules)
 
-package se2.sensornet.rules;
+package rule.engine;
 
 import java.util.*;
 

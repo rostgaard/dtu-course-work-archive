@@ -4,6 +4,8 @@
 
 package rule.engine;
 
+import dto.model.Event;
+
 public class Constant extends Expression {
 	int value;
 	

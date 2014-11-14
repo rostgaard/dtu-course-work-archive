@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.logging.Logger;
 
+import dto.model.Event;
+
 public class RuleEngine {
 
 	final List<Rule> rules;

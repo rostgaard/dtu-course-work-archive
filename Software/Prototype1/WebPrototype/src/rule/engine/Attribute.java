@@ -4,6 +4,9 @@
 
 package rule.engine;
 
+import dto.model.Event;
+import dto.model.EventType;
+
 public class Attribute extends Expression {
 	
 	public static final String SYSTEM_OBJECT = "system";
@@ -23,9 +26,7 @@ public class Attribute extends Expression {
 
 	@Override
 	boolean matches(Event event) {
-		return 
-		   (event.sensor == this.object) && 
-		   (event.key    == this.key);
+		return this.object.equals(EVENT_OBJECT);
 	}
 	
 	/**
