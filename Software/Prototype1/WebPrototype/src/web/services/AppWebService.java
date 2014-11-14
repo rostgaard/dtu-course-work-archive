@@ -14,10 +14,10 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import dto.model.App;
-import dto.model.EventType;
 import eao.model.Conversion;
 import eao.model.SensorDataEAO;
 import entity.model.AppEntity;
+import enums.EventType;
 
 @LocalBean
 @Stateless

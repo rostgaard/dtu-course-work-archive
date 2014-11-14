@@ -18,11 +18,11 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 import dto.model.Event;
-import dto.model.EventType;
 import eao.model.Conversion;
 import eao.model.SensorDataEAO;
 import entity.model.AppEntity;
 import entity.model.EventEntity;
+import enums.EventType;
 
 @LocalBean
 @Stateless

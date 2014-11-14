@@ -5,7 +5,7 @@
 package rule.engine;
 
 import dto.model.Event;
-import dto.model.EventType;
+import enums.EventType;
 
 public class Attribute extends Expression {
 	

@@ -1,4 +1,4 @@
-package dto.model;
+package enums;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

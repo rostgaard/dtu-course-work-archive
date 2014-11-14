@@ -5,11 +5,11 @@ import java.util.List;
 
 import dto.model.App;
 import dto.model.Event;
-import dto.model.EventType;
 import dto.model.User;
 import entity.model.AppEntity;
 import entity.model.EventEntity;
 import entity.model.UserEntity;
+import enums.EventType;
 import enums.Role;
 
 public class Conversion {

@@ -9,9 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import dto.model.EventType;
 import entity.model.AppEntity;
 import entity.model.EventEntity;
+import enums.EventType;
 
 @LocalBean
 @Stateless

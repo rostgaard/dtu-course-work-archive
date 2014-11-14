@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import enums.EventType;
+
 @XmlRootElement
 public class App {
 	
