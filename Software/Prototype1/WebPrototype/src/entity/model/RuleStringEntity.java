@@ -13,63 +13,62 @@ import enums.EventType;
 
 @Entity
 @Cacheable(false)
-public class EventEntity implements Serializable {
+public class RuleStringEntity implements Serializable{
 
-	   
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
 	@ManyToOne
-	private AppEntity appEntity;
+	private PolicyEntity policyEntity;
 	
-	private float value;
-	
-	private long time;
-	
+	private String rule;
 	private EventType eventType;
+	private boolean status;
 	
 	private static final long serialVersionUID = 1L;
-
-	public EventEntity() {
+	
+	public RuleStringEntity() {
 		super();
-	}   
+	}
+
 	public Integer getId() {
 		return this.id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}   
-	public AppEntity getAppEntity() {
-		return this.appEntity;
-	}
-
-	public void setAppEntity(AppEntity appEntity) {
-		this.appEntity = appEntity;
 	}
 	
-	public float getValue() {
-		return this.value;
+	public String getRule() {
+		return rule;
 	}
 
-	public void setValue(float value) {
-		this.value = value;
-	}
-	
-	public long getTime() {
-		return this.time;
+	public void setRule(String rule) {
+		this.rule = rule;
 	}
 
-	public void setTime(long time) {
-		this.time = time;
-	}
-	
 	public EventType getEventType() {
-		return this.eventType;
+		return eventType;
 	}
-	
+
 	public void setEventType(EventType eventType) {
 		this.eventType = eventType;
+	}
+
+	public boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public PolicyEntity getPolicyEntity() {
+		return policyEntity;
+	}
+
+	public void setPolicyEntity(PolicyEntity policyEntity) {
+		this.policyEntity = policyEntity;
 	}
 }

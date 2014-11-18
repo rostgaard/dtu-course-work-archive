@@ -51,7 +51,7 @@ public class SensorDataEAO {
 		event.setValue(value);
 		long time = System.currentTimeMillis();
 		event.setTime(time);
-		//event.setEventType(eventType);
+		event.setEventType(eventType);
 		em.persist(event);
 		em.flush(); // NEEDED for updating the automatically assigned id to the event entity
 		return event;
@@ -67,6 +67,7 @@ public class SensorDataEAO {
 		event.setAppEntity(appEntity);
 		event.setValue(value);
 		event.setTime(System.currentTimeMillis());
+		event.setEventType(eventType);
 		em.persist(event);
 		em.flush(); // NEEDED for updating the automatically assigned id to the event entity
 		return event;

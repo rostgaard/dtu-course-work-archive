@@ -39,5 +39,13 @@ public class Query {
 			 "e.appEntity = s " +
 			"AND " +
 			  "s.eventType =  :eventType ";	
-
+	
+	final protected static String getPolicyByName = 
+			"SELECT p " +
+			"FROM PolicyEntity p " +
+			"WHERE " + 
+			  "p.name = :name ";
+	
+	final protected static String getAllPolicies = "SELECT p FROM PolicyEntity p";
+	final protected static String getAllRuleStrings = "SELECT r FROM RuleStringEntity r";
 }
