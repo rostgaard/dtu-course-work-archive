@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import enums.EventType;
-
 @Entity
 @Cacheable(false)
 public class RuleStringEntity implements Serializable{
@@ -23,7 +21,6 @@ public class RuleStringEntity implements Serializable{
 	private PolicyEntity policyEntity;
 	
 	private String rule;
-	private EventType eventType;
 	private boolean status;
 	
 	private static final long serialVersionUID = 1L;
@@ -46,14 +43,6 @@ public class RuleStringEntity implements Serializable{
 
 	public void setRule(String rule) {
 		this.rule = rule;
-	}
-
-	public EventType getEventType() {
-		return eventType;
-	}
-
-	public void setEventType(EventType eventType) {
-		this.eventType = eventType;
 	}
 
 	public boolean getStatus() {

@@ -95,10 +95,9 @@ public class Conversion {
 		int id = entity.getId();
 		int policyId = entity.getPolicyEntity().getId();
 		String ruleString = entity.getRule();
-		EventType eventType = entity.getEventType();
 		boolean status = entity.getStatus();
 		
-		return new RuleString(id, policyId, ruleString, eventType, status);
+		return new RuleString(id, policyId, ruleString, status);
 	}
 	
 	public static List<Policy> convertPolicyEntityList(List<PolicyEntity> list) {

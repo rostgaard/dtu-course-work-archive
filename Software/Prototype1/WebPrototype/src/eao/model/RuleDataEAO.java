@@ -47,7 +47,6 @@ public class RuleDataEAO {
 		RuleStringEntity ruleStringEntity = new RuleStringEntity();
 		ruleStringEntity.setRule(ruleString);
 		ruleStringEntity.setPolicyEntity(policyEntity);
-		ruleStringEntity.setEventType(eventType);
 		ruleStringEntity.setStatus(true);
 		em.persist(ruleStringEntity);
 		em.flush();
