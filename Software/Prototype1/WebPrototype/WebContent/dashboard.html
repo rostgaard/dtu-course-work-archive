@@ -374,27 +374,24 @@
   							</div>
   							<div class="form-group">
   								<div class="col-sm-12">
- 									<button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-  										Role <span class="caret"></span>
-									</button>
-  									<ul class="dropdown-menu" role="menu">
-										<li><a href="#viewer">Viewer</a></li>
-										<li><a href="#manager">Manager</a>
-									</ul>
-								</div>
-							</div>
+  									<select id="role" name="Role">
+  										<option value = 0>Viewer</option>
+  										<option value = 1>Manager</option>
+  									</select>
+  								</div>
+  							</div>
 							<div class="form-group">
  								<div class="col-sm-12">
 									<div class="checkbox">
 										<label>
-											<input type="checkbox">Ask for new password on first log on
+											<input type="checkbox" id="checkbox" value="1">Ask for new password on first log on
 										</label>
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-4">
-									<button type="submit" class="btn btn-default">Add User</button>
+									<button type="button" id="submit" class="btn btn-lg btn-success btn-block" onclick="myfunction()">Add User</button>
   								</div>
 							</div>
 	  					</div>
@@ -462,6 +459,38 @@
 	<script src="js/interact.js"></script>
   	<script src="js/interact dragging.js"></script>
   	<script src="js/savefloorplan.js"></script>
+	
+	<!-- Script for new user ####NOT WORKING## -->
+	<script type="text/javascript">
+	function myfunction(){
+	var username = document.getElementById("username").value;
+	var email = document.getElementById("email").value;
+	var firstname = document.getElementById("firstname").value;
+	var lastname = document.getElementById("lastname").value;
+	var role = document.getElemenetById("role").value;
+		
+	var element = '<a href="#" class="list-group-item"><i class="fa fa-user fa-fw"></i> '+username+'</a>';
+	
+	$('#user').append(element);
+	
+		
+		
+	}
+	</script>
+	
+	
+	<!-- LScript for listing all the users in system -->
+	<script type="text/javascript">
+	var users;
+	$.getJSON("http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getUsers", function(data){
+	users = data;
+	for(var i in users.revers())
+	{
+		$('#user').append(users[i]);
+	}
+	});
+	
+	</script>
 	
 	
 	<script type="text/javascript">
