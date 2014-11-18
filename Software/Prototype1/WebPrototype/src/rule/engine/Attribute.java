@@ -5,12 +5,13 @@
 package rule.engine;
 
 import dto.model.Event;
-import enums.EventType;
 
 public class Attribute extends Expression {
 	
 	public static final String SYSTEM_OBJECT = "system";
 	public static final String EVENT_OBJECT  = "event";
+	public static final String VALUE_KEY     = "value";
+	public static final String SOURCE_KEY    = "source";
 	
 	String object;
 	String key;
@@ -20,6 +21,16 @@ public class Attribute extends Expression {
 		this.key = key;
 	}
 	
+	
+	public boolean isValue() {
+		return this.key.equals(VALUE_KEY);
+	}
+	
+
+	public boolean isID() {
+		return this.key.equals(SOURCE_KEY);
+	}
+
 	public String toString () {
 		return this.object + "." + this.key;
 	}
@@ -37,13 +48,14 @@ public class Attribute extends Expression {
 		if (this.object.equals(SYSTEM_OBJECT)) {
 			return new Constant (RuleEngine.systemSecurityLevel);
 		} else if (this.object.equals(EVENT_OBJECT)) {
-			Integer value = event.getAttributeValue(this.key);
-			
-			if (value == null) {
-				throw new Error ("Unknown key: " + this.key);
+
+			if (this.isID()) {
+				return new Constant (event.getId());
+			} else if(this.isValue()) {
+				return new Constant (event.getValue());
+			} else {
+				throw new Error ("Unknown object key: " + this.key);
 			}
-			
-			return new Constant (value);	
 		}
 		
 		throw new Error ("Unsupported object type: " + this.object);

@@ -12,6 +12,7 @@ import dto.model.Event;
 
 public class Rule {
 
+	private int          policyID;
 	private String       name;
 	private EventTrigger event;
 	private Expression   condition;
@@ -31,6 +32,14 @@ public class Rule {
 		return this.condition.matches (event);
 	}
 	
+	public void setPolicyID (int pID) {
+		this.policyID = pID;
+	}
+
+	public int getPolicyID () {
+		return this.policyID;
+	}
+
 	public String getName () {
 		return this.name;
 	}
