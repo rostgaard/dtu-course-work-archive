@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import rule.engine.RuleEngine;
 import dto.model.Policy;
 import dto.model.RuleString;
 import eao.model.Conversion;
@@ -25,7 +26,11 @@ import enums.EventType;
 @Stateless
 @Path("/rules")
 public class RuleWebService {
-	@EJB RuleDataEAO eao;
+	
+	private static RuleEngine ruleEngine = new RuleEngine(RuleEngine.parseRules(getAllStringRuleList()));
+	
+	@EJB
+	static RuleDataEAO eao;
 
 	@GET
 	@Path("/addPolicy")
@@ -108,12 +113,13 @@ public class RuleWebService {
 	@Path("/getAllRuleStrings")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<RuleString> getAllStringRuleList() {
+	public static List<RuleString> getAllStringRuleList() {
 		List<RuleStringEntity> ruleStringEntities = new ArrayList<RuleStringEntity>();
 		List<RuleString> ruleStrings = new ArrayList<RuleString>();
 		ruleStringEntities = eao.getAllRuleStringEntitylist();
 		ruleStrings = Conversion.convertRuleStringEntityList(ruleStringEntities);
 		return ruleStrings;
 	}
+	
 	
 }

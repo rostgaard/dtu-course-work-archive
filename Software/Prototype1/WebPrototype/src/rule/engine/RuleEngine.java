@@ -51,6 +51,16 @@ public class RuleEngine {
 		
 		return rules;
 	}
+	
+	public static List<Rule> parseRules (List<RuleString> ruleStrings) {
+		List<Rule> rules = new LinkedList<Rule>();
+		
+		for (RuleString rule : ruleStrings) {
+			rules.addAll(parseRule(rule));
+		}
+		
+		return rules;
+	}
 
 	public List<RuleString> ruleStrings () {
 		List<RuleString> ruleStrings = new LinkedList<RuleString>();
