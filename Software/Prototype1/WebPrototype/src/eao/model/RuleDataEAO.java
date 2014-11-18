@@ -34,7 +34,7 @@ public class RuleDataEAO {
 		return entity;
 	}
 	
-	public RuleStringEntity addRuleStringEntity(String ruleString, int policyId, EventType eventType) {
+	public RuleStringEntity addRuleStringEntity(String ruleString, int policyId) {
 		PolicyEntity policyEntity = getPolicyById(policyId);
 		if (policyEntity == null) {
 			policyEntity = new PolicyEntity();

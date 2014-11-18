@@ -44,8 +44,8 @@ public class RuleWebService {
 	@Path("/addRuleString")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
-	public RuleString addRuleString(@QueryParam("ruleString") String ruleString, @QueryParam("policyId") int policyId , @QueryParam("eventType") EventType eventType) {
-		RuleStringEntity ruleStringEntity = eao.addRuleStringEntity(ruleString, policyId, eventType);
+	public RuleString addRuleString(@QueryParam("ruleString") String ruleString, @QueryParam("policyId") int policyId) {
+		RuleStringEntity ruleStringEntity = eao.addRuleStringEntity(ruleString, policyId);
 		if (ruleStringEntity == null) {
 			return null;
 		}
