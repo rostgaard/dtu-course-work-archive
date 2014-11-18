@@ -1,10 +1,15 @@
 package test;
 
 import java.io.*;
+
 import rule.engine.*;
+
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.logging.Logger;
+
+import dto.model.Event;
+import dto.model.EventType;
 
 
 public class testParser {
@@ -12,7 +17,7 @@ public class testParser {
 	private static final Logger log = Logger.getLogger(testParser.class.getName());
 	
 	public static void main (String[] args) {
-		File file = new File("../testData/example1.rules");
+		File file = new File("testData/example1.rules");
 		
 		try {
 			testStream (new FileInputStream(file));
@@ -67,9 +72,9 @@ public class testParser {
 		System.out.println("### End Parsed rules:");
 		
 		Event testEvent1 = new Event();
-		testEvent1.type = "DoorAlarmEvent";
-		testEvent1.addAttribute("value", 100);
-		testEvent1.addAttribute("source", 1);
+		testEvent1.setEventType(EventType.ACCELEROMETER);
+		testEvent1.setValue(12);
+		testEvent1.setId(0);
 		
 		System.out.println("testEvent1 matches the following rules:");
 		

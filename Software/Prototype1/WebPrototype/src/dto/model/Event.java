@@ -8,11 +8,11 @@ public class Event {
 	private int id;
 	private float value;
 	private long time;
-	private int appID;
+	private int appID;//Sensor id
 	//private App app;
 	//private int sensorId;
-	//private EventType eventType;
-	
+	private EventType eventType;
+
 	public Event() {
 		
 	}
@@ -62,12 +62,12 @@ public class Event {
 		return appID;
 	}
 	
-//	public void setEventType(EventType eventType) {
-//		this.eventType = eventType;
-//	}
-//	
-//	public EventType getEventType() {
-//		return this.eventType;
-//	}
+	public EventType getEventType () {
+		return eventType;
+	}
+
+	public void setEventType (EventType eventType) {
+		this.eventType = eventType;
+	}
 
 }

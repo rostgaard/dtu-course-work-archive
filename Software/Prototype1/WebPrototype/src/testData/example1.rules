@@ -11,7 +11,7 @@ test1:
                                      // does bot alow single variables
 
 test2:
-  when DoorAlarmEvent
+  when ACCELEROMETER
   if system.securitylevel >= 2
      ||
      event.source == 1  // this should better be a String identfying the source
