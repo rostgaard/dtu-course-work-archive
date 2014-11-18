@@ -20,7 +20,7 @@ public class Conversion {
 
 	public static Event convertEventEntity(EventEntity eventEntity) {
 		int eventId = eventEntity.getId();
-		float eventValue = eventEntity.getValue();
+		int eventValue = eventEntity.getValue();
 		long eventTime = eventEntity.getTime();
 		
 		int appID = eventEntity.getAppEntity().getId();

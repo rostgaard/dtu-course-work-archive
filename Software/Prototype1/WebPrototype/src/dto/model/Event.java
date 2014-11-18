@@ -8,7 +8,7 @@ import enums.EventType;
 public class Event {
 	
 	private int id;
-	private float value;
+	private int value;
 	private long time;
 	private int appID;//Sensor id
 	//private App app;
@@ -20,12 +20,12 @@ public class Event {
 		
 	}
 	
-	public Event(int id, float value) {
+	public Event(int id, int value) {
 		this.id = id;
 		this.value = value;
 	}
 	
-	public Event(int id, float value, long time, int appID, EventType eventType) {
+	public Event(int id, int value, long time, int appID, EventType eventType) {
 		this.id = id;
 		this.value = value;
 		this.time = time;
@@ -41,11 +41,11 @@ public class Event {
 		this.id = id;
 	}
 	
-	public float getValue() {
+	public int getValue() {
 		return value;
 	}
 	
-	public void setValue(float value) {
+	public void setValue(int value) {
 		this.value = value;
 	}
 	

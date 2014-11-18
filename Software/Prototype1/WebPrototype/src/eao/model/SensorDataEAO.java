@@ -36,7 +36,7 @@ public class SensorDataEAO {
 		return appEntity;
 	}
 	
-	public EventEntity addEvent(float value, int appEntityId, EventType eventType) {
+	public EventEntity addEvent(int value, int appEntityId, EventType eventType) {
 		AppEntity appEntity = em.find(AppEntity.class, appEntityId);
 		if (appEntity == null) {
 			appEntity = new AppEntity();
@@ -57,7 +57,7 @@ public class SensorDataEAO {
 		return event;
 	}
 	
-	public EventEntity addEvent(float value, String mac, EventType eventType) {
+	public EventEntity addEvent(int value, String mac, EventType eventType) {
 		AppEntity appEntity = getAppEntity(mac, eventType);
 		if (appEntity == null) {
 			return null;

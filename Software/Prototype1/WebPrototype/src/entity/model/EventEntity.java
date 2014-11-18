@@ -23,7 +23,7 @@ public class EventEntity implements Serializable {
 	@ManyToOne
 	private AppEntity appEntity;
 	
-	private float value;
+	private int value;
 	
 	private long time;
 	
@@ -49,11 +49,11 @@ public class EventEntity implements Serializable {
 		this.appEntity = appEntity;
 	}
 	
-	public float getValue() {
+	public int getValue() {
 		return this.value;
 	}
 
-	public void setValue(float value) {
+	public void setValue(int value) {
 		this.value = value;
 	}
 	

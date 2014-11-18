@@ -38,7 +38,7 @@ public class EventWebService {
 	@Path("/addEventByID")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
-	public Event addEvent(@QueryParam("value") float value, @QueryParam("id") int sensorId, @QueryParam("eventType") EventType eventType) {	
+	public Event addEvent(@QueryParam("value") int value, @QueryParam("id") int sensorId, @QueryParam("eventType") EventType eventType) {	
 		EventEntity eventEntity = eao.addEvent(value, sensorId, eventType);
 		
 		List<EventEntity> tempList = entitiesWaiting.get(sensorId);
@@ -55,7 +55,7 @@ public class EventWebService {
 	@Path("/addEventByMac")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
-	public Event addEvent(@QueryParam("mac") String mac, @QueryParam("value") float value, @QueryParam("eventType") EventType eventType) {	
+	public Event addEvent(@QueryParam("mac") String mac, @QueryParam("value") int value, @QueryParam("eventType") EventType eventType) {	
 		EventEntity eventEntity = eao.addEvent(value, mac, eventType);
 		if (eventEntity == null) return null;
 		
