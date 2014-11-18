@@ -45,11 +45,11 @@ public class AccelerometerEventListener implements SensorEventListener {
 		}
 		
 		if (((x - oldX > deltaX) || (oldX - x > deltaX)) && !thread) {
-			invokeAddEventWebServer(macAddress, x);
+			invokeAddEventWebServer(macAddress, Math.round(x));
 		} else if (((y - oldY > deltaY) || (oldY - y > deltaY)) && !thread) {
-			invokeAddEventWebServer(macAddress, y);
+			invokeAddEventWebServer(macAddress, Math.round(y));
 		} else if (((z - oldZ > deltaZ) || (oldZ - z > deltaZ)) && !thread) {
-			invokeAddEventWebServer(macAddress, z);
+			invokeAddEventWebServer(macAddress, Math.round(z));
 		}
 		
 		oldX=x;
@@ -64,7 +64,7 @@ public class AccelerometerEventListener implements SensorEventListener {
 //		return DEFAULT_SENSOR_ID;
 //	}
 
-	private void invokeAddEventWebServer(final String macAddress, final float value) {
+	private void invokeAddEventWebServer(final String macAddress, final int value) {
 		new Thread(new Runnable() {			
 			@Override
 			public void run() {
