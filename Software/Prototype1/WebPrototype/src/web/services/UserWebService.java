@@ -41,9 +41,6 @@ public class UserWebService {
 			@QueryParam("password") String password) {
 
 		UserEntity userEntity = eao.addUser(userName, email, firstName, lastName, role, password);
-		
-		System.out.println("" + userEntity.getUserName());
-
 		return Conversion.convertUserEntity(userEntity);
 	}
 	

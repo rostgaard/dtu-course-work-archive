@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="dto.model.User"%>
+<%@ page import="enums.Role"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,13 +53,21 @@
 
 <body>
 	<%
-		//allow access only if session attribute is of user class
+		//allow access only if session attribute "user" is set beforehand
 		User user = (User) session.getAttribute("user");
 		String userName = null;
+		String firstName = null;
+		String lastName = null;
+		String email = null;
+		Role role = null;
 		if (user == null) {
-			response.sendRedirect("default.jsp");
+			response.sendRedirect("login.jsp");
 		} else {
-			userName = user.getFirstName();
+			userName = user.getUserName();
+			firstName = user.getFirstName();
+			lastName = user.getLastName();
+			email = user.getEmail();
+			role = user.getRole();
 		}
 	%>
 
@@ -68,8 +78,11 @@
 		<li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
 		<li><a href="#floorplan" role="tab" data-toggle="tab">Floor
 				Plan</a></li>
-		<li><a href="#profile" role="tab" data-toggle="tab"><%=user.getFirstName()%>
-				<%=user.getLastName()%></a></li>
+		<li><a href="#profile" role="tab" data-toggle="tab"> <%=firstName%>
+				<%=lastName%> </a></li>
+		<li style="float:right;"><a href="/Prototype1/Servlet">Log Out</a></li>		
+				
+				 
 	</ul>
 
 
@@ -528,12 +541,11 @@
 		<div role="tabpanel" class="tab-pane" id="profile">
 			<div>
 				<h2>
-					Username: <%=user.getUserName()%><br>
-					Role: <%=user.getRole()%><br>
-					Email: <%=user.getEmail()%><br>
-					Password: <%=user.getPassword()%><br>
-					First Name: <%=user.getFirstName() %><br>
-					Last Name: <%=user.getLastName() %>
+					Username: <%=userName%><br>
+					Role: <%=role%><br>
+					Email: <%=email%><br>
+					First Name: <%=firstName%><br>
+					Last Name: <%=lastName %>
 				</h2>
 				<br>
 			</div>

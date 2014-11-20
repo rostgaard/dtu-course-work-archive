@@ -1,17 +1,13 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import dto.model.User;
 import eao.model.Conversion;
 import eao.model.UserEAO;
@@ -30,11 +26,16 @@ public class Servlet extends HttpServlet {
 	@EJB
 	UserEAO eao;
 
+	// handling log out logic
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		HttpSession session = request.getSession(false);
+		if(session != null)
+			session.invalidate();
+		response.sendRedirect("login.jsp");
 	}
 
+	// handling log in logic
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
