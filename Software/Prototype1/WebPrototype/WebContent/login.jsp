@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page import="dto.model.User"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,6 +38,14 @@
 </head>
 
 <body>
+
+<%
+		//allow access only if session attribute "user" is set beforehand
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			response.sendRedirect("dashboard.jsp");
+		}
+	%>
 
 	<div class="container">
 		<div class="row">

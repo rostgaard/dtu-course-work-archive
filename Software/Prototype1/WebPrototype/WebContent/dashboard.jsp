@@ -123,13 +123,10 @@
 										</div>
 									</div>
 								</div>
-								<a href="#">
 									<div class="panel-footer">
-										<span class="pull-left">View Details</span> <span
-											class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-										<div class="clearfix"></div>
+										<button type="button" class="btn btn-link btn-xs btn-block"						
+											data-toggle="modal" data-target="#deviceModal">View Details</button>
 									</div>
-								</a>
 							</div>
 						</div>
 						<div class="col-lg-3 col-md-6">
@@ -145,17 +142,21 @@
 										</div>
 									</div>
 								</div>
-								<a href="#">
+<!-- 								<a href="#"> 		-->	
 									<div class="panel-footer">
-										<span class="pull-left">View Details</span> <span
+										<button type="button" class="btn btn-link btn-xs btn-block"						
+											data-toggle="modal" data-target="#eventModal">View Details</button>
+										
+										
+										<!-- <span class="pull-left">View Details</span> <span
 											class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-										<div class="clearfix"></div>
+										<div class="clearfix"></div> -->
 									</div>
-								</a>
+<!-- 								</a>		 -->
 							</div>
 						</div>
 						<div class="col-lg-3 col-md-6">
-							<div class="panel panel-warning">
+							<div class="panel panel-info">
 								<div class="panel-heading">
 									<div class="row">
 										<div class="col-xs-3">
@@ -167,17 +168,22 @@
 										</div>
 									</div>
 								</div>
-								<a href="#">
+								<!-- <a href="#"> -->
 									<div class="panel-footer">
-										<span class="pull-left">View Details</span> <span
+										<button type="button" class="btn btn-link btn-xs btn-block"
+											data-toggle="modal" data-target="#lastLoginModal">View
+											Details</button>
+	
+
+									<!-- 						<span class="pull-left">View Details</span> <span
 											class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-										<div class="clearfix"></div>
+										<div class="clearfix"></div> -->
 									</div>
-								</a>
+								<!-- </a> -->
 							</div>
 						</div>
 						<div class="col-lg-3 col-md-6">
-							<div class="panel panel-info">
+							<div class="panel panel-red">
 								<div class="panel-heading">	
 									<div class="row">
 										<div class="col-xs-3">
@@ -189,13 +195,16 @@
 										</div>
 									</div>
 								</div>
-								<a href="#">
+								<!-- <a href="#"> -->
 									<div class="panel-footer">
-										<span class="pull-left">View Details</span> <span
+
+									<button type="button" class="btn btn-link btn-xs btn-block"
+										data-toggle="modal" data-target="#deviceModal">Activate/Deactive System</button>
+									<!-- 	<span class="pull-left">View Details</span> <span
 											class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-										<div class="clearfix"></div>
+										<div class="clearfix"></div> -->
 									</div>
-								</a>
+								<!-- </a> -->
 							</div>
 						</div>
 					</div>
@@ -264,6 +273,68 @@
 						</div>
 					</div>
 				</div>
+				
+				
+				<!-- @Jesper Show devices in modal -->
+				<div class="modal fade" id="deviceModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">Devices</h4>
+							</div>
+							<div class="modal-body">			
+									<h1>Device 1<br>
+									Device 2<br>
+									Device 3</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- @Jesper Show events in modal -->
+				<div class="modal fade" id="eventModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">Devices</h4>
+							</div>
+							<div class="modal-body">			
+									<h1>Event 1<br>
+									Event 2<br>
+									Event 3</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+				<!-- @Jesper Show login in modal -->
+				<div class="modal fade" id="lastLoginModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">Devices</h4>
+							</div>
+							<div class="modal-body">			
+									<h1>Last Login: now</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
 			</div>
 
 
