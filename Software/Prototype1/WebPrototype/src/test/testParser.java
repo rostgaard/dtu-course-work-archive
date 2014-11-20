@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import dto.model.Event;
-import dto.model.EventType;
+import enums.EventType;
 
 
 public class testParser {

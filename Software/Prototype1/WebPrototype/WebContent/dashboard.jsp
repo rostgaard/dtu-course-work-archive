@@ -1,5 +1,5 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ page import="dto.model.User" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="dto.model.User"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,25 +51,25 @@
 
 <body>
 	<%
- 		//allow access only if session exists
+		//allow access only if session attribute is of user class
 		User user = (User) session.getAttribute("user");
 		String userName = null;
 		if (user == null) {
 			response.sendRedirect("default.jsp");
 		} else {
 			userName = user.getFirstName();
-		} 
+		}
 	%>
-
-<h1>Hi <%=userName%></h1>
-
 
 	<ul class="nav nav-tabs" role="tablist">
 		<li class="active"><a href="#dashboard" role="tab"
 			data-toggle="tab">Dashboard</a></li>
 		<li><a href="#devices" role="tab" data-toggle="tab">Devices</a></li>
 		<li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
-		<li><a href="#floorplan" role="tab" data-toggle="tab">Floor Plan</a></li>
+		<li><a href="#floorplan" role="tab" data-toggle="tab">Floor
+				Plan</a></li>
+		<li><a href="#profile" role="tab" data-toggle="tab"><%=user.getFirstName()%>
+				<%=user.getLastName()%></a></li>
 	</ul>
 
 
@@ -290,87 +290,91 @@
 ################################################################### -->
 
 		<div role="tabpanel" class="tab-pane" id="devices">
-   <div id="wrapper">
-		<div id="page-wrapper">
-			<div class="row">
-				<div class="col-lg-12">
-					<h1 class="page-header">Device Management</h1>	
-				</div>
-				<!-- /.col-lg-12 -->
-			</div>
-			<!-- /.row -->
-			<div class="row">
-			<div class="col-lg-6">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<i class="fa fa-mobile fa-fw"></i> Active Devices
+			<div id="wrapper">
+				<div id="page-wrapper">
+					<div class="row">
+						<div class="col-lg-12">
+							<h1 class="page-header">Device Management</h1>
 						</div>
-						<!-- /.panel-heading -->
+						<!-- /.col-lg-12 -->
+					</div>
+					<!-- /.row -->
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<i class="fa fa-mobile fa-fw"></i> Active Devices
+								</div>
+								<!-- /.panel-heading -->
 
-						<div class="panel-body">
-							<div class="list-group" id="devices"></div>
-							
-							<!-- /.list-group -->
+								<div class="panel-body">
+									<div class="list-group" id="devices"></div>
+
+									<!-- /.list-group -->
+								</div>
+
+								<!-- /.panel-body -->
+							</div>
+							<!-- /.panel -->
+
 						</div>
-
-						<!-- /.panel-body -->
-					</div>
-					<!-- /.panel -->
-				
-					</div>
-					<!-- /.panel -->
-					<div class="col-lg-6">
-	  				<form class="form-horizontal" role="form">
-	  					<div class="form-group">
-	  						<div class="panel panel-default">
-	  							<div class="panel-heading">
-									<i class="fa fa-user fa-fw"></i>Configure Device  							
-	  							</div>
-	  						<div class="panel-body">
-	  							<div class="form-group">
-  									<div class="col-sm-12">
-  										<input type="text" class="form-control" id="deviceName" placeholder="Device Name">
-  									</div>
-  								</div>
-  							<div class="form-group">
-  								<div class="col-sm-12">
-  									<input type="text" class="form-control" id="deviceID" placeholder="Device ID">
-  								</div>
-  							</div>  								
-  							<div class="form-group">
-  								<div class="col-sm-12">
-  									<select id="status" name="Status">
-  										<option value = 0>Activated</option>										
-  										<option value = 1>Deactivated</option>
-  									</select>
-  								</div>
-  							</div>
-							<div class="form-group">
- 								<div class="col-sm-12">
-									<div class="checkbox">
-										<label>
-											<input type="checkbox" id="light" value="1">Flashlight Actuator
-											<input type="checkbox" id="camera" value="1">Camera Actuator
-											<input type="checkbox" id="sound" value="1">Sound Actuator
-										</label>
+						<!-- /.panel -->
+						<div class="col-lg-6">
+							<form class="form-horizontal" role="form">
+								<div class="form-group">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<i class="fa fa-user fa-fw"></i>Configure Device
+										</div>
+										<div class="panel-body">
+											<div class="form-group">
+												<div class="col-sm-12">
+													<input type="text" class="form-control" id="deviceName"
+														placeholder="Device Name">
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-sm-12">
+													<input type="text" class="form-control" id="deviceID"
+														placeholder="Device ID">
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-sm-12">
+													<select id="status" name="Status">
+														<option value=0>Activated</option>
+														<option value=1>Deactivated</option>
+													</select>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-sm-12">
+													<div class="checkbox">
+														<label> <input type="checkbox" id="light"
+															value="1">Flashlight Actuator <input
+															type="checkbox" id="camera" value="1">Camera
+															Actuator <input type="checkbox" id="sound" value="1">Sound
+															Actuator
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-sm-4">
+													<button type="button" id="submit"
+														class="btn btn-lg btn-success btn-block" onclick="">Configure</button>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-4">
-									<button type="button" id="submit" class="btn btn-lg btn-success btn-block" onclick="">Configure</button>
-  								</div>
-							</div>
-	  					</div>
-	   				</div>
-	  			</div>
-	  	</form>
-	  </div>
-	  </div>
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	<!-- /#wrapper -->
+		<!-- /#wrapper -->
 
 
 		<!-- ##################################################################
@@ -509,9 +513,32 @@
 				</div>
 			</div>
 		</div>
+
+
+		<!-- ##################################################################
+#######################################################################
+#######################################################################
+
+#########################	Profile	###############################
+
+#######################################################################
+#######################################################################
+################################################################### -->
+
+		<div role="tabpanel" class="tab-pane" id="profile">
+			<div>
+				<h2>
+					Username: <%=user.getUserName()%><br>
+					Role: <%=user.getRole()%><br>
+					Email: <%=user.getEmail()%><br>
+					Password: <%=user.getPassword()%><br>
+					First Name: <%=user.getFirstName() %><br>
+					Last Name: <%=user.getLastName() %>
+				</h2>
+				<br>
+			</div>
+		</div>
 	</div>
-
-
 	<!-- ##################################################################
 #######################################################################
 #######################################################################
@@ -531,68 +558,107 @@
 
 
 	<script type="text/javascript">
-	var items;
-	$.getJSON( "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents", function( data ) {//IN FOR PRODUCTION
-	items = data; //IN FOR PRODUCTION
-	//var temp = '[{"appID":1,"id":1,"time":1415874489932,"value":4.0},{"appID":1,"id":2,"time":1415875767627,"value":9.889431},{"appID":1,"id":3,"time":1415876233632,"value":3.0}]';//OUT FOR PRODUCTION
-	//items = $.parseJSON(temp);//OUT FOR PRODUCTION
-	for(var i in items.reverse())
-	{
-		var type;
-		$.getJSON( "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAppByID?id="+items[i].id, function( data ) {
-		type = data;
-		var time = jQuery.timeago(new Date(items[i].time));
-		var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+type.eventType+'<span class="pull-right text-muted small"><em>'+time+'</em></span></a>';
-		$('#box').append(element);
-		
-		});
-		
-		}
-	});
-	$('.list-group-item:gt(4)').hide().last().after(
-    $('#more').click(function(){
-        var a = this;
-        $('.list-group-item:not(:visible):lt(5)').fadeIn(function(){
-         if ($('.list-group-item:not(:visible)').length == 0) $(a).remove();   
-        }); return false;
-    })
-	);
+		var items;
+		$
+				.getJSON(
+						"http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents",
+						function(data) {//IN FOR PRODUCTION
+							items = data; //IN FOR PRODUCTION
+							//var temp = '[{"appID":1,"id":1,"time":1415874489932,"value":4.0},{"appID":1,"id":2,"time":1415875767627,"value":9.889431},{"appID":1,"id":3,"time":1415876233632,"value":3.0}]';//OUT FOR PRODUCTION
+							//items = $.parseJSON(temp);//OUT FOR PRODUCTION
+							for ( var i in items.reverse()) {
+								var type;
+								$
+										.getJSON(
+												"http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAppByID?id="
+														+ items[i].id,
+												function(data) {
+													type = data;
+													var time = jQuery
+															.timeago(new Date(
+																	items[i].time));
+													var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '
+															+ type.eventType
+															+ '<span class="pull-right text-muted small"><em>'
+															+ time
+															+ '</em></span></a>';
+													$('#box').append(element);
+
+												});
+
+							}
+						});
+		$('.list-group-item:gt(4)')
+				.hide()
+				.last()
+				.after(
+						$('#more')
+								.click(
+										function() {
+											var a = this;
+											$(
+													'.list-group-item:not(:visible):lt(5)')
+													.fadeIn(
+															function() {
+																if ($('.list-group-item:not(:visible)').length == 0)
+																	$(a)
+																			.remove();
+															});
+											return false;
+										}));
 	</script>
 	<!-- Device list script -->
 	<script type="text/javascript">
-	var devices;
-	//var tempSensors = '[{"appID":1,"id":1,"time":1415874489932,"value":4.0},{"appID":1,"id":2,"time":1415875767627,"value":9.889431},{"appID":1,"id":3,"time":1415876233632,"value":3.0}]';//OUT FOR PRODUCTION
-	$.getJSON( "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAllApps", function( data ) {//IN FOR PRODUCTION
-		devices = data; //IN FOR PRODUCTION
-	//sensors = $.parseJSON(tempSensors);//OUT FOR PRODUCTION
-	for(var i in items.reverse())
-	{
-		var id = devices[i].appID;
-		var devicetype = devices[i].eventType;
-		var element = '<a href="#" class="list-group-item"><i class="fa fa-mobile fa-fw"></i> '+id+ ' '+ devicetype +'</a>';
-		$('#devices').append(element);
-		}
-	});
+		var devices;
+		//var tempSensors = '[{"appID":1,"id":1,"time":1415874489932,"value":4.0},{"appID":1,"id":2,"time":1415875767627,"value":9.889431},{"appID":1,"id":3,"time":1415876233632,"value":3.0}]';//OUT FOR PRODUCTION
+		$
+				.getJSON(
+						"http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAllApps",
+						function(data) {//IN FOR PRODUCTION
+							devices = data; //IN FOR PRODUCTION
+							//sensors = $.parseJSON(tempSensors);//OUT FOR PRODUCTION
+							for ( var i in items.reverse()) {
+								var id = devices[i].appID;
+								var devicetype = devices[i].eventType;
+								var element = '<a href="#" class="list-group-item"><i class="fa fa-mobile fa-fw"></i> '
+										+ id + ' ' + devicetype + '</a>';
+								$('#devices').append(element);
+							}
+						});
 	</script>
 	<!-- VIDEOPLAYER SCRIPT -->
 	<script>
-	var id = 1;
-	//var latest = parseInt("0");
-	
-	var latest = parseInt($.ajax({type: "GET", url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getLatest?id="+id, async: false}).responseText);
-	//Start the player
-	$("#player")[0].src="http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getVideo?id="+id+"&count="+latest;
-		
-	$("#player").bind("ended", function() {
-		latest++;
-		$("#player")[0].src="http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getVideo?id="+id+"&count="+latest;
-	});
+		var id = 1;
+		//var latest = parseInt("0");
 
-	$("#player").bind("error", function() {
-		latest--;
-		$("#player")[0].src="http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getVideo?id="+id+"&count="+latest;
-	});
+		var latest = parseInt($
+				.ajax({
+					type : "GET",
+					url : "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getLatest?id="
+							+ id,
+					async : false
+				}).responseText);
+		//Start the player
+		$("#player")[0].src = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getVideo?id="
+				+ id + "&count=" + latest;
 
+		$("#player")
+				.bind(
+						"ended",
+						function() {
+							latest++;
+							$("#player")[0].src = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getVideo?id="
+									+ id + "&count=" + latest;
+						});
+
+		$("#player")
+				.bind(
+						"error",
+						function() {
+							latest--;
+							$("#player")[0].src = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getVideo?id="
+									+ id + "&count=" + latest;
+						});
 	</script>
 
 

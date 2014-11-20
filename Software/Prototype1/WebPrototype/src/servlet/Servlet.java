@@ -39,26 +39,24 @@ public class Servlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		if(request.getParameter("login") != null){
-			String userName = request.getParameter("username");
-			String password = request.getParameter("password");
+			String inputUserName = request.getParameter("username");
+			String inputPassword = request.getParameter("password");
 
-			System.out.println(userName + " " + password);
 			try{
-				UserEntity userEntity = eao.getUserByUserName(userName);
+				UserEntity userEntity = eao.getUserByUserName(inputUserName);
 				User user = Conversion.convertUserEntity(userEntity);
-				if(password.equals(user.getPassword())){
-
+				if(inputPassword.equals(user.getPassword())){
 					HttpSession session = request.getSession();
 					session.setAttribute("user", user);
 					response.sendRedirect("dashboard.jsp");
 				}
 				else{
-					response.sendRedirect("default.jsp");
+					response.sendRedirect("login.jsp");
 				}
 
 			}
 			catch(IllegalArgumentException | NullPointerException e){
-				response.sendRedirect("default.jsp");
+				response.sendRedirect("login.jsp");
 			}
 		}
 	}
