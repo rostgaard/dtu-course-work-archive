@@ -281,11 +281,12 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">OLD Device Management</h1>	
+					<h1 class="page-header">Device Management</h1>	
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
 			<!-- /.row -->
+			<div class="row">
 			<div class="col-lg-6">
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -305,6 +306,54 @@
 				
 					</div>
 					<!-- /.panel -->
+					<div class="col-lg-6">
+	  				<form class="form-horizontal" role="form">
+	  					<div class="form-group">
+	  						<div class="panel panel-default">
+	  							<div class="panel-heading">
+									<i class="fa fa-user fa-fw"></i>Configure Device  							
+	  							</div>
+	  						<div class="panel-body">
+	  							<div class="form-group">
+  									<div class="col-sm-12">
+  										<input type="text" class="form-control" id="deviceName" placeholder="Device Name">
+  									</div>
+  								</div>
+  							<div class="form-group">
+  								<div class="col-sm-12">
+  									<input type="text" class="form-control" id="deviceID" placeholder="Device ID">
+  								</div>
+  							</div>  								
+  							<div class="form-group">
+  								<div class="col-sm-12">
+  									<select id="status" name="Status">
+  										<option value = 0>Activated</option>										
+  										<option value = 1>Deactivated</option>
+  									</select>
+  								</div>
+  							</div>
+							<div class="form-group">
+ 								<div class="col-sm-12">
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" id="light" value="1">Flashlight Actuator
+											<input type="checkbox" id="camera" value="1">Camera Actuator
+											<input type="checkbox" id="sound" value="1">Sound Actuator
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-4">
+									<button type="button" id="submit" class="btn btn-lg btn-success btn-block" onclick="">Configure</button>
+  								</div>
+							</div>
+	  					</div>
+	   				</div>
+	  			</div>
+	  	</form>
+	  </div>
+	  </div>
 				</div>
 			</div>
 		</div>
