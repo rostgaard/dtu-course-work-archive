@@ -19,6 +19,11 @@ import eao.model.UserEAO;
 import entity.model.UserEntity;
 import enums.Role;
 
+/**
+ * 
+ * @author s124259
+ *
+ */
 
 @LocalBean
 @Stateless

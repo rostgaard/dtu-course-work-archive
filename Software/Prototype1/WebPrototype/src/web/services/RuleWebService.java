@@ -27,10 +27,10 @@ import enums.EventType;
 @Path("/rules")
 public class RuleWebService {
 	
-	private static RuleEngine ruleEngine = new RuleEngine(RuleEngine.parseRules(getAllStringRuleList()));
+//	private static RuleEngine ruleEngine = new RuleEngine(RuleEngine.parseRules(getAllStringRuleList()));
 	
 	@EJB
-	static RuleDataEAO eao;
+	RuleDataEAO eao;
 
 	@GET
 	@Path("/addPolicy")
@@ -109,17 +109,17 @@ public class RuleWebService {
 		return policies;
 	}
 	
-	@GET
-	@Path("/getAllRuleStrings")
-	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-	@Produces(MediaType.APPLICATION_JSON)
-	public static List<RuleString> getAllStringRuleList() {
-		List<RuleStringEntity> ruleStringEntities = new ArrayList<RuleStringEntity>();
-		List<RuleString> ruleStrings = new ArrayList<RuleString>();
-		ruleStringEntities = eao.getAllRuleStringEntitylist();
-		ruleStrings = Conversion.convertRuleStringEntityList(ruleStringEntities);
-		return ruleStrings;
-	}
+//	@GET
+//	@Path("/getAllRuleStrings")
+//	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public static List<RuleString> getAllStringRuleList() {
+//		List<RuleStringEntity> ruleStringEntities = new ArrayList<RuleStringEntity>();
+//		List<RuleString> ruleStrings = new ArrayList<RuleString>();
+//		ruleStringEntities = eao.getAllRuleStringEntitylist();
+//		ruleStrings = Conversion.convertRuleStringEntityList(ruleStringEntities);
+//		return ruleStrings;
+//	}
 	
 	
 }

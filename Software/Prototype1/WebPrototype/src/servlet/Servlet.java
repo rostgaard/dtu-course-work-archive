@@ -17,6 +17,11 @@ import eao.model.Conversion;
 import eao.model.UserEAO;
 import entity.model.UserEntity;
 
+/**
+ * 
+ * @author s124259
+ *
+ */
 @WebServlet("/Servlet")
 public class Servlet extends HttpServlet {
 

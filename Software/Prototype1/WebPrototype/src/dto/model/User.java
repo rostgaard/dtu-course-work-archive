@@ -4,6 +4,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import enums.Role;
 
+/**
+ * 
+ * @author s124259
+ *
+ */
 @XmlRootElement
 public class User {
 	private String userName;

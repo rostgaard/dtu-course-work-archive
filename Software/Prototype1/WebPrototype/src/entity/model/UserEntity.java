@@ -7,6 +7,11 @@ import javax.persistence.Id;
 
 import enums.Role;
 
+/**
+ * 
+ * @author s124259
+ *
+ */
 @Entity
 public class UserEntity implements Serializable {
 	
