@@ -119,7 +119,7 @@
 										</div>
 										<div class="col-xs-9 text-right">
 											<div class="huge">3</div>
-											<div>Devices running</div>
+											<div>Devices Running</div>
 										</div>
 									</div>
 								</div>
@@ -159,11 +159,11 @@
 								<div class="panel-heading">
 									<div class="row">
 										<div class="col-xs-3">
-											<i class="fa fa-home  fa-5x"></i>
+											<i class="fa fa-laptop  fa-5x"></i>
 										</div>
 										<div class="col-xs-9 text-right">
-											<div class="huge">19°C</div>
-											<div>Average Room Temperature</div>
+											<div class="huge">7 days ago</div>
+											<div>Last Login</div>
 										</div>
 									</div>
 								</div>
@@ -178,14 +178,14 @@
 						</div>
 						<div class="col-lg-3 col-md-6">
 							<div class="panel panel-info">
-								<div class="panel-heading">
+								<div class="panel-heading">	
 									<div class="row">
 										<div class="col-xs-3">
-											<i class="fa fa-cloud fa-5x"></i>
+											<i class="fa fa-lock fa-5x"></i>
 										</div>
 										<div class="col-xs-9 text-right">
-											<div class="huge">40%</div>
-											<div>Average Humidity</div>
+											<div class="huge">Activated</div>
+											<div>Security System</div>
 										</div>
 									</div>
 								</div>
