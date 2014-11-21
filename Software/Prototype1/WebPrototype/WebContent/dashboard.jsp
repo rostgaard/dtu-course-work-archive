@@ -471,96 +471,87 @@
 ################################################################### -->
 
 
-		<div role="tabpanel" class="tab-pane" id="users">
-			<div class="tab-pane" id="users">
-				<div id="wrapper">
-					<div id="page-wrapper">
-						<div class="row">
-							<div class="col-lg-12">
-								<h1 class="page-header">User Management</h1>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-4">
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<i class="fa fa-users fa-fw"></i> Users
-									</div>
-									<!-- /.panel-heading -->
-									<div class="panel-body">
-										<div class="list-group" id="user"></div>
-									</div>
-								</div>
-							</div>
-							<!-----New user credentials----->
-							<form class="form-horizontal" role="form">
-								<div class="form-group">
-									<div class="col-lg-4">
-										<div class="panel panel-default">
-											<div class="panel-heading">
-												<i class="fa fa-user fa-fw"></i>New User
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-offset-4 col-sm-4">
-										<input type="text" class="form-control" id="username"
-											placeholder="Username">
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-offset-4 col-sm-4">
-										<input type="email" class="form-control" id="email"
-											placeholder="Email">
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-offset-4 col-sm-4">
-										<input type="text" class="form-control" id="firstname"
-											placeholder="First Name">
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-offset-4 col-sm-4">
-										<input type="text" class="form-control" id="lastname"
-											placeholder="Last Name">
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-offset-4 col-lg-8">
-										<button class="btn btn-default btn-sm dropdown-toggle"
-											type="button" data-toggle="dropdown" aria-expanded="false">
-											Role <span class="caret"></span>
-										</button>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#viewer">Viewer</a></li>
-											<li><a href="#manager">Manager</a>
-										</ul>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-offset-4 col-sm-4">
-										<div class="checkbox">
-											<label> <input type="checkbox">Ask for new
-												password on first log on
-											</label>
-										</div>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-offset-4 col-sm-4">
-										<button type="submit" class="btn btn-default">Add
-											User</button>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
+		 <div role="tabpanel" class="tab-pane" id="users">
+  	<div class="tab-pane" id="users">
+  	<div id="wrapper">
+  		<div id="page-wrapper">
+	  	 <div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">User Management</h1>
 			</div>
 		</div>
-
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<i class="fa fa-users fa-fw"></i> Users
+							</div>
+							<!-- /.panel-heading -->
+							<div class="panel-body">
+								<div class="list-group" id="user"></div>
+							</div>
+					</div>
+	  			</div>
+	  				<div class="col-lg-6">
+	  				<form class="form-horizontal" role="form">
+	  					<div class="form-group">
+	  						<div class="panel panel-default">
+	  							<div class="panel-heading">
+									<i class="fa fa-user fa-fw"></i>New User  							
+	  							</div>
+	  						<div class="panel-body">
+	  							<div class="form-group">
+  									<div class="col-sm-12">
+  										<input type="text" class="form-control" id="username" placeholder="Username">
+  									</div>
+  								</div>
+  							<div class="form-group">
+  								<div class="col-sm-12">
+  									<input type="email" class="form-control" id="email" placeholder="Email">
+  								</div>
+  							</div>  								
+  							<div class="form-group">
+  								<div class="col-sm-12">
+  									<input type="text" class="form-control" id="firstname" placeholder="First Name">
+ 								</div>
+  							</div>
+  							<div class="form-group">
+  								<div class="col-sm-12">
+  									<input type="text" class="form-control" id="lastname" placeholder="Last Name">
+								</div>
+  							</div>
+  							<div class="form-group">
+  								<div class="col-sm-12">
+  									<select id="role" name="Role">
+  										<option value = 0>Viewer</option>
+  										<option value = 1>Manager</option>
+  									</select>
+  								</div>
+  							</div>
+							<div class="form-group">
+ 								<div class="col-sm-12">
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" id="checkbox" value="1">Ask for new password on first log on
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-4">
+									<button type="button" id="submit" class="btn btn-lg btn-success btn-block" onclick="myfunction()">Add User</button>
+  								</div>
+							</div>
+	  					</div>
+	   				</div>
+	  			</div>
+	  	</form>
+	  </div>
+	 </div>
+	</div>
+  </div>
+ </div>
+</div>
 
 		<!-- ##################################################################
 #######################################################################
