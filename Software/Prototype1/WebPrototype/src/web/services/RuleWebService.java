@@ -3,9 +3,8 @@ package web.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.EJB;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
+import javax.annotation.PostConstruct;
+import javax.ejb.*;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -22,16 +21,27 @@ import entity.model.PolicyEntity;
 import entity.model.RuleStringEntity;
 import enums.EventType;
 
+@Startup
+@Singleton
 @LocalBean
 @Stateless
 @Path("/rules")
 public class RuleWebService {
 	
-//	private static RuleEngine ruleEngine = new RuleEngine(RuleEngine.parseRules(getAllStringRuleList()));
+	private RuleEngine ruleEngine = null;
 	
 	@EJB
 	RuleDataEAO eao;
-
+	
+	@PostConstruct
+	private void startup() { 
+		this.reloadRules();
+	}
+	
+	private void reloadRules() {
+		this.ruleEngine = new RuleEngine(RuleEngine.parseRules(getAllStringRuleList()));
+	}
+	
 	@GET
 	@Path("/addPolicy")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
@@ -109,17 +119,17 @@ public class RuleWebService {
 		return policies;
 	}
 	
-//	@GET
-//	@Path("/getAllRuleStrings")
-//	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public static List<RuleString> getAllStringRuleList() {
-//		List<RuleStringEntity> ruleStringEntities = new ArrayList<RuleStringEntity>();
-//		List<RuleString> ruleStrings = new ArrayList<RuleString>();
-//		ruleStringEntities = eao.getAllRuleStringEntitylist();
-//		ruleStrings = Conversion.convertRuleStringEntityList(ruleStringEntities);
-//		return ruleStrings;
-//	}
+	@GET
+	@Path("/getAllRuleStrings")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<RuleString> getAllStringRuleList() {
+		List<RuleStringEntity> ruleStringEntities = new ArrayList<RuleStringEntity>();
+		List<RuleString> ruleStrings = new ArrayList<RuleString>();
+		ruleStringEntities = eao.getAllRuleStringEntitylist();
+		ruleStrings = Conversion.convertRuleStringEntityList(ruleStringEntities);
+		return ruleStrings;
+	}
 	
 	
 }
