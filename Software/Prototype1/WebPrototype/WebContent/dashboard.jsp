@@ -76,8 +76,6 @@
 			data-toggle="tab">Dashboard</a></li>
 		<li><a href="#devices" role="tab" data-toggle="tab">Devices</a></li>
 		<li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
-		<li><a href="#floorplan" role="tab" data-toggle="tab">Floor
-				Plan</a></li>
 		<li><a href="#profile" role="tab" data-toggle="tab"> <%=firstName%>
 				<%=lastName%> </a></li>
 		<li style="float:right;"><a href="/Prototype1/Servlet">Log Out</a></li>		
@@ -195,16 +193,11 @@
 										</div>
 									</div>
 								</div>
-								<!-- <a href="#"> -->
 									<div class="panel-footer">
-
 									<button type="button" class="btn btn-link btn-xs btn-block"
-										data-toggle="modal" data-target="#deviceModal">Activate/Deactive System</button>
-									<!-- 	<span class="pull-left">View Details</span> <span
-											class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-										<div class="clearfix"></div> -->
+										data-toggle="modal" data-target="#securityLevelModal">Activate/Deactive System</button>
+	
 									</div>
-								<!-- </a> -->
 							</div>
 						</div>
 					</div>
@@ -216,12 +209,34 @@
 								<button type="button" class="btn btn-warning btn-s"
 									data-toggle="modal" data-target="#jesperModal"
 									style="position: absolute; left: 30%; top: 20%">
-									<i class="fa fa-video-camera fa-3x"><h2>1</h2></i>
+									<i class="fa fa-video-camera fa-3x">1</i>
 								</button>
 								<div class="panel-body">
 
-									<img src="floor_plan_example.png" width="49%"> <img
-										src="floor_plan_example.png" width="49%">
+									<div>
+											<div id="sensor1" class="draggable">1</div>
+
+											<div id="sensor2" class="draggable">2</div>
+
+											<div id="sensor3" class="draggable">3</div>
+
+											<div id="sensor4" class="draggable">4</div>
+										<div id="floorplan">
+											<img src="floor_plan_example.png" width="40%" height="40%" />
+											<img src="floor_plan_example.png" width="40%" height="40%" />
+										</div>
+
+									</div>
+
+<!-- 									<div class="col-md-4">
+										<div class="panel-body">
+											<button onclick="saveFloorplan()"
+												class="btn btn-primary btn-block" id="save">Save</button>
+										</div>
+									</div> -->
+
+
+
 								</div>
 								<!-- /.panel-body -->
 							</div>
@@ -251,7 +266,7 @@
 					<!-- /.row -->
 				</div>
 
-				<!-- @Jesper play video file in modal window -->
+				<!--  play video file in modal window -->
 				<div class="modal fade" id="jesperModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-lg">
@@ -275,7 +290,7 @@
 				</div>
 				
 				
-				<!-- @Jesper Show devices in modal -->
+				<!--Show devices in modal -->
 				<div class="modal fade" id="deviceModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-lg">
@@ -295,7 +310,7 @@
 					</div>
 				</div>
 				
-				<!-- @Jesper Show events in modal -->
+				<!--Show events in modal -->
 				<div class="modal fade" id="eventModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-lg">
@@ -316,7 +331,7 @@
 				</div>
 				
 				
-				<!-- @Jesper Show login in modal -->
+				<!-- Show login in modal -->
 				<div class="modal fade" id="lastLoginModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-lg">
@@ -329,6 +344,37 @@
 							</div>
 							<div class="modal-body">			
 									<h1>Last Login: now</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			<!-- security level in modal -->
+				<div class="modal fade" id="securityLevelModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">Security Level</h4>
+							</div>
+							<div class="modal-body">
+								<h2>Current System Status: Security Level 1</h2>
+								<br>
+
+								<div>
+									Set Security Level
+									<div class="btn-group-lg" role="group" aria-label="...">
+										<button type="button" class="btn btn-default">Level 1</button>
+										<button type="button" class="btn btn-default">Level 2</button>
+										<button type="button" class="btn btn-default">Level 3</button>
+										<button type="button" class="btn btn-default">Deactivate
+											System</button>
+									</div>
+								</div>
+
 							</div>
 						</div>
 					</div>
@@ -553,42 +599,7 @@
  </div>
 </div>
 
-		<!-- ##################################################################
-#######################################################################
-#######################################################################
-
-#########################	Floorplan	###############################
-
-#######################################################################
-#######################################################################
-################################################################### -->
-
-		<div role="tabpanel" class="tab-pane" id="floorplan">
-
-			<div>
-				<div id="sensor1" class="draggable">1</div>
-
-				<div id="sensor2" class="draggable">2</div>
-
-				<div id="sensor3" class="draggable">3</div>
-
-				<div id="sensor4" class="draggable">4</div>
-
-				<div id="floorplan">
-					<img src="floor_plan_example.png" width="500px" height="500px" />
-				</div>
-
-			</div>
-
-			<div class="col-md-4">
-				<div class="panel-body">
-					<button onclick="saveFloorplan()" class="btn btn-primary btn-block"
-						id="save">Save</button>
-				</div>
-			</div>
-		</div>
-
-
+	
 		<!-- ##################################################################
 #######################################################################
 #######################################################################

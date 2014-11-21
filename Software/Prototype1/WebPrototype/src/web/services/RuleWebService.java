@@ -187,4 +187,20 @@ public class RuleWebService {
 	}
 	
 	
+	@GET
+	@Path("/setSecurityLevel")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public void setSecurityLevel(@QueryParam("level") int level) {
+		RuleEngine.systemSecurityLevel = level;
+	}
+	
+	@GET
+	@Path("/getSecurityLevel")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public int getSecurityLevel() {
+		return RuleEngine.systemSecurityLevel;
+	}
+	
 }
