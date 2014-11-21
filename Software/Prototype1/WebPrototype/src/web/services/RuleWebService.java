@@ -1,5 +1,8 @@
 package web.services;
 
+import java.io.*;
+import rule.engine.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +30,18 @@ import enums.EventType;
 @Stateless
 @Path("/rules")
 public class RuleWebService {
-	
+
+	String ruleString = ""
+			   + "test1:\n"
+			   + "  when DoorAlarmEvent\n"
+            + "  if event.source == 1 && event.value >= 50 && system.securitylevel == 1\n"
+            + "  then actorSound1.play(1,30), UserAlert.raise(event.event);\n"
+            + "\n"
+            + "test2:\n"
+            + "  when DoorAlarmEvent\n"
+            + "  if system.securitylevel >= 2 || event.source == 1 && event.value >= 50\n"  
+            + "  then actorSound1.play(1,30), UserAlert.raise(event.event);\n";
+
 	private RuleEngine ruleEngine = null;
 	
 	@EJB
@@ -39,7 +53,11 @@ public class RuleWebService {
 	}
 	
 	private void reloadRules() {
-		this.ruleEngine = new RuleEngine(RuleEngine.parseRules(getAllStringRuleList()));
+		InputStream stream = new ByteArrayInputStream(ruleString.getBytes());					 
+		List<Rule> rules = new Rules (stream).parse();
+		
+		this.ruleEngine = new RuleEngine(rules);
+
 	}
 	
 	@GET
@@ -118,17 +136,21 @@ public class RuleWebService {
 		policies = Conversion.convertPolicyEntityList(policyEntities);
 		return policies;
 	}
+
+	public List<RuleString> getRulesFromDB() {
+		List<RuleStringEntity> ruleStringEntities = new ArrayList<RuleStringEntity>();
+		List<RuleString> ruleStrings = new ArrayList<RuleString>();
+		ruleStringEntities = eao.getAllRuleStringEntitylist();
+		ruleStrings = Conversion.convertRuleStringEntityList(ruleStringEntities);
+		return ruleStrings;
+	}
 	
 	@GET
 	@Path("/getAllRuleStrings")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<RuleString> getAllStringRuleList() {
-		List<RuleStringEntity> ruleStringEntities = new ArrayList<RuleStringEntity>();
-		List<RuleString> ruleStrings = new ArrayList<RuleString>();
-		ruleStringEntities = eao.getAllRuleStringEntitylist();
-		ruleStrings = Conversion.convertRuleStringEntityList(ruleStringEntities);
-		return ruleStrings;
+		return this.ruleEngine.ruleStrings();
 	}
 	
 	
