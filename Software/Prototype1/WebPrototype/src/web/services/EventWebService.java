@@ -30,10 +30,11 @@ import enums.EventType;
 public class EventWebService {
 	
 	private static final long TIMEOUT = 9000;
-	private static Map<Integer,List<EventEntity>> entitiesWaiting = new HashMap<Integer,List<EventEntity>>();
+	public static Map<Integer,List<EventEntity>> entitiesWaiting = new HashMap<Integer,List<EventEntity>>();
 	
 	@EJB SensorDataEAO eao;
-
+	
+	
 	@GET
 	@Path("/addEventByID")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})

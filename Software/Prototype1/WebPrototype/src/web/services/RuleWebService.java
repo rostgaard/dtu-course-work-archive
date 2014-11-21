@@ -1,6 +1,7 @@
 package web.services;
 
 import java.io.*;
+
 import rule.engine.*;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ import dto.model.Policy;
 import dto.model.RuleString;
 import eao.model.Conversion;
 import eao.model.RuleDataEAO;
+import eao.model.SensorDataEAO;
+import entity.model.EventEntity;
 import entity.model.PolicyEntity;
 import entity.model.RuleStringEntity;
 import enums.EventType;
@@ -45,7 +48,10 @@ public class RuleWebService {
 	private RuleEngine ruleEngine = null;
 	
 	@EJB
-	RuleDataEAO eao;
+	RuleDataEAO    eao;
+	
+	@EJB
+	SensorDataEAO  seao;
 	
 	@PostConstruct
 	private void startup() { 
@@ -59,6 +65,33 @@ public class RuleWebService {
 		this.ruleEngine = new RuleEngine(rules);
 
 	}
+	
+	private void playsound (int acutatorID, int value) {
+		EventEntity eventEntity = seao.addEvent(value, acutatorID, EventType.PLAY_SOUND);
+		
+		List<EventEntity> tempList = EventWebService.entitiesWaiting.get(acutatorID);
+		if (tempList != null) {
+			//tempList = Collections.synchronizedList(tempList);
+			synchronized(tempList) {
+				tempList.notifyAll();
+			}
+		}
+	}
+	
+	
+	private void userAlert (int sensorID) {
+		EventEntity eventEntity = seao.addEvent(sensorID, 0, EventType.USER_ALERT);
+		
+		List<EventEntity> tempList = EventWebService.entitiesWaiting.get(sensorID);
+		if (tempList != null) {
+			//tempList = Collections.synchronizedList(tempList);
+			synchronized(tempList) {
+				tempList.notifyAll();
+			}
+		}
+	}
+	
+	
 	
 	@GET
 	@Path("/addPolicy")
