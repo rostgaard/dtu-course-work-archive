@@ -304,7 +304,7 @@
 								<button type="button" class="close" data-dismiss="modal">
 									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">Devices</h4>
+								<h4 class="modal-title" id="myModalLabel">Recent Events</h4>
 							</div>
 							<div class="modal-body">			
 									<h1>Event 1<br>
@@ -325,7 +325,7 @@
 								<button type="button" class="close" data-dismiss="modal">
 									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">Devices</h4>
+								<h4 class="modal-title" id="myModalLabel">Last Login</h4>
 							</div>
 							<div class="modal-body">			
 									<h1>Last Login: now</h1>
