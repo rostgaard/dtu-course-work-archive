@@ -434,12 +434,8 @@
 								<div class="panel-heading">
 									<i class="fa fa-mobile fa-fw"></i> Active Devices
 								</div>
-								<!-- /.panel-heading -->
-
 								<div class="panel-body">
-									<div class="list-group" id="devices"></div>
-
-									<!-- /.list-group -->
+									<div class="list-group" id="devs"></div>
 								</div>
 
 								<!-- /.panel-body -->
@@ -643,20 +639,12 @@
 
 	<script type="text/javascript">
 		var items;
-		$
-				.getJSON(
-						"http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents",
-						function(data) {//IN FOR PRODUCTION
-							items = data; //IN FOR PRODUCTION
-							//var temp = '[{"appID":1,"id":1,"time":1415874489932,"value":4.0},{"appID":1,"id":2,"time":1415875767627,"value":9.889431},{"appID":1,"id":3,"time":1415876233632,"value":3.0}]';//OUT FOR PRODUCTION
-							//items = $.parseJSON(temp);//OUT FOR PRODUCTION
+		$.getJSON("localhost:8080/Prototype1/rest/events/getAllEvents",	function(data) {
+							items = data; 
+							
 							for ( var i in items.reverse()) {
 								var type;
-								$
-										.getJSON(
-												"http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAppByID?id="
-														+ items[i].id,
-												function(data) {
+								$.getJSON("localhost:8080/Prototype1/rest/apps/getAppByID?id="+ items[i].id,function(data) {
 													type = data;
 													var time = jQuery
 															.timeago(new Date(
@@ -672,78 +660,21 @@
 
 							}
 						});
-		$('.list-group-item:gt(4)')
-				.hide()
-				.last()
-				.after(
-						$('#more')
-								.click(
-										function() {
-											var a = this;
-											$(
-													'.list-group-item:not(:visible):lt(5)')
-													.fadeIn(
-															function() {
-																if ($('.list-group-item:not(:visible)').length == 0)
-																	$(a)
-																			.remove();
-															});
-											return false;
-										}));
-	</script>
-	<!-- Device list script -->
-	<script type="text/javascript">
-		var devices;
-		//var tempSensors = '[{"appID":1,"id":1,"time":1415874489932,"value":4.0},{"appID":1,"id":2,"time":1415875767627,"value":9.889431},{"appID":1,"id":3,"time":1415876233632,"value":3.0}]';//OUT FOR PRODUCTION
-		$
-				.getJSON(
-						"http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAllApps",
-						function(data) {//IN FOR PRODUCTION
-							devices = data; //IN FOR PRODUCTION
-							//sensors = $.parseJSON(tempSensors);//OUT FOR PRODUCTION
-							for ( var i in items.reverse()) {
-								var id = devices[i].appID;
-								var devicetype = devices[i].eventType;
+		
+		
+		$.getJSON("localhost:8080/Prototype1/rest/apps/getAllApps",	function(data){
+					
+							 $.each(data.items, function(i, items){
+								var id = items[i].id;
+								var devicetype = items[i].mac;
 								var element = '<a href="#" class="list-group-item"><i class="fa fa-mobile fa-fw"></i> '
-										+ id + ' ' + devicetype + '</a>';
-								$('#devices').append(element);
-							}
-						});
+										+ mac + '<span class="pull-right text-muted small"><em>' + devicetype + '</em></span></a>';
+								$('#devs').append(element);
+								});
+							});
+							
 	</script>
-	<!-- VIDEOPLAYER SCRIPT -->
-	<script>
-		var id = 1;
-		//var latest = parseInt("0");
-
-		var latest = parseInt($
-				.ajax({
-					type : "GET",
-					url : "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getLatest?id="
-							+ id,
-					async : false
-				}).responseText);
-		//Start the player
-		$("#player")[0].src = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getVideo?id="
-				+ id + "&count=" + latest;
-
-		$("#player")
-				.bind(
-						"ended",
-						function() {
-							latest++;
-							$("#player")[0].src = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getVideo?id="
-									+ id + "&count=" + latest;
-						});
-
-		$("#player")
-				.bind(
-						"error",
-						function() {
-							latest--;
-							$("#player")[0].src = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/video/getVideo?id="
-									+ id + "&count=" + latest;
-						});
-	</script>
+	
 
 
 
