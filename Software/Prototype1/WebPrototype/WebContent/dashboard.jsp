@@ -77,10 +77,12 @@
 		<li><a href="#devices" role="tab" data-toggle="tab">Devices</a></li>
 		<li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
 		<li><a href="#profile" role="tab" data-toggle="tab"> <%=firstName%>
-				<%=lastName%> </a></li>
-		<li style="float:right;"><a href="/Prototype1/Servlet">Log Out</a></li>		
-				
-				 
+				<%=lastName%>
+		</a></li>
+		<li style="float: right;"><a href="/Prototype1/Servlet">Log
+				Out</a></li>
+
+
 	</ul>
 
 
@@ -121,10 +123,11 @@
 										</div>
 									</div>
 								</div>
-									<div class="panel-footer">
-										<button type="button" class="btn btn-link btn-xs btn-block"						
-											data-toggle="modal" data-target="#deviceModal">View Details</button>
-									</div>
+								<div class="panel-footer">
+									<button type="button" class="btn btn-link btn-xs btn-block"
+										data-toggle="modal" data-target="#deviceModal">View
+										Details</button>
+								</div>
 							</div>
 						</div>
 						<div class="col-lg-3 col-md-6">
@@ -140,17 +143,18 @@
 										</div>
 									</div>
 								</div>
-<!-- 								<a href="#"> 		-->	
-									<div class="panel-footer">
-										<button type="button" class="btn btn-link btn-xs btn-block"						
-											data-toggle="modal" data-target="#eventModal">View Details</button>
-										
-										
-										<!-- <span class="pull-left">View Details</span> <span
+								<!-- 								<a href="#"> 		-->
+								<div class="panel-footer">
+									<button type="button" class="btn btn-link btn-xs btn-block"
+										data-toggle="modal" data-target="#eventModal">View
+										Details</button>
+
+
+									<!-- <span class="pull-left">View Details</span> <span
 											class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 										<div class="clearfix"></div> -->
-									</div>
-<!-- 								</a>		 -->
+								</div>
+								<!-- 								</a>		 -->
 							</div>
 						</div>
 						<div class="col-lg-3 col-md-6">
@@ -167,22 +171,22 @@
 									</div>
 								</div>
 								<!-- <a href="#"> -->
-									<div class="panel-footer">
-										<button type="button" class="btn btn-link btn-xs btn-block"
-											data-toggle="modal" data-target="#lastLoginModal">View
-											Details</button>
-	
+								<div class="panel-footer">
+									<button type="button" class="btn btn-link btn-xs btn-block"
+										data-toggle="modal" data-target="#lastLoginModal">View
+										Details</button>
+
 
 									<!-- 						<span class="pull-left">View Details</span> <span
 											class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 										<div class="clearfix"></div> -->
-									</div>
+								</div>
 								<!-- </a> -->
 							</div>
 						</div>
 						<div class="col-lg-3 col-md-6">
 							<div class="panel panel-red">
-								<div class="panel-heading">	
+								<div class="panel-heading">
 									<div class="row">
 										<div class="col-xs-3">
 											<i class="fa fa-lock fa-5x"></i>
@@ -193,11 +197,12 @@
 										</div>
 									</div>
 								</div>
-									<div class="panel-footer">
+								<div class="panel-footer">
 									<button type="button" class="btn btn-link btn-xs btn-block"
-										data-toggle="modal" data-target="#securityLevelModal">Activate/Deactive System</button>
-	
-									</div>
+										data-toggle="modal" data-target="#securityLevelModal">Activate/Deactive
+										System</button>
+
+								</div>
 							</div>
 						</div>
 					</div>
@@ -214,13 +219,13 @@
 								<div class="panel-body">
 
 									<div>
-											<div id="sensor1" class="draggable">1</div>
+										<div id="sensor1" class="draggable">1</div>
 
-											<div id="sensor2" class="draggable">2</div>
+										<div id="sensor2" class="draggable">2</div>
 
-											<div id="sensor3" class="draggable">3</div>
+										<div id="sensor3" class="draggable">3</div>
 
-											<div id="sensor4" class="draggable">4</div>
+										<div id="sensor4" class="draggable">4</div>
 										<div id="floorplan">
 											<img src="floor_plan_example.png" width="40%" height="40%" />
 											<img src="floor_plan_example.png" width="40%" height="40%" />
@@ -228,7 +233,7 @@
 
 									</div>
 
-<!-- 									<div class="col-md-4">
+									<!-- 									<div class="col-md-4">
 										<div class="panel-body">
 											<button onclick="saveFloorplan()"
 												class="btn btn-primary btn-block" id="save">Save</button>
@@ -288,8 +293,8 @@
 						</div>
 					</div>
 				</div>
-				
-				
+
+
 				<!--Show devices in modal -->
 				<div class="modal fade" id="deviceModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel" aria-hidden="true">
@@ -301,15 +306,15 @@
 								</button>
 								<h4 class="modal-title" id="myModalLabel">Devices</h4>
 							</div>
-							<div class="modal-body">			
-									<h1>Device 1<br>
-									Device 2<br>
-									Device 3</h1>
+							<div class="modal-body">
+								<h1>
+									Device 1<br> Device 2<br> Device 3
+								</h1>
 							</div>
 						</div>
 					</div>
 				</div>
-				
+
 				<!--Show events in modal -->
 				<div class="modal fade" id="eventModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel" aria-hidden="true">
@@ -321,19 +326,19 @@
 								</button>
 								<h4 class="modal-title" id="myModalLabel">Recent Events</h4>
 							</div>
-							<div class="modal-body">			
-									<h1>Event 1<br>
-									Event 2<br>
-									Event 3</h1>
+							<div class="modal-body">
+								<h1>
+									Event 1<br> Event 2<br> Event 3
+								</h1>
 							</div>
 						</div>
 					</div>
 				</div>
-				
-				
+
+
 				<!-- Show login in modal -->
-				<div class="modal fade" id="lastLoginModal" tabindex="-1" role="dialog"
-					aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal fade" id="lastLoginModal" tabindex="-1"
+					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-lg">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -342,16 +347,16 @@
 								</button>
 								<h4 class="modal-title" id="myModalLabel">Last Login</h4>
 							</div>
-							<div class="modal-body">			
-									<h1>Last Login: now</h1>
+							<div class="modal-body">
+								<h1>Last Login: now</h1>
 							</div>
 						</div>
 					</div>
 				</div>
-				
-			<!-- security level in modal -->
-				<div class="modal fade" id="securityLevelModal" tabindex="-1" role="dialog"
-					aria-labelledby="myModalLabel" aria-hidden="true">
+
+				<!-- security level in modal -->
+				<div class="modal fade" id="securityLevelModal" tabindex="-1"
+					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-lg">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -379,8 +384,8 @@
 						</div>
 					</div>
 				</div>
-				
-				
+
+
 			</div>
 
 
@@ -513,89 +518,95 @@
 ################################################################### -->
 
 
-		 <div role="tabpanel" class="tab-pane" id="users">
-  	<div class="tab-pane" id="users">
-  	<div id="wrapper">
-  		<div id="page-wrapper">
-	  	 <div class="row">
-			<div class="col-lg-12">
-				<h1 class="page-header">User Management</h1>
-			</div>
-		</div>
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<i class="fa fa-users fa-fw"></i> Users
+		<div role="tabpanel" class="tab-pane" id="users">
+			<div class="tab-pane" id="users">
+				<div id="wrapper">
+					<div id="page-wrapper">
+						<div class="row">
+							<div class="col-lg-12">
+								<h1 class="page-header">User Management</h1>
 							</div>
-							<!-- /.panel-heading -->
-							<div class="panel-body">
-								<div class="list-group" id="user"></div>
-							</div>
-					</div>
-	  			</div>
-	  				<div class="col-lg-6">
-	  				<form class="form-horizontal" role="form">
-	  					<div class="form-group">
-	  						<div class="panel panel-default">
-	  							<div class="panel-heading">
-									<i class="fa fa-user fa-fw"></i>New User  							
-	  							</div>
-	  						<div class="panel-body">
-	  							<div class="form-group">
-  									<div class="col-sm-12">
-  										<input type="text" class="form-control" id="username" placeholder="Username">
-  									</div>
-  								</div>
-  							<div class="form-group">
-  								<div class="col-sm-12">
-  									<input type="email" class="form-control" id="email" placeholder="Email">
-  								</div>
-  							</div>  								
-  							<div class="form-group">
-  								<div class="col-sm-12">
-  									<input type="text" class="form-control" id="firstname" placeholder="First Name">
- 								</div>
-  							</div>
-  							<div class="form-group">
-  								<div class="col-sm-12">
-  									<input type="text" class="form-control" id="lastname" placeholder="Last Name">
-								</div>
-  							</div>
-  							<div class="form-group">
-  								<div class="col-sm-12">
-  									<select id="role" name="Role">
-  										<option value = 0>Viewer</option>
-  										<option value = 1>Manager</option>
-  									</select>
-  								</div>
-  							</div>
-							<div class="form-group">
- 								<div class="col-sm-12">
-									<div class="checkbox">
-										<label>
-											<input type="checkbox" id="checkbox" value="1">Ask for new password on first log on
-										</label>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<i class="fa fa-users fa-fw"></i> Users
+									</div>
+									<!-- /.panel-heading -->
+									<div class="panel-body">
+										<div class="list-group" id="user"></div>
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
-								<div class="col-sm-4">
-									<button type="button" id="submit" class="btn btn-lg btn-success btn-block" onclick="myfunction()">Add User</button>
-  								</div>
+							<div class="col-lg-6">
+								<form class="form-horizontal" role="form">
+									<div class="form-group">
+										<div class="panel panel-default">
+											<div class="panel-heading">
+												<i class="fa fa-user fa-fw"></i>New User
+											</div>
+											<div class="panel-body">
+												<div class="form-group">
+													<div class="col-sm-12">
+														<input type="text" class="form-control" id="username"
+															placeholder="Username">
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-sm-12">
+														<input type="email" class="form-control" id="email"
+															placeholder="Email">
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-sm-12">
+														<input type="text" class="form-control" id="firstname"
+															placeholder="First Name">
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-sm-12">
+														<input type="text" class="form-control" id="lastname"
+															placeholder="Last Name">
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-sm-12">
+														<select id="role" name="Role">
+															<option value=0>Viewer</option>
+															<option value=1>Manager</option>
+														</select>
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-sm-12">
+														<div class="checkbox">
+															<label> <input type="checkbox" id="checkbox"
+																value="1">Ask for new password on first log on
+															</label>
+														</div>
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-sm-4">
+														<button type="button" id="submit"
+															class="btn btn-lg btn-success btn-block"
+															onclick="myfunction()">Add User</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
 							</div>
-	  					</div>
-	   				</div>
-	  			</div>
-	  	</form>
-	  </div>
-	 </div>
-	</div>
-  </div>
- </div>
-</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-	
+
 		<!-- ##################################################################
 #######################################################################
 #######################################################################
@@ -609,11 +620,12 @@
 		<div role="tabpanel" class="tab-pane" id="profile">
 			<div>
 				<h2>
-					Username: <%=userName%><br>
-					Role: <%=role%><br>
-					Email: <%=email%><br>
-					First Name: <%=firstName%><br>
-					Last Name: <%=lastName %>
+					Username:
+					<%=userName%><br> Role:
+					<%=role%><br> Email:
+					<%=email%><br> First Name:
+					<%=firstName%><br> Last Name:
+					<%=lastName%>
 				</h2>
 				<br>
 			</div>
@@ -639,42 +651,39 @@
 
 	<script type="text/javascript">
 		var items;
-		$.getJSON("localhost:8080/Prototype1/rest/events/getAllEvents",	function(data) {
-							items = data; 
-							
-							for ( var i in items.reverse()) {
-								var type;
-								$.getJSON("localhost:8080/Prototype1/rest/apps/getAppByID?id="+ items[i].id,function(data) {
-													type = data;
-													var time = jQuery
-															.timeago(new Date(
-																	items[i].time));
-													var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '
-															+ type.eventType
-															+ '<span class="pull-right text-muted small"><em>'
-															+ time
-															+ '</em></span></a>';
-													$('#box').append(element);
+		var data;
+		$.getJSON( "localhost:8080/Prototype1/rest/events/getAllEvents", function( data ) {
+		items = data; 
+	for(var i in items.reverse())
+		{
+		var value = items[i].value;
+		var id = items[i].id;
+		var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+id+'<span class="pull-right text-muted small"><em>'+value+'</em></span></a>';
+		$('#box').append(element);
+		}
+	});
 
-												});
+		$
+				.getJSON(
+						"localhost:8080/Prototype1/rest/apps/getAllApps",
+						function(data) {
 
-							}
+							$
+									.each(
+											data.items,
+											function(i, items) {
+												var id = items[i].id;
+												var devicetype = items[i].mac;
+												var element = '<a href="#" class="list-group-item"><i class="fa fa-mobile fa-fw"></i> '
+														+ mac
+														+ '<span class="pull-right text-muted small"><em>'
+														+ devicetype
+														+ '</em></span></a>';
+												$('#devs').append(element);
+											});
 						});
-		
-		
-		$.getJSON("localhost:8080/Prototype1/rest/apps/getAllApps",	function(data){
-					
-							 $.each(data.items, function(i, items){
-								var id = items[i].id;
-								var devicetype = items[i].mac;
-								var element = '<a href="#" class="list-group-item"><i class="fa fa-mobile fa-fw"></i> '
-										+ mac + '<span class="pull-right text-muted small"><em>' + devicetype + '</em></span></a>';
-								$('#devs').append(element);
-								});
-							});
-							
 	</script>
-	
+
 
 
 
