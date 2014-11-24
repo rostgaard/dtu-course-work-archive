@@ -55,19 +55,8 @@
 	<%
 		//allow access only if session attribute "user" is set beforehand
 		User user = (User) session.getAttribute("user");
-		String userName = null;
-		String firstName = null;
-		String lastName = null;
-		String email = null;
-		Role role = null;
 		if (user == null) {
 			response.sendRedirect("login.jsp");
-		} else {
-			userName = user.getUserName();
-			firstName = user.getFirstName();
-			lastName = user.getLastName();
-			email = user.getEmail();
-			role = user.getRole();
 		}
 	%>
 
@@ -76,9 +65,7 @@
 			data-toggle="tab">Dashboard</a></li>
 		<li><a href="#devices" role="tab" data-toggle="tab">Devices</a></li>
 		<li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
-		<li><a href="#profile" role="tab" data-toggle="tab"> <%=firstName%>
-				<%=lastName%>
-		</a></li>
+		
 		<li style="float: right;"><a href="/Prototype1/Servlet">Log
 				Out</a></li>
 
@@ -211,21 +198,16 @@
 						<div class="col-lg-8">
 							<div class="panel panel-default">
 								<!-- /.panel-heading -->
-								<button type="button" class="btn btn-warning btn-s"
-									data-toggle="modal" data-target="#jesperModal"
-									style="position: absolute; left: 30%; top: 20%">
-									<i class="fa fa-video-camera fa-3x">1</i>
-								</button>
+	
 								<div class="panel-body">
-
-									<div>
-										<div id="sensor1" class="draggable">1</div>
-
-										<div id="sensor2" class="draggable">2</div>
-
-										<div id="sensor3" class="draggable">3</div>
-
-										<div id="sensor4" class="draggable">4</div>
+									<div id="draggableSensorButtons">
+										<button type="button" class="draggable" data-toggle="modal"
+											data-target="#jesperModal">1</button>
+										<button type="button" class="draggable" data-toggle="modal"
+											data-target="#jesperModal">2</button>
+										<button type="button" class="draggable" data-toggle="modal"
+											data-target="#jesperModal">3</button>
+											
 										<div id="floorplan">
 											<img src="floor_plan_example.png" width="40%" height="40%" />
 											<img src="floor_plan_example.png" width="40%" height="40%" />
@@ -261,7 +243,6 @@
 										more</button>
 									<!-- /.list-group -->
 								</div>
-
 								<!-- /.panel-body -->
 							</div>
 							<!-- /.panel -->
@@ -366,16 +347,15 @@
 								<h4 class="modal-title" id="myModalLabel">Security Level</h4>
 							</div>
 							<div class="modal-body">
-								<h2>Current System Status: Security Level 1</h2>
-								<br>
+								<div class="securityStatus"></div>
 
 								<div>
 									Set Security Level
-									<div class="btn-group-lg" role="group" aria-label="...">
-										<button type="button" class="btn btn-default">Level 1</button>
-										<button type="button" class="btn btn-default">Level 2</button>
-										<button type="button" class="btn btn-default">Level 3</button>
-										<button type="button" class="btn btn-default">Deactivate
+									<div class="btn-group-lg" id="securityLevelGroup" role="group" aria-label="...">
+										<button type="button" id="1" class="btn btn-default">Level 1</button>
+										<button type="button" id="2" class="btn btn-default">Level 2</button>
+										<button type="button" id="3" class="btn btn-default">Level 3</button>
+										<button type="button" id="0" class="btn btn-default">Deactivate
 											System</button>
 									</div>
 								</div>
@@ -606,31 +586,6 @@
 			</div>
 		</div>
 
-
-		<!-- ##################################################################
-#######################################################################
-#######################################################################
-
-#########################	Profile	###############################
-
-#######################################################################
-#######################################################################
-################################################################### -->
-
-		<div role="tabpanel" class="tab-pane" id="profile">
-			<div>
-				<h2>
-					Username:
-					<%=userName%><br> Role:
-					<%=role%><br> Email:
-					<%=email%><br> First Name:
-					<%=firstName%><br> Last Name:
-					<%=lastName%>
-				</h2>
-				<br>
-			</div>
-		</div>
-	</div>
 	<!-- ##################################################################
 #######################################################################
 #######################################################################
@@ -641,12 +596,6 @@
 #######################################################################
 ################################################################### -->
 
-
-	<script src="js/jquery-1.11.0.js"></script>
-	<script src="js/jquery.timeago.js"></script>
-	<script src="js/interact.js"></script>
-	<script src="js/interact dragging.js"></script>
-	<script src="js/savefloorplan.js"></script>
 
 
 	<script type="text/javascript">
@@ -685,7 +634,56 @@
 	</script>
 
 
+	<!-- 
+		 OnClick Event on whole button group (Security Level Buttons)
+		 @s124259
+	     source: http://stackoverflow.com/questions/9262827/twitter-bootstrap-onclick-event-on-buttons-radio
+	  -->
+	<script>		
+		$('#securityLevelGroup button').click(function() {
+		    $(this).addClass('active').siblings().removeClass('active');
+		    var baseURI = "http://localhost:8080/Prototype1/rest/rules/setSecurityLevel?level=";
+		    var level = $(this).attr('id');
+		    var URL = baseURI + level;		  
+		    
+		    if(level > 0){
+		    	$( "div.securityStatus" ).replaceWith( "<h2>Security Level is now: " + level + "</h2>" );	
+		    }
+		    else{
+		    	$( "div.securityStatus" ).replaceWith( "<h2>Home Security System is now Deactivated </h2>" );
+		    }
+		    
+		    $.ajax({
+		    	  type: "POST",
+		    	  url: URL
+		    	});
+			});
+	</script>
+	
+		<!-- 
+		Reload Modal Content on Click (Security Level Buttons)
+		 @s124259
+	     source: http://stackoverflow.com/questions/12449890/reload-content-in-modal-twitter-bootstrap
+	  -->
+<!-- 	<script>
+	$("a[data-target=#securityLevelModal]").click(function(ev) {
+	    // reload show modal on success
+	    location.reload();
+	    $("#securityLevelModal").modal("show"); 
 
+	});
+	</script> -->
+		
+		
+		
+
+
+
+
+	<script src="js/jquery-1.11.0.js"></script>
+	<script src="js/jquery.timeago.js"></script>
+	<script src="js/interact.js"></script>
+	<script src="js/interact dragging.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
 	<script src="js/bootstrap.min.js"></script>

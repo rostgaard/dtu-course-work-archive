@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.*;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -195,7 +196,7 @@ public class RuleWebService {
 	}
 	
 	
-	@GET
+	@POST
 	@Path("/setSecurityLevel")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
@@ -207,8 +208,8 @@ public class RuleWebService {
 	@Path("/getSecurityLevel")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
-	public int getSecurityLevel() {
-		return RuleEngine.systemSecurityLevel;
+	public String getSecurityLevel() {
+		return Integer.toString(RuleEngine.systemSecurityLevel);
 	}
 	
 }
