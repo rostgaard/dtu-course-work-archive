@@ -1,5 +1,6 @@
 package eao.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import dto.model.RuleString;
 import entity.model.PolicyEntity;
 import entity.model.RuleStringEntity;
 import enums.EventType;
@@ -51,6 +53,14 @@ public class RuleDataEAO {
 		em.persist(ruleStringEntity);
 		em.flush();
 		return ruleStringEntity;
+	}
+	
+	public List<RuleStringEntity> addRuleStringEntities(List<RuleString> rules) {
+		List<RuleStringEntity> entities = new ArrayList<RuleStringEntity>();
+		for (RuleString r : rules) {
+			entities.add(addRuleStringEntity(r.getRule(), r.getPolicyId()));
+		}
+		return entities;
 	}
 	
 	public PolicyEntity getPolicyByName(String name) {

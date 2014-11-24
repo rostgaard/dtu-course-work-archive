@@ -54,15 +54,23 @@ public class RuleWebService {
 	SensorDataEAO  seao;
 	
 	@PostConstruct
-	private void startup() { 
-		this.reloadRules();
+	private void startup() {
+		List<RuleString> dbRules = this.getRulesFromDB();
+		
+		if (dbRules.isEmpty()) {
+			InputStream stream = new ByteArrayInputStream(ruleString.getBytes());					 
+			List<Rule> rules = new Rules (stream).parse();
+			
+			dbRules = Conversion.convertRuleStringEntityList(eao.addRuleStringEntities((new RuleEngine(rules)).ruleStrings()));				
+		}
+		
+		this.ruleEngine = new RuleEngine(RuleEngine.parseRules(dbRules));
+		
+		//this.reloadRules();
 	}
 	
 	private void reloadRules() {
-		InputStream stream = new ByteArrayInputStream(ruleString.getBytes());					 
-		List<Rule> rules = new Rules (stream).parse();
-		
-		this.ruleEngine = new RuleEngine(rules);
+		this.ruleEngine = new RuleEngine(RuleEngine.parseRules(this.getRulesFromDB()));
 
 	}
 	
@@ -71,7 +79,6 @@ public class RuleWebService {
 		
 		List<EventEntity> tempList = EventWebService.entitiesWaiting.get(acutatorID);
 		if (tempList != null) {
-			//tempList = Collections.synchronizedList(tempList);
 			synchronized(tempList) {
 				tempList.notifyAll();
 			}
@@ -80,11 +87,10 @@ public class RuleWebService {
 	
 	
 	private void userAlert (int sensorID) {
-		EventEntity eventEntity = seao.addEvent(sensorID, 0, EventType.USER_ALERT);
+		EventEntity eventEntity = seao.addEvent(0, sensorID, EventType.USER_ALERT);
 		
 		List<EventEntity> tempList = EventWebService.entitiesWaiting.get(sensorID);
 		if (tempList != null) {
-			//tempList = Collections.synchronizedList(tempList);
 			synchronized(tempList) {
 				tempList.notifyAll();
 			}
@@ -115,6 +121,8 @@ public class RuleWebService {
 		if (ruleStringEntity == null) {
 			return null;
 		}
+		
+		reloadRules();
 		
 		return Conversion.convertRuleStringEntity(ruleStringEntity);	
 	}
@@ -170,7 +178,7 @@ public class RuleWebService {
 		return policies;
 	}
 
-	public List<RuleString> getRulesFromDB() {
+	private List<RuleString> getRulesFromDB() {
 		List<RuleStringEntity> ruleStringEntities = new ArrayList<RuleStringEntity>();
 		List<RuleString> ruleStrings = new ArrayList<RuleString>();
 		ruleStringEntities = eao.getAllRuleStringEntitylist();
