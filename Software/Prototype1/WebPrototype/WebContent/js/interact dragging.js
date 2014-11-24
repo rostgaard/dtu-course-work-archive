@@ -1,3 +1,10 @@
+/*
+ * @Author s124259
+ * Source: http://interactjs.io/
+ * Code released under the MIT License.
+ */
+
+
 // target elements with the "draggable" class
 interact('.draggable')
     .draggable({
@@ -28,7 +35,7 @@ interact('.draggable')
         }
     })
     // enable inertial throwing
-    .inertia(true)
+    .inertia(false)
     // keep the element within the area of it's parent
     .restrict({
         drag: "parent",

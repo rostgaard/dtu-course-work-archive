@@ -8,7 +8,8 @@
 	line-height: 25px;
 	border: 2px solid;
 	border-radius: 8px;
-	float: left;
+	float: top;
+	margin-bottom: 8px;
 }
 
  #floorplan {
