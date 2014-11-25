@@ -12,7 +12,6 @@ public class Action {
 	String value;
 	List<Constant> parameters;
 	
-	
 	public Action(String actuator, String value, List<Constant> parameters) {
 		super();
 		this.actuator = actuator;
@@ -26,6 +25,23 @@ public class Action {
 	public void setActuator(String actuator) {
 		this.actuator = actuator;
 	}
+	
+	public int getTargetActuatorID () {
+		if (this.parameters.isEmpty()) {
+			throw new Error ("Not enough parameters in action. (Missing ID)");
+		}
+		
+		return this.parameters.get(0).value;
+	}
+	
+	public int getTargetActuatorValue () {
+		if (this.parameters.size() < 2) {
+			throw new Error ("Not enough parameters in action. (Missing value)");
+		}
+		
+		return this.parameters.get(1).value;
+	}
+
 	public String getValue() {
 		return value;
 	}
