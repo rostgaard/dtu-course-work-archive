@@ -1,7 +1,9 @@
 package com.example.prototypemoniterapp;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.example.datatypes.App;
+import com.example.datatypes.AppList;
 
 public class MainActivity extends Activity {
 
@@ -46,6 +52,8 @@ public class MainActivity extends Activity {
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment {
+		
+		private AwaitEventThread awaitEventThread;
 
 		public PlaceholderFragment() {
 		}
@@ -56,6 +64,28 @@ public class MainActivity extends Activity {
 			View rootView = inflater.inflate(R.layout.fragment_main, container,
 					false);
 			return rootView;
+		}
+		
+		@Override
+		public void onViewCreated(View view, Bundle savedInstanceState) {
+			super.onViewCreated(view, savedInstanceState);
+			
+			AppList apps = WebServiceConnection.invokeGetAppsFromWebServer();
+			Set<String> macs = new HashSet<String>();
+			
+			for (App app : apps.getApps()) {
+				macs.add(app.getMac());
+			}
+			
+			ListView listView = (ListView) getActivity().findViewById(R.id.appList);
+			
+			for (String mac : macs) {
+				TextView textView = new TextView(getActivity());
+				textView.setText(mac);
+				listView.addView(textView);
+			}
+			
+			awaitEventThread = new AwaitEventThread();
 		}
 	}
 }
