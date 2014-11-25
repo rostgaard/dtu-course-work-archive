@@ -66,6 +66,7 @@ public class RuleWebService {
 		}
 		
 		this.ruleEngine = new RuleEngine(RuleEngine.parseRules(dbRules));
+		System.out.println("startup method!");
 		
 		//this.reloadRules();
 	}

@@ -56,6 +56,7 @@
 		//allow access only if session attribute "user" is set beforehand
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
+			user = new User();
 			response.sendRedirect("login.jsp");
 		}
 	%>
@@ -105,7 +106,7 @@
 											<i class="fa fa-mobile fa-5x"></i>
 										</div>
 										<div class="col-xs-9 text-right">
-											<div class="huge">3</div>
+											<div id="devicesRunning" class="huge"></div>
 											<div>Devices Running</div>
 										</div>
 									</div>
@@ -600,13 +601,47 @@
 #######################################################################
 ################################################################### -->
 
-		<script>
+
+	<script>
+
 	/*
 		@Author s124259
+		Refreshing page every 60 seconds
+	*/
+		setTimeout(function(){
+			   window.location.reload(1);
+			}, 60000);
+	</script>
+
+	<script>
+	/*
+	@Author s124259
+	Getting device count with webservice call
+	on page load and update #devicesRunning class with data.
+	*/
+
+	$( document ).ready(function() {
+		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getDeviceCount";
+		$.ajax({
+		     type: "GET",
+		     url: URL,
+		     data: data,
+		     success: function(data) {
+		          $('#devicesRunning').html(data);
+		     }
+		   });
+	});	
+	</script>
+
+
+	<script>
+	/*
+		@Author s124259
+		Getting lastLogin based on username with webservice call
+		on page load and update #lastLogin class with data.
 		Using JQuery timeago plugin for formatting
 	*/
 	$( document ).ready(function() {
-		
 		var baseURI = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getLastLoginByUserName?userName=";
 		var userName = "<%=user.getUserName()%>";
 		var buildURL = baseURI + userName;
@@ -623,6 +658,10 @@
 	</script>
 
 		<script>
+	/*
+		Getting security level with webservice call
+		on page load and update #securityLevel class with data
+	*/
 	$( document ).ready(function() {
 		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/rules/getSecurityLevel";
 		$.ajax({
@@ -668,7 +707,7 @@
 				+ mac
 				+ '</em></span></a>';
 				$('#devs').append(element);
-				});
+				};
 			});
 	</script>
 

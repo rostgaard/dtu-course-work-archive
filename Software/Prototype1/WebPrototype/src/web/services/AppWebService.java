@@ -1,7 +1,10 @@
 package web.services;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -25,7 +28,7 @@ import enums.EventType;
 @Path("/apps")
 public class AppWebService {
 	@EJB SensorDataEAO eao;
-	
+
 	@GET
 	@Path("/addApp")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
@@ -35,10 +38,10 @@ public class AppWebService {
 		if (appEntity == null) {
 			return null;
 		}
-		
+
 		return Conversion.convertAppEntity(appEntity);	
 	}
-	
+
 	@GET
 	@Path("/getApp")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
@@ -48,10 +51,10 @@ public class AppWebService {
 		if (appEntity == null) {
 			return null;
 		}
-			
+
 		return Conversion.convertAppEntity(appEntity);
 	}
-	
+
 	@GET
 	@Path("/getAppByID")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
@@ -61,10 +64,10 @@ public class AppWebService {
 		if (appEntity == null) {
 			return null;
 		}
-			
+
 		return Conversion.convertAppEntity(appEntity);
 	}
-	
+
 	@GET
 	@Path("/getApps")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
@@ -72,7 +75,7 @@ public class AppWebService {
 	public List<App> getApps(@QueryParam("mac") String mac) {
 		return Conversion.convertAppEntityList(eao.getAppEntitylist(mac));
 	}
-	
+
 	@GET
 	@Path("/getAllApps")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
@@ -97,4 +100,24 @@ public class AppWebService {
 		AppList appList = new AppList(apps);
 		return appList;
 	}
+	
+	/*
+	 * @Author s124259 s084283
+	 */
+	@GET
+	@Path("/getDeviceCount")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getDeviceCount(){
+		List<App> apps = this.getAllEventList();
+		Set<String> macAddr = new HashSet<>();
+		
+		for(App app : apps) {
+			macAddr.add(app.getMac());
+		}
+		
+		return Integer.toString(macAddr.size());
+
+	}
+
 }
