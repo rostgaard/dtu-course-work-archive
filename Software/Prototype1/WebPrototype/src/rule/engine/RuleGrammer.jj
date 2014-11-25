@@ -224,13 +224,13 @@ Action ACTION(): {
 	}
 }
 
-List<Expression> PARAMETERS(): {
-	List<Expression> parameters = new ArrayList<Expression>();
-	Expression parameter;
+List<Constant> PARAMETERS(): {
+	List<Constant> parameters = new ArrayList<Constant>();
+	Constant parameter;
 }{
-	"(" [ parameter = EXPRESSION() { parameters.add(parameter); } 
-	      ( "," parameter = EXPRESSION() { parameters.add(parameter); } )*
+	"(" [ parameter = CONSTANT() { parameters.add(parameter); } 
+	      ( "," parameter = CONSTANT() { parameters.add(parameter); } )*
 	    ]
 	")"
-	{ return parameters; }    
+	{ return parameters; } 
 }
