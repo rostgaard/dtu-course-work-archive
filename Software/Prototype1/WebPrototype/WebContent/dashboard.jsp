@@ -661,11 +661,11 @@
 	for(var i in items.reverse())
 		{
 		var id = items[i].id;
-		var devicetype = items[i].mac;
+		var mac = items[i].mac;
 		var element = '<a href="#" class="list-group-item"><i class="fa fa-mobile fa-fw"></i> '
-				+ mac
+				+ id
 				+ '<span class="pull-right text-muted small"><em>'
-				+ devicetype
+				+ mac
 				+ '</em></span></a>';
 				$('#devs').append(element);
 				});
