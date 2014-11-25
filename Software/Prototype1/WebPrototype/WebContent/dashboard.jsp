@@ -576,7 +576,7 @@
 													<div class="col-sm-4">
 														<button type="button" id="submit"
 															class="btn btn-lg btn-success btn-block"
-															onclick="myfunction()">Add User</button>
+															onclick="addUser()">Add User</button>
 													</div>
 												</div>
 											</div>
@@ -700,6 +700,42 @@
 			});
 	</script>
 
+	<script type="text/javascript">
+		var users;
+		var data;
+		var url = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getUsers";
+		$.getJSON( url  , function(data){
+			users = data;
+			for(i = 0; i < users.length; i++){
+				var element = '<a href="#" class="list-group-item"><i class="fa fa-user fa-fw"></i>' + users[i]+'</a>';
+				$('#user').append(element);
+			}
+		});
+	
+	</script>
+	
+	<script type="text/javascript">
+		function addUser(){
+			var username = document.getElementById('username').value;
+			var email = document.getElementById('email').value;
+			var firstname = doucment.getElementById('firstname').value;
+			var lastname = doucment.getElementById('lastname').value;
+			var role = doucment.getElementById('role').value;
+			if(role == 0){
+				role = "Viewer";
+			}
+			else
+				role = "Manager";
+			var password = doucment.getElementById('password').value;
+			
+			$.getJSON("http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/addUser?userName="+username+"&email="+email+"&firsName"+firstname+"&lastName"+lastname+"&role"+role+"&password"+password, function(){
+				
+			});
+			
+		}
+	
+	</script>
+	
 		<script src="js/jquery-1.11.0.js"></script>
 		<script src="js/jquery.timeago.js"></script>
 		<script src="js/interact.js"></script>
