@@ -179,7 +179,7 @@
 											<i class="fa fa-lock fa-5x"></i>
 										</div>
 										<div class="col-xs-9 text-right">
-											<div class="huge">Activated</div>
+											<div id=securityLevel class="huge"></div>
 											<div>Security System</div>
 										</div>
 									</div>
@@ -615,12 +615,26 @@
 		          $('#lastLogin').html(jQuery.timeago(new Date(data)));
 		     }
 		   });		
-	});
+	});	
+	</script>
 	
-	
-
-		
-		
+	<script>
+	$( document ).ready(function() {
+		var URL = "http://localhost:8080/Prototype1/rest/rules/getSecurityLevel";
+		$.ajax({
+		     type: "GET",
+		     url: URL,
+		     data: data,
+		     success: function(data) {
+		    	 if(data>0){
+		          $('#securityLevel').html("Level " + data);
+		    	 }
+		    	 else{
+		    		 $('#securityLevel').html("Deactivated");
+		    	 }
+		     }
+		   });	
+	});	
 	</script>
 
 
@@ -684,6 +698,9 @@
 		    	  type: "POST",
 		    	  url: URL
 		    	});
+		    
+			document.location.reload();
+
 			});
 	</script>
 	
