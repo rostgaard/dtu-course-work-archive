@@ -1,45 +1,47 @@
 package com.example.prototypemoniterapp;
 
+import android.app.Activity;
+import android.graphics.Color;
+import android.widget.ListView;
 import android.widget.TextView;
+
 import com.example.datatypes.Event;
 import com.example.datatypes.EventType;
 
 public class AwaitEventThread extends Thread {
 	
-//	private EditText editText;
-	private TextView textView;
+	private ListView alertList;
 	private String macAddress;
+	private Activity activity;
 	private boolean run = true;
 	
-	public AwaitEventThread (TextView textView, String macAddress) {
-//		this.editText = editText;
-		this.textView = textView;
+	public AwaitEventThread (ListView alertList, String macAddress, Activity activity) {
+		this.alertList = alertList;
 		this.macAddress = macAddress;
+		this.activity = activity;
 	}
 	
 	
-
 	@Override
 	public void run() {
-		
-		int count = 0;
 		
 		while (run || !isInterrupted()) {
 			
 			Event event = null;
 			
 			try {
-//				int id = Integer.parseInt(editText.getText().toString());
 				event = WebServiceConnection.invokeAwaitEventWebServer(macAddress, EventType.ACCELEROMETER);
 			} catch (Exception e) {
 				
 				if(!run || isInterrupted()) break; 
 				
-				textView.post(new Runnable() {
+				alertList.post(new Runnable() {
 					
 					@Override
 					public void run() {						
+						TextView textView = new TextView(activity);
 						textView.setText("Exception");
+						alertList.addView(textView);
 					}
 				});
 			}
@@ -47,28 +49,18 @@ public class AwaitEventThread extends Thread {
 			if(!run || isInterrupted()) break; 
 			
 			if (event != null) {
-				final String txt = "Await Event:\n ID: " + event.getId() + " Value: " + event.getValue() + " Time: " + event.getTime();
-				textView.post(new Runnable() {
+				final String txt = "Alert from device: " + macAddress + "\nTime: " + event.getTime();
+				alertList.post(new Runnable() {
 					@Override
-					public void run() {						
+					public void run() {
+						TextView textView = new TextView(activity);
 						textView.setText(txt);
-					}
-				});
-			} else {
-				count++;
-				final String countTxt = "" + count; 
-				textView.post(new Runnable() {
-					
-					@Override
-					public void run() {						
-						textView.setText("Timeout " + countTxt);
+						alertList.addView(textView);
+						alertList.setBackgroundColor(Color.RED);
 					}
 				});
 			}
-			
-			
 		}
-		
 	}
 
 

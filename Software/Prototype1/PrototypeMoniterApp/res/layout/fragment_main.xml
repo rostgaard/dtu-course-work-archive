@@ -8,15 +8,34 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.prototypemoniterapp.MainActivity$PlaceholderFragment" 
     android:orientation="vertical">
+    
+    <TextView android:id="@+id/deviceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/device_text"
+        android:textSize="20sp"/>
 
 	<ListView android:id="@+id/appList" 
 	    android:layout_width="fill_parent"
-	    android:layout_weight="4" />
+	    android:layout_weight="2"
+	    android:layout_marginBottom="20sp"/>
+
+	<TextView
+	    android:id="@+id/alertText"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@string/alert_text"
+	    android:textSize="20sp" />
 	
-	<TextView android:id="@+id/alertview" 
+	<ListView android:id="@+id/alertList" 
 	    android:layout_width="fill_parent"
 	    android:layout_weight="1"
-	    android:text="@string/alert_text"/>"
+	    android:layout_marginBottom="20sp"/>
+	
+	<Button android:id="@+id/resetButton"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@string/resetButton_text"/>
 	
 	
 </LinearLayout>

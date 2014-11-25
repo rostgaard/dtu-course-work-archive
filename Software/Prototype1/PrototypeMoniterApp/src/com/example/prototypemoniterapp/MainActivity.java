@@ -1,21 +1,25 @@
 package com.example.prototypemoniterapp;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.datatypes.App;
-import com.example.datatypes.AppList;
 
 public class MainActivity extends Activity {
 
@@ -53,7 +57,8 @@ public class MainActivity extends Activity {
 	 */
 	public static class PlaceholderFragment extends Fragment {
 		
-		private AwaitEventThread awaitEventThread;
+		private List<AwaitEventThread> awaitEventThreadList = new ArrayList<>();
+		private ListView alertList;
 
 		public PlaceholderFragment() {
 		}
@@ -70,22 +75,34 @@ public class MainActivity extends Activity {
 		public void onViewCreated(View view, Bundle savedInstanceState) {
 			super.onViewCreated(view, savedInstanceState);
 			
-			AppList apps = WebServiceConnection.invokeGetAppsFromWebServer();
+			List<App> apps = WebServiceConnection.invokeGetAppsFromWebServer();
 			Set<String> macs = new HashSet<String>();
 			
-			for (App app : apps.getApps()) {
+			for (App app : apps) {
 				macs.add(app.getMac());
 			}
 			
-			ListView listView = (ListView) getActivity().findViewById(R.id.appList);
+			ListView appList = (ListView) getActivity().findViewById(R.id.appList);
+			alertList = (ListView) getActivity().findViewById(R.id.alertList);
+			
+			Button resetButton = (Button) getActivity().findViewById(R.id.resetButton);
+			resetButton.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					alertList.removeAllViewsInLayout();
+					alertList.setBackgroundColor(Color.WHITE);
+				}
+			});
 			
 			for (String mac : macs) {
 				TextView textView = new TextView(getActivity());
 				textView.setText(mac);
-				listView.addView(textView);
+				appList.addView(textView);
+				AwaitEventThread awaitEventThread = new AwaitEventThread(alertList, mac, getActivity());
+				awaitEventThreadList.add(awaitEventThread);
 			}
 			
-			awaitEventThread = new AwaitEventThread();
 		}
 	}
 }
