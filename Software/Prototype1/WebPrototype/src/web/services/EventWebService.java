@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -17,6 +18,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
+import rule.engine.Action;
+import rule.engine.Rule;
 import dto.model.Event;
 import eao.model.Conversion;
 import eao.model.SensorDataEAO;
@@ -49,7 +52,11 @@ public class EventWebService {
 				tempList.notifyAll();
 			}
 		}
-		return Conversion.convertEventEntity(eventEntity);
+		
+		Event event = Conversion.convertEventEntity(eventEntity);
+		actuateAction(event);
+		
+		return event;
 	}
 	
 	@GET
@@ -67,7 +74,20 @@ public class EventWebService {
 				tempList.notifyAll();
 			}
 		}
-		return Conversion.convertEventEntity(eventEntity);
+		
+		Event event = Conversion.convertEventEntity(eventEntity);
+		actuateAction(event);
+		
+		return event;
+	}
+	
+	private void actuateAction(Event event) {
+		Set<Rule> ruleMatches = RuleWebService.ruleEngine.checkEvent(event);
+		for (Rule rule : ruleMatches) {
+			for (Action act : rule.getActions()) {
+				addEvent(event.getValue(), act.getTargetActuatorID(), EventType.valueOf(act.getActuator()));
+			}
+		}
 	}
 	
 	@GET

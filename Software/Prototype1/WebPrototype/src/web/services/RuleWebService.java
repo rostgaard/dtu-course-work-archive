@@ -1,14 +1,16 @@
 package web.services;
 
-import java.io.*;
-
-import rule.engine.*;
-
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.*;
+import javax.ejb.EJB;
+import javax.ejb.LocalBean;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -17,16 +19,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import rule.engine.Rule;
 import rule.engine.RuleEngine;
+import rule.engine.Rules;
 import dto.model.Policy;
 import dto.model.RuleString;
 import eao.model.Conversion;
 import eao.model.RuleDataEAO;
 import eao.model.SensorDataEAO;
-import entity.model.EventEntity;
 import entity.model.PolicyEntity;
 import entity.model.RuleStringEntity;
-import enums.EventType;
 
 @Startup
 @Singleton
@@ -39,14 +41,14 @@ public class RuleWebService {
 			   + "test1:\n"
 			   + "  when DoorAlarmEvent\n"
             + "  if event.source == 1 && event.value >= 50 && system.securitylevel == 1\n"
-            + "  then actorSound1.play(1,30), UserAlert.raise(event.event);\n"
+            + "  then PLAY_SOUND.play(1,30), USER_ALERT.raise(0);\n"
             + "\n"
             + "test2:\n"
             + "  when DoorAlarmEvent\n"
             + "  if system.securitylevel >= 2 || event.source == 1 && event.value >= 50\n"  
-            + "  then actorSound1.play(1,30), UserAlert.raise(event.event);\n";
+            + "  then PLAY_SOUND.play(1,30), USER_ALERT.raise(0);\n";
 
-	private RuleEngine ruleEngine = null;
+	public static RuleEngine ruleEngine = null;
 	
 	@EJB
 	RuleDataEAO    eao;
@@ -57,7 +59,7 @@ public class RuleWebService {
 	@PostConstruct
 	private void startup() {
 		List<RuleString> dbRules = this.getRulesFromDB();
-		
+				
 		if (dbRules.isEmpty()) {
 			InputStream stream = new ByteArrayInputStream(ruleString.getBytes());					 
 			List<Rule> rules = new Rules (stream).parse();
@@ -65,41 +67,16 @@ public class RuleWebService {
 			dbRules = Conversion.convertRuleStringEntityList(eao.addRuleStringEntities((new RuleEngine(rules)).ruleStrings()));				
 		}
 		
-		this.ruleEngine = new RuleEngine(RuleEngine.parseRules(dbRules));
+		ruleEngine = new RuleEngine(RuleEngine.parseRules(dbRules));
 		System.out.println("startup method!");
 		
 		//this.reloadRules();
 	}
 	
 	private void reloadRules() {
-		this.ruleEngine = new RuleEngine(RuleEngine.parseRules(this.getRulesFromDB()));
+		ruleEngine = new RuleEngine(RuleEngine.parseRules(this.getRulesFromDB()));
 
-	}
-	
-	private void playsound (int acutatorID, int value) {
-		EventEntity eventEntity = seao.addEvent(value, acutatorID, EventType.PLAY_SOUND);
-		
-		List<EventEntity> tempList = EventWebService.entitiesWaiting.get(acutatorID);
-		if (tempList != null) {
-			synchronized(tempList) {
-				tempList.notifyAll();
-			}
-		}
-	}
-	
-	
-	private void userAlert (int sensorID) {
-		EventEntity eventEntity = seao.addEvent(0, sensorID, EventType.USER_ALERT);
-		
-		List<EventEntity> tempList = EventWebService.entitiesWaiting.get(sensorID);
-		if (tempList != null) {
-			synchronized(tempList) {
-				tempList.notifyAll();
-			}
-		}
-	}
-	
-	
+	}	
 	
 	@GET
 	@Path("/addPolicy")
@@ -193,7 +170,7 @@ public class RuleWebService {
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<RuleString> getAllStringRuleList() {
-		return this.ruleEngine.ruleStrings();
+		return ruleEngine.ruleStrings();
 	}
 	
 	
