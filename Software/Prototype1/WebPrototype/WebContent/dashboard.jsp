@@ -395,7 +395,7 @@
 			</div>
 		</div>
 		<!-- /#wrapper -->
-
+</div>
 
 
 		<!-- ##################################################################
@@ -683,21 +683,31 @@
 
 
 		<script type="text/javascript">
-	var items;
-	$.getJSON( "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents", function( data ) {
-		items = data;
-	for(var i in items.reverse())
-		{
-		var type = items[i].eventType;
-		var time = jQuery.timeago(new Date(items[i].time));
-		var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+type.replace("SHAKE","Door moved").replace("PLAY_SOUND","Sound played")+'<span class="pull-right text-muted small"><em>'+time+'</em></span></a>';
-		$('#box').append(element);
-		}
-	});
+	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents";
+		$.ajax({
+		     type: "GET",
+		     url: URL,
+		     data: data,
+		     success: function(data) {
+		    var items = data;
+		          for(var i in items.reverse())
+					{
+					var type = items[i].eventType;
+					var time = jQuery.timeago(new Date(items[i].time));
+					var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+type.replace("SHAKE","Door moved").replace("PLAY_SOUND","Sound played")+'<span class="pull-right text-muted small"><em>'+time+'</em></span></a>';
+					$('#box').append(element);
+					}
+				}
+		     });
 
-	$.getJSON("http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAllApps",	function(data) {
-	items = data;
-	for(var i in items.reverse())
+	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents";
+		$.ajax({
+		     type: "GET",
+		     url: URL,
+		     data: data,
+		     success: function(data) {
+		var items = data;
+		for(var i in items.reverse())
 		{
 		var id = items[i].id;
 		var mac = items[i].mac;
@@ -708,7 +718,8 @@
 				+ '</em></span></a>';
 				$('#devs').append(element);
 				};
-			});
+			}
+		});
 	</script>
 
 
@@ -742,16 +753,21 @@
 	</script>
 
 	<script type="text/javascript">
+	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getUsers";
+	$.ajax({
+		     type: "GET",
+		     url: URL,
+		     data: data,
+		     success: function(data) {
 		var users;
 		var data;
-		var url = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getUsers";
-		$.getJSON( url  , function(data){
-			users = data;
+		users = data;
 			for(i = 0; i < users.length; i++){
-				var element = '<a href="#" class="list-group-item"><i class="fa fa-user fa-fw"></i>' + users[i]+'</a>';
+				var element = '<a href="#" class="list-group-item"><i class="fa fa-user fa-fw"></i>' + users[i].userName+'</a>';
 				$('#user').append(element);
 			}
-		});
+		}
+	});
 	
 	</script>
 	
@@ -769,49 +785,20 @@
 				role = "Manager";
 			var password = doucment.getElementById('password').value;
 			
-			$.getJSON("http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/addUser?userName="+username+"&email="+email+"&firsName"+firstname+"&lastName"+lastname+"&role"+role+"&password"+password, function(){
-				
-			});
+			var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/addUser?userName="+username+"&email="+email+"&firsName"+firstname+"&lastName"+lastname+"&role"+role+"&password"+password";
+			$.ajax({
+		     type: "GET",
+		     url: URL,
+		     data: data,
+		     success: function(data) {
 			
-		}
-	
-	</script>
-	
-	<script type="text/javascript">
-		var users;
-		var data;
-		var url = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getUsers";
-		$.getJSON( url  , function(data){
-			users = data;
-			for(i = 0; i < users.length; i++){
-				var element = '<a href="#" class="list-group-item"><i class="fa fa-user fa-fw"></i>' + users[i]+'</a>';
-				$('#user').append(element);
 			}
 		});
 	
 	</script>
 	
-	<script type="text/javascript">
-		function addUser(){
-			var username = document.getElementById('username').value;
-			var email = document.getElementById('email').value;
-			var firstname = doucment.getElementById('firstname').value;
-			var lastname = doucment.getElementById('lastname').value;
-			var role = doucment.getElementById('role').value;
-			if(role == 0){
-				role = "Viewer";
-			}
-			else
-				role = "Manager";
-			var password = doucment.getElementById('password').value;
-			
-			$.getJSON("http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/addUser?userName="+username+"&email="+email+"&firsName"+firstname+"&lastName"+lastname+"&role"+role+"&password"+password, function(){
-				
-			});
-			
-		}
 	
-	</script>
+	
 	
 		<script src="js/jquery-1.11.0.js"></script>
 		<script src="js/jquery.timeago.js"></script>
