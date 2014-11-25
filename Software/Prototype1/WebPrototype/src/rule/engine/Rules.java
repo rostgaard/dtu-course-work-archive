@@ -269,16 +269,14 @@ public class Rules implements RulesConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public List<Expression> PARAMETERS() throws ParseException {
-        List<Expression> parameters = new ArrayList<Expression>();
-        Expression parameter;
+  final public List<Constant> PARAMETERS() throws ParseException {
+        List<Constant> parameters = new ArrayList<Constant>();
+        Constant parameter;
     jj_consume_token(10);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 10:
-    case IDENTIFIER:
     case NUMBER:
-      parameter = EXPRESSION();
-                                         parameters.add(parameter);
+      parameter = CONSTANT();
+                                       parameters.add(parameter);
       label_6:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -290,8 +288,8 @@ public class Rules implements RulesConstants {
           break label_6;
         }
         jj_consume_token(15);
-        parameter = EXPRESSION();
-                                               parameters.add(parameter);
+        parameter = CONSTANT();
+                                             parameters.add(parameter);
       }
       break;
     default:
@@ -318,7 +316,7 @@ public class Rules implements RulesConstants {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x300,0x80000,0x40,0x80,0x300,0x180400,0x8000,0x8000,0x180400,};
+      jj_la1_0 = new int[] {0x300,0x80000,0x40,0x80,0x300,0x180400,0x8000,0x8000,0x100000,};
    }
 
   /** Constructor with InputStream. */
