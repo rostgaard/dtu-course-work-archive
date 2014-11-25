@@ -656,11 +656,13 @@
 		}
 	});
 
-		$.getJSON("http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAllApps",	function(data) {
-			$.each(data.items, function(i, items) {
-				var id = items[i].id;
-				var devicetype = items[i].mac;
-				var element = '<a href="#" class="list-group-item"><i class="fa fa-mobile fa-fw"></i> '
+	$.getJSON("http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAllApps",	function(data) {
+	items = data;
+	for(var i in items.reverse())
+		{
+		var id = items[i].id;
+		var devicetype = items[i].mac;
+		var element = '<a href="#" class="list-group-item"><i class="fa fa-mobile fa-fw"></i> '
 				+ mac
 				+ '<span class="pull-right text-muted small"><em>'
 				+ devicetype
