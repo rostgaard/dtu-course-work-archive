@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import dto.model.AppList;
 import dto.model.App;
 import eao.model.Conversion;
 import eao.model.SensorDataEAO;
@@ -83,5 +84,17 @@ public class AppWebService {
 		apps = Conversion.convertAppEntityList(appEntities);
 		return apps;
 	}
-
+	
+	@GET
+	@Path("/getAppList")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public AppList getAppList() {
+		List<AppEntity> appEntities = new ArrayList<AppEntity>();
+		List<App> apps = new ArrayList<App>();
+		appEntities = eao.getAllAppEntitylist();
+		apps = Conversion.convertAppEntityList(appEntities);
+		AppList appList = new AppList(apps);
+		return appList;
+	}
 }
