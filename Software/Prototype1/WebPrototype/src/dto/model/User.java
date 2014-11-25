@@ -17,13 +17,14 @@ public class User {
 	private String lastName;
 	private Role role;
 	private String password;
+	private long lastLogin;
 	
 	public User(){
 		
 	}
 	
 	public User(String userName, String email, String firstName,
-			String lastName, Role role, String password) {
+			String lastName, Role role, String password, long lastLogin) {
 		super();
 		this.userName = userName;
 		this.email = email;
@@ -31,6 +32,7 @@ public class User {
 		this.lastName = lastName;
 		this.role = role;
 		this.password = password;
+		this.lastLogin = lastLogin;
 	}
 
 	public String getUserName() {
@@ -79,5 +81,13 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public long getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(long lastLogin) {
+		this.lastLogin = lastLogin;
 	}
 }

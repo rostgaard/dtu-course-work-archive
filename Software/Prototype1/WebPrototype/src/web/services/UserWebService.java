@@ -66,7 +66,16 @@ public class UserWebService {
 		UserEntity userEntity = eao.getUserByUserName(userName);
 		
 		return Conversion.convertUserEntity(userEntity);
-		
+	}
+	
+	@GET
+	@Path("/getLastLoginByUserName")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getLastLoginByUserName(@QueryParam("userName") String userName){
+		UserEntity userEntity = eao.getUserByUserName(userName);
+		long lastLogin = userEntity.getLastLogin();
+		return String.valueOf(lastLogin);
 	}
 	
 	

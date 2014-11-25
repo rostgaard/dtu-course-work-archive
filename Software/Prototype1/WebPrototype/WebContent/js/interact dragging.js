@@ -1,5 +1,4 @@
 /*
- * @Author s124259
  * Source: http://interactjs.io/
  * Code released under the MIT License.
  */

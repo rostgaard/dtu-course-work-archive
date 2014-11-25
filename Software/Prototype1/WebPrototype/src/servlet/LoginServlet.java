@@ -19,7 +19,7 @@ import entity.model.UserEntity;
  *
  */
 @WebServlet("/Servlet")
-public class Servlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -46,8 +46,13 @@ public class Servlet extends HttpServlet {
 			try{
 				UserEntity userEntity = eao.getUserByUserName(inputUserName);
 				User user = Conversion.convertUserEntity(userEntity);
+				
 				if(inputPassword.equals(user.getPassword())){
 					HttpSession session = request.getSession();
+					
+					userEntity.setLastLogin(session.getCreationTime());
+					eao.update(userEntity);
+					
 					session.setAttribute("user", user);
 					response.sendRedirect("dashboard.jsp");
 				}

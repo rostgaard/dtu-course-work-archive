@@ -152,7 +152,7 @@
 											<i class="fa fa-laptop  fa-5x"></i>
 										</div>
 										<div class="col-xs-9 text-right">
-											<div class="huge">7 days ago</div>
+											<div id="lastLogin" style="font-size: 32px;"></div>
 											<div>Last Login</div>
 										</div>
 									</div>
@@ -596,6 +596,33 @@
 #######################################################################
 ################################################################### -->
 
+	<script>
+	/*
+		@Author s124259
+		Using JQuery timeago plugin for formatting
+	*/
+	$( document ).ready(function() {
+		
+		var baseURI = "http://localhost:8080/Prototype1/rest/users/getLastLoginByUserName?userName=";
+		var userName = "<%=user.getUserName()%>";
+		var buildURL = baseURI + userName;
+		
+		$.ajax({
+		     type: "GET",
+		     url: buildURL,
+		     data: data,
+		     success: function(data) {
+		          $('#lastLogin').html(jQuery.timeago(new Date(data)));
+		     }
+		   });		
+	});
+	
+	
+
+		
+		
+	</script>
+
 
 
 	<script type="text/javascript">
@@ -660,26 +687,6 @@
 			});
 	</script>
 	
-		<!-- 
-		Reload Modal Content on Click (Security Level Buttons)
-		 @s124259
-	     source: http://stackoverflow.com/questions/12449890/reload-content-in-modal-twitter-bootstrap
-	  -->
-<!-- 	<script>
-	$("a[data-target=#securityLevelModal]").click(function(ev) {
-	    // reload show modal on success
-	    location.reload();
-	    $("#securityLevelModal").modal("show"); 
-
-	});
-	</script> -->
-		
-		
-		
-
-
-
-
 	<script src="js/jquery-1.11.0.js"></script>
 	<script src="js/jquery.timeago.js"></script>
 	<script src="js/interact.js"></script>

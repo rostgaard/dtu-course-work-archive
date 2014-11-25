@@ -30,8 +30,8 @@
 
 	<servlet>
 		<description></description>
-		<display-name>Servlet</display-name>
-		<servlet-name>Servlet</servlet-name>
-		<servlet-class>servlet.Servlet</servlet-class>
+		<display-name>LoginServlet</display-name>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>servlet.LoginServlet</servlet-class>
 	</servlet>
 </web-app>

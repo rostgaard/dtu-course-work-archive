@@ -28,6 +28,8 @@ public class UserEntity implements Serializable {
 	
 	private String password;
 	
+	private long lastLogin;
+	
 	private static final long serialVersionUID = 1L;
 	
 	public UserEntity(){
@@ -80,6 +82,14 @@ public class UserEntity implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public long getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(long lastLogin) {
+		this.lastLogin = lastLogin;
 	}
 	
 

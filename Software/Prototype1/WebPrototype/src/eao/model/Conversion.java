@@ -69,8 +69,9 @@ public class Conversion {
 		String lastName = userEntity.getLastName();
 		Role role = userEntity.getRole();
 		String password = userEntity.getPassword();
+		Long lastLogin = userEntity.getLastLogin();
 
-		return new User(userName, email, firstName, lastName, role, password);
+		return new User(userName, email, firstName, lastName, role, password, lastLogin);
 	}
 	
 	public static List<User> convertUserEntityList(List<UserEntity> userEntityList){

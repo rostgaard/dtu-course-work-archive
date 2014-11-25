@@ -39,6 +39,7 @@ public class UserEAO {
 		user.setLastName(lastName);
 		user.setRole(role);
 		user.setPassword(password);
+		user.setLastLogin(0);
 
 		em.persist(user);
 		em.flush();
@@ -63,7 +64,13 @@ public class UserEAO {
 			return Collections.emptyList();
 		}
 	}
-
-
-
+	
+	
+	/**
+	 * source: http://stackoverflow.com/questions/1809159/how-to-implement-update-method-in-dao-using-entitymanager-jpa
+	 */
+	public UserEntity update(UserEntity transientUser) {
+	    return em.merge(transientUser);
+	}
+	
 }
