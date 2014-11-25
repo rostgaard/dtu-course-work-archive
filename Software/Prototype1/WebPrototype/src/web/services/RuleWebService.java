@@ -31,7 +31,7 @@ import entity.model.PolicyEntity;
 import entity.model.RuleStringEntity;
 
 @Startup
-@Singleton
+//@Singleton
 @LocalBean
 @Stateless
 @Path("/rules")
