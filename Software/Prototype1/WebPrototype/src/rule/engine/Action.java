@@ -10,10 +10,10 @@ public class Action {
 
 	String actuator;
 	String value;
-	List<Expression> parameters;
+	List<Constant> parameters;
 	
 	
-	public Action(String actuator, String value, List<Expression> parameters) {
+	public Action(String actuator, String value, List<Constant> parameters) {
 		super();
 		this.actuator = actuator;
 		this.value = value;
@@ -32,10 +32,10 @@ public class Action {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	public List<Expression> getParameters() {
+	public List<Constant> getParameters() {
 		return parameters;
 	}
-	public void setParameters(List<Expression> parameters) {
+	public void setParameters(List<Constant> parameters) {
 		this.parameters = parameters;
 	}
 

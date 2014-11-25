@@ -214,7 +214,7 @@ List<Action> ACTIONS(): {
 Action ACTION(): {
 	String actorName;
 	String actionName;
-	List<Expression> parameters;
+	List<Constant> parameters;
 }{  actorName = IDENTIFIER()
     "."
     actionName = IDENTIFIER()

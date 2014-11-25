@@ -260,7 +260,7 @@ public class Rules implements RulesConstants {
   final public Action ACTION() throws ParseException {
         String actorName;
         String actionName;
-        List<Expression> parameters;
+        List<Constant> parameters;
     actorName = IDENTIFIER();
     jj_consume_token(12);
     actionName = IDENTIFIER();
