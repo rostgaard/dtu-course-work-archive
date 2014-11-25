@@ -30,37 +30,38 @@ import com.sun.tools.ws.processor.util.DirectoryUtil;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import com.sun.xml.messaging.saaj.util.Base64;
 
+/**
+ * 
+ * @author stefan
+ *
+ */
+
 @LocalBean
 @Stateless
 @Path("/video")
 public class VideoWebService {
 
 
+
 	@POST
 	@Path("/addVideo")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes("video/mp4")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String addVideo ( VideoPacket in) {
+	public String addVideo ( @QueryParam("id") int id, byte[] data) throws IOException {
 	
-		File dir = new File("datastore/"+in.getId()+"/");
+		File dir = new File("datastore/"+id+"/");
 		dir.mkdirs();
-		File file = new File("datastore/"+in.getId()+"/"+dir.list().length+".mp4");
+		File file = new File("datastore/"+id+"/"+dir.list().length+".mp4");
 		try {
 			
 			file.createNewFile();
-			
-			InputStream inputStream = new ByteInputStream();
-			byte[] decoded = DatatypeConverter.parseBase64Binary(in.getContent());
-			
 			FileOutputStream output = new FileOutputStream(file);
-			output.write(decoded);
+			output.write(data);
 			
 			output.close();
-			inputStream.close();
-			inputStream = null;
 			output = null;
 			
-			return "Got it! " + new Date()+",bytes: "+decoded.length;
+			return "Got it! " + new Date()+",bytes: "+data.length;
 		} catch (IOException e) {
 			System.out.println("Error in Create file");
 			e.printStackTrace();
