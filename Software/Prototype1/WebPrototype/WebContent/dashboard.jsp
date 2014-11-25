@@ -65,7 +65,7 @@
 			data-toggle="tab">Dashboard</a></li>
 		<li><a href="#devices" role="tab" data-toggle="tab">Devices</a></li>
 		<li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
-		
+
 		<li style="float: right;"><a href="/Prototype1/Servlet">Log
 				Out</a></li>
 
@@ -198,7 +198,7 @@
 						<div class="col-lg-8">
 							<div class="panel panel-default">
 								<!-- /.panel-heading -->
-	
+
 								<div class="panel-body">
 									<div id="draggableSensorButtons">
 										<button type="button" class="draggable" data-toggle="modal"
@@ -207,7 +207,7 @@
 											data-target="#jesperModal">2</button>
 										<button type="button" class="draggable" data-toggle="modal"
 											data-target="#jesperModal">3</button>
-											
+
 										<div id="floorplan">
 											<img src="floor_plan_example.png" width="40%" height="40%" />
 											<img src="floor_plan_example.png" width="40%" height="40%" />
@@ -351,10 +351,14 @@
 
 								<div>
 									Set Security Level
-									<div class="btn-group-lg" id="securityLevelGroup" role="group" aria-label="...">
-										<button type="button" id="1" class="btn btn-default">Level 1</button>
-										<button type="button" id="2" class="btn btn-default">Level 2</button>
-										<button type="button" id="3" class="btn btn-default">Level 3</button>
+									<div class="btn-group-lg" id="securityLevelGroup" role="group"
+										aria-label="...">
+										<button type="button" id="1" class="btn btn-default">Level
+											1</button>
+										<button type="button" id="2" class="btn btn-default">Level
+											2</button>
+										<button type="button" id="3" class="btn btn-default">Level
+											3</button>
 										<button type="button" id="0" class="btn btn-default">Deactivate
 											System</button>
 									</div>
@@ -586,7 +590,7 @@
 			</div>
 		</div>
 
-	<!-- ##################################################################
+		<!-- ##################################################################
 #######################################################################
 #######################################################################
 
@@ -596,14 +600,14 @@
 #######################################################################
 ################################################################### -->
 
-	<script>
+		<script>
 	/*
 		@Author s124259
 		Using JQuery timeago plugin for formatting
 	*/
 	$( document ).ready(function() {
 		
-		var baseURI = "http://localhost:8080/Prototype1/rest/users/getLastLoginByUserName?userName=";
+		var baseURI = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getLastLoginByUserName?userName=";
 		var userName = "<%=user.getUserName()%>";
 		var buildURL = baseURI + userName;
 		
@@ -617,10 +621,10 @@
 		   });		
 	});	
 	</script>
-	
-	<script>
+
+		<script>
 	$( document ).ready(function() {
-		var URL = "http://localhost:8080/Prototype1/rest/rules/getSecurityLevel";
+		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/rules/getSecurityLevel";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -639,51 +643,43 @@
 
 
 
-	<script type="text/javascript">
-		var items;
-		var data;
-		$.getJSON( "localhost:8080/Prototype1/rest/events/getAllEvents", function( data ) {
-		items = data; 
+		<script type="text/javascript">
+	var items;
+	$.getJSON( "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents", function( data ) {
+		items = data;
 	for(var i in items.reverse())
 		{
-		var value = items[i].value;
-		var id = items[i].id;
-		var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+id+'<span class="pull-right text-muted small"><em>'+value+'</em></span></a>';
+		var type = items[i].eventType;
+		var time = jQuery.timeago(new Date(items[i].time));
+		var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+type.replace("SHAKE","Door moved").replace("PLAY_SOUND","Sound played")+'<span class="pull-right text-muted small"><em>'+time+'</em></span></a>';
 		$('#box').append(element);
 		}
 	});
 
-		$
-				.getJSON(
-						"localhost:8080/Prototype1/rest/apps/getAllApps",
-						function(data) {
-
-							$
-									.each(
-											data.items,
-											function(i, items) {
-												var id = items[i].id;
-												var devicetype = items[i].mac;
-												var element = '<a href="#" class="list-group-item"><i class="fa fa-mobile fa-fw"></i> '
-														+ mac
-														+ '<span class="pull-right text-muted small"><em>'
-														+ devicetype
-														+ '</em></span></a>';
-												$('#devs').append(element);
-											});
-						});
+		$.getJSON("http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAllApps",	function(data) {
+			$.each(data.items, function(i, items) {
+				var id = items[i].id;
+				var devicetype = items[i].mac;
+				var element = '<a href="#" class="list-group-item"><i class="fa fa-mobile fa-fw"></i> '
+				+ mac
+				+ '<span class="pull-right text-muted small"><em>'
+				+ devicetype
+				+ '</em></span></a>';
+				$('#devs').append(element);
+				});
+			});
 	</script>
 
 
-	<!-- 
+		<!-- 
 		 OnClick Event on whole button group (Security Level Buttons)
 		 @s124259
 	     source: http://stackoverflow.com/questions/9262827/twitter-bootstrap-onclick-event-on-buttons-radio
 	  -->
-	<script>		
+		<script>		
 		$('#securityLevelGroup button').click(function() {
 		    $(this).addClass('active').siblings().removeClass('active');
-		    var baseURI = "http://localhost:8080/Prototype1/rest/rules/setSecurityLevel?level=";
+		    var baseURI = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/rules/setSecurityLevel?level=";
 		    var level = $(this).attr('id');
 		    var URL = baseURI + level;		  
 		    
@@ -703,30 +699,28 @@
 
 			});
 	</script>
-	
-	<script src="js/jquery-1.11.0.js"></script>
-	<script src="js/jquery.timeago.js"></script>
-	<script src="js/interact.js"></script>
-	<script src="js/interact dragging.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script src="js/bootstrap.min.js"></script>
+		<script src="js/jquery-1.11.0.js"></script>
+		<script src="js/jquery.timeago.js"></script>
+		<script src="js/interact.js"></script>
+		<script src="js/interact dragging.js"></script>
 
-	<!-- Metis Menu Plugin JavaScript -->
-	<script src="js/plugins/metisMenu/metisMenu.min.js"></script>
+		<!-- Bootstrap Core JavaScript -->
+		<script src="js/bootstrap.min.js"></script>
 
-	<!-- Morris Charts JavaScript -->
-	<script src="js/plugins/morris/raphael.min.js"></script>
-	<script src="js/plugins/morris/morris.min.js"></script>
-	<script src="js/plugins/morris/morris-data.js"></script>
+		<!-- Metis Menu Plugin JavaScript -->
+		<script src="js/plugins/metisMenu/metisMenu.min.js"></script>
 
-	<!-- Custom Theme JavaScript -->
-	<script src="js/sb-admin-2.js"></script>
+		<!-- Morris Charts JavaScript -->
+		<script src="js/plugins/morris/raphael.min.js"></script>
+		<script src="js/plugins/morris/morris.min.js"></script>
+		<script src="js/plugins/morris/morris-data.js"></script>
 
-	<!-- Custom DragNDrop JavaScript -->
-	<script src="js/dragndrop.js"></script>
+		<!-- Custom Theme JavaScript -->
+		<script src="js/sb-admin-2.js"></script>
 
-
+		<!-- Custom DragNDrop JavaScript -->
+		<script src="js/dragndrop.js"></script>
 </body>
 
 </html>
