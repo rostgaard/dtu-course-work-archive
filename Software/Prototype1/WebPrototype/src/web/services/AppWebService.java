@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -117,6 +115,30 @@ public class AppWebService {
 		}
 		
 		return Integer.toString(macAddr.size());
+
+	}
+	
+	/*
+	 * @Author s124255
+	 */
+	@GET
+	@Path("/getDevices")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String> getDevices(){
+		List<App> apps = this.getAllEventList();
+		Set<String> macAddr = new HashSet<>();
+		List<String> device = new ArrayList<String>();
+		
+		for(App app : apps) {
+			macAddr.add(app.getMac());
+		}
+		
+		for(String dev : macAddr){
+			device.add(dev);
+		}
+		
+		return device;
 
 	}
 

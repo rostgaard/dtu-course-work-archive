@@ -52,7 +52,7 @@
 </head>
 
 <body>
-	<%
+	 <%
 		//allow access only if session attribute "user" is set beforehand
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
@@ -489,6 +489,31 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal fade" id="deviceInfoModal" tabindex="-1" role="dialog"
+		aria-labelledby="deviceInfoModal" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+				</div>
+				<div class="modal-body" align=center>
+				1
+				<script>
+					var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAppByMac";
+					$.ajax({
+		     		type: "GET",
+		     		url: URL,
+		     		data: data,
+		     		success: function(data) {    	
+		     			}
+		   			});	
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
 		<!-- /#wrapper -->
 
 
@@ -699,8 +724,9 @@
 					}
 				}
 		     });
+		     
 
-	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents";
+	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getDevices";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -709,13 +735,9 @@
 		var items = data;
 		for(var i in items.reverse())
 		{
-		var id = items[i].id;
-		var mac = items[i].mac;
-		var element = '<a href="#" class="list-group-item"><i class="fa fa-mobile fa-fw"></i> '
-				+ id
-				+ '<span class="pull-right text-muted small"><em>'
-				+ mac
-				+ '</em></span></a>';
+		var element = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item"><i class="fa fa-mobile fa-fw"></i> '
+				+ items[i]
+				+ 'id='items[i]'</a>';
 				$('#devs').append(element);
 				};
 			}
