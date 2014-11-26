@@ -395,7 +395,7 @@
 			</div>
 		</div>
 		<!-- /#wrapper -->
-</div>
+
 
 
 		<!-- ##################################################################
@@ -499,14 +499,16 @@
 					</button>
 				</div>
 				<div class="modal-body" align=center>
-				1
+				
 				<script>
+					var data
 					var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAppByMac";
 					$.ajax({
 		     		type: "GET",
 		     		url: URL,
 		     		data: data,
-		     		success: function(data) {    	
+		     		error: function(data) {
+		     				    	
 		     			}
 		   			});	
 					</script>
@@ -615,6 +617,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 
 		<!-- ##################################################################
 #######################################################################
@@ -708,6 +711,7 @@
 
 
 		<script type="text/javascript">
+	var data
 	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents";
 		$.ajax({
 		     type: "GET",
@@ -725,22 +729,25 @@
 				}
 		     });
 		     
-
+	var devData
 	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getDevices";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
-		     data: data,
-		     success: function(data) {
-		var items = data;
-		for(var i in items.reverse())
+		     data: devData,
+		     error: function(devData) {
+		var devItems;
+		var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":3,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
+		var devItems = $.parseJSON(temp);//OUT FOR PRODUCTION
+		for(var i in devItems)
 		{
-		var element = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item"><i class="fa fa-mobile fa-fw"></i> '
-				+ items[i]
-				+ 'id='items[i]'</a>';
-				$('#devs').append(element);
+		var devElement = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item" id='+devItems[i].mac+'><i class="fa fa-mobile fa-fw"></i> '
+				+ devItems[i].mac
+				+ '</a>';
+				$('#devs').append(devElement);
 				};
 			}
+			
 		});
 	</script>
 
