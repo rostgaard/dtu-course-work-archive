@@ -21,7 +21,7 @@ public class FlashLightActuator extends Thread {
 		Event event = null;
 		while (run || !isInterrupted()) {
 			try {
-				event = WebServiceConnection.invokeAwaitEventWebServer(macAddress, EventType.FLASH_LIGHT);
+				event = WebServiceConnection.invokeAwaitEventWebServer(macAddress, EventType.FLASHLIGHT);
 			} catch (Exception e) {
 
 			}

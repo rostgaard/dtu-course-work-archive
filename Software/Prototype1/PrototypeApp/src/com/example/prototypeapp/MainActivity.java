@@ -82,10 +82,10 @@ public class MainActivity extends Activity {
 					}
 					// Check for flashlight
 					if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
-						WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.FLASH_LIGHT);
+						WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.FLASHLIGHT);
 					}
 					// We assume the device has a speaker (we cannot check it)
-					WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.PLAY_SOUND);
+					WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.PLAYSOUND);
 			
 				} catch (Exception e) {
 				}

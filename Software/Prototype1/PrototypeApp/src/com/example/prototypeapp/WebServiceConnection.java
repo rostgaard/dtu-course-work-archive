@@ -13,7 +13,7 @@ public class WebServiceConnection {
 	//private static final String BASE_URL = "http://se-se2-e14-glassfish-c.compute.dtu.dk:8080/TechnologyExperiment/rest";
 	//private static final String BASE_URL = "http://10.16.163.41:8080/TechnologyExperiment/rest";
 	
-	public static Event invokeAddEventWebServer(String mac, float value, EventType eventType) {
+	public static Event invokeAddEventWebServer(String mac, int value, EventType eventType) {
 		final String url = BASE_URL + "/events/addEventByMac?mac={mac}&value={value}&eventType={eventType}";
 		final Map<String,String> parameters = new HashMap<String,String>();
 		parameters.put("mac", String.valueOf(mac));
