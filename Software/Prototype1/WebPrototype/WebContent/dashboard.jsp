@@ -500,17 +500,49 @@
 				</div>
 				<div class="modal-body" align=center>
 				
+				<p class="text" id="macDevice"></p>
+				<p class="text" id="idDevice"></p>
+				<p class="text" id="accAct">Accelerometer is deactivated</p>
+				<p class="text" id="soundAct">Sound is deactivated</p>
+				<p class="text" id="lightAct">Light is deactivated</p>
+				
 				<script>
-					var data
-					var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAppByMac";
+				
+				function deviceInfo(mac){
+					var data;
+					var devices;
+					var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAppByMac?mac="+mac;
 					$.ajax({
 		     		type: "GET",
 		     		url: URL,
 		     		data: data,
 		     		error: function(data) {
-		     				    	
+		     			$('#macDevice').html("Device mac: " + mac);
+		     			devices = data;
+		     			var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":3,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
+						devices = $.parseJSON(temp);
+		     				for(var i in devices)
+							{
+								$('#idDevice').html("Device ID: " + devices[i].id);
+								var status = devices[i].status;
+								var eventTy = devices[i].eventType;
+								
+								if(status){
+									if(eventTy =="ACCELEROMETER"){
+										$('#accAct').html("Accelerometer is active");
+									}
+									if(eventTy =="PLAY_SOUND"){
+										$('#soundAct').html("Sound is active");
+									}
+									if(eventTy =="FLASH_LIGHT"){
+										$('#lightAct').html("Light is active");
+									}
+								}
+							}	     		   	
 		     			}
-		   			});	
+		   			});
+		   		};
+		   	
 					</script>
 				</div>
 			</div>
@@ -650,6 +682,7 @@
 
 	$( document ).ready(function() {
 		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getDeviceCount";
+		var data;
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -673,7 +706,7 @@
 		var baseURI = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getLastLoginByUserName?userName=";
 		var userName = "<%=user.getUserName()%>";
 		var buildURL = baseURI + userName;
-		
+		var data;
 		$.ajax({
 		     type: "GET",
 		     url: buildURL,
@@ -711,7 +744,7 @@
 
 
 		<script type="text/javascript">
-	var data
+	var data;
 	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents";
 		$.ajax({
 		     type: "GET",
@@ -729,7 +762,7 @@
 				}
 		     });
 		     
-	var devData
+	var devData;
 	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getDevices";
 		$.ajax({
 		     type: "GET",
@@ -741,7 +774,7 @@
 		var devItems = $.parseJSON(temp);//OUT FOR PRODUCTION
 		for(var i in devItems)
 		{
-		var devElement = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item" id='+devItems[i].mac+'><i class="fa fa-mobile fa-fw"></i> '
+		var devElement = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item" onclick="deviceInfo(\'' + devItems[i].mac + '\')"><i class="fa fa-mobile fa-fw"></i> '
 				+ devItems[i].mac
 				+ '</a>';
 				$('#devs').append(devElement);
