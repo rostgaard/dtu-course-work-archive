@@ -781,48 +781,55 @@
 			});
 	</script>
 
-	<script type="text/javascript">
-	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getUsers";
-	$.ajax({
+	<!-- USER MANAGEMENT SCRIPTS -->
+	
+	<!-- GetUsers -->
+	
+	<script>
+		var userData;
+		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getUsers";
+		$.ajax({
 		     type: "GET",
 		     url: URL,
-		     data: data,
-		     success: function(data) {
-		var users;
-		var data;
-		users = data;
-			for(i = 0; i < users.length; i++){
-				var element = '<a href="#" class="list-group-item"><i class="fa fa-user fa-fw"></i>' + users[i].userName+'</a>';
-				$('#user').append(element);
-			}
-		}
-	});
-	
-	</script>
-	
-	<script type="text/javascript">
-		function addUser(){
-			var username = document.getElementById('username').value;
-			var email = document.getElementById('email').value;
-			var firstname = doucment.getElementById('firstname').value;
-			var lastname = doucment.getElementById('lastname').value;
-			var role = doucment.getElementById('role').value;
-			if(role == 0){
-				role = "Viewer";
-			}
-			else
-				role = "Manager";
-			var password = doucment.getElementById('password').value;
-			
-			var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/addUser?userName="+username+"&email="+email+"&firsName"+firstname+"&lastName"+lastname+"&role"+role+"&password"+password";
-			$.ajax({
-		     type: "GET",
-		     url: URL,
-		     data: data,
-		     success: function(data) {
-			
+		     data: userData,
+		     error: function(userData) {
+		var userItems;
+		var temp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
+		var userItems = $.parseJSON(temp);//OUT FOR PRODUCTION
+		for(var i in userItems)
+		{
+		var userElement = '<a href="#" class="list-group-item" userName='+userItem[i].name+'><i class="fa fa-user fa-fw"></i> '
+				+ userItems[i].name
+				+ '</a>';
+				$('#user').append(userElement);
+				};
 			}
 		});
+	</script>
+	
+	<!-- Add User -->
+	
+	<script type="text/javascript">
+		var username,email,firstname,lastname,role,password;
+		function addUser(){
+			username = document.getElementById('username').value;
+			email = document.getElementById('email').value;
+			firstname = doucment.getElementById('firstname').value;
+			lastname = doucment.getElementById('lastname').value;
+			role = doucment.getElementById('role').value;
+		
+			password = doucment.getElementById('password').value;
+			
+			var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/addUser?userName="+username+"&email="+email+"&firsName"+firstname+"&lastName"+lastname+"&role"+role+"&password"+password;
+			$.ajax({
+		     type: "POST",
+		     url: URL,
+		     data: data,
+		     success: function(data) {
+				
+			}
+		});
+		}
 	
 	</script>
 	
