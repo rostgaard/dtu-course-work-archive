@@ -16,7 +16,7 @@ public class RuleString {
 	
 	public RuleString(int id, int policyId, String rule, boolean status) {
 		this.id = id;
-		this.policyId = id;
+		this.policyId = policyId;
 		this.rule = rule;
 		this.status = status;
 	}

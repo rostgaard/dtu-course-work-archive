@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -14,8 +15,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import dto.model.AppList;
 import dto.model.App;
+import dto.model.AppList;
 import eao.model.Conversion;
 import eao.model.SensorDataEAO;
 import entity.model.AppEntity;

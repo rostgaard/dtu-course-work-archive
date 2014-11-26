@@ -31,7 +31,7 @@ import entity.model.PolicyEntity;
 import entity.model.RuleStringEntity;
 
 @Startup
-//@Singleton
+@Singleton
 @LocalBean
 @Stateless
 @Path("/rules")
@@ -39,14 +39,14 @@ public class RuleWebService {
 
 	String ruleString = ""
 			   + "test1:\n"
-			   + "  when DoorAlarmEvent\n"
-            + "  if event.source == 1 && event.value >= 50 && system.securitylevel == 1\n"
-            + "  then PLAY_SOUND.play(1,30), USER_ALERT.raise(0);\n"
+			   + "  when accelerometer\n"
+            + "  if event.source == 1 && event.value >= 0 && system.securitylevel == 1\n"
+            + "  then playSound.play(1,30), UserAlert.raise(0);\n"
             + "\n"
             + "test2:\n"
-            + "  when DoorAlarmEvent\n"
+            + "  when accelerometer\n"
             + "  if system.securitylevel >= 2 || event.source == 1 && event.value >= 50\n"  
-            + "  then PLAY_SOUND.play(1,30), USER_ALERT.raise(0);\n";
+            + "  then playSound.play(1,30), UserAlert.raise(0);\n";
 
 	public static RuleEngine ruleEngine = null;
 	
@@ -58,25 +58,36 @@ public class RuleWebService {
 	
 	@PostConstruct
 	private void startup() {
+		System.out.println("Start up");
 		List<RuleString> dbRules = this.getRulesFromDB();
-				
+
 		if (dbRules.isEmpty()) {
 			InputStream stream = new ByteArrayInputStream(ruleString.getBytes());					 
-			List<Rule> rules = new Rules (stream).parse();
+			List<Rule> rules = new Rules (stream).parse();			
 			
-			dbRules = Conversion.convertRuleStringEntityList(eao.addRuleStringEntities((new RuleEngine(rules)).ruleStrings()));				
+			for (Rule rule : rules) {
+				rule.setPolicyID(1);
+			}
+			
+			dbRules = Conversion.convertRuleStringEntityList(eao.addRuleStringEntities((new RuleEngine(rules)).ruleStrings()));
 		}
 		
 		ruleEngine = new RuleEngine(RuleEngine.parseRules(dbRules));
-		System.out.println("startup method!");
-		
-		//this.reloadRules();
 	}
 	
 	private void reloadRules() {
 		ruleEngine = new RuleEngine(RuleEngine.parseRules(this.getRulesFromDB()));
 
 	}	
+	
+	@GET
+	@Path("/startup")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.TEXT_PLAIN)
+	public String addPolicy() {
+		startup();
+		return "d";
+	}
 	
 	@GET
 	@Path("/addPolicy")

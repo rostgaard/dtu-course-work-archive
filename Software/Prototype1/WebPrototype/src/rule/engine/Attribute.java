@@ -50,7 +50,8 @@ public class Attribute extends Expression {
 		} else if (this.object.equals(EVENT_OBJECT)) {
 
 			if (this.isID()) {
-				return new Constant (event.getId());
+				return new Constant (event.getAppID());
+				//return new Constant (event.getId());
 			} else if(this.isValue()) {
 				return new Constant (event.getValue());
 			} else {

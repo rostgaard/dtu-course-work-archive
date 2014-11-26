@@ -13,7 +13,6 @@ import javax.persistence.TypedQuery;
 import dto.model.RuleString;
 import entity.model.PolicyEntity;
 import entity.model.RuleStringEntity;
-import enums.EventType;
 
 @LocalBean
 @Stateless
@@ -45,7 +44,7 @@ public class RuleDataEAO {
 			policyEntity.setSecurityLevel(1);
 			em.persist(policyEntity);
 		}
-		
+	
 		RuleStringEntity ruleStringEntity = new RuleStringEntity();
 		ruleStringEntity.setRule(ruleString);
 		ruleStringEntity.setPolicyEntity(policyEntity);

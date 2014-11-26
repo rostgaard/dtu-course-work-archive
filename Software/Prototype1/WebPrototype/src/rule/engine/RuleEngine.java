@@ -88,19 +88,30 @@ public class RuleEngine {
 	 * Extracts the Rule objects currently associated with this engine
 	 * as a list of RuleString DTO objects.
 	 * 
+	 *  Modified @author Luai s113444
+	 *  ???? It goes through all the policies!!
+	 * 
 	 * @return
 	 */
 	public List<RuleString> ruleStrings () {
 		List<RuleString> ruleStrings = new LinkedList<RuleString>();
 		
-		for (int key : this.policy.keySet()) {
-			RuleString rs = new RuleString();
-			rs.setRule(serializeRules (this.policy.get(key)));
-			rs.setPolicyId(key);
+		for (int key : this.policy.keySet()) {			
+			for (Rule rule : this.policy.get(key)) {
+				RuleString rs = new RuleString();
+				rs.setRule(rule.toString());
+				rs.setPolicyId(key);
+				rs.setStatus(true);
+				ruleStrings.add(rs);
+			}
 			
-			rs.setStatus(true);
-			
-			ruleStrings.add(rs);
+//			RuleString rs = new RuleString();
+//			rs.setRule(serializeRules (this.policy.get(key)));
+//			rs.setPolicyId(key);
+//			
+//			rs.setStatus(true);
+//			
+//			ruleStrings.add(rs);
 		}
 		
 		return ruleStrings;
