@@ -57,7 +57,7 @@
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
 			user = new User();
-			response.sendRedirect("login.jsp");
+			//response.sendRedirect("login.jsp");
 		}
 	%>
 
@@ -793,13 +793,13 @@
 		     url: URL,
 		     data: userData,
 		     error: function(userData) {
-		var userItems;
-		var temp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
-		var userItems = $.parseJSON(temp);//OUT FOR PRODUCTION
+		
+		var usertemp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
+		var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
 		for(var i in userItems)
 		{
-		var userElement = '<a href="#" class="list-group-item" userName='+userItem[i].name+'><i class="fa fa-user fa-fw"></i> '
-				+ userItems[i].name
+		var userElement = '<a href="#" class="list-group-item" id='+userItems[i].userName+'><i class="fa fa-user fa-fw"></i> '
+				+ userItems[i].userName
 				+ '</a>';
 				$('#user').append(userElement);
 				};
