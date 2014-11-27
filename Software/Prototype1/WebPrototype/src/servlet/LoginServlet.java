@@ -26,7 +26,6 @@ public class LoginServlet extends HttpServlet {
 	@EJB
 	UserEAO eao;
 
-	// handling log out logic
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 	}
