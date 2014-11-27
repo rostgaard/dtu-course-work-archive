@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.ejb.LocalBean;
@@ -16,6 +17,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
+import web.services.util.VOD;
 
 /**
  * 
@@ -65,11 +68,41 @@ public class VideoWebService {
 		File file = new File("datastore/"+id+"/"+count+".mp4");
 		return  Files.readAllBytes(file.toPath());
 	}
+	
 	@GET
 	@Path("/getLatest")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getLatest ( @QueryParam("id") int id) throws IOException {
 		return (new File("datastore/"+id+"/").list().length-1)+"";
+	}
+	
+	@GET
+	@Path("/getVODS")
+	@Produces(MediaType.APPLICATION_JSON)
+	public VOD[] getVideo (@QueryParam("id") int id) throws IOException {
+		File dir = new File("datastore/"+id+"/");
+		File[] listOfFiles = dir.listFiles();
+		ArrayList<VOD> vods = new ArrayList<VOD>();
+		VOD current = null;
+		long lastTime = 0 ;
+		
+		for (File f : listOfFiles){
+			if (f.lastModified() < lastTime + 6000){//Video is continous
+				lastTime = f.lastModified();	
+			}
+			else//New VOD
+			{
+				if (current != null){
+					vods.add( current);
+				}
+				int count = Integer.parseInt( f.getName().replace(".mp4", ""));
+				current = new VOD(count,f.lastModified());
+				lastTime = f.lastModified();
+			}
+			
+		}
+		
+		return (VOD[])(vods.toArray());
 	}
 	
 	@GET
