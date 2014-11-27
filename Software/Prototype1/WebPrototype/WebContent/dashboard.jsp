@@ -67,7 +67,7 @@
 		<li><a href="#devices" role="tab" data-toggle="tab">Devices</a></li>
 		<li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
 
-		<li style="float: right;"><a href="/Prototype1/Servlet">Log
+		<li style="float: right;"><a href="/Prototype1/LogoutServlet">Log
 				Out</a></li>
 
 

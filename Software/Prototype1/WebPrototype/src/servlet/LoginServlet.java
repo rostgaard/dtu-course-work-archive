@@ -18,7 +18,7 @@ import entity.model.UserEntity;
  * @author s124259
  *
  */
-@WebServlet("/Servlet")
+@WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -29,10 +29,6 @@ public class LoginServlet extends HttpServlet {
 	// handling log out logic
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if(session != null)
-			session.invalidate();
-		response.sendRedirect("login.jsp");
 	}
 
 	// handling log in logic
