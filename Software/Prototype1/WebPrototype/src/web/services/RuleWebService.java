@@ -60,6 +60,7 @@ public class RuleWebService {
 	@PostConstruct
 	private void startup() {
 		System.out.println("Start up");
+		
 		List<RuleString> dbRules = this.getRulesFromDB();
 
 		if (dbRules.isEmpty()) {
@@ -79,15 +80,6 @@ public class RuleWebService {
 	private void reloadRules() {
 		ruleEngine = new RuleEngine(RuleEngine.parseRules(this.getRulesFromDB()));
 
-	}	
-	
-	@GET
-	@Path("/startup")
-	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-	@Produces(MediaType.TEXT_PLAIN)
-	public String addPolicy() {
-		startup();
-		return "d";
 	}
 	
 	@GET

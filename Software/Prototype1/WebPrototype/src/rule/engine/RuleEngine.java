@@ -89,7 +89,6 @@ public class RuleEngine {
 	 * as a list of RuleString DTO objects.
 	 * 
 	 *  Modified @author Luai s113444
-	 *  ???? It goes through all the policies!!
 	 * 
 	 * @return
 	 */
