@@ -69,7 +69,7 @@
         <li><a href="#rules" role="tab" data-toggle="tab">Rules</a></li>
 		<li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
 
-		<li style="float: right;"><a href="/Prototype2/LogoutServlet">Log
+		<li style="float: right;"><a href="/Prototype25/LogoutServlet">Log
 				Out</a></li>
 
 
@@ -272,10 +272,77 @@
 							</div>
 							<div class="modal-body">
 
-								<video width="800" id="player" controls autoplay>
-									<!--<source src="tmp/video1.mp4"  type="video/mp4" >-->
-									<!--<source src="mov_bbb.ogg" type="video/ogg">-->
-								</video>
+								<div id="liveplayer">
+<h1> Video Player </h1>
+<hr>
+<video width="800" id="playerlive">
+  Your browser does not support HTML5 video.
+</video>
+</div><!-- liveplayer -->
+<div id="vodplayer">
+<video width="800" id="playervod" controls>
+  Your browser does not support HTML5 video.
+</video>
+</div><!-- vodplayer -->
+
+<button class="button" onClick="startLive(14);">Show live video feed</button>
+<div id="voddiv">
+</div>
+<script>
+var url = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype25/rest/video/";
+function startLive(id){
+$('#liveplayer').show();
+var latest;
+$("#playerlive").bind("ended", function() {
+		
+	$.get(url+"getLatest?id="+id,function( data ) {
+
+	$("#playerlive")[0].src=url+"getVideo?id="+id+"&count="+data;
+
+	$("#playerlive")[0].play();
+});});
+
+$.get(url+"getLatest?id="+id,function( data ) {
+
+$("#playerlive")[0].src=url+"getVideo?id="+id+"&count="+data;
+
+$("#playerlive")[0].play();
+});
+
+}// startlive
+
+function startVod(i, end){
+$('#vodplayer').show();
+
+$("#playervod")[0].src=url+"getVideo?id="+id+"&count="+i;
+
+$("#playervod").bind("ended", function() {
+	console.log(i+"/"+end);
+	if (end > 1){
+	startVod(i+1,end-1);
+	}
+	else {$('#playervod')[0].pause();}
+});
+$("#playervod")[0].play();
+}
+//Init
+var id = 14;
+$("#liveplayer").hide();
+$("#vodplayer").hide();
+
+//Generate vod buttons
+$.getJSON( url+"getVODS?id="+id, function( data ) {
+vods = data;
+$.each( data.reverse(), function( key, vod ) {
+	var date = new Date(vod.startTime);
+	var element = '<a><br>'+date.toUTCString()+'&nbsp;&nbsp;&nbsp;Length: '+vod.length*2+'s&nbsp;&nbsp;&nbsp;<button class="button" onClick="startVod('+vod.startID+','+vod.length+');">  Show video</button>';
+	$('#voddiv').append(element);
+});
+});
+
+
+</script>
+<!-- PLAYER SCRIPT END-->
 
 							</div>
 						</div>
@@ -848,7 +915,7 @@
 		based on devices from webrservice request
 	*/
 	
-	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype2/rest";
+	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype25/rest";
 	//var webServerPath = "http://localhost:8080/Prototype1/rest";
 	
 	$( document ).ready(function() {

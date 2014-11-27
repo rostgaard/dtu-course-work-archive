@@ -32,8 +32,6 @@ import web.services.util.VOD;
 @Path("/video")
 public class VideoWebService {
 
-
-
 	@POST
 	@Path("/addVideo")
 	@Consumes("video/mp4")
