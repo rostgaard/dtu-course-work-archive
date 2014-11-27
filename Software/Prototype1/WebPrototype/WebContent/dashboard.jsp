@@ -918,7 +918,7 @@ $.each( data.reverse(), function( key, vod ) {
 	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype25/rest";
 	//var webServerPath = "http://localhost:8080/Prototype1/rest";
 	
-	$( document ).ready(function() {
+
 		var data;
 		var URL = webServerPath+"/apps/getDevicesWithCamera";
 			$.ajax({
@@ -927,13 +927,14 @@ $.each( data.reverse(), function( key, vod ) {
 			     data: data,
 			     success: function(data) {
 					var devices = $.parseJSON(data);
+					print(devices);
 					for(var i in devices){
 						var mac = devices[i].mac;
 						 $('<button id="' + mac + '"' + ' type="button" class="draggable" data-toggle="modal" data-target="#jesperModal" />').text(+i + 1).appendTo('#cameraMap');
 					}
 			   	 }
 			 });
-	});	
+	
 	</script>
 
 
@@ -969,7 +970,7 @@ $.each( data.reverse(), function( key, vod ) {
 	on page load and update #devicesRunning class with data.
 	*/
 
-	$( document ).ready(function() {
+
 		var URL = webServerPath+"/apps/getDeviceCount";
 		var data;
 		$.ajax({
@@ -980,7 +981,7 @@ $.each( data.reverse(), function( key, vod ) {
 		          $('#devicesRunning').html(data);
 		     }
 		   });
-	});	
+
 	</script>
 
 	<script>
@@ -990,7 +991,7 @@ $.each( data.reverse(), function( key, vod ) {
 		on page load and update #lastLogin class with data.
 		Using JQuery timeago plugin for formatting
 	*/
-	$( document ).ready(function() {
+
 		var baseURI = webServerPath+"/users/getLastLoginByUserName?userName=";
 		
 		var buildURL = baseURI + userName;
@@ -1003,7 +1004,7 @@ $.each( data.reverse(), function( key, vod ) {
 		          $('#lastLogin').html(jQuery.timeago(new Date(data)));
 		     }
 		   });		
-	});	
+
 	</script>
 
 	<script>
@@ -1012,7 +1013,7 @@ $.each( data.reverse(), function( key, vod ) {
 		Getting security level with webservice call
 		on page load and update #securityLevel class with data
 	*/
-	$( document ).ready(function() {
+
 		var URL = webServerPath+"/rules/getSecurityLevel";
 		$.ajax({
 		     type: "GET",
@@ -1027,7 +1028,7 @@ $.each( data.reverse(), function( key, vod ) {
 		    	 }
 		     }
 		   });	
-	});	
+
 	</script>
 
 	<script type="text/javascript">
