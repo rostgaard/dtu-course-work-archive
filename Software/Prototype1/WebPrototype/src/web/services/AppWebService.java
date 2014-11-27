@@ -157,24 +157,13 @@ public class AppWebService {
 	public List<App> getDevicesWithCamera(){
 		
 		List<App> apps = getAllEventList();
-		Set<String> uniqueMACAddr = new HashSet<>();
-		List<App> uniqueDevicesWithCamera = new ArrayList<App>();
+		List<App> devicesWithCamera = new ArrayList<App>();
 		
 		for(App app : apps) {
-			uniqueMACAddr.add(app.getMac());
+			if(app.getEventType().equals(EventType.STOP_VIDEO_RECORDING))
+				devicesWithCamera.add(app);
 		}
-		
-		for(String mac : uniqueMACAddr){
-			for(App a : apps){
-				if(a.getMac().equals(mac) && 
-						(a.getEventType() == EventType.STOP_VIDEO_RECORDING 
-						|| a.getEventType() == EventType.START_VIDEO_RECORDING)){
-					uniqueDevicesWithCamera.add(a);
-					break;
-				}
-			}			
-		}	
-		return uniqueDevicesWithCamera;
+		return devicesWithCamera;
 	}
 	
 	
