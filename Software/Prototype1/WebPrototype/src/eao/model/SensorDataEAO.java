@@ -172,9 +172,9 @@ public class SensorDataEAO {
 		TypedQuery<AppEntity> query = em.createQuery(Query.queryGetApp, AppEntity.class);
 		query.setParameter("mac", mac);
 		query.setParameter("eventType",eventType);
-		List<AppEntity> result = query.getResultList();
-		result.get(0).setStatus(status);
-	    return em.merge(result.get(0));
+		AppEntity result = query.getSingleResult();
+		result.setStatus(status);
+	    return em.merge(result);
 	}
 
 
