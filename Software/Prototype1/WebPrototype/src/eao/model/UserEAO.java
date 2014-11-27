@@ -22,7 +22,7 @@ import enums.Role;
 @Stateless
 public class UserEAO {
 
-	@PersistenceContext(unitName = "Prototype1")
+	@PersistenceContext(unitName = "Prototype2")
 	EntityManager em;
 
 

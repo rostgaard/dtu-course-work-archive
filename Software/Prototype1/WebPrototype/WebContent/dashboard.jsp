@@ -505,7 +505,7 @@
 				$('#lightAct').html("Light is deactivated");
 					var data;
 					var devices;
-					var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAppByMac?mac="+mac;
+					var URL = webServerPath+"/rest/apps/getAppByMac?mac="+mac;
 					$.ajax({
 		     		type: "GET",
 		     		url: URL,
@@ -733,6 +733,10 @@
 
 
 	<script>
+	
+	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1";
+	//var webServerPath = "http://localhost:8080/Prototype1";
+	
 	(function poll(){
 		   setTimeout(function(){
 		      $.ajax({ url: "server", success: function(data){
@@ -765,7 +769,7 @@
 	*/
 
 	$( document ).ready(function() {
-		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getDeviceCount";
+		var URL = webServerPath+"/rest/apps/getDeviceCount";
 		var data;
 		$.ajax({
 		     type: "GET",
@@ -786,7 +790,7 @@
 		Using JQuery timeago plugin for formatting
 	*/
 	$( document ).ready(function() {
-		var baseURI = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getLastLoginByUserName?userName=";
+		var baseURI = webServerPath+"/rest/users/getLastLoginByUserName?userName=";
 		var userName = "<%=user.getUserName()%>";
 		var buildURL = baseURI + userName;
 		var data;
@@ -808,7 +812,7 @@
 		on page load and update #securityLevel class with data
 	*/
 	$( document ).ready(function() {
-		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/rules/getSecurityLevel";
+		var URL = webServerPath+"/rest/rules/getSecurityLevel";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -831,7 +835,7 @@
 		Get list of events and devices and place in list
 	*/
 	var data;
-	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents";
+	var URL = webServerPath+"/rest/events/getAllEvents";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -849,7 +853,7 @@
 		     });
 		     
 	var devData;
-	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getDevices";
+	var URL = webServerPath+"/rest/events/getDevices";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -878,7 +882,7 @@
 	<script>		
 		$('#securityLevelGroup button').click(function() {
 		    $(this).addClass('active').siblings().removeClass('active');
-		    var baseURI = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/rules/setSecurityLevel?level=";
+		    var baseURI = webServerPath+"/rest/rules/setSecurityLevel?level=";
 		    var level = $(this).attr('id');
 		    var URL = baseURI + level;		  
 		    
@@ -905,7 +909,7 @@
 	
 	<script>
 		var userData;
-		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getUsers";
+		var URL = webServerPath+"/rest/users/getUsers";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -938,7 +942,7 @@
 		
 			password = doucment.getElementById('password').value;
 			
-			var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/addUser?userName="+username+"&email="+email+"&firsName"+firstname+"&lastName"+lastname+"&role"+role+"&password"+password;
+			var URL = webServerPath+"/rest/users/addUser?userName="+username+"&email="+email+"&firsName"+firstname+"&lastName"+lastname+"&role"+role+"&password"+password;
 			$.ajax({
 		     type: "POST",
 		     url: URL,
@@ -953,7 +957,7 @@
 	
   <script>
     var ruleList;
-    var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/rules/getAllRuleStrings";
+    var URL = webServerPath+"/rest/rules/getAllRuleStrings";
     $.ajax({
          type: "GET",
          url: URL,

@@ -18,7 +18,7 @@ import entity.model.RuleStringEntity;
 @Stateless
 public class RuleDataEAO {
 	
-	@PersistenceContext(unitName = "Prototype1")
+	@PersistenceContext(unitName = "Prototype2")
 	EntityManager em;
 	
 	public PolicyEntity addPolicyEntity(String name) {

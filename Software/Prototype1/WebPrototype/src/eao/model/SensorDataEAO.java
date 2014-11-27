@@ -17,7 +17,7 @@ import enums.EventType;
 @Stateless
 public class SensorDataEAO {
 	
-	@PersistenceContext(unitName = "Prototype1")
+	@PersistenceContext(unitName = "Prototype2")
 	EntityManager em;
 	
 	public AppEntity addApp(String mac, EventType eventType) {
