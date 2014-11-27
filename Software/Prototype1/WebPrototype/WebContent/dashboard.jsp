@@ -1077,7 +1077,7 @@
 		    }
 		    
 		    $.ajax({
-		    	  type: "POST",
+		    	  type: "PUT",
 		    	  url: URL
 		    	});
 		    
