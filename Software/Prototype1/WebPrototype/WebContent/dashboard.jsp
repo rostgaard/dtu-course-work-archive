@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="dto.model.User"%>
 <%@ page import="enums.Role"%>
 
@@ -52,14 +52,14 @@
 </head>
 
 <body>
-	 <%/*
+	 <%
 		//allow access only if session attribute "user" is set beforehand
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
 			user = new User();
 			response.sendRedirect("login.jsp");
 		}
-		*/
+		
 	%>
 
 	<ul class="nav nav-tabs" role="tablist">
@@ -459,15 +459,15 @@
 											</div>
 											<div class="form-group">
 												<div class="col-sm-16">
-													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="light" value="1">Flashlight</label></div>
-													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="camera" value="1">Camera</label></div>
-													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="sound" value="1">Sound</label></div>		
+													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="light" value="true">Flashlight</label></div>
+													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="camera" value="true">Camera</label></div>
+													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="sound" value="true">Sound</label></div>		
 												</div>
 											</div>
 											<div class="form-group">
 												<div class="col-sm-4">
 													<button type="button" id="submit"
-														class="btn btn-lg btn-success btn-block" onclick="">Configure</button>
+														class="btn btn-lg btn-success btn-block" onclick="confDev()">Configure</button>
 												</div>
 											</div>
 										</div>
@@ -532,11 +532,11 @@
 										$('#lightAct').html("Light is active");
 									}
 								}
-							}
+							};
 							//onclose del der sætter mac i configure felt til configurering	     		   	
 		     			}
 		   			});
-		   		};
+		   		}
 		   	
 					</script>
 				</div>
@@ -860,11 +860,10 @@
 
 	<script type="text/javascript">
 	
-	/*	@author s124255
-		Get list of events and devices and place in list
-	*/
+	/** @author s124255
+		*/
 	var data;
-	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents";
+	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAllEvents";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -880,9 +879,10 @@
 					}
 				}
 		     });
-		     
+	/** @author s124255
+		*/	     
 	var devData;
-	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getDevices";
+	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getDevices";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -901,6 +901,48 @@
 			}
 			
 		});
+		
+	/** @author s124255
+		*/
+		function confDev(){
+		
+			var lightAppStatus = false;
+			var camAppStatus = false;
+			var soundAppStatus = false;
+			var app = appData;
+			var devMac = document.getElementById('mac').value;
+			if(document.getElementById('light').value==1){
+				lightAppStatus = true;
+			}
+			if(document.getElementById('camera').value==1){
+				camAppStatus = true;
+			}
+			if(document.getElementById('sound').value==1){
+				soundAppStatus = true;
+			}	
+			
+			$.ajax({
+		    	type: "UPDATE",
+		     	url: URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/update?mac="+devMac+"&eventType='PLAYSOUND'&status="+soundAppStatus+"",
+
+		    });
+			
+			$.ajax({
+		    	type: "UPDATE",
+		     	url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/update?mac="+devMac+"&eventType='START_VIDEO_RECORDING'&status="+camAppStatus+"",
+		     
+		    });
+			
+			$.ajax({
+		    	type: "UPDATE",
+		     	url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/update?mac="+devMac+"&eventType='FLASH_LIGHT'&status="+lightAppStatus+"",
+		     	
+		    });
+				
+		}
+		
+		
+		
 	</script>
 
 		<!-- 

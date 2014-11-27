@@ -119,7 +119,7 @@ public class AppWebService {
 
 	}
 	
-	/*
+	/**
 	 * @Author s124255
 	 */
 	@GET
@@ -143,12 +143,19 @@ public class AppWebService {
 
 	}
 	
-	@GET
+	/**
+	 * @author s124255
+	 * @param mac
+	 * @param eventType
+	 * @param status
+	 * @return
+	 */
+	@UPDATE
 	@Path("/updateApp")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
-	public App updateApp(@QueryParam("mac") String mac, @QueryParam("eventType") EventType eventType, @QueryParam("status") boolean status) {
-		return Conversion.convertAppEntity(eao.update(mac, eventType, status));
+	public updateApp(@QueryParam("mac") String mac, @QueryParam("eventType") EventType eventType, @QueryParam("status") boolean status) {
+		Conversion.convertAppEntity(eao.update(mac, eventType, status));
 	}
 	
 

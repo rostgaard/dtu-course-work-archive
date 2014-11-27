@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ page import="dto.model.User"%>
 <!DOCTYPE html>
 <html lang="en">

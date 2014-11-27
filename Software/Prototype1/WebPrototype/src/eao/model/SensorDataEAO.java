@@ -162,7 +162,11 @@ public class SensorDataEAO {
 	}
 	
 	/**
-	 * source: http://stackoverflow.com/questions/1809159/how-to-implement-update-method-in-dao-using-entitymanager-jpa
+	 * @author s124255
+	 * @param mac
+	 * @param eventType
+	 * @param status
+	 * @return
 	 */
 	public AppEntity update(String mac, EventType eventType, boolean status) {
 		TypedQuery<AppEntity> query = em.createQuery(Query.queryGetApp, AppEntity.class);
