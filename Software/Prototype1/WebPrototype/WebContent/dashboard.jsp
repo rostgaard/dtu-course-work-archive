@@ -52,13 +52,14 @@
 </head>
 
 <body>
-	 <%
+	 <%/*
 		//allow access only if session attribute "user" is set beforehand
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
 			user = new User();
 			response.sendRedirect("login.jsp");
 		}
+		*/
 	%>
 
 	<ul class="nav nav-tabs" role="tablist">
@@ -600,13 +601,13 @@
 												<div class="form-group">
 													<div class="col-sm-12">
 														<input type="text" class="form-control" id="firstname"
-															placeholder="First Name">
+															placeholder="Firstname">
 													</div>
 												</div>
 												<div class="form-group">
 													<div class="col-sm-12">
 														<input type="text" class="form-control" id="lastname"
-															placeholder="Last Name">
+															placeholder="Lastname">
 													</div>
 												</div>
 												<div class="form-group">
@@ -619,18 +620,15 @@
 												</div>
 												<div class="form-group">
 													<div class="col-sm-12">
-														<div class="checkbox">
-															<label> <input type="checkbox" id="checkbox"
-																value="1">Ask for new password on first log on
-															</label>
-														</div>
+														<input type="password" class="form-control" id="password"
+														placeholder="Password">
 													</div>
 												</div>
 												<div class="form-group">
 													<div class="col-sm-4">
 														<button type="button" id="submit"
 															class="btn btn-lg btn-success btn-block"
-															onclick="addUser()">Add User</button>
+															data-toggle="modal" data-target="#addUserModal" onclick="addTest()">Add User</button>
 													</div>
 												</div>
 											</div>
@@ -644,7 +642,107 @@
 			</div>
 		</div>
 	</div>
-
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
+		aria-labelledby="addUserModal" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+				</div>
+				<div class="modal-body" align=center>
+				
+				<p class="text" id="uname"></p>
+				<p class="text" id="mail"></p>
+				<p class="text" id="fname"></p>
+				<p class="text" id="lname"></p>
+				<p class="text" id="role"></p>
+				<p class="text" id="pass"></p>
+				
+				<script>
+				
+				function addTest(){
+					var username,firstname,lastname,email,role,password;
+				
+					username = document.getElementById('username').value;
+					email = document.getElementById('email').value;
+					firstname = doucment.getElementById('firstname').value;
+					lastname = doucment.getElementById('lastname').value;
+					role = doucment.getElementById('role').value;
+					password = document.getElementById('password').value;
+					
+					$('#uname').html("Username: "+username);
+					$('#mail').html("Email: "+email);
+					$('#fname').html("Firstname: "+firstname);
+					$('#lname').html("Lastname: "+lastname);
+					$('#role').html("Role: "+role);
+					$('#pass').html("Password: "+password);
+					
+					var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/addUser?userName="+username+"&email="+email+"&firsName"+firstname+"&lastName"+lastname+"&role"+role+"&password"+password;
+					$.ajax({
+		    		type: "POST",
+		    		url: URL,
+		     		data: data,
+		     		success: function(data) {
+				
+			}
+		});
+				}
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog"
+		aria-labelledby="userInfoModal" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+				</div>
+				<div class="modal-body" align=center>
+				
+				<p class="text" id="uname"></p>
+				<p class="text" id="mail"></p>
+				<p class="text" id="fname">Per</p>
+				<p class="text" id="lname"></p>
+				<p class="text" id="role"></p>
+				<p class="text" id="pass"></p>
+				
+				<script>
+				
+				function getUser(username){
+				$('#uname').html("Username: "+username);
+				var userData;
+				var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getUserByUserName?userName="+username;
+				$.ajax({
+		     	type: "GET",
+		     	url: URL,
+		     	data: userData,
+		     	error: function(userData) {
+				var usertemp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
+				var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
+				for(var i in userItems){
+					if(userItems[i].userName == username){
+						$('#mail').html("Email: "+userItems[i].email);
+						$('#fname').html("Firstname: "+userItems[i].firstName);
+						$('#lname').html("Lastname: "+userItems[i].lastName);
+						$('#role').html("Role: "+userItems[i].role);
+						$('#pass').html("Password: "+userItems[i].password);
+					}
+				}
+				}
+				});
+				}
+				</script>
+			</div>
+			</div>
+		</div>
+	</div>
 		<!-- ##################################################################
 #######################################################################
 #######################################################################
@@ -711,7 +809,7 @@
 	*/
 	$( document ).ready(function() {
 		var baseURI = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getLastLoginByUserName?userName=";
-		var userName = "<%=user.getUserName()%>";
+		
 		var buildURL = baseURI + userName;
 		var data;
 		$.ajax({
@@ -840,7 +938,7 @@
 		var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
 		for(var i in userItems)
 		{
-		var userElement = '<a href="#" class="list-group-item" id='+userItems[i].userName+'><i class="fa fa-user fa-fw"></i> '
+		var userElement = '<a href="#" data-toggle="modal" data-target="#userInfoModal" class="list-group-item" id='+userItems[i].userName+' onclick="getUser(\'' + userItems[i].userName + '\')"><i class="fa fa-user fa-fw"></i> '
 				+ userItems[i].userName
 				+ '</a>';
 				$('#user').append(userElement);
@@ -848,35 +946,6 @@
 			}
 		});
 	</script>
-	
-	<!-- Add User -->
-	
-	<script type="text/javascript">
-		var username,email,firstname,lastname,role,password;
-		function addUser(){
-			username = document.getElementById('username').value;
-			email = document.getElementById('email').value;
-			firstname = doucment.getElementById('firstname').value;
-			lastname = doucment.getElementById('lastname').value;
-			role = doucment.getElementById('role').value;
-		
-			password = doucment.getElementById('password').value;
-			
-			var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/addUser?userName="+username+"&email="+email+"&firsName"+firstname+"&lastName"+lastname+"&role"+role+"&password"+password;
-			$.ajax({
-		     type: "POST",
-		     url: URL,
-		     data: data,
-		     success: function(data) {
-				
-			}
-		});
-		}
-	
-	</script>
-	
-	
-	
 	
 		<script src="js/jquery-1.11.0.js"></script>
 		<script src="js/jquery.timeago.js"></script>
