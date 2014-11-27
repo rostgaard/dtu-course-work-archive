@@ -852,17 +852,14 @@
 	//var webServerPath = "http://localhost:8080/Prototype1/rest";
 	
 	$( document ).ready(function() {
-		
-		var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"C1:DS:37:AD:G3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":3,"mac":"D1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
-
 		var data;
 		var URL = webServerPath+"/apps/getDevicesWithCamera";
 			$.ajax({
 			     type: "GET",
 			     url: URL,
 			     data: data,
-			     error: function(data) {
-					var devices = $.parseJSON(temp);
+			     success: function(data) {
+					var devices = $.parseJSON(data);
 					for(var i in devices){
 						var mac = devices[i].mac;
 						 $('<button id="' + mac + '"' + ' type="button" class="draggable" data-toggle="modal" data-target="#jesperModal" />').text(+i + 1).appendTo('#cameraMap');
