@@ -927,7 +927,7 @@ $.each( data.reverse(), function( key, vod ) {
 			     data: data,
 			     success: function(data) {
 					var devices = $.parseJSON(data);
-					print(devices);
+					console.log(devices);
 					for(var i in devices){
 						var mac = devices[i].mac;
 						 $('<button id="' + mac + '"' + ' type="button" class="draggable" data-toggle="modal" data-target="#jesperModal" />').text(+i + 1).appendTo('#cameraMap');
@@ -1201,9 +1201,6 @@ $.each( data.reverse(), function( key, vod ) {
 
 		<!-- Custom Theme JavaScript -->
 		<script src="js/sb-admin-2.js"></script>
-
-		<!-- Custom DragNDrop JavaScript -->
-		<script src="js/dragndrop.js"></script>
 </body>
 
 </html>
