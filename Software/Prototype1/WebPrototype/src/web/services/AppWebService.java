@@ -142,5 +142,14 @@ public class AppWebService {
 		return device;
 
 	}
+	
+	@GET
+	@Path("/updateApp")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public App updateApp(@QueryParam("mac") String mac, @QueryParam("eventType") EventType eventType, @QueryParam("status") boolean status) {
+		return Conversion.convertAppEntity(eao.update(mac, eventType, status));
+	}
+	
 
 }

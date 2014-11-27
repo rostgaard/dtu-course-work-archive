@@ -1,6 +1,5 @@
 package eao.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import dto.model.User;
 import entity.model.UserEntity;
 import enums.Role;
 
