@@ -459,9 +459,9 @@
 											</div>
 											<div class="form-group">
 												<div class="col-sm-16">
-													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="light" value="true">Flashlight</label></div>
-													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="camera" value="true">Camera</label></div>
-													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="sound" value="true">Sound</label></div>		
+													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="light" value="1" >Flashlight</label></div>
+													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="camera" value="1">Camera</label></div>
+													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="sound" value="1">Sound</label></div>		
 												</div>
 											</div>
 											<div class="form-group">
@@ -510,11 +510,11 @@
 		     		type: "GET",
 		     		url: URL,
 		     		data: data,
-		     		error: function(data) {
+		     		success: function(data) {
 		     			$('#macDevice').html("Device mac: " + mac);
 		     			devices = data;
-		     			var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":false},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"PLAY_SOUND","events":[],"id":89,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
-						devices = $.parseJSON(temp);
+		     			//var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":false},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"PLAY_SOUND","events":[],"id":89,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
+						//devices = $.parseJSON(temp);
 		     				for(var i in devices)
 							{
 								$('#idDevice').html("Device ID: " + devices[i].id);
@@ -681,7 +681,7 @@
 					
 					var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/addUser?userName="+username+"&email="+email+"&firsName="+firstname+"&lastName="+lastname+"&role="+role+"&password="+password;
 					$.ajax({
-		    		type: "POST",
+		    		type: "GET",
 		    		url: URL,
 		     		data: data,
 		     		success: function(data) {
@@ -731,10 +731,11 @@
 		    	type: "GET",
 		     	url: URL,
 		     	data: userData,
-		     	error: function(userData) {
+		     	success: function(userData) {
 		
-				var usertemp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
-				var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
+				//var usertemp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
+				//var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
+				var userItems = userData;
 				for(var i in userItems){
 					if(userItems[i].userName == user){
 					$('#eMail').html("Email: "+userItems[i].email);
@@ -887,10 +888,12 @@
 		     type: "GET",
 		     url: URL,
 		     data: devData,
-		     error: function(devData) {
-		var devItems;
-		var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":3,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
-		var devItems = $.parseJSON(temp);//OUT FOR PRODUCTION
+		     success: function(devData) {
+		
+		//var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":3,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
+		//var devItems = $.parseJSON(temp);//OUT FOR PRODUCTION
+		var devItems = devData;//IN FOR PRODUCTION
+		
 		for(var i in devItems)
 		{
 		var devElement = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item" onclick="deviceInfo(\'' + devItems[i].mac + '\')"><i class="fa fa-mobile fa-fw"></i> '
@@ -911,13 +914,13 @@
 			var soundAppStatus = false;
 			var app = appData;
 			var devMac = document.getElementById('mac').value;
-			if(document.getElementById('light').value==1){
+			if(document.getElementById('light').value=="1"){
 				lightAppStatus = true;
 			}
-			if(document.getElementById('camera').value==1){
+			if(document.getElementById('camera').value=="1"){
 				camAppStatus = true;
 			}
-			if(document.getElementById('sound').value==1){
+			if(document.getElementById('sound').value=="1"){
 				soundAppStatus = true;
 			}	
 			
@@ -985,10 +988,12 @@
 		     type: "GET",
 		     url: URL,
 		     data: userData,
-		     error: function(userData) {
+		     success: function(userData) {
 		
-		var usertemp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
-		var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
+		//var usertemp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
+		//var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
+		var userItems = userData;
+		
 		for(var i in userItems)
 		{
 		var userElement = '<a href="#" data-toggle="modal" data-target="#userInfoModal" class="list-group-item" onclick="getUser(\'' + userItems[i].userName + '\')"><i class="fa fa-user fa-fw"></i> '
