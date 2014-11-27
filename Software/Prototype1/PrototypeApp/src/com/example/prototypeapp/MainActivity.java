@@ -1,5 +1,7 @@
 package com.example.prototypeapp;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
@@ -102,6 +104,9 @@ public class MainActivity extends Activity {
 		private AccelerometerEventListener accelerometerListener;
 		private PlaySoundActuator playSoundActuator;
 		private FlashLightActuator flashLightActuator;
+		private boolean accelerometerActive = true;
+		private boolean playSoundActive = true;
+		private boolean flashLightActive = true;
 //		private String macAddress;
 
 		public PlaceholderFragment() {
@@ -130,17 +135,25 @@ public class MainActivity extends Activity {
 		public void onResume() {
 			super.onResume();
 			
-			accelerometerListener = new AccelerometerEventListener(macAddress);
+			setAppStatus();
 			
-			sensorManager.registerListener(accelerometerListener,
-					sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION),
-					SensorManager.SENSOR_DELAY_NORMAL);
+			if (accelerometerActive) {
+				accelerometerListener = new AccelerometerEventListener(macAddress);
+				
+				sensorManager.registerListener(accelerometerListener,
+						sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION),
+						SensorManager.SENSOR_DELAY_NORMAL);
+			}		
 			
-			playSoundActuator = new PlaySoundActuator(getActivity(), macAddress);
-			playSoundActuator.start();
+			if (playSoundActive) {
+				playSoundActuator = new PlaySoundActuator(getActivity(), macAddress);
+				playSoundActuator.start();
+			}
 			
-			flashLightActuator = new FlashLightActuator(macAddress);
-			flashLightActuator.start();
+			if (flashLightActive) {
+				flashLightActuator = new FlashLightActuator(macAddress);
+				flashLightActuator.start();
+			}
 		}
 		
 		@Override
@@ -152,6 +165,21 @@ public class MainActivity extends Activity {
 			flashLightActuator = null;
 			sensorManager.unregisterListener(accelerometerListener);
 			accelerometerListener = null;
+		}
+		
+		private void setAppStatus() {
+			List<App> apps = WebServiceConnection.invokeGetAppByMac(macAddress);
+			for (App app : apps) {
+				if (app.getEventType() == EventType.ACCELEROMETER && app.isStatus() == false) {
+					accelerometerActive = false;
+				}
+				if (app.getEventType() == EventType.FLASHLIGHT && app.isStatus() == false) {
+					flashLightActive = false;
+				}
+				if (app.getEventType() == EventType.PLAYSOUND && app.isStatus() == false) {
+					playSoundActive = false;
+				}
+			}
 		}
 	}
 }
