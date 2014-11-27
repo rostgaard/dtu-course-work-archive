@@ -66,6 +66,7 @@
 		<li class="active"><a href="#dashboard" role="tab"
 			data-toggle="tab">Dashboard</a></li>
 		<li><a href="#devices" role="tab" data-toggle="tab">Devices</a></li>
+        <li><a href="#rules" role="tab" data-toggle="tab">Rules</a></li>
 		<li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
 
 		<li style="float: right;"><a href="/Prototype1/LogoutServlet">Log
@@ -509,7 +510,7 @@
 				$('#lightAct').html("Light is deactivated");
 					var data;
 					var devices;
-					var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAppByMac?mac="+mac;
+					var URL = webServerPath+"/apps/getAppByMac?mac="+mac;
 					$.ajax({
 		     		type: "GET",
 		     		url: URL,
@@ -549,7 +550,81 @@
 	</div>
 		<!-- /#wrapper -->
 
+		<!-- ##################################################################
+#######################################################################
+#######################################################################
 
+#########################	Rules		###############################
+
+#######################################################################
+#######################################################################
+################################################################### -->
+
+
+		<div role="tabpanel" class="tab-pane" id="rules">
+			<div class="tab-pane" id="rules">
+				<div id="wrapper">
+					<div id="page-wrapper">
+						<div class="row">
+							<div class="col-lg-12">
+								<h1 class="page-header">Rule Management</h1>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<i class="fa fa-filter fa-fw"></i> Rules
+									</div>
+									<!-- /.panel-heading -->
+									<div class="panel-body">
+										<div class="list-group" id="rules"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<form class="form-horizontal" role="form">
+									<div class="form-group">
+										<div class="panel panel-default">
+											<div class="panel-heading">
+												<i class="fa fa-filter fa-fw"></i>New Rule
+											</div>
+											<div class="panel-body">
+												<div class="form-group">
+													<div class="col-sm-12">
+														<input type="text" class="form-control" id="rulename"
+															placeholder="Rule description">
+													</div>
+												</div>
+												<div class="form-group">
+                                                  <div class="col-sm-12">
+                                                      <label for="eventTrigger">Responds to event </label>
+                                                      <select id="eventTrigger" name="Even Trigger">
+                                                        <option value="ACCELEROMETER">Door open</option>
+                                                        <option value="HUMIDITY">Humitidy threshold</option>
+                                                        <option value="TEMPERATURE">Temperature threshols</option>
+                                                        <option value="USERALERT">User alert</option>
+                                                      </select>
+                                                    </div>
+													
+												</div>
+												<div class="form-group">
+													<div class="col-sm-4">
+														<button type="button" id="submit"
+															class="btn btn-lg btn-success btn-block"
+															onclick="addRule()">Add new rule</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- ##################################################################
 #######################################################################
 #######################################################################
@@ -683,7 +758,7 @@
 					}
 					password = document.getElementById('password').value;
 					
-					var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/addUser?userName="+username+"&email="+email+"&firsName="+firstname+"&lastName="+lastname+"&role="+role+"&password="+password;
+					var URL = webServerPath+"/users/addUser?userName="+username+"&email="+email+"&firsName="+firstname+"&lastName="+lastname+"&role="+role+"&password="+password;
 					$.ajax({
 		    		type: "GET",
 		    		url: URL,
@@ -697,6 +772,7 @@
 					$('#role').html("Role: "+role);
 					$('#pass').html("Password: "+password);
 					$('#sucess').html("User added to the system");
+					reloadUsers();
 			}
 		});
 				}
@@ -727,29 +803,27 @@
 				<script>
 				
 				function getUser(user){
-				$('#uName').html("Username: "+user);	
+				//$('#uName').html("Username: "+user);	
 				
-				var userData;
-				var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getUserByUserName?userName="+user;
+				var userData = [];
+				var URL = webServerPath+"/users/getUserByUserName?userName="+user;
 				$.ajax({
 		    	type: "GET",
 		     	url: URL,
-		     	data: userData,
-		     	success: function(userData) {
-		
+		     	success: function(user) {
+	
 				//var usertemp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
 				//var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
-				var userItems = userData;
-				for(var i in userItems){
-					if(userItems[i].userName == user){
-					$('#eMail').html("Email: "+userItems[i].email);
-					$('#fName').html("Firstname: "+userItems[i].firstName);
-					$('#lName').html("Lastname: "+userItems[i].lastName);
-					$('#role').html("Role: "+userItems[i].role);
-					$('#pass').html("Password: "+userItems[i].password);
-					
-					}
-				};
+				//var user = $.parseJSON(userData);
+				
+				console.log(user);
+	
+				$('#eMail').text("Email: "+user.email);
+				$('#fName').text("Firstname: "+user.userName);
+				$('#lName').text("Lastname: "+user.lastName);
+				$('#role').text("Role: "+user.role);
+				$('#pass').text("Password: "+user.password);
+			
 			}
 		});
 				
@@ -776,12 +850,15 @@
 		based on devices from webrservice request
 	*/
 	
+	//var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1";
+	var webServerPath = "http://localhost:8080/Prototype1/rest";
+	
 	$( document ).ready(function() {
 		
 		var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"C1:DS:37:AD:G3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":3,"mac":"D1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
 
 		var data;
-		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getDevicesWithCamera";
+		var URL = webServerPath+"/apps/getDevicesWithCamera";
 			$.ajax({
 			     type: "GET",
 			     url: URL,
@@ -831,7 +908,7 @@
 	*/
 
 	$( document ).ready(function() {
-		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getDeviceCount";
+		var URL = webServerPath+"/apps/getDeviceCount";
 		var data;
 		$.ajax({
 		     type: "GET",
@@ -852,7 +929,7 @@
 		Using JQuery timeago plugin for formatting
 	*/
 	$( document ).ready(function() {
-		var baseURI = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getLastLoginByUserName?userName=";
+		var baseURI = webServerPath+"/users/getLastLoginByUserName?userName=";
 		
 		var buildURL = baseURI + userName;
 		var data;
@@ -874,7 +951,7 @@
 		on page load and update #securityLevel class with data
 	*/
 	$( document ).ready(function() {
-		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/rules/getSecurityLevel";
+		var URL = webServerPath+"/rules/getSecurityLevel";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -896,7 +973,7 @@
 	/** @author s124255
 		*/
 	var data;
-	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAllEvents";
+	var URL = webServerPath+"/apps/getAllEvents";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -915,7 +992,7 @@
 	/** @author s124255
 		*/	     
 	var devData;
-	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getDevices";
+	var URL = webServerPath+"/apps/getDevices";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -958,19 +1035,19 @@
 			
 			$.ajax({
 		    	type: "PUT",
-		     	url: URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/update?mac="+devMac+"&eventType='PLAYSOUND'&status="+soundAppStatus+"",
+		     	url: URL = webServerPath+"/apps/update?mac="+devMac+"&eventType='PLAYSOUND'&status="+soundAppStatus+"",
 
 		    });
 			
 			$.ajax({
 		    	type: "PUT",
-		     	url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/update?mac="+devMac+"&eventType='START_VIDEO_RECORDING'&status="+camAppStatus+"",
+		     	url: webServerPath+"/apps/update?mac="+devMac+"&eventType='START_VIDEO_RECORDING'&status="+camAppStatus+"",
 		     
 		    });
 			
 			$.ajax({
 		    	type: "PUT",
-		     	url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/update?mac="+devMac+"&eventType='FLASH_LIGHT'&status="+lightAppStatus+"",
+		     	url: webServerPath+"/apps/update?mac="+devMac+"&eventType='FLASH_LIGHT'&status="+lightAppStatus+"",
 		     	
 		    });
 				
@@ -988,7 +1065,7 @@
 	<script>		
 		$('#securityLevelGroup button').click(function() {
 		    $(this).addClass('active').siblings().removeClass('active');
-		    var baseURI = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/rules/setSecurityLevel?level=";
+		    var baseURI = webServerPath+"/rules/setSecurityLevel?level=";
 		    var level = $(this).attr('id');
 		    var URL = baseURI + level;		  
 		    
@@ -1014,8 +1091,10 @@
 	<!-- GetUsers -->
 	
 	<script>
+	
+	function reloadUsers() {
 		var userData;
-		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getUsers";
+		var URL = webServerPath+"/users/getUsers";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -1026,6 +1105,7 @@
 		//var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
 		var userItems = userData;
 		
+		$('#user').empty();
 		for(var i in userItems)
 		{
 		var userElement = '<a href="#" data-toggle="modal" data-target="#userInfoModal" class="list-group-item" onclick="getUser(\'' + userItems[i].userName + '\')"><i class="fa fa-user fa-fw"></i> '
@@ -1035,6 +1115,9 @@
 				};
 			}
 		});
+	}
+	
+	reloadUsers();
 	</script>
 	
 		<script src="js/jquery-1.11.0.js"></script>
