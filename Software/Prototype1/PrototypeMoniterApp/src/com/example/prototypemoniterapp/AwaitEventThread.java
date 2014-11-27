@@ -44,15 +44,15 @@ public class AwaitEventThread extends Thread {
 			} catch (Exception e) {
 				
 				if(!run || isInterrupted()) break; 
-				
-				activity.runOnUiThread(new Runnable() {					
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						alertListAdapter.add("Exception: " + macAddress);
-						alertListAdapter.notifyDataSetChanged();
-					}
-				});
+//				
+//				activity.runOnUiThread(new Runnable() {					
+//					@Override
+//					public void run() {
+//						// TODO Auto-generated method stub
+//						alertListAdapter.add("Exception: " + macAddress);
+//						alertListAdapter.notifyDataSetChanged();
+//					}
+//				});
 			}
 			
 			if(!run || isInterrupted()) break; 

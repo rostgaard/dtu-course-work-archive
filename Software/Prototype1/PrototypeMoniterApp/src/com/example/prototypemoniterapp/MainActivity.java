@@ -121,9 +121,9 @@ public class MainActivity extends Activity {
 					for (App app : apps) {
 						macsTemp.add(app.getMac());
 					}
-					for (int i = 0; i < 3; i++) {
-						macsTemp.add("" + i);
-					}
+//					for (int i = 0; i < 3; i++) {
+//						macsTemp.add("" + i);
+//					}
 					final Set<String> macs = macsTemp;
 					Log.d("Debug", "Macs: " + macs);
 					
