@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="dto.model.User"%>
 <%@ page import="enums.Role"%>
 
@@ -59,6 +59,7 @@
 			user = new User();
 			response.sendRedirect("login.jsp");
 		}
+		
 	%>
 
 	<ul class="nav nav-tabs" role="tablist">
@@ -66,7 +67,6 @@
 			data-toggle="tab">Dashboard</a></li>
 		<li><a href="#devices" role="tab" data-toggle="tab">Devices</a></li>
 		<li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
-        <li><a href="#rules" role="tab" data-toggle="tab">Rules</a></li>
 
 		<li style="float: right;"><a href="/Prototype1/LogoutServlet">Log
 				Out</a></li>
@@ -459,7 +459,7 @@
 											</div>
 											<div class="form-group">
 												<div class="col-sm-16">
-													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="light" value="1">Flashlight</label></div>
+													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="light" value="1" >Flashlight</label></div>
 													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="camera" value="1">Camera</label></div>
 													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="sound" value="1">Sound</label></div>		
 												</div>
@@ -467,7 +467,7 @@
 											<div class="form-group">
 												<div class="col-sm-4">
 													<button type="button" id="submit"
-														class="btn btn-lg btn-success btn-block" onclick="">Configure</button>
+														class="btn btn-lg btn-success btn-block" onclick="confDev()">Configure</button>
 												</div>
 											</div>
 										</div>
@@ -505,16 +505,16 @@
 				$('#lightAct').html("Light is deactivated");
 					var data;
 					var devices;
-					var URL = webServerPath+"/rest/apps/getAppByMac?mac="+mac;
+					var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAppByMac?mac="+mac;
 					$.ajax({
 		     		type: "GET",
 		     		url: URL,
 		     		data: data,
-		     		error: function(data) {
+		     		success: function(data) {
 		     			$('#macDevice').html("Device mac: " + mac);
 		     			devices = data;
-		     			var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":false},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"PLAY_SOUND","events":[],"id":89,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
-						devices = $.parseJSON(temp);
+		     			//var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":false},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"PLAY_SOUND","events":[],"id":89,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
+						//devices = $.parseJSON(temp);
 		     				for(var i in devices)
 							{
 								$('#idDevice').html("Device ID: " + devices[i].id);
@@ -532,11 +532,11 @@
 										$('#lightAct').html("Light is active");
 									}
 								}
-							}
+							};
 							//onclose del der sætter mac i configure felt til configurering	     		   	
 		     			}
 		   			});
-		   		};
+		   		}
 		   	
 					</script>
 				</div>
@@ -550,31 +550,31 @@
 #######################################################################
 #######################################################################
 
-#########################	Rules		###############################
+#########################	Users		###############################
 
 #######################################################################
 #######################################################################
 ################################################################### -->
 
 
-		<div role="tabpanel" class="tab-pane" id="rules">
-			<div class="tab-pane" id="rules">
+		<div role="tabpanel" class="tab-pane" id="users">
+			<div class="tab-pane" id="users">
 				<div id="wrapper">
 					<div id="page-wrapper">
 						<div class="row">
 							<div class="col-lg-12">
-								<h1 class="page-header">Rule Management</h1>
+								<h1 class="page-header">User Management</h1>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
 								<div class="panel panel-default">
 									<div class="panel-heading">
-										<i class="fa fa-filter fa-fw"></i> Rules
+										<i class="fa fa-users fa-fw"></i> Users
 									</div>
 									<!-- /.panel-heading -->
 									<div class="panel-body">
-										<div class="list-group" id="rules"></div>
+										<div class="list-group" id="user"></div>
 									</div>
 								</div>
 							</div>
@@ -583,32 +583,52 @@
 									<div class="form-group">
 										<div class="panel panel-default">
 											<div class="panel-heading">
-												<i class="fa fa-filter fa-fw"></i>New Rule
+												<i class="fa fa-user fa-fw"></i>New User
 											</div>
 											<div class="panel-body">
 												<div class="form-group">
 													<div class="col-sm-12">
-														<input type="text" class="form-control" id="rulename"
-															placeholder="Rule description">
+														<input type="text" class="form-control" id="username"
+															placeholder="Username"/>
 													</div>
 												</div>
 												<div class="form-group">
-                                                  <div class="col-sm-12">
-                                                      <label for="eventTrigger">Responds to event </label>
-                                                      <select id="eventTrigger" name="Even Trigger">
-                                                        <option value="ACCELEROMETER">Door open</option>
-                                                        <option value="HUMIDITY">Humitidy threshold</option>
-                                                        <option value="TEMPERATURE">Temperature threshols</option>
-                                                        <option value="USERALERT">User alert</option>
-                                                      </select>
-                                                    </div>
-													
+													<div class="col-sm-12">
+														<input type="email" class="form-control" id="email"
+															placeholder="Email"/>
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-sm-12">
+														<input type="text" class="form-control" id="firstname"
+															placeholder="Firstname"/>
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-sm-12">
+														<input type="text" class="form-control" id="lastname"
+															placeholder="Lastname" />
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-sm-12">
+														<select id="role" name="Role">
+															<option value="1">Viewer</option>
+															<option value="2">Manager</option>
+														</select>
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-sm-12">
+														<input type="password" class="form-control" id="password"
+														placeholder="Password" />
+													</div>
 												</div>
 												<div class="form-group">
 													<div class="col-sm-4">
 														<button type="button" id="submit"
 															class="btn btn-lg btn-success btn-block"
-															onclick="addRule()">Add new rule</button>
+															data-toggle="modal" data-target="#addUserModal" onclick="addUser()">Add User</button>
 													</div>
 												</div>
 											</div>
@@ -621,106 +641,120 @@
 				</div>
 			</div>
 		</div>
-        <!-- ##################################################################
-#######################################################################
-#######################################################################
-
-######################### Users   ###############################
-
-#######################################################################
-#######################################################################
-################################################################### -->
-
-
-    <div role="tabpanel" class="tab-pane" id="users">
-      <div class="tab-pane" id="users">
-        <div id="wrapper">
-          <div id="page-wrapper">
-            <div class="row">
-              <div class="col-lg-12">
-                <h1 class="page-header">User Management</h1>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <i class="fa fa-users fa-fw"></i> Users
-                  </div>
-                  <!-- /.panel-heading -->
-                  <div class="panel-body">
-                    <div class="list-group" id="user"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <form class="form-horizontal" role="form">
-                  <div class="form-group">
-                    <div class="panel panel-default">
-                      <div class="panel-heading">
-                        <i class="fa fa-user fa-fw"></i>New User
-                      </div>
-                      <div class="panel-body">
-                        <div class="form-group">
-                          <div class="col-sm-12">
-                            <input type="text" class="form-control" id="username"
-                              placeholder="Username">
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <div class="col-sm-12">
-                            <input type="email" class="form-control" id="email"
-                              placeholder="Email">
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <div class="col-sm-12">
-                            <input type="text" class="form-control" id="firstname"
-                              placeholder="First Name">
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <div class="col-sm-12">
-                            <input type="text" class="form-control" id="lastname"
-                              placeholder="Last Name">
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <div class="col-sm-12">
-                            <select id="role" name="Role">
-                              <option value=0>Viewer</option>
-                              <option value=1>Manager</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <div class="col-sm-12">
-                            <div class="checkbox">
-                              <label> <input type="checkbox" id="checkbox"
-                                value="1">Ask for new password on first log on
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <div class="col-sm-4">
-                            <button type="button" id="submit"
-                              class="btn btn-lg btn-success btn-block"
-                              onclick="addUser()">Add User</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 	</div>
-
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
+		aria-labelledby="addUserModal" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+				</div>
+				<div class="modal-body" align=center>
+				
+				<p class="text" id="uname"></p>
+				<p class="text" id="mail"></p>
+				<p class="text" id="fname"></p>
+				<p class="text" id="lname"></p>
+				<p class="text" id="role"></p>
+				<p class="text" id="pass"></p>
+				<p class="text" id="sucess"></p>
+				
+				<script>
+				
+				function addUser(){
+					var username,firstname,lastname,email,role,password;
+				
+					username = document.getElementById('username').value;
+					email = document.getElementById('email').value;
+					firstname = document.getElementById('firstname').value;
+					lastname = document.getElementById('lastname').value;
+					role = document.getElementById('role').value;
+					if(role == 1){
+						role = "VIEWER"
+					}
+					else{
+						role="MANAGER"
+					}
+					password = document.getElementById('password').value;
+					
+					var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/addUser?userName="+username+"&email="+email+"&firsName="+firstname+"&lastName="+lastname+"&role="+role+"&password="+password;
+					$.ajax({
+		    		type: "GET",
+		    		url: URL,
+		     		data: data,
+		     		success: function(data) {
+					
+					$('#uname').html("Username: "+username);
+					$('#mail').html("Email: "+email);
+					$('#fname').html("Firstname: "+firstname);
+					$('#lname').html("Lastname: "+lastname);
+					$('#role').html("Role: "+role);
+					$('#pass').html("Password: "+password);
+					$('#sucess').html("User added to the system");
+			}
+		});
+				}
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog"
+		aria-labelledby="userInfoModal" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+				</div>
+				<div class="modal-body" align=center>
+				
+				<p class="text" id="uName"></p>
+				<p class="text" id="eMail"></p>
+				<p class="text" id="fName"></p>
+				<p class="text" id="lName"></p>
+				<p class="text" id="role"></p>
+				<p class="text" id="pass"></p>
+				
+				<script>
+				
+				function getUser(user){
+				$('#uName').html("Username: "+user);	
+				
+				var userData;
+				var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getUserByUserName?userName="+user;
+				$.ajax({
+		    	type: "GET",
+		     	url: URL,
+		     	data: userData,
+		     	success: function(userData) {
+		
+				//var usertemp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
+				//var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
+				var userItems = userData;
+				for(var i in userItems){
+					if(userItems[i].userName == user){
+					$('#eMail').html("Email: "+userItems[i].email);
+					$('#fName').html("Firstname: "+userItems[i].firstName);
+					$('#lName').html("Lastname: "+userItems[i].lastName);
+					$('#role').html("Role: "+userItems[i].role);
+					$('#pass').html("Password: "+userItems[i].password);
+					
+					}
+				};
+			}
+		});
+				
+				}
+				</script>
+			</div>
+			</div>
+		</div>
+	</div>
 		<!-- ##################################################################
 #######################################################################
 #######################################################################
@@ -733,10 +767,6 @@
 
 
 	<script>
-	
-	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1";
-	//var webServerPath = "http://localhost:8080/Prototype1";
-	
 	(function poll(){
 		   setTimeout(function(){
 		      $.ajax({ url: "server", success: function(data){
@@ -769,7 +799,7 @@
 	*/
 
 	$( document ).ready(function() {
-		var URL = webServerPath+"/rest/apps/getDeviceCount";
+		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getDeviceCount";
 		var data;
 		$.ajax({
 		     type: "GET",
@@ -790,8 +820,8 @@
 		Using JQuery timeago plugin for formatting
 	*/
 	$( document ).ready(function() {
-		var baseURI = webServerPath+"/rest/users/getLastLoginByUserName?userName=";
-		var userName = "<%=user.getUserName()%>";
+		var baseURI = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getLastLoginByUserName?userName=";
+		
 		var buildURL = baseURI + userName;
 		var data;
 		$.ajax({
@@ -812,7 +842,7 @@
 		on page load and update #securityLevel class with data
 	*/
 	$( document ).ready(function() {
-		var URL = webServerPath+"/rest/rules/getSecurityLevel";
+		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/rules/getSecurityLevel";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -831,11 +861,10 @@
 
 	<script type="text/javascript">
 	
-	/*	@author s124255
-		Get list of events and devices and place in list
-	*/
+	/** @author s124255
+		*/
 	var data;
-	var URL = webServerPath+"/rest/events/getAllEvents";
+	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAllEvents";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -851,17 +880,20 @@
 					}
 				}
 		     });
-		     
+	/** @author s124255
+		*/	     
 	var devData;
-	var URL = webServerPath+"/rest/events/getDevices";
+	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getDevices";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
 		     data: devData,
-		     error: function(devData) {
-		var devItems;
-		var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":3,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
-		var devItems = $.parseJSON(temp);//OUT FOR PRODUCTION
+		     success: function(devData) {
+		
+		//var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":3,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
+		//var devItems = $.parseJSON(temp);//OUT FOR PRODUCTION
+		var devItems = devData;//IN FOR PRODUCTION
+		
 		for(var i in devItems)
 		{
 		var devElement = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item" onclick="deviceInfo(\'' + devItems[i].mac + '\')"><i class="fa fa-mobile fa-fw"></i> '
@@ -872,6 +904,48 @@
 			}
 			
 		});
+		
+	/** @author s124255
+		*/
+		function confDev(){
+		
+			var lightAppStatus = false;
+			var camAppStatus = false;
+			var soundAppStatus = false;
+			var app = appData;
+			var devMac = document.getElementById('mac').value;
+			if(document.getElementById('light').value=="1"){
+				lightAppStatus = true;
+			}
+			if(document.getElementById('camera').value=="1"){
+				camAppStatus = true;
+			}
+			if(document.getElementById('sound').value=="1"){
+				soundAppStatus = true;
+			}	
+			
+			$.ajax({
+		    	type: "PUT",
+		     	url: URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/update?mac="+devMac+"&eventType='PLAYSOUND'&status="+soundAppStatus+"",
+
+		    });
+			
+			$.ajax({
+		    	type: "PUT",
+		     	url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/update?mac="+devMac+"&eventType='START_VIDEO_RECORDING'&status="+camAppStatus+"",
+		     
+		    });
+			
+			$.ajax({
+		    	type: "PUT",
+		     	url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/update?mac="+devMac+"&eventType='FLASH_LIGHT'&status="+lightAppStatus+"",
+		     	
+		    });
+				
+		}
+		
+		
+		
 	</script>
 
 		<!-- 
@@ -882,7 +956,7 @@
 	<script>		
 		$('#securityLevelGroup button').click(function() {
 		    $(this).addClass('active').siblings().removeClass('active');
-		    var baseURI = webServerPath+"/rest/rules/setSecurityLevel?level=";
+		    var baseURI = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/rules/setSecurityLevel?level=";
 		    var level = $(this).attr('id');
 		    var URL = baseURI + level;		  
 		    
@@ -909,18 +983,20 @@
 	
 	<script>
 		var userData;
-		var URL = webServerPath+"/rest/users/getUsers";
+		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getUsers";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
 		     data: userData,
-		     error: function(userData) {
+		     success: function(userData) {
 		
-		var usertemp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
-		var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
+		//var usertemp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
+		//var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
+		var userItems = userData;
+		
 		for(var i in userItems)
 		{
-		var userElement = '<a href="#" class="list-group-item" id='+userItems[i].userName+'><i class="fa fa-user fa-fw"></i> '
+		var userElement = '<a href="#" data-toggle="modal" data-target="#userInfoModal" class="list-group-item" onclick="getUser(\'' + userItems[i].userName + '\')"><i class="fa fa-user fa-fw"></i> '
 				+ userItems[i].userName
 				+ '</a>';
 				$('#user').append(userElement);
@@ -928,56 +1004,6 @@
 			}
 		});
 	</script>
-	
-	<!-- Add User -->
-	
-	<script type="text/javascript">
-		var username,email,firstname,lastname,role,password;
-		function addUser(){
-			username = document.getElementById('username').value;
-			email = document.getElementById('email').value;
-			firstname = doucment.getElementById('firstname').value;
-			lastname = doucment.getElementById('lastname').value;
-			role = doucment.getElementById('role').value;
-		
-			password = doucment.getElementById('password').value;
-			
-			var URL = webServerPath+"/rest/users/addUser?userName="+username+"&email="+email+"&firsName"+firstname+"&lastName"+lastname+"&role"+role+"&password"+password;
-			$.ajax({
-		     type: "POST",
-		     url: URL,
-		     data: data,
-		     success: function(data) {
-				
-			}
-		});
-		}
-	
-	</script>
-	
-  <script>
-    var ruleList;
-    var URL = webServerPath+"/rest/rules/getAllRuleStrings";
-    $.ajax({
-         type: "GET",
-         url: URL,
-         data: ruleList,
-         error: function(ruleList) {
-    
-    var rules = $.parseJSON(ruleList);
-    //$('#rules').clear();
-    for(var ruleObj in ruleList) {
-      print (ruleObj);
-        //var ruleElement = '<a href="#" class="list-group-item" id='+userItems[i].userName+'><i class="fa fa-user fa-fw"></i> '
-        //+ userItems[i].userName
-        //+ '</a>';
-        //$('#rules').append(userElement);
-        };
-      }
-    });
-  </script>
-	
-	
 	
 		<script src="js/jquery-1.11.0.js"></script>
 		<script src="js/jquery.timeago.js"></script>
