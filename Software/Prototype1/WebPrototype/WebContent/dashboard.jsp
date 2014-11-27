@@ -589,39 +589,39 @@
 												<div class="form-group">
 													<div class="col-sm-12">
 														<input type="text" class="form-control" id="username"
-															placeholder="Username">
+															placeholder="Username"/>
 													</div>
 												</div>
 												<div class="form-group">
 													<div class="col-sm-12">
 														<input type="email" class="form-control" id="email"
-															placeholder="Email">
+															placeholder="Email"/>
 													</div>
 												</div>
 												<div class="form-group">
 													<div class="col-sm-12">
 														<input type="text" class="form-control" id="firstname"
-															placeholder="Firstname">
+															placeholder="Firstname"/>
 													</div>
 												</div>
 												<div class="form-group">
 													<div class="col-sm-12">
 														<input type="text" class="form-control" id="lastname"
-															placeholder="Lastname">
+															placeholder="Lastname" />
 													</div>
 												</div>
 												<div class="form-group">
 													<div class="col-sm-12">
 														<select id="role" name="Role">
-															<option value=0>Viewer</option>
-															<option value=1>Manager</option>
+															<option value="1">Viewer</option>
+															<option value="2">Manager</option>
 														</select>
 													</div>
 												</div>
 												<div class="form-group">
 													<div class="col-sm-12">
 														<input type="password" class="form-control" id="password"
-														placeholder="Password">
+														placeholder="Password" />
 													</div>
 												</div>
 												<div class="form-group">
@@ -659,6 +659,7 @@
 				<p class="text" id="lname"></p>
 				<p class="text" id="role"></p>
 				<p class="text" id="pass"></p>
+				<p class="text" id="sucess"></p>
 				
 				<script>
 				
@@ -667,10 +668,23 @@
 				
 					username = document.getElementById('username').value;
 					email = document.getElementById('email').value;
-					firstname = doucment.getElementById('firstname').value;
-					lastname = doucment.getElementById('lastname').value;
-					role = doucment.getElementById('role').value;
+					firstname = document.getElementById('firstname').value;
+					lastname = document.getElementById('lastname').value;
+					role = document.getElementById('role').value;
+					if(role == 1){
+						role = "VIEWER"
+					}
+					else{
+						role="MANAGER"
+					}
 					password = document.getElementById('password').value;
+					
+					var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/addUser?userName="+username+"&email="+email+"&firsName="+firstname+"&lastName="+lastname+"&role="+role+"&password="+password;
+					$.ajax({
+		    		type: "POST",
+		    		url: URL,
+		     		data: data,
+		     		success: function(data) {
 					
 					$('#uname').html("Username: "+username);
 					$('#mail').html("Email: "+email);
@@ -678,14 +692,7 @@
 					$('#lname').html("Lastname: "+lastname);
 					$('#role').html("Role: "+role);
 					$('#pass').html("Password: "+password);
-					
-					var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/addUser?userName="+username+"&email="+email+"&firsName"+firstname+"&lastName"+lastname+"&role"+role+"&password"+password;
-					$.ajax({
-		    		type: "POST",
-		    		url: URL,
-		     		data: data,
-		     		success: function(data) {
-				
+					$('#sucess').html("User added to the system");
 			}
 		});
 				}
@@ -706,37 +713,41 @@
 				</div>
 				<div class="modal-body" align=center>
 				
-				<p class="text" id="uname"></p>
-				<p class="text" id="mail"></p>
-				<p class="text" id="fname">Per</p>
-				<p class="text" id="lname"></p>
+				<p class="text" id="uName"></p>
+				<p class="text" id="eMail"></p>
+				<p class="text" id="fName"></p>
+				<p class="text" id="lName"></p>
 				<p class="text" id="role"></p>
 				<p class="text" id="pass"></p>
 				
 				<script>
 				
-				function getUser(username){
-				$('#uname').html("Username: "+username);
+				function getUser(user){
+				$('#uName').html("Username: "+user);	
+				
 				var userData;
-				var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getUserByUserName?userName="+username;
+				var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/users/getUserByUserName?userName="+user;
 				$.ajax({
-		     	type: "GET",
+		    	type: "GET",
 		     	url: URL,
 		     	data: userData,
 		     	error: function(userData) {
+		
 				var usertemp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
 				var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
 				for(var i in userItems){
-					if(userItems[i].userName == username){
-						$('#mail').html("Email: "+userItems[i].email);
-						$('#fname').html("Firstname: "+userItems[i].firstName);
-						$('#lname').html("Lastname: "+userItems[i].lastName);
-						$('#role').html("Role: "+userItems[i].role);
-						$('#pass').html("Password: "+userItems[i].password);
+					if(userItems[i].userName == user){
+					$('#eMail').html("Email: "+userItems[i].email);
+					$('#fName').html("Firstname: "+userItems[i].firstName);
+					$('#lName').html("Lastname: "+userItems[i].lastName);
+					$('#role').html("Role: "+userItems[i].role);
+					$('#pass').html("Password: "+userItems[i].password);
+					
 					}
-				}
-				}
-				});
+				};
+			}
+		});
+				
 				}
 				</script>
 			</div>
@@ -938,7 +949,7 @@
 		var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
 		for(var i in userItems)
 		{
-		var userElement = '<a href="#" data-toggle="modal" data-target="#userInfoModal" class="list-group-item" id='+userItems[i].userName+' onclick="getUser(\'' + userItems[i].userName + '\')"><i class="fa fa-user fa-fw"></i> '
+		var userElement = '<a href="#" data-toggle="modal" data-target="#userInfoModal" class="list-group-item" onclick="getUser(\'' + userItems[i].userName + '\')"><i class="fa fa-user fa-fw"></i> '
 				+ userItems[i].userName
 				+ '</a>';
 				$('#user').append(userElement);
