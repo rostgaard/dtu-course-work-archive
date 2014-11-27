@@ -403,7 +403,7 @@
 #######################################################################
 
 #########################	Devices		###############################
-
+						 @author s124255
 #######################################################################
 #######################################################################
 ################################################################### -->
@@ -670,7 +670,6 @@
 		})();
 	</script>
 
-
 	<script>
 
 	/*
@@ -703,7 +702,6 @@
 	});	
 	</script>
 
-
 	<script>
 	/*
 		@Author s124259
@@ -727,8 +725,9 @@
 	});	
 	</script>
 
-		<script>
+	<script>
 	/*
+		@Author s124259
 		Getting security level with webservice call
 		on page load and update #securityLevel class with data
 	*/
@@ -750,9 +749,11 @@
 	});	
 	</script>
 
-
-
-		<script type="text/javascript">
+	<script type="text/javascript">
+	
+	/*	@author s124255
+		Get list of events and devices and place in list
+	*/
 	var data;
 	var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/events/getAllEvents";
 		$.ajax({
@@ -793,13 +794,12 @@
 		});
 	</script>
 
-
 		<!-- 
 		 OnClick Event on whole button group (Security Level Buttons)
 		 @s124259
 	     source: http://stackoverflow.com/questions/9262827/twitter-bootstrap-onclick-event-on-buttons-radio
 	  -->
-		<script>		
+	<script>		
 		$('#securityLevelGroup button').click(function() {
 		    $(this).addClass('active').siblings().removeClass('active');
 		    var baseURI = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/rules/setSecurityLevel?level=";
