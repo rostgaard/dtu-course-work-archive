@@ -44,7 +44,7 @@ public class EventWebService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Event addEvent(@QueryParam("value") int value, @QueryParam("id") int sensorId, @QueryParam("eventType") EventType eventType) {	
 		EventEntity eventEntity = eao.addEvent(value, sensorId, eventType);
-		
+
 		List<EventEntity> tempList = entitiesWaiting.get(sensorId);
 		if (tempList != null) {
 			//tempList = Collections.synchronizedList(tempList);
@@ -84,10 +84,10 @@ public class EventWebService {
 	private void actuateAction(Event event) {
 		Set<Rule> ruleMatches = RuleWebService.ruleEngine.checkEvent(event);
 		System.out.println(ruleMatches);
-		System.out.println("act s " + ruleMatches.size());
+		
 		for (Rule rule : ruleMatches) {
 			for (Action act : rule.getActions()) {
-				System.out.println("addEvent" + event.getValue() + " targetId " +  act.getTargetActuatorID() + " type " + EventType.valueOf(act.getActuator().toUpperCase()));
+				
 				addEvent(event.getValue(), act.getTargetActuatorID(), EventType.valueOf(act.getActuator().toUpperCase()));
 			}
 		}

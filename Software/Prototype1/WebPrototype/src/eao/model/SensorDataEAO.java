@@ -60,7 +60,11 @@ public class SensorDataEAO {
 	public EventEntity addEvent(int value, String mac, EventType eventType) {
 		AppEntity appEntity = getAppEntity(mac, eventType);
 		if (appEntity == null) {
-			return null;
+			appEntity = new AppEntity();
+			appEntity.setEventType(eventType);
+			appEntity.setStatus(true);
+			em.persist(appEntity);
+			em.flush();
 		}
 
 		EventEntity event = new EventEntity();
