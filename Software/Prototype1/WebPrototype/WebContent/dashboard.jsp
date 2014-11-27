@@ -628,7 +628,7 @@
 													<div class="col-sm-4">
 														<button type="button" id="submit"
 															class="btn btn-lg btn-success btn-block"
-															data-toggle="modal" data-target="#addUserModal" onclick="addTest()">Add User</button>
+															data-toggle="modal" data-target="#addUserModal" onclick="addUser()">Add User</button>
 													</div>
 												</div>
 											</div>
@@ -663,7 +663,7 @@
 				
 				<script>
 				
-				function addTest(){
+				function addUser(){
 					var username,firstname,lastname,email,role,password;
 				
 					username = document.getElementById('username').value;
