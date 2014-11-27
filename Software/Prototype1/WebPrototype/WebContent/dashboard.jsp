@@ -815,9 +815,7 @@
 				//var usertemp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
 				//var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
 				//var user = $.parseJSON(userData);
-				
-				console.log(user);
-	
+					
 				$('#eMail').text("Email: "+user.email);
 				$('#fName').text("Firstname: "+user.userName);
 				$('#lName').text("Lastname: "+user.lastName);
@@ -850,8 +848,8 @@
 		based on devices from webrservice request
 	*/
 	
-	//var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1";
-	var webServerPath = "http://localhost:8080/Prototype1/rest";
+	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/WebPrototype/rest";
+	//var webServerPath = "http://localhost:8080/Prototype1/rest";
 	
 	$( document ).ready(function() {
 		
