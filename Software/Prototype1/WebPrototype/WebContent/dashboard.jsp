@@ -202,15 +202,19 @@
 								<!-- /.panel-heading -->
 
 								<div class="panel-body">
-									<div id="draggableSensorButtons">
+									<div id="cameraMap">
+									
+										
+									
+									<!-- 
 										<button type="button" class="draggable" data-toggle="modal"
 											data-target="#jesperModal">1</button>
 										<button type="button" class="draggable" data-toggle="modal"
 											data-target="#jesperModal">2</button>
 										<button type="button" class="draggable" data-toggle="modal"
-											data-target="#jesperModal">3</button>
+											data-target="#jesperModal">3</button> -->
 
-										<div id="floorplan">
+										<div id="floorplan" class="floorplan">
 											<img src="floor_plan_example.png" width="40%" height="40%" />
 											<img src="floor_plan_example.png" width="40%" height="40%" />
 										</div>
@@ -764,6 +768,34 @@
 #######################################################################
 #######################################################################
 ################################################################### -->
+
+	<script>
+	/*
+		@author s124259, Jesper Mark
+		Dynamically adding sensor buttons to cameraMap in dashboard
+		based on devices from webrservice request
+	*/
+	
+	$( document ).ready(function() {
+		
+		var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"C1:DS:37:AD:G3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":3,"mac":"D1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
+
+		var data;
+		var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getDevicesWithCamera";
+			$.ajax({
+			     type: "GET",
+			     url: URL,
+			     data: data,
+			     error: function(data) {
+					var devices = $.parseJSON(temp);
+					for(var i in devices){
+						var mac = devices[i].mac;
+						 $('<button id="' + mac + '"' + ' type="button" class="draggable" data-toggle="modal" data-target="#jesperModal" />').text(+i + 1).appendTo('#cameraMap');
+					}
+			   	 }
+			 });
+	});	
+	</script>
 
 
 	<script>

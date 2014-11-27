@@ -145,6 +145,32 @@ public class AppWebService {
 	}
 	
 	/**
+	 * @Author s124255
+	 */
+	@GET
+	@Path("/getDevicesWithCamera")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String> getDevicesWithCamera(){
+		List<App> apps = this.getAllEventList();
+		Set<String> macAddr = new HashSet<>();
+		List<String> devices = new ArrayList<String>();
+		
+		for(App app : apps) {
+			if(app.getEventType() == EventType.STOP_VIDEO_RECORDING || app.getEventType() == EventType.START_VIDEO_RECORDING)
+				macAddr.add(app.getMac());
+		}
+		
+		for(String dev : macAddr){
+			devices.add(dev);
+		}
+		
+		return devices;
+
+	}
+	
+	
+	/**
 	 * @author s124255
 	 * @param mac
 	 * @param eventType
