@@ -57,7 +57,7 @@
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
 			user = new User();
-			//response.sendRedirect("login.jsp");
+			response.sendRedirect("login.jsp");
 		}
 	%>
 
@@ -660,6 +660,21 @@
 #######################################################################
 #######################################################################
 ################################################################### -->
+
+
+	<script>
+	(function poll(){
+		   setTimeout(function(){
+		      $.ajax({ url: "server", success: function(data){
+		        //Update your dashboard gauge
+		        salesGauge.setValue(data.value);
+
+		        //Setup the next poll recursively
+		        poll();
+		      }, dataType: "json"});
+		  }, 30000);
+		})();
+	</script>
 
 
 	<script>
