@@ -69,7 +69,7 @@
         <li><a href="#rules" role="tab" data-toggle="tab">Rules</a></li>
 		<li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
 
-		<li style="float: right;"><a href="/Prototype1/LogoutServlet">Log
+		<li style="float: right;"><a href="/Prototype2/LogoutServlet">Log
 				Out</a></li>
 
 
@@ -848,7 +848,7 @@
 		based on devices from webrservice request
 	*/
 	
-	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/WebPrototype/rest";
+	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype2/rest";
 	//var webServerPath = "http://localhost:8080/Prototype1/rest";
 	
 	$( document ).ready(function() {
