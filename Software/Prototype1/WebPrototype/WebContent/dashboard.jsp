@@ -922,19 +922,19 @@
 			}	
 			
 			$.ajax({
-		    	type: "UPDATE",
+		    	type: "PUT",
 		     	url: URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/update?mac="+devMac+"&eventType='PLAYSOUND'&status="+soundAppStatus+"",
 
 		    });
 			
 			$.ajax({
-		    	type: "UPDATE",
+		    	type: "PUT",
 		     	url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/update?mac="+devMac+"&eventType='START_VIDEO_RECORDING'&status="+camAppStatus+"",
 		     
 		    });
 			
 			$.ajax({
-		    	type: "UPDATE",
+		    	type: "PUT",
 		     	url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/update?mac="+devMac+"&eventType='FLASH_LIGHT'&status="+lightAppStatus+"",
 		     	
 		    });
