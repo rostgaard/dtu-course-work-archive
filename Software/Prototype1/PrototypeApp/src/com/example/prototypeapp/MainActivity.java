@@ -21,7 +21,6 @@ import android.view.WindowManager;
 
 public class MainActivity extends Activity {
 	
-	public static final String FRAGMENT_ARGUMENT = "mac";
 	public static String macAddress;
 
 	@Override
@@ -29,14 +28,9 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-//		macAddress = getMacAddress();
-		macAddress = "macc";
+		macAddress = getMacAddress();
 		registerAppsWithServer(macAddress);
 		if (savedInstanceState == null) {
-//			Bundle bundle = new Bundle();
-//			bundle.putString(FRAGMENT_ARGUMENT, macAddress);
-//			PlaceholderFragment placeholderFragment = new PlaceholderFragment();
-//			placeholderFragment.setArguments(bundle);
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
@@ -109,12 +103,7 @@ public class MainActivity extends Activity {
 		private boolean flashLightActive = true;
 //		private String macAddress;
 
-		public PlaceholderFragment() {
-			Log.d("ourOwnDebug", "before");
-//			this.macAddress = this.getArguments().getString(FRAGMENT_ARGUMENT);
-//			Log.d("ourOwnDebug", this.getArguments().getString(FRAGMENT_ARGUMENT));
-//			this.macAddress = "mac5";
-		}
+		public PlaceholderFragment() {}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -129,13 +118,13 @@ public class MainActivity extends Activity {
 			
 			if (sensorManager == null)
 				sensorManager = (SensorManager) this.getActivity().getSystemService(Context.SENSOR_SERVICE);
+			
+			setAppStatus();
 		}
 		
 		@Override
 		public void onResume() {
 			super.onResume();
-			
-			setAppStatus();
 			
 			if (accelerometerActive) {
 				accelerometerListener = new AccelerometerEventListener(macAddress);
@@ -168,18 +157,26 @@ public class MainActivity extends Activity {
 		}
 		
 		private void setAppStatus() {
-			List<App> apps = WebServiceConnection.invokeGetAppByMac(macAddress);
-			for (App app : apps) {
-				if (app.getEventType() == EventType.ACCELEROMETER && app.isStatus() == false) {
-					accelerometerActive = false;
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					try{
+						List<App> apps = WebServiceConnection.invokeGetAppByMac(macAddress);
+						for (App app : apps) {
+							if (app.getEventType() == EventType.ACCELEROMETER && app.isStatus() == false) {
+								accelerometerActive = false;
+							}
+							if (app.getEventType() == EventType.FLASHLIGHT && app.isStatus() == false) {
+								flashLightActive = false;
+							}
+							if (app.getEventType() == EventType.PLAYSOUND && app.isStatus() == false) {
+								playSoundActive = false;
+							}
+						}
+					} catch (Exception e){}
 				}
-				if (app.getEventType() == EventType.FLASHLIGHT && app.isStatus() == false) {
-					flashLightActive = false;
-				}
-				if (app.getEventType() == EventType.PLAYSOUND && app.isStatus() == false) {
-					playSoundActive = false;
-				}
-			}
+			}).start();
 		}
 	}
 }
