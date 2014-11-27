@@ -69,7 +69,7 @@
         <li><a href="#rules" role="tab" data-toggle="tab">Rules</a></li>
 		<li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
 
-		<li style="float: right;"><a href="/Prototype25/LogoutServlet">Log
+		<li style="float: right;"><a href="/Prototype28/LogoutServlet">Log
 				Out</a></li>
 
 
@@ -289,7 +289,7 @@
 <div id="voddiv">
 </div>
 <script>
-var url = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype25/rest/video/";
+var url = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype28/rest/video/";
 function startLive(id){
 $('#liveplayer').show();
 var latest;
@@ -915,15 +915,15 @@ $.each( data.reverse(), function( key, vod ) {
 		based on devices from webrservice request
 	*/
 	
-	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype25/rest";
+	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype28/rest";
 	//var webServerPath = "http://localhost:8080/Prototype1/rest";
 	
 
-		var data;
 		var URL = webServerPath+"/apps/getDevicesWithCamera";
 			$.ajax({
 			     type: "GET",
 			     url: URL,
+			     dataType: "json",
 			     data: data,
 			     success: function(data) {
 					var devices = $.parseJSON(data);
