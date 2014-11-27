@@ -127,21 +127,24 @@ public class AppWebService {
 	@Path("/getDevices")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String> getDevices(){
-		List<App> apps = this.getAllEventList();
-		Set<String> macAddr = new HashSet<>();
-		List<String> device = new ArrayList<String>();
+	public List<App> getDevices(){
+		List<App> apps = getAllEventList();
+		Set<String> uniqueMACAddr = new HashSet<>();
+		List<App> uniqueDevices = new ArrayList<App>();
 		
 		for(App app : apps) {
-			macAddr.add(app.getMac());
+			uniqueMACAddr.add(app.getMac());
 		}
 		
-		for(String dev : macAddr){
-			device.add(dev);
-		}
-		
-		return device;
-
+		for(String mac : uniqueMACAddr){
+			for(App a : apps){
+				if(a.getMac().equals(mac)){
+					uniqueDevices.add(a);
+					break;
+				}
+			}			
+		}	
+		return uniqueDevices;
 	}
 	
 	/**
@@ -151,22 +154,27 @@ public class AppWebService {
 	@Path("/getDevicesWithCamera")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String> getDevicesWithCamera(){
-		List<App> apps = this.getAllEventList();
-		Set<String> macAddr = new HashSet<>();
-		List<String> devices = new ArrayList<String>();
+	public List<App> getDevicesWithCamera(){
+		
+		List<App> apps = getAllEventList();
+		Set<String> uniqueMACAddr = new HashSet<>();
+		List<App> uniqueDevicesWithCamera = new ArrayList<App>();
 		
 		for(App app : apps) {
-			if(app.getEventType() == EventType.STOP_VIDEO_RECORDING || app.getEventType() == EventType.START_VIDEO_RECORDING)
-				macAddr.add(app.getMac());
+			uniqueMACAddr.add(app.getMac());
 		}
 		
-		for(String dev : macAddr){
-			devices.add(dev);
-		}
-		
-		return devices;
-
+		for(String mac : uniqueMACAddr){
+			for(App a : apps){
+				if(a.getMac().equals(mac) && 
+						(a.getEventType() == EventType.STOP_VIDEO_RECORDING 
+						|| a.getEventType() == EventType.START_VIDEO_RECORDING)){
+					uniqueDevicesWithCamera.add(a);
+					break;
+				}
+			}			
+		}	
+		return uniqueDevicesWithCamera;
 	}
 	
 	
