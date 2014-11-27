@@ -445,13 +445,7 @@
 											<div class="form-group">
 												<div class="col-sm-12">
 													<input type="text" class="form-control" id="deviceName"
-														placeholder="Device Name">
-												</div>
-											</div>
-											<div class="form-group">
-												<div class="col-sm-12">
-													<input type="text" class="form-control" id="deviceID"
-														placeholder="Device ID">
+														placeholder="Device Mac">
 												</div>
 											</div>
 											<div class="form-group">
@@ -463,15 +457,10 @@
 												</div>
 											</div>
 											<div class="form-group">
-												<div class="col-sm-12">
-													<div class="checkbox">
-														<label> <input type="checkbox" id="light"
-															value="1">Flashlight Actuator <input
-															type="checkbox" id="camera" value="1">Camera
-															Actuator <input type="checkbox" id="sound" value="1">Sound
-															Actuator
-														</label>
-													</div>
+												<div class="col-sm-16">
+													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="light" value="1">Flashlight</label></div>
+													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="camera" value="1">Camera</label></div>
+													<div class="checkbox" style="text-align:center"><label><input type="checkbox" id="sound" value="1">Sound</label></div>		
 												</div>
 											</div>
 											<div class="form-group">
@@ -502,13 +491,17 @@
 				
 				<p class="text" id="macDevice"></p>
 				<p class="text" id="idDevice"></p>
-				<p class="text" id="accAct">Accelerometer is deactivated</p>
-				<p class="text" id="soundAct">Sound is deactivated</p>
-				<p class="text" id="lightAct">Light is deactivated</p>
+				<p class="text" id="accAct"></p>
+				<p class="text" id="soundAct"></p>
+				<p class="text" id="lightAct"></p>
 				
 				<script>
 				
 				function deviceInfo(mac){
+				
+				$('#accAct').html("Accelerometer is deactivated");
+				$('#soundAct').html("Sound is deactivated");
+				$('#lightAct').html("Light is deactivated");
 					var data;
 					var devices;
 					var URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest/apps/getAppByMac?mac="+mac;
@@ -519,7 +512,7 @@
 		     		error: function(data) {
 		     			$('#macDevice').html("Device mac: " + mac);
 		     			devices = data;
-		     			var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":3,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
+		     			var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":false},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"PLAY_SOUND","events":[],"id":89,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
 						devices = $.parseJSON(temp);
 		     				for(var i in devices)
 							{
@@ -538,7 +531,8 @@
 										$('#lightAct').html("Light is active");
 									}
 								}
-							}	     		   	
+							}
+							//onclose del der sætter mac i configure felt til configurering	     		   	
 		     			}
 		   			});
 		   		};
