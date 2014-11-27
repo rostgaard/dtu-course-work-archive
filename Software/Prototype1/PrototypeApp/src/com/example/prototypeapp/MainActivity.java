@@ -11,7 +11,6 @@ import android.hardware.SensorManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -101,7 +100,6 @@ public class MainActivity extends Activity {
 		private boolean accelerometerActive = true;
 		private boolean playSoundActive = true;
 		private boolean flashLightActive = true;
-//		private String macAddress;
 
 		public PlaceholderFragment() {}
 
