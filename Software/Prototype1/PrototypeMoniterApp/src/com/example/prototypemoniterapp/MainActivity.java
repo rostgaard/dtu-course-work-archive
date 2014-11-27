@@ -9,15 +9,16 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.datatypes.App;
 
@@ -58,7 +59,10 @@ public class MainActivity extends Activity {
 	public static class PlaceholderFragment extends Fragment {
 		
 		private List<AwaitEventThread> awaitEventThreadList = new ArrayList<>();
+		private ListView appList;
 		private ListView alertList;
+		private ArrayAdapter<String> appListAdapter;
+		private ArrayAdapter<String> alertListAdapter;
 
 		public PlaceholderFragment() {
 		}
@@ -74,35 +78,84 @@ public class MainActivity extends Activity {
 		@Override
 		public void onViewCreated(View view, Bundle savedInstanceState) {
 			super.onViewCreated(view, savedInstanceState);
-			
-			List<App> apps = WebServiceConnection.invokeGetAppsFromWebServer();
-			Set<String> macs = new HashSet<String>();
-			
-			for (App app : apps) {
-				macs.add(app.getMac());
-			}
-			
-			ListView appList = (ListView) getActivity().findViewById(R.id.appList);
-			alertList = (ListView) getActivity().findViewById(R.id.alertList);
-			
-			Button resetButton = (Button) getActivity().findViewById(R.id.resetButton);
-			resetButton.setOnClickListener(new OnClickListener() {
+			Button clearButton = (Button) getActivity().findViewById(R.id.clearButton);
+			clearButton.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					alertList.removeAllViewsInLayout();
-					alertList.setBackgroundColor(Color.WHITE);
+					alertListAdapter.clear();
+					alertListAdapter.notifyDataSetChanged();
+					alertList.setBackgroundColor(Color.TRANSPARENT);
 				}
 			});
+			appList = (ListView) getActivity().findViewById(R.id.appList);
+			alertList = (ListView) getActivity().findViewById(R.id.alertList);
+//			List<String> list = new ArrayList<String>();
+//			list.add("Connecting to server...");
+//			appListAdapter = new ArrayAdapter<>(getActivity(),
+//					 android.R.layout.simple_list_item_1);
+//			appList.setAdapter(appListAdapter);
+			setDeviceList();
 			
-			for (String mac : macs) {
-				TextView textView = new TextView(getActivity());
-				textView.setText(mac);
-				appList.addView(textView);
-				AwaitEventThread awaitEventThread = new AwaitEventThread(alertList, mac, getActivity());
-				awaitEventThreadList.add(awaitEventThread);
-			}
-			
+		}
+		
+		private void setDeviceList() {
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					Log.d("Debug", "Start");
+					
+					List<App> apps;
+					try {
+						apps = WebServiceConnection.invokeGetAppsFromWebServer();
+					} catch (Exception e) {
+						apps = new ArrayList<App>();
+						Log.d("Debug", "New applist");
+						Log.d("Debug", e.toString());
+					}
+					
+					Log.d("Debug", "After apps web get");
+					Set<String> macsTemp = new HashSet<String>();
+					
+					for (App app : apps) {
+						macsTemp.add(app.getMac());
+					}
+					macsTemp.remove(null);
+//					for (int i = 0; i < 3; i++) {
+//						macsTemp.add("" + i);
+//					}
+					final Set<String> macs = macsTemp;
+					Log.d("Debug", "Macs: " + macs);
+					
+					getActivity().runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							List<String> arrayList = new ArrayList<String>(macs);
+							appListAdapter.clear();
+							appListAdapter = new ArrayAdapter<>(getActivity(),
+															 android.R.layout.simple_list_item_1,
+															 arrayList);
+							appList.setAdapter(appListAdapter);
+//							appListAdapter.notifyDataSetChanged();
+							
+							alertListAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1);
+							alertList.setAdapter(alertListAdapter);
+							
+							
+							Log.d("Debug", "Before list add");
+							for (String mac : macs) {
+								AwaitEventThread awaitEventThread = new AwaitEventThread(mac, getActivity(), alertList, alertListAdapter);
+								awaitEventThread.start();
+								awaitEventThreadList.add(awaitEventThread);
+							}
+						}
+					});
+					
+					
+				}
+			}).start();
 		}
 	}
 }

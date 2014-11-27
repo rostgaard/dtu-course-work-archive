@@ -12,6 +12,9 @@ public class Event {
 	private long time;
 	@JsonProperty("appID")
 	private int appID;
+	@JsonProperty("eventType")
+	private EventType eventType;
+	
 	
 	public Event() {
 		
@@ -53,6 +56,14 @@ public class Event {
 	
 	public void setAppID(int appID) {
 		this.appID = appID;
+	}
+
+	public EventType getEventType() {
+		return eventType;
+	}
+
+	public void setEventType(EventType eventType) {
+		this.eventType = eventType;
 	}
 
 }
