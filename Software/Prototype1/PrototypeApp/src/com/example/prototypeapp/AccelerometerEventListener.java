@@ -6,13 +6,7 @@ import android.hardware.SensorEventListener;
 
 public class AccelerometerEventListener implements SensorEventListener {
 	
-//	private static final int DEFAULT_SENSOR_ID = 1;
-
-//	private TextView textView;
-//	private EditText editText;
 	private String macAddress;
-	
-//	private float deltaZ = 0.07f;
 	private float deltaX = 5.0f, deltaY = 5.0f, deltaZ = 5.0f;
 	
 	private float x,y,z, oldX, oldY,oldZ;
@@ -20,8 +14,6 @@ public class AccelerometerEventListener implements SensorEventListener {
 	
 	public AccelerometerEventListener (String macAddress) {
 		super();
-//		this.textView = textView;
-//		this.editText = editText;
 		this.macAddress = macAddress;
 	}
 
@@ -57,12 +49,6 @@ public class AccelerometerEventListener implements SensorEventListener {
 		oldZ=z;
 		
 	}
-	
-//	private int getSensorId(EditText editText) {
-//		if(editText.getText().toString().length() > 0)
-//			return Integer.parseInt(editText.getText().toString());
-//		return DEFAULT_SENSOR_ID;
-//	}
 
 	private void invokeAddEventWebServer(final String macAddress, final int value) {
 		new Thread(new Runnable() {			
@@ -72,27 +58,9 @@ public class AccelerometerEventListener implements SensorEventListener {
 				
 				try {
 					WebServiceConnection.invokeAddEventWebServer(macAddress, value, EventType.ACCELEROMETER);
-					Thread.sleep(10000);
-//					final String txt = "Event added to server:\n ID: " + result.getId() + " Value: " + result.getValue() + " Time: " + result.getTime();
-//					textView.post(new Runnable() {
-//						
-//						@Override
-//						public void run() {						
-//							textView.setText(txt);
-//							thread = false;
-//							
-//						}
-//					});					
-				} catch (Exception e) {
-//						textView.post(new Runnable() {
-//						
-//						@Override
-//						public void run() {						
-//							textView.setText("Exception");
-//							thread = false;
-//							
-//						}
-//					});			
+					// wait for 10 seconds, so only one event is sent when a door opens
+					Thread.sleep(10000);			
+				} catch (Exception e) {	
 				}
 			}
 		}).start();
