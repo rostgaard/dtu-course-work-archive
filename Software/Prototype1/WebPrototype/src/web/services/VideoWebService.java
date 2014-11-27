@@ -1,4 +1,3 @@
-
 package web.services;
 
 import java.io.File;
@@ -6,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 
 import javax.ejb.LocalBean;
@@ -76,33 +77,60 @@ public class VideoWebService {
 		return (new File("datastore/"+id+"/").list().length-1)+"";
 	}
 	
+
 	@GET
 	@Path("/getVODS")
 	@Produces(MediaType.APPLICATION_JSON)
 	public VOD[] getVideo (@QueryParam("id") int id) throws IOException {
 		File dir = new File("datastore/"+id+"/");
 		File[] listOfFiles = dir.listFiles();
+		//Sort the files
+		Arrays.sort( listOfFiles, new Comparator<File>()
+		{
+		    public int compare(File o1, File o2) {
+		
+		        if (((File)o1).lastModified() < ((File)o2).lastModified()) {
+		            return -1;
+		        } else if (((File)o1).lastModified() > ((File)o2).lastModified()) {
+		            return +1;
+		        } else {
+		            return 0;
+		        }
+		    }
+		
+		}); 
 		ArrayList<VOD> vods = new ArrayList<VOD>();
 		VOD current = null;
 		long lastTime = 0 ;
-		
-		for (File f : listOfFiles){
-			if (f.lastModified() < lastTime + 6000){//Video is continous
-				lastTime = f.lastModified();	
+		int length = 0;
+		for (int i = 0; i < listOfFiles.length; i++){
+			File f = listOfFiles[i];
+
+			System.out.println("sDate: "+f.lastModified());
+			if (f.lastModified() < lastTime + 4000){//Video is continous
+				lastTime = f.lastModified();
+				length++;
 			}
 			else//New VOD
 			{
 				if (current != null){
-					vods.add( current);
+					current.setLength(length);
+					vods.add(current);
 				}
 				int count = Integer.parseInt( f.getName().replace(".mp4", ""));
-				current = new VOD(count,f.lastModified());
+				current = new VOD(count,f.lastModified(),length);
 				lastTime = f.lastModified();
+				length = 1;
 			}
 			
+			if (i == listOfFiles.length-1){//Avoid fencepost problem
+				int count = Integer.parseInt( f.getName().replace(".mp4", ""));
+				current = new VOD(count-length+1,f.lastModified(),length);
+				vods.add(current);
+			}	
 		}
 		
-		return (VOD[])(vods.toArray());
+		return (VOD[])(vods.toArray(new VOD[0]));
 	}
 	
 	@GET
