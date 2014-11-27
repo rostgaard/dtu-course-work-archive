@@ -9,14 +9,12 @@ public class PlaySoundActuator extends Thread {
 	private final int S1 = R.raw.wopwop;
 	private SoundPool soundPool;
 	final int sound;
-//	private int sensorID;
 	private String macAddress;
 	private boolean run = true;
 	
 	public PlaySoundActuator(Activity activity, String macAddress) {	
 		soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 100);
 		sound = soundPool.load(activity, S1, 1);
-//		this.sensorID = sensorID;
 		this.macAddress = macAddress;
 	}
 	
