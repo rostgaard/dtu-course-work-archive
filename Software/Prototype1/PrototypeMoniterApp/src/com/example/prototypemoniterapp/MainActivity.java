@@ -121,10 +121,9 @@ public class MainActivity extends Activity {
 					for (App app : apps) {
 						macsTemp.add(app.getMac());
 					}
-					macsTemp.remove(null);
-//					for (int i = 0; i < 3; i++) {
-//						macsTemp.add("" + i);
-//					}
+					for (int i = 0; i < 3; i++) {
+						macsTemp.add("" + i);
+					}
 					final Set<String> macs = macsTemp;
 					Log.d("Debug", "Macs: " + macs);
 					
@@ -133,7 +132,7 @@ public class MainActivity extends Activity {
 						@Override
 						public void run() {
 							List<String> arrayList = new ArrayList<String>(macs);
-							appListAdapter.clear();
+							//appListAdapter.clear();
 							appListAdapter = new ArrayAdapter<>(getActivity(),
 															 android.R.layout.simple_list_item_1,
 															 arrayList);

@@ -41,7 +41,6 @@ public class AwaitEventThread extends Thread {
 			
 			try {
 				event = WebServiceConnection.invokeAwaitEventWebServer(macAddress, EventType.USERALERT);
-//				event = new Event(0,0.0f,System.currentTimeMillis());
 			} catch (Exception e) {
 				
 				if(!run || isInterrupted()) break; 
