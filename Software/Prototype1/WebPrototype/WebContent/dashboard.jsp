@@ -787,6 +787,21 @@ $.each( data.reverse(), function( key, vod ) {
 				</div>
 			</div>
 		</div>
+		<div class="panel-footer">
+		
+		<div style="width:60%; margin: 0 auto;">
+		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Jesper Mark</a>
+		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Stefan Mertens</a>
+		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Jan-Eric Raab</a>
+		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Nicolai Kamstrup</a>
+		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Luai Michlawi</a>
+		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Peter Østergaard</a>
+		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Kim Christensen</a>
+		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Nicolai Polack</a>
+		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Jacob Gilsaa</a>
+		</div>
+		</div>
+		
 	</div>
 <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
 		aria-labelledby="addUserModal" aria-hidden="true">
@@ -907,6 +922,10 @@ $.each( data.reverse(), function( key, vod ) {
 #######################################################################
 #######################################################################
 ################################################################### -->
+
+
+<script>
+$('.s12').popover(options)</script>
 
 	<script>
 	/*
