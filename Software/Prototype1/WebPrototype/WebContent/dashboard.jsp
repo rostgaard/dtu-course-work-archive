@@ -563,8 +563,7 @@ $.each( data.reverse(), function( key, vod ) {
 				<div class="modal-body" align=center>
 				
 				<p class="text" id="macDevice"></p>
-				<p class="text" id="idDevice"></p>
-				<p class="text" id="accAct"></p>
+				<p class="text" id="camAct"></p>
 				<p class="text" id="soundAct"></p>
 				<p class="text" id="lightAct"></p>
 				
@@ -572,12 +571,12 @@ $.each( data.reverse(), function( key, vod ) {
 				
 				function deviceInfo(mac){
 				
-				$('#accAct').html("Accelerometer is deactivated");
+				$('#accAct').html("Camera is deactivated");
 				$('#soundAct').html("Sound is deactivated");
 				$('#lightAct').html("Light is deactivated");
 					var data;
 					var devices;
-					var URL = webServerPath+"/apps/getAppByMac?mac="+mac;
+					var URL = webServerPath+"/apps/getApps?mac="+mac;
 					$.ajax({
 		     		type: "GET",
 		     		url: URL,
@@ -589,13 +588,12 @@ $.each( data.reverse(), function( key, vod ) {
 						//devices = $.parseJSON(temp);
 		     				for(var i in devices)
 							{
-								$('#idDevice').html("Device ID: " + devices[i].id);
 								var status = devices[i].status;
 								var eventTy = devices[i].eventType;
 								
 								if(status){
-									if(eventTy =="ACCELEROMETER"){
-										$('#accAct').html("Accelerometer is active");
+									if(eventTy =="STOP_VIDEO_RECORDING"){
+										$('#camAct').html("Camera is active");
 									}
 									if(eventTy =="PLAY_SOUND"){
 										$('#soundAct').html("Sound is active");
@@ -1054,8 +1052,9 @@ $('.s12').popover(options)</script>
 	
 	/** @author s124255
 		*/
+	function reloadEvents(){
 	var data;
-	var URL = webServerPath+"/apps/getAllEvents";
+	var URL = webServerPath+"/events/getAllEvents";
 		$.ajax({
 		     type: "GET",
 		     url: URL,
@@ -1071,8 +1070,12 @@ $('.s12').popover(options)</script>
 					}
 				}
 		     });
+		
+		}
+	reloadEvents();
 	/** @author s124255
-		*/	     
+		*/	 
+	function reloadDevs(){    
 	var devData;
 	var URL = webServerPath+"/apps/getDevices";
 		$.ajax({
@@ -1095,6 +1098,8 @@ $('.s12').popover(options)</script>
 			}
 			
 		});
+	}
+	reloadDevs();
 		
 	/** @author s124255
 		*/
@@ -1123,7 +1128,7 @@ $('.s12').popover(options)</script>
 			
 			$.ajax({
 		    	type: "PUT",
-		     	url: webServerPath+"/apps/update?mac="+devMac+"&eventType='START_VIDEO_RECORDING'&status="+camAppStatus+"",
+		     	url: webServerPath+"/apps/update?mac="+devMac+"&eventType='STOP_VIDEO_RECORDING'&status="+camAppStatus+"",
 		     
 		    });
 			

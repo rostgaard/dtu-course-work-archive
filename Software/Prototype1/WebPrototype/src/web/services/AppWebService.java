@@ -16,6 +16,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import src.dto.model.Event;
+import src.dto.model.String;
 import dto.model.App;
 import dto.model.AppList;
 import eao.model.Conversion;
@@ -130,12 +132,17 @@ public class AppWebService {
 	public Set<String> getDevices(){
 		List<App> apps = getAllEventList();
 		Set<String> uniqueMACAddr = new HashSet<>();
-		//List<App> uniqueDevices = new ArrayList<App>();
+		List<App> uniqueDevices = new ArrayList<App>();
 		
 		for(App app : apps) {
 			uniqueMACAddr.add(app.getMac());
 		}
-		return uniqueMACAddr;
+	
+		for(String mac : uniqueMACAddr){
+			uniqueDevices.add(new App(0, mac, "FLASH_LIGHT", true, new List<Event>()));
+		}
+		
+		return uniqueDevices;
 		/*
 		for(String mac : uniqueMACAddr){
 			for(App a : apps){
@@ -151,7 +158,7 @@ public class AppWebService {
 	}
 	
 	/**
-	 * @Author s124255
+	 * @Author s124259
 	 */
 	@GET
 	@Path("/getDevicesWithCamera")
