@@ -15,9 +15,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import dto.model.Event;
 
-import src.dto.model.Event;
-import src.dto.model.String;
 import dto.model.App;
 import dto.model.AppList;
 import eao.model.Conversion;
@@ -129,7 +128,7 @@ public class AppWebService {
 	@Path("/getDevices")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
-	public Set<String> getDevices(){
+	public List<App> getDevices(){
 		List<App> apps = getAllEventList();
 		Set<String> uniqueMACAddr = new HashSet<>();
 		List<App> uniqueDevices = new ArrayList<App>();
@@ -139,7 +138,7 @@ public class AppWebService {
 		}
 	
 		for(String mac : uniqueMACAddr){
-			uniqueDevices.add(new App(0, mac, "FLASH_LIGHT", true, new List<Event>()));
+			uniqueDevices.add(new App(0, mac, EventType.FLASHLIGHT, true, new ArrayList<Event>()));
 		}
 		
 		return uniqueDevices;
@@ -170,7 +169,7 @@ public class AppWebService {
 		List<App> devicesWithCamera = new ArrayList<App>();
 		
 		for(App app : apps) {
-			if(app.getEventType().equals(EventType.STOP_VIDEO_RECORDING))
+			if(app.getEventType().equals(EventType.STOPVIDEORECORDING))
 				devicesWithCamera.add(app);
 		}
 		return devicesWithCamera;

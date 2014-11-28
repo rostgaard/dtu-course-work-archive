@@ -584,7 +584,7 @@ $.each( data.reverse(), function( key, vod ) {
 		     		success: function(data) {
 		     			$('#macDevice').html("Device mac: " + mac);
 		     			devices = data;
-		     			//var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":false},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"PLAY_SOUND","events":[],"id":89,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
+		     			//var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":false},{"eventType":"FLASHLIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"PLAYSOUND","events":[],"id":89,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
 						//devices = $.parseJSON(temp);
 		     				for(var i in devices)
 							{
@@ -592,13 +592,13 @@ $.each( data.reverse(), function( key, vod ) {
 								var eventTy = devices[i].eventType;
 								
 								if(status){
-									if(eventTy =="STOP_VIDEO_RECORDING"){
+									if(eventTy =="STOPVIDEORECORDING'"){
 										$('#camAct').html("Camera is active");
 									}
-									if(eventTy =="PLAY_SOUND"){
+									if(eventTy =="PLAYSOUND"){
 										$('#soundAct').html("Sound is active");
 									}
-									if(eventTy =="FLASH_LIGHT"){
+									if(eventTy =="FLASHLIGHT"){
 										$('#lightAct').html("Light is active");
 									}
 								}
@@ -1065,7 +1065,7 @@ $('.s12').popover(options)</script>
 					{
 					var type = items[i].eventType;
 					var time = jQuery.timeago(new Date(items[i].time));
-					var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+type.replace("SHAKE","Door moved").replace("PLAY_SOUND","Sound played")+'<span class="pull-right text-muted small"><em>'+time+'</em></span></a>';
+					var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+type.replace("SHAKE","Door moved").replace("PLAYSOUND","Sound played")+'<span class="pull-right text-muted small"><em>'+time+'</em></span></a>';
 					$('#box').append(element);
 					}
 				}
@@ -1084,7 +1084,7 @@ $('.s12').popover(options)</script>
 		     data: devData,
 		     success: function(devData) {
 		
-		//var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"FLASH_LIGHT","events":[],"id":3,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
+		//var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":true},{"eventType":"FLASHLIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"FLASHLIGHT","events":[],"id":3,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
 		//var devItems = $.parseJSON(temp);//OUT FOR PRODUCTION
 		var devItems = devData;//IN FOR PRODUCTION
 		
@@ -1128,13 +1128,13 @@ $('.s12').popover(options)</script>
 			
 			$.ajax({
 		    	type: "PUT",
-		     	url: webServerPath+"/apps/update?mac="+devMac+"&eventType='STOP_VIDEO_RECORDING'&status="+camAppStatus+"",
+		     	url: webServerPath+"/apps/update?mac="+devMac+"&eventType='STOPVIDEORECORDING''&status="+camAppStatus+"",
 		     
 		    });
 			
 			$.ajax({
 		    	type: "PUT",
-		     	url: webServerPath+"/apps/update?mac="+devMac+"&eventType='FLASH_LIGHT'&status="+lightAppStatus+"",
+		     	url: webServerPath+"/apps/update?mac="+devMac+"&eventType='FLASHLIGHT'&status="+lightAppStatus+"",
 		     	
 		    });
 				
