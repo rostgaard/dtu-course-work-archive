@@ -127,15 +127,16 @@ public class AppWebService {
 	@Path("/getDevices")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<App> getDevices(){
+	public Set<String> getDevices(){
 		List<App> apps = getAllEventList();
 		Set<String> uniqueMACAddr = new HashSet<>();
-		List<App> uniqueDevices = new ArrayList<App>();
+		//List<App> uniqueDevices = new ArrayList<App>();
 		
 		for(App app : apps) {
 			uniqueMACAddr.add(app.getMac());
 		}
-		
+		return uniqueMACAddr;
+		/*
 		for(String mac : uniqueMACAddr){
 			for(App a : apps){
 				if(a.getMac().equals(mac)){
@@ -145,6 +146,8 @@ public class AppWebService {
 			}			
 		}	
 		return uniqueDevices;
+		*/
+		
 	}
 	
 	/**
