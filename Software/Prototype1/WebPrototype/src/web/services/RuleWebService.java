@@ -39,20 +39,10 @@ import entity.model.RuleStringEntity;
 public class RuleWebService {
 
 	String ruleString = ""
-			   + "test1:\n"
-			   + "  when accelerometer\n"
-            + "  if event.source == 1 && event.value >= 0 && system.securitylevel == 1\n"
-            + "  then playSound.play(1,30), UserAlert.raise(0);\n"
-            + "\n"
-            + "test2:\n"
-            + "  when accelerometer\n"
-            + "  if system.securitylevel >= 2 || event.source == 1 && event.value >= 50\n"  
-            + "  then playSound.play(1,30), UserAlert.raise(0);\n"
-            + "\n"
-            + "test3:\n"
+			+ "test1:\n"
             + "  when accelerometer\n"
             + "  if event.source == 19 && event.value >= 0 && system.securitylevel == 1\n"  
-            + "  then flashlight.play(25,30), playSound.play(26,30), UserAlert.raise(27);\n";
+            + "  then playSound.play(26,30), flashlight.play(25,30), UserAlert.raise(27);\n";
 
 	public static RuleEngine ruleEngine = null;
 	
