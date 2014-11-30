@@ -37,10 +37,13 @@ public class AccelerometerEventListener implements SensorEventListener {
 		}
 		
 		if (((x - oldX > deltaX) || (oldX - x > deltaX)) && !thread) {
+			thread = true;
 			invokeAddEventWebServer(macAddress, Math.round(x));
 		} else if (((y - oldY > deltaY) || (oldY - y > deltaY)) && !thread) {
+			thread = true;
 			invokeAddEventWebServer(macAddress, Math.round(y));
 		} else if (((z - oldZ > deltaZ) || (oldZ - z > deltaZ)) && !thread) {
+			thread = true;
 			invokeAddEventWebServer(macAddress, Math.round(z));
 		}
 		
@@ -54,14 +57,15 @@ public class AccelerometerEventListener implements SensorEventListener {
 		new Thread(new Runnable() {			
 			@Override
 			public void run() {
-				thread = true;
+//				thread = true;
 				
 				try {
 					WebServiceConnection.invokeAddEventWebServer(macAddress, value, EventType.ACCELEROMETER);
-					// wait for 10 seconds, so only one event is sent when a door opens
-					Thread.sleep(10000);			
+					// wait for 5 seconds, so only one event is sent when a door opens
+					Thread.sleep(5000);			
 				} catch (Exception e) {	
 				}
+				thread = false;
 			}
 		}).start();
 	}

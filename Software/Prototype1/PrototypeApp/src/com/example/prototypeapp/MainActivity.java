@@ -81,6 +81,8 @@ public class MainActivity extends Activity {
 					}
 					// We assume the device has a speaker (we cannot check it)
 					WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.PLAYSOUND);
+					
+					WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.USERALERT);
 			
 				} catch (Exception e) {
 				}
