@@ -85,12 +85,12 @@ public class AwaitEventThread extends Thread {
 						(NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
 				nManager.notify(0, nBuilder.build());
 			}
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			try {
+//				Thread.sleep(10000);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		}
 	}
 
