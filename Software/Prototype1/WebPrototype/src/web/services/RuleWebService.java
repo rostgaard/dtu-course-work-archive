@@ -47,7 +47,17 @@ public class RuleWebService {
             + "test2:\n"
             + "  when accelerometer\n"
             + "  if system.securitylevel >= 2 || event.source == 1 && event.value >= 50\n"  
-            + "  then playSound.play(1,30), UserAlert.raise(0);\n";
+            + "  then playSound.play(1,30), UserAlert.raise(0);\n"
+            + "\n"
+            + "test3:\n"
+            + "  when accelerometer\n"
+            + "  if event.source == 19 && event.value >= 0 && system.securitylevel == 1\n"  
+            + "  then flashlight.play(26,30), UserAlert.raise(27);\n"
+            + "\n"
+            + "test4:\n"
+            + "  when accelerometer\n"
+            + "  if event.source == 24 && event.value >= 0 && system.securitylevel == 1\n" 
+            + "  then flashlight.play(20,30), UserAlert.raise(23);\n";
 
 	public static RuleEngine ruleEngine = null;
 	
