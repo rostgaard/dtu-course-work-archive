@@ -4,6 +4,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import enums.EventType;
 
+/**
+ * @author Luai s113444
+ */
+
 @XmlRootElement
 public class Event {
 	

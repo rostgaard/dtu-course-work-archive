@@ -4,6 +4,10 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * @author Luai s113444
+ */
+
 @XmlRootElement
 public class Policy {
 

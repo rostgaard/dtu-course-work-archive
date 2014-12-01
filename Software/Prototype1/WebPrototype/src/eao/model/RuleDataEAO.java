@@ -14,6 +14,10 @@ import dto.model.RuleString;
 import entity.model.PolicyEntity;
 import entity.model.RuleStringEntity;
 
+/**
+ * @author Luai s113444
+ */
+
 @LocalBean
 @Stateless
 public class RuleDataEAO {

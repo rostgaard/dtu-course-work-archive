@@ -24,6 +24,10 @@ import eao.model.SensorDataEAO;
 import entity.model.AppEntity;
 import enums.EventType;
 
+/**
+ * @author Luai s113444
+ */
+
 @LocalBean
 @Stateless
 @Path("/apps")

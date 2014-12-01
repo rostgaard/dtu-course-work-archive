@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
+/**
+ * @author Luai s113444
+ */
+
 @Entity
 @Cacheable(false)
 public class RuleStringEntity implements Serializable{

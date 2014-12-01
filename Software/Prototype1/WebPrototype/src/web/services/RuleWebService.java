@@ -31,6 +31,10 @@ import eao.model.SensorDataEAO;
 import entity.model.PolicyEntity;
 import entity.model.RuleStringEntity;
 
+/**
+ * @author Luai s113444
+ */
+
 @Startup
 @Singleton
 @LocalBean

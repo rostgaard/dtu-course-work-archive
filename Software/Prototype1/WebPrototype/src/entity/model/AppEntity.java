@@ -13,6 +13,10 @@ import javax.persistence.OrderBy;
 
 import enums.EventType;
 
+/**
+ * @author Luai s113444
+ */
+
 @Entity
 @Cacheable(false)
 //@Table(uniqueConstraints=@UniqueConstraint(columnNames={"id","mac"}))

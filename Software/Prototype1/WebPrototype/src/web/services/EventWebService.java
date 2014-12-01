@@ -27,6 +27,10 @@ import entity.model.AppEntity;
 import entity.model.EventEntity;
 import enums.EventType;
 
+/**
+ * @author Luai s113444
+ */
+
 @LocalBean
 @Stateless
 @Path("/events")

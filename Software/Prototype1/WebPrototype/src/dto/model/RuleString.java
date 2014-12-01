@@ -2,6 +2,10 @@ package dto.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * @author Luai s113444
+ */
+
 @XmlRootElement
 public class RuleString {
 	

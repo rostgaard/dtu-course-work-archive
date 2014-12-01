@@ -11,6 +11,10 @@ import javax.persistence.ManyToOne;
 
 import enums.EventType;
 
+/**
+ * @author Luai s113444
+ */
+
 @Entity
 @Cacheable(false)
 public class EventEntity implements Serializable {
