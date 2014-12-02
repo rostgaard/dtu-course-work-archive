@@ -947,9 +947,6 @@ $.each( data.reverse(), function( key, vod ) {
 ################################################################### -->
 
 
-<script>
-$('.s12').popover(options)</script>
-
 	<script>
 	/*
 		@author s124259, Jesper Mark
@@ -1033,14 +1030,11 @@ $('.s12').popover(options)</script>
 		Using JQuery timeago plugin for formatting
 	*/
 
-		var baseURI = webServerPath+"/users/getLastLoginByUserName?userName=";
+		var baseURI = webServerPath+"/users/getLastLoginByUserName?userName=" + <%=user.getUserName()%>;
 		
-		var buildURL = baseURI + <%=user.getUserName()%>
-		var data;
 		$.ajax({
 		     type: "GET",
 		     url: buildURL,
-		     data: data,
 		     success: function(data) {
 		          $('#lastLogin').html(jQuery.timeago(new Date(data)));
 		     }
@@ -1072,7 +1066,7 @@ $('.s12').popover(options)</script>
 
 	</script>
 	
-	<script>
+<!-- 	<script>
 		/*
 		@Author s124259
 		Getting total number of new events last 7 days with webservice call
@@ -1088,7 +1082,7 @@ $('.s12').popover(options)</script>
 		          $('#eventsSinceLastWeek').html(data);
 		     }
 		   });		
-	</script>
+	</script> -->
 
 	<script type="text/javascript">
 	
