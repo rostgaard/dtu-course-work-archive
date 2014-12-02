@@ -128,8 +128,8 @@
 											<i class="fa fa-warning fa-5x"></i>
 										</div>
 										<div class="col-xs-9 text-right">
-											<div class="huge">0</div>
-											<div>New Security Events</div>
+											<div id="eventsSinceLastWeek" class="huge">0</div>
+											<div>Security Events Last 7 Days</div>
 										</div>
 									</div>
 								</div>
@@ -785,21 +785,46 @@ $.each( data.reverse(), function( key, vod ) {
 				</div>
 			</div>
 		</div>
+		
+		<!--  
+		@author s124259		
+		-->
 		<div class="panel-footer">
-		
-		<div style="width:60%; margin: 0 auto;">
-		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Jesper Mark</a>
-		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Stefan Mertens</a>
-		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Jan-Eric Raab</a>
-		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Nicolai Kamstrup</a>
-		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Luai Michlawi</a>
-		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Peter Østergaard</a>
-		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Kim Christensen</a>
-		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Nicolai Polack</a>
-		<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12" class="btn btn-xs btn-info" role="button">Jacob Gilsaa</a>
+		<div style="width: 19%; margin: 0 auto;">
+			<div style="width: 3%; margin: 0 auto;">
+			v0.1.1
+			</div>
+			<a href="https://docs.google.com/document/d/1I5P_2qIg8SIz7wvdPGlaI-uMimTQXew2n0-tSskPx6s/pub" target="_blank">Quick Start Guide</a>
+			|
+			<a href="https://docs.google.com/document/d/1I5P_2qIg8SIz7wvdPGlaI-uMimTQXew2n0-tSskPx6s/pub" target="_blank">Handbook</a>
+			|
+			<a href="https://docs.google.com/spreadsheets/d/1xKfce3ZwyUpaoCnxguzYpSRH6URlFPQwEO1oNtJMgug/pubhtml?gid=0&single=true" target="_blank">Known Bugs</a>
+		</div>		
+		<!-- 
+			<div style="width: 60%; margin: 0 auto;">
+				<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9"
+					id="s12" class="btn btn-xs btn-info" role="button">Jesper Mark</a>
+				<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9"
+					id="s12" class="btn btn-xs btn-info" role="button">Stefan
+					Mertens</a> <a
+					href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12"
+					class="btn btn-xs btn-info" role="button">Jan-Eric Raab</a> <a
+					href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12"
+					class="btn btn-xs btn-info" role="button">Nicolai Kamstrup</a> <a
+					href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12"
+					class="btn btn-xs btn-info" role="button">Luai Michlawi</a> <a
+					href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12"
+					class="btn btn-xs btn-info" role="button">Peter Østergaard</a> <a
+					href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12"
+					class="btn btn-xs btn-info" role="button">Kim Christensen</a> <a
+					href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12"
+					class="btn btn-xs btn-info" role="button">Nicolai Polack</a> <a
+					href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12"
+					class="btn btn-xs btn-info" role="button">Jacob Gilsaa</a>
+
+			
 		</div>
-		</div>
-		
+		!-->
 	</div>
 <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
 		aria-labelledby="addUserModal" aria-hidden="true">
@@ -937,6 +962,7 @@ $('.s12').popover(options)</script>
 	
 
 		var URL = webServerPath+"/apps/getDevicesWithCamera";
+		var data;
 			$.ajax({
 			     type: "GET",
 			     url: URL,
@@ -1011,7 +1037,7 @@ $('.s12').popover(options)</script>
 
 		var baseURI = webServerPath+"/users/getLastLoginByUserName?userName=";
 		
-		var buildURL = baseURI + userName;
+		var buildURL = baseURI + <%=user.getUserName()%>
 		var data;
 		$.ajax({
 		     type: "GET",
@@ -1046,6 +1072,24 @@ $('.s12').popover(options)</script>
 		     }
 		   });	
 
+	</script>
+	
+	<script>
+		/*
+		@Author s124259
+		Getting total number of new events last 7 days with webservice call
+		on page load and update #eventsSinceLastWeek class with data
+		*/
+
+		var URL = webServerPath+"/events/getEventCountSinceLastWeek";
+		$.ajax({
+		     type: "GET",
+		     url: URL,
+		     data: data,
+		     success: function(data) {
+		          $('#eventsSinceLastWeek').html(data);
+		     }
+		   });		
 	</script>
 
 	<script type="text/javascript">
