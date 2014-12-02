@@ -106,8 +106,8 @@ public class AppWebService {
 		return appList;
 	}
 	
-	/*
-	 * @Author s124259 s084283
+	/**
+	 * @author s124259 s084283
 	 */
 	@GET
 	@Path("/getDeviceCount")
@@ -126,7 +126,7 @@ public class AppWebService {
 	}
 	
 	/**
-	 * @Author s124255
+	 * @author s124255
 	 */
 	@GET
 	@Path("/getDevices")
@@ -161,7 +161,7 @@ public class AppWebService {
 	}
 	
 	/**
-	 * @Author s124259
+	 * @author s124259
 	 */
 	@GET
 	@Path("/getDevicesWithCamera")

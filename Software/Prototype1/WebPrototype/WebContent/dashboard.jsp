@@ -155,7 +155,7 @@
 											<i class="fa fa-laptop  fa-5x"></i>
 										</div>
 										<div class="col-xs-9 text-right">
-											<div id="lastLogin" style="font-size: 32px;"></div>
+											<div id="lastLogin" style="font-size: 26px;"></div>
 											<div>Last Login</div>
 										</div>
 									</div>
