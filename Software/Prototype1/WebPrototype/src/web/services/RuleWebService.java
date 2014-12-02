@@ -45,8 +45,8 @@ public class RuleWebService {
 	String ruleString = ""
 			+ "test1:\n"
             + "  when accelerometer\n"
-            + "  if event.source == 19 && system.securitylevel == 1\n"  
-            + "  then playSound.play(26,30), flashlight.play(25,30), UserAlert.raise(27);\n";
+            + "  if event.source == 37 && system.securitylevel == 1\n"  
+            + "  then playSound.play(43,30), flashlight.play(42,30), UserAlert.raise(44);\n";
 
 	public static RuleEngine ruleEngine = null;
 	
