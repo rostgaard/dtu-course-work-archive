@@ -963,6 +963,7 @@ $.each( data.reverse(), function( key, vod ) {
 			$.ajax({
 			     type: "GET",
 			     url: URL,
+			     data: data,
 			     success: function(data) {
 					var devices = $.parseJSON(data);
 					console.log(devices);
@@ -1030,7 +1031,7 @@ $.each( data.reverse(), function( key, vod ) {
 		Using JQuery timeago plugin for formatting
 	*/
 
-		var baseURI = webServerPath+"/users/getLastLoginByUserName?userName=" + <%=user.getUserName()%>;
+		var baseURI = webServerPath+"/users/getLastLoginByUserName?userName=" + "<%=user.getUserName()%>;"
 		
 		$.ajax({
 		     type: "GET",
