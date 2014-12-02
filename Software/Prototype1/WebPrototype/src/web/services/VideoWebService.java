@@ -105,7 +105,7 @@ public class VideoWebService {
 			File f = listOfFiles[i];
 
 			System.out.println("sDate: "+f.lastModified());
-			if (f.lastModified() < lastTime + 4000){//Video is continous
+			if (f.lastModified() < lastTime + 12000){//Video is continous
 				lastTime = f.lastModified();
 				length++;
 			}

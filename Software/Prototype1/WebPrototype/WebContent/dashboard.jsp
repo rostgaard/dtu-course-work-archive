@@ -285,11 +285,29 @@
 </video>
 </div><!-- vodplayer -->
 
-<button class="button" onClick="startLive(14);">Show live video feed</button>
+<button class="button" onClick="startLive(videoID);">Show live video feed</button>
 <div id="voddiv">
 </div>
 <script>
-var url = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest/video/";
+var videoID;
+var url = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/PrototypeTwo/rest/video/";
+function preparePlayer(id){
+//Init
+var id = videoID;
+$("#liveplayer").hide();
+$("#vodplayer").hide();
+$("#playerlive")[0].pause();
+$('#voddiv').empty();
+//Generate vod buttons
+$.getJSON( url+"getVODS?id="+id, function( data ) {
+vods = data;
+$.each( data.reverse(), function( key, vod ) {
+	var date = new Date(vod.startTime);
+	var element = '<a><br>'+date.toUTCString()+'&nbsp;&nbsp;&nbsp;Length: '+vod.length*2+'s&nbsp;&nbsp;&nbsp;<button class="button" onClick="startVod('+vod.startID+','+vod.length+');">  Show video</button>';
+	$('#voddiv').append(element);
+});
+});
+}
 function startLive(id){
 $('#liveplayer').show();
 var latest;
@@ -314,7 +332,7 @@ $("#playerlive")[0].play();
 function startVod(i, end){
 $('#vodplayer').show();
 
-$("#playervod")[0].src=url+"getVideo?id="+id+"&count="+i;
+$("#playervod")[0].src=url+"getVideo?id="+videoID+"&count="+i;
 
 $("#playervod").bind("ended", function() {
 	console.log(i+"/"+end);
@@ -325,20 +343,6 @@ $("#playervod").bind("ended", function() {
 });
 $("#playervod")[0].play();
 }
-//Init
-var id = 14;
-$("#liveplayer").hide();
-$("#vodplayer").hide();
-
-//Generate vod buttons
-$.getJSON( url+"getVODS?id="+id, function( data ) {
-vods = data;
-$.each( data.reverse(), function( key, vod ) {
-	var date = new Date(vod.startTime);
-	var element = '<a><br>'+date.toUTCString()+'&nbsp;&nbsp;&nbsp;Length: '+vod.length*2+'s&nbsp;&nbsp;&nbsp;<button class="button" onClick="startVod('+vod.startID+','+vod.length+');">  Show video</button>';
-	$('#voddiv').append(element);
-});
-});
 
 
 </script>
@@ -957,19 +961,16 @@ $.each( data.reverse(), function( key, vod ) {
 	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
 	//var webServerPath = "http://localhost:8080/Prototype1/rest";
 	
-
 		var URL = webServerPath+"/apps/getDevicesWithCamera";
-		var data;
 			$.ajax({
 			     type: "GET",
 			     url: URL,
-			     data: data,
 			     success: function(data) {
-					var devices = $.parseJSON(data);
+					var devices = data;
 					console.log(devices);
 					for(var i in devices){
 						var mac = devices[i].mac;
-						 $('<button id="' + mac + '"' + ' type="button" class="draggable" data-toggle="modal" data-target="#jesperModal" />').text(+i + 1).appendTo('#cameraMap');
+			$('			<button id="' + mac + '"' + ' type="button" class="draggable" data-toggle="modal" onClick="videoID = '+(devices[i].id)+'-1;preparePlayer('+devices[i].id+'-1);" data-target="#jesperModal" />').text(+i+1).appendTo('#cameraMap');
 					}
 			   	 }
 			 });
@@ -989,17 +990,6 @@ $.each( data.reverse(), function( key, vod ) {
 		      }, dataType: "json"});
 		  }, 30000);
 		})();
-	</script>
-
-	<script>
-
-	/*
-		@Author s124259
-		Refreshing page every 60 seconds
-	*/
-		setTimeout(function(){
-			   window.location.reload(1);
-			}, 60000);
 	</script>
 
 	<script>
@@ -1031,7 +1021,7 @@ $.each( data.reverse(), function( key, vod ) {
 		Using JQuery timeago plugin for formatting
 	*/
 
-		var URL = webServerPath+"/users/getLastLoginByUserName?userName=" + "<%=user.getUserName()%>;"
+		var URL = webServerPath+"/users/getLastLoginByUserName?userName=" + "<%=user.getUserName()%>"
 		var data;
 		$.ajax({
 		     type: "GET",
