@@ -10,6 +10,16 @@
 	</welcome-file-list>
 
 	<servlet>
+      <servlet-name>Gateway Servlet</servlet-name>
+      <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+      <init-param>
+        <param-name>javax.ws.rs.container.ContainerResponseFilter</param-name>
+        <param-value>web.services.RestResponseFilter</param-value>
+      </init-param>
+      <load-on-startup>1</load-on-startup>
+    </servlet>
+
+	<servlet>
 		<servlet-name>Jersey Web Application</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 		<init-param>
