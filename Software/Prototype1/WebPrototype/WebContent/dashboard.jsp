@@ -1031,11 +1031,12 @@ $.each( data.reverse(), function( key, vod ) {
 		Using JQuery timeago plugin for formatting
 	*/
 
-		var baseURI = webServerPath+"/users/getLastLoginByUserName?userName=" + "<%=user.getUserName()%>;"
-		
+		var URL = webServerPath+"/users/getLastLoginByUserName?userName=" + "<%=user.getUserName()%>;"
+		var data;
 		$.ajax({
 		     type: "GET",
-		     url: buildURL,
+		     url: URL,
+		     data: data,
 		     success: function(data) {
 		          $('#lastLogin').html(jQuery.timeago(new Date(data)));
 		     }
