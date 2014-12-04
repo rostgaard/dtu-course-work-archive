@@ -1136,7 +1136,7 @@ $("#playervod")[0].play();
 			var lightAppStatus = false;
 			var camAppStatus = false;
 			var soundAppStatus = false;
-			var app = appData;
+			//var app = appData;
 			var devMac = document.getElementById('mac').value;
 			if(document.getElementById('light').value=="1"){
 				lightAppStatus = true;
