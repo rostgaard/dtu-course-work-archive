@@ -33,4 +33,15 @@ public class WebServiceConnection {
 		restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
 		return restTemplate.getForObject(url, Event.class, parameters);
 	}
+	
+	public static Event invokeAddEventWebServer(String mac, int value, EventType eventType) {
+		final String url = BASE_URL + "/events/addEventByMac?mac={mac}&value={value}&eventType={eventType}";
+		final Map<String,String> parameters = new HashMap<String,String>();
+		parameters.put("mac", String.valueOf(mac));
+		parameters.put("value", String.valueOf(value));
+		parameters.put("eventType", String.valueOf(eventType));
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+		return restTemplate.getForObject(url, Event.class, parameters);
+	}
 }
