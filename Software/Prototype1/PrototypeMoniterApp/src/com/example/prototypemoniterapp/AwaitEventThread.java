@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -27,39 +26,25 @@ public class AwaitEventThread extends Thread {
 		this.activity = activity;
 		this.alertList = view;
 		this.alertListAdapter = adapter;
-		Log.d("Debug", "Thread created");
 	}
 	
 	
 	@Override
 	public void run() {
-		
 		while (run || !isInterrupted()) {
-			Log.d("Debug","Start thread");
 			
 			Event event = null;
 			
 			try {
 				event = WebServiceConnection.invokeAwaitEventWebServer(macAddress, EventType.USERALERT);
 			} catch (Exception e) {
-				
 				if(!run || isInterrupted()) break; 
-//				
-//				activity.runOnUiThread(new Runnable() {					
-//					@Override
-//					public void run() {
-//						// TODO Auto-generated method stub
-//						alertListAdapter.add("Exception: " + macAddress);
-//						alertListAdapter.notifyDataSetChanged();
-//					}
-//				});
 			}
 			
 			if(!run || isInterrupted()) break; 
 			
 			if (event != null) {
 				final String txt = "Alert from device: " + macAddress + "\nTime: " + event.getTime();
-				Log.d("Debug","Before add text");
 				
 				activity.runOnUiThread(new Runnable() {					
 					@Override
@@ -85,12 +70,6 @@ public class AwaitEventThread extends Thread {
 						(NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
 				nManager.notify(0, nBuilder.build());
 			}
-//			try {
-//				Thread.sleep(10000);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 		}
 	}
 
