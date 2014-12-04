@@ -9,7 +9,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -92,13 +91,7 @@ public class MainActivity extends Activity {
 			});
 			appList = (ListView) getActivity().findViewById(R.id.appList);
 			alertList = (ListView) getActivity().findViewById(R.id.alertList);
-//			List<String> list = new ArrayList<String>();
-//			list.add("Connecting to server...");
-//			appListAdapter = new ArrayAdapter<>(getActivity(),
-//					 android.R.layout.simple_list_item_1);
-//			appList.setAdapter(appListAdapter);
 			setDeviceList();
-			
 		}
 		
 		private void setDeviceList() {
@@ -106,46 +99,35 @@ public class MainActivity extends Activity {
 				
 				@Override
 				public void run() {
-					Log.d("Debug", "Start");
 					
 					List<App> apps;
 					try {
 						apps = WebServiceConnection.invokeGetAppsFromWebServer();
 					} catch (Exception e) {
 						apps = new ArrayList<App>();
-						Log.d("Debug", "New applist");
-						Log.d("Debug", e.toString());
 					}
 					
-					Log.d("Debug", "After apps web get");
 					Set<String> macsTemp = new HashSet<String>();
 					
 					for (App app : apps) {
 						macsTemp.add(app.getMac());
 					}
-//					for (int i = 0; i < 3; i++) {
-//						macsTemp.add("" + i);
-//					}
+					
 					final Set<String> macs = macsTemp;
-					Log.d("Debug", "Macs: " + macs);
 					
 					getActivity().runOnUiThread(new Runnable() {
 						
 						@Override
 						public void run() {
 							List<String> arrayList = new ArrayList<String>(macs);
-							//appListAdapter.clear();
 							appListAdapter = new ArrayAdapter<>(getActivity(),
 															 android.R.layout.simple_list_item_1,
 															 arrayList);
 							appList.setAdapter(appListAdapter);
-//							appListAdapter.notifyDataSetChanged();
 							
 							alertListAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1);
 							alertList.setAdapter(alertListAdapter);
 							
-							
-							Log.d("Debug", "Before list add");
 							for (String mac : macs) {
 								AwaitEventThread awaitEventThread = new AwaitEventThread(mac, getActivity(), alertList, alertListAdapter);
 								awaitEventThread.start();
@@ -153,8 +135,6 @@ public class MainActivity extends Activity {
 							}
 						}
 					});
-					
-					
 				}
 			}).start();
 		}
