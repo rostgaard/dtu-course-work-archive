@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
@@ -120,6 +121,8 @@ public class MainActivity extends Activity {
 				sensorManager = (SensorManager) this.getActivity().getSystemService(Context.SENSOR_SERVICE);
 			
 			setAppStatus();
+			TextView status = (TextView) getActivity().findViewById(R.id.status);
+			status.setText("Connected");
 		}
 		
 		@Override
