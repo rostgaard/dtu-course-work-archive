@@ -16,6 +16,13 @@ public class Query {
 			"WHERE " + 
 			  "a.mac = :mac ";
 	
+	
+	final protected static String queryGetDevice = 
+			"SELECT a " +
+			"FROM DeviceEntity a " +
+			"WHERE " +
+				"a.mac = :mac";
+	
 	final protected static String querytextGetAll = "SELECT e FROM EventEntity e";
 	final protected static String querytextGetAllApps = "SELECT s FROM AppEntity s";
 	
