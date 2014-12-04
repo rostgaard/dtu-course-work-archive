@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.model.App;
+import dto.model.Device;
 import dto.model.Event;
 import dto.model.Policy;
 import dto.model.RuleString;
 import dto.model.User;
 import entity.model.AppEntity;
+import entity.model.DeviceEntity;
 import entity.model.EventEntity;
 import entity.model.PolicyEntity;
 import entity.model.RuleStringEntity;
@@ -121,6 +123,15 @@ public class Conversion {
 		}
 		
 		return rules;
+	}
+	
+	public static Device convertDeviceEntity(DeviceEntity deviceEntity){
+		
+		String mac = deviceEntity.getMac();
+		String name = deviceEntity.getName();
+			
+		return new Device(mac, name);
+		
 	}
 	
 	
