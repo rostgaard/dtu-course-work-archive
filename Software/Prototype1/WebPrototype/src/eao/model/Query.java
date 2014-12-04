@@ -55,4 +55,12 @@ public class Query {
 	
 	final protected static String getAllPolicies = "SELECT p FROM PolicyEntity p";
 	final protected static String getAllRuleStrings = "SELECT r FROM RuleStringEntity r";
+	
+	final protected static String getEventsInTimespan =
+			"SELECT e " +
+			"FROM EventEntity e " +
+			"WHERE " + 
+			  "e.time >  :time " +
+			"ORDER BY e.time ASC";
+			;
 }

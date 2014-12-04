@@ -162,7 +162,7 @@ public class EventWebService {
 	}
 	
 	@GET
-	@Path("/getEventsInTimeSpan")
+	@Path("/getEventsByIdInTimeSpan")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Event> getEventList(@QueryParam("id") int id, @QueryParam("time") int time) {
@@ -172,6 +172,22 @@ public class EventWebService {
 		events = Conversion.convertEventEntityList(eventEntities);
 		return events;
 	}
+	
+	
+	/**
+	 * @author s124259, Jesper Mark
+	 *
+	 */
+	@GET
+	@Path("/getTotalEventCountInTimeSpan")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getEventListInTimespan(@QueryParam("time") int time) {
+		List<EventEntity> eventEntities = new ArrayList<EventEntity>();
+		eventEntities = eao.getEventlistInTimespan(time);
+		return Integer.toString(eventEntities.size());		
+	}
+	
 	
 	@GET
 	@Path("/awaitEventByID")

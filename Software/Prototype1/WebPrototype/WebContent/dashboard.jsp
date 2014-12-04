@@ -128,7 +128,7 @@
 											<i class="fa fa-warning fa-5x"></i>
 										</div>
 										<div class="col-xs-9 text-right">
-											<div id="eventsSinceLastWeek" class="huge">0</div>
+											<div id="eventCountSinceLastWeek" class="huge">0</div>
 											<div>Security Events Last 7 Days</div>
 										</div>
 									</div>
@@ -1058,23 +1058,23 @@ $("#playervod")[0].play();
 
 	</script>
 	
-<!-- 	<script>
+ 	<script>
 		/*
 		@Author s124259
-		Getting total number of new events last 7 days with webservice call
-		on page load and update #eventsSinceLastWeek class with data
+		Getting total number of new events within last x miliseconds with webservice call
+		on page load and update #eventCountSinceLastWeek class with data
 		*/
-
-		var URL = webServerPath+"/events/getEventCountSinceLastWeek";
+	
+		var timespan = "604800000"; // 7 days in ms
+		var URL = webServerPath+"/events/getTotalEventCountInTimeSpan?time="+timespan;
 		$.ajax({
 		     type: "GET",
 		     url: URL,
-		     data: data,
 		     success: function(data) {
-		          $('#eventsSinceLastWeek').html(data);
+		          $('#eventCountSinceLastWeek').html(data);
 		     }
 		   });		
-	</script> -->
+	</script>
 
 	<script type="text/javascript">
 	

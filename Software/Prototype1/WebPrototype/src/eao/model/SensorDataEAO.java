@@ -132,6 +132,7 @@ public class SensorDataEAO {
 		return appEntity.getEvents();
 	}
 	
+	
 	public List<EventEntity> getAllEventlist() {
 		TypedQuery<EventEntity> query = em.createQuery(Query.querytextGetAll, EventEntity.class);	
 		List<EventEntity> result = query.getResultList();
@@ -146,6 +147,22 @@ public class SensorDataEAO {
 	public List<EventEntity> getEventlist(int id, int time) {		
 		TypedQuery<EventEntity> query = em.createQuery(Query.querytext, EventEntity.class);
 		query.setParameter("id", id);
+		query.setParameter("time", System.currentTimeMillis() - time);
+		List<EventEntity> result = query.getResultList();
+
+		if (result.size() > 0) {
+			return result;
+		} else {
+			return Collections.emptyList();
+		}
+	}
+	
+	/**
+	 * 
+	 * @author s124259, Jesper Mark
+	 */
+	public List<EventEntity> getEventlistInTimespan(int time) {		
+		TypedQuery<EventEntity> query = em.createQuery(Query.getEventsInTimespan, EventEntity.class);
 		query.setParameter("time", System.currentTimeMillis() - time);
 		List<EventEntity> result = query.getResultList();
 
