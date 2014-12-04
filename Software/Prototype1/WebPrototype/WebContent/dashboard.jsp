@@ -258,6 +258,7 @@
 					</div>
 					<!-- /.row -->
 				</div>
+			</div>
 
 				<!--  play video file in modal window -->
 				<div class="modal fade" id="jesperModal" tabindex="-1" role="dialog"
@@ -450,7 +451,30 @@ $("#playervod")[0].play();
 
 			</div>
 
-
+			<div class="modal fade" id="eventInfoModal" tabindex="-1" role="dialog"
+		aria-labelledby="deviceInfoModal" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+				</div>
+				<div class="modal-body" align=center>
+				
+				<p class="text" id="macEvent"></p>
+					
+					<script>
+				
+						function eventInfo(mac){
+							$('#macEvent').html("Event from mac: " + mac);
+		   				}
+					</script>
+					
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
@@ -521,8 +545,14 @@ $("#playervod")[0].play();
 										<div class="panel-body">
 											<div class="form-group">
 												<div class="col-sm-12">
-													<input type="text" class="form-control" id="deviceName"
+													<input type="text" class="form-control" id="deviceMac"
 														placeholder="Device Mac">
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-sm-12">
+													<input type="text" class="form-control" id="deviceName"
+														placeholder="Device Name">
 												</div>
 											</div>
 											<div class="form-group">
@@ -567,6 +597,7 @@ $("#playervod")[0].play();
 				<div class="modal-body" align=center>
 				
 				<p class="text" id="macDevice"></p>
+				<p class="text" id="nameDevice"></p>
 				<p class="text" id="camAct"></p>
 				<p class="text" id="soundAct"></p>
 				<p class="text" id="lightAct"></p>
@@ -583,6 +614,15 @@ $("#playervod")[0].play();
 					var URL = webServerPath+"/apps/getApps?mac="+mac;
 					$.ajax({
 		     		type: "GET",
+		     		url: webServerPath+"/devices/getDeviceName?mac"+mac,
+		     		data: data,
+		     		success: function(data) {
+		     			var dev = data
+		     			$('#nameDevice').html(dev.name);
+		     		}
+		     		});
+					$.ajax({
+		     		type: "GET",
 		     		url: URL,
 		     		data: data,
 		     		success: function(data) {
@@ -596,7 +636,7 @@ $("#playervod")[0].play();
 								var eventTy = devices[i].eventType;
 								
 								if(status){
-									if(eventTy =="STOPVIDEORECORDING'"){
+									if(eventTy =="STARTVIDEORECORDING'"){
 										$('#camAct').html("Camera is active");
 									}
 									if(eventTy =="PLAYSOUND"){
@@ -606,13 +646,20 @@ $("#playervod")[0].play();
 										$('#lightAct').html("Light is active");
 									}
 								}
-							};
-							//onclose del der sætter mac i configure felt til configurering	     		   	
+							};	   	
 		     			}
 		   			});
 		   		}
+		   		
+				function setMacField(mac){
+				$('#DeviceMac').html(mac)
+				}
 		   	
 					</script>
+					
+					<div class="col-sm-4">
+						<button type="button" id="submit" class="btn btn-lg btn-close btn-block" onclick="setMacField(\'' + $('#macDevice') + '\')">Configure</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -1093,11 +1140,20 @@ $("#playervod")[0].play();
 					{
 					var type = items[i].eventType;
 					var time = jQuery.timeago(new Date(items[i].time));
-					var element = '<a href="#" class="list-group-item"><i class="fa fa-shield fa-fw"></i> '+type.replace("SHAKE","Door moved").replace("PLAYSOUND","Sound played")+'<span class="pull-right text-muted small"><em>'+time+'</em></span></a>';
+					var element = '<a href="#" data-toggle="modal" data-target="#eventInfoModal" class="list-group-item" onclick="eventInfo(\'' + items[i].mac + '\')"><i class="fa fa-shield fa-fw"></i> '+type.replace("SHAKE","Door moved").replace("PLAYSOUND","Sound played").replace("FLASHLIGHT", "Flash light activated").replace("USERALERT", "User Alerted").replace("ACCELEROMETER", "Movement detected")+'<span class="pull-right text-muted small"><em>'+time+'</em></span></a>';
 					$('#box').append(element);
 					}
 				}
 		     });
+		     
+		     $('.list-group-item:gt(10)').hide().last().after(
+    			$('#more').click(function(){
+        		var a = this;
+        		$('.list-group-item:not(:visible):lt(5)').fadeIn(function(){
+         		if ($('.list-group-item:not(:visible)').length == 0) $(a).remove();   
+        		}); return false;
+    })
+	);
 		
 		}
 	reloadEvents();
@@ -1156,7 +1212,7 @@ $("#playervod")[0].play();
 			
 			$.ajax({
 		    	type: "PUT",
-		     	url: webServerPath+"/apps/update?mac="+devMac+"&eventType='STOPVIDEORECORDING''&status="+camAppStatus+"",
+		     	url: webServerPath+"/apps/update?mac="+devMac+"&eventType='STARTVIDEORECORDING''&status="+camAppStatus+"",
 		     
 		    });
 			
