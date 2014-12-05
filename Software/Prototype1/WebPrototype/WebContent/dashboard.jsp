@@ -1174,8 +1174,11 @@ $("#playervod")[0].play();
 		
 		for(var i in devItems)
 		{
+		var printDevName = devItems[i].mac;
+		
+		
 		var devElement = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item" onclick="deviceInfo(\'' + devItems[i].mac + '\')"><i class="fa fa-mobile fa-fw"></i> '
-				+ devItems[i].mac
+				+ printDevName
 				+ '</a>';
 				$('#devs').append(devElement);
 				};
