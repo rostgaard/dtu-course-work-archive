@@ -304,7 +304,7 @@ $.getJSON( url+"getVODS?id="+id, function( data ) {
 vods = data;
 $.each( data.reverse(), function( key, vod ) {
 	var date = new Date(vod.startTime);
-	var element = '<a><br>'+date.toUTCString()+'&nbsp;&nbsp;&nbsp;Length: '+vod.length*2+'s&nbsp;&nbsp;&nbsp;<button class="button" onClick="startVod('+vod.startID+','+vod.length+');">  Show video</button>';
+	var element = '<a><br>'+date.toUTCString()+'&nbsp;&nbsp;&nbsp;Length: '+vod.length*4+'s&nbsp;&nbsp;&nbsp;<button class="button" onClick="startVod('+vod.startID+','+vod.length+');">  Show video</button>';
 	$('#voddiv').append(element);
 });
 });

@@ -22,7 +22,6 @@ public class DeviceEntity {
 	private Integer id;
 	
 	
-	@ManyToOne
 	private String mac;
 	private String name;
 	
