@@ -1126,6 +1126,7 @@ $("#playervod")[0].play();
 	<script type="text/javascript">
 	
 	/** @author s124255
+	dashboard tab
 		*/
 	function reloadEvents(){
 	var data;
@@ -1158,6 +1159,7 @@ $("#playervod")[0].play();
 		}
 	reloadEvents();
 	/** @author s124255
+	device tab
 		*/	 
 	function reloadDevs(){    
 	var devData;
@@ -1189,6 +1191,7 @@ $("#playervod")[0].play();
 	reloadDevs();
 		
 	/** @author s124255
+	device tab
 		*/
 		function confDev(){
 		
