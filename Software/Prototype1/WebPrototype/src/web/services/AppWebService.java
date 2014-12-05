@@ -15,10 +15,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import dto.model.Event;
 
 import dto.model.App;
 import dto.model.AppList;
+import dto.model.Event;
 import eao.model.Conversion;
 import eao.model.SensorDataEAO;
 import entity.model.AppEntity;
@@ -106,8 +106,22 @@ public class AppWebService {
 		return appList;
 	}
 	
-	/**
-	 * @author s124259 s084283
+	@GET
+	@Path("/deleteApp")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteApp(@QueryParam("id") int id) {
+		if (id == 0) {
+			List<AppEntity> appEntities = eao.getAllAppEntitylist();
+			eao.deleteApps(appEntities);
+		} else {
+			eao.deleteApp(id);
+		}
+		return "id " + id;
+	}
+	
+	/*
+	 * @Author s124259 s084283
 	 */
 	@GET
 	@Path("/getDeviceCount")

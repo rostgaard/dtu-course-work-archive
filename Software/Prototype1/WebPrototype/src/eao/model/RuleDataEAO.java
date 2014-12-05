@@ -107,6 +107,18 @@ public class RuleDataEAO {
 		} else {
 			return Collections.emptyList();
 		}
-	}	
+	}
+	
+	public void deletePolicy(int id) {
+		PolicyEntity policyEntity = em.find(PolicyEntity.class, id);
+		
+		em.remove(policyEntity);
+	}
+	
+	public void deletePolicies(List<PolicyEntity> entities) {
+		for (PolicyEntity policyEntity : entities) {
+			em.remove(policyEntity);			
+		}
+	}
 
 }

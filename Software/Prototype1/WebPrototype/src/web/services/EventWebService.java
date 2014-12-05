@@ -90,8 +90,7 @@ public class EventWebService {
 		System.out.println(ruleMatches);
 		
 		for (Rule rule : ruleMatches) {
-			for (Action act : rule.getActions()) {
-				
+			for (Action act : rule.getActions()) {				
 				addEvent(event.getValue(), act.getTargetActuatorID(), EventType.valueOf(act.getActuator().toUpperCase()));
 			}
 		}

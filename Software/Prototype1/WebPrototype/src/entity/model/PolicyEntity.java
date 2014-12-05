@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +25,7 @@ public class PolicyEntity implements Serializable{
 	
 	private String name;
 	
-	@OneToMany(mappedBy="policyEntity")
+	@OneToMany(mappedBy="policyEntity", cascade=CascadeType.ALL)
 	private List<RuleStringEntity> ruleStringEntities;
 	
 	private int securityLevel;

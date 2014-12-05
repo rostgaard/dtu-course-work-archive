@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +31,7 @@ public class AppEntity implements Serializable {
 	private String mac;
 	private EventType eventType;
 	
-	@OneToMany(mappedBy="appEntity")
+	@OneToMany(mappedBy="appEntity", cascade=CascadeType.ALL)
 	@OrderBy("time ASC")
 	private List<EventEntity> events;
 	

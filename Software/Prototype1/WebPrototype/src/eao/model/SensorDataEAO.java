@@ -186,6 +186,18 @@ public class SensorDataEAO {
 		}
 	}
 	
+	public void deleteApp(int id) {
+		AppEntity appEntity = em.find(AppEntity.class, id);
+		
+		em.remove(appEntity);
+	}
+	
+	public void deleteApps(List<AppEntity> entities) {
+		for (AppEntity appEntity : entities) {
+			em.remove(appEntity);			
+		}
+	}
+	
 	/**
 	 * @author s124255
 	 * @param mac

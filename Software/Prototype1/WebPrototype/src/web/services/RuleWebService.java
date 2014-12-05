@@ -12,8 +12,8 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -103,7 +103,7 @@ public class RuleWebService {
 		if (ruleStringEntity == null) {
 			return null;
 		}
-		
+
 		reloadRules();
 		
 		return Conversion.convertRuleStringEntity(ruleStringEntity);	
@@ -176,6 +176,18 @@ public class RuleWebService {
 		return ruleEngine.ruleStrings();
 	}
 	
+	@DELETE
+	@Path("/deletePolicy")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	public void deletePolicy(@QueryParam("id") int id) {
+		if (id == 0) {
+			List<PolicyEntity> policyEntities = eao.getAllPolicyEntitylist();
+			eao.deletePolicies(policyEntities);
+		} else {
+			eao.deletePolicy(id);
+		}
+		reloadRules();
+	}
 	
 	@PUT
 	@Path("/setSecurityLevel")
