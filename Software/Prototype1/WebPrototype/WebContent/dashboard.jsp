@@ -656,9 +656,9 @@ $("#playervod")[0].play();
 		   	
 					</script>
 					
-					<div class="col-sm-4">
-						<button type="button" id="submit" class="btn btn-lg btn-close btn-block" onclick="setMacField($('#macDevice').text());">Configure</button>
-					</div>
+					
+					<button type="button" id="submit" class="button" data-toggle="modal" data-target="#eventInfoModal" onclick="setMacField(\''$('#macDevice').text()'\');">Configure</button>
+					
 				</div>
 			</div>
 		</div>
@@ -1137,6 +1137,7 @@ $("#playervod")[0].play();
 		     data: data,
 		     success: function(data) {
 		    var items = data;
+		    $('#box').empty();
 		          for(var i in items.reverse())
 					{
 					var type = items[i].eventType;
@@ -1174,6 +1175,7 @@ $("#playervod")[0].play();
 		//var devItems = $.parseJSON(temp);//OUT FOR PRODUCTION
 		var devItems = devData;//IN FOR PRODUCTION
 		
+		$('#devs').empty();
 		for(var i in devItems)
 		{
 		var printDevName = devItems[i].mac;
