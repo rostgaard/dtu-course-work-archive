@@ -41,6 +41,13 @@
 <!-- Custom Fonts -->
 <link href="font-awesome-4.1.0/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
+	
+
+<!-- Add IntroJs styles -->
+<link href="css/introjs.css" rel="stylesheet">
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -62,15 +69,16 @@
 		
 	%>
 
-	<ul class="nav nav-tabs" role="tablist">
+	<ul class="nav nav-tabs" role="tablist" data-step="1" data-intro="Browse the different pages using the top tab">
 		<li class="active"><a href="#dashboard" role="tab"
 			data-toggle="tab">Dashboard</a></li>
 		<li><a href="#devices" role="tab" data-toggle="tab">Devices</a></li>
         <li><a href="#rules" role="tab" data-toggle="tab">Rules</a></li>
 		<li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
 
-		<li style="float: right;"><a href="/Prototype245/LogoutServlet">Log
-				Out</a></li>
+		
+		<li style="float: right;"><a href="/Prototype245/LogoutServlet">Log	Out</a></li>
+		<li style="float: right;"><a href="javascript:void(0);" onclick="javascript:introJs().start();">Demo</a></li>
 
 
 	</ul>
@@ -94,12 +102,12 @@
 				<div id="page-wrapper">
 					<div class="row">
 						<div class="col-lg-12">
-							<h1 class="page-header">Dashboard</h1>
+							<h1 class="page-header"  data-step="5" data-intro="Okay, you're good to go!">Dashboard</h1>
 						</div>
 						<!-- /.col-lg-12 -->
 					</div>
 					<!-- /.row -->
-					<div class="row">
+					<div class="row"  data-step="2" data-intro="Get a quick overview of your home">
 						<div class="col-lg-3 col-md-6">
 							<div class="panel panel-primary">
 								<div class="panel-heading">
@@ -202,7 +210,7 @@
 							<div class="panel panel-default">
 								<!-- /.panel-heading -->
 
-								<div class="panel-body">
+								<div class="panel-body" data-step="3" data-intro="Drag and drop your camera devices to their exact position in the floor plan">
 									<div id="cameraMap">
 									
 										
@@ -237,7 +245,7 @@
 							<!-- /.panel -->
 						</div>
 						<!-- /.col-lg-8 -->
-						<div class="col-lg-4">
+						<div class="col-lg-4" data-step="4" data-intro="View the recent security events in your home">
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<i class="fa fa-bell fa-fw"></i> Notifications Panel
@@ -1014,7 +1022,6 @@ $("#playervod")[0].play();
 			     url: URL,
 			     success: function(data) {
 					var devices = data;
-					console.log(devices);
 					for(var i in devices){
 						var mac = devices[i].mac;
 			$('			<button id="' + mac + '"' + ' type="button" class="draggable" data-toggle="modal" onClick="videoID = '+(devices[i].id)+'-1;preparePlayer('+devices[i].id+'-1);" data-target="#jesperModal" />').text(+i+1).appendTo('#cameraMap');
@@ -1317,6 +1324,9 @@ $("#playervod")[0].play();
 
 		<!-- Custom Theme JavaScript -->
 		<script src="js/sb-admin-2.js"></script>
+		
+		<!-- "Guided Tour" Plugin -->
+		 <script type="text/javascript" src="js/intro.js"></script>
 </body>
 
 </html>
