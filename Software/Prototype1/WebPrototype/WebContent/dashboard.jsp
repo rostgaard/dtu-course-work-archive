@@ -494,7 +494,6 @@ $("#playervod")[0].play();
 					</div>
 				</div>
 			</div>
-		</div>
 		<!-- /#wrapper -->
 
 
@@ -658,7 +657,7 @@ $("#playervod")[0].play();
 					</script>
 					
 					<div class="col-sm-4">
-						<button type="button" id="submit" class="btn btn-lg btn-close btn-block" onclick="setMacField($('#macDevice').text);">Configure</button>
+						<button type="button" id="submit" class="btn btn-lg btn-close btn-block" onclick="setMacField($('#macDevice').text());">Configure</button>
 					</div>
 				</div>
 			</div>
@@ -987,6 +986,7 @@ $("#playervod")[0].play();
 			</div>
 		</div>
 	</div>
+</div>
 		<!-- ##################################################################
 #######################################################################
 #######################################################################
