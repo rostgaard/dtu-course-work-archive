@@ -48,7 +48,6 @@ public class DevicesEAO {
 	public DeviceEntity getDeviceEntity(String mac, String name) {
 		TypedQuery<DeviceEntity> query = em.createQuery(Query.queryGetDevice, DeviceEntity.class);
 		query.setParameter("mac", mac);
-		query.setParameter("name",name);
 		List<DeviceEntity> result = query.getResultList();
 
 		if (result.size() > 0) {
