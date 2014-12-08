@@ -71,7 +71,7 @@
 
 	<ul class="nav nav-tabs" role="tablist" data-step="1" data-intro="Browse the different pages using the top tab">
 		<li class="active"><a href="#dashboard" role="tab"
-			data-toggle="tab">Dashboard</a></li>
+			data-toggle="tab">Home</a></li>
 		<li><a href="#devices" role="tab" data-toggle="tab" >Devices</a></li>
         <li><a href="#rules" role="tab" data-toggle="tab">Rules</a></li>
 		<li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
@@ -563,9 +563,9 @@ $("#playervod")[0].play();
 				
 				function deviceInfo(mac){
 				
-				$('#accAct').html("Camera is deactivated");
-				$('#soundAct').html("Sound is deactivated");
-				$('#lightAct').html("Light is deactivated");
+				$('#accAct').html("Camera is not available");
+				$('#soundAct').html("Sound is not available");
+				$('#lightAct').html("Light is not available");
 					var data;
 					var devices;
 					var URL = webServerPath+"/apps/getApps?mac="+mac;
@@ -594,13 +594,13 @@ $("#playervod")[0].play();
 								
 								if(status){
 									if(eventTy =="STARTVIDEORECORDING'"){
-										$('#camAct').html("Camera is active");
+										$('#camAct').html("Camera is available");
 									}
 									if(eventTy =="PLAYSOUND"){
-										$('#soundAct').html("Sound is active");
+										$('#soundAct').html("Sound is available");
 									}
 									if(eventTy =="FLASHLIGHT"){
-										$('#lightAct').html("Light is active");
+										$('#lightAct').html("Light is available");
 									}
 								}
 							};	   	
@@ -739,7 +739,7 @@ $("#playervod")[0].play();
 			</div>
 		</div>
 	</div>
-</div>
+
 		<!-- ##################################################################
 #######################################################################
 #######################################################################
@@ -840,41 +840,21 @@ $("#playervod")[0].play();
 		@author s124259		
 		-->
 		<div class="panel-footer">
+		<div style="width: 2%; margin: 0 auto;">
+		v0.1.2
+		</div>
 		<div style="width: 19%; margin: 0 auto;">
-			<div style="width: 3%; margin: 0 auto;">
-			v0.1.1
-			</div>
-			<a href="https://docs.google.com/document/d/1I5P_2qIg8SIz7wvdPGlaI-uMimTQXew2n0-tSskPx6s/pub" target="_blank">Quick Start Guide</a>
+			<a href="https://docs.google.com/document/d/1fRxEcnT6e1gi_WQDbheRzWXXZbP5OenC2mTVpi9qMDk/pub" target="_blank">Quick Start Guide</a>
 			|
 			<a href="https://docs.google.com/document/d/1I5P_2qIg8SIz7wvdPGlaI-uMimTQXew2n0-tSskPx6s/pub" target="_blank">Handbook</a>
 			|
 			<a href="https://docs.google.com/spreadsheets/d/1xKfce3ZwyUpaoCnxguzYpSRH6URlFPQwEO1oNtJMgug/pubhtml?gid=0&single=true" target="_blank">Known Bugs</a>
-		</div>		
-		<!-- 
-			<div style="width: 60%; margin: 0 auto;">
-				<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9"
-					id="s12" class="btn btn-xs btn-info" role="button">Jesper Mark</a>
-				<a href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9"
-					id="s12" class="btn btn-xs btn-info" role="button">Stefan
-					Mertens</a> <a
-					href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12"
-					class="btn btn-xs btn-info" role="button">Jan-Eric Raab</a> <a
-					href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12"
-					class="btn btn-xs btn-info" role="button">Nicolai Kamstrup</a> <a
-					href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12"
-					class="btn btn-xs btn-info" role="button">Luai Michlawi</a> <a
-					href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12"
-					class="btn btn-xs btn-info" role="button">Peter Østergaard</a> <a
-					href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12"
-					class="btn btn-xs btn-info" role="button">Kim Christensen</a> <a
-					href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12"
-					class="btn btn-xs btn-info" role="button">Nicolai Polack</a> <a
-					href="https://www.linkedin.com/pub/jesper-mark/59/502/2a9" id="s12"
-					class="btn btn-xs btn-info" role="button">Jacob Gilsaa</a>
-
-			
 		</div>
-		!-->
+		<div style="width: 13%; margin: 0 auto;">
+			<a href="https://docs.google.com/spreadsheets/d/1xKfce3ZwyUpaoCnxguzYpSRH6URlFPQwEO1oNtJMgug/pubhtml?gid=0&single=true" target="_blank">Device App</a>
+			|
+			<a href="https://docs.google.com/spreadsheets/d/1xKfce3ZwyUpaoCnxguzYpSRH6URlFPQwEO1oNtJMgug/pubhtml?gid=0&single=true" target="_blank">User Alarm App</a>
+		</div>
 	</div>
 <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
 		aria-labelledby="addUserModal" aria-hidden="true">
@@ -1050,6 +1030,8 @@ $("#playervod")[0].play();
 	
 	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
 	//var webServerPath = "http://localhost:8080/Prototype1/rest";
+	var x_max_coord = document.getElementById('floorplan').offsetWidth;
+	var y_max_coord = document.getElementById('floorplan').offsetHeight;
 	
 		var URL = webServerPath+"/apps/getDevicesWithCamera";
 			$.ajax({
@@ -1058,8 +1040,16 @@ $("#playervod")[0].play();
 			     success: function(data) {
 					var devices = data;
 					for(var i in devices){
+						minimum = 20;
+						maximum = 70;
+						
+						var x_factor = (Math.floor(Math.random() * (maximum - minimum + 1)) + minimum) / 100;
+						var y_factor = (Math.floor(Math.random() * (maximum - minimum + 1)) + minimum) / 100;
+						var x_coord = x_max_coord * x_factor;
+						var y_coord = y_max_coord * y_factor;
+						
 						var mac = devices[i].mac;
-			$('			<button id="' + mac + '"' + ' type="button" class="draggable" data-toggle="modal" onClick="videoID = '+(devices[i].id)+'-1;preparePlayer('+devices[i].id+'-1);" data-target="#jesperModal" />').text(+i+1).appendTo('#cameraMap');
+			$('			<button id="' + mac + '"' + ' type="button" class="draggable" data-toggle="modal" onClick="videoID = '+(devices[i].id)+'-1;preparePlayer('+devices[i].id+'-1);" data-target="#jesperModal" style="position: absolute; left: '+x_coord+'px; top: '+y_coord+'px;"/>').text(+i+1).appendTo('#cameraMap');
 					}
 			   	 }
 			 });
