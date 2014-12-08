@@ -1,27 +1,33 @@
 package com.example.prototypeapp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
 	public static String macAddress;
+	private static boolean connected = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +35,14 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		macAddress = getMacAddress();
-		registerAppsWithServer(macAddress);
+		Thread registerAppsThread = registerAppsWithServer(macAddress);
+		registerAppsThread.start();
+		try {
+			registerAppsThread.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
@@ -62,13 +75,13 @@ public class MainActivity extends Activity {
 		return info.getMacAddress();
 	}
 	
-	private void registerAppsWithServer(String mac){
+	private Thread registerAppsWithServer(String mac){
 		
 		final String macAddress = mac;
 		// Registering the apps with the server
 		final PackageManager packageManager = this.getPackageManager();
 		
-		new Thread(new Runnable() {			
+		return new Thread(new Runnable() {			
 			@Override
 			public void run() {					
 				try {
@@ -84,11 +97,13 @@ public class MainActivity extends Activity {
 					WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.PLAYSOUND);
 					
 					WebServiceConnection.invokeAddAppToDatabase(macAddress,EventType.USERALERT);
+					connected = true;
 			
 				} catch (Exception e) {
+					connected = false;
 				}
 			}
-		}).start();
+		});
 	}
 
 	/**
@@ -100,9 +115,10 @@ public class MainActivity extends Activity {
 		private AccelerometerEventListener accelerometerListener;
 		private PlaySoundActuator playSoundActuator;
 		private FlashLightActuator flashLightActuator;
-		private boolean accelerometerActive = true;
-		private boolean playSoundActive = true;
-		private boolean flashLightActive = true;
+		private boolean accelerometerActive = false;
+		private boolean playSoundActive = false;
+		private boolean flashLightActive = false;
+		private ArrayList<String> activeApps;
 
 		public PlaceholderFragment() {}
 
@@ -120,9 +136,22 @@ public class MainActivity extends Activity {
 			if (sensorManager == null)
 				sensorManager = (SensorManager) this.getActivity().getSystemService(Context.SENSOR_SERVICE);
 			
-			setAppStatus();
-			TextView status = (TextView) getActivity().findViewById(R.id.status);
-			status.setText("Connected");
+			Thread setStatusThread = setAppStatus();
+			setStatusThread.start();
+			try {
+				setStatusThread.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			TextView statusValue = (TextView) getActivity().findViewById(R.id.status);
+			if (connected) {
+				statusValue.setText("Connected");
+				statusValue.setTextColor(Color.rgb(0, 150, 0));
+			} else {
+				statusValue.setText("Could not connect to server");
+				statusValue.setTextColor(Color.RED);
+			}
 		}
 		
 		@Override
@@ -159,27 +188,36 @@ public class MainActivity extends Activity {
 			accelerometerListener = null;
 		}
 		
-		private void setAppStatus() {
-			new Thread(new Runnable() {
+		private Thread setAppStatus() {
+			return new Thread(new Runnable() {
 				
 				@Override
 				public void run() {
 					try{
+						activeApps = new ArrayList<String>();
 						List<App> apps = WebServiceConnection.invokeGetAppByMac(macAddress);
 						for (App app : apps) {
-							if (app.getEventType() == EventType.ACCELEROMETER && app.isStatus() == false) {
-								accelerometerActive = false;
+							if (app.getEventType() == EventType.ACCELEROMETER && app.isStatus() == true) {
+								accelerometerActive = true;
+								activeApps.add("Door Sensor");
 							}
-							if (app.getEventType() == EventType.FLASHLIGHT && app.isStatus() == false) {
-								flashLightActive = false;
+							if (app.getEventType() == EventType.FLASHLIGHT && app.isStatus() == true) {
+								flashLightActive = true;
+								activeApps.add("Flashlight");
 							}
-							if (app.getEventType() == EventType.PLAYSOUND && app.isStatus() == false) {
-								playSoundActive = false;
+							if (app.getEventType() == EventType.PLAYSOUND && app.isStatus() == true) {
+								playSoundActive = true;
+								activeApps.add("Sound");
 							}
 						}
+						ArrayAdapter<String> listAdapter = new ArrayAdapter<>(getActivity(),
+															android.R.layout.simple_list_item_1,
+															activeApps);
+						ListView activeAppsList = (ListView) getActivity().findViewById(R.id.active_apps);
+						activeAppsList.setAdapter(listAdapter);
 					} catch (Exception e){}
 				}
-			}).start();
+			});
 		}
 	}
 }

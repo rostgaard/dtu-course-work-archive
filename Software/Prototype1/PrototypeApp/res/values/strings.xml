@@ -8,5 +8,6 @@
     <string name="sensor_id2"> Sensor ID - Await Event</string>
     <string name="status_string">Status: </string>
     <string name="status_value">Not connected</string>
+    <string name="apps_title_string">Active Sensors and Actuators</string>
 
 </resources>
