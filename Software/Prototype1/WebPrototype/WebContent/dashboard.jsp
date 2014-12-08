@@ -123,7 +123,7 @@
 								</div>
 								<div class="panel-footer">
 									<button type="button" class="btn btn-link btn-xs btn-block"
-										data-toggle="modal" data-target="#deviceModal">View
+										id="deviceDetailButton">View
 										Details</button>
 								</div>
 							</div>
@@ -143,16 +143,15 @@
 								</div>
 								<!-- 								<a href="#"> 		-->
 								<div class="panel-footer">
+
+									<!-- source for linking within page:
+									http://stackoverflow.com/questions/2906582/how-to-create-an-html-button-that-acts-like-a-link
+									  -->
+									  
 									<button type="button" class="btn btn-link btn-xs btn-block"
-										data-toggle="modal" data-target="#eventModal">View
-										Details</button>
-
-
-									<!-- <span class="pull-left">View Details</span> <span
-											class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-										<div class="clearfix"></div> -->
-								</div>
-								<!-- 								</a>		 -->
+									onclick="window.location.href='#notificationsPanel'">
+									View Details</button>									
+								</div>								
 							</div>
 						</div>
 						<div class="col-lg-3 col-md-6">
@@ -168,18 +167,11 @@
 										</div>
 									</div>
 								</div>
-								<!-- <a href="#"> -->
 								<div class="panel-footer">
 									<button type="button" class="btn btn-link btn-xs btn-block"
 										data-toggle="modal" data-target="#lastLoginModal">View
 										Details</button>
-
-
-									<!-- 						<span class="pull-left">View Details</span> <span
-											class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-										<div class="clearfix"></div> -->
 								</div>
-								<!-- </a> -->
 							</div>
 						</div>
 						<div class="col-lg-3 col-md-6">
@@ -212,33 +204,12 @@
 
 								<div class="panel-body" data-step="3" data-intro="Drag and drop your camera devices to their exact position in the floor plan">
 									<div id="cameraMap">
-									
-										
-									
-									<!-- 
-										<button type="button" class="draggable" data-toggle="modal"
-											data-target="#jesperModal">1</button>
-										<button type="button" class="draggable" data-toggle="modal"
-											data-target="#jesperModal">2</button>
-										<button type="button" class="draggable" data-toggle="modal"
-											data-target="#jesperModal">3</button> -->
-
 										<div id="floorplan" class="floorplan">
 											<img src="floor_plan_example.png" width="40%" height="40%" />
 											<img src="floor_plan_example.png" width="40%" height="40%" />
 										</div>
 
 									</div>
-
-									<!-- 									<div class="col-md-4">
-										<div class="panel-body">
-											<button onclick="saveFloorplan()"
-												class="btn btn-primary btn-block" id="save">Save</button>
-										</div>
-									</div> -->
-
-
-
 								</div>
 								<!-- /.panel-body -->
 							</div>
@@ -246,7 +217,7 @@
 						</div>
 						<!-- /.col-lg-8 -->
 						<div class="col-lg-4" data-step="4" data-intro="View the recent security events in your home">
-							<div class="panel panel-default">
+							<div class="panel panel-default" id="notificationsPanel">
 								<div class="panel-heading">
 									<i class="fa fa-bell fa-fw"></i> Notifications Panel
 								</div>
@@ -362,27 +333,6 @@ $("#playervod")[0].play();
 					</div>
 				</div>
 
-
-				<!--Show devices in modal -->
-				<div class="modal fade" id="deviceModal" tabindex="-1" role="dialog"
-					aria-labelledby="myModalLabel" aria-hidden="true">
-					<div class="modal-dialog modal-lg">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">
-									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-								</button>
-								<h4 class="modal-title" id="myModalLabel">Devices</h4>
-							</div>
-							<div class="modal-body">
-								<h1>
-									Device 1<br> Device 2<br> Device 3
-								</h1>
-							</div>
-						</div>
-					</div>
-				</div>
-
 				<!--Show events in modal -->
 				<div class="modal fade" id="eventModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel" aria-hidden="true">
@@ -415,8 +365,8 @@ $("#playervod")[0].play();
 								</button>
 								<h4 class="modal-title" id="myModalLabel">Last Login</h4>
 							</div>
-							<div class="modal-body">
-								<h1>Last Login: now</h1>
+							<div class="modal-body" id="loginModalBody">
+								
 							</div>
 						</div>
 					</div>
@@ -1083,6 +1033,12 @@ $("#playervod")[0].play();
 	
 	
 	</script>
+	
+	<script>
+	$('#deviceDetailButton').click(function(){
+		$('.nav-tabs a[href="#devices"]').tab('show');
+	});
+	</script>
 
 
 	<script>
@@ -1150,10 +1106,10 @@ $("#playervod")[0].play();
 	/*
 		@Author s124259
 		Getting lastLogin based on username with webservice call
-		on page load and update #lastLogin class with data.
+		on page load and update #lastLogin class with data and details modal aswell.
 		Using JQuery timeago plugin for formatting
 	*/
-
+	
 		var URL = webServerPath+"/users/getLastLoginByUserName?userName=" + "<%=user.getUserName()%>"
 		var data;
 		$.ajax({
@@ -1161,7 +1117,9 @@ $("#playervod")[0].play();
 		     url: URL,
 		     data: data,
 		     success: function(data) {
-		          $('#lastLogin').html(jQuery.timeago(new Date(data)));
+		    	 var d = new Date(data);
+		          $('#lastLogin').html(jQuery.timeago(d));
+		          $('#loginModalBody').html("<h3>Last login: " + d + "</h3>");		          
 		     }
 		   });		
 
@@ -1330,7 +1288,7 @@ $("#playervod")[0].play();
 	<script>		
 		$('#securityLevelGroup button').click(function() {
 		    $(this).addClass('active').siblings().removeClass('active');
-		    var baseURI = webServerPath+"/rules/setSecurityLevel?level=";
+		    var baseURI = webServerPath+"	";
 		    var level = $(this).attr('id');
 		    var URL = baseURI + level;		  
 		    
