@@ -1,26 +1,36 @@
 package com.example.prototypemoniterapp;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import android.R.bool;
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.datatypes.App;
+import com.example.datatypes.EventType;
 
 public class MainActivity extends Activity {
 
@@ -53,6 +63,7 @@ public class MainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
 
 	/**
 	 * A placeholder fragment containing a simple view.
@@ -64,6 +75,8 @@ public class MainActivity extends Activity {
 		private ListView alertList;
 		private ArrayAdapter<String> appListAdapter;
 		private ArrayAdapter<String> alertListAdapter;
+		private Map<String,HashSet<EventType>> availableApps;
+		private boolean connected = false;
 
 		public PlaceholderFragment() {
 		}
@@ -81,7 +94,6 @@ public class MainActivity extends Activity {
 			super.onViewCreated(view, savedInstanceState);
 			Button clearButton = (Button) getActivity().findViewById(R.id.clearButton);
 			clearButton.setOnClickListener(new OnClickListener() {
-				
 				@Override
 				public void onClick(View v) {
 					alertListAdapter.clear();
@@ -90,6 +102,42 @@ public class MainActivity extends Activity {
 				}
 			});
 			appList = (ListView) getActivity().findViewById(R.id.appList);
+			appList.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					Log.d("Debug", view.toString());
+					TextView textView = (TextView) view;
+					SpannableString spannableString = new SpannableString(textView.getText());
+					String mac = spannableString.toString();
+					
+					HashSet<EventType> availableAppsAtMac = availableApps.get(mac);
+					String[] choices = new String[availableAppsAtMac.size()];
+					int index = 0;
+					for (Iterator<EventType> iterator = availableAppsAtMac.iterator(); iterator
+							.hasNext();) {
+						EventType eventType = (EventType) iterator.next();
+						switch (eventType) {
+						case FLASHLIGHT:
+							choices[index] = "Activate Flashlight";
+							break;
+						case PLAYSOUND:
+							choices[index] = "Activate Sound";
+							break;
+						case STARTVIDEORECORDING:
+							choices[index] = "Get Video Feed";
+							break;
+						default:
+							break;
+						}
+						index++;
+					}
+					if (connected) {
+						ManageDeviceDialog dialog = ManageDeviceDialog.newInstance(choices, mac);
+						dialog.show(getFragmentManager(), "dialog");
+					}
+				}
+			});
 			alertList = (ListView) getActivity().findViewById(R.id.alertList);
 			setDeviceList();
 		}
@@ -103,23 +151,31 @@ public class MainActivity extends Activity {
 					List<App> apps;
 					try {
 						apps = WebServiceConnection.invokeGetAppsFromWebServer();
+						connected = true;
 					} catch (Exception e) {
 						apps = new ArrayList<App>();
 					}
+					final List<App> finalApps = apps;
 					
-					Set<String> macsTemp = new HashSet<String>();
+					Set<String> macs = new HashSet<String>();
 					
 					for (App app : apps) {
-						macsTemp.add(app.getMac());
+						macs.add(app.getMac());
 					}
 					
-					final Set<String> macs = macsTemp;
+					final Set<String> finalMacs = macs;
 					
 					getActivity().runOnUiThread(new Runnable() {
 						
 						@Override
 						public void run() {
-							List<String> arrayList = new ArrayList<String>(macs);
+							List<String> arrayList;
+							if (connected) {
+								arrayList = new ArrayList<String>(finalMacs);
+							} else {
+								arrayList = new ArrayList<>();
+								arrayList.add("Could not connect to server");
+							}
 							appListAdapter = new ArrayAdapter<>(getActivity(),
 															 android.R.layout.simple_list_item_1,
 															 arrayList);
@@ -128,10 +184,24 @@ public class MainActivity extends Activity {
 							alertListAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1);
 							alertList.setAdapter(alertListAdapter);
 							
-							for (String mac : macs) {
+							for (String mac : finalMacs) {
 								AwaitEventThread awaitEventThread = new AwaitEventThread(mac, getActivity(), alertList, alertListAdapter);
 								awaitEventThread.start();
 								awaitEventThreadList.add(awaitEventThread);
+							}
+							availableApps = new HashMap<>();
+							for (App app : finalApps) {
+								String mac = app.getMac();
+								EventType type = app.getEventType();
+								if (app.isStatus() && (type == EventType.FLASHLIGHT || type == EventType.PLAYSOUND)) {
+									if (availableApps.containsKey(mac)) {
+										availableApps.get(mac).add(type);
+									} else {
+										HashSet<EventType> newSet = new HashSet<EventType>();
+										newSet.add(type);
+										availableApps.put(mac, newSet);
+									}									
+								}
 							}
 						}
 					});

@@ -7,5 +7,6 @@
     <string name="device_text">Devices</string>
     <string name="alert_text">Alerts</string>
     <string name="clearButton_text">Clear Alerts</string>
+    <string name="manage_device_title">Device options</string>
 
 </resources>

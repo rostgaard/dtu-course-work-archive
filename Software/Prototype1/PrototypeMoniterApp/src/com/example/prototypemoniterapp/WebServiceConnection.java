@@ -44,4 +44,14 @@ public class WebServiceConnection {
 		restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
 		return restTemplate.getForObject(url, Event.class, parameters);
 	}
+	
+	public static List<App> invokeGetAppByMac(String mac){
+		final String url = BASE_URL + "/apps/getApps?mac={mac}";
+		final Map<String,String> parameters = new HashMap<String,String>();
+		parameters.put("mac", String.valueOf(mac));
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+		App[] apps = restTemplate.getForObject(url, App[].class, parameters);
+		return Arrays.asList(apps);
+	}
 }
