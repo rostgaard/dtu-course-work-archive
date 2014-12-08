@@ -72,7 +72,7 @@
 	<ul class="nav nav-tabs" role="tablist" data-step="1" data-intro="Browse the different pages using the top tab">
 		<li class="active"><a href="#dashboard" role="tab"
 			data-toggle="tab">Dashboard</a></li>
-		<li><a href="#devices" role="tab" data-toggle="tab">Devices</a></li>
+		<li><a href="#devices" role="tab" data-toggle="tab" >Devices</a></li>
         <li><a href="#rules" role="tab" data-toggle="tab">Rules</a></li>
 		<li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
 
@@ -748,6 +748,48 @@ $("#playervod")[0].play();
 				</div>
 			</div>
 		</div>
+		
+		<div class="modal fade" id="ruleInfoModal" tabindex="-1" role="dialog"
+		aria-labelledby="userInfoModal" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+				</div>
+				<div class="modal-body" align=center>
+				
+				<p class="text" id="Policyid"></p>
+				<p class="text" id="Name"></p>
+				<p class="text" id="RuleString"></p>
+				<p class="text" id="SecurityLevel"></p>
+				
+				<script>
+				
+				function getRule(ruleId){
+			
+				var URL = webServerPath+"/rule/getPolicy?id="+ruleId;
+				$.ajax({
+		    	type: "GET",
+		     	url: URL,
+		     	success: function(rule) {
+	
+				$('#Policyid').text("Policy Id: "+rule.id);
+				$('#Name').text("Policy Name: "+rule.name);
+				$('#RuleString').text("Rule: "+rule.ruleStrings);
+				$('#SecurityLevel').text("Role: "+rule.securityLevel);
+			
+			}
+		});
+				
+				}
+				</script>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
 		<!-- ##################################################################
 #######################################################################
 #######################################################################
@@ -889,6 +931,7 @@ $("#playervod")[0].play();
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-header">
+					<p>New User</p>
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 					</button>
@@ -926,7 +969,7 @@ $("#playervod")[0].play();
 		    		type: "GET",
 		    		url: URL,
 		     		data: data,
-		     		success: function(data) {
+		     		error: function(data) {
 					
 					$('#uname').html("Username: "+username);
 					$('#mail').html("Email: "+email);
@@ -1004,6 +1047,42 @@ $("#playervod")[0].play();
 #######################################################################
 #######################################################################
 ################################################################### -->
+	
+	<script>
+	
+	
+	</script>
+
+
+	<script>
+	/*
+	Script for getting all the policies in the system
+
+
+	*/
+	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
+	
+	var URL = webServerPath+"/rules/getAllPolicies";
+		$.ajax({
+			type: "GET",
+			url: URL,
+			sucess: function(data) {
+				var rules = data;
+				$('#rules').empty();
+				for(var i in rules){
+					//var rule = rules[i].toString();
+					var rule '<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(\'' + rules[i].id + '\')"><i class="fa fa-user fa-fw"></i> '
+					//var rule = rules[i].name;
+					+ rules[i].name
+					+ '</a>';
+					$('#rules').append(rule);
+				};
+			}
+		});
+	
+	
+	
+	</script>
 
 
 	<script>
@@ -1304,6 +1383,10 @@ $("#playervod")[0].play();
 	}
 	
 	reloadUsers();
+	</script>
+	
+	<script>
+	
 	</script>
 	
 		<script src="js/jquery-1.11.0.js"></script>
