@@ -52,7 +52,7 @@ public class AwaitEventThread extends Thread {
 						// TODO Auto-generated method stub
 						alertListAdapter.add(txt);
 						alertListAdapter.notifyDataSetChanged();
-						alertList.setBackgroundColor(Color.RED);
+						alertList.setBackgroundColor(Color.rgb(245, 20, 25));
 					}
 				});
 				

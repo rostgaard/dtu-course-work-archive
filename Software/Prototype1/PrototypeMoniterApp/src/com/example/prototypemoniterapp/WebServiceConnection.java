@@ -9,6 +9,7 @@ import org.springframework.http.converter.json.MappingJacksonHttpMessageConverte
 import org.springframework.web.client.RestTemplate;
 
 import com.example.datatypes.App;
+import com.example.datatypes.Device;
 import com.example.datatypes.Event;
 import com.example.datatypes.EventType;
 
@@ -53,5 +54,23 @@ public class WebServiceConnection {
 		restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
 		App[] apps = restTemplate.getForObject(url, App[].class, parameters);
 		return Arrays.asList(apps);
+	}
+	
+	public static int invokeGetLatestVideoID(int id) {
+		final String url = BASE_URL + "/video/getLatest?id={id}";
+		final Map<String,String> parameters = new HashMap<String,String>();
+		parameters.put("id", String.valueOf(id));
+		RestTemplate restTemplate = new RestTemplate(true);
+		restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+		return restTemplate.getForObject(url, Integer.class);
+	}
+	
+	public static Device invokeGetDeviceByMac(String mac) {
+		final String url = BASE_URL + "/devices/getDevice?mac={mac}";
+		final Map<String,String> parameters = new HashMap<String,String>();
+		parameters.put("mac", String.valueOf(mac));
+		RestTemplate restTemplate = new RestTemplate(true);
+		restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+		return restTemplate.getForObject(url, Device.class);
 	}
 }

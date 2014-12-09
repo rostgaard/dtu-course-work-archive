@@ -8,12 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import android.R.bool;
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.SpannableString;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,9 +25,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.datatypes.App;
+import com.example.datatypes.Device;
 import com.example.datatypes.EventType;
 
 public class MainActivity extends Activity {
@@ -48,7 +46,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+//		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -77,6 +75,8 @@ public class MainActivity extends Activity {
 		private ArrayAdapter<String> alertListAdapter;
 		private Map<String,HashSet<EventType>> availableApps;
 		private boolean connected = false;
+		private ArrayList<String> arrayList;
+		private HashMap<String, String> macToDeviceName;
 
 		public PlaceholderFragment() {
 		}
@@ -106,10 +106,7 @@ public class MainActivity extends Activity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					Log.d("Debug", view.toString());
-					TextView textView = (TextView) view;
-					SpannableString spannableString = new SpannableString(textView.getText());
-					String mac = spannableString.toString();
+					String mac = arrayList.get(position);
 					
 					HashSet<EventType> availableAppsAtMac = availableApps.get(mac);
 					String[] choices = new String[availableAppsAtMac.size()];
@@ -162,6 +159,22 @@ public class MainActivity extends Activity {
 					for (App app : apps) {
 						macs.add(app.getMac());
 					}
+					macToDeviceName = new HashMap<>();
+					for (String mac : macs) {
+						String name;
+						try {
+							Device device = WebServiceConnection.invokeGetDeviceByMac(mac);							
+							name = device.getName();
+						} catch (Exception e) {
+							Log.d("Debug","getDeviceByMac exception");
+							name = "";
+						}
+						if (name == null || name.equals("")) {
+							macToDeviceName.put(mac, mac);
+						} else {
+							macToDeviceName.put(mac, name);
+						}
+					}
 					
 					final Set<String> finalMacs = macs;
 					
@@ -169,16 +182,18 @@ public class MainActivity extends Activity {
 						
 						@Override
 						public void run() {
-							List<String> arrayList;
+							ArrayList<String> deviceNameList = new ArrayList<>();
 							if (connected) {
 								arrayList = new ArrayList<String>(finalMacs);
+								for (String mac : arrayList) {
+									deviceNameList.add(macToDeviceName.get(mac));
+								}
 							} else {
-								arrayList = new ArrayList<>();
-								arrayList.add("Could not connect to server");
+								deviceNameList.add("Could not connect to server");
 							}
 							appListAdapter = new ArrayAdapter<>(getActivity(),
 															 android.R.layout.simple_list_item_1,
-															 arrayList);
+															 deviceNameList);
 							appList.setAdapter(appListAdapter);
 							
 							alertListAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1);
@@ -193,7 +208,8 @@ public class MainActivity extends Activity {
 							for (App app : finalApps) {
 								String mac = app.getMac();
 								EventType type = app.getEventType();
-								if (app.isStatus() && (type == EventType.FLASHLIGHT || type == EventType.PLAYSOUND)) {
+								if (app.isStatus() && (type == EventType.FLASHLIGHT || type == EventType.PLAYSOUND
+														|| type == EventType.STARTVIDEORECORDING)) {
 									if (availableApps.containsKey(mac)) {
 										availableApps.get(mac).add(type);
 									} else {

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ public class ManageDeviceDialog extends DialogFragment {
 				.setNegativeButton("Cancel", new OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					// No action - Closes dialog				
+					// No action - Closes dialog
 				}
 			})
 			.setItems(choices, new DialogInterface.OnClickListener() {
@@ -62,19 +63,20 @@ public class ManageDeviceDialog extends DialogFragment {
 									WebServiceConnection.invokeAddEventWebServer(macAddress, 0, EventType.PLAYSOUND);
 									break;
 								case "Get Video Feed":
+									Intent videoIntent = new Intent(getActivity(), VideoActivity.class);
+									videoIntent.putExtra("MAC", macAddress);
+									startActivity(videoIntent);
 									break;
 								default:
 									break;
 								}
 							} catch (Exception e) {
 								// TODO: handle exception
-							}
-							
+							}							
 						}
 					}).start();
 				}
 			});
 		return builder.create();
-	}
-	
+	}	
 }

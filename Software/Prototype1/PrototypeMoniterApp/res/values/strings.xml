@@ -2,11 +2,11 @@
 <resources>
 
     <string name="app_name">PrototypeMoniterApp</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="device_text">Devices</string>
     <string name="alert_text">Alerts</string>
     <string name="clearButton_text">Clear Alerts</string>
     <string name="manage_device_title">Device options</string>
+    <string name="title_activity_video">VideoActivity</string>
 
 </resources>
