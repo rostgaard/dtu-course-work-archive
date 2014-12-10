@@ -49,6 +49,11 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <!-- Add IntroJs styles -->
+    <link href="css/introjs.css" rel="stylesheet">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -63,13 +68,12 @@ response.sendRedirect("login.jsp");
 %>
 
 <ul class="nav nav-tabs" role="tablist">
-    <li class="active"><a href="#" >Dashboard</a></li>
+    <li class="active"><a href="#">Dashboard</a></li>
     <li><a href="/Prototype245/Forward?ref=devices">Devices</a></li>
     <li><a href="/Prototype245/Forward?ref=rules">Rules</a></li>
     <li><a href="/Prototype245/Forward?ref=users">Users</a></li>
-
-    <li style="float: right;"><a href="/Prototype245/LogoutServlet">Log
-        Out</a></li>
+    <li style="float: right;"><a href="/Prototype245/LogoutServlet">Log Out</a></li>
+    <li style="float: right;"><a href="javascript:void(0);" onclick="javascript:introJs().start();">Demo</a></li>
 
 </ul>
 
@@ -447,7 +451,31 @@ response.sendRedirect("login.jsp");
     </div>
     <!-- /#wrapper -->
 
-
+    <!--
+    @author s124259
+    -->
+    <div class="panel-footer">
+        <div style="width: 2%; margin: 0 auto;">
+            v0.1.2
+        </div>
+        <div style="width: 19%; margin: 0 auto;">
+            <a href="https://docs.google.com/document/d/1fRxEcnT6e1gi_WQDbheRzWXXZbP5OenC2mTVpi9qMDk/pub"
+               target="_blank">Quick Start Guide</a>
+            |
+            <a href="https://docs.google.com/document/d/1I5P_2qIg8SIz7wvdPGlaI-uMimTQXew2n0-tSskPx6s/pub"
+               target="_blank">Handbook</a>
+            |
+            <a href="https://docs.google.com/spreadsheets/d/1xKfce3ZwyUpaoCnxguzYpSRH6URlFPQwEO1oNtJMgug/pubhtml?gid=0&single=true"
+               target="_blank">Known Bugs</a>
+        </div>
+        <div style="width: 13%; margin: 0 auto;">
+            <a href="https://docs.google.com/spreadsheets/d/1xKfce3ZwyUpaoCnxguzYpSRH6URlFPQwEO1oNtJMgug/pubhtml?gid=0&single=true"
+               target="_blank">Device App</a>
+            |
+            <a href="https://docs.google.com/spreadsheets/d/1xKfce3ZwyUpaoCnxguzYpSRH6URlFPQwEO1oNtJMgug/pubhtml?gid=0&single=true"
+               target="_blank">User Alarm App</a>
+        </div>
+    </div>
     <!-- ##################################################################
     #######################################################################
     #######################################################################

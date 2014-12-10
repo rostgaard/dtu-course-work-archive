@@ -64,7 +64,7 @@ response.sendRedirect("login.jsp");
 %>
 
 <ul class="nav nav-tabs" role="tablist">
-    <li><a href="#" >Dashboard</a></li>
+    <li><a href="/Prototype245/Forward?ref=dashboard" >Dashboard</a></li>
     <li><a href="/Prototype245/Forward?ref=devices">Devices</a></li>
     <li><a href="/Prototype245/Forward?ref=rules">Rules</a></li>
     <li class="active"><a href="/Prototype245/Forward?ref=users">Users</a></li>
