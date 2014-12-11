@@ -71,4 +71,10 @@ public class UserEAO {
 	    return em.merge(transientUser);
 	}
 	
+	/**
+	 * @author Luai
+	 */
+	public void deleteUser(String username) {
+		em.remove(getUserByUserName(username));
+	}
 }

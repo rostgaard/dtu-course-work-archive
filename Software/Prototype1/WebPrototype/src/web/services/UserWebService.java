@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -76,6 +77,13 @@ public class UserWebService {
 		UserEntity userEntity = eao.getUserByUserName(userName);
 		long lastLogin = userEntity.getLastLogin();
 		return String.valueOf(lastLogin);
+	}
+	
+	@DELETE
+	@Path("/deleteUser")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	public void deleteUser(@QueryParam("userName") String userName) {
+		eao.deleteUser(userName);
 	}
 	
 	
