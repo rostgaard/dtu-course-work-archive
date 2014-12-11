@@ -13,6 +13,10 @@ public class Device {
 	private String mac;
 	private String name;
 	
+	public Device() {
+		
+	}
+	
 	public Device(String mac, String name) {
 		this.mac = mac;
 		this.name = name;
