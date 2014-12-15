@@ -303,6 +303,7 @@ response.sendRedirect("login.jsp");
 
                               function startVod(i, end) {
                                 $('#vodplayer').show();
+                                 $("#playervod").unbind("ended");//There might be previous bindings
 
                                 $("#playervod")[0].src = url + "getVideo?id=" + videoID + "&count=" + i;
 
@@ -315,6 +316,8 @@ response.sendRedirect("login.jsp");
                                     }
                                     else {
                                         $('#playervod')[0].pause();
+ 										 $("#playervod").unbind("ended");
+ 										 $('#vodplayer').hide();
                                     }
                                 });
                                 $("#playervod")[0].play();
