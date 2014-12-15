@@ -261,7 +261,7 @@ response.sendRedirect("login.jsp");
                         </div>
                         <script>
                             var videoID;
-                            var url = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/PrototypeTwo/rest/video/";
+                            var url = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest/video/";
                             function preparePlayer(id) {
 //Init
                                 var id = videoID;
