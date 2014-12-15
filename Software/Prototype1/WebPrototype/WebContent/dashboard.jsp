@@ -423,9 +423,17 @@ response.sendRedirect("login.jsp");
 
                     <script>
 
-                        function eventInfo(mac) {
-                            $('#macEvent').html("Event from mac: " + mac);
-                        }
+                        function eventInfo(id) {
+                         $.ajax({
+           					type: "GET",
+            				url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest/ápps/getAppByID?id="+id,
+           				 	data: data,
+            				success: function (data) {
+                				var mac = data.mac       
+                            	$('#macEvent').html("Event from mac: " + mac);                       
+                            }	
+        				});
+        			}
                     </script>
 
                 </div>
@@ -642,13 +650,16 @@ response.sendRedirect("login.jsp");
                     for (var i in items.reverse()) {
                         var type = items[i].eventType;
                         var time = jQuery.timeago(new Date(items[i].time));
-                        var element = '<a href="#" data-toggle="modal" data-target="#eventInfoModal" class="list-group-item" onclick="eventInfo(\'' + items[i].mac + '\')"><i class="fa fa-shield fa-fw"></i> ' + type.replace("SHAKE", "Door moved").replace("PLAYSOUND", "Sound played").replace("FLASHLIGHT", "Flash light activated").replace("USERALERT", "User Alerted").replace("ACCELEROMETER", "Movement detected") + '<span class="pull-right text-muted small"><em>' + time + '</em></span></a>';
+                        var element = '<a href="#" data-toggle="modal" data-target="#eventInfoModal" class="list-group-item" onclick="eventInfo(\'' + items[i].appID + '\')"><i class="fa fa-shield fa-fw"></i> ' + type.replace("SHAKE", "Door moved").replace("PLAYSOUND", "Sound played").replace("FLASHLIGHT", "Flash light activated").replace("USERALERT", "User Alerted").replace("ACCELEROMETER", "Movement detected") + '<span class="pull-right text-muted small"><em>' + time + '</em></span></a>';
                         $('#box').append(element);
+                        if(i >= 5){
+                        	break;
+                        }
                     }
                 }
             });
 
-            $('.list-group-item:gt(10)').hide().last().after(
+         /*   $('.list-group-item:gt(10)').hide().last().after(
                     $('#more').click(function () {
                         var a = this;
                         $('.list-group-item:not(:visible):lt(5)').fadeIn(function () {
@@ -656,7 +667,7 @@ response.sendRedirect("login.jsp");
                         });
                         return false;
                     })
-            );
+            );*/
 
         }
         reloadEvents();

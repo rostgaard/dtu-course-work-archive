@@ -347,22 +347,27 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
                 url: URL,
                 data: devData,
                 success: function (devData) {
-
-                    //var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":true},{"eventType":"FLASHLIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"FLASHLIGHT","events":[],"id":3,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
-                    //var devItems = $.parseJSON(temp);//OUT FOR PRODUCTION
-                    var devItems = devData;//IN FOR PRODUCTION
+                    var devItems = devData;
 
                     $('#devs').empty();
                     for (var i in devItems) {
                         var printDevName = devItems[i].mac;
-
+						$.ajax({
+                			type: "GET",
+                			url: webServerPath + "/devices/getDevices?mac="+devItems[i].mac,
+                			data: devData,
+                			success: function (data) {
+                    			if(data.name != NULL){
+                    				printDevName = data.name;
+                    			}
+                    		}
+                    	});
 
                         var devElement = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item" onclick="deviceInfo(\'' + devItems[i].mac + '\')"><i class="fa fa-mobile fa-fw"></i> '
                                 + printDevName
                                 + '</a>';
                         $('#devs').append(devElement);
-                    }
-                    ;
+                    };
                 }
 
             });
