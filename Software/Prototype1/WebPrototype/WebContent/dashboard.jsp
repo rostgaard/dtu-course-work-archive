@@ -67,13 +67,13 @@ response.sendRedirect("login.jsp");
 
 %>
 
-<ul class="nav nav-tabs" role="tablist">
+<ul class="nav nav-tabs" role="tablist" data-step="1" data-intro="Browse the different pages using the top tab">
     <li class="active"><a href="#">Dashboard</a></li>
     <li><a href="/Prototype245/Forward?ref=devices">Devices</a></li>
     <li><a href="/Prototype245/Forward?ref=rules">Rules</a></li>
     <li><a href="/Prototype245/Forward?ref=users">Users</a></li>
     <li style="float: right;"><a href="/Prototype245/LogoutServlet">Log Out</a></li>
-    <li style="float: right;"><a href="javascript:void(0);" onclick="javascript:introJs().start();">Demo</a></li>
+    <li style="float: right;"><a href="javascript:void(0);" onclick="javascript:introJs().start();" data-step="6" data-intro="On every page you can get a detailed tour">Demo</a></li>
 
 </ul>
 
@@ -85,7 +85,7 @@ response.sendRedirect("login.jsp");
             <div id="page-wrapper">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header" data-step="5" data-intro="Okay, you're good to go!">Dashboard</h1>
+                        <h1 class="page-header" data-step="7" data-intro="Alright, you're good to go!">Dashboard</h1>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -404,8 +404,9 @@ response.sendRedirect("login.jsp");
             </div>
         </div>
 
-
     </div>
+    
+  </div>
 
     <div class="modal fade" id="eventInfoModal" tabindex="-1" role="dialog"
          aria-labelledby="deviceInfoModal" aria-hidden="true">
@@ -454,7 +455,7 @@ response.sendRedirect("login.jsp");
     <!--
     @author s124259
     -->
-    <div class="panel-footer">
+    <div class="panel-footer" data-step="5" data-intro="These useful links will help you even further">
         <div style="width: 2%; margin: 0 auto;">
             v0.1.2
         </div>
@@ -710,7 +711,7 @@ response.sendRedirect("login.jsp");
     <script src="js/sb-admin-2.js"></script>
 
     <!-- "Guided Tour" Plugin -->
-    <script type="text/javascript" src="js/intro.js"></script>
+    <script src="js/intro.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
