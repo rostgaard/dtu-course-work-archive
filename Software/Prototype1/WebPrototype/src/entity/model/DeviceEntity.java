@@ -16,11 +16,11 @@ import javax.persistence.Id;
 @Cacheable(false)
 public class DeviceEntity {
 	
-	@Id
+	
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	
+	@Id
 	private String mac;
 	private String name;
 	
