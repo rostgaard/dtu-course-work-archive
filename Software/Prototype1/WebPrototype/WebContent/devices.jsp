@@ -159,6 +159,7 @@ response.sendRedirect("login.jsp");
                                             </button>
                                         </div>
                                     </div>
+                                    <p class="text" id="condev"></p>
                                 </div>
                             </div>
                         </div>
@@ -289,6 +290,14 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
      device tab
      */
     function confDev() {
+    
+    $.ajax({
+          type: "GET",
+          url: webServerPath + "/devices/addDeviceName?mac" + mac+"&name="+$('#deviceName'),
+          data: data,
+          success: function (data) {
+          }
+        });
 
         var lightAppStatus = false;
         var camAppStatus = false;
@@ -322,6 +331,8 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
             url: webServerPath + "/apps/update?mac=" + devMac + "&eventType='FLASHLIGHT'&status=" + lightAppStatus + "",
 
         });
+        
+        $('#condev').html("Device Configured");
 
     }
 
