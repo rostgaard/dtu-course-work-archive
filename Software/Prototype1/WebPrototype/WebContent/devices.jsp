@@ -216,21 +216,20 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
                             success: function (data) {
                                 $('#macDevice').html("Device mac: " + mac);
                                 devices = data;
-                                //var temp = '[{"eventType":"ACCELEROMETER","events":[],"id":1,"mac":"BC:DS:37:SD:E3:7E","status":false},{"eventType":"FLASHLIGHT","events":[],"id":2,"mac":"B1:DS:37:AD:G3:7E","status":true},{"eventType":"PLAYSOUND","events":[],"id":89,"mac":"B1:DS:33:AD:E3:7E","status":true}]';//OUT FOR PRODUCTION
-                                //devices = $.parseJSON(temp);
                                 for (var i in devices) {
                                     var status = devices[i].status;
                                     var eventTy = devices[i].eventType;
+                                    var id = devices[i].appID;
 
                                     if (status) {
-                                        if (eventTy == "STARTVIDEORECORDING'") {
-                                            $('#camAct').html("Camera is available");
+                                        if (eventTy == "STARTVIDEORECORDING") {
+                                            $('#camAct').html("Camera is available, ID: "+id);
                                         }
                                         if (eventTy == "PLAYSOUND") {
-                                            $('#soundAct').html("Sound is available");
+                                            $('#soundAct').html("Sound is available, ID: "+id);
                                         }
                                         if (eventTy == "FLASHLIGHT") {
-                                            $('#lightAct').html("Light is available");
+                                            $('#lightAct').html("Light is available, ID: "+id);
                                         }
                                     }
                                 }
