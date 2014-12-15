@@ -220,7 +220,7 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
                                 for (var i in devices) {
                                     var status = devices[i].status;
                                     var eventTy = devices[i].eventType;
-                                    var id = devices[i].appID;
+                                    var id = devices[i].id;
 
                                     if (status) {
                                         if (eventTy == "STARTVIDEORECORDING") {
@@ -293,7 +293,7 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
     
     $.ajax({
           type: "GET",
-          url: webServerPath + "/devices/addDeviceName?mac" + mac+"&name="+$('#deviceName'),
+          url: webServerPath + "/devices/addDeviceName?mac" + $('#deviceMac')+"&name="+$('#deviceName'),
           data: data,
           success: function (data) {
           }
