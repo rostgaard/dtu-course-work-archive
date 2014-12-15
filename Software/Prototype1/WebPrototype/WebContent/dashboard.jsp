@@ -301,15 +301,17 @@ response.sendRedirect("login.jsp");
 
                             }// startlive
 
-                            function startVod(i, end) {
+                              function startVod(i, end) {
                                 $('#vodplayer').show();
 
                                 $("#playervod")[0].src = url + "getVideo?id=" + videoID + "&count=" + i;
 
                                 $("#playervod").bind("ended", function () {
                                     console.log(i + "/" + end);
-                                    if (end > 1) {
-                                        startVod(i + 1, end - 1);
+                                    if (i < end) {
+										  i++;
+                                          $("#playervod")[0].src = url + "getVideo?id=" + videoID + "&count=" + i
+                                          $("#playervod")[0].play();
                                     }
                                     else {
                                         $('#playervod')[0].pause();

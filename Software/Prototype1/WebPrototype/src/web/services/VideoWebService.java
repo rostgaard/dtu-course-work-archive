@@ -59,7 +59,6 @@ public class VideoWebService {
 	
 	}
 	
-	
 	@GET
 	@Path("/getVideo")
 	@Produces({"video/mp4"})
@@ -104,8 +103,8 @@ public class VideoWebService {
 		for (int i = 0; i < listOfFiles.length; i++){
 			File f = listOfFiles[i];
 
-			System.out.println("sDate: "+f.lastModified());
-			if (f.lastModified() < lastTime + 12000){//Video is continous
+			//System.out.println("sDate: "+f.lastModified());
+			if (f.lastModified() < lastTime + 8000){//Video is continous
 				lastTime = f.lastModified();
 				length++;
 			}
@@ -114,6 +113,7 @@ public class VideoWebService {
 				if (current != null){
 					current.setLength(length);
 					vods.add(current);
+					lastTime = f.lastModified();
 				}
 				int count = Integer.parseInt( f.getName().replace(".mp4", ""));
 				current = new VOD(count,f.lastModified(),length);
