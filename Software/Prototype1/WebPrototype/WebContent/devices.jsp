@@ -299,7 +299,7 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
     var data;
     $.ajax({
           type: "GET",
-          url: webServerPath + "/devices/addDeviceName?mac" + $('#deviceMac')+"&name="+$('#deviceName'),
+          url: webServerPath + "/devices/addDeviceName?mac=" + $('#deviceMac')+"&name="+$('#deviceName'),
           data: data,
           success: function (data) {
           }
@@ -309,7 +309,7 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
         var camAppStatus = false;
         var soundAppStatus = false;
        
-        var devMac = document.getElementById('mac').value;
+        var devMac = document.getElementById('deviceMac').value;
         if (document.getElementById('light').value == "1") {
             lightAppStatus = true;
         }
@@ -347,7 +347,7 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
          */
         function reloadDevs() {
             var devData;
-            var URL = webServerPath + "/apps/getDevices";
+            var URL = webServerPath + "/devices/getDevices";
             $.ajax({
                 type: "GET",
                 url: URL,
@@ -366,6 +366,8 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
                     			if(data.name != NULL){
                     				printDevName = data.name;
                     			}
+                    		},
+                    		error: function (data) {
                     		}
                     	});
 
