@@ -101,7 +101,7 @@ response.sendRedirect("login.jsp");
                 <div class="col-lg-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-mobile fa-fw"></i> Active Devices
+                            <i class="fa fa-mobiles fa-fw"></i> Active Devices
                         </div>
                         <div class="panel-body">
                             <div class="list-group" id="devs"></div>
@@ -118,7 +118,7 @@ response.sendRedirect("login.jsp");
                         <div class="form-group">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <i class="fa fa-user fa-fw"></i>Configure Device
+                                    <i class="fa fa-mobile fa-fw"></i>Configure Device
                                 </div>
                                 <div class="panel-body">
                                     <div class="form-group">
@@ -296,7 +296,7 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
      device tab
      */
     function confDev() {
-    
+    var data;
     $.ajax({
           type: "GET",
           url: webServerPath + "/devices/addDeviceName?mac" + $('#deviceMac')+"&name="+$('#deviceName'),
@@ -308,7 +308,7 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
         var lightAppStatus = false;
         var camAppStatus = false;
         var soundAppStatus = false;
-        //var app = appData;
+       
         var devMac = document.getElementById('mac').value;
         if (document.getElementById('light').value == "1") {
             lightAppStatus = true;

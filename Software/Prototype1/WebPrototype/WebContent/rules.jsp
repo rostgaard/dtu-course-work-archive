@@ -282,15 +282,16 @@ response.sendRedirect("login.jsp");
 	var rulestring = document.getElementById('ruleString');
 	
 	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
-	
+	var data;
 	if(document.getElementById('policy nr') == 'new'){
 	var polURL = webServerPath + "/rule/addPolicy?name=Policy "+document.getElementById('policy nr');
+	
 	$.ajax({
 		type: "GET",
 		url: polURL,
 		data: data,
 		succes: function(policy){
-			ruleURL = webServerPath + "/rule/addRuleString?ruleString="+rulestring + "&policyId="0;
+			ruleURL = webServerPath + "/rule/addRuleString?ruleString="+rulestring + "&policyId=0";
 			$.ajax({
 				type: "GET",
 				url: ruleURL,

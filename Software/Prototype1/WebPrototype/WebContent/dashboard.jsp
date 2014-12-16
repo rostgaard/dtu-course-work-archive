@@ -432,10 +432,10 @@ response.sendRedirect("login.jsp");
 
                         function eventInfo(event) {
                         var d= new Date(event.time);
-                        $('#time').html(d);
+                        $('#time').html("Event time: "+event.time);
                          $.ajax({
            					type: "GET",
-            				url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest/apps/getAppByID?id="+event.id,
+            				url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest/apps/getAppByID?id="+event.appID,
            				 	data: data,
             				success: function (data) {
                 				var mac = data.mac       
