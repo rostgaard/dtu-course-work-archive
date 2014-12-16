@@ -19,9 +19,12 @@ import service.SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetAppByID
  *
  */
 public class TestAppService {
+	
+	private String errorMessage = "GET http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest/apps/addApp?mac=TestMac1&eventType=ACCELEROMETER returned a response status of 204 No Content";
 
 	@Before
 	public void setUp() throws Exception {
+		// Deletes all the apps in the table
 		//Localhost_Prototype1Rest.apps().deleteApp().getAsTextPlain(0,String.class);
 	}
 
@@ -46,7 +49,7 @@ public class TestAppService {
 			addApp.getAsApp(mac1, EventType.ACCELEROMETER.toString());
 			fail();
 		} catch (Exception e) {
-			
+			assertEquals(errorMessage, e.getMessage());
 		}
 		
 		// Add new  app
