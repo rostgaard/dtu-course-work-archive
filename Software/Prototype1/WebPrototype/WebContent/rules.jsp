@@ -74,7 +74,7 @@ response.sendRedirect("login.jsp");
 
     <li style="float: right;"><a href="/Prototype245/LogoutServlet">Log
         Out</a></li>
-
+    <li style="float: right;"><a href="javascript:void(0);" onclick="javascript:introJs().start();">Demo</a></li>
 
 </ul>
 

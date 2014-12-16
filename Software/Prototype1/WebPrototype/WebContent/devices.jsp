@@ -190,14 +190,17 @@ response.sendRedirect("login.jsp");
                 <p class="text" id="soundAct"></p>
 
                 <p class="text" id="lightAct"></p>
+                
+                <p class="text" id="userAlertAct"></p>
 
                 <script>
 var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
                     function deviceInfo(mac) {
 
-                        $('#accAct').html("Camera is not available");
-                        $('#soundAct').html("Sound is not available");
-                        $('#lightAct').html("Light is not available");
+                        $('#accAct').html("This device does not have a compatible camera.");
+                        $('#soundAct').html("This device does not have a compatible microphone.");
+                        $('#lightAct').html("This device does not have a compatible flashlight.");
+                        $('#userAlertAct').html("This device does not support user alerts.");
                         var data;
                         var devices;
                         var URL = webServerPath + "/apps/getApps?mac=" + mac;
@@ -223,14 +226,17 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
                                     var id = devices[i].id;
 
                                     if (status) {
-                                        if (eventTy == "STARTVIDEORECORDING") {
-                                            $('#camAct').html("Camera is available, ID: "+id);
+                                        if (eventTy == "STARTVIDEORECORDING'") {
+                                            $('#camAct').html("Camera is available - Sensor ID: " + devices[i].id);
                                         }
                                         if (eventTy == "PLAYSOUND") {
-                                            $('#soundAct').html("Sound is available, ID: "+id);
+                                            $('#soundAct').html("Sound is available - Sensor ID: " + devices[i].id);
                                         }
                                         if (eventTy == "FLASHLIGHT") {
-                                            $('#lightAct').html("Light is available, ID: "+id);
+                                            $('#lightAct').html("Light is available - Sensor ID: " + devices[i].id);
+                                        }
+                                        if (eventTy == "USERALERT") {
+                                            $('#userAlertAct').html("User Alert is available - Sensor ID: " + devices[i].id);
                                         }
                                     }
                                 }
@@ -246,7 +252,7 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
                 </script>
 
 
-                <button type="button" id="submit" class="button" data-toggle="modal" data-target="#eventInfoModal"
+               <button type="button" id="submit" class="button" data-toggle="modal" data-target="#eventInfoModal"
                         onclick="setMacField(\''$('#macDevice').text()'\');">Configure
                 </button>
 

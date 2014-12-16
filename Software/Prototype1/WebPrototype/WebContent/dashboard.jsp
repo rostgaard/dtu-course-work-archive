@@ -501,7 +501,7 @@ response.sendRedirect("login.jsp");
     ################################################################### -->
     <script>
         $('#deviceDetailButton').click(function () {
-            $('.nav-tabs a[href="#devices"]').tab('show');
+            $('.nav-tabs a[href="/Prototype245/Forward?ref=devices"]').tab('show');
         });
     </script>
 
@@ -514,8 +514,6 @@ response.sendRedirect("login.jsp");
 
         var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
         //var webServerPath = "http://localhost:8080/Prototype1/rest";
-        var x_max_coord = document.getElementById('floorplan').offsetWidth;
-        var y_max_coord = document.getElementById('floorplan').offsetHeight;
 
         var URL = webServerPath + "/apps/getDevicesWithCamera";
         $.ajax({
@@ -524,16 +522,9 @@ response.sendRedirect("login.jsp");
             success: function (data) {
                 var devices = data;
                 for (var i in devices) {
-                    minimum = 20;
-                    maximum = 70;
-
-                    var x_factor = (Math.floor(Math.random() * (maximum - minimum + 1)) + minimum) / 100;
-                    var y_factor = (Math.floor(Math.random() * (maximum - minimum + 1)) + minimum) / 100;
-                    var x_coord = x_max_coord * x_factor;
-                    var y_coord = y_max_coord * y_factor;
-
+                   
                     var mac = devices[i].mac;
-                    $('			<button id="' + mac + '"' + ' type="button" class="draggable" data-toggle="modal" onClick="videoID = ' + (devices[i].id) + '-1;preparePlayer(' + devices[i].id + '-1);" data-target="#jesperModal" style="position: absolute; left: ' + x_coord + 'px; top: ' + y_coord + 'px;"/>').text(+i + 1).appendTo('#cameraMap');
+                    $('			<button id="' + mac + '"' + ' type="button" class="draggable" data-toggle="modal" onClick="videoID = '+(devices[i].id)+'-1;preparePlayer('+devices[i].id+'-1);" data-target="#jesperModal" />').text(+i+1).appendTo('#cameraMap');
                 }
             }
         });
