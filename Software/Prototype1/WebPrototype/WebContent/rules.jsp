@@ -196,9 +196,9 @@ response.sendRedirect("login.jsp");
             					for (var i in listOfStrings) {				
                 				var rulestring = listOfStrings[i];	
                 				$('#RuleString').append(rulestring);
-            					};
+            					}
             			
-                                $('#SecurityLevel').text("Role: " + policy.securityLevel);
+                                $('#SecurityLevel').text("Active Security Level : " + policy.securityLevel);
 
                             }
                         });
@@ -272,7 +272,7 @@ response.sendRedirect("login.jsp");
 		url: polURL,
 		data: data,
 		succes: function(policy){
-			var ruleURL = webServerPath + "/rules/addRuleString?ruleString="+rulestring + "&policyId="+id;
+			var ruleURL = webServerPath + "/rules/addRuleString?ruleString="+rulestring + "&policyId=0";
 			$.ajax({
 				type: "GET",
 				url: ruleURL,
@@ -282,7 +282,7 @@ response.sendRedirect("login.jsp");
 			});
 		},
 		error: function(policy){
-			var ruleURL = webServerPath + "/rules/addRuleString?ruleString="+rulestring + "&policyId=0";
+			var ruleURL = webServerPath + "/rules/addRuleString?ruleString="+rulestring + "&policyId="+id;
 			$.ajax({
 				type: "GET",
 				url: ruleURL,
