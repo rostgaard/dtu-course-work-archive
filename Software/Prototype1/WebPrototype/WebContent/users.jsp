@@ -57,10 +57,15 @@
 
 <body>
 <%
+
+/*
+ *		@author s124259
+ *		Jesper Mark
+ */
 //allow access only if session attribute "user" is set beforehand
 User user = (User) session.getAttribute("user");
 if (user == null) {
-user = new User();
+user = new User(); // dirty trick to avoid nullpointer exception when DOM is created (code is put here because exception is only thrown if user is not authed)
 response.sendRedirect("login.jsp");
 }
 

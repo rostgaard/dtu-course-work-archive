@@ -139,7 +139,7 @@ response.sendRedirect("login.jsp");
                                   	  	 <br>
 	                        				test2:
 												<p class="indent_1">  when ACCELEROMETER
-												  if system.securitylevel >= 2</p>
+												  <br>if system.securitylevel >= 2</p>
 												 <p class="indent_2">    ||
 												     event.source == 1 
 												     &&
@@ -183,7 +183,7 @@ response.sendRedirect("login.jsp");
 
                     function getRule(policyId) {
 
-                        var URL = webServerPath + "/rule/getPolicy?id=" + policyId;
+                        var URL = webServerPath + "/rules/getPolicy?id=" + policyId;
                         $.ajax({
                             type: "GET",
                             url: URL,
@@ -252,9 +252,7 @@ response.sendRedirect("login.jsp");
             var policies = data;
             $('#rules').empty();
             for (var i in policies) {
-                //var rule = rules[i].toString();
                 var policy ='<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(\'' + policies[i].id + '\')"><i class="fa fa-user fa-fw"></i> '
-                    //var rule = rules[i].name;
                 + policies[i].name
                 + '</a>';
                 $('#rules').append(policy);
@@ -273,14 +271,14 @@ response.sendRedirect("login.jsp");
 	var id = document.getElementById('policyNr');
 	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
 	var data;
-	var polURL = webServerPath + "/rule/addPolicy?name=Policy "+id;
+	var polURL = webServerPath + "/rules/addPolicy?name=Policy "+id;
 	
 	$.ajax({
 		type: "GET",
 		url: polURL,
 		data: data,
 		succes: function(policy){
-			var ruleURL = webServerPath + "/rule/addRuleString?ruleString="+rulestring + "&policyId="+id;
+			var ruleURL = webServerPath + "/rules/addRuleString?ruleString="+rulestring + "&policyId="+id;
 			$.ajax({
 				type: "GET",
 				url: ruleURL,
@@ -290,7 +288,7 @@ response.sendRedirect("login.jsp");
 			});
 		},
 		error: function(policy){
-			var ruleURL = webServerPath + "/rule/addRuleString?ruleString="+rulestring + "&policyId=0";
+			var ruleURL = webServerPath + "/rules/addRuleString?ruleString="+rulestring + "&policyId=0";
 			$.ajax({
 				type: "GET",
 				url: ruleURL,

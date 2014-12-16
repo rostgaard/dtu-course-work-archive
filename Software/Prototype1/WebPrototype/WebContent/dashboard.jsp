@@ -431,7 +431,7 @@ response.sendRedirect("login.jsp");
                     <script>
 
                         function eventInfo(id , time) {
-                        var d= new Date(time);
+                        var d= new Date(time).toUTCString();
                         $('#time').html("Event time: "+d);
                          $.ajax({
            					type: "GET",
@@ -570,7 +570,7 @@ response.sendRedirect("login.jsp");
             url: URL,
             data: data,
             success: function (data) {
-                var d = new Date(data);
+                var d = new Date(data).toUTCString();
                 $('#lastLogin').html(jQuery.timeago(d));
                 $('#loginModalBody').html("<h3>Last login: " + d + "</h3>");
             }
