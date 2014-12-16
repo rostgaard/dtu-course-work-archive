@@ -112,17 +112,11 @@ response.sendRedirect("login.jsp");
                                     </div>
                                     <div class="panel-body">
                                         
-                                        <div class="form-group">
-                                            <div class="col-sm-12">
-                                                <label for="policy nr">Policy nr. </label>
-                                                <select id="policy nr" name="Policy nr">
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="new">new</option>
-                                                </select>
-                                            </div>
-
+                                        <div class = "form-group">
+                                        	<div class = "col-sm-6">
+                                        		<input type ="text" class="form-control" id="policyNr"
+                                        				placeholder ="Policy nr.">
+                                        	</div>
                                         </div>
                                         <div class = "form-group">
                                         	<div class = "col-sm-12">
@@ -276,18 +270,17 @@ response.sendRedirect("login.jsp");
 	function addRule(){
 	
 	var rulestring = document.getElementById('ruleString');
-	
+	var id = document.getElementById('policyNr');
 	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
 	var data;
-	if(document.getElementById('policy nr') == 'new'){
-	var polURL = webServerPath + "/rule/addPolicy?name=Policy "+document.getElementById('policy nr');
+	var polURL = webServerPath + "/rule/addPolicy?name=Policy "+id;
 	
 	$.ajax({
 		type: "GET",
 		url: polURL,
 		data: data,
 		succes: function(policy){
-			ruleURL = webServerPath + "/rule/addRuleString?ruleString="+rulestring + "&policyId=0";
+			var ruleURL = webServerPath + "/rule/addRuleString?ruleString="+rulestring + "&policyId="+id;
 			$.ajax({
 				type: "GET",
 				url: ruleURL,
@@ -296,19 +289,22 @@ response.sendRedirect("login.jsp");
 				}
 			});
 		}
+		error: function(policy){
+			var ruleURL = webServerPath + "/rule/addRuleString?ruleString="+rulestring + "&policyId=0";
+			$.ajax({
+				type: "GET",
+				url: ruleURL,
+				data: data,
+				sucess: function(data){
+				}
+			});
+		}
+			
 	});
-	}
-	else{
-		ruleURL = webServerPath + "/rule/addRuleString?ruleString="+rulestring + "&policyId="+document.getElementById('policy nr');
-			$.ajax({
-				type: "GET",
-				url: ruleURL,
-				data: data,
-				sucess: function(data){
-				}
-			});
-		}
-	}
+	
+}
+	
+	
 
 </script>
 <script src="js/bootstrap.min.js"></script>

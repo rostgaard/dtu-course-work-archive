@@ -636,7 +636,7 @@ response.sendRedirect("login.jsp");
                     for (var i in items.reverse()) {
                         var type = items[i].eventType;
                         var time = jQuery.timeago(new Date(items[i].time));
-                        var element = '<a href="#" data-toggle="modal" data-target="#eventInfoModal" class="list-group-item" onclick="eventInfo('items[i].appID , items[i].time')"><i class="fa fa-shield fa-fw"></i> ' + type.replace("PLAYSOUND", "Sound played").replace("FLASHLIGHT", "Flash light activated").replace("USERALERT", "User Alerted").replace("ACCELEROMETER", "Movement detected") + '<span class="pull-right text-muted small"><em>' + time + '</em></span></a>';
+                        var element = '<a href="#" data-toggle="modal" data-target="#eventInfoModal" class="list-group-item" onclick="eventInfo('+items[i].appID + ',' + items[i].time+')"><i class="fa fa-shield fa-fw"></i> ' + type.replace("PLAYSOUND", "Sound played").replace("FLASHLIGHT", "Flash light activated").replace("USERALERT", "User Alerted").replace("ACCELEROMETER", "Movement detected") + '<span class="pull-right text-muted small"><em>' + time + '</em></span></a>';
                         $('#box').append(element);
                         if(i >= 5){
                         	break;
