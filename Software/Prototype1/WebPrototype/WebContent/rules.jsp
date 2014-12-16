@@ -243,7 +243,7 @@ response.sendRedirect("login.jsp");
 <script>
   
     var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
-
+	function policyList(){
     var URL = webServerPath + "/rules/getAllPolicies";
     $.ajax({
         type: "GET",
@@ -262,8 +262,8 @@ response.sendRedirect("login.jsp");
             ;
         }
     });
-
-
+    }
+    policyList();
 </script>
 <script>
 
@@ -288,7 +288,7 @@ response.sendRedirect("login.jsp");
 				sucess: function(data){
 				}
 			});
-		}
+		},
 		error: function(policy){
 			var ruleURL = webServerPath + "/rule/addRuleString?ruleString="+rulestring + "&policyId=0";
 			$.ajax({
