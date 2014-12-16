@@ -146,10 +146,10 @@ public class MainActivity extends Activity {
 			}
 			TextView statusValue = (TextView) getActivity().findViewById(R.id.status);
 			if (connected) {
-				statusValue.setText("Connected");
+				statusValue.setText("Connected with MAC address: " + macAddress);
 				statusValue.setTextColor(Color.rgb(0, 150, 0));
 			} else {
-				statusValue.setText("Could not connect to server");
+				statusValue.setText("Could not connect to server - Restart app");
 				statusValue.setTextColor(Color.RED);
 			}
 		}
