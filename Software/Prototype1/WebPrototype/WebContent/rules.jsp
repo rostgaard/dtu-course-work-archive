@@ -44,6 +44,9 @@
                     
     <!-- Add IntroJs styles -->
     <link href="css/introjs.css" rel="stylesheet">
+    
+        <!-- Add IntroJs styles -->
+    <link href="css/syntaxIndent.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -134,10 +137,27 @@ response.sendRedirect("login.jsp");
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
+                                        <br>
+                                        	Example syntax:
+                                        <div>
+                                  	  	 <div class="ConsolasItalic">
+                                  	  	 <br>
+	                        				test2:
+												<p class="indent_1">  when ACCELEROMETER
+												  if system.securitylevel >= 2</p>
+												 <p class="indent_2">    ||
+												     event.source == 1 
+												     &&
+												     event.value >= 50  
+												     </p>
+												<p class="indent_1">  then actorSound1.play(1,30),</p> 
+												    <p class="indent_2">   UserAlert.raise(event.event);</p> 
+                     				   	</div>                  				   
+                     				   </div>
+                                    </div>                                   
                                 </div>
-                            </div>
-                        </form>
+                            </div>                         
+                        </form>             
                     </div>
                 </div>
             </div>

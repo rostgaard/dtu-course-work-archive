@@ -89,7 +89,7 @@ response.sendRedirect("login.jsp");
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6" data-step="1" data-intro="View all the current users of the system">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <i class="fa fa-users fa-fw"></i> Users
@@ -100,7 +100,7 @@ response.sendRedirect("login.jsp");
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6" data-step="2" data-intro="Add a new user to the system">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
                                 <div class="panel panel-default">
