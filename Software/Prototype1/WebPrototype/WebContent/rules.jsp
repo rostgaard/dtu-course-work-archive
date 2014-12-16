@@ -250,15 +250,9 @@ response.sendRedirect("login.jsp");
         success: function (data) {
             var policies = data;
             for (var i in policies) {
-<<<<<<< .mine
                 var policy = '<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(\'' + policies[i].id + '\')"><i class="fa fa-user fa-fw"></i> ' + policies[i].name + '</a>';                
                 $('#ruleList').append(policy);
-=======
-                var policy ='<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(' + policies[i].id + ')"><i class="fa fa-user fa-fw"></i> '
-                + policies[i].name
-                + '</a>';
-                $('#rules').append(policy);
->>>>>>> .r317
+
             }
         }
     });
