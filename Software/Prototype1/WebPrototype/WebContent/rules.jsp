@@ -99,7 +99,7 @@ response.sendRedirect("login.jsp");
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
-                                <div class="list-group" id="rules"></div>
+                                <div class="list-group" id="ruleList"></div>
                             </div>
                         </div>
                     </div>
@@ -241,27 +241,27 @@ response.sendRedirect("login.jsp");
 
 
 <script>
-  
     var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
-	function policyList(){
 	
     var URL = webServerPath + "/rules/getAllPolicies";
     $.ajax({
         type: "GET",
         url: URL,
-        sucess: function (data) {
+        success: function (data) {
             var policies = data;
-            $('#rules').empty();
             for (var i in policies) {
+<<<<<<< .mine
+                var policy = '<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(\'' + policies[i].id + '\')"><i class="fa fa-user fa-fw"></i> ' + policies[i].name + '</a>';                
+                $('#ruleList').append(policy);
+=======
                 var policy ='<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(' + policies[i].id + ')"><i class="fa fa-user fa-fw"></i> '
                 + policies[i].name
                 + '</a>';
                 $('#rules').append(policy);
+>>>>>>> .r317
             }
         }
     });
-    }
-    policyList();
 </script>
 <script>
 
@@ -283,7 +283,7 @@ response.sendRedirect("login.jsp");
 				type: "GET",
 				url: ruleURL,
 				data: data,
-				sucess: function(data){
+				success: function(data){
 				}
 			});
 		},
@@ -293,7 +293,7 @@ response.sendRedirect("login.jsp");
 				type: "GET",
 				url: ruleURL,
 				data: data,
-				sucess: function(data){
+				success: function(data){
 				}
 			});
 		}
