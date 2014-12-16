@@ -133,14 +133,7 @@ response.sendRedirect("login.jsp");
                                                    placeholder="Device Name">
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <select id="status" name="Status">
-                                                <option value=0>Activated</option>
-                                                <option value=1>Deactivated</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="form-group">
                                         <div class="col-sm-16">
                                             <div class="checkbox" style="text-align:center"><label><input
@@ -149,6 +142,10 @@ response.sendRedirect("login.jsp");
                                                     type="checkbox" id="camera" value="1">Camera</label></div>
                                             <div class="checkbox" style="text-align:center"><label><input
                                                     type="checkbox" id="sound" value="1">Sound</label></div>
+                                            <div class="checkbox" style="text-align:center"><label><input
+                                                    type="checkbox" id="userAlerts" value="1">User Alerts</label></div>
+                                            <div class="checkbox" style="text-align:center"><label><input
+                                                    type="checkbox" id="moveSens" value="1">Movement Sensor</label></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -192,15 +189,20 @@ response.sendRedirect("login.jsp");
                 <p class="text" id="lightAct"></p>
                 
                 <p class="text" id="userAlertAct"></p>
-
+                
+                <p class="text" id="movementSens"></p>
+                
+                
                 <script>
 var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
+var activeMac;
                     function deviceInfo(mac) {
-
-                        $('#accAct').html("This device does not have a compatible camera.");
-                        $('#soundAct').html("This device does not have a compatible microphone.");
-                        $('#lightAct').html("This device does not have a compatible flashlight.");
-                        $('#userAlertAct').html("This device does not support user alerts.");
+						activeMac = mac;
+                        $('#accAct').html("This device does not have a active camera.");
+                        $('#soundAct').html("This device does not have a active microphone.");
+                        $('#lightAct').html("This device does not have a active flashlight.");
+                        $('#userAlertAct').html("This device does not have user alerts activated.");
+                        $('#movementSens').html("This device does not have a movement sensor activated.");
                         var data;
                         var devices;
                         var URL = webServerPath + "/apps/getApps?mac=" + mac;
@@ -238,23 +240,25 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
                                         if (eventTy == "USERALERT") {
                                             $('#userAlertAct').html("User Alert is available - Sensor ID: " + devices[i].id);
                                         }
+                                         if (eventTy == "ACCELEROMETER") {
+                                            $('#movementSens').html("Movement Sensor is available - Sensor ID: " + devices[i].id);
+                                        }
+
                                     }
                                 }
-                                ;
+                                //;???
                             }
                         });
                     }
 
-                    function setMacField(mac) {
-                        $('#DeviceMac').html(mac)
+                    function setMacField() {
+                        $('#DeviceMac').append(activeMac);
                     }
 
                 </script>
 
 
-               <button type="button" id="submit" class="button" data-toggle="modal" data-target="#eventInfoModal"
-                        onclick="setMacField(' + document.getElementById('macDevice').value + ')">Configure
-                </button>
+               <button type="button" id="submit" class="button" data-toggle="modal" data-target="#eventInfoModal" onclick="setMacField();" >Configure</button>
 
             </div>
         </div>
@@ -301,13 +305,22 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
           type: "GET",
           url: webServerPath + "/devices/addDeviceName?mac=" + $('#deviceMac')+"&name="+$('#deviceName'),
           data: data,
-          success: function (data) {
+          error: function (data) {
+          	$.ajax({
+          		type: "GET",
+          		url: webServerPath + "/devices/updateDeviceName?mac=" + $('#deviceMac')+"&name="+$('#deviceName'),
+          		data: data,
+          		succes: function (data) {  			
+          		}
+        	});
           }
         });
 
         var lightAppStatus = false;
         var camAppStatus = false;
         var soundAppStatus = false;
+        var userAlertsStatus = false;
+        var movementSensStatus = false
        
         var devMac = document.getElementById('deviceMac').value;
         if (document.getElementById('light').value == "1") {
@@ -318,6 +331,12 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
         }
         if (document.getElementById('sound').value == "1") {
             soundAppStatus = true;
+        }
+        if (document.getElementById('userAlerts').value == "1") {
+            userAlertsStatus = true;
+        }
+        if (document.getElementById('moveSens').value == "1") {
+            movementSensStatus = true;
         }
 
         $.ajax({
@@ -338,6 +357,18 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
 
         });
         
+        $.ajax({
+            type: "PUT",
+            url: webServerPath + "/apps/update?mac=" + devMac + "&eventType='USERALERT'&status=" + userAlertsStatus + "",
+
+        });
+        
+        $.ajax({
+            type: "PUT",
+            url: webServerPath + "/apps/update?mac=" + devMac + "&eventType='ACCELEROMETER'&status=" + movementSensStatus + "",
+
+        });
+        
         $('#condev').html("Device Configured");
 
     }
@@ -347,7 +378,7 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
          */
         function reloadDevs() {
             var devData;
-            var URL = webServerPath + "/devices/getDevices";
+            var URL = webServerPath + "/apps/getDevices";
             $.ajax({
                 type: "GET",
                 url: URL,
@@ -360,14 +391,15 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
                         var printDevName = devItems[i].mac;
 						$.ajax({
                 			type: "GET",
-                			url: webServerPath + "/devices/getDevices?mac="+devItems[i].mac,
+                			url: webServerPath + "/devices/getDevice?mac="+devItems[i].mac,
                 			data: devData,
                 			success: function (data) {
-                    			if(data.name != NULL){
-                    				printDevName = data.name;
-                    			}
+                    		
+                    			printDevName = data.name;
+                    			
                     		},
                     		error: function (data) {
+                    		printDevName = devItems[i].mac;
                     		}
                     	});
 

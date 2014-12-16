@@ -56,5 +56,13 @@ public class DevicesEAO {
 			return null;
 		}
 	}
+	
+	public DeviceEntity update(String mac, String name) {
+		TypedQuery<DeviceEntity> query = em.createQuery(Query.queryGetDevice, DeviceEntity.class);
+		query.setParameter("mac", mac);
+		DeviceEntity result = query.getSingleResult();
+		result.setName(name);
+	    return em.merge(result);
+	}
 
 }

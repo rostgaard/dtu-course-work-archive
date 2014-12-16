@@ -5,6 +5,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -50,6 +51,16 @@ public class DeviceWebService {
 		}
 
 		return Conversion.convertDeviceEntity(deviceEntity);
+	}
+	
+	/**
+	 * @author s124255
+	 */
+	@PUT
+	@Path("/updateDeviceName")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	public void updateDeviceName(@QueryParam("mac") String mac, @QueryParam("name") String name) {
+		Conversion.convertDeviceEntity(eao.update(mac, name));
 	}
 
 }
