@@ -95,7 +95,7 @@ response.sendRedirect("login.jsp");
                     <div class="col-lg-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <i class="fa fa-filter fa-fw"></i> Rules
+                                <i class="fa fa-filter fa-fw"></i> Polices
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
@@ -111,20 +111,15 @@ response.sendRedirect("login.jsp");
                                         <i class="fa fa-filter fa-fw"></i>New Rule
                                     </div>
                                     <div class="panel-body">
+                                        
                                         <div class="form-group">
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="rulename"
-                                                       placeholder="Rule name">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-sm-12">
-                                                <label for="eventTrigger">Responds to event </label>
-                                                <select id="eventTrigger" name="Even Trigger">
-                                                    <option value="ACCELEROMETER">Door open</option>
-                                                    <option value="HUMIDITY">Humitidy threshold</option>
-                                                    <option value="TEMPERATURE">Temperature threshols</option>
-                                                    <option value="USERALERT">User alert</option>
+                                                <label for="policy nr">Policy nr. </label>
+                                                <select id="policy nr" name="Policy nr">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="new">new</option>
                                                 </select>
                                             </div>
 
@@ -186,24 +181,30 @@ response.sendRedirect("login.jsp");
 
                 <p class="text" id="Name"></p>
 
-                <p class="text" id="RuleString"></p>
+                <div class="list-group" id="rules"></div>
 
                 <p class="text" id="SecurityLevel"></p>
 
                 <script>
 
-                    function getRule(ruleId) {
+                    function getRule(policyId) {
 
-                        var URL = webServerPath + "/rule/getPolicy?id=" + ruleId;
+                        var URL = webServerPath + "/rule/getPolicy?id=" + policyId;
                         $.ajax({
                             type: "GET",
                             url: URL,
-                            success: function (rule) {
+                            success: function (policy) {
 
-                                $('#Policyid').text("Policy Id: " + rule.id);
-                                $('#Name').text("Policy Name: " + rule.name);
-                                $('#RuleString').text("Rule: " + rule.ruleStrings);
-                                $('#SecurityLevel').text("Role: " + rule.securityLevel);
+                                $('#Policyid').text("Policy Id: " + policy.id);
+                                $('#Name').text("Policy Name: " + policy.name);
+                                
+            					$('#RuleString').empty();
+            					for (var i in plicy.Rule) {				
+                				var rule = plicy.ruleStrings[i];	
+                				$('#RuleString').append(rule);
+            					};
+            			
+                                $('#SecurityLevel').text("Role: " + policy.securityLevel);
 
                             }
                         });
@@ -258,15 +259,15 @@ response.sendRedirect("login.jsp");
         type: "GET",
         url: URL,
         sucess: function (data) {
-            var rules = data;
+            var policies = data;
             $('#rules').empty();
-            for (var i in rules) {
+            for (var i in policies) {
                 //var rule = rules[i].toString();
-                var rule ='<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(\'' + rules[i].id + '\')"><i class="fa fa-user fa-fw"></i> '
+                var policies ='<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(\'' + policies[i].id + '\')"><i class="fa fa-user fa-fw"></i> '
                     //var rule = rules[i].name;
-                + rules[i].name
+                + policies[i].name
                 + '</a>';
-                $('#rules').append(rule);
+                $('#rules').append(policies);
             }
             ;
         }
@@ -277,21 +278,19 @@ response.sendRedirect("login.jsp");
 <script>
 
 	function addRule(){
-	var rulename, respond, rulestring;
 	
-	rulename = document.getElemententById('rulename');
-	respond = document.getElementById('eventTrigger');
-	rulestring = document.getElementById('ruleString');
+	var rulestring = document.getElementById('ruleString');
 	
 	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
 	
-	var polURL = webServerPath + "/rule/addPolicy?name="+rulename;
+	if(document.getElementById('policy nr') == 'new'){
+	var polURL = webServerPath + "/rule/addPolicy?name=Policy "+document.getElementById('policy nr');
 	$.ajax({
 		type: "GET",
 		url: polURL,
 		data: data,
-		error: function(policy){
-			ruleURL = webServerPath + "/rule/addRuleString?ruleString="+rulestring + "&policyId="+policy.id;
+		succes: function(policy){
+			ruleURL = webServerPath + "/rule/addRuleString?ruleString="+rulestring + "&policyId="0;
 			$.ajax({
 				type: "GET",
 				url: ruleURL,
@@ -301,6 +300,17 @@ response.sendRedirect("login.jsp");
 			});
 		}
 	});
+	}
+	else{
+		ruleURL = webServerPath + "/rule/addRuleString?ruleString="+rulestring + "&policyId="+document.getElementById('policy nr');
+			$.ajax({
+				type: "GET",
+				url: ruleURL,
+				data: data,
+				sucess: function(data){
+				}
+			});
+		}
 	}
 
 </script>
