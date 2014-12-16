@@ -244,6 +244,7 @@ response.sendRedirect("login.jsp");
   
     var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
 	function policyList(){
+	
     var URL = webServerPath + "/rules/getAllPolicies";
     $.ajax({
         type: "GET",
@@ -252,12 +253,11 @@ response.sendRedirect("login.jsp");
             var policies = data;
             $('#rules').empty();
             for (var i in policies) {
-                var policy ='<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(\'' + policies[i].id + '\')"><i class="fa fa-user fa-fw"></i> '
+                var policy ='<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(' + policies[i].id + ')"><i class="fa fa-user fa-fw"></i> '
                 + policies[i].name
                 + '</a>';
                 $('#rules').append(policy);
             }
-            ;
         }
     });
     }
