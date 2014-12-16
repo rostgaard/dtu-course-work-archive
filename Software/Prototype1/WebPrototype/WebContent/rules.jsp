@@ -114,7 +114,7 @@ response.sendRedirect("login.jsp");
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <input type="text" class="form-control" id="rulename"
-                                                       placeholder="Rule description">
+                                                       placeholder="Rule name">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -128,6 +128,12 @@ response.sendRedirect("login.jsp");
                                                 </select>
                                             </div>
 
+                                        </div>
+                                        <div class = "form-group">
+                                        	<div class = "col-sm-12">
+                                        		<input type ="text" class="form-control" id="ruleString"
+                                        				placeholder ="Rule string">
+                                        	</div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-4">
@@ -267,6 +273,36 @@ response.sendRedirect("login.jsp");
         }
     });
 
+
+</script>
+<script>
+
+	function addRule(){
+	var rulename, respond, rulestring;
+	
+	rulename = document.getElemententById('rulename');
+	respond = document.getElementById('eventTrigger');
+	rulestring = document.getElementById('ruleString');
+	
+	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
+	
+	var polURL = webServerPath + "/rule/addPolicy?name="+rulename;
+	$.ajax({
+		type: "GET",
+		url: polURL,
+		data: data,
+		error: function(policy){
+			ruleURL = webServerPath + "/rule/addRuleString?ruleString="+rulestring + "&policyId="+policy.id;
+			$.ajax({
+				type: "GET",
+				url: ruleURL,
+				data: data,
+				sucess: function(data){
+				}
+			});
+		}
+	});
+	}
 
 </script>
 <script src="js/bootstrap.min.js"></script>
