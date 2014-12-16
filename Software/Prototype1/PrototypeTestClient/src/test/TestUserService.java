@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
@@ -49,6 +50,14 @@ public class TestUserService {
 		
 		String lastLogin = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.users().getLastLoginByUserName().getAsJson(username, String.class);
 		assertEquals("" + getUser.getLastLogin(), lastLogin);
+		
+		// Add the same user
+		try {
+			SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.users().addUser().getAsUser(username, email, firstname, lastname, Role.MANAGER.toString(), password);
+			fail();
+		} catch (Exception e) {
+			assertEquals("500 Internal Server Error", e.getMessage());
+		}
 		
 	}
 	
