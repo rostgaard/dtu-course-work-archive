@@ -188,13 +188,13 @@ response.sendRedirect("login.jsp");
                             type: "GET",
                             url: URL,
                             success: function (policy) {
-
+								var listOfStrings = policy.ruleStrings
                                 $('#Policyid').text("Policy Id: " + policy.id);
                                 $('#Name').text("Policy Name: " + policy.name);
                                 
             					$('#RuleString').empty();
-            					for (var i in plicy.Rule) {				
-                				var rulestring = plicy.ruleStrings[i];	
+            					for (var i in listOfStrings) {				
+                				var rulestring = listOfStrings[i];	
                 				$('#RuleString').append(rulestring);
             					};
             			
