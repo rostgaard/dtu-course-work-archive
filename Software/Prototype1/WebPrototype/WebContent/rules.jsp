@@ -262,8 +262,7 @@ response.sendRedirect("login.jsp");
             $('#rules').empty();
             for (var i in rules) {
                 //var rule = rules[i].toString();
-                var rule
-                '<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(\'' + rules[i].id + '\')"><i class="fa fa-user fa-fw"></i> '
+                var rule ='<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(\'' + rules[i].id + '\')"><i class="fa fa-user fa-fw"></i> '
                     //var rule = rules[i].name;
                 + rules[i].name
                 + '</a>';
