@@ -430,12 +430,12 @@ response.sendRedirect("login.jsp");
 
                     <script>
 
-                        function eventInfo(event) {
-                        var d= new Date(event.time);
-                        $('#time').html("Event time: "+event.time);
+                        function eventInfo(id , time) {
+                        var d= new Date(time);
+                        $('#time').html("Event time: "+d);
                          $.ajax({
            					type: "GET",
-            				url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest/apps/getAppByID?id="+event.appID,
+            				url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest/apps/getAppByID?id="+id,
            				 	data: data,
             				success: function (data) {
                 				var mac = data.mac       
@@ -534,21 +534,7 @@ response.sendRedirect("login.jsp");
         });
 
     </script>
-    <script>
-        (function poll() {
-            setTimeout(function () {
-                $.ajax({
-                    url: "server", success: function (data) {
-                        //Update your dashboard gauge
-                        salesGauge.setValue(data.value);
 
-                        //Setup the next poll recursively
-                        poll();
-                    }, dataType: "json"
-                });
-            }, 30000);
-        })();
-    </script>
     <script>
         /*
          @Author s124259
@@ -650,7 +636,7 @@ response.sendRedirect("login.jsp");
                     for (var i in items.reverse()) {
                         var type = items[i].eventType;
                         var time = jQuery.timeago(new Date(items[i].time));
-                        var element = '<a href="#" data-toggle="modal" data-target="#eventInfoModal" class="list-group-item" onclick="eventInfo(\'' + items[i] + '\')"><i class="fa fa-shield fa-fw"></i> ' + type.replace("SHAKE", "Door moved").replace("PLAYSOUND", "Sound played").replace("FLASHLIGHT", "Flash light activated").replace("USERALERT", "User Alerted").replace("ACCELEROMETER", "Movement detected") + '<span class="pull-right text-muted small"><em>' + time + '</em></span></a>';
+                        var element = '<a href="#" data-toggle="modal" data-target="#eventInfoModal" class="list-group-item" onclick="eventInfo('items[i].appID , items[i].time')"><i class="fa fa-shield fa-fw"></i> ' + type.replace("PLAYSOUND", "Sound played").replace("FLASHLIGHT", "Flash light activated").replace("USERALERT", "User Alerted").replace("ACCELEROMETER", "Movement detected") + '<span class="pull-right text-muted small"><em>' + time + '</em></span></a>';
                         $('#box').append(element);
                         if(i >= 5){
                         	break;

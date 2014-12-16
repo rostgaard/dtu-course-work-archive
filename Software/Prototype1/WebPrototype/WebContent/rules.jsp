@@ -247,11 +247,7 @@ response.sendRedirect("login.jsp");
 
 
 <script>
-    /*
-     Script for getting all the policies in the system
-
-
-     */
+  
     var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
 
     var URL = webServerPath + "/rules/getAllPolicies";
@@ -263,11 +259,11 @@ response.sendRedirect("login.jsp");
             $('#rules').empty();
             for (var i in policies) {
                 //var rule = rules[i].toString();
-                var policies ='<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(\'' + policies[i].id + '\')"><i class="fa fa-user fa-fw"></i> '
+                var policy ='<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(\'' + policies[i].id + '\')"><i class="fa fa-user fa-fw"></i> '
                     //var rule = rules[i].name;
                 + policies[i].name
                 + '</a>';
-                $('#rules').append(policies);
+                $('#rules').append(policy);
             }
             ;
         }
