@@ -62,7 +62,7 @@ public class WebServiceConnection {
 		parameters.put("id", String.valueOf(id));
 		RestTemplate restTemplate = new RestTemplate(true);
 		restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-		return restTemplate.getForObject(url, Integer.class);
+		return Integer.parseInt(restTemplate.getForObject(url, String.class, parameters));
 	}
 	
 	public static Device invokeGetDeviceByMac(String mac) {
@@ -71,6 +71,6 @@ public class WebServiceConnection {
 		parameters.put("mac", String.valueOf(mac));
 		RestTemplate restTemplate = new RestTemplate(true);
 		restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-		return restTemplate.getForObject(url, Device.class);
+		return restTemplate.getForObject(url, Device.class, parameters);
 	}
 }

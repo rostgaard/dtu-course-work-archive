@@ -200,7 +200,8 @@ public class MainActivity extends Activity {
 							alertList.setAdapter(alertListAdapter);
 							
 							for (String mac : finalMacs) {
-								AwaitEventThread awaitEventThread = new AwaitEventThread(mac, getActivity(), alertList, alertListAdapter);
+								AwaitEventThread awaitEventThread = new AwaitEventThread(mac, getActivity(), alertList,
+																		alertListAdapter, macToDeviceName);
 								awaitEventThread.start();
 								awaitEventThreadList.add(awaitEventThread);
 							}

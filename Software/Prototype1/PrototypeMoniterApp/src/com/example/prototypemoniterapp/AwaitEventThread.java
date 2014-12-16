@@ -1,5 +1,7 @@
 package com.example.prototypemoniterapp;
 
+import java.util.HashMap;
+
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,13 +21,16 @@ public class AwaitEventThread extends Thread {
 	private Activity activity;
 	private ListView alertList;
 	private ArrayAdapter<String> alertListAdapter;
+	private HashMap<String, String> macToDeviceName;
 	private boolean run = true;
 	
-	public AwaitEventThread (String macAddress, Activity activity, ListView view, ArrayAdapter<String> adapter) {
+	public AwaitEventThread (String macAddress, Activity activity, ListView view,
+							ArrayAdapter<String> adapter, HashMap<String, String> macToDeviceName) {
 		this.macAddress = macAddress;
 		this.activity = activity;
 		this.alertList = view;
 		this.alertListAdapter = adapter;
+		this.macToDeviceName = macToDeviceName;
 	}
 	
 	
@@ -44,7 +49,7 @@ public class AwaitEventThread extends Thread {
 			if(!run || isInterrupted()) break; 
 			
 			if (event != null) {
-				final String txt = "Alert from device: " + macAddress + "\nTime: " + event.getTime();
+				final String txt = "Alert from device: " + macToDeviceName.get(macAddress) + "\nTime: " + event.getTime();
 				
 				activity.runOnUiThread(new Runnable() {					
 					@Override
