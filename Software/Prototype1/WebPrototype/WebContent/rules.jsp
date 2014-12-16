@@ -175,7 +175,7 @@ response.sendRedirect("login.jsp");
 
                 <p class="text" id="Name"></p>
 
-                <div class="list-group" id="rules"></div>
+                <div class="list-group" id="RuleString"></div>
 
                 <p class="text" id="SecurityLevel"></p>
 
@@ -194,8 +194,8 @@ response.sendRedirect("login.jsp");
                                 
             					$('#RuleString').empty();
             					for (var i in plicy.Rule) {				
-                				var rule = plicy.ruleStrings[i];	
-                				$('#RuleString').append(rule);
+                				var rulestring = plicy.ruleStrings[i];	
+                				$('#RuleString').append(rulestring);
             					};
             			
                                 $('#SecurityLevel').text("Role: " + policy.securityLevel);
@@ -261,8 +261,8 @@ response.sendRedirect("login.jsp");
 
 	function addRule(){
 	
-	var rulestring = document.getElementById('ruleString');
-	var id = document.getElementById('policyNr');
+	var rulestring = document.getElementById('ruleString').value;
+	var id = document.getElementById('policyNr').value;
 	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
 	var data;
 	var polURL = webServerPath + "/rules/addPolicy?name=Policy "+id;

@@ -253,7 +253,7 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
 
 
                <button type="button" id="submit" class="button" data-toggle="modal" data-target="#eventInfoModal"
-                        onclick="setMacField(' + document.getElementById(macDevice) + ')">Configure
+                        onclick="setMacField(' + document.getElementById('macDevice').value + ')">Configure
                 </button>
 
             </div>
