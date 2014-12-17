@@ -115,7 +115,7 @@ response.sendRedirect("login.jsp");
                                         <div class = "form-group">
                                         	<div class = "col-sm-6">
                                         		<input type ="text" class="form-control" id="policyNr"
-                                        				placeholder ="Policy nr.">
+                                        				placeholder ="Policy number">
                                         	</div>
                                         </div>
                                         <div class = "form-group">
@@ -293,7 +293,7 @@ response.sendRedirect("login.jsp");
 		}
 			
 	});
-	
+	document.location.reload();
 }
 	
 	

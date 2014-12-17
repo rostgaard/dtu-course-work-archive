@@ -663,9 +663,8 @@ response.sendRedirect("login.jsp");
     <script>
         $('#securityLevelGroup button').click(function () {
             $(this).addClass('active').siblings().removeClass('active');
-            var baseURI = webServerPath + "	";
             var level = $(this).attr('id');
-            var URL = baseURI + level;
+            var URL = webServerPath + "/rules/setSecurityLevel?level=" + level;
 
             if (level > 0) {
                 $("div.securityStatus").replaceWith("<h2>Security Level is now: " + level + "</h2>");

@@ -116,25 +116,25 @@ response.sendRedirect("login.jsp");
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <input type="text" class="form-control" id="username"
-                                                       placeholder="Username"/>
+                                                       placeholder="Username" required/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <input type="email" class="form-control" id="email"
-                                                       placeholder="Email"/>
+                                                       placeholder="Email" required/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <input type="text" class="form-control" id="firstname"
-                                                       placeholder="Firstname"/>
+                                                       placeholder="Firstname" required/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <input type="text" class="form-control" id="lastname"
-                                                       placeholder="Lastname"/>
+                                                       placeholder="Lastname" required/>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -148,7 +148,7 @@ response.sendRedirect("login.jsp");
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <input type="password" class="form-control" id="password"
-                                                       placeholder="Password"/>
+                                                       placeholder="Password" required/>
                                             </div>
                                         </div>
                                         <div class="form-group">
