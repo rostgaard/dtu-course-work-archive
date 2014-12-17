@@ -208,7 +208,7 @@ var activeMac;
                         var URL = webServerPath + "/apps/getApps?mac=" + mac;
                         $.ajax({
                             type: "GET",
-                            url: webServerPath + "/devices/getDeviceName?mac" + mac,
+                            url: webServerPath + "/devices/getDeviceName?mac=" + mac,
                             data: data,
                             success: function (data) {
                                 var dev = data
@@ -253,7 +253,7 @@ var activeMac;
 					$(function() {
 
                     $('#confMac').click(function setMacField() {
-                        $('#DeviceMac').append(activeMac);
+                        $('#deviceMac').append(activeMac);
                         $('#deviceInfoModal').modal('hide');
                     });
                                     
@@ -394,16 +394,17 @@ var activeMac;
                     $('#devs').empty();
                     for (var i in devItems) {
                         var printDevName = devItems[i].mac;
+                        var devNameData;
 						$.ajax({
                 			type: "GET",
                 			url: webServerPath + "/devices/getDevice?mac="+devItems[i].mac,
-                			data: devData,
-                			success: function (data) {
+                			data: devNameData,
+                			success: function (devNameData) {
                     		
-                    			printDevName = data.name;
+                    			printDevName = devNameData.name;
                     			
                     		},
-                    		error: function (data) {
+                    		error: function (devNameData) {
                     		printDevName = devItems[i].mac;
                     		}
                     	});
