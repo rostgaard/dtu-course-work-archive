@@ -44,7 +44,7 @@ public class RuleDataEAO {
 		if (policyEntity == null) {
 			policyEntity = new PolicyEntity();
 			policyEntity.setId(policyId);
-			policyEntity.setName("Policy" + policyId);
+			policyEntity.setName("Policy " + policyId);
 			policyEntity.setSecurityLevel(1);
 			em.persist(policyEntity);
 		}
