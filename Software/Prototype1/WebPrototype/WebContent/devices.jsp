@@ -134,18 +134,18 @@ response.sendRedirect("login.jsp");
                                         </div>
                                     </div>
                                     
-                                    <div class="form-group">
-                                        <div class="col-sm-16">
-                                            <div class="checkbox" style="text-align:center"><label><input
+                                    <div class="form-group" style="margin-auto: 0;">
+                                        <div class="col-sm-16" style="margin-left: 16px;">
+                                            <div class="checkbox"><label><input
                                                     type="checkbox" id="light" value="1">Flashlight</label></div>
-                                            <div class="checkbox" style="text-align:center"><label><input
+                                            <div class="checkbox"><label><input
                                                     type="checkbox" id="camera" value="1">Camera</label></div>
-                                            <div class="checkbox" style="text-align:center"><label><input
+                                            <div class="checkbox"><label><input
                                                     type="checkbox" id="sound" value="1">Sound</label></div>
-                                            <div class="checkbox" style="text-align:center"><label><input
+                                            <div class="checkbox"><label><input
                                                     type="checkbox" id="userAlerts" value="1">User Alerts</label></div>
-                                            <div class="checkbox" style="text-align:center"><label><input
-                                                    type="checkbox" id="moveSens" value="1">Movement Sensor</label></div>
+                                            <div class="checkbox"><label><input
+                                                    type="checkbox" id="moveSens" value="1">Door Sensor</label></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
