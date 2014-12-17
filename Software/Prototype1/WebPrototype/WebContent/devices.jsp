@@ -306,20 +306,30 @@ var activeMac;
      */
     function confDev() {
     var data;
+    var md = document.getElementById('deviceMac').value;
+    var nd = document.getElementById('deviceName').value
+    
+    if(md != ""){
+    
+    if(nd != ""){
     $.ajax({
           type: "GET",
-          url: webServerPath + "/devices/addDeviceName?mac=" + $('#deviceMac')+"&name="+$('#deviceName'),
+          url: webServerPath + "/devices/addDeviceName?mac=" + md +"&name="+nd,
           data: data,
+          success: function (data){
+          },
           error: function (data) {
           	$.ajax({
           		type: "GET",
-          		url: webServerPath + "/devices/updateDeviceName?mac=" + $('#deviceMac')+"&name="+$('#deviceName'),
+          		url: webServerPath + "/devices/updateDeviceName?mac=" + md+"&name="+nd,
           		data: data,
           		succes: function (data) {  			
           		}
         	});
           }
         });
+        
+      }
 
         var lightAppStatus = false;
         var camAppStatus = false;
@@ -327,7 +337,7 @@ var activeMac;
         var userAlertsStatus = false;
         var movementSensStatus = false
        
-        var devMac = document.getElementById('deviceMac').value;
+        var devMac = md
         if (document.getElementById('light').value == "1") {
             lightAppStatus = true;
         }
@@ -374,7 +384,13 @@ var activeMac;
 
         });
         
-        $('#condev').html("Device Configured");
+        	$('#condev').html("Device Configured");
+        
+        }
+        
+        else{
+        	$('#condev').html("Mac is Needed");
+        }
 
     }
 
