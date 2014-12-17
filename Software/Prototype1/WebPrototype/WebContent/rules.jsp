@@ -73,6 +73,7 @@ response.sendRedirect("login.jsp");
     <li><a href="/Prototype245/Forward?ref=devices">Devices</a></li>
     <li class="active"><a href="/Prototype245/Forward?ref=rules">Rules</a></li>
     <li><a href="/Prototype245/Forward?ref=users">Users</a></li>
+    <li><a href="/Prototype245/Forward?ref=log">Event Log</a></li>
 
 
     <li style="float: right;"><a href="/Prototype245/LogoutServlet">Log

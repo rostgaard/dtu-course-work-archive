@@ -11,7 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - Bootstrap Admin Theme</title>
+<title>Smart Home Security - Login</title>
 
 <link rel="icon" href="..\WebContent\icon.ico">
 
