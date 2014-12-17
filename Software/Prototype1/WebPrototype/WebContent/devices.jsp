@@ -152,7 +152,7 @@ response.sendRedirect("login.jsp");
                                         <div class="col-sm-4">
                                             <button type="button" id="submit"
                                                     class="btn btn-lg btn-success btn-block" onclick="confDev()">
-                                                Configure
+                                                Submit
                                             </button>
                                         </div>
                                     </div>
