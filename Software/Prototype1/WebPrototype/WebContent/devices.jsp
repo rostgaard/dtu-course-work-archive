@@ -250,15 +250,20 @@ var activeMac;
                             }
                         });
                     }
+					$(function() {
 
-                    function setMacField() {
+                    $('#confMac').click(function setMacField() {
                         $('#DeviceMac').append(activeMac);
-                    }
+                        $('#deviceInfoModal').modal('hide');
+                    });
+                                    
+					});
+                    
 
                 </script>
 
 
-               <button type="button" id="submit" class="button" data-toggle="modal" data-target="#eventInfoModal" onclick="setMacField();" >Configure</button>
+               <button type="button" id="confMac" class="button">Configure</button>
 
             </div>
         </div>
