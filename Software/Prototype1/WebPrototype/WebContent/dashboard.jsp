@@ -213,7 +213,7 @@ response.sendRedirect("login.jsp");
 
                             <div class="panel-body">
                                 <div class="list-group" id="box"></div>
-                                <button class="btn btn-primary btn-block" id="more">Show
+                                <button class="btn btn-primary btn-block" id="more" onclick="reloadEvents();">Show
                                     more
                                 </button>
                                 <!-- /.list-group -->
@@ -623,6 +623,7 @@ response.sendRedirect("login.jsp");
         /** @author s124255
          dashboard tab
          */
+         
          var eventListSize = 5;
         function reloadEvents() {
             var data;
@@ -645,14 +646,12 @@ response.sendRedirect("login.jsp");
                     }
                 }
             });
-
-           $('#more').click(function () {
-           eventListSize=eventListSize+4;
-           })
-          
-
         }
         reloadEvents();
+        
+         $('#more').click(function () {
+           eventListSize=eventListSize+4;
+          })
 
     </script>
     <!--
