@@ -570,9 +570,9 @@ response.sendRedirect("login.jsp");
             url: URL,
             data: data,
             success: function (data) {
-                var d = new Date(data).toUTCString();
+                var d = new Date(data);
                 $('#lastLogin').html(jQuery.timeago(d));
-                $('#loginModalBody').html("<h3>Last login: " + d + "</h3>");
+                $('#loginModalBody').html("<h3>Last login: " + d.toUTCString() + "</h3>");
             }
         });
 
