@@ -254,7 +254,7 @@ var activeMac;
 					$(function() {
 
                     $('#confMac').click(function setMacField() {
-                        $('#deviceMac').append(activeMac);
+                        $('#deviceMac').val(activeMac);
                         $('#deviceInfoModal').modal('hide');
                     });
                                     
@@ -308,7 +308,7 @@ var activeMac;
     function confDev() {
     var data;
     var md = document.getElementById('deviceMac').value;
-    var nd = document.getElementById('deviceName').value
+    var nd = document.getElementById('deviceName').value;
     
     if(md != ""){
     
