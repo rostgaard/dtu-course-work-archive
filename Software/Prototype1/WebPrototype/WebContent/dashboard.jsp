@@ -623,6 +623,7 @@ response.sendRedirect("login.jsp");
         /** @author s124255
          dashboard tab
          */
+         var eventListSize = 5;
         function reloadEvents() {
             var data;
             var URL = webServerPath + "/events/getAllEvents";
@@ -638,22 +639,17 @@ response.sendRedirect("login.jsp");
                         var time = jQuery.timeago(new Date(items[i].time));
                         var element = '<a href="#" data-toggle="modal" data-target="#eventInfoModal" class="list-group-item" onclick="eventInfo('+items[i].appID + ',' + items[i].time+')"><i class="fa fa-shield fa-fw"></i> ' + type.replace("PLAYSOUND", "Sound played").replace("FLASHLIGHT", "Flash light activated").replace("USERALERT", "User Alerted").replace("ACCELEROMETER", "Movement detected") + '<span class="pull-right text-muted small"><em>' + time + '</em></span></a>';
                         $('#box').append(element);
-                        if(i >= 5){
+                        if(i >= eventListSize){
                         	break;
                         }
                     }
                 }
             });
 
-         /*   $('.list-group-item:gt(10)').hide().last().after(
-                    $('#more').click(function () {
-                        var a = this;
-                        $('.list-group-item:not(:visible):lt(5)').fadeIn(function () {
-                            if ($('.list-group-item:not(:visible)').length == 0) $(a).remove();
-                        });
-                        return false;
-                    })
-            );*/
+           $('#more').click(function () {
+           eventListSize=eventListSize+4;
+           })
+          
 
         }
         reloadEvents();
