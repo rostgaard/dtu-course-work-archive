@@ -25,7 +25,7 @@ public class DevicesEAO {
 
 
 	public DeviceEntity addDeviceName(String mac, String name) {
-		DeviceEntity deviceEntity = getDeviceEntity(mac, name);
+		DeviceEntity deviceEntity = getDeviceEntity(mac);
 		if (deviceEntity != null) {
 			return null;
 		}
@@ -45,7 +45,7 @@ public class DevicesEAO {
 
 	}
 
-	public DeviceEntity getDeviceEntity(String mac, String name) {
+	public DeviceEntity getDeviceEntity(String mac) {
 		TypedQuery<DeviceEntity> query = em.createQuery(Query.queryGetDevice, DeviceEntity.class);
 		query.setParameter("mac", mac);
 		List<DeviceEntity> result = query.getResultList();

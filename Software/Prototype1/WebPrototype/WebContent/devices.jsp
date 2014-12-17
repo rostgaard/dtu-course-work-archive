@@ -102,7 +102,7 @@ response.sendRedirect("login.jsp");
                 <div class="col-lg-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-mobiles fa-fw"></i> Active Devices
+                            <i class="fa fa-mobile fa-fw"></i> Active Devices
                         </div>
                         <div class="panel-body">
                             <div class="list-group" id="devs"></div>
@@ -318,8 +318,7 @@ var activeMac;
           url: webServerPath + "/devices/addDeviceName?mac=" + md +"&name="+nd,
           data: data,
           success: function (data){
-          },
-          error: function (data) {
+          if(data == null){
           	$.ajax({
           		type: "GET",
           		url: webServerPath + "/devices/updateDeviceName?mac=" + md+"&name="+nd,
@@ -328,6 +327,8 @@ var activeMac;
           		}
         	});
           }
+          }
+          
         });
         
       }

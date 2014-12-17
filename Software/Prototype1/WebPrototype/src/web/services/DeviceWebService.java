@@ -34,6 +34,10 @@ public class DeviceWebService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Device addDevice(@QueryParam("mac") String mac, @QueryParam("name") String name) {	
 		DeviceEntity deviceEntity = eao.addDeviceName(mac, name);
+		
+		if(deviceEntity == null){
+			return null;
+		}
 
 		Device device = Conversion.convertDeviceEntity(deviceEntity);
 				
