@@ -209,7 +209,7 @@ var activeMac;
                         var URL = webServerPath + "/apps/getApps?mac=" + mac;
                         $.ajax({
                             type: "GET",
-                            url: webServerPath + "/devices/getDeviceName?mac=" + mac,
+                            url: webServerPath + "/devices/getDevice?mac=" + mac,
                             data: data,
                             success: function (data) {
                                 var dev = data
@@ -399,30 +399,30 @@ var activeMac;
          device tab
          */
         function reloadDevs() {
-            var devData;
+            var data;
             var URL = webServerPath + "/apps/getDevices";
             $.ajax({
                 type: "GET",
                 url: URL,
-                data: devData,
-                success: function (devData) {
-                    var devItems = devData;
+                data: data,
+                success: function (data) {
+                    var devItems = data;
 
                     $('#devs').empty();
                     for (var i in devItems) {
                         var printDevName = devItems[i].mac;
-                        var devNameData;
+                        var data;
 						$.ajax({
                 			type: "GET",
                 			url: webServerPath + "/devices/getDevice?mac="+devItems[i].mac,
-                			data: devNameData,
-                			success: function (devNameData) {
+                			data: data,
+                			success: function (data) {
                     		
-                    			printDevName = devNameData.name;
+                    			printDevName = data.name;
                     			
                     		},
-                    		error: function (devNameData) {
-                    		printDevName = devItems[i].mac;
+                    		error: function (data) {
+                    			printDevName = devItems[i].mac;
                     		}
                     	});
 
