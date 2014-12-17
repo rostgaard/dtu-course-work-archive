@@ -194,7 +194,7 @@ response.sendRedirect("login.jsp");
                                 
             					$('#RuleString').empty();
             					for (var i in listOfStrings) {				
-                				var rulestring = "<li>"i + " : " +listOfStrings[i]+"</li>";	
+                				var rulestring = "<li>"+ i + " : " +listOfStrings[i]+"</li>";	
                 				$('#RuleString').append(rulestring);
             					}
             			
