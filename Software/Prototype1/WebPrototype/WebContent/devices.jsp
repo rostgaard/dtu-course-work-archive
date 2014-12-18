@@ -346,19 +346,19 @@ var activeMac;
         var movementSensStatus = false;
        
         var devMac = md;
-        if (document.getElementById('light').value == true) {
+        if (document.getElementById('light').checked == true) {
             lightAppStatus = true;
         }
-        if (document.getElementById('camera').value == true) {
+        if (document.getElementById('camera').checked == true) {
             camAppStatus = true;
         }
-        if (document.getElementById('sound').value == true) {
+        if (document.getElementById('sound').checked == true) {
             soundAppStatus = true;
         }
-        if (document.getElementById('userAlerts').value == true) {
+        if (document.getElementById('userAlerts').checked == true) {
             userAlertsStatus = true;
         }
-        if (document.getElementById('moveSens').value == true) {
+        if (document.getElementById('moveSens').checked == true) {
             movementSensStatus = true;
         }
 
@@ -420,7 +420,7 @@ var activeMac;
                 			success: function (data) {
                 			 var dev = data
                     			if(dev != null){
-                    				printDevName = dev.name;
+                    				printDevName = dev[0].name;
                     			}
                     		}
                     	});
