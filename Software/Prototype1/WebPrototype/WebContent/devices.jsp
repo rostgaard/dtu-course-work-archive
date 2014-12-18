@@ -145,15 +145,13 @@ response.sendRedirect("login.jsp");
                                             <div class="checkbox"><label><input
                                                     type="checkbox" id="sound">Sound</label></div>
                                             <div class="checkbox"><label><input
-                                                    type="checkbox" id="userAlerts">User Alerts</label></div>
-                                            <div class="checkbox"><label><input
                                                     type="checkbox" id="moveSens">Movement Sensor</label></div>
                                              <script type="text/javascript">
                                              document.getElementById('light').checked = true;
                                              document.getElementById('camera').checked = true;
            									 document.getElementById('sound').checked = true;
-	         								 document.getElementById('userAlerts').checked = true;
-           									 document.getElementById('moveSens').checked == true;
+	         								
+           									 document.getElementById('moveSens').checked = true;
             
                                              </script>
                                         </div>
