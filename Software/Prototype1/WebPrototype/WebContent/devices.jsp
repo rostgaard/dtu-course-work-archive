@@ -196,6 +196,7 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
 var activeMac;
                     function deviceInfo(mac) {
 						activeMac = mac;
+						document.getElementById("camera").disabled = false;
                         $('#camAct').html("This device does not have a active camera.");
                         $('#soundAct').html("This device does not have a active microphone.");
                         $('#lightAct').html("This device does not have a active flashlight.");
@@ -358,6 +359,10 @@ var activeMac;
         $.ajax({
             type: "PUT",
             url: webServerPath + "/apps/updateApp?mac=" + devMac + "&eventType=STARTVIDEORECORDING&status=" + camAppStatus + "",
+        	error: function(data){
+        		$('#camera').html("Camera app not active for this device");
+        		document.getElementById("camera").disabled = true;
+        	}
         });
 
         $.ajax({
@@ -371,6 +376,7 @@ var activeMac;
         });
         
         	$('#condev').html("Device Configured");
+        	reloadDevs();
         
         }
         
