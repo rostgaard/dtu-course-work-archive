@@ -147,7 +147,7 @@ response.sendRedirect("login.jsp");
                                             <div class="checkbox"><label><input
                                                     type="checkbox" id="userAlerts" value="1">User Alerts</label></div>
                                             <div class="checkbox"><label><input
-                                                    type="checkbox" id="moveSens" value="1">Door Sensor</label></div>
+                                                    type="checkbox" id="moveSens" value="1">Movement Sensor</label></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -204,7 +204,7 @@ var activeMac;
                         $('#soundAct').html("This device does not have a active microphone.");
                         $('#lightAct').html("This device does not have a active flashlight.");
                         $('#userAlertAct').html("This device does not have user alerts activated.");
-                        $('#movementSens').html("This device does not have a door sensor activated.");
+                        $('#movementSens').html("This device does not have a movement sensor activated.");
                         var data;
                         var devices;
                         var URL = webServerPath + "/apps/getApps?mac=" + mac;
@@ -248,7 +248,7 @@ var activeMac;
                                             $('#userAlertAct').html("User Alert is available - Sensor ID: " + devices[i].id);
                                         }
                                          if (eventTy == "ACCELEROMETER") {
-                                            $('#movementSens').html("Door sensor is available - Sensor ID: " + devices[i].id);
+                                            $('#movementSens').html("Movement sensor is available - Sensor ID: " + devices[i].id);
                                         }
 
                                     }
@@ -343,9 +343,9 @@ var activeMac;
         var camAppStatus = false;
         var soundAppStatus = false;
         var userAlertsStatus = false;
-        var movementSensStatus = false
+        var movementSensStatus = false;
        
-        var devMac = md
+        var devMac = md;
         if (document.getElementById('light').value == "1") {
             lightAppStatus = true;
         }
