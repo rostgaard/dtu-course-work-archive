@@ -139,15 +139,15 @@ response.sendRedirect("login.jsp");
                                         <div class="col-sm-16" style="margin-left: 16px;">
                                         	<p> Mark the sensors and actuator which should be availeble on the device </p>
                                             <div class="checkbox"><label><input
-                                                    type="checkbox" id="light" value="1">Flashlight</label></div>
+                                                    type="checkbox" id="light">Flashlight</label></div>
                                             <div class="checkbox"><label><input
-                                                    type="checkbox" id="camera" value="1">Camera</label></div>
+                                                    type="checkbox" id="camera">Camera</label></div>
                                             <div class="checkbox"><label><input
-                                                    type="checkbox" id="sound" value="1">Sound</label></div>
+                                                    type="checkbox" id="sound">Sound</label></div>
                                             <div class="checkbox"><label><input
-                                                    type="checkbox" id="userAlerts" value="1">User Alerts</label></div>
+                                                    type="checkbox" id="userAlerts">User Alerts</label></div>
                                             <div class="checkbox"><label><input
-                                                    type="checkbox" id="moveSens" value="1">Movement Sensor</label></div>
+                                                    type="checkbox" id="moveSens">Movement Sensor</label></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -346,19 +346,19 @@ var activeMac;
         var movementSensStatus = false;
        
         var devMac = md;
-        if (document.getElementById('light').value == "1") {
+        if (document.getElementById('light').value == true) {
             lightAppStatus = true;
         }
-        if (document.getElementById('camera').value == "1") {
+        if (document.getElementById('camera').value == true) {
             camAppStatus = true;
         }
-        if (document.getElementById('sound').value == "1") {
+        if (document.getElementById('sound').value == true) {
             soundAppStatus = true;
         }
-        if (document.getElementById('userAlerts').value == "1") {
+        if (document.getElementById('userAlerts').value == true) {
             userAlertsStatus = true;
         }
-        if (document.getElementById('moveSens').value == "1") {
+        if (document.getElementById('moveSens').value == true) {
             movementSensStatus = true;
         }
 
