@@ -1,5 +1,6 @@
 package eao.model;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -57,12 +58,35 @@ public class DevicesEAO {
 		}
 	}
 	
-	public DeviceEntity update(String mac, String name) {
+	public List<DeviceEntity> getAllUsers(){
+		TypedQuery<DeviceEntity> query = em.createQuery(Query.querytextGetAllDeviceNames, DeviceEntity.class);	
+		List<DeviceEntity> result = query.getResultList();
+
+		if (result != null) {
+			return result;
+		} else {
+			return Collections.emptyList();
+		}
+	}
+	
+	public DeviceEntity updateName(String mac, String name) {
 		TypedQuery<DeviceEntity> query = em.createQuery(Query.queryGetDevice, DeviceEntity.class);
 		query.setParameter("mac", mac);
 		DeviceEntity result = query.getSingleResult();
 		result.setName(name);
 	    return em.merge(result);
 	}
+
+	public List<DeviceEntity> getAllDeviceEntitylist() {
+			TypedQuery<DeviceEntity> query = em.createQuery(Query.querytextGetAllDeviceNames, DeviceEntity.class);	
+			List<DeviceEntity> result = query.getResultList();
+
+			if (result.size() > 0) {
+				return result;
+			} else {
+				return Collections.emptyList();
+			}
+		}
+	
 
 }

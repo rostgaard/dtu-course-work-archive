@@ -198,7 +198,6 @@ public class AppWebService {
 	 * @param mac
 	 * @param eventType
 	 * @param status
-	 * @return
 	 */
 	@PUT
 	@Path("/updateApp")

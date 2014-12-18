@@ -133,6 +133,18 @@ public class Conversion {
 		return new Device(mac, name);
 		
 	}
+
+	public static List<Device> convertDeviceEntityList(
+			List<DeviceEntity> list) {
+		if (list == null) return null;
+		List<Device> devices = new ArrayList<Device>();
+		
+		for (DeviceEntity r : list) {
+			devices.add(convertDeviceEntity(r));
+		}
+		
+		return devices;
+	}
 	
 	
 }

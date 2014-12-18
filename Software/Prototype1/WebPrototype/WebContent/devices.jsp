@@ -364,31 +364,31 @@ var activeMac;
 
         $.ajax({
             type: "PUT",
-            url: URL = webServerPath + "/apps/update?mac=" + devMac + "&eventType='PLAYSOUND'&status=" + soundAppStatus + "",
+            url: URL = webServerPath + "/apps/update?mac=" + devMac + "&eventType=PLAYSOUND&status=" + soundAppStatus + "",
 
         });
 
         $.ajax({
             type: "PUT",
-            url: webServerPath + "/apps/update?mac=" + devMac + "&eventType='STARTVIDEORECORDING''&status=" + camAppStatus + "",
+            url: webServerPath + "/apps/update?mac=" + devMac + "&eventType=STARTVIDEORECORDING&status=" + camAppStatus + "",
 
         });
 
         $.ajax({
             type: "PUT",
-            url: webServerPath + "/apps/update?mac=" + devMac + "&eventType='FLASHLIGHT'&status=" + lightAppStatus + "",
-
-        });
-        
-        $.ajax({
-            type: "PUT",
-            url: webServerPath + "/apps/update?mac=" + devMac + "&eventType='USERALERT'&status=" + userAlertsStatus + "",
+            url: webServerPath + "/apps/update?mac=" + devMac + "&eventType=FLASHLIGHT&status=" + lightAppStatus + "",
 
         });
         
         $.ajax({
             type: "PUT",
-            url: webServerPath + "/apps/update?mac=" + devMac + "&eventType='ACCELEROMETER'&status=" + movementSensStatus + "",
+            url: webServerPath + "/apps/update?mac=" + devMac + "&eventType=USERALERT&status=" + userAlertsStatus + "",
+
+        });
+        
+        $.ajax({
+            type: "PUT",
+            url: webServerPath + "/apps/update?mac=" + devMac + "&eventType=ACCELEROMETER&status=" + movementSensStatus + "",
 
         });
         
@@ -397,7 +397,7 @@ var activeMac;
         }
         
         else{
-        	$('#condev').html("Mac is Needed");
+        	$('#condev').html("Error in input");
         }
 
     }

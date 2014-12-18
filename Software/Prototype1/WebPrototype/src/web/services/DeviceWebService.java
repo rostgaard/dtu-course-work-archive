@@ -1,5 +1,8 @@
 package web.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -57,14 +60,23 @@ public class DeviceWebService {
 		return Conversion.convertDeviceEntity(deviceEntity);
 	}
 	
-	/**
-	 * @author s124255
-	 */
 	@PUT
 	@Path("/updateDeviceName")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	public void updateDeviceName(@QueryParam("mac") String mac, @QueryParam("name") String name) {
-		Conversion.convertDeviceEntity(eao.update(mac, name));
+		Conversion.convertDeviceEntity(eao.updateName(mac, name));
+	}
+	
+	@GET
+	@Path("/getDeviceList")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Device> getDeviceList() {
+			List<DeviceEntity> deviceEntities = new ArrayList<DeviceEntity>();
+			List<Device> devices = new ArrayList<Device>();
+			deviceEntities = eao.getAllDeviceEntitylist();
+			devices = Conversion.convertDeviceEntityList(deviceEntities);
+			return devices;
 	}
 
 }

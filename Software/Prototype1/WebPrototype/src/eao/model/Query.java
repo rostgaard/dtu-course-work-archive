@@ -21,10 +21,11 @@ public class Query {
 			"SELECT a " +
 			"FROM DeviceEntity a " +
 			"WHERE " +
-				"a.mac = :mac";
+				"a.mac = :mac ";
 	
 	final protected static String querytextGetAll = "SELECT e FROM EventEntity e";
 	final protected static String querytextGetAllApps = "SELECT s FROM AppEntity s";
+	final protected static String querytextGetAllDeviceNames = "SELECT q FROM DeviceEntity q";
 	
 	final protected static String querytext =
 			"SELECT e " +
