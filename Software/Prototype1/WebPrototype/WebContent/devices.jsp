@@ -421,7 +421,7 @@ var activeMac;
                 			success: function (data) {
                 				var printMac = printDevName;
                 				var dev = data;
-                    			if(dev.name != ""){
+                    			if(dev != null){
                     				printDevName = dev.name;
                     				}    
                     			var devElement = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item" onclick="deviceInfo('+ printMac +')"><i class="fa fa-mobile fa-fw"></i> '
