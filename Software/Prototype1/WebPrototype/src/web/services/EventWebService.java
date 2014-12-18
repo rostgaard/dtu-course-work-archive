@@ -87,7 +87,6 @@ public class EventWebService {
 	
 	private void actuateAction(Event event) {
 		Set<Rule> ruleMatches = RuleWebService.ruleEngine.checkEvent(event);
-		System.out.println(ruleMatches);
 		
 		for (Rule rule : ruleMatches) {
 			for (Action act : rule.getActions()) {				

@@ -186,7 +186,7 @@ public class AppWebService {
 		List<App> devicesWithCamera = new ArrayList<App>();
 		
 		for(App app : apps) {
-			if(app.getEventType().equals(EventType.STOPVIDEORECORDING))
+			if(app.getEventType().equals(EventType.STARTVIDEORECORDING))
 				devicesWithCamera.add(app);
 		}
 		return devicesWithCamera;

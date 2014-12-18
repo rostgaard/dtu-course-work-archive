@@ -58,8 +58,6 @@ public class RuleWebService {
 	
 	@PostConstruct
 	private void startup() {
-		System.out.println("Start up");
-		
 		List<RuleString> dbRules = this.getRulesFromDB();
 
 		if (dbRules.isEmpty()) {

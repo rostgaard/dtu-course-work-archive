@@ -529,7 +529,7 @@ response.sendRedirect("login.jsp");
                 for (var i in devices) {
                    
                     var mac = devices[i].mac;
-                    $('			<button id="' + mac + '"' + ' type="button" class="draggable" data-toggle="modal" onClick="videoID = '+(devices[i].id)+'-1;preparePlayer('+devices[i].id+'-1);" data-target="#jesperModal" />').text(+i+1).appendTo('#cameraMap');
+                    $('			<button id="' + mac + '"' + ' type="button" class="draggable" data-toggle="modal" onClick="videoID = '+(devices[i].id)+';preparePlayer('+devices[i].id+');" data-target="#jesperModal" />').text(+i+1).appendTo('#cameraMap');
                 }
             }
         });

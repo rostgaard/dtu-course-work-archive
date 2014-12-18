@@ -52,7 +52,6 @@ public class VideoWebService {
 			
 			return "Got it! " + new Date()+",bytes: "+data.length;
 		} catch (IOException e) {
-			System.out.println("Error in Create file");
 			e.printStackTrace();
 		}
 		return "";
@@ -103,7 +102,6 @@ public class VideoWebService {
 		for (int i = 0; i < listOfFiles.length; i++){
 			File f = listOfFiles[i];
 
-			//System.out.println("sDate: "+f.lastModified());
 			if (f.lastModified() < lastTime + 8000){//Video is continous
 				lastTime = f.lastModified();
 				length++;
