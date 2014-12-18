@@ -89,7 +89,7 @@
 					</button>
 				</div>
 				<div class="modal-body" align=center>
-					<h3>Im sorry to hear that :-(</h3>
+					<h3>Sorry to hear that :-(</h3>
 				</div>
 			</div>
 		</div>
@@ -107,9 +107,6 @@
 	<!-- Custom Theme JavaScript -->
 	<script src="js/sb-admin-2.js"></script>
 
-	<!-- Custom Login JavaScript -->
-	<script src="js/login.js"></script>
-	
 	<script>
 	function proceed () {
 	    var form = document.createElement('form');

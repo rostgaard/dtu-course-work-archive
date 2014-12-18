@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Security System Dashboard</title>
+    <title>Smart Home Security - Rules</title>
 
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
@@ -141,10 +141,10 @@ response.sendRedirect("login.jsp");
                                   	  	 <div class="ConsolasItalic">
                                   	  	 <br>
 	                        				test1: 
-												<p class="indent_1">when accelerometer</p> 
+												<p class="indent_1">when ACCELEROMETER</p> 
 												  <p class="indent_2">if event.source == 37 && system.securitylevel == 1</p>
 												<p class="indent_2">then</p> 
-												    <p class="indent_3">actorSound1.play(1,30), flashlight.play(42, 30), UserAlert.raise(44);</p>
+												    <p class="indent_3">playSound.play("id"), flashlight.play("id"), UserAlert.raise("id");</p>
 											</div>                  				   
                      				   </div>
                                     </div>                                   
@@ -272,6 +272,7 @@ response.sendRedirect("login.jsp");
 	var ruleURL = webServerPath + "/rules/addRuleString?policyId="+ id;
 			$.ajax({
 				type: "POST",
+				contentType : "text/plain", 
 				url: ruleURL,
 				data: newRulestring,
 				success: function(data){
