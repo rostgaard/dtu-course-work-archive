@@ -238,7 +238,8 @@ response.sendRedirect("login.jsp");
                             role = "MANAGER"
                         }
                         password = document.getElementById('password').value.trim();
-
+						
+						if(username != "" && email != "" && firstname != "" && lastname != "" && password != ""){
                         var URL = webServerPath + "/users/addUser?userName=" + username + "&email=" + email + "&firsName=" + firstname + "&lastName=" + lastname + "&role=" + role + "&password=" + password;
                         var data;
                         $.ajax({
@@ -257,6 +258,10 @@ response.sendRedirect("login.jsp");
                                 reloadUsers();
                             }
                         });
+                        }
+                        else{
+                        alert("All fields must be filled");
+                        }
                     }
                 </script>
             </div>

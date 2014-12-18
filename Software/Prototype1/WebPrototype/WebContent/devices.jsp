@@ -200,7 +200,7 @@ var activeMac;
                     function deviceInfo(mac) {
 						activeMac = mac;
 						document.getElementById("camera").disabled = false;
-						$('#camera').html("");
+						$('#camStatus').html("");
                         $('#camAct').html("This device does not have a active camera.");
                         $('#soundAct').html("This device does not have a active microphone.");
                         $('#lightAct').html("This device does not have a active flashlight.");
