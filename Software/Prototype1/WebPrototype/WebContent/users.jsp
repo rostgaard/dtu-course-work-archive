@@ -261,6 +261,7 @@ response.sendRedirect("login.jsp");
                         }
                         else{
                         alert("All fields must be filled");
+                        $('#addUserModal').modal('hide');
                         }
                     }
                 </script>
