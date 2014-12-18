@@ -189,15 +189,13 @@ response.sendRedirect("login.jsp");
                     <div class="col-lg-8">
                         <div class="panel panel-default">
                             <!-- /.panel-heading -->
-
                             <div class="panel-body" data-step="3"
                                  data-intro="Drag and drop your camera devices to their exact position in the floor plan">
                                 <div id="cameraMap">
                                     <div id="floorplan" class="floorplan">
-                                        <img src="floor_plan_example.png" width="40%" height="40%"/>
-                                        <img src="floor_plan_example.png" width="40%" height="40%"/>
+                                        <img src="images/floor_plan_example.png" width="40%" height="40%"/>
+                                        <img src="images/floor_plan_example.png" width="40%" height="40%"/>
                                     </div>
-
                                 </div>
                             </div>
                             <!-- /.panel-body -->

@@ -65,11 +65,6 @@
 									<input class="form-control" placeholder="Password"
 										name="password" type="password" id="password" value="">
 								</div>
-								<div class="checkbox">
-									<label> <input name="remember" type="checkbox"
-										value="Remember Me">Remember Me
-									</label>
-								</div>
 
 								<button type="button" class="btn btn-xs btn-success btn-block"
 									data-toggle="modal" data-target="#myModal">Forgot
@@ -94,12 +89,7 @@
 					</button>
 				</div>
 				<div class="modal-body" align=center>
-					<form>
-						E-mail: <input type="email" name="email">
-
-						<button type="submit" class="btn btn-xs btn-success">Send</button>
-					</form>
-
+					<h3>Im sorry to hear that :-(</h3>
 				</div>
 			</div>
 		</div>
