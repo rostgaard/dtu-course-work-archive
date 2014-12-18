@@ -170,7 +170,7 @@ $( document ).ready(function() {
 	                { "data": "appID" },
 	                { "data": "eventType" },
 	                { "data": "id" },
-	                { "data": "time"},
+	                { "data": "time"},           
 	                { "data": "value" }
 	            ]
 	        } );
