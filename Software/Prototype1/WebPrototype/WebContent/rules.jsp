@@ -116,7 +116,7 @@ response.sendRedirect("login.jsp");
 	                                        <div class = "form-group">
 	                                        	<div class = "col-sm-6">
 	                                        		<input type ="number" class="form-control" id="policyNr"
-	                                        				placeholder ="Policy number">
+	                                        				placeholder ="Policy number" min=1>
 	                                        	</div>
 	                                        </div>
 	                                        <div class = "form-group">
@@ -147,13 +147,15 @@ response.sendRedirect("login.jsp");
 												    <p class="indent_3">playSound.play("id"), flashlight.play("id"), UserAlert.raise("id");</p>
 											</div>                  				   
                      				   </div>
+                     				   <p id=status></p>
                                     </div>                                   
                                 </div>
                             </div>                         
                         </form>             
                     </div>
+                    
                 </div>
-                <p id=status></p>
+                
             </div>
         </div>
     </div>
@@ -172,8 +174,6 @@ response.sendRedirect("login.jsp");
 
                 <p class="text" id="Policyid"></p>
 
-                <p class="text" id="Name"></p>
-
                 <div class="list-group" id="RuleString"></div>
 
                 <p class="text" id="SecurityLevel"></p>
@@ -189,7 +189,7 @@ response.sendRedirect("login.jsp");
                             success: function (policy) {
 								var listOfStrings = policy.ruleStrings;
                                 $('#Policyid').text("Policy Id: " + policy.id);
-                                $('#Name').text("Policy Name: " + policy.name);
+                                
                                 
             					$('#RuleString').empty();
             					for (var i in listOfStrings) {				
