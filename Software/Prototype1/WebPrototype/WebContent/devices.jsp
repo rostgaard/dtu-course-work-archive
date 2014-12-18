@@ -148,6 +148,14 @@ response.sendRedirect("login.jsp");
                                                     type="checkbox" id="userAlerts">User Alerts</label></div>
                                             <div class="checkbox"><label><input
                                                     type="checkbox" id="moveSens">Movement Sensor</label></div>
+                                             <script type="text/javascript">
+                                             document.getElementById('light').checked = true;
+                                             document.getElementById('camera').checked = true;
+           									 document.getElementById('sound').checked = true;
+	         								 document.getElementById('userAlerts').checked = true;
+           									 document.getElementById('moveSens').checked == true;
+            
+                                             </script>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -190,8 +198,6 @@ response.sendRedirect("login.jsp");
 
                 <p class="text" id="lightAct"></p>
                 
-                <p class="text" id="userAlertAct"></p>
-                
                 <p class="text" id="movementSens"></p>
                 
                 
@@ -203,7 +209,6 @@ var activeMac;
                         $('#camAct').html("This device does not have a active camera.");
                         $('#soundAct').html("This device does not have a active microphone.");
                         $('#lightAct').html("This device does not have a active flashlight.");
-                        $('#userAlertAct').html("This device does not have user alerts activated.");
                         $('#movementSens').html("This device does not have a movement sensor activated.");
                         var data;
                         var devices;
@@ -235,7 +240,7 @@ var activeMac;
                                     var id = devices[i].id;
 
                                     if (status) {
-                                        if (eventTy == "STARTVIDEORECORDING'") {
+                                        if (eventTy == "STARTVIDEORECORDING") {
                                             $('#camAct').html("Camera is available - Sensor ID: " + devices[i].id);
                                         }
                                         if (eventTy == "PLAYSOUND") {
@@ -243,9 +248,6 @@ var activeMac;
                                         }
                                         if (eventTy == "FLASHLIGHT") {
                                             $('#lightAct').html("Light is available - Sensor ID: " + devices[i].id);
-                                        }
-                                        if (eventTy == "USERALERT") {
-                                            $('#userAlertAct').html("User Alert is available - Sensor ID: " + devices[i].id);
                                         }
                                          if (eventTy == "ACCELEROMETER") {
                                             $('#movementSens').html("Movement sensor is available - Sensor ID: " + devices[i].id);
@@ -342,7 +344,6 @@ var activeMac;
         var lightAppStatus = false;
         var camAppStatus = false;
         var soundAppStatus = false;
-        var userAlertsStatus = false;
         var movementSensStatus = false;
        
         var devMac = md;
@@ -354,9 +355,6 @@ var activeMac;
         }
         if (document.getElementById('sound').checked == true) {
             soundAppStatus = true;
-        }
-        if (document.getElementById('userAlerts').checked == true) {
-            userAlertsStatus = true;
         }
         if (document.getElementById('moveSens').checked == true) {
             movementSensStatus = true;
@@ -375,11 +373,6 @@ var activeMac;
         $.ajax({
             type: "PUT",
             url: webServerPath + "/apps/updateApp?mac=" + devMac + "&eventType=FLASHLIGHT&status=" + lightAppStatus + "",
-        });
-        
-        $.ajax({
-            type: "PUT",
-            url: webServerPath + "/apps/updateApp?mac=" + devMac + "&eventType=USERALERT&status=" + userAlertsStatus + "",
         });
         
         $.ajax({
