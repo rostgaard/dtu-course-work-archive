@@ -649,11 +649,11 @@ response.sendRedirect("login.jsp");
 	            });
 	        }
 	        reloadEvents();
-      });
+
          $('#more').click(function () {
            eventListSize=eventListSize+4;
           })
-
+      });
     </script>
     <!--
  OnClick Event on whole button group (Security Level Buttons)
