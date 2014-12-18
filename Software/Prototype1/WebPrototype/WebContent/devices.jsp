@@ -140,7 +140,9 @@ response.sendRedirect("login.jsp");
                                         	<p> Check the sensors and actuators which should be available on the device </p>
                                             <div class="checkbox"><label><input
                                                     type="checkbox" id="light" checked>Flashlight</label></div>
-                                            <div class="checkbox"><label><input
+                                            <div class="checkbox">
+                                            	<p class="text" id="camStatus"></p>
+                                            					<label><input
                                                     type="checkbox" id="camera" checked>Camera</label></div>
                                             <div class="checkbox"><label><input
                                                     type="checkbox" id="sound" checked>Sound</label></div>
@@ -360,7 +362,8 @@ var activeMac;
             type: "PUT",
             url: webServerPath + "/apps/updateApp?mac=" + devMac + "&eventType=STARTVIDEORECORDING&status=" + camAppStatus + "",
         	error: function(data){
-        		$('#camera').html("Camera app not active for this device");
+        		$('#camStatus').html("This device does not have a active camera.");
+        		document.getElementById("camera").checked = false;
         		document.getElementById("camera").disabled = true;
         	}
         });
