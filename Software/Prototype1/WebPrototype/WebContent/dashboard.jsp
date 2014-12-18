@@ -563,20 +563,20 @@ response.sendRedirect("login.jsp");
          on page load and update #lastLogin class with data and details modal aswell.
          Using JQuery timeago plugin for formatting
          */
-
-        var URL = webServerPath + "/users/getLastLoginByUserName?userName=" + "<%=user.getUserName()%>"
-        var data;
-        $.ajax({
-            type: "GET",
-            url: URL,
-            data: data,
-            success: function (data) {
-                var d = new Date(data);
-                $('#lastLogin').html(jQuery.timeago(d));
-                $('#loginModalBody').html("<h3>Last login: " + d + "</h3>");
-            }
-        });
-
+         $( document ).ready(function() {
+	        var URL = webServerPath + "/users/getLastLoginByUserName?userName=" + "<%=user.getUserName()%>"
+	        var data;
+	        $.ajax({
+	            type: "GET",
+	            url: URL,
+	            data: data,
+	            success: function (data) {
+	                var d = new Date(data);
+	                $('#lastLogin').html(jQuery.timeago(d));
+	                $('#loginModalBody').html("<h3>Last login: " + d + "</h3>");
+	            }
+	        });
+         });
     </script>
 
     <script>
