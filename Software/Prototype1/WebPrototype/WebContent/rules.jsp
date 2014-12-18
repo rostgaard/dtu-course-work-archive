@@ -163,7 +163,7 @@ response.sendRedirect("login.jsp");
 
 <div class="modal fade" id="ruleInfoModal" tabindex="-1" role="dialog"
      aria-labelledby="userInfoModal" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
@@ -175,8 +175,6 @@ response.sendRedirect("login.jsp");
                 <p class="text" id="Policyid"></p>
 
                 <div class="list-group" id="RuleString"></div>
-
-                <p class="text" id="SecurityLevel"></p>
 
                 <script>
 
@@ -196,9 +194,6 @@ response.sendRedirect("login.jsp");
                 				var rulestring = "<li>"+ i + " : " +listOfStrings[i].rule+"</li>";	
                 				$('#RuleString').append(rulestring);
             					}
-            			
-                                $('#SecurityLevel').text("Active Security Level : " + policy.securityLevel);
-
                             }
                         });
 
