@@ -291,7 +291,7 @@ response.sendRedirect("login.jsp");
 
                     function getUser(user) {
                         $('#uName').html("Username: "+user);
-
+						var data;
                         var URL = webServerPath + "/users/getUserByUserName?userName=" + user;
                         $.ajax({
                             type: "GET",
