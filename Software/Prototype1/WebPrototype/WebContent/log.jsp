@@ -116,7 +116,7 @@ response.sendRedirect("login.jsp");
 						 
 						    <tfoot>
 						        <tr>
-						            <th>App ID</th>
+						            <th>Source App ID</th>
 						            <th>Event Type</th>
 						            <th>Event ID</th>
 						            <th>Time</th>
