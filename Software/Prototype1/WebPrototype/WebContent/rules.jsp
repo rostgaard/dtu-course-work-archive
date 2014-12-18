@@ -133,6 +133,7 @@ response.sendRedirect("login.jsp");
                                                 </button>
                                             </div>
                                         </div>
+                                        <p id=ruleError></p>
                                         <br>
                                         	Example syntax:
                                         <div>

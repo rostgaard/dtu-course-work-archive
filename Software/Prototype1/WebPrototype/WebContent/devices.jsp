@@ -137,6 +137,7 @@ response.sendRedirect("login.jsp");
                                     
                                     <div class="form-group" style="margin-auto: 0;">
                                         <div class="col-sm-16" style="margin-left: 16px;">
+                                        	<p> Mark the sensors and actuator which should be availeble on the device </p>
                                             <div class="checkbox"><label><input
                                                     type="checkbox" id="light" value="1">Flashlight</label></div>
                                             <div class="checkbox"><label><input
@@ -170,7 +171,7 @@ response.sendRedirect("login.jsp");
 
 <div class="modal fade" id="deviceInfoModal" tabindex="-1" role="dialog"
      aria-labelledby="deviceInfoModal" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
@@ -213,7 +214,12 @@ var activeMac;
                             data: data,
                             success: function (data) {
                                 var dev = data
+                                if(dev != null){
                                 $('#nameDevice').html(dev.name);
+                                }
+                                else{
+                                 $('#nameDevice').html("No name for this device");
+                                }
                             }
                         });
                         $.ajax({
@@ -412,10 +418,9 @@ var activeMac;
                     $('#devs').empty();
                     for (var i in devItems) {
                         var printDevName = devItems[i].mac;
-                        var data;
 						$.ajax({
                 			type: "GET",
-                			url: webServerPath + "/devices/getDevice?mac="+devItems[i].mac,
+                			url: webServerPath + "/devices/getDevice?mac="+printDevName,
                 			data: data,
                 			success: function (data) {
                     		
