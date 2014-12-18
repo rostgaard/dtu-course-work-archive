@@ -137,23 +137,15 @@ response.sendRedirect("login.jsp");
                                     
                                     <div class="form-group" style="margin-auto: 0;">
                                         <div class="col-sm-16" style="margin-left: 16px;">
-                                        	<p> Mark the sensors and actuator which should be availeble on the device </p>
+                                        	<p> Check the sensors and actuators which should be available on the device </p>
                                             <div class="checkbox"><label><input
-                                                    type="checkbox" id="light">Flashlight</label></div>
+                                                    type="checkbox" id="light" checked>Flashlight</label></div>
                                             <div class="checkbox"><label><input
-                                                    type="checkbox" id="camera">Camera</label></div>
+                                                    type="checkbox" id="camera" checked>Camera</label></div>
                                             <div class="checkbox"><label><input
-                                                    type="checkbox" id="sound">Sound</label></div>
+                                                    type="checkbox" id="sound" checked>Sound</label></div>
                                             <div class="checkbox"><label><input
-                                                    type="checkbox" id="moveSens">Movement Sensor</label></div>
-                                             <script type="text/javascript">
-                                             document.getElementById('light').checked = true;
-                                             document.getElementById('camera').checked = true;
-           									 document.getElementById('sound').checked = true;
-	         								
-           									 document.getElementById('moveSens').checked = true;
-            
-                                             </script>
+                                                    type="checkbox" id="moveSens" checked>Movement Sensor</label></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
