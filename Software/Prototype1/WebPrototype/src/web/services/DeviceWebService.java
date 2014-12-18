@@ -51,7 +51,10 @@ public class DeviceWebService {
 	@Path("/getDevice")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)
-	public Device getDeviceName(@QueryParam("mac") String mac) {		
+	public Device getDeviceName(@QueryParam("mac") String mac) {
+		if(mac == "undefined" || mac == null){
+			return null;
+		}
 		DeviceEntity deviceEntity = eao.getDevice(mac);
 		if (deviceEntity == null) {
 			return null;

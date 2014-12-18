@@ -418,13 +418,9 @@ var activeMac;
                 			url: webServerPath + "/devices/getDevice?mac="+printDevName,
                 			data: data,
                 			success: function (data) {
-                    		if(data!=null){
-                    			printDevName = data.name;
+                    			if(data!=null){
+                    				printDevName = data.name;
                     			}
-                    			
-                    		},
-                    		error: function (data) {
-                    			printDevName = devItems[i].mac;
                     		}
                     	});
 
