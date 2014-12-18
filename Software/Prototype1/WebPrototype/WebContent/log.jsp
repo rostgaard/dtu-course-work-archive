@@ -45,8 +45,13 @@
     <!-- Add IntroJs styles -->
     <link href="css/introjs.css" rel="stylesheet">
     
-    <!-- DataTables CSS -->
-	<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
+<!--     DataTables CSS
+	<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css"> -->
+	
+	    <!-- DataTable Bootstrap styles -->
+    <link href="http://cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+	
+	
 	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -96,28 +101,30 @@ response.sendRedirect("login.jsp");
                 </div>
                 <div class="row">
                     
-                    <!--DATA TABLE  -->       
-                    <table id="example" class="display" cellspacing="0" width="100%">
-					    <thead>
-					        <tr>
-					            <th>App ID</th>
-					            <th>Event Type</th>
-					            <th>Event ID</th>
-					            <th>Time</th>
-					            <th>Value</th>				   
-					        </tr>
-					    </thead>
-					 
-					    <tfoot>
-					        <tr>
-					            <th>App ID</th>
-					            <th>Event Type</th>
-					            <th>Event ID</th>
-					            <th>Time</th>
-					            <th>Value</th>	
-					        </tr>
-					    </tfoot>					 
-					</table>
+                    <!--DATA TABLE  --> 
+                    <div class="table-responsive">      
+	                    <table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+						    <thead>
+						        <tr>
+						            <th>Source App ID</th>
+						            <th>Event Type</th>
+						            <th>Event ID</th>
+						            <th>Time</th>
+						            <th>Value</th>				   
+						        </tr>
+						    </thead>
+						 
+						    <tfoot>
+						        <tr>
+						            <th>App ID</th>
+						            <th>Event Type</th>
+						            <th>Event ID</th>
+						            <th>Time</th>
+						            <th>Value</th>	
+						        </tr>
+						    </tfoot>					 
+						</table>
+					</div>
 	            </div>
             </div>
         </div>
@@ -180,6 +187,10 @@ $( document ).ready(function() {
     
     	<!-- DataTables -->
 	<script type="text/javascript" charset="utf8" src="js/jquery.dataTables.js"></script>
+	
+	<!--DataTable Bootstrap style  -->
+	<script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+	
 	    
     
 </body>
