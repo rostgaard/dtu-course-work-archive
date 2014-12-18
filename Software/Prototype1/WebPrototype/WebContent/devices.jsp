@@ -200,11 +200,11 @@ var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototy
 var activeMac;
                     function deviceInfo(mac) {
 						activeMac = mac;
-                        $('#accAct').html("This device does not have a active camera.");
+                        $('#camAct').html("This device does not have a active camera.");
                         $('#soundAct').html("This device does not have a active microphone.");
                         $('#lightAct').html("This device does not have a active flashlight.");
                         $('#userAlertAct').html("This device does not have user alerts activated.");
-                        $('#movementSens').html("This device does not have a movement sensor activated.");
+                        $('#movementSens').html("This device does not have a door sensor activated.");
                         var data;
                         var devices;
                         var URL = webServerPath + "/apps/getApps?mac=" + mac;
@@ -248,7 +248,7 @@ var activeMac;
                                             $('#userAlertAct').html("User Alert is available - Sensor ID: " + devices[i].id);
                                         }
                                          if (eventTy == "ACCELEROMETER") {
-                                            $('#movementSens').html("Movement Sensor is available - Sensor ID: " + devices[i].id);
+                                            $('#movementSens').html("Door sensor is available - Sensor ID: " + devices[i].id);
                                         }
 
                                     }
@@ -326,7 +326,7 @@ var activeMac;
           success: function (data){
           if(data == null){
           	$.ajax({
-          		type: "GET",
+          		type: "PUT",
           		url: webServerPath + "/devices/updateDeviceName?mac=" + md+"&name="+nd,
           		data: data,
           		succes: function (data) {  			
@@ -364,32 +364,27 @@ var activeMac;
 
         $.ajax({
             type: "PUT",
-            url: URL = webServerPath + "/apps/update?mac=" + devMac + "&eventType=PLAYSOUND&status=" + soundAppStatus + "",
-
+            url: URL = webServerPath + "/apps/updateApp?mac=" + devMac + "&eventType=PLAYSOUND&status=" + soundAppStatus + "",
         });
 
         $.ajax({
             type: "PUT",
             url: webServerPath + "/apps/update?mac=" + devMac + "&eventType=STARTVIDEORECORDING&status=" + camAppStatus + "",
-
         });
 
         $.ajax({
             type: "PUT",
             url: webServerPath + "/apps/update?mac=" + devMac + "&eventType=FLASHLIGHT&status=" + lightAppStatus + "",
-
         });
         
         $.ajax({
             type: "PUT",
             url: webServerPath + "/apps/update?mac=" + devMac + "&eventType=USERALERT&status=" + userAlertsStatus + "",
-
         });
         
         $.ajax({
             type: "PUT",
             url: webServerPath + "/apps/update?mac=" + devMac + "&eventType=ACCELEROMETER&status=" + movementSensStatus + "",
-
         });
         
         	$('#condev').html("Device Configured");
@@ -423,8 +418,9 @@ var activeMac;
                 			url: webServerPath + "/devices/getDevice?mac="+printDevName,
                 			data: data,
                 			success: function (data) {
-                    		
+                    		if(data!=null){
                     			printDevName = data.name;
+                    			}
                     			
                     		},
                     		error: function (data) {
