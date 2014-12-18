@@ -115,7 +115,7 @@ response.sendRedirect("login.jsp");
 	                                    <div data-step="3" data-intro="Define your own rule and associate it with a policy.">    
 	                                        <div class = "form-group">
 	                                        	<div class = "col-sm-6">
-	                                        		<input type ="text" class="form-control" id="policyNr"
+	                                        		<input type ="number" class="form-control" id="policyNr"
 	                                        				placeholder ="Policy number">
 	                                        	</div>
 	                                        </div>
@@ -153,6 +153,7 @@ response.sendRedirect("login.jsp");
                         </form>             
                     </div>
                 </div>
+                <p id=status></p>
             </div>
         </div>
     </div>
@@ -274,6 +275,10 @@ response.sendRedirect("login.jsp");
 				url: ruleURL,
 				data: newRulestring,
 				success: function(data){
+					$('#status').html("Rule successfully added");
+				},
+				error: function(data){
+					$('#status').html("Input syntax");
 				}
 			});
 	reloadRules();
