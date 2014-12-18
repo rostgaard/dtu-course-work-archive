@@ -416,7 +416,7 @@ var activeMac;
                                   var devElement = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item" onclick="deviceInfo(\'' + devItems[i].mac + '\')"><i class="fa fa-mobile fa-fw"></i> '
                                 + printDevName
                                 + '</a>';
-                                 console.log("Found a name"+devItems[i].mac);
+                                 
 
                             $('#devs').append(devElement);
                     		},
@@ -425,7 +425,7 @@ var activeMac;
                                   var devElement = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item" onclick="deviceInfo(\'' + devItems[i].mac + '\')"><i class="fa fa-mobile fa-fw"></i> '
                                 + printDevName
                                 + '</a>';
-                                 console.log(devItems[i].mac);
+                                 
                         $('#devs').append(devElement);
                             }
                     	});
