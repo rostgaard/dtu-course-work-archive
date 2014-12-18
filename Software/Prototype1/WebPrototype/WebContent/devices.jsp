@@ -419,24 +419,22 @@ var activeMac;
                 			url: webServerPath + "/devices/getDevice?mac="+printDevName,
                 			data: data,
                 			success: function (data) {
-                				var printMac = printDevName;
-                				var dev = data;
+                			 var dev = data;
                     			if(dev != null){
                     				printDevName = dev.name;
-                    				}    
-                    			var devElement = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item" onclick="deviceInfo('+ printMac +')"><i class="fa fa-mobile fa-fw"></i> '
-                                + printDevName
-                                + '</a>';
-                        		$('#devs').append(devElement);               			
+                    			}
                     		}
                     	});
 
+                        var devElement = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item" onclick="deviceInfo(\'' + devItems[i].mac + '\')"><i class="fa fa-mobile fa-fw"></i> '
+                                + printDevName
+                                + '</a>';
+                        $('#devs').append(devElement);
                     };
                 }
 
-            	});
-            
-       }
+            });
+        }
         reloadDevs();
 </script>
 <!-- Bootstrap Core JavaScript -->
