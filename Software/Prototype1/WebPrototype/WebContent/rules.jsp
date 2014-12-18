@@ -94,7 +94,7 @@ response.sendRedirect("login.jsp");
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="panel panel-default">
+                        <div class="panel panel-default" data-step="1" data-intro="View all policies in the system.">
                             <div class="panel-heading">
                                 <i class="fa fa-filter fa-fw"></i> Polices
                             </div>
@@ -112,31 +112,32 @@ response.sendRedirect("login.jsp");
                                         <i class="fa fa-filter fa-fw"></i>New Rule
                                     </div>
                                     <div class="panel-body">
-                                        
-                                        <div class = "form-group">
-                                        	<div class = "col-sm-6">
-                                        		<input type ="text" class="form-control" id="policyNr"
-                                        				placeholder ="Policy number">
-                                        	</div>
-                                        </div>
-                                        <div class = "form-group">
-                                        	<div class = "col-sm-12">
-                                        		<input type ="text" class="form-control" id="ruleString"
-                                        				placeholder ="Rule string">
-                                        	</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-sm-4">
-                                                <button type="button" id="submit"
-                                                        class="btn btn-lg btn-success btn-block"
-                                                        onclick="addRule()">Add new rule
-                                                </button>
-                                            </div>
+	                                    <div data-step="3" data-intro="Define your own rule and associate it with a policy.">    
+	                                        <div class = "form-group">
+	                                        	<div class = "col-sm-6">
+	                                        		<input type ="text" class="form-control" id="policyNr"
+	                                        				placeholder ="Policy number">
+	                                        	</div>
+	                                        </div>
+	                                        <div class = "form-group">
+	                                        	<div class = "col-sm-12">
+	                                        		<input type ="text" class="form-control" id="ruleString"
+	                                        				placeholder ="Rule string">
+	                                        	</div>
+	                                        </div>
+	                                        <div class="form-group">
+	                                            <div class="col-sm-4">
+	                                                <button type="button" id="submit"
+	                                                        class="btn btn-lg btn-success btn-block"
+	                                                        onclick="addRule()">Add new rule
+	                                                </button>
+	                                            </div>
+	                                        </div>
                                         </div>
                                         <p id=ruleError></p>
                                         <br>
                                         	Example syntax:
-                                        <div>
+                                        <div data-step="2" data-intro="This is an example of a rule. Use this syntax when defining your own rules.">
                                   	  	 <div class="ConsolasItalic">
                                   	  	 <br>
 	                        				test2:

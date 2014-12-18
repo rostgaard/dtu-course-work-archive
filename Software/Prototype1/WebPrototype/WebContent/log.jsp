@@ -102,7 +102,7 @@ response.sendRedirect("login.jsp");
                 <div class="row">
                     
                     <!--DATA TABLE  --> 
-                    <div class="table-responsive">      
+                    <div class="table-responsive" data-step="1" data-intro="This table provides a history of all events fired in the past.">      
 	                    <table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 						    <thead>
 						        <tr>

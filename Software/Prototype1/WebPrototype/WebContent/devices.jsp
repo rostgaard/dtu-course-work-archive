@@ -100,7 +100,7 @@ response.sendRedirect("login.jsp");
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default" data-step="1" data-intro="View all devices associated with your system.">
                         <div class="panel-heading">
                             <i class="fa fa-mobile fa-fw"></i> Active Devices
                         </div>
@@ -117,7 +117,7 @@ response.sendRedirect("login.jsp");
                 <div class="col-lg-6">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
-                            <div class="panel panel-default">
+                            <div class="panel panel-default" data-step="2" data-intro="Configure a device by using it's MAC address. Marking a sensor/actuator and pressing submit will make it available on the specific device">
                                 <div class="panel-heading">
                                     <i class="fa fa-mobile fa-fw"></i>Configure Device
                                 </div>
