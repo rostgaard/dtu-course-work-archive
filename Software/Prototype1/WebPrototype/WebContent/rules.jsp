@@ -241,11 +241,13 @@ response.sendRedirect("login.jsp");
 <script>
     var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
 	
+    function reloadRules(){
     var URL = webServerPath + "/rules/getAllPolicies";
     $.ajax({
         type: "GET",
         url: URL,
         success: function (data) {
+        	$('#ruleList').empty();
             var policies = data;
             for (var i in policies) {
                 var policy = '<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(\'' + policies[i].id + '\')"><i class="fa fa-user fa-fw"></i> ' + policies[i].name + '</a>';                
@@ -254,6 +256,8 @@ response.sendRedirect("login.jsp");
             }
         }
     });
+    }
+    reloadRules();
 </script>
 <script>
 
@@ -263,15 +267,16 @@ response.sendRedirect("login.jsp");
 	var id = document.getElementById('policyNr').value;
 	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
 	var data;	
-	var ruleURL = webServerPath + "/rules/addRuleString?ruleString="+newRulestring + "&policyId="+ id;
+	
+	var ruleURL = webServerPath + "/rules/addRuleString?policyId="+ id;
 			$.ajax({
-				type: "GET",
+				type: "POST",
 				url: ruleURL,
-				data: data,
+				data: newRulestring,
 				success: function(data){
 				}
 			});
-	document.location.reload();
+	reloadRules();
 }
 	
 </script>

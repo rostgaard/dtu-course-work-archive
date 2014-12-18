@@ -240,6 +240,7 @@ response.sendRedirect("login.jsp");
                         password = document.getElementById('password').value;
 
                         var URL = webServerPath + "/users/addUser?userName=" + username + "&email=" + email + "&firsName=" + firstname + "&lastName=" + lastname + "&role=" + role + "&password=" + password;
+                        var data;
                         $.ajax({
                             type: "GET",
                             url: URL,
@@ -289,24 +290,20 @@ response.sendRedirect("login.jsp");
                 <script>
 
                     function getUser(user) {
-                        //$('#uName').html("Username: "+user);
+                        $('#uName').html("Username: "+user);
 
-                        var userData = [];
                         var URL = webServerPath + "/users/getUserByUserName?userName=" + user;
                         $.ajax({
                             type: "GET",
                             url: URL,
-                            success: function (user) {
+                            data: data,
+                            success: function (data) {
 
-                                //var usertemp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
-                                //var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
-                                //var user = $.parseJSON(userData);
-
-                                $('#eMail').text("Email: " + user.email);
-                                $('#fName').text("Firstname: " + user.userName);
-                                $('#lName').text("Lastname: " + user.lastName);
-                                $('#role').text("Role: " + user.role);
-                                $('#pass').text("Password: " + user.password);
+                                $('#eMail').html("Email: " + user.email);
+                                $('#fName').html("Firstname: " + user.userName);
+                                $('#lName').html("Lastname: " + user.lastName);
+                                $('#role').html("Role: " + user.role);
+                                $('#pass').html("Password: " + user.password);
 
                             }
                         });
@@ -323,17 +320,17 @@ response.sendRedirect("login.jsp");
 <script>
 
     function reloadUsers() {
-        var userData;
+        var data;
         var URL = webServerPath + "/users/getUsers";
         $.ajax({
             type: "GET",
             url: URL,
-            data: userData,
-            success: function (userData) {
+            data: data,
+            success: function (data) {
 
                 //var usertemp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
                 //var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
-                var userItems = userData;
+                var userItems = data;
 
                 $('#user').empty();
                 for (var i in userItems) {

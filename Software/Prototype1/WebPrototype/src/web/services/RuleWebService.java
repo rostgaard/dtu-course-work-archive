@@ -14,6 +14,7 @@ import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -92,11 +93,11 @@ public class RuleWebService {
 		return Conversion.convertPolicyEntity(policyEntity);	
 	}
 	
-	@GET
+	@POST
 	@Path("/addRuleString")
-	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Consumes({MediaType.TEXT_PLAIN})
 	@Produces(MediaType.APPLICATION_JSON)
-	public RuleString addRuleString(@QueryParam("ruleString") String ruleString, @QueryParam("policyId") int policyId) {
+	public RuleString addRuleString(@QueryParam("policyId") int policyId, String ruleString) {
 		RuleStringEntity ruleStringEntity = eao.addRuleStringEntity(ruleString, policyId);
 		if (ruleStringEntity == null) {
 			return null;
