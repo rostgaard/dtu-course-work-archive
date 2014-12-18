@@ -140,17 +140,12 @@ response.sendRedirect("login.jsp");
                                         <div data-step="2" data-intro="This is an example of a rule. Use this syntax when defining your own rules.">
                                   	  	 <div class="ConsolasItalic">
                                   	  	 <br>
-	                        				test2:
-												<p class="indent_1">  when ACCELEROMETER
-												  <br>if system.securitylevel >= 2</p>
-												 <p class="indent_2">    ||
-												     event.source == 1 
-												     &&
-												     event.value >= 50  
-												     </p>
-												<p class="indent_1">  then actorSound1.play(1,30),</p> 
-												    <p class="indent_2">   UserAlert.raise(event.event);</p> 
-                     				   	</div>                  				   
+	                        				test1: 
+												<p class="indent_1">when accelerometer</p> 
+												  <p class="indent_2">if event.source == 37 && system.securitylevel == 1</p>
+												<p class="indent_2">then</p> 
+												    <p class="indent_3">actorSound1.play(1,30), flashlight.play(42, 30), UserAlert.raise(44);</p>
+											</div>                  				   
                      				   </div>
                                     </div>                                   
                                 </div>
