@@ -624,32 +624,32 @@ response.sendRedirect("login.jsp");
         /** @author s124255
          dashboard tab
          */
-         
-         var eventListSize = 5;
-        function reloadEvents() {
-            var data;
-            var URL = webServerPath + "/events/getAllEvents";
-            $.ajax({
-                type: "GET",
-                url: URL,
-                data: data,
-                success: function (data) {
-                    var items = data;
-                    $('#box').empty();
-                    for (var i in items.reverse()) {
-                        var type = items[i].eventType;
-                        var time = jQuery.timeago(new Date(items[i].time));
-                        var element = '<a href="#" data-toggle="modal" data-target="#eventInfoModal" class="list-group-item" onclick="eventInfo('+items[i].appID + ',' + items[i].time+')"><i class="fa fa-shield fa-fw"></i> ' + type.replace("PLAYSOUND", "Sound played").replace("FLASHLIGHT", "Flash light activated").replace("USERALERT", "User Alerted").replace("ACCELEROMETER", "Movement detected") + '<span class="pull-right text-muted small"><em>' + time + '</em></span></a>';
-                        $('#box').append(element);
-                        if(i >= eventListSize){
-                        	break;
-                        }
-                    }
-                }
-            });
-        }
-        reloadEvents();
-        
+      $( document ).ready(function() {        
+	     var eventListSize = 5;
+	        function reloadEvents() {
+	            var data;
+	            var URL = webServerPath + "/events/getAllEvents";
+	            $.ajax({
+	                type: "GET",
+	                url: URL,
+	                data: data,
+	                success: function (data) {
+	                    var items = data;
+	                    $('#box').empty();
+	                    for (var i in items.reverse()) {
+	                        var type = items[i].eventType;
+	                        var time = jQuery.timeago(new Date(items[i].time));
+	                        var element = '<a href="#" data-toggle="modal" data-target="#eventInfoModal" class="list-group-item" onclick="eventInfo('+items[i].appID + ',' + items[i].time+')"><i class="fa fa-shield fa-fw"></i> ' + type.replace("PLAYSOUND", "Sound played").replace("FLASHLIGHT", "Flash light activated").replace("USERALERT", "User Alerted").replace("ACCELEROMETER", "Movement detected") + '<span class="pull-right text-muted small"><em>' + time + '</em></span></a>';
+	                        $('#box').append(element);
+	                        if(i >= eventListSize){
+	                        	break;
+	                        }
+	                    }
+	                }
+	            });
+	        }
+	        reloadEvents();
+      });
          $('#more').click(function () {
            eventListSize=eventListSize+4;
           })
