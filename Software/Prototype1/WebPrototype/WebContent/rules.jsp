@@ -250,7 +250,7 @@ response.sendRedirect("login.jsp");
         	$('#ruleList').empty();
             var policies = data;
             for (var i in policies) {
-                var policy = '<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(\'' + policies[i].id + '\')"><i class="fa fa-user fa-fw"></i> ' + policies[i].name + '</a>';                
+                var policy = '<a href="#" data-toggle="modal" data-target="#ruleInfoModal" class="list-group-item" onclick="getRule(\'' + policies[i].id + '\')"><i class="fa fa-user fa-fw"></i> ' + "Policy " + policies[i].id + '</a>';                
                 $('#ruleList').append(policy);
 
             }
