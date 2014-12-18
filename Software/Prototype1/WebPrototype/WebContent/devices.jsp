@@ -138,12 +138,13 @@ response.sendRedirect("login.jsp");
                                     <div class="form-group" style="margin-auto: 0;">
                                         <div class="col-sm-16" style="margin-left: 16px;">
                                         	<p> Check the sensors and actuators which should be available on the device </p>
-                                            <div class="checkbox"><label><input
-                                                    type="checkbox" id="light" checked>Flashlight</label></div>
+                                            
+                                            <p class="text" id="camStatus"></p>
                                             <div class="checkbox">
-                                            	<p class="text" id="camStatus"></p>
                                             					<label><input
                                                     type="checkbox" id="camera" checked>Camera</label></div>
+                                            <div class="checkbox"><label><input
+                                                    type="checkbox" id="light" checked>Flashlight</label></div>             
                                             <div class="checkbox"><label><input
                                                     type="checkbox" id="sound" checked>Sound</label></div>
                                             <div class="checkbox"><label><input
@@ -199,6 +200,7 @@ var activeMac;
                     function deviceInfo(mac) {
 						activeMac = mac;
 						document.getElementById("camera").disabled = false;
+						$('#camera').html("");
                         $('#camAct').html("This device does not have a active camera.");
                         $('#soundAct').html("This device does not have a active microphone.");
                         $('#lightAct').html("This device does not have a active flashlight.");
