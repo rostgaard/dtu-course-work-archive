@@ -391,6 +391,7 @@ var activeMac;
     }
 
     /** @author s124255
+    	@author s113420
          device tab
          */
         function reloadDevs() {
@@ -400,29 +401,38 @@ var activeMac;
             $.ajax({
                 type: "GET",
                 url: URL,
-                data: data,
                 success: function (data) {
                     var devItems = data;
 
                     $('#devs').empty();
                     for (var i in devItems) {
                         var printDevName = devItems[i].mac;
+
 						$.ajax({
                 			type: "GET",
                 			url: webServerPath + "/devices/getDevice?mac="+printDevName,
-                			data: data,
+                            async:   false,
                 			success: function (data) {
-                			 var dev = data;
-                    			if(dev != null){
+                			    var dev = data;
                     				printDevName = dev.name;
-                    			}
-                    		}
-                    	});
-
-                        var devElement = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item" onclick="deviceInfo(\'' + devItems[i].mac + '\')"><i class="fa fa-mobile fa-fw"></i> '
+                                  var devElement = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item" onclick="deviceInfo(\'' + devItems[i].mac + '\')"><i class="fa fa-mobile fa-fw"></i> '
                                 + printDevName
                                 + '</a>';
+                                 console.log("Found a name"+devItems[i].mac);
+
+                            $('#devs').append(devElement);
+                    		},
+                            error: function (data){
+                                 var dev = data;
+                                  var devElement = '<a href="#" data-toggle="modal" data-target="#deviceInfoModal" class="list-group-item" onclick="deviceInfo(\'' + devItems[i].mac + '\')"><i class="fa fa-mobile fa-fw"></i> '
+                                + printDevName
+                                + '</a>';
+                                 console.log(devItems[i].mac);
                         $('#devs').append(devElement);
+                            }
+                    	});
+
+
                     };
                 }
 
