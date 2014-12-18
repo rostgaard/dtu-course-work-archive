@@ -310,8 +310,8 @@ var activeMac;
      */
     function confDev() {
     var data;
-    var md = document.getElementById('deviceMac').value;
-    var nd = document.getElementById('deviceName').value;
+    var md = document.getElementById('deviceMac').value.trim();
+    var nd = document.getElementById('deviceName').value.trim();
     
     if(md != ""){
     
@@ -324,10 +324,7 @@ var activeMac;
           if(data == null){
           	$.ajax({
           		type: "PUT",
-          		url: webServerPath + "/devices/updateDeviceName?mac=" + md+"&name="+nd,
-          		data: data,
-          		succes: function (data) {  			
-          		}
+          		url: webServerPath + "/devices/updateDeviceName?mac=" + md+"&name="+nd,        		
         	});
           }
           }

@@ -207,17 +207,17 @@ response.sendRedirect("login.jsp");
             </div>
             <div class="modal-body" align=center>
 
-                <p class="text" id="uname"></p>
+                <p class="text" id="addUname"></p>
 
-                <p class="text" id="mail"></p>
+                <p class="text" id="addMail"></p>
 
-                <p class="text" id="fname"></p>
+                <p class="text" id="addFname"></p>
 
-                <p class="text" id="lname"></p>
+                <p class="text" id="addLname"></p>
 
-                <p class="text" id="role"></p>
+                <p class="text" id="addRole"></p>
 
-                <p class="text" id="pass"></p>
+                <p class="text" id="addPass"></p>
 
                 <p class="text" id="sucess"></p>
 
@@ -226,10 +226,10 @@ response.sendRedirect("login.jsp");
                     function addUser() {
                         var username, firstname, lastname, email, role, password;
 
-                        username = document.getElementById('username').value;
-                        email = document.getElementById('email').value;
-                        firstname = document.getElementById('firstname').value;
-                        lastname = document.getElementById('lastname').value;
+                        username = document.getElementById('username').value.trim();
+                        email = document.getElementById('email').value.trim();
+                        firstname = document.getElementById('firstname').value.trim();
+                        lastname = document.getElementById('lastname').value.trim();
                         role = document.getElementById('role').value;
                         if (role == 1) {
                             role = "VIEWER"
@@ -237,7 +237,7 @@ response.sendRedirect("login.jsp");
                         else {
                             role = "MANAGER"
                         }
-                        password = document.getElementById('password').value;
+                        password = document.getElementById('password').value.trim();
 
                         var URL = webServerPath + "/users/addUser?userName=" + username + "&email=" + email + "&firsName=" + firstname + "&lastName=" + lastname + "&role=" + role + "&password=" + password;
                         var data;
@@ -247,12 +247,12 @@ response.sendRedirect("login.jsp");
                             data: data,
                             error: function (data) {
 
-                                $('#uname').html("Username: " + username);
-                                $('#mail').html("Email: " + email);
-                                $('#fname').html("Firstname: " + firstname);
-                                $('#lname').html("Lastname: " + lastname);
-                                $('#role').html("Role: " + role);
-                                $('#pass').html("Password: " + password);
+                                $('#addUname').html("Username: " + username);
+                                $('#addMail').html("Email: " + email);
+                                $('#addFname').html("Firstname: " + firstname);
+                                $('#addLname').html("Lastname: " + lastname);
+                                $('#addRole').html("Role: " + role);
+                                $('#addPass').html("Password: " + password);
                                 $('#sucess').html("User added to the system");
                                 reloadUsers();
                             }
@@ -275,22 +275,22 @@ response.sendRedirect("login.jsp");
             </div>
             <div class="modal-body" align=center>
 
-                <p class="text" id="uName"></p>
+                <p class="text" id="showuName"></p>
 
-                <p class="text" id="eMail"></p>
+                <p class="text" id="showeMail"></p>
 
-                <p class="text" id="fName"></p>
+                <p class="text" id="showfName"></p>
 
-                <p class="text" id="lName"></p>
+                <p class="text" id="showlName"></p>
 
-                <p class="text" id="role"></p>
+                <p class="text" id="showrole"></p>
 
-                <p class="text" id="pass"></p>
+                <p class="text" id="showpass"></p>
 
                 <script>
 
                     function getUser(user) {
-                        $('#uName').html("Username: "+user);
+                        $('#showuName').html("Username: "+user);
 						var data;
                         var URL = webServerPath + "/users/getUserByUserName?userName=" + user;
                         $.ajax({
@@ -299,11 +299,11 @@ response.sendRedirect("login.jsp");
                             data: data,
                             success: function (data) {
 
-                                $('#eMail').html("Email: " + user.email);
-                                $('#fName').html("Firstname: " + user.userName);
-                                $('#lName').html("Lastname: " + user.lastName);
-                                $('#role').html("Role: " + user.role);
-                                $('#pass').html("Password: " + user.password);
+                                $('#showeMail').html("Email: " + data.email);
+                                $('#showfName').html("Firstname: " + data.userName);
+                                $('#showlName').html("Lastname: " + data.lastName);
+                                $('#showrole').html("Role: " + data.role);
+                                $('#showpass').html("Password: " + data.password);
 
                             }
                         });
@@ -327,9 +327,6 @@ response.sendRedirect("login.jsp");
             url: URL,
             data: data,
             success: function (data) {
-
-                //var usertemp = '[{"userName":"Perminator","email":"pr@mail.com","firstName":"Per","lastName":"Kristansen","role":"VIEWER","password":"pertheman"},{"userName":"TomCat","email":"tom@mail.com","firstName":"Tom","lastName":"Catgat","role":"VIEWER","password":"awesomeo"},{"userName":"Charleton","email":"chr@mail.com","firstName":"Charles","lastName":"Tonnisen","role":"VIEWER","password":"tonnibonde"}]';//OUT FOR PRODUCTION
-                //var userItems = $.parseJSON(usertemp);//OUT FOR PRODUCTION
                 var userItems = data;
 
                 $('#user').empty();
