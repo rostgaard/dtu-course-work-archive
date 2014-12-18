@@ -213,7 +213,7 @@ var activeMac;
                             url: webServerPath + "/devices/getDevice?mac=" + mac,
                             data: data,
                             success: function (data) {
-                                var dev = data
+                                var dev = data;
                                 if(dev != null){
                                 $('#nameDevice').html(dev.name);
                                 }
