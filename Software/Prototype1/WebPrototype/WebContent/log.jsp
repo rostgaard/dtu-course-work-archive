@@ -62,22 +62,20 @@
 </head>
 
 <body>
-<%
+	<%
+		/**
+		 *		@author s124259
+		 *		Jesper Mark
+		 */
+		//allow access only if session attribute "user" is set beforehand
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			user = new User(); // dirty trick to avoid nullpointer exception when DOM is created (code is put here because exception is only thrown if user is not authed)
+			response.sendRedirect("login.jsp");
+		}
+	%>
 
-/*
- *		@author s124259
- *		Jesper Mark
- */
-//allow access only if session attribute "user" is set beforehand
-User user = (User) session.getAttribute("user");
-if (user == null) {
-user = new User(); // dirty trick to avoid nullpointer exception when DOM is created (code is put here because exception is only thrown if user is not authed)
-response.sendRedirect("login.jsp");
-}
-
-%>
-
-<ul class="nav nav-tabs" role="tablist" data-step="1" data-intro="Browse the different pages using the top tab">
+	<ul class="nav nav-tabs" role="tablist" data-step="1" data-intro="Browse the different pages using the top tab">
     <li><a href="/SmartHomeSecurity/Forward?ref=dashboard">Dashboard</a></li>
     <li><a href="/SmartHomeSecurity/Forward?ref=devices">Devices</a></li>
     <li><a href="/SmartHomeSecurity/Forward?ref=rules">Rules</a></li>
@@ -134,9 +132,9 @@ response.sendRedirect("login.jsp");
 -->
 <div class="panel-footer">
     <div style="width: 2%; margin: 0 auto;">
-        v0.1.2
+        v1.0.0
     </div>
-    <div style="width: 19%; margin: 0 auto;">
+    <div style="width: 22%; margin: 0 auto;">
         <a href="https://docs.google.com/document/d/1fRxEcnT6e1gi_WQDbheRzWXXZbP5OenC2mTVpi9qMDk/pub" target="_blank">Quick
             Start Guide</a>
         |
@@ -145,7 +143,7 @@ response.sendRedirect("login.jsp");
         <a href="https://docs.google.com/spreadsheets/d/1xKfce3ZwyUpaoCnxguzYpSRH6URlFPQwEO1oNtJMgug/pubhtml?gid=0&single=true"
            target="_blank">Known Bugs</a>
     </div>
-    <div style="width: 13%; margin: 0 auto;">
+    <div style="width: 15%; margin: 0 auto;">
         <a href="https://docs.google.com/spreadsheets/d/1xKfce3ZwyUpaoCnxguzYpSRH6URlFPQwEO1oNtJMgug/pubhtml?gid=0&single=true"
            target="_blank">Device App</a>
         |
