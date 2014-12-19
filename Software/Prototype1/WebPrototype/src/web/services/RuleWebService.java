@@ -57,6 +57,7 @@ public class RuleWebService {
 	SensorDataEAO  seao;
 	
 	/**
+	 *  @author Kim s084283
 	 * Init rules 
 	 */
 	@PostConstruct
@@ -77,6 +78,9 @@ public class RuleWebService {
 		ruleEngine = new RuleEngine(RuleEngine.parseRules(dbRules));
 	}
 	
+	/**
+	 * @author Kim s084283
+	 */
 	private void reloadRules() {
 		ruleEngine = new RuleEngine(RuleEngine.parseRules(this.getRulesFromDB()));
 
