@@ -41,7 +41,13 @@ public class EventWebService {
 	
 	@EJB SensorDataEAO eao;
 	
-	
+	/**
+	 * Notify all waiting events, using the monitor concept.
+	 * @param value
+	 * @param sensorId
+	 * @param eventType
+	 * @return
+	 */
 	@GET
 	@Path("/addEventByID")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
@@ -62,7 +68,13 @@ public class EventWebService {
 		
 		return event;
 	}
-	
+	/**
+	 * Notify all waiting events, using the monitor concept.
+	 * @param mac
+	 * @param value
+	 * @param eventType
+	 * @return
+	 */
 	@GET
 	@Path("/addEventByMac")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
@@ -85,6 +97,10 @@ public class EventWebService {
 		return event;
 	}
 	
+	/**
+	 * New events are added.
+	 * @param event, uses to match the rules.
+	 */
 	private void actuateAction(Event event) {
 		Set<Rule> ruleMatches = RuleWebService.ruleEngine.checkEvent(event);
 		
@@ -172,21 +188,6 @@ public class EventWebService {
 	}
 	
 	
-	/**
-	 * @author s124259, Jesper Mark
-	 *
-	 */
-	@GET
-	@Path("/getTotalEventCountInTimeSpan")
-	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-	@Produces(MediaType.APPLICATION_JSON)
-	public String getEventListInTimespan(@QueryParam("time") int time) {
-		List<EventEntity> eventEntities = new ArrayList<EventEntity>();
-		eventEntities = eao.getEventlistInTimespan(time);
-		return Integer.toString(eventEntities.size());		
-	}
-	
-	
 	@GET
 	@Path("/awaitEventByID")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
@@ -219,6 +220,13 @@ public class EventWebService {
 		return event;
 	}
 	
+	/**
+	 * Uses the monitor concept, incoming events wait until the are notified.
+	 * Waits until timeout.
+	 * @param id
+	 * @param eventType
+	 * @return
+	 */
 	private EventEntity awaitEventEntity(int id, EventType eventType) {
 		
 		List<EventEntity> eventEntities = Collections.synchronizedList(eao.getEventlist(id, eventType));
@@ -260,5 +268,19 @@ public class EventWebService {
 		
 		return null;
 		
+	}
+	
+	/**
+	 * @author s124259, Jesper Mark
+	 *
+	 */
+	@GET
+	@Path("/getTotalEventCountInTimeSpan")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getEventListInTimespan(@QueryParam("time") int time) {
+		List<EventEntity> eventEntities = new ArrayList<EventEntity>();
+		eventEntities = eao.getEventlistInTimespan(time);
+		return Integer.toString(eventEntities.size());		
 	}
 }

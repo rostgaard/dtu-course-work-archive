@@ -57,6 +57,9 @@ public class RuleWebService {
 	@EJB
 	SensorDataEAO  seao;
 	
+	/**
+	 * Init rules 
+	 */
 	@PostConstruct
 	private void startup() {
 		List<RuleString> dbRules = this.getRulesFromDB();
@@ -111,6 +114,11 @@ public class RuleWebService {
 		return Conversion.convertRuleStringEntity(ruleStringEntity);	
 	}
 	
+	/**
+	 * Validation before add rule is added
+	 * @param ruleString
+	 * @return
+	 */
 	private boolean validateRuleString(String ruleString) {
 		try {
 			InputStream stream = new ByteArrayInputStream(ruleString.getBytes());
