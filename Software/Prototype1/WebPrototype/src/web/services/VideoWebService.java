@@ -22,8 +22,13 @@ import javax.ws.rs.core.MediaType;
 import web.services.util.VOD;
 
 /**
+<<<<<<< .mine
+ * Video web service with endpoints for video upload and playback
+ * @author stefan, s113420
+=======
  * 
  * @author s113420 (Stefan)
+>>>>>>> .r398
  *
  */
 
@@ -32,6 +37,15 @@ import web.services.util.VOD;
 @Path("/video")
 public class VideoWebService {
 
+	/**
+	 * Endpoint to store a video on the server
+	 * @param id The device ID for which to store the video, camera app will just send its own ID, theoretically anything can be put here, the server will
+	 * just create a corresponding folder. 
+	 * @param data A byte array, which contains a video in "video/mp4" datatype. The server expects H.264 Encoding,
+	 * H.263 will not work in the web player
+	 * @return "Got it" + the time and length of the received videos for debugging purposes
+	 * @throws IOException
+	 */
 	@POST
 	@Path("/addVideo")
 	@Consumes("video/mp4")
@@ -54,10 +68,18 @@ public class VideoWebService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "";
+		return "OK";//Inform the client that the video has been stored
 	
 	}
 	
+	/**
+	 * This function returns a specific video chunk for a specific device ID, is used 
+	 * to show videos from the server. Will work in browsers.
+	 * @param id The sensor ID of the device
+	 * @param count Which video should be returned
+	 * @return A video as a byte array in video/mp4 format
+	 * @throws IOException
+	 */
 	@GET
 	@Path("/getVideo")
 	@Produces({"video/mp4"})
@@ -65,7 +87,14 @@ public class VideoWebService {
 		File file = new File("datastore/"+id+"/"+count+".mp4");
 		return  Files.readAllBytes(file.toPath());
 	}
-	
+	/**
+	 * Returns an integer which corresponds to the latest video for a specific id.
+	 * This can be used in conjunction with /getVideo to always play the latest video,
+	 * as seen in the web interfaces live player
+	 * @param id The device ID for which to return the latest id
+	 * @return an integer corresponding to the latest video ID
+	 * @throws IOException
+	 */
 	@GET
 	@Path("/getLatest")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -73,7 +102,14 @@ public class VideoWebService {
 		return (new File("datastore/"+id+"/").list().length-1)+"";
 	}
 	
-
+/**
+ * Gets all available VODs (Video on Demand) for a specific device ID. 
+ * Videos with less than 8 seconds difference in their last modified times are
+ * aggregated into one long video.
+ * @param id The ideo for which to return the VOD
+ * @return a VOD Array encoded as JSON, specifying at which ID and at what time the video starts and how long it is
+ * @throws IOException
+ */
 	@GET
 	@Path("/getVODS")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -128,7 +164,13 @@ public class VideoWebService {
 		
 		return (VOD[])(vods.toArray(new VOD[0]));
 	}
-	
+	/**
+	 * Simple helper web service to delete every video for a camera.
+	 * The function simply deletes all files in the folder for a specific ID
+	 * @param id The ID for which to delete all videos
+	 * @return "OK" if all files have been deleted
+	 * @throws IOException
+	 */
 	@GET
 	@Path("/deleteEVERYTHING")
 	@Produces(MediaType.TEXT_PLAIN)
