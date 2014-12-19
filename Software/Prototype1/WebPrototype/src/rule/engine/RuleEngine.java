@@ -13,6 +13,10 @@ import java.util.logging.Logger;
 import dto.model.Event;
 import dto.model.RuleString;
 
+/**
+ * @author Kim Rostgaard Christensen - s084283
+ */
+
 public class RuleEngine {
 
 	// FIXME: The current global security level of the RuleEngine.
