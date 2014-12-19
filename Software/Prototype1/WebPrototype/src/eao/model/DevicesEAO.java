@@ -51,6 +51,9 @@ public class DevicesEAO {
 	 */
 	public DeviceEntity getDevice(String mac){
 		DeviceEntity device = em.find(DeviceEntity.class, mac);
+		if(device == null){
+			return null;
+		}
 		return device;
 
 	}
