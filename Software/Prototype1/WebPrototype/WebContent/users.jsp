@@ -198,10 +198,10 @@ response.sendRedirect("login.jsp");
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
-                <p id="addstatus">New User Added</p>
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                 </button>
+                <h4 class="modal-title" id="adduserModalLabel">New User Added</h4>
             </div>
             <div class="modal-body" align=center>
 
@@ -222,6 +222,14 @@ response.sendRedirect("login.jsp");
                 <script>
 
                     function addUser() {
+                    
+                    	$('#addUname').html("");
+                        $('#addMail').html("");
+                        $('#addFname').html("");
+                        $('#addLname').html("");
+                        $('#addRole').html("");
+                        $('#addPass').html("");
+                        $('#sucess').html("");
                         var username, firstname, lastname, email, role, password;
 
                         username = document.getElementById('username').value.trim();
@@ -276,6 +284,7 @@ response.sendRedirect("login.jsp");
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                 </button>
+               <h4 class="modal-title" id="userInfoModalLabel">User Information</h4>
             </div>
             <div class="modal-body" align=center>
 
