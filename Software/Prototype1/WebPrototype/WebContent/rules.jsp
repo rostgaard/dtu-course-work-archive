@@ -132,9 +132,10 @@ response.sendRedirect("login.jsp");
 	                                                        onclick="addRule()">Add new rule
 	                                                </button>
 	                                            </div>
+	                                            <p id=ruleError></p>
 	                                        </div>
                                         </div>
-                                        <p id=ruleError></p>
+                                        
                                         <br>
                                         	Example syntax:
                                         <div data-step="2" data-intro="This is an example of a rule. Use this syntax when defining your own rules.">
@@ -271,10 +272,14 @@ response.sendRedirect("login.jsp");
 				url: ruleURL,
 				data: newRulestring,
 				success: function(data){
-					$('#status').html("Rule successfully added");
+					var tex = "Rule successfully added";
+					var suc = tex.fontcolor("green");
+					$('#status').html(suc);
 				},
 				error: function(data){
-					$('#status').html("Input syntax");
+					var tex = "Input Error";
+					var fail = tex.fontcolor("red");
+					$('#status').html(fail);		
 				}
 			});
 	reloadRules();

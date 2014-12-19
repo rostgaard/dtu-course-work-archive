@@ -377,13 +377,18 @@ var activeMac;
             url: webServerPath + "/apps/updateApp?mac=" + devMac + "&eventType=ACCELEROMETER&status=" + movementSensStatus + "",
         });
         
-        	$('#condev').html("Device Configured");
+        	var tex = "Device Configured";
+			var suc = tex.fontcolor("green");
+        	$('#condev').html(suc);
         	reloadDevs();
         
         }
         
         else{
-        	$('#condev').html("Error in input");
+        	var tex = "Input Error";
+			var fail = tex.fontcolor("red");
+			$('#condev').html(fail);
+        	
         }
 
     }
