@@ -11,6 +11,11 @@ import android.widget.Toast;
 
 import com.example.datatypes.EventType;
 
+/**
+ * 
+ * @author s103459 (Peter), s103470 (Nicolai P)
+ *
+ */
 
 public class ManageDeviceDialog extends DialogFragment {
 	private String[] choices;
@@ -71,7 +76,6 @@ public class ManageDeviceDialog extends DialogFragment {
 									break;
 								}
 							} catch (Exception e) {
-								// TODO: handle exception
 							}							
 						}
 					}).start();

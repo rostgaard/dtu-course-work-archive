@@ -2,6 +2,12 @@ package com.example.datatypes;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+/**
+ * 
+ * @author s103459 (Peter), s103470 (Nicolai P)
+ *
+ */
+
 public class Event {
 	
 	@JsonProperty("id")

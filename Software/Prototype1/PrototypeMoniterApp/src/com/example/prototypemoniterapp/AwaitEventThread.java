@@ -15,6 +15,12 @@ import android.widget.ListView;
 import com.example.datatypes.Event;
 import com.example.datatypes.EventType;
 
+/**
+ * 
+ * @author s103459 (Peter), s103470 (Nicolai P)
+ *
+ */
+
 public class AwaitEventThread extends Thread {
 	
 	private String macAddress;
@@ -54,10 +60,9 @@ public class AwaitEventThread extends Thread {
 				activity.runOnUiThread(new Runnable() {					
 					@Override
 					public void run() {
-						// TODO Auto-generated method stub
 						alertListAdapter.add(txt);
 						alertListAdapter.notifyDataSetChanged();
-						alertList.setBackgroundColor(Color.rgb(245, 20, 25));
+						alertList.setBackgroundColor(Color.rgb(245, 20, 25)); //red
 					}
 				});
 				

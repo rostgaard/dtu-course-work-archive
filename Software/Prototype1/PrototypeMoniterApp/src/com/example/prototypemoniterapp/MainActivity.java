@@ -30,6 +30,12 @@ import com.example.datatypes.App;
 import com.example.datatypes.Device;
 import com.example.datatypes.EventType;
 
+/**
+ * 
+ * @author s103459 (Peter), s103470 (Nicolai P)
+ *
+ */
+
 public class MainActivity extends Activity {
 
 	@Override
@@ -166,7 +172,6 @@ public class MainActivity extends Activity {
 							Device device = WebServiceConnection.invokeGetDeviceByMac(mac);							
 							name = device.getName();
 						} catch (Exception e) {
-							Log.d("Debug","getDeviceByMac exception");
 							name = "";
 						}
 						if (name == null || name.equals("")) {
@@ -199,31 +204,35 @@ public class MainActivity extends Activity {
 							alertListAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1);
 							alertList.setAdapter(alertListAdapter);
 							
+							availableApps = new HashMap<>();
 							for (String mac : finalMacs) {
 								AwaitEventThread awaitEventThread = new AwaitEventThread(mac, getActivity(), alertList,
 																		alertListAdapter, macToDeviceName);
 								awaitEventThread.start();
 								awaitEventThreadList.add(awaitEventThread);
+								
+								availableApps.put(mac, new HashSet<EventType>());
 							}
-							availableApps = new HashMap<>();
 							for (App app : finalApps) {
 								String mac = app.getMac();
 								EventType type = app.getEventType();
 								if (app.isStatus() && (type == EventType.FLASHLIGHT || type == EventType.PLAYSOUND
 														|| type == EventType.STARTVIDEORECORDING)) {
-									if (availableApps.containsKey(mac)) {
-										availableApps.get(mac).add(type);
-									} else {
-										HashSet<EventType> newSet = new HashSet<EventType>();
-										newSet.add(type);
-										availableApps.put(mac, newSet);
-									}									
+									availableApps.get(mac).add(type);
 								}
 							}
 						}
 					});
 				}
 			}).start();
+		}
+
+		@Override
+		public void onDestroy() {
+			for (AwaitEventThread thread : awaitEventThreadList) {
+				thread.terminate();
+			}
+			super.onDestroy();
 		}
 	}
 }

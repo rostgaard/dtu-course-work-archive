@@ -13,9 +13,15 @@ import com.example.datatypes.Device;
 import com.example.datatypes.Event;
 import com.example.datatypes.EventType;
 
+/**
+ * 
+ * @author s103459 (Peter), s103470 (Nicolai P)
+ *
+ */
+
 public class WebServiceConnection {
 	
-	private static final String BASE_URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
+	private static final String BASE_URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/SmartHomeSecurity/rest";
 	
 	public static List<App> invokeGetAppsFromWebServer() {
 		final String url = BASE_URL + "/apps/getAllApps";

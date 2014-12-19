@@ -12,6 +12,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.VideoView;
 
+/**
+ * 
+ * @author s103459 (Peter), s103470 (Nicolai P)
+ *
+ */
+
 public class VideoActivity extends Activity {
 	
 	private static String macAddress;
@@ -65,10 +71,16 @@ public class VideoActivity extends Activity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_video,
 					container, false);
-			final VideoView videoView = (VideoView) rootView.findViewById(R.id.video_view);
+			VideoView videoView = (VideoView) rootView.findViewById(R.id.video_view);
 			videoThread = new VideoThread(videoView,VideoActivity.macAddress);
 			videoThread.start();
 			return rootView;
+		}
+
+		@Override
+		public void onDestroy() {
+			videoThread.terminate();
+			super.onDestroy();
 		}
 	}
 }
