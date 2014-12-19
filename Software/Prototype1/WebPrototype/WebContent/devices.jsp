@@ -195,8 +195,8 @@ response.sendRedirect("login.jsp");
                 
                 
                 <script>
-var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
-var activeMac;
+					var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
+					var activeMac;
                     function deviceInfo(mac) {
 						activeMac = mac;
 						document.getElementById("camera").disabled = false;
@@ -265,7 +265,6 @@ var activeMac;
                     
 
                 </script>
-
 
                <button type="button" id="confMac" class="button">Configure</button>
 
@@ -377,17 +376,13 @@ var activeMac;
             url: webServerPath + "/apps/updateApp?mac=" + devMac + "&eventType=ACCELEROMETER&status=" + movementSensStatus + "",
         });
         
-        	var tex = "Device Configured";
-			var suc = tex.fontcolor("green");
-        	alert(suc);
+        	alert("Device Configured");
         	reloadDevs();
         
         }
         
         else{
-        	var tex = "Input Error";
-			var fail = tex.fontcolor("red");
-			alert(fail);
+			alert("Input Error");
         	
         }
 
