@@ -625,7 +625,7 @@ response.sendRedirect("login.jsp");
 
             $.ajax({
                 type: "POST",
-                url: URL
+                url: URL,
             });
 
             document.location.reload();
