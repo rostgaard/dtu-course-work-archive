@@ -198,7 +198,7 @@ response.sendRedirect("login.jsp");
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
-                <p>New User</p>
+                <p id="addstatus">New User Added</p>
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                 </button>
@@ -244,7 +244,7 @@ response.sendRedirect("login.jsp");
                             type: "GET",
                             url: URL,
                             data: data,
-                            error: function (data) {
+                            success: function (data) {
 
                                 $('#addUname').html("Username: " + username);
                                 $('#addMail').html("Email: " + email);
@@ -259,7 +259,7 @@ response.sendRedirect("login.jsp");
                         }
                         else{
                         alert("All fields must be filled");
-                        $('#addUserModal').modal('hide');
+                        $('#addstatus').html('No User Added');
                         }
                     }
                 </script>
