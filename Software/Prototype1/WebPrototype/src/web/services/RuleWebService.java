@@ -98,6 +98,9 @@ public class RuleWebService {
 	@Consumes({MediaType.TEXT_PLAIN})
 	@Produces(MediaType.APPLICATION_JSON)
 	public RuleString addRuleString(@QueryParam("policyId") int policyId, String ruleString) {
+		if (!validateRuleString(ruleString))
+			return null;
+		
 		RuleStringEntity ruleStringEntity = eao.addRuleStringEntity(ruleString, policyId);
 		if (ruleStringEntity == null) {
 			return null;
@@ -106,6 +109,16 @@ public class RuleWebService {
 		reloadRules();
 		
 		return Conversion.convertRuleStringEntity(ruleStringEntity);	
+	}
+	
+	private boolean validateRuleString(String ruleString) {
+		try {
+			InputStream stream = new ByteArrayInputStream(ruleString.getBytes());
+			new Rules (stream).parse();
+			return true;
+		} catch(Exception e) {
+			return false;
+		}
 	}
 	
 	@GET
