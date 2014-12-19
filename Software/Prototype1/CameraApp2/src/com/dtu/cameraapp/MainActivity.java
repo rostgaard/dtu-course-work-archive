@@ -17,6 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+/**
+ * @author Jan-Eric Raab s123673
+ */
 public class MainActivity extends Activity {
 	
 	public static String macAddress;

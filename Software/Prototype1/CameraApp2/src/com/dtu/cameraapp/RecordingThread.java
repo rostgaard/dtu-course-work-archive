@@ -1,8 +1,5 @@
 package com.dtu.cameraapp;
-/**
- * @author Jan-Eric Raab s123673
- * @author Stefan Mertens s113420
- */
+
 import java.io.File;
 import java.io.IOException;
 
@@ -14,7 +11,10 @@ import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 
-
+/**
+ * @author Jan-Eric Raab s123673
+ * @author Stefan Mertens s113420
+ */
 public class RecordingThread extends Thread{
 
 	SurfaceView surfaceView;

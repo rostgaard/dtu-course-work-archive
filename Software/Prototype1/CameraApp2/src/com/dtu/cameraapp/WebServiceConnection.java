@@ -8,12 +8,14 @@ import java.util.Map;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-
+/**
+ * 
+ * @author s123673 (Jan-Eric)
+ *
+ */
 public class WebServiceConnection {
 	
 	private static final String BASE_URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/SmartHomeSecurity/rest";
-	//private static final String BASE_URL = "http://se-se2-e14-glassfish-c.compute.dtu.dk:8080/TechnologyExperiment/rest";
-	//private static final String BASE_URL = "http://10.16.163.41:8080/TechnologyExperiment/rest";
 	
 	public static Event invokeAddEventWebServer(String mac, float value, EventType eventType) {
 		final String url = BASE_URL + "/events/addEventByMac?mac={mac}&value={value}&eventType={eventType}";
@@ -56,6 +58,19 @@ public class WebServiceConnection {
 		return Arrays.asList(apps);
 	}
 	
+	/**
+
+	* Takes a video file and camera id, converts the file to a byte array and sends
+
+	* the video ad a byte array as a http post.
+
+	* @param File	The video file that has to be send to the server
+
+	* @param id The camera id, that is used in order to identify the source of the video
+
+	* @return the http response code
+
+	*/
 	public static int invokeGetApp(String mac, EventType eventType){
 		final String url = BASE_URL + "/apps/getApp?mac={mac}&eventType={eventType}";
 		final Map<String,String> parameters = new HashMap<String,String>();

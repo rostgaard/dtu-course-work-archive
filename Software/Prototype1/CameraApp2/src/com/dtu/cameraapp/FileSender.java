@@ -15,6 +15,17 @@ import android.util.Log;
 
 public class FileSender extends AsyncTask<Object,Void,Integer>{
 	
+	/**
+
+	* Returns a camera id based on a macaddress and an event type.
+
+	* @param mac	the macaddress of the phone.
+
+	* @param eventType the EventType that the app is registered with, in this case STARTVIDEORECORDING.
+
+	* @return the id corresponding to the phones macaddress and EventType.
+
+	 */
 	public static int  sendAsHttp(File file, int id) throws IOException{
 		Log.i("Desperate", "FileSender top");
 		FileInputStream fileInputStream;

@@ -2,6 +2,9 @@ package com.dtu.cameraapp;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+/**
+ * @author Jan-Eric Raab s123673
+ */
 public class Event {
 	
 	@JsonProperty("id")
