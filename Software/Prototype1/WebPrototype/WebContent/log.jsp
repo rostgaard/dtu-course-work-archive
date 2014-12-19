@@ -78,12 +78,12 @@ response.sendRedirect("login.jsp");
 %>
 
 <ul class="nav nav-tabs" role="tablist" data-step="1" data-intro="Browse the different pages using the top tab">
-    <li><a href="/Prototype245/Forward?ref=dashboard">Dashboard</a></li>
-    <li><a href="/Prototype245/Forward?ref=devices">Devices</a></li>
-    <li><a href="/Prototype245/Forward?ref=rules">Rules</a></li>
-    <li><a href="/Prototype245/Forward?ref=users">Users</a></li>
-    <li class="active"><a href="/Prototype245/Forward?ref=log">Event Log</a></li>
-    <li style="float: right;"><a href="/Prototype245/LogoutServlet">Log Out</a></li>
+    <li><a href="/SmartHomeSecurity/Forward?ref=dashboard">Dashboard</a></li>
+    <li><a href="/SmartHomeSecurity/Forward?ref=devices">Devices</a></li>
+    <li><a href="/SmartHomeSecurity/Forward?ref=rules">Rules</a></li>
+    <li><a href="/SmartHomeSecurity/Forward?ref=users">Users</a></li>
+    <li class="active"><a href="/SmartHomeSecurity/Forward?ref=log">Event Log</a></li>
+    <li style="float: right;"><a href="/SmartHomeSecurity/LogoutServlet">Log Out</a></li>
     <li style="float: right;"><a href="javascript:void(0);" onclick="javascript:introJs().start();">Demo</a></li>
 </ul>
 
@@ -160,7 +160,7 @@ $( document ).ready(function() {
 	$.ajax({
 	    type: "GET",
 	    dataType: 'json',
-	    url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest/events/getAllEvents",
+	    url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/SmartHomeSecurity/rest/events/getAllEvents",
 	    success: function (data) {
 	    	$('#example').dataTable( {
 	    		"data": data,

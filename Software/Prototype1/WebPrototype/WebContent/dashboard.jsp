@@ -67,11 +67,11 @@ response.sendRedirect("login.jsp");
 
 <ul class="nav nav-tabs" role="tablist" data-step="1" data-intro="Browse the different pages using the top tab">
     <li class="active"><a href="#">Dashboard</a></li>
-    <li><a href="/Prototype245/Forward?ref=devices">Devices</a></li>
-    <li><a href="/Prototype245/Forward?ref=rules">Rules</a></li>
-    <li><a href="/Prototype245/Forward?ref=users">Users</a></li>
-    <li><a href="/Prototype245/Forward?ref=log">Event Log</a></li>
-    <li style="float: right;"><a href="/Prototype245/LogoutServlet">Log Out</a></li>
+    <li><a href="/SmartHomeSecurity/Forward?ref=devices">Devices</a></li>
+    <li><a href="/SmartHomeSecurity/Forward?ref=rules">Rules</a></li>
+    <li><a href="/SmartHomeSecurity/Forward?ref=users">Users</a></li>
+    <li><a href="/SmartHomeSecurity/Forward?ref=log">Event Log</a></li>
+    <li style="float: right;"><a href="/SmartHomeSecurity/LogoutServlet">Log Out</a></li>
     <li style="float: right;"><a href="javascript:void(0);" onclick="javascript:introJs().start();" data-step="6" data-intro="On every page you can get a detailed tour">Demo</a></li>
 
 </ul>
@@ -105,7 +105,7 @@ response.sendRedirect("login.jsp");
                             </div>
                             <div class="panel-footer">
                                 <button type="button" class="btn btn-link btn-xs btn-block"
-                                         onclick="location.href='/Prototype245/Forward?ref=devices'">View
+                                         onclick="location.href='/SmartHomeSecurity/Forward?ref=devices'">View
                                     Details                            
                                 </button>
                             </div>
@@ -126,7 +126,7 @@ response.sendRedirect("login.jsp");
                             </div>
                             <div class="panel-footer">
                                 <button type="button" class="btn btn-link btn-xs btn-block"
-                                        onclick="location.href='/Prototype245/Forward?ref=log'">
+                                        onclick="location.href='/SmartHomeSecurity/Forward?ref=log'">
                                     View Details
                                 </button>
                             </div>
@@ -253,7 +253,7 @@ response.sendRedirect("login.jsp");
                         <script>
                              //@author Stefan Mertens s113429
                             var videoID;
-                            var url = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest/video/";
+                            var url = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/SmartHomeSecurity/rest/video/";
                             function preparePlayer(id) {
 //Init
                                 var id = videoID;
@@ -429,7 +429,7 @@ response.sendRedirect("login.jsp");
                         $('#time').html("Event time: "+d);
                          $.ajax({
            					type: "GET",
-            				url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest/apps/getAppByID?id="+id,
+            				url: "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/SmartHomeSecurity/rest/apps/getAppByID?id="+id,
            				 	data: data,
             				success: function (data) {
                 				var mac = data.mac       
@@ -504,7 +504,7 @@ response.sendRedirect("login.jsp");
          based on devices from webrservice request
          */
 
-        var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
+        var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/SmartHomeSecurity/rest";
 
         var URL = webServerPath + "/apps/getDevicesWithCamera";
         $.ajax({
