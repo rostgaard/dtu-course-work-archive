@@ -4,6 +4,12 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 
+/**
+ * 
+ * @author s103459 (Peter), s103470 (Nicolai P)
+ *
+ */
+
 public class AccelerometerEventListener implements SensorEventListener {
 	
 	private String macAddress;
@@ -23,6 +29,11 @@ public class AccelerometerEventListener implements SensorEventListener {
 		
 	}
 	
+	/**
+	 * 
+	 * @author s103459 (Peter), s103470 (Nicolai P)
+	 *
+	 */
 	@Override
 	public void onSensorChanged(SensorEvent e) {
 		x = e.values[0];
@@ -53,12 +64,15 @@ public class AccelerometerEventListener implements SensorEventListener {
 		
 	}
 
+	/**
+	 * 
+	 * @author s113444 (Luai)
+	 * 
+	 */
 	private void invokeAddEventWebServer(final String macAddress, final int value) {
 		new Thread(new Runnable() {			
 			@Override
-			public void run() {
-//				thread = true;
-				
+			public void run() {				
 				try {
 					WebServiceConnection.invokeAddEventWebServer(macAddress, value, EventType.ACCELEROMETER);
 					// wait for 5 seconds, so only one event is sent when a door opens

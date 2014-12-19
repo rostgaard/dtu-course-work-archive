@@ -13,7 +13,6 @@ import android.hardware.SensorManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +22,12 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+/**
+ * 
+ * @author s103459 (Peter), s103470 (Nicolai P)
+ *
+ */
 
 public class MainActivity extends Activity {
 	

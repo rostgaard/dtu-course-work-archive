@@ -4,6 +4,12 @@ import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+/**
+ * 
+ * @author s103470 (Nicolai P)
+ *
+ */
+
 public class App {
 	
 	@JsonProperty("id")

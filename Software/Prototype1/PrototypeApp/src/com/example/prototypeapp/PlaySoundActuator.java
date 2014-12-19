@@ -4,6 +4,12 @@ import android.app.Activity;
 import android.media.AudioManager;
 import android.media.SoundPool;
 
+/**
+ * 
+ * @author s113444 (Luai)
+ *
+ */
+
 public class PlaySoundActuator extends Thread {
 	
 	private final int S1 = R.raw.wopwop;

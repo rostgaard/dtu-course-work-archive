@@ -3,6 +3,12 @@ package com.example.prototypeapp;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 
+/**
+ * 
+ * @author s103459 (Peter), s103470 (Nicolai P)
+ *
+ */
+
 public class FlashLightActuator extends Thread {
 	
 	private Camera camera;

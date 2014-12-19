@@ -8,14 +8,16 @@ import java.util.Map;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * 
+ * 
+ * @author s113444 (Luai), s103429 (Peter), s103470 (Nicolai P)
+ *
+ */
 
 public class WebServiceConnection {
 	
-	private static final String BASE_URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
-	//private static final String BASE_URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/WebPrototype/rest";
-	//private static final String BASE_URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype1/rest";
-	//private static final String BASE_URL = "http://se-se2-e14-glassfish-c.compute.dtu.dk:8080/TechnologyExperiment/rest";
-	//private static final String BASE_URL = "http://10.16.163.41:8080/TechnologyExperiment/rest";
+	private static final String BASE_URL = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/SmartHomeSecurity/rest";
 	
 	public static Event invokeAddEventWebServer(String mac, int value, EventType eventType) {
 		final String url = BASE_URL + "/events/addEventByMac?mac={mac}&value={value}&eventType={eventType}";
