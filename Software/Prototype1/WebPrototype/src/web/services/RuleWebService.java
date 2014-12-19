@@ -46,7 +46,7 @@ public class RuleWebService {
 			+ "test1:\n"
             + "  when accelerometer\n"
             + "  if event.source == 37 && system.securitylevel == 1\n"  
-            + "  then playSound.play(43,30), flashlight.play(42,30), UserAlert.raise(44);\n";
+            + "  then playSound.play(43), flashlight.play(42), UserAlert.raise(44);\n";
 
 	public static RuleEngine ruleEngine = null;
 	
@@ -57,7 +57,7 @@ public class RuleWebService {
 	SensorDataEAO  seao;
 	
 	/**
-	 *  @author Kim s084283
+	 * @author Kim s084283
 	 * Init rules 
 	 */
 	@PostConstruct
@@ -78,9 +78,6 @@ public class RuleWebService {
 		ruleEngine = new RuleEngine(RuleEngine.parseRules(dbRules));
 	}
 	
-	/**
-	 * @author Kim s084283
-	 */
 	private void reloadRules() {
 		ruleEngine = new RuleEngine(RuleEngine.parseRules(this.getRulesFromDB()));
 
