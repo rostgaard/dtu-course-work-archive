@@ -1,0 +1,20 @@
+
+.indent_1 {
+	text-indent: 20px;
+}
+
+.indent_2 {
+	text-indent: 40px;
+}
+
+.indent_3 {
+	text-indent: 60px;
+}
+
+.indent_4 {
+	text-indent: 80px;
+}
+
+.ConsolasItalic {
+    font-family: "Consolas"
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Sensor and Actuator App</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="sensor_id"> Sensor ID - Add Event</string>
+    <string name="sensor_id2"> Sensor ID - Await Event</string>
+    <string name="status_string">Status </string>
+    <string name="status_value">Not connected</string>
+    <string name="apps_title_string">Active Sensors and Actuators</string>
+
+</resources>
