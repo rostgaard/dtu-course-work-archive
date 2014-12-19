@@ -53,7 +53,30 @@ public class RecordingThread extends Thread{
 	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
-		id = WebServiceConnection.invokeGetApp(macAddress, EventType.STARTVIDEORECORDING);
+		try{
+			id = WebServiceConnection.invokeGetApp(macAddress, EventType.STARTVIDEORECORDING);
+
+		}catch(Exception e)  {
+
+			// We get here if the camera app is registered the first time
+
+			// because the id is not ready yet
+
+			try {
+
+				Thread.sleep(4000);
+
+			} catch (InterruptedException e1) {
+
+				// TODO Auto-generated catch block
+
+				e1.printStackTrace();
+
+			}
+
+			id = WebServiceConnection.invokeGetApp(macAddress, EventType.STARTVIDEORECORDING);
+
+		} 
 		   
 		Log.i("CameraId", "ID = " + id+ "mac = " + macAddress);
         boolean running = true;

@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Camera App</string>
-    <string name="hello_world">Video Recording and Streaming App</string>
     <string name="status_value">Not connected</string>
     <string name="action_settings">Settings</string>
     

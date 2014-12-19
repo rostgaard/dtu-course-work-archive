@@ -1,5 +1,7 @@
 package com.dtu.cameraapp;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
@@ -7,18 +9,15 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.view.WindowManager;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 	
 	public static String macAddress;
 	private static boolean connected = false;
@@ -28,12 +27,13 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //prevents app from carshing on rotation
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 
         macAddress = getMacAddress();
 		registerAppsWithServer(macAddress);
 		
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
