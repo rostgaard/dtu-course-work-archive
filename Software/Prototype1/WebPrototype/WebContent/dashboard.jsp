@@ -259,6 +259,7 @@ response.sendRedirect("login.jsp");
                         <div id="voddiv">
                         </div>
                         <script>
+                             //@author Stefan Mertens s113429
                             var videoID;
                             var url = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest/video/";
                             function preparePlayer(id) {
@@ -300,23 +301,25 @@ response.sendRedirect("login.jsp");
 
                             }// startlive
 
+                              
                               function startVod(i, end) {
                                 $('#vodplayer').show();
-                                 $("#playervod").unbind("ended");//There might be previous bindings
+                                  $("#playervod").unbind("ended");//There might be previous bindings
 
                                 $("#playervod")[0].src = url + "getVideo?id=" + videoID + "&count=" + i;
 
                                 $("#playervod").bind("ended", function () {
                                     console.log(i + "/" + end);
-                                    if (i < end) {
+                                    if (end > 1) {
 										  i++;
+                                          end--;
                                           $("#playervod")[0].src = url + "getVideo?id=" + videoID + "&count=" + i
                                           $("#playervod")[0].play();
                                     }
                                     else {
                                         $('#playervod')[0].pause();
- 										 $("#playervod").unbind("ended");
- 										 $('#vodplayer').hide();
+ 										$("#playervod").unbind("ended");
+ 										$('#vodplayer').hide();
                                     }
                                 });
                                 $("#playervod")[0].play();
