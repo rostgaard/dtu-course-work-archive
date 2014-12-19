@@ -265,7 +265,7 @@ response.sendRedirect("login.jsp");
 	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
 	var data;	
 	
-	if(!isNan(id)){
+	if(!isNaN(id)){
 	
 	var ruleURL = webServerPath + "/rules/addRuleString?policyId="+ id;
 			$.ajax({
