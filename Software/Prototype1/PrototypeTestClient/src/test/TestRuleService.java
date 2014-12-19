@@ -39,7 +39,8 @@ public class TestRuleService {
 		
 		ruleString = generateRuleString(app1.getId(), app2.getId(), app3.getId(), app4.getId());
 		
-		dbRulestring = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.rules().addRuleString().getAsRuleString(ruleString, 999);
+		dbRulestring = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.rules().addRuleString().postTextPlainAsJson(ruleString, 999, RuleString.class);
+		//dbRulestring = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.rules().addRuleString().getAsRuleString(ruleString, 999);
 		assertEquals(ruleString, dbRulestring.getRule());
 	}
 

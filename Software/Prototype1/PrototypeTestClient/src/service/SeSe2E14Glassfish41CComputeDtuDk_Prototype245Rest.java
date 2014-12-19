@@ -17,7 +17,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 @Generated(value = {
     "wadl|http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest/application.wadl"
-}, comments = "wadl2java, http://wadl.java.net", date = "2014-12-15T14:22:16.767+01:00")
+}, comments = "wadl2java, http://wadl.java.net", date = "2014-12-19T09:25:52.442+01:00")
 public class SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest {
 
     /**
@@ -179,36 +179,40 @@ public class SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest {
             _templateAndMatrixParameterValues = map;
         }
 
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetDeviceCount getDeviceCount() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetDeviceCount(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-        }
-
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetDevices getDevices() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetDevices(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-        }
-
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetDevicesWithCamera getDevicesWithCamera() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetDevicesWithCamera(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-        }
-
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetApps getApps() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetApps(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-        }
-
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetAllApps getAllApps() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetAllApps(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.AddApp addApp() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.AddApp(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
         public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetAppByID getAppByID() {
             return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetAppByID(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetAllApps getAllApps() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetAllApps(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
         public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetApp getApp() {
             return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetApp(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.AddApp addApp() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.AddApp(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetApps getApps() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetApps(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetDevices getDevices() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetDevices(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetAppList getAppList() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetAppList(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetDeviceCount getDeviceCount() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetDeviceCount(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetDevicesWithCamera getDevicesWithCamera() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetDevicesWithCamera(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
         public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.DeleteApp deleteApp() {
@@ -217,10 +221,6 @@ public class SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest {
 
         public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.UpdateApp updateApp() {
             return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.UpdateApp(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-        }
-
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetAppList getAppList() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetAppList(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
         public static class AddApp {
@@ -1305,6 +1305,14 @@ public class SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest {
             _templateAndMatrixParameterValues = map;
         }
 
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Devices.UpdateDeviceName updateDeviceName() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Devices.UpdateDeviceName(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Devices.GetDeviceList getDeviceList() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Devices.GetDeviceList(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
         public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Devices.AddDeviceName addDeviceName() {
             return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Devices.AddDeviceName(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
@@ -1556,6 +1564,189 @@ public class SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest {
 
         }
 
+        public static class GetDeviceList {
+
+            private Client _client;
+            private UriBuilder _uriBuilder;
+            private Map<String, Object> _templateAndMatrixParameterValues;
+            private URI _uri;
+
+            /**
+             * Create new instance using existing Client instance
+             * 
+             */
+            public GetDeviceList(Client client, URI uri) {
+                _client = client;
+                _uri = uri;
+                _uriBuilder = UriBuilder.fromUri(uri);
+                _uriBuilder = _uriBuilder.path("/getDeviceList");
+                _templateAndMatrixParameterValues = new HashMap<String, Object>();
+            }
+
+            private GetDeviceList(Client client, UriBuilder uriBuilder, Map<String, Object> map) {
+                _client = client;
+                _uriBuilder = uriBuilder.clone();
+                _templateAndMatrixParameterValues = map;
+            }
+
+            public Device getAsDevice() {
+                UriBuilder localUriBuilder = _uriBuilder.clone();
+                WebResource resource = _client.resource(localUriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+                com.sun.jersey.api.client.WebResource.Builder resourceBuilder = resource.getRequestBuilder();
+                resourceBuilder = resourceBuilder.accept("application/json");
+                ClientResponse response;
+                response = resourceBuilder.method("GET", ClientResponse.class);
+                if (response.getStatus()>= 400) {
+                    throw new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.WebApplicationExceptionMessage(Response.status(response.getClientResponseStatus()).build());
+                }
+                return response.getEntity(Device.class);
+            }
+
+            public<T >T getAsJson(GenericType<T> returnType) {
+                UriBuilder localUriBuilder = _uriBuilder.clone();
+                WebResource resource = _client.resource(localUriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+                com.sun.jersey.api.client.WebResource.Builder resourceBuilder = resource.getRequestBuilder();
+                resourceBuilder = resourceBuilder.accept("application/json");
+                ClientResponse response;
+                response = resourceBuilder.method("GET", ClientResponse.class);
+                if (response.getStatus()>= 400) {
+                    throw new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.WebApplicationExceptionMessage(Response.status(response.getClientResponseStatus()).build());
+                }
+                return response.getEntity(returnType);
+            }
+
+            public<T >T getAsJson(Class<T> returnType) {
+                UriBuilder localUriBuilder = _uriBuilder.clone();
+                WebResource resource = _client.resource(localUriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+                com.sun.jersey.api.client.WebResource.Builder resourceBuilder = resource.getRequestBuilder();
+                resourceBuilder = resourceBuilder.accept("application/json");
+                ClientResponse response;
+                response = resourceBuilder.method("GET", ClientResponse.class);
+                if (!ClientResponse.class.isAssignableFrom(returnType)) {
+                    if (response.getStatus()>= 400) {
+                        throw new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.WebApplicationExceptionMessage(Response.status(response.getClientResponseStatus()).build());
+                    }
+                }
+                if (!ClientResponse.class.isAssignableFrom(returnType)) {
+                    return response.getEntity(returnType);
+                } else {
+                    return returnType.cast(response);
+                }
+            }
+
+        }
+
+        public static class UpdateDeviceName {
+
+            private Client _client;
+            private UriBuilder _uriBuilder;
+            private Map<String, Object> _templateAndMatrixParameterValues;
+            private URI _uri;
+
+            /**
+             * Create new instance using existing Client instance
+             * 
+             */
+            public UpdateDeviceName(Client client, URI uri) {
+                _client = client;
+                _uri = uri;
+                _uriBuilder = UriBuilder.fromUri(uri);
+                _uriBuilder = _uriBuilder.path("/updateDeviceName");
+                _templateAndMatrixParameterValues = new HashMap<String, Object>();
+            }
+
+            private UpdateDeviceName(Client client, UriBuilder uriBuilder, Map<String, Object> map) {
+                _client = client;
+                _uriBuilder = uriBuilder.clone();
+                _templateAndMatrixParameterValues = map;
+            }
+
+            public ClientResponse put() {
+                UriBuilder localUriBuilder = _uriBuilder.clone();
+                WebResource resource = _client.resource(localUriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+                com.sun.jersey.api.client.WebResource.Builder resourceBuilder = resource.getRequestBuilder();
+                ClientResponse response;
+                response = resourceBuilder.method("PUT", ClientResponse.class);
+                return response;
+            }
+
+            public<T >T put(GenericType<T> returnType) {
+                UriBuilder localUriBuilder = _uriBuilder.clone();
+                WebResource resource = _client.resource(localUriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+                com.sun.jersey.api.client.WebResource.Builder resourceBuilder = resource.getRequestBuilder();
+                ClientResponse response;
+                response = resourceBuilder.method("PUT", ClientResponse.class);
+                if (response.getStatus()>= 400) {
+                    throw new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.WebApplicationExceptionMessage(Response.status(response.getClientResponseStatus()).build());
+                }
+                return response.getEntity(returnType);
+            }
+
+            public<T >T put(Class<T> returnType) {
+                UriBuilder localUriBuilder = _uriBuilder.clone();
+                WebResource resource = _client.resource(localUriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+                com.sun.jersey.api.client.WebResource.Builder resourceBuilder = resource.getRequestBuilder();
+                ClientResponse response;
+                response = resourceBuilder.method("PUT", ClientResponse.class);
+                if (!ClientResponse.class.isAssignableFrom(returnType)) {
+                    if (response.getStatus()>= 400) {
+                        throw new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.WebApplicationExceptionMessage(Response.status(response.getClientResponseStatus()).build());
+                    }
+                }
+                if (!ClientResponse.class.isAssignableFrom(returnType)) {
+                    return response.getEntity(returnType);
+                } else {
+                    return returnType.cast(response);
+                }
+            }
+
+            public ClientResponse put(String mac, String name) {
+                UriBuilder localUriBuilder = _uriBuilder.clone();
+                localUriBuilder = localUriBuilder.replaceQueryParam("mac", mac);
+                localUriBuilder = localUriBuilder.replaceQueryParam("name", name);
+                WebResource resource = _client.resource(localUriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+                com.sun.jersey.api.client.WebResource.Builder resourceBuilder = resource.getRequestBuilder();
+                ClientResponse response;
+                response = resourceBuilder.method("PUT", ClientResponse.class);
+                return response;
+            }
+
+            public<T >T put(String mac, String name, GenericType<T> returnType) {
+                UriBuilder localUriBuilder = _uriBuilder.clone();
+                localUriBuilder = localUriBuilder.replaceQueryParam("mac", mac);
+                localUriBuilder = localUriBuilder.replaceQueryParam("name", name);
+                WebResource resource = _client.resource(localUriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+                com.sun.jersey.api.client.WebResource.Builder resourceBuilder = resource.getRequestBuilder();
+                ClientResponse response;
+                response = resourceBuilder.method("PUT", ClientResponse.class);
+                if (response.getStatus()>= 400) {
+                    throw new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.WebApplicationExceptionMessage(Response.status(response.getClientResponseStatus()).build());
+                }
+                return response.getEntity(returnType);
+            }
+
+            public<T >T put(String mac, String name, Class<T> returnType) {
+                UriBuilder localUriBuilder = _uriBuilder.clone();
+                localUriBuilder = localUriBuilder.replaceQueryParam("mac", mac);
+                localUriBuilder = localUriBuilder.replaceQueryParam("name", name);
+                WebResource resource = _client.resource(localUriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+                com.sun.jersey.api.client.WebResource.Builder resourceBuilder = resource.getRequestBuilder();
+                ClientResponse response;
+                response = resourceBuilder.method("PUT", ClientResponse.class);
+                if (!ClientResponse.class.isAssignableFrom(returnType)) {
+                    if (response.getStatus()>= 400) {
+                        throw new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.WebApplicationExceptionMessage(Response.status(response.getClientResponseStatus()).build());
+                    }
+                }
+                if (!ClientResponse.class.isAssignableFrom(returnType)) {
+                    return response.getEntity(returnType);
+                } else {
+                    return returnType.cast(response);
+                }
+            }
+
+        }
+
     }
 
     public static class Events {
@@ -1583,16 +1774,24 @@ public class SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest {
             _templateAndMatrixParameterValues = map;
         }
 
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetTotalEventCountInTimeSpan getTotalEventCountInTimeSpan() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetTotalEventCountInTimeSpan(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AddEventByMac addEventByMac() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AddEventByMac(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AwaitEventByMac awaitEventByMac() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AwaitEventByMac(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
         public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetEventsByMac getEventsByMac() {
             return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetEventsByMac(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AwaitEventByMac awaitEventByMac() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AwaitEventByMac(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetEventsByMacAndType getEventsByMacAndType() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetEventsByMacAndType(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AddEventByID addEventByID() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AddEventByID(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
         public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetEventsByID getEventsByID() {
@@ -1603,28 +1802,20 @@ public class SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest {
             return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetAllEvents(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetEventsByMacAndType getEventsByMacAndType() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetEventsByMacAndType(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-        }
-
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AddEventByMac addEventByMac() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AddEventByMac(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetEventsByIdInTimeSpan getEventsByIdInTimeSpan() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetEventsByIdInTimeSpan(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
         public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AwaitEventByID awaitEventByID() {
             return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AwaitEventByID(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetEventsByIdInTimeSpan getEventsByIdInTimeSpan() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetEventsByIdInTimeSpan(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-        }
-
         public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetEventsByType getEventsByType() {
             return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetEventsByType(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AddEventByID addEventByID() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AddEventByID(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetTotalEventCountInTimeSpan getTotalEventCountInTimeSpan() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetTotalEventCountInTimeSpan(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
         public static class AddEventByID {
@@ -2926,44 +3117,44 @@ public class SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest {
             _templateAndMatrixParameterValues = map;
         }
 
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetPolicyByName getPolicyByName() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetPolicyByName(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-        }
-
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.AddPolicy addPolicy() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.AddPolicy(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-        }
-
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetSecurityLevel getSecurityLevel() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetSecurityLevel(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-        }
-
         public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.DeletePolicy deletePolicy() {
             return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.DeletePolicy(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetPolicy getPolicy() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetPolicy(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-        }
-
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetRuleString getRuleString() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetRuleString(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-        }
-
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetAllPolicies getAllPolicies() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetAllPolicies(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetPolicyByName getPolicyByName() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetPolicyByName(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
         public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetAllRuleStrings getAllRuleStrings() {
             return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetAllRuleStrings(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.SetSecurityLevel setSecurityLevel() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.SetSecurityLevel(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetPolicy getPolicy() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetPolicy(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetAllPolicies getAllPolicies() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetAllPolicies(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetSecurityLevel getSecurityLevel() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetSecurityLevel(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.AddPolicy addPolicy() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.AddPolicy(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
         public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.AddRuleString addRuleString() {
             return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.AddRuleString(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.SetSecurityLevel setSecurityLevel() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.SetSecurityLevel(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetRuleString getRuleString() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Rules.GetRuleString(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
         public static class AddPolicy {
@@ -3111,39 +3302,28 @@ public class SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest {
                 _templateAndMatrixParameterValues = map;
             }
 
-            public RuleString getAsRuleString() {
+            public<T >T postTextPlainAsJson(Object input, GenericType<T> returnType) {
                 UriBuilder localUriBuilder = _uriBuilder.clone();
                 WebResource resource = _client.resource(localUriBuilder.buildFromMap(_templateAndMatrixParameterValues));
                 com.sun.jersey.api.client.WebResource.Builder resourceBuilder = resource.getRequestBuilder();
                 resourceBuilder = resourceBuilder.accept("application/json");
+                resourceBuilder = resourceBuilder.type("text/plain");
                 ClientResponse response;
-                response = resourceBuilder.method("GET", ClientResponse.class);
-                if (response.getStatus()>= 400) {
-                    throw new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.WebApplicationExceptionMessage(Response.status(response.getClientResponseStatus()).build());
-                }
-                return response.getEntity(RuleString.class);
-            }
-
-            public<T >T getAsJson(GenericType<T> returnType) {
-                UriBuilder localUriBuilder = _uriBuilder.clone();
-                WebResource resource = _client.resource(localUriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-                com.sun.jersey.api.client.WebResource.Builder resourceBuilder = resource.getRequestBuilder();
-                resourceBuilder = resourceBuilder.accept("application/json");
-                ClientResponse response;
-                response = resourceBuilder.method("GET", ClientResponse.class);
+                response = resourceBuilder.method("POST", ClientResponse.class, input);
                 if (response.getStatus()>= 400) {
                     throw new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.WebApplicationExceptionMessage(Response.status(response.getClientResponseStatus()).build());
                 }
                 return response.getEntity(returnType);
             }
 
-            public<T >T getAsJson(Class<T> returnType) {
+            public<T >T postTextPlainAsJson(Object input, Class<T> returnType) {
                 UriBuilder localUriBuilder = _uriBuilder.clone();
                 WebResource resource = _client.resource(localUriBuilder.buildFromMap(_templateAndMatrixParameterValues));
                 com.sun.jersey.api.client.WebResource.Builder resourceBuilder = resource.getRequestBuilder();
                 resourceBuilder = resourceBuilder.accept("application/json");
+                resourceBuilder = resourceBuilder.type("text/plain");
                 ClientResponse response;
-                response = resourceBuilder.method("GET", ClientResponse.class);
+                response = resourceBuilder.method("POST", ClientResponse.class, input);
                 if (!ClientResponse.class.isAssignableFrom(returnType)) {
                     if (response.getStatus()>= 400) {
                         throw new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.WebApplicationExceptionMessage(Response.status(response.getClientResponseStatus()).build());
@@ -3156,45 +3336,30 @@ public class SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest {
                 }
             }
 
-            public RuleString getAsRuleString(String rulestring, Integer policyid) {
+            public<T >T postTextPlainAsJson(Object input, Integer policyid, GenericType<T> returnType) {
                 UriBuilder localUriBuilder = _uriBuilder.clone();
-                localUriBuilder = localUriBuilder.replaceQueryParam("ruleString", rulestring);
                 localUriBuilder = localUriBuilder.replaceQueryParam("policyId", policyid);
                 WebResource resource = _client.resource(localUriBuilder.buildFromMap(_templateAndMatrixParameterValues));
                 com.sun.jersey.api.client.WebResource.Builder resourceBuilder = resource.getRequestBuilder();
                 resourceBuilder = resourceBuilder.accept("application/json");
+                resourceBuilder = resourceBuilder.type("text/plain");
                 ClientResponse response;
-                response = resourceBuilder.method("GET", ClientResponse.class);
-                if (response.getStatus()>= 400) {
-                    throw new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.WebApplicationExceptionMessage(Response.status(response.getClientResponseStatus()).build());
-                }
-                return response.getEntity(RuleString.class);
-            }
-
-            public<T >T getAsJson(String rulestring, Integer policyid, GenericType<T> returnType) {
-                UriBuilder localUriBuilder = _uriBuilder.clone();
-                localUriBuilder = localUriBuilder.replaceQueryParam("ruleString", rulestring);
-                localUriBuilder = localUriBuilder.replaceQueryParam("policyId", policyid);
-                WebResource resource = _client.resource(localUriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-                com.sun.jersey.api.client.WebResource.Builder resourceBuilder = resource.getRequestBuilder();
-                resourceBuilder = resourceBuilder.accept("application/json");
-                ClientResponse response;
-                response = resourceBuilder.method("GET", ClientResponse.class);
+                response = resourceBuilder.method("POST", ClientResponse.class, input);
                 if (response.getStatus()>= 400) {
                     throw new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.WebApplicationExceptionMessage(Response.status(response.getClientResponseStatus()).build());
                 }
                 return response.getEntity(returnType);
             }
 
-            public<T >T getAsJson(String rulestring, Integer policyid, Class<T> returnType) {
+            public<T >T postTextPlainAsJson(Object input, Integer policyid, Class<T> returnType) {
                 UriBuilder localUriBuilder = _uriBuilder.clone();
-                localUriBuilder = localUriBuilder.replaceQueryParam("ruleString", rulestring);
                 localUriBuilder = localUriBuilder.replaceQueryParam("policyId", policyid);
                 WebResource resource = _client.resource(localUriBuilder.buildFromMap(_templateAndMatrixParameterValues));
                 com.sun.jersey.api.client.WebResource.Builder resourceBuilder = resource.getRequestBuilder();
                 resourceBuilder = resourceBuilder.accept("application/json");
+                resourceBuilder = resourceBuilder.type("text/plain");
                 ClientResponse response;
-                response = resourceBuilder.method("GET", ClientResponse.class);
+                response = resourceBuilder.method("POST", ClientResponse.class, input);
                 if (!ClientResponse.class.isAssignableFrom(returnType)) {
                     if (response.getStatus()>= 400) {
                         throw new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.WebApplicationExceptionMessage(Response.status(response.getClientResponseStatus()).build());
@@ -4015,24 +4180,24 @@ public class SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest {
             _templateAndMatrixParameterValues = map;
         }
 
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.GetUserByUserName getUserByUserName() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.GetUserByUserName(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.DeleteUser deleteUser() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.DeleteUser(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.GetUsers getUsers() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.GetUsers(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.GetUserByUserName getUserByUserName() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.GetUserByUserName(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
         public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.GetLastLoginByUserName getLastLoginByUserName() {
             return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.GetLastLoginByUserName(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.AddUser addUser() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.AddUser(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.GetUsers getUsers() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.GetUsers(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.DeleteUser deleteUser() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.DeleteUser(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.AddUser addUser() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Users.AddUser(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
         public static class AddUser {
@@ -4590,24 +4755,24 @@ public class SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest {
             _templateAndMatrixParameterValues = map;
         }
 
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.GetVODS getVODS() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.GetVODS(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-        }
-
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.GetLatest getLatest() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.GetLatest(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-        }
-
-        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.GetVideo getVideo() {
-            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.GetVideo(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
-        }
-
         public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.AddVideo addVideo() {
             return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.AddVideo(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
         public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.DeleteEVERYTHING deleteEVERYTHING() {
             return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.DeleteEVERYTHING(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.GetVideo getVideo() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.GetVideo(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.GetLatest getLatest() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.GetLatest(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
+        }
+
+        public SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.GetVODS getVODS() {
+            return new SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Video.GetVODS(_client, _uriBuilder.buildFromMap(_templateAndMatrixParameterValues));
         }
 
         public static class AddVideo {

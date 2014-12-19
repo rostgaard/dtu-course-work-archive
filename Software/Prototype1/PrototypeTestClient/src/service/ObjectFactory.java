@@ -42,27 +42,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Policy }
+     * Create an instance of {@link AppList }
      * 
      */
-    public Policy createPolicy() {
-        return new Policy();
-    }
-
-    /**
-     * Create an instance of {@link User }
-     * 
-     */
-    public User createUser() {
-        return new User();
-    }
-
-    /**
-     * Create an instance of {@link Device }
-     * 
-     */
-    public Device createDevice() {
-        return new Device();
+    public AppList createAppList() {
+        return new AppList();
     }
 
     /**
@@ -74,19 +58,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AppList }
+     * Create an instance of {@link User }
      * 
      */
-    public AppList createAppList() {
-        return new AppList();
-    }
-
-    /**
-     * Create an instance of {@link Event }
-     * 
-     */
-    public Event createEvent() {
-        return new Event();
+    public User createUser() {
+        return new User();
     }
 
     /**
@@ -95,6 +71,30 @@ public class ObjectFactory {
      */
     public App createApp() {
         return new App();
+    }
+
+    /**
+     * Create an instance of {@link Policy }
+     * 
+     */
+    public Policy createPolicy() {
+        return new Policy();
+    }
+
+    /**
+     * Create an instance of {@link Device }
+     * 
+     */
+    public Device createDevice() {
+        return new Device();
+    }
+
+    /**
+     * Create an instance of {@link Event }
+     * 
+     */
+    public Event createEvent() {
+        return new Event();
     }
 
     /**
