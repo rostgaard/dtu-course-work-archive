@@ -13,7 +13,7 @@ import android.hardware.SensorEventListener;
 public class AccelerometerEventListener implements SensorEventListener {
 	
 	private String macAddress;
-	private float deltaX = 5.0f, deltaY = 5.0f, deltaZ = 5.0f;
+	private float deltaX = 1.0f, deltaY = 1.0f, deltaZ = 1.0f;
 	
 	private float x,y,z, oldX, oldY,oldZ;
 	private boolean start = true, thread = false;
