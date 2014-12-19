@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //prevents app from carshing on rotation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //prevents app from crashing on rotation
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 
         macAddress = getMacAddress();
@@ -70,7 +70,6 @@ public class MainActivity extends Activity {
 		final String macAddress = mac;
 		// Registering the apps with the server
 		
-		// According to luai the registration will not work without the threading
 		new Thread(new Runnable() {			
 			@Override
 			public void run() {					

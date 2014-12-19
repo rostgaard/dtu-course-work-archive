@@ -32,7 +32,7 @@ public class FileSender extends AsyncTask<Object,Void,Integer>{
         	e.printStackTrace();
         }
 		
-		String url = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest/video/addVideo?id="+id;
+		String url = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/SmartHomeSecurity/rest/video/addVideo?id="+id;
 		 
 		Log.w("video", "Sending video to"+url);
 		URL obj = new URL(url);
