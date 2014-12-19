@@ -209,7 +209,7 @@ public class RuleWebService {
 		reloadRules();
 	}
 	
-	@PUT
+	@POST
 	@Path("/setSecurityLevel")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	@Produces(MediaType.APPLICATION_JSON)

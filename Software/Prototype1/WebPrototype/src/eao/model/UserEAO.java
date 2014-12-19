@@ -14,7 +14,7 @@ import enums.Role;
 
 /**
  * 
- * @author s124259
+ * @author s124259(Jesper)
  *
  */
 
@@ -72,7 +72,7 @@ public class UserEAO {
 	}
 	
 	/**
-	 * @author Luai
+	 * @author s113444 (Luai)
 	 */
 	public void deleteUser(String username) {
 		em.remove(getUserByUserName(username));

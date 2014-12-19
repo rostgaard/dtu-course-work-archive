@@ -94,6 +94,7 @@ public class AppWebService {
 		return apps;
 	}
 	
+	@Deprecated
 	@GET
 	@Path("/getAppList")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
@@ -119,8 +120,8 @@ public class AppWebService {
 		}
 	}
 	
-	/*
-	 * @Author s124259 s084283
+	/**
+	 * @author s124259(Jesper), s084283(Kim)
 	 */
 	@GET
 	@Path("/getDeviceCount")
@@ -163,7 +164,7 @@ public class AppWebService {
 	}
 	
 	/**
-	 * @author s124259
+	 * @author s124259 (Jesper)
 	 */
 	@GET
 	@Path("/getDevicesWithCamera")
@@ -175,7 +176,7 @@ public class AppWebService {
 		List<App> devicesWithCamera = new ArrayList<App>();
 		
 		for(App app : apps) {
-			if(app.getEventType().equals(EventType.STARTVIDEORECORDING))
+			if(app.getEventType() == EventType.STARTVIDEORECORDING)
 				devicesWithCamera.add(app);
 		}
 		return devicesWithCamera;

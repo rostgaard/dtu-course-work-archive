@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * 
- * @author s124259
+ * @author s124259 (Jesper)
  * 
  */
 @WebServlet("/LogoutServlet")

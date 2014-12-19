@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet implementation class ForwardServlet
+ * @author s113420 (Stefan)
  */
 @WebServlet("/Forward")
 public class ForwardServlet extends HttpServlet {

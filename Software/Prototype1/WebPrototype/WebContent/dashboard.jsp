@@ -107,8 +107,8 @@ response.sendRedirect("login.jsp");
                             </div>
                             <div class="panel-footer">
                                 <button type="button" class="btn btn-link btn-xs btn-block"
-                                        id="deviceDetailButton">View
-                                    Details
+                                         onclick="location.href='/Prototype245/Forward?ref=devices'">View
+                                    Details                            
                                 </button>
                             </div>
                         </div>
@@ -126,15 +126,9 @@ response.sendRedirect("login.jsp");
                                     </div>
                                 </div>
                             </div>
-                            <!-- 								<a href="#"> 		-->
                             <div class="panel-footer">
-
-                                <!-- source for linking within page:
-                                http://stackoverflow.com/questions/2906582/how-to-create-an-html-button-that-acts-like-a-link
-                                  -->
-
                                 <button type="button" class="btn btn-link btn-xs btn-block"
-                                        onclick="window.location.href='#notificationsPanel'">
+                                        onclick="location.href='/Prototype245/Forward?ref=log'">
                                     View Details
                                 </button>
                             </div>
@@ -472,7 +466,7 @@ response.sendRedirect("login.jsp");
     <!-- /#wrapper -->
 
     <!--
-    @author s124259
+    @author s124259(Jesper)
     -->
     <div class="panel-footer" data-step="5" data-intro="These useful links will help you even further">
         <div style="width: 2%; margin: 0 auto;">
@@ -506,20 +500,13 @@ response.sendRedirect("login.jsp");
     #######################################################################
     ################################################################### -->
     <script>
-        $('#deviceDetailButton').click(function () {
-            $('.nav-tabs a[href="/Prototype245/Forward?ref=devices"]').tab('show');
-        });
-    </script>
-
-    <script>
         /*
-         @author s124259, Jesper Mark
+         @author s124259(Jesper)
          Dynamically adding sensor buttons to cameraMap in dashboard
          based on devices from webrservice request
          */
 
         var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
-        //var webServerPath = "http://localhost:8080/Prototype1/rest";
 
         var URL = webServerPath + "/apps/getDevicesWithCamera";
         $.ajax({
@@ -534,17 +521,14 @@ response.sendRedirect("login.jsp");
                 }
             }
         });
-
     </script>
 
     <script>
         /*
-         @Author s124259
+         @author s124259(Jesper)
          Getting device count with webservice call
          on page load and update #devicesRunning class with data.
          */
-
-
         var URL = webServerPath + "/apps/getDeviceCount";
         var data;
         $.ajax({
@@ -555,11 +539,11 @@ response.sendRedirect("login.jsp");
                 $('#devicesRunning').html(data);
             }
         });
-
     </script>
+    
     <script>
         /*
-         @Author s124259
+         @author s124259(Jesper)
          Getting lastLogin based on username with webservice call
          on page load and update #lastLogin class with data and details modal aswell.
          Using JQuery timeago plugin for formatting
@@ -582,7 +566,7 @@ response.sendRedirect("login.jsp");
 
     <script>
         /*
-         @Author s124259
+         @author s124259(Jesper)
          Getting security level with webservice call
          on page load and update #securityLevel class with data
          */
@@ -601,11 +585,11 @@ response.sendRedirect("login.jsp");
                 }
             }
         });
-
     </script>
+    
     <script>
         /*
-         @Author s124259
+         @author s124259(Jesper)
          Getting total number of new events within last x miliseconds with webservice call
          on page load and update #eventCountSinceLastWeek class with data
          */
@@ -620,12 +604,41 @@ response.sendRedirect("login.jsp");
             }
         });
     </script>
+
+    <script>
+    /* 
+    	@author s124259(Jesper)
+    	OnClick Event on whole button group (Security Level Buttons)
+ 		source: http://stackoverflow.com/questions/9262827/twitter-bootstrap-onclick-event-on-buttons-radio
+    */
+        $('#securityLevelGroup button').click(function () {
+            $(this).addClass('active').siblings().removeClass('active');
+            var level = $(this).attr('id');
+            var URL = webServerPath + "/rules/setSecurityLevel?level=" + level;
+
+            if (level > 0) {
+                $("div.securityStatus").replaceWith("<h2>Security Level is now: " + level + "</h2>");
+            }
+            else {
+                $("div.securityStatus").replaceWith("<h2>Home Security System is now Deactivated </h2>");
+            }
+
+            $.ajax({
+                type: "POST",
+                url: URL
+            });
+
+            document.location.reload();
+
+        });
+    </script>
+    
     <script type="text/javascript">
 
         /** @author s124255
          dashboard tab
          */
-      $( document ).ready(function() {        
+  
 	     var eventListSize = 5;
 	        function reloadEvents() {
 	            var data;
@@ -649,45 +662,15 @@ response.sendRedirect("login.jsp");
 	                }
 	            });
 	        }
+     $( document ).ready(function() {      
 	        reloadEvents();
+     });
+      
+     $('#more').click(function () {
+        eventListSize=eventListSize+4;
+     })
 
-         $('#more').click(function () {
-           eventListSize=eventListSize+4;
-          })
-      });
     </script>
-    <!--
- OnClick Event on whole button group (Security Level Buttons)
- @s124259
- source: http://stackoverflow.com/questions/9262827/twitter-bootstrap-onclick-event-on-buttons-radio
--->
-    <script>
-        $('#securityLevelGroup button').click(function () {
-            $(this).addClass('active').siblings().removeClass('active');
-            var level = $(this).attr('id');
-            var URL = webServerPath + "/rules/setSecurityLevel?level=" + level;
-
-            if (level > 0) {
-                $("div.securityStatus").replaceWith("<h2>Security Level is now: " + level + "</h2>");
-            }
-            else {
-                $("div.securityStatus").replaceWith("<h2>Home Security System is now Deactivated </h2>");
-            }
-
-            $.ajax({
-                type: "PUT",
-                url: URL
-            });
-
-            document.location.reload();
-
-        });
-    </script>
-
-    <!-- USER MANAGEMENT SCRIPTS -->
-
-    <!-- GetUsers -->
-
 
     <script src="js/jquery-1.11.0.js"></script>
     <script src="js/jquery.timeago.js"></script>

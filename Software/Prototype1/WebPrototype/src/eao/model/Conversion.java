@@ -18,6 +18,11 @@ import entity.model.UserEntity;
 import enums.EventType;
 import enums.Role;
 
+/**
+ * 
+ * @author s124259(Jesper), s113444(Luai)
+ *
+ */
 public class Conversion {
 
 	public static Event convertEventEntity(EventEntity eventEntity) {

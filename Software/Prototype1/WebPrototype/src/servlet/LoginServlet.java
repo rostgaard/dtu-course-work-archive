@@ -15,7 +15,7 @@ import entity.model.UserEntity;
 
 /**
  * 
- * @author s124259
+ * @author s124259 (Jesper)
  *
  */
 @WebServlet("/LoginServlet")

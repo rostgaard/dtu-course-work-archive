@@ -23,7 +23,7 @@ import web.services.util.VOD;
 
 /**
  * 
- * @author stefan
+ * @author s113420 (Stefan)
  *
  */
 

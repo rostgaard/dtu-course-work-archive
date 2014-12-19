@@ -9,7 +9,7 @@ import enums.Role;
 
 /**
  * 
- * @author s124259
+ * @author s124259 (Jesper)
  *
  */
 @Entity

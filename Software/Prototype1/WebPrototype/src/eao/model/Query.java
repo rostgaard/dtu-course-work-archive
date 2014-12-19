@@ -1,5 +1,10 @@
 package eao.model;
 
+/**
+ * 
+ * @author s113444(Luai), s124255(Nicolai K), s124259(Jesper)
+ *
+ */
 public class Query {
 	
 	final protected static String queryGetApp = 

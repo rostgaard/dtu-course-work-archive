@@ -9,6 +9,9 @@ import javax.ws.rs.ext.Provider;
 
 import org.glassfish.jersey.servlet.ServletContainer;
 
+/**
+ * @author s084283 (Kim)
+ */
 @Provider
 public class RestResponseFilter implements ContainerResponseFilter{
 

@@ -21,7 +21,7 @@ import entity.model.DeviceEntity;
 
 /**
  * 
- * @author s124255
+ * @author s124255 (Nicolai K)
  *
  */
 @LocalBean

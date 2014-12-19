@@ -1,5 +1,10 @@
 package web.services.util;
 
+/**
+ * 
+ * @author 
+ *
+ */
 
 public class VOD {
 	long startTime;
