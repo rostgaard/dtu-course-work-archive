@@ -18,8 +18,6 @@
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
 
-    <link rel="icon" href="\icon.ico">
-
     <!-- Custom Sensor CSS -->
     <link href="css/sensor.css" rel="stylesheet">
 

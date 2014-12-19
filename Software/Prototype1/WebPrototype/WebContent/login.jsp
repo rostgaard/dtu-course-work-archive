@@ -13,8 +13,6 @@
 
 <title>Smart Home Security - Login</title>
 
-<link rel="icon" href="..\WebContent\icon.ico">
-
 <!-- Bootstrap Core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 
