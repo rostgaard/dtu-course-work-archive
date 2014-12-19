@@ -25,8 +25,13 @@ public class DevicesEAO {
 	EntityManager em;
 
 
+	/**
+	 * @param mac The mac address of the device to be added
+	 * @param name The name of the device to be added
+	 * @return A DeviceEntity object of the added entity
+	 */
 	public DeviceEntity addDeviceName(String mac, String name) {
-		DeviceEntity deviceEntity = getDeviceEntity(mac);
+		DeviceEntity deviceEntity = getDevice(mac);
 		if (deviceEntity != null) {
 			return null;
 		}
@@ -40,12 +45,22 @@ public class DevicesEAO {
 		return deviceEntity;
 	}
 
+	/**
+	 * @param mac The mac address of the device to be found in the database by the EntityManager
+	 * @return A DeviceEntity object of the found entity
+	 */
 	public DeviceEntity getDevice(String mac){
 		DeviceEntity device = em.find(DeviceEntity.class, mac);
 		return device;
 
 	}
 
+	/**
+	 * @deprecated
+	 * Not in use anymore
+	 * @param mac The mac address of the device to be found in the database by Query request
+	 * @return A DeviceEntity object of the found entity
+	 */
 	public DeviceEntity getDeviceEntity(String mac) {
 		TypedQuery<DeviceEntity> query = em.createQuery(Query.queryGetDevice, DeviceEntity.class);
 		query.setParameter("mac", mac);
@@ -58,17 +73,12 @@ public class DevicesEAO {
 		}
 	}
 	
-	public List<DeviceEntity> getAllUsers(){
-		TypedQuery<DeviceEntity> query = em.createQuery(Query.querytextGetAllDeviceNames, DeviceEntity.class);	
-		List<DeviceEntity> result = query.getResultList();
-
-		if (result != null) {
-			return result;
-		} else {
-			return Collections.emptyList();
-		}
-	}
 	
+	/**
+	 * @param mac The mac address of the device which name will be updated
+	 * @param name The new name for the device
+	 * @return An DeviceEntity object of the entity merged
+	 */
 	public DeviceEntity updateName(String mac, String name) {
 		TypedQuery<DeviceEntity> query = em.createQuery(Query.queryGetDevice, DeviceEntity.class);
 		query.setParameter("mac", mac);
@@ -77,6 +87,9 @@ public class DevicesEAO {
 	    return em.merge(result);
 	}
 
+	/**
+	 * @return A list of all DeviceEntity in the database
+	 */
 	public List<DeviceEntity> getAllDeviceEntitylist() {
 			TypedQuery<DeviceEntity> query = em.createQuery(Query.querytextGetAllDeviceNames, DeviceEntity.class);	
 			List<DeviceEntity> result = query.getResultList();

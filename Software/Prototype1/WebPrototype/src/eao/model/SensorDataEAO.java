@@ -200,10 +200,10 @@ public class SensorDataEAO {
 	
 	/**
 	 * @author s124255
-	 * @param mac
-	 * @param eventType
-	 * @param status
-	 * @return
+	 * @param mac The mac address of the device running the App to be updated
+	 * @param eventType Type of App
+	 * @param status New status of the App
+	 * @return An AppEntity object of the entity merged
 	 */
 	public AppEntity update(String mac, EventType eventType, boolean status) {
 		AppEntity entity = getAppEntity(mac, eventType);

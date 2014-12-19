@@ -140,6 +140,7 @@ public class AppWebService {
 	
 	/**
 	 * @author s124255
+	 * @return A JSON object containing a list of all the unique mac addresses currently registered with an App
 	 */
 	@GET
 	@Path("/getDevices")
@@ -159,18 +160,6 @@ public class AppWebService {
 		}
 		
 		return uniqueDevices;
-		/*
-		for(String mac : uniqueMACAddr){
-			for(App a : apps){
-				if(a.getMac().equals(mac)){
-					uniqueDevices.add(a);
-					break;
-				}
-			}			
-		}	
-		return uniqueDevices;
-		*/
-		
 	}
 	
 	/**
@@ -195,9 +184,9 @@ public class AppWebService {
 	
 	/**
 	 * @author s124255
-	 * @param mac
-	 * @param eventType
-	 * @param status
+	 * @param mac The mac address of the device which should be updated
+	 * @param eventType The enum EventType of which type of event the App to be updated is producing
+	 * @param status The new status of the App
 	 */
 	@PUT
 	@Path("/updateApp")

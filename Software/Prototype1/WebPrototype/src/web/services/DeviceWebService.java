@@ -31,6 +31,15 @@ public class DeviceWebService {
 	@EJB DevicesEAO eao;
 	
 	
+	/**
+	 * @author s124255
+	 * @param mac
+	 * The mac address of new device to be added.
+	 * Typically in the format XX:XX:XX:XX:XX:XX
+	 * @param name
+	 * A String representation of the name belonging to the mac
+	 * @return The JSON object representing the newly created device, if null is returned the mac already exists
+	 */
 	@GET
 	@Path("/addDeviceName")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
@@ -47,6 +56,12 @@ public class DeviceWebService {
 		return device;
 	}
 	
+	/**
+	 * @author s124255
+	 * @param mac The mac address of the device to lookup
+	 * @return The JSON object representing the device;
+	 * Returns null if no device is found
+	 */
 	@GET
 	@Path("/getDevice")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
@@ -63,6 +78,11 @@ public class DeviceWebService {
 		return Conversion.convertDeviceEntity(deviceEntity);
 	}
 	
+	/**
+	 * @author s124255
+	 * @param mac The mac address of the device which name should be updated
+	 * @param name A String representation of the new name 
+	 */
 	@PUT
 	@Path("/updateDeviceName")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
@@ -70,6 +90,10 @@ public class DeviceWebService {
 		Conversion.convertDeviceEntity(eao.updateName(mac, name));
 	}
 	
+	/**
+	 * @author s124255
+	 * @return A JSON object containing the complete list of device data objects with names
+	 */
 	@GET
 	@Path("/getDeviceList")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})

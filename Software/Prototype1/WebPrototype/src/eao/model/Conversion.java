@@ -125,6 +125,12 @@ public class Conversion {
 		return rules;
 	}
 	
+	/**
+	 * @author s124255
+	 * @param deviceEntity
+	 * A DeviceEntity object to be converted to a Device data object
+	 * @return The converted data object
+	 */
 	public static Device convertDeviceEntity(DeviceEntity deviceEntity){
 		
 		String mac = deviceEntity.getMac();
@@ -134,6 +140,12 @@ public class Conversion {
 		
 	}
 
+	/**
+	 * @author s124255
+	 * @param list
+	 * A list of DeviceEntity objects to be converted to a list of Device data objects
+	 * @return The list of converted data objects
+	 */
 	public static List<Device> convertDeviceEntityList(
 			List<DeviceEntity> list) {
 		if (list == null) return null;

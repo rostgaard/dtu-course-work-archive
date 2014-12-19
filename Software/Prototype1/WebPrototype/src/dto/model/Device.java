@@ -5,13 +5,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * 
  * @author s124255
- *
+ *	@Note Device data structure
+ *  <p><code>String mac</code> <p><code>String name</code>
  */
 @XmlRootElement
 public class Device {
 
 	private String mac;
 	private String name;
+	
 	
 	public Device() {
 		

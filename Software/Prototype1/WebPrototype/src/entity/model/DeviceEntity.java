@@ -9,7 +9,8 @@ import javax.persistence.Id;
 /**
  * 
  * @author s124255
- *
+ * @Note Device entity structure
+ * <p><code>int id</code> <p><code>String mac</code> <p><code>String name</code>
  */
 
 @Entity
