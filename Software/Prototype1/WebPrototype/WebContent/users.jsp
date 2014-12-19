@@ -170,27 +170,32 @@
 <!--
 @author s124259
 -->
-<div class="panel-footer">
-    <div style="width: 2%; margin: 0 auto;">
-        v1.0.0
+<div class="panel-footer" data-step="5" data-intro="These useful links will help you even further">
+        <div style="width: 2%; margin: 0 auto;">
+            v1.0.0
+        </div>
+        <div style="width: 22%; margin: 0 auto;">
+            <a href="documentation/QuickStartGuide.pdf"
+               target="_blank">Quick Start Guide</a>
+            |
+            <a href="documentation/Handbook.pdf"
+               target="_blank">Handbook</a>
+            |
+            <a href="https://docs.google.com/spreadsheets/d/1-Mja1E3XRwdse36ivBhWv3xAWuNfAvNiuyAH2vrtuww/pubhtml"
+               target="_blank">Known Bugs</a>
+        </div>
+        <div style="width: 22%; margin: 0 auto;">
+            <a href="android/MonitorApp.apk"
+               target="_blank">Monitor App</a>
+            |
+            <a href="android/SensorActuatorApp.apk"
+               target="_blank">Sensor/Actuar App</a>
+            |
+            <a href="android/CameraApp.apk"
+               target="_blank">Camera App</a>
+        </div>
     </div>
-    <div style="width: 22%; margin: 0 auto;">
-        <a href="https://docs.google.com/document/d/1fRxEcnT6e1gi_WQDbheRzWXXZbP5OenC2mTVpi9qMDk/pub" target="_blank">Quick
-            Start Guide</a>
-        |
-        <a href="https://docs.google.com/document/d/1I5P_2qIg8SIz7wvdPGlaI-uMimTQXew2n0-tSskPx6s/pub" target="_blank">Handbook</a>
-        |
-        <a href="https://docs.google.com/spreadsheets/d/1xKfce3ZwyUpaoCnxguzYpSRH6URlFPQwEO1oNtJMgug/pubhtml?gid=0&single=true"
-           target="_blank">Known Bugs</a>
-    </div>
-    <div style="width: 15%; margin: 0 auto;">
-        <a href="https://docs.google.com/spreadsheets/d/1xKfce3ZwyUpaoCnxguzYpSRH6URlFPQwEO1oNtJMgug/pubhtml?gid=0&single=true"
-           target="_blank">Device App</a>
-        |
-        <a href="https://docs.google.com/spreadsheets/d/1xKfce3ZwyUpaoCnxguzYpSRH6URlFPQwEO1oNtJMgug/pubhtml?gid=0&single=true"
-           target="_blank">User Alarm App</a>
-    </div>
-</div>
+    
 <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
      aria-labelledby="addUserModal" aria-hidden="true">
     <div class="modal-dialog modal-sm">

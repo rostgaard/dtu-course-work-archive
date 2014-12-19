@@ -474,21 +474,24 @@
             v1.0.0
         </div>
         <div style="width: 22%; margin: 0 auto;">
-            <a href="https://docs.google.com/document/d/1fRxEcnT6e1gi_WQDbheRzWXXZbP5OenC2mTVpi9qMDk/pub"
+            <a href="documentation/QuickStartGuide.pdf"
                target="_blank">Quick Start Guide</a>
             |
-            <a href="https://docs.google.com/document/d/1I5P_2qIg8SIz7wvdPGlaI-uMimTQXew2n0-tSskPx6s/pub"
+            <a href="documentation/Handbook.pdf"
                target="_blank">Handbook</a>
             |
-            <a href="https://docs.google.com/spreadsheets/d/1xKfce3ZwyUpaoCnxguzYpSRH6URlFPQwEO1oNtJMgug/pubhtml?gid=0&single=true"
+            <a href="https://docs.google.com/spreadsheets/d/1-Mja1E3XRwdse36ivBhWv3xAWuNfAvNiuyAH2vrtuww/pubhtml"
                target="_blank">Known Bugs</a>
         </div>
-        <div style="width: 15%; margin: 0 auto;">
-            <a href="https://docs.google.com/spreadsheets/d/1xKfce3ZwyUpaoCnxguzYpSRH6URlFPQwEO1oNtJMgug/pubhtml?gid=0&single=true"
-               target="_blank">Device App</a>
+        <div style="width: 22%; margin: 0 auto;">
+            <a href="android/MonitorApp.apk"
+               target="_blank">Monitor App</a>
             |
-            <a href="https://docs.google.com/spreadsheets/d/1xKfce3ZwyUpaoCnxguzYpSRH6URlFPQwEO1oNtJMgug/pubhtml?gid=0&single=true"
-               target="_blank">User Alarm App</a>
+            <a href="android/SensorActuatorApp.apk"
+               target="_blank">Sensor/Actuar App</a>
+            |
+            <a href="android/CameraApp.apk"
+               target="_blank">Camera App</a>
         </div>
     </div>
     <!-- ##################################################################
