@@ -193,6 +193,8 @@ response.sendRedirect("login.jsp");
                 
                 <p class="text" id="movementSens"></p>
                 
+                <p class="text" id="userAlert"></p>
+                
                 
                 <script>
 					var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
@@ -246,6 +248,9 @@ response.sendRedirect("login.jsp");
                                         }
                                          if (eventTy == "ACCELEROMETER") {
                                             $('#movementSens').html("Movement sensor is available - Sensor ID: " + devices[i].id);
+                                        }                 
+                                         if (eventTy == "USERALERT") {
+                                            $('#userAlert').html("User Alert - ID: " + devices[i].id);
                                         }
 
                                     }
