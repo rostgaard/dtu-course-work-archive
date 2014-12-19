@@ -1,4 +1,9 @@
 package web.services.util;
+/**
+ * 
+ * @author stefan s113420
+ *
+ */
 
 /**
  * 
@@ -7,9 +12,9 @@ package web.services.util;
  */
 
 public class VOD {
-	long startTime;
-	int startID;
-	int length;
+	long startTime;//The time at which the VOD starts
+	int startID;//The video ID at which the VOD starts
+	int length;//The length in video chuncks (default: 4s)
 	
 	public VOD()
 	{
