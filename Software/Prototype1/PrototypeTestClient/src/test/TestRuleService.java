@@ -9,10 +9,10 @@ import org.junit.Test;
 import service.App;
 import service.Event;
 import service.EventType;
-import service.SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest;
-import service.SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.AddApp;
-import service.SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AddEventByID;
-import service.SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.GetEventsByID;
+import service.SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest;
+import service.SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.Apps.AddApp;
+import service.SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.Events.AddEventByID;
+import service.SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.Events.GetEventsByID;
 import service.RuleString;
 
 /**
@@ -29,9 +29,9 @@ public class TestRuleService {
 	@Before
 	public void setUp() throws Exception {
 		//Localhost_Prototype1Rest.apps().deleteApp().getAsTextPlain(0,String.class);
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.rules().setSecurityLevel().put(1);
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.rules().setSecurityLevel().post(1);
 		
-		AddApp addApp = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().addApp();		
+		AddApp addApp = SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().addApp();		
 		app1 = addApp.getAsApp("TestMac1", EventType.ACCELEROMETER.toString());
 		app2 = addApp.getAsApp("TestMac2", EventType.PLAYSOUND.toString());
 		app3 = addApp.getAsApp("TestMac3", EventType.FLASHLIGHT.toString());
@@ -39,25 +39,25 @@ public class TestRuleService {
 		
 		ruleString = generateRuleString(app1.getId(), app2.getId(), app3.getId(), app4.getId());
 		
-		dbRulestring = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.rules().addRuleString().postTextPlainAsJson(ruleString, 999, RuleString.class);
+		dbRulestring = SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.rules().addRuleString().postTextPlainAsJson(ruleString, 999, RuleString.class);
 		//dbRulestring = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.rules().addRuleString().getAsRuleString(ruleString, 999);
 		assertEquals(ruleString, dbRulestring.getRule());
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().deleteApp().delete(app1.getId());
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().deleteApp().delete(app2.getId());
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().deleteApp().delete(app3.getId());
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().deleteApp().delete(app4.getId());
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().deleteApp().delete(app1.getId());
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().deleteApp().delete(app2.getId());
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().deleteApp().delete(app3.getId());
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().deleteApp().delete(app4.getId());
 		
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.rules().deletePolicy().delete(dbRulestring.getPolicyId());
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.rules().deletePolicy().delete(dbRulestring.getPolicyId());
 	}
 
 	@Test
 	public void ruleEngineTest() {
-		AddEventByID  addEventByID = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.events().addEventByID();
-		GetEventsByID getEventById = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.events().getEventsByID();
+		AddEventByID  addEventByID = SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.events().addEventByID();
+		GetEventsByID getEventById = SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.events().getEventsByID();
 		
 //		// Should not trigger the rule
 //		addEventByID.getAsEvent(40, app2.getId(), app2.getEventType().toString());

@@ -8,8 +8,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import service.SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest;
 import service.Role;
+import service.SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest;
 import service.User;
 
 /**
@@ -28,32 +28,32 @@ public class TestUserService {
 
 	@Before
 	public void setUp() throws Exception {
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.users().deleteUser().delete(username);
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.users().deleteUser().delete(username);
 	}
 	
 	@After
 	public void tearDown() throws Exception {
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.users().deleteUser().delete(username);
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.users().deleteUser().delete(username);
 	}
 	
 	@Test
 	public void userTest() {
 		
-		User addUser = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.users().addUser().getAsUser(username, email, firstname, lastname, Role.MANAGER.toString(), password);
+		User addUser = SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.users().addUser().getAsUser(username, email, firstname, lastname, Role.MANAGER.toString(), password);
 		
 		assertTrue(checkUser(addUser));
 		
-		User getUser = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.users().getUserByUserName().getAsUser(username);
+		User getUser = SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.users().getUserByUserName().getAsUser(username);
 		
 		assertTrue(checkUser(getUser));
 		assertEquals(addUser.getLastLogin(), getUser.getLastLogin());
 		
-		String lastLogin = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.users().getLastLoginByUserName().getAsJson(username, String.class);
+		String lastLogin = SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.users().getLastLoginByUserName().getAsJson(username, String.class);
 		assertEquals("" + getUser.getLastLogin(), lastLogin);
 		
 		// Add the same user
 		try {
-			SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.users().addUser().getAsUser(username, email, firstname, lastname, Role.MANAGER.toString(), password);
+			SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.users().addUser().getAsUser(username, email, firstname, lastname, Role.MANAGER.toString(), password);
 			fail();
 		} catch (Exception e) {
 			assertEquals("500 Internal Server Error", e.getMessage());

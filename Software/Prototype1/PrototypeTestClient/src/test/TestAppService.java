@@ -9,9 +9,9 @@ import org.junit.Test;
 
 import service.App;
 import service.EventType;
-import service.SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest;
-import service.SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.AddApp;
-import service.SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetAppByID;
+import service.SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest;
+import service.SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.Apps.AddApp;
+import service.SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.Apps.GetAppByID;
 
 /**
  * 
@@ -20,7 +20,7 @@ import service.SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.GetAppByID
  */
 public class TestAppService {
 	
-	private String errorMessage = "GET http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest/apps/addApp?mac=TestMac1&eventType=ACCELEROMETER returned a response status of 204 No Content";
+	private String errorMessage = "GET http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/SmartHomeSecurity/rest/apps/addApp?mac=TestMac1&eventType=ACCELEROMETER returned a response status of 204 No Content";
 
 	@Before
 	public void setUp() throws Exception {
@@ -37,7 +37,7 @@ public class TestAppService {
 	public void addAppTest() {
 		
 		String mac1 = "TestMac1", mac2 = "TestMac2";
-		AddApp addApp = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().addApp();
+		AddApp addApp = SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().addApp();
 		
 		App app1 = addApp.getAsApp(mac1, EventType.ACCELEROMETER.toString());
 		
@@ -58,7 +58,7 @@ public class TestAppService {
 		/**
 		 *  Test get from database, not all the get services are being tested.
 		 */
-		GetAppByID getApp = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().getAppByID();
+		GetAppByID getApp = SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().getAppByID();
 		
 		App appGet1 = getApp.getAsApp(app1.getId());
 		App appGet2 = getApp.getAsApp(app2.getId());
@@ -73,8 +73,8 @@ public class TestAppService {
 		assertEquals(app2.getEvents().size(), appGet2.getEvents().size());
 		
 		
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().deleteApp().delete(app1.getId());
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().deleteApp().delete(app2.getId());
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().deleteApp().delete(app1.getId());
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().deleteApp().delete(app2.getId());
 	}
 
 }

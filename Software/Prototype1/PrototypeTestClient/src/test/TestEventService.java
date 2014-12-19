@@ -11,11 +11,11 @@ import org.junit.Test;
 import service.App;
 import service.Event;
 import service.EventType;
-import service.SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest;
-import service.SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Apps.AddApp;
-import service.SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AddEventByID;
-import service.SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AddEventByMac;
-import service.SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.Events.AwaitEventByID;
+import service.SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest;
+import service.SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.Apps.AddApp;
+import service.SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.Events.AddEventByID;
+import service.SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.Events.AddEventByMac;
+import service.SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.Events.AwaitEventByID;
 
 /**
  * 
@@ -30,7 +30,7 @@ public class TestEventService {
 	
 	@Before
 	public void setUp() throws Exception {
-		AddApp addApp = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().addApp();		
+		AddApp addApp = SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().addApp();		
 		app1 = addApp.getAsApp("TestMac1", EventType.ACCELEROMETER.toString());
 		app2 = addApp.getAsApp("TestMac2", EventType.FLASHLIGHT.toString());
 		app3 = addApp.getAsApp("TestMac3", EventType.PLAYSOUND.toString());
@@ -39,16 +39,16 @@ public class TestEventService {
 
 	@After
 	public void tearDown() throws Exception {
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().deleteApp().delete(app1.getId());
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().deleteApp().delete(app2.getId());
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().deleteApp().delete(app3.getId());
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().deleteApp().delete(app4.getId());
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().deleteApp().delete(app1.getId());
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().deleteApp().delete(app2.getId());
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().deleteApp().delete(app3.getId());
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().deleteApp().delete(app4.getId());
 	}
 
 	@Test
 	public void addEventTest() {
-		AddEventByID  addEventByID = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.events().addEventByID();
-		AddEventByMac addEventByMac = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.events().addEventByMac();
+		AddEventByID  addEventByID = SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.events().addEventByID();
+		AddEventByMac addEventByMac = SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.events().addEventByMac();
 		
 		Event event1 = addEventByID.getAsEvent(4, app1.getId(), app1.getEventType().toString());
 		Event event2 = addEventByID.getAsEvent(4, app2.getId(), app2.getEventType().toString());
@@ -69,9 +69,9 @@ public class TestEventService {
 	@Test
 	public void addEventToAppThatDoesNotExistTest() {
 		// Add an event to an app that doesn't exist
-		AddEventByID  addEventByID = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.events().addEventByID();
+		AddEventByID  addEventByID = SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.events().addEventByID();
 		Event eventWithNewApp = addEventByID.getAsEvent(4, 999, EventType.ACCELEROMETER.toString());
-		App appNew = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().getAppByID().getAsApp(eventWithNewApp.getAppID());
+		App appNew = SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().getAppByID().getAsApp(eventWithNewApp.getAppID());
 		
 		assertNotNull(appNew);
 		assertEquals(eventWithNewApp.getAppID(), appNew.getId());
@@ -79,12 +79,12 @@ public class TestEventService {
 		assertEquals(eventWithNewApp.getId(), appNew.getEvents().get(0).getId());
 		
 		
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.apps().deleteApp().delete(appNew.getId());
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.apps().deleteApp().delete(appNew.getId());
 	}
 	
 	@Test
 	public void awaitEventTest() {
-		final AwaitEventByID awaitEventByID = SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.events().awaitEventByID();
+		final AwaitEventByID awaitEventByID = SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.events().awaitEventByID();
 		
 		try {
 			assertNull(awaitEventByID.getAsEvent(app1.getId(), app1.getEventType().toString()));
@@ -103,7 +103,7 @@ public class TestEventService {
 			}
 		}).start();
 		
-		SeSe2E14Glassfish41CComputeDtuDk_Prototype245Rest.events().addEventByID().getAsEvent(2, app1.getId(), app1.getEventType().toString());
+		SeSe2E14Glassfish41CComputeDtuDk_SmartHomeSecurityRest.events().addEventByID().getAsEvent(2, app1.getId(), app1.getEventType().toString());
 		
 		while(true) {
 			if (awaited) {
