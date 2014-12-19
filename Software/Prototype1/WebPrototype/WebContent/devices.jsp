@@ -379,7 +379,7 @@ var activeMac;
         
         	var tex = "Device Configured";
 			var suc = tex.fontcolor("green");
-        	$('#condev').html(suc);
+        	alert(suc);
         	reloadDevs();
         
         }
@@ -387,7 +387,7 @@ var activeMac;
         else{
         	var tex = "Input Error";
 			var fail = tex.fontcolor("red");
-			$('#condev').html(fail);
+			alert(fail);
         	
         }
 

@@ -265,6 +265,8 @@ response.sendRedirect("login.jsp");
 	var webServerPath = "http://se-se2-e14-glassfish41-c.compute.dtu.dk:8080/Prototype245/rest";
 	var data;	
 	
+	if(!isNan(id)){
+	
 	var ruleURL = webServerPath + "/rules/addRuleString?policyId="+ id;
 			$.ajax({
 				type: "POST",
@@ -272,17 +274,17 @@ response.sendRedirect("login.jsp");
 				url: ruleURL,
 				data: newRulestring,
 				success: function(data){
-					var tex = "Rule successfully added";
-					var suc = tex.fontcolor("green");
-					$('#status').html(suc);
+					alert("Rule successfully added");
 				},
 				error: function(data){
-					var tex = "Input Error";
-					var fail = tex.fontcolor("red");
-					$('#status').html(fail);		
+					alert("Input Error: \n Rule String was not parsed correctly");		
 				}
 			});
 	reloadRules();
+	}
+	else{
+	alert("Policy Id must be a number");
+	}
 }
 	
 </script>
