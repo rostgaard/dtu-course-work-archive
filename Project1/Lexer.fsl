@@ -1,4 +1,4 @@
-﻿{ // Lexer spec. for simple imperative language      Michael R. Hansen 05-01-2014 
+{ // Lexer spec. for simple imperative language      Michael R. Hansen 05-01-2014 
 module Lexer
 
 open System

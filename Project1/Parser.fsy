@@ -1,4 +1,4 @@
-﻿/*   Parser spec. for simple imperative language      mrh 03-01 2014 */
+/*   Parser spec. for simple imperative language      mrh 03-01 2014 */
 %{ 
 open AST
 %}

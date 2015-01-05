@@ -1,4 +1,4 @@
-﻿module ParserUtil
+module ParserUtil
 
 open System.IO
 open System.Text

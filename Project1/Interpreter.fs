@@ -1,4 +1,4 @@
-﻿(* Interpreter for a simple WHILE-language. Michael R. Hansen 03-01-2014 *)
+(* Interpreter for a simple WHILE-language. Michael R. Hansen 03-01-2014 *)
 (* Based on a natural semantics of WHILE                                 *)
 
 (* Remember to regenerate the parser and the lexer using the commands 
@@ -108,6 +108,7 @@ and dec d env store =
                                                  -> let env2 = Map.add s (Reference loc) env
                                                     let store2 = Map.add loc (SimpVal res) store1
                                                     (env2, store2)
-                     | _                         -> failwith "error"                                    
+                     | _                         -> failwith "error"
+    |
 ;;
 
