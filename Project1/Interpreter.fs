@@ -109,6 +109,6 @@ and dec d env store =
                                                     let store2 = Map.add loc (SimpVal res) store1
                                                     (env2, store2)
                      | _                         -> failwith "error"
-    |
+    | ProcDec (_)  -> failwith "Process declarations are not yet implemented"
 ;;
 
