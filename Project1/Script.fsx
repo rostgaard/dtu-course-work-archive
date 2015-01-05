@@ -1,4 +1,4 @@
-﻿// Michael R. Hansen 03-01-2014
+// Michael R. Hansen 03-01-2014
 
 (* Load the parser and interpreter *)
 #r "FSharp.PowerPack.dll"
@@ -61,8 +61,24 @@ let _ = ignore (stm p3 initEnv Map.empty);;
 let p4 = parseFromFile "Factorial2.while";;
 let _ = ignore (stm p4 initEnv Map.empty);;
 
-// let p5 = parseFromFile "Factorial3.while";;
-// let _ = ignore (stm p5 initEnv Map.empty);;
+let p5a =
+  Block
+    ([VarDec ("n",Int 4); VarDec ("y",Int 1) ; ProcDec ("test",["x"], PrintLn (Int 42))],
+     Seq
+       [While
+          (Apply ("<>",[ContOf (Var "n"); Int 0]),
+           Seq
+             [PrintLn (Apply ("toString",[ContOf (Var "n")]));
+              PrintLn (Apply ("toString",[ContOf (Var "y")]));
+              Asg (Var "y",Apply ("*",[ContOf (Var "n"); ContOf (Var "y")]));
+              Asg (Var "n",Apply ("-",[ContOf (Var "n"); Int 1]))]);
+        PrintLn (String "Result is: ");
+        PrintLn (Apply ("toString",[ContOf (Var "n")]));
+        PrintLn (Apply ("toString",[ContOf (Var "y")]))]);;
+
+let _ = ignore (stm p5a initEnv Map.empty);;
+//let p5 = parseFromFile "Factorial3.while";;
+//let _ = ignore (stm p5 initEnv Map.empty);;
 
 // let p6 = parseFromFile "Factorial4.while";;
 // let _ = ignore (stm p6 initEnv Map.empty);;
