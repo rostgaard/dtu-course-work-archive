@@ -1,4 +1,4 @@
-﻿// Michael R. Hansen 03-01-2014
+// Michael R. Hansen 03-01-2014
 module AST
 open System
 
@@ -14,9 +14,5 @@ and  Stm = | Asg of Exp * Exp
            | Seq of List<Stm>
            | While of Exp * Stm
            | Block of List<Dec> * Stm
-and Dec  = | VarDec of string * Exp
-
-
-
-
-
+and Dec  = | VarDec   of string * Exp
+           | ProcDec  of string * List<string> * Stm
