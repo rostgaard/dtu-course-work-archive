@@ -1,4 +1,4 @@
-﻿let rng: 100; len:10;  a[!len]: 1 ; sum : 0
+let rng: 100; len:10;  a[!len]: 1 ; sum : 0
 in a := randomArray(rng, len);
    call printArray(!a);
    sum := sumArray(!a);

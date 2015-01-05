@@ -1,4 +1,4 @@
-﻿let x: 4; output: 1;
+let x: 4; output: 1;
     rec proc fac(n) if =(!n,0)
                     then return 1  
                     else n := -(!n,1);

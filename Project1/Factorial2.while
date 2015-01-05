@@ -1,4 +1,4 @@
-﻿let n: 4; y: 1
+let n: 4; y: 1
 in while <>(!n,0)
    do print toString(!n); 
       print toString(!y);
