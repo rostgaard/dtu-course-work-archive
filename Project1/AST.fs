@@ -7,7 +7,9 @@ type Exp = | Int of int
            | String of string 
            | Var of string 
            | ContOf of Exp 
-           | Apply of string * List<Exp>    
+           | Apply of string * List<Exp>
+           | ArrExp of string * Exp
+           | Length of string
 
 and  Stm = | Asg of Exp * Exp
            | PrintLn of Exp

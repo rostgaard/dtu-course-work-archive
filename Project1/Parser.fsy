@@ -8,7 +8,7 @@ open AST
 %token <string> STRING
 %token <string> NAME
 %token TRUE FALSE
-%token ASG SKIP SEMI WHILE DO OD CONTOF LET IN END PROC CALL REC RETURN IF THEN ELSE FI
+%token ASG SKIP SEMI WHILE DO OD CONTOF LET IN END PROC CALL REC RETURN IF THEN ELSE FI ARRAYEXP LENGTH
 %token COLON COMMA PRINT
 %token LPAR RPAR LSQPAR RSQPAR
 %token EOF
@@ -62,6 +62,8 @@ Exp:
   | INT                                  { Int $1 }
   | BOOL                                 { Bool $1 }
   | STRING                               { String $1}
+  | NAME LENGTH                          { Length $1 }
+  | ARRAYEXP NAME LSQPAR Exp RSQPAR      { ArrExp ($2,$4) }
   | CONTOF Exp                           { ContOf $2 }        
   | LPAR Exp RPAR                        { $2 }
   | NAME LPAR ExpList RPAR               { Apply($1, $3) } 

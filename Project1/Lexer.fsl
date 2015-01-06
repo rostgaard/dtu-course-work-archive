@@ -17,6 +17,7 @@ let keyword s =
     | "then"      -> THEN
     | "else"      -> ELSE
     | "fi"        -> FI
+    | ".length"   -> LENGTH
     | "skip"      -> SKIP
     | "let"       -> LET 
     | "in"        -> IN
