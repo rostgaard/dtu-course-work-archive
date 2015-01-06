@@ -42,12 +42,14 @@ rule tokenize =
                   let last = str.Length - 1
                   STRING (str.Remove(last).Remove(0,1)) }
   | "!"         { CONTOF} 
-  | "("         { LPAR  } 
-  | ")"         { RPAR  }  
-  | ";"         { SEMI  }
-  | ":"         { COLON }
-  | ","         { COMMA }
-  | ":="        { ASG   }
+  | "("         { LPAR   } 
+  | ")"         { RPAR   }  
+  | "["         { LSQPAR } 
+  | "]"         { RSQPAR }  
+  | ";"         { SEMI   }
+  | ":"         { COLON  }
+  | ","         { COMMA  }
+  | ":="        { ASG    }
   | "<>"        { NAME("<>") }
   | "<"         { NAME("<") } 
   | "*"         { NAME("*") }
