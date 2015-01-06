@@ -85,9 +85,9 @@ let arr1 =
 // Test the program
 //let _ = ignore (stm p5a initEnv Map.empty);;
 
-
 let p5 = parseFromFile "Factorial3.while";;
-let _ = ignore (stm p5 initEnv Map.empty);;
+//let _ = ignore (stm p5 initEnv Map.empty);;
+
 
 // let p6 = parseFromFile "Factorial4.while";;
 // let _ = ignore (stm p6 initEnv Map.empty);;
