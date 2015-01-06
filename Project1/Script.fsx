@@ -76,24 +76,22 @@ let p5a =
         PrintLn (Apply ("toString",[ContOf (Var "n")]));
         PrintLn (Apply ("toString",[ContOf (Var "y")]))]);;
 
-(* 
 let arr1 =
   Block
     ([VarDec ("n",Int 4); VarDec ("y",Int 1) ; ProcDec ("test",["x"], PrintLn (Int 42))],
      Seq[Asg (Var "n",Apply ("-",[ContOf (Var "n"); Int 1]))]);
-*)       
 
 // Test the program
 //let _ = ignore (stm p5a initEnv Map.empty);;
 
 let p5 = parseFromFile "Factorial3.while";;
-let _ = (stm p5 initEnv Map.empty);;
+let _ = ignore (stm p5 initEnv Map.empty);;
 
 
-// let p6 = parseFromFile "Factorial4.while";;
-// let _ = ignore (stm p6 initEnv Map.empty);;
+let p6 = parseFromFile "Factorial4.while";;
+//let _ = ignore (stm p6 initEnv Map.empty);;
 
-// let p7 = parseFromFile "Factorial5.while";;
+let p7 = parseFromFile "Factorial5.while";;
 // let _ = ignore (stm p7 initEnv Map.empty);;
 
 
