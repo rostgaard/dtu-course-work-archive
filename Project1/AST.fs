@@ -16,3 +16,5 @@ and  Stm = | Asg of Exp * Exp
            | Block of List<Dec> * Stm
 and Dec  = | VarDec   of string * Exp
            | ProcDec  of string * List<string> * Stm
+           | ArrDec   of string * Exp * Exp
+           ;;

@@ -9,6 +9,8 @@ open Microsoft.FSharp.Text.Lexing
 let keyword s = 
     match s with
     | "print"     -> PRINT
+    | "proc"      -> PROC
+    | "call"      -> CALL
     | "skip"      -> SKIP
     | "let"       -> LET 
     | "in"        -> IN
