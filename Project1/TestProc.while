@@ -1,0 +1,5 @@
+﻿
+namespace WhileInterpreter
+open System
+
+type TestProc() = 

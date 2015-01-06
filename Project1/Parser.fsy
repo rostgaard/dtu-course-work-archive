@@ -31,6 +31,7 @@ Stm:
   | WHILE Exp DO StmList OD				 { While($2,Seq $4) }
   | LET DecList IN StmList END           { Block($2,Seq $4) }
   | PRINT Exp                            { PrintLn $2 }
+  | CALL NAME LPAR ExpList RPAR        { Call ($2,$4)}
 
 StmList:
     Stm                                 { [$1] }
@@ -44,7 +45,7 @@ Dec:
 ParamList:
                                         { []   }
    | NAME                               { [$1] }
-   | NAME COLON ParamList               { $1 :: $3 }
+   | NAME COMMA ParamList               { $1 :: $3 }
 
 DecList:
                                         { [] } 
