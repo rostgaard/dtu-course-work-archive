@@ -1,3 +1,10 @@
 */obj
+*.fsproj
+*.sln
+*.suo
+bin/
+Parser.fs
+Lexer.fs
+Parser.fsi
 *~
 
