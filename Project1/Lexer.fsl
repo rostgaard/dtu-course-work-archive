@@ -11,6 +11,12 @@ let keyword s =
     | "print"     -> PRINT
     | "proc"      -> PROC
     | "call"      -> CALL
+    | "rec"       -> REC
+    | "return"    -> RETURN
+    | "if"        -> IF
+    | "then"      -> THEN
+    | "else"      -> ELSE
+    | "fi"        -> FI
     | "skip"      -> SKIP
     | "let"       -> LET 
     | "in"        -> IN
