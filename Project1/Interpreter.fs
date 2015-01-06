@@ -31,11 +31,20 @@ let closureOf(ps,st) env = (ps, env, st)
 let nextLoc: unit -> int =  let n = ref 0
                             let f x = (n := !n+1; !n)
                             f
-// creates nev environment based on args
-let rec newEnvFromArgs = function 
-    | []    -> Map.empty
-    | s::xs -> Map.add s (Reference (nextLoc())) (newEnvFromArgs xs);;  
 
+
+let rec toString mapp = Map.fold (fun acc k v -> (string k) + " = " + (string v) + " \n ") "" mapp;;
+// creates nev environment based on args
+let rec newEnvFromArgs env = function 
+    | []    -> env
+    | s::xs -> Map.add s (Reference (nextLoc())) (newEnvFromArgs env xs);;  
+
+let rec assignArgsToVals (env:Env) = function
+    | ([], []) -> env
+    | (a::ax, v::vx) -> Map.add a v (assignArgsToVals env (ax,vx))
+    | (_) -> failwith "Arguments list do not match the declaration"
+
+    
 // exp: Exp -> Env -> Store -> Value * Store 
 let rec exp e (env:Env) (store:Store) = 
     match e with
@@ -44,7 +53,8 @@ let rec exp e (env:Env) (store:Store) =
                      | IntVal i              -> printfn "%s" (string i) ; failwith "errorXXX"
                      | _                     -> failwith "errorYYY"
     | ContOf er    -> match exp er env store with
-                      | (Reference loc,store1) -> match Map.find loc store1 with 
+                      | (Reference loc,store1) -> //eprintf "%s" (toString env)
+                                                  match Map.find loc store1 with 
                                                   | SimpVal res -> (res,store1)
                                                   | _           -> failwith "error"
                       | _                   -> failwith "error"
@@ -65,10 +75,16 @@ and expList es env store =
                   let (ress, store2) = expList erest env store1
                   (res1::ress, store2)  
 
- 
+
 // stm: Stm -> Env -> Store -> option<Value> * Store
 and stm st (env:Env) (store:Store) = 
     match st with 
+    | Call(s, args) -> let (res, store1) = expList args env store
+                       let ((Reference resl), store2) = exp (Var(s)) env store1
+                       let Proc(args1, env2, stms) as x = Map.find resl store2
+                       let env3 = assignArgsToVals env2 (args1,res)
+                       match stm stms env3 store2 with
+                            | result    -> result
     | Asg(el,e) -> let (res,store1) = exp e env store
                    let (resl, store2) = exp el env store1
                    match resl with 
@@ -115,8 +131,8 @@ and dec d env store =
                                                     (env2, store2)
                      | _                         -> failwith "error"
     | ProcDec (s, args, stm) -> let loc = nextLoc()
-                                let locEnv = newEnvFromArgs args
                                 let env2 = Map.add s (Reference loc) env
-                                let proc = Proc(args, locEnv, stm)
+                                let proc = Proc(args, env, stm)
                                 let store2 = Map.add loc proc store
                                 (env2, store2);;
+
