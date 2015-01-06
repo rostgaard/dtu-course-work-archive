@@ -26,10 +26,15 @@ type Store  = Map<Location,Content>
   
 let closureOf(ps,st) env = (ps, env, st)
 
+
 // nextLoc() generates the next available location
 let nextLoc: unit -> int =  let n = ref 0
                             let f x = (n := !n+1; !n)
                             f
+// creates nev environment based on args
+let rec newEnvFromArgs = function 
+    | []    -> Map.empty
+    | s::xs -> Map.add s (Reference (nextLoc())) (newEnvFromArgs xs);;  
 
 // exp: Exp -> Env -> Store -> Value * Store 
 let rec exp e (env:Env) (store:Store) = 
@@ -109,6 +114,9 @@ and dec d env store =
                                                     let store2 = Map.add loc (SimpVal res) store1
                                                     (env2, store2)
                      | _                         -> failwith "error"
-    | ProcDec (_) -> failwith "Process declarations are not yet implemented"
-;;
-
+    | ProcDec (s, args, stm) -> let loc = nextLoc()
+                                let locEnv = newEnvFromArgs args
+                                let env2 = Map.add s (Reference loc) env
+                                let proc = Proc(args, locEnv, stm)
+                                let store2 = Map.add loc proc store
+                                (env2, store2);;
