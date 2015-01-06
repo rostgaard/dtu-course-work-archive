@@ -102,13 +102,13 @@ and dec d env store =
     match d with 
     | VarDec(s,e) -> let loc = nextLoc()
                      match exp e env store with
-                     | (IntVal _ as res, store1)  
-                     | (BoolVal _ as res, store1) 
+                     | (IntVal _    as res, store1)  
+                     | (BoolVal _   as res, store1) 
                      | (StringVal _ as res, store1)  
                                                  -> let env2 = Map.add s (Reference loc) env
                                                     let store2 = Map.add loc (SimpVal res) store1
                                                     (env2, store2)
                      | _                         -> failwith "error"
-    | ProcDec (_)  -> failwith "Process declarations are not yet implemented"
+    | ProcDec (_) -> failwith "Process declarations are not yet implemented"
 ;;
 

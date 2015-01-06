@@ -4,7 +4,7 @@ let x: 4; output: 1;
                       print toString(!y);
                       y := *(!n,!y);
                       n := -(!n,1) 
-                   od     
+                   od    
 in call fac(x, output);
    print toString(!x);
    print toString(!output) 

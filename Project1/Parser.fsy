@@ -8,7 +8,7 @@ open AST
 %token <string> STRING
 %token <string> NAME
 %token TRUE FALSE
-%token ASG SKIP SEMI WHILE DO OD CONTOF LET IN END 
+%token ASG SKIP SEMI WHILE DO OD CONTOF LET IN END PROC CALL
 %token COLON COMMA PRINT
 %token LPAR RPAR LSQPAR RSQPAR
 %token EOF
@@ -38,7 +38,13 @@ StmList:
 
 Dec: 
      NAME COLON Exp                       { VarDec($1,$3) }  
-   | NAME LSQPAR Exp RSQPAR COLON Exp     { ArrDec($1,$3,$6)} 
+   | NAME LSQPAR Exp RSQPAR COLON Exp     { ArrDec($1,$3,$6)}
+   | PROC NAME LPAR ParamList RPAR Stm    { ProcDec($2,$4,$6)}
+
+ParamList:
+                                        { []   }
+   | NAME                               { [$1] }
+   | NAME COLON ParamList               { $1 :: $3 }
 
 DecList:
                                         { [] } 
