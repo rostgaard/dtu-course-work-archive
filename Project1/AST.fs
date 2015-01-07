@@ -10,7 +10,7 @@ type Exp = | Int of int
            | ContOf of Exp 
            | Apply of string * List<Exp>
            | ArrExp of string * Exp
-           | Length of string
+           | Attribute of string * string
 
 and  Stm = | Asg of Exp * Exp
            | ArrayAsg of string * Exp * Exp
@@ -22,7 +22,8 @@ and  Stm = | Asg of Exp * Exp
            | Return of Exp
            | IfElse of Exp * Stm * Stm
            | Skip
-and Dec  = | VarDec   of string * Exp
-           | ProcDec  of string * List<string> * Stm
-           | ArrDec   of string * Exp * Exp
+and Dec  = | VarDec     of string * Exp
+           | ProcDec    of string * List<string> * Stm
+           | RecProcDec of string * List<string> * Stm
+           | ArrDec     of string * Exp * Exp
            ;;
