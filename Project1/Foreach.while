@@ -1,0 +1,26 @@
+let
+  s          :  3;
+  a[+(!s,1)] : 10;
+  arraySum   :  0;
+
+  proc sum (a,b) return +(a,b);
+
+  proc crudeFold (arr, func) 
+  let
+     sum : 0;
+     i   : 1
+  in
+    foreach element in arr
+    do
+      sum := func(!sum, !element)
+    od;
+    return sum 
+  end
+
+in 
+   arraysum := crudeFold (a, sum);
+   print "Result is: ";
+   print toString (!arraysum);
+   print "Expected";
+   print toString(*(3,10)) 
+end
