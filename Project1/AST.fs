@@ -5,13 +5,15 @@ open System
 type Exp = | Int of int 
            | Bool of bool 
            | String of string 
-           | Var of string 
+           | Var of string
+           | ArrVar of string * Exp
            | ContOf of Exp 
            | Apply of string * List<Exp>
            | ArrExp of string * Exp
            | Length of string
 
 and  Stm = | Asg of Exp * Exp
+           | ArrayAsg of string * Exp * Exp
            | PrintLn of Exp
            | Seq of List<Stm>
            | While of Exp * Stm
