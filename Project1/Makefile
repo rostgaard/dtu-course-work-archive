@@ -13,3 +13,5 @@ test_run: Lexer.fs Parser.fs
 
 clean:
 	@-rm Lexer.fs Parser.fs Parser.fsi
+
+.PHONY: Lexer.fs Parser.fs

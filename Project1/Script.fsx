@@ -94,12 +94,10 @@ let p6 = parseFromFile "Factorial4.while";;
 let p7 = parseFromFile "Factorial5.while";;
 // let _ = ignore (stm p7 initEnv Map.empty);;
 
-let simpleArray = parseFromFile "ArrayProg1.while";;
-let _ = ignore (stm simpleArray initEnv Map.empty);;
 
-
+let arrTest = parseFromFile "ArrTest.while";;
 // Parsing and interpreting programs with arrays
-(*
+
 let randomArray = parseDec "proc randomArray(rng, lng) 
                                let a[!lng]: 0;
                                    i: 0
@@ -109,18 +107,22 @@ let randomArray = parseDec "proc randomArray(rng, lng)
                                od;
                                return a
                                end";;
-*)
+
 
 // Auxiliary procedures on arrays are in the file "ArrayUtil.while"
 // They are used to built up a basic environment and a basic store
-//let arrayUtilDecs = parseDecListFromFile "ArrayUtil.while";;
+let arrayUtilDecs = parseDecListFromFile "ArrayUtil.while";;
 
-//let (basisEnv, basisStore) = decList arrayUtilDecs initEnv Map.empty;; 
+let (basisEnv, basisStore) = decList arrayUtilDecs initEnv Map.empty;; 
 
-//let ap1 = parseFromFile"ArrayProg1.while";; 
+let ap1 = parseFromFile"ArrayProg1.while";; 
 //let _ = ignore (stm ap1 basisEnv basisStore);;
 
-//let ap2 = parseFromFile"ArrayProg2.while";; 
+let ap2 = parseFromFile"ArrayProg2.while";; 
 //let _ = ignore (stm ap2 basisEnv basisStore);;
 
+printf "%s\n" "ArrTest.while";;
 
+printf "%s\n" "Extensions - foreach";;
+
+let foreachTest = parseFromFile "Foreach.while";;

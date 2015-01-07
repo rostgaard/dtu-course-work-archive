@@ -8,7 +8,8 @@ open AST
 %token <string> STRING
 %token <string> NAME
 %token TRUE FALSE
-%token ASG SKIP SEMI WHILE DO OD CONTOF LET IN END PROC CALL REC RETURN IF THEN ELSE FI ARRAYEXP
+%token ASG SKIP SEMI WHILE DO OD CONTOF LET IN END PROC CALL REC RETURN IF THEN ELSE FI
+%token FOREACH
 %token COLON COMMA PRINT PERIOD
 %token LPAR RPAR LSQPAR RSQPAR
 %token EOF
@@ -28,7 +29,7 @@ Main:
 
 Stm:
 	NAME ASG Exp                        { Asg(Var $1,$3) }
-  | NAME LSQPAR Exp RSQPAR ASG Exp      { ArrayAsg($1, $3, $6) }
+  | NAME LSQPAR Exp RSQPAR ASG Exp      { ArrAsg($1, $3, $6) }
   | SKIP                                { Skip }
   | WHILE Exp DO StmList OD             { While($2,Seq $4) }
   | IF Exp THEN StmList ELSE StmList FI { IfElse ($2, Seq $4, Seq $6) }
@@ -37,6 +38,7 @@ Stm:
   | PRINT Exp                           { PrintLn $2 }
   | CALL NAME LPAR ExpList RPAR         { Call ($2,$4)}
   | RETURN Exp                          { Return ($2)}
+  | FOREACH NAME IN Exp DO StmList OD   { Foreach ($2, $4, Seq $6)}
 
 StmList:
     Stm                                 { [$1] }

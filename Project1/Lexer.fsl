@@ -27,6 +27,7 @@ let keyword s =
     | "true"      -> BOOL(true) 
     | "false"     -> BOOL(false)
     | "toString"  -> NAME("toString")
+    | "foreach"   -> FOREACH
     | _           -> NAME s  
 }
 
