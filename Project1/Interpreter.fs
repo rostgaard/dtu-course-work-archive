@@ -22,6 +22,8 @@ type Length = int
 type Array = Length * Value array;;
 type Closure =  List<string> * Env * Stm
 
+exception TypeError of string
+
 type Content = SimpVal of Value | Proc of Closure |  ArrayList of Array;;
 
 type Store  = Map<Location,Content>  
@@ -182,16 +184,16 @@ and dec d env store =
                                    let newStore = Map.add loc proc store
                                    (procEnv, newStore)
 
-    | ArrDec(s, e, value) -> let lookup = exp e env store
-                             let (IntVal length, newStore) = lookup //TODO: Perform conversion or handle error
-                             let (initial, newStore2) = exp value env newStore
-                             let values = [| for i in 1 .. length -> initial |]
-                             let array = ArrayList(length, values)
-                             let loc = nextLoc()
-                             let arrayEnv = Map.add s (Reference loc) env
-                             let arrayStore = Map.add loc array store
-                             (arrayEnv, arrayStore)
-       
-                             
+    | ArrDec(s, e, value) -> let loc = nextLoc()
+                             match exp e env store with
+                             | (IntVal length  as res, store1) -> let (initial, newStore2) = exp value env store1
+                                                                  let values = [| for i in 1 .. length -> initial |]
+                                                                  let array = ArrayList(length, values)
+                                                                  let loc = nextLoc()
+                                                                  let arrayEnv = Map.add s (Reference loc) env
+                                                                  let arrayStore = Map.add loc array store
+
+                                                                  (arrayEnv, arrayStore)
+                             | _                               -> raise(TypeError ("Error in declaration of index in array \""+s+"\""))
 
 

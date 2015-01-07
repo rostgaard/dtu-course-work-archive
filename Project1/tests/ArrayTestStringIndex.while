@@ -1,0 +1,6 @@
+let
+  s    : "i'm a string - no good for index.";
+  a[s] : 10
+in 
+   skip
+end
