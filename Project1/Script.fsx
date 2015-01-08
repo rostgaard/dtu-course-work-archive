@@ -86,20 +86,6 @@ let arr1 =
     ([VarDec ("n",Int 4); VarDec ("y",Int 1) ; ProcDec ("test",["x"], PrintLn (Int 42))],
      Seq[Asg (Var "n",Apply ("-",[ContOf (Var "n"); Int 1]))]);
 
-// Test the program
-//let _ = ignore (stm p5a initEnv Map.empty);;
-
-let p5 = parseFromFile "Factorial3.while";;
-let _ = ignore (stm p5 initEnv Map.empty);;
-
-
-let p6 = parseFromFile "Factorial4.while";;
-let _ = ignore (stm p6 initEnv Map.empty);;
-
-let p7 = parseFromFile "Factorial5.while";;
-let _ = ignore (stm p7 initEnv Map.empty);;
-
-
 // Parsing and interpreting programs with arrays
 
 let randomArray = parseDec "proc randomArray(rng, lng) 
@@ -143,6 +129,26 @@ try
 with
     | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 
+printf "%s" "  Factorial3.while - ";;
+let p5 = parseFromFile "Factorial3.while";;
+try
+  ignore (stm p5 initEnv Map.empty)
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+printf "%s" "  Factorial4.while - ";;
+let p6 = parseFromFile "Factorial4.while";;
+try
+  ignore (stm p6 initEnv Map.empty)
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+printf "%s" "  Factorial5.while - ";;
+let p7 = parseFromFile "Factorial5.while";;
+try
+  ignore (stm p7 initEnv Map.empty)
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 
 printf "%s" "  String as array index error - ";;
 let arrayTest = parseFromFile (testPath + "ArrayTestStringIndex.while");;

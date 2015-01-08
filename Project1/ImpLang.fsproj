@@ -51,7 +51,6 @@
     </FsLex>
     <Compile Include="ParserUtil.fs" />
     <Compile Include="Interpreter.fs" />
-    <Compile Include="Program.fs" />
     <None Include="Factorial2.while">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

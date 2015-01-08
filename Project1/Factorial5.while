@@ -8,6 +8,9 @@ let
          call fac(n,o)
      fi    
 in call fac(x, output);
-   print toString(!x);
-   print toString(!output) 
+   if <>(!output, 24) then
+      print "(failed assertion!)"
+   else
+     print "(ok)"
+   fi
 end
