@@ -62,30 +62,6 @@ let s2 = parseStm "let n: 4; y: 1
 // Set current directory
 System.IO.Directory.SetCurrentDirectory __SOURCE_DIRECTORY__;;
 
-let p3 = parseFromFile "Factorial1.while";;
-// Interpret the statement
-let _ = ignore (stm p3 initEnv Map.empty);;
-
-let p5a =
-  Block
-    ([VarDec ("n",Int 4); VarDec ("y",Int 1) ; ProcDec ("test",["x"], PrintLn (Int 42))],
-     Seq
-       [While
-          (Apply ("<>",[ContOf (Var "n"); Int 0]),
-           Seq
-             [PrintLn (Apply ("toString",[ContOf (Var "n")]));
-              PrintLn (Apply ("toString",[ContOf (Var "y")]));
-              Asg (Var "y",Apply ("*",[ContOf (Var "n"); ContOf (Var "y")]));
-              Asg (Var "n",Apply ("-",[ContOf (Var "n"); Int 1]))]);
-        PrintLn (String "Result is: ");
-        PrintLn (Apply ("toString",[ContOf (Var "n")]));
-        PrintLn (Apply ("toString",[ContOf (Var "y")]))]);;
-
-let arr1 =
-  Block
-    ([VarDec ("n",Int 4); VarDec ("y",Int 1) ; ProcDec ("test",["x"], PrintLn (Int 42))],
-     Seq[Asg (Var "n",Apply ("-",[ContOf (Var "n"); Int 1]))]);
-
 // Parsing and interpreting programs with arrays
 
 let randomArray = parseDec "proc randomArray(rng, lng) 
@@ -105,22 +81,16 @@ let arrayUtilDecs = parseDecListFromFile "ArrayUtil.while";;
 
 let (basisEnv, basisStore) = decList arrayUtilDecs initEnv Map.empty;; 
 
-let ap1 = parseFromFile"ArrayProg1.while";; 
-let _ = ignore (stm ap1 basisEnv basisStore);;
-
-let ap2 = parseFromFile"ArrayProg2.while";; 
-let _ = ignore (stm ap2 basisEnv basisStore);;
-
-//printf "%s\n" "Extensions - foreach";;
-
-//let foreachTest = parseFromFile "Foreach.while";;
-
-//printf "%s\n" "Return.while";;
-//let returnTest = parseFromFile "Return.while";;
-//stm returnTest basisEnv basisStore
 
 
 printf "%s" "Tests:\n";;
+
+printf "%s" "  Factorial1.while - ";;
+let p3 = parseFromFile "Factorial1.while";;
+try
+   ignore (stm p3 initEnv Map.empty)
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 
 printf "%s" "  Factorial2.while - ";;
 let p4 = parseFromFile "Factorial2.while";;
@@ -150,6 +120,22 @@ try
 with
     | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 
+printf "%s" "  ArrayProg1.while - ";;
+let ap1 = parseFromFile "ArrayProg1.while";; 
+try
+  ignore (stm ap1 basisEnv basisStore)
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+printf "%s\n" "  ArrayProg2.while (manually expect output) ";;
+printf "%s\n" "=== ArrayProg2.while output ===";;
+let ap2 = parseFromFile "ArrayProg2.while";; 
+try
+  ignore (stm ap2 basisEnv basisStore)
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+printf "%s\n" "=== End ArrayProg2.while output ===";;
+
 printf "%s" "  String as array index error - ";;
 let arrayTest = parseFromFile (testPath + "ArrayTestStringIndex.while");;
 try
@@ -158,7 +144,6 @@ try
 with
     | TypeError msg  -> printf "%s\n" "(ok)"
     | _              -> printf "%s\n" "(fail) Got unexpected exception!"
-
 
 printf "%s" "  If-Else parsing - ";;
 let ifelseparseTest = parseFromFile (testPath + "IfElseParse.while");;

@@ -2,5 +2,10 @@ let n: 4; y: 1
 in while <>(!n,0)
    do y := *(!n,!y);
       n := -(!n,1)
-   od
+   od;
+   if <>(!y, 24) then
+      print "(failed assertion!)"
+   else
+     print "(ok)"
+   fi
 end
