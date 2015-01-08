@@ -158,16 +158,19 @@ and stm st (env:Env) (store:Store) =
     | Return (e) -> let (res, store1) = exp e env store
                     (Some res,store1)
 
-    | IfElse (cond, tbrach, fbranch) -> let (evalCond,store1) = exp cond env store
-                                        match evalCond with
-                                        | BoolVal true  -> stm tbrach env store1
-                                        | BoolVal false -> stm tbrach env store1
-                                        | _             -> failwith "Type error, expected Boolean expression for If condition" 
-    | Skip                          -> failwith "Not supported"
-    | Foreach (iden, listExp, body) -> let localEnv = Map.add iden env
-                                       //stm (While (Apply ("<",1; Attribute (exp listExp env store,"length"))), body) env store1
-                                       //TODO: convert to while loop
-                                       failwith "Not supported"
+    | IfElse (cond, tbranch, fbranch) -> let (evalCond,store1) = exp cond env store
+                                         match evalCond with
+                                         | BoolVal true  -> stm tbranch env store1
+                                         | BoolVal false -> stm fbranch env store1
+                                         | _             -> failwith "Type error, expected Boolean expression for If condition" 
+    | Skip                          -> None,store
+    | Foreach (iden, listExp, body) -> //TODO Push the local identifier onto the environment, and add an alias
+                                       //TODO Add iden increment function at end of body
+                                       //TODO Extract the length attribute from the array expression
+                                       match exp listExp env store with
+                                       | Reference resl, store1 -> let rewrite = While (Apply ("<", [Int 1; Attribute ("FIXME","length")]), body)
+                                                                   stm rewrite env store
+                                       | _                      -> raise (TypeError ("Expected reference to variable in foreach loop!"))
 
 and decList ds env store = 
     match ds with
