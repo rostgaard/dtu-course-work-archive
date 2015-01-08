@@ -60,6 +60,8 @@ rule tokenize =
   | "."         { PERIOD }
   | ","         { COMMA  }
   | ":="        { ASG    }
+  | "&&"        { AND    }
+  | "||"        { OR     }
   | "<>"        { NAME("<>") }
   | "<"         { NAME("<") } 
   | "*"         { NAME("*") }

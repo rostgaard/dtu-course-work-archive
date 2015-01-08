@@ -10,7 +10,8 @@ type Exp = | Int of int
            | ContOf of Exp 
            | Apply of string * List<Exp>
            | Attribute of string * string
-
+           | AndOp     of Exp * Exp
+           | OrOp      of Exp * Exp
 and  Stm = | Asg of Exp * Exp
            | ArrAsg of string * Exp * Exp
            | PrintLn of Exp

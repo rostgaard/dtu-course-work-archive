@@ -23,6 +23,10 @@ let eqInt = Primitive( function [IntVal i1; IntVal i2] -> BoolVal(i1=i2) | _ -> 
 let neqInt = Primitive( function [IntVal i1; IntVal i2] -> BoolVal(i1<>i2) | _ -> failwith "Invalid arguments" );;
 let lessEqInt = Primitive( function [IntVal i1; IntVal i2] -> BoolVal(i1<=i2) | _ -> failwith "Invalid arguments" );;
 let lessInt = Primitive( function [IntVal i1; IntVal i2] -> BoolVal(i1<i2) | _ -> failwith "Invalid arguments" );;
+
+let logicAnd = Primitive( function [BoolVal b1; BoolVal b2] -> BoolVal(b1 && b2) | _ -> failwith "Invalid arguments" );;
+let logicOr  = Primitive( function [BoolVal b1; BoolVal b2] -> BoolVal(b1 || b2) | _ -> failwith "Invalid arguments" );;
+
 let gen = let generator = new System.Random()
           generator.Next;;   
 let randomInt = Primitive( function [IntVal rng] -> IntVal (gen rng) | _ -> failwith "Invalid arguments" );; 
@@ -36,7 +40,8 @@ let toString = let f vs =  match vs with
 
 let initEnv = Map.ofList [("+",plusInt); ("-",minusInt); ("*",multInt); 
                           ("=",eqInt); ("<>",neqInt); ("<=",lessEqInt); ("<",lessInt); 
-                          ("randomInt", randomInt); ("toString",toString)  ];;
+                          ("randomInt", randomInt); ("toString",toString);
+                          ("&&", logicAnd); ("||", logicOr)];;
 let dirDelimiter = "/" //Char.ToString System.IO.Path.PathSeparator;;
 let testPath = "tests" + dirDelimiter;
 
@@ -162,6 +167,14 @@ let arrTest = parseFromFile (testPath + "ArrayFolding.while");;
 try
   let _ = stm arrTest initEnv Map.empty
   printf ""
+with
+  | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+printf "%s" "  Infix logic parse - ";;
+let andOrTest = parseFromFile (testPath + "AndOrInfix.while");;
+try
+  let _ = stm andOrTest initEnv Map.empty
+  printf "%s\n" "(ok)"
 with
   | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 

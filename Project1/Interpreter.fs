@@ -102,6 +102,9 @@ let rec exp e (env:Env) (store:Store) =
     | Int i       -> (IntVal i, store)
     | Bool b      -> (BoolVal b,store)
     | String s    -> (StringVal s,store)
+    | AndOp (e1, e2) -> exp (Apply ("&&", e1 :: [e2])) env store
+    | OrOp  (e1, e2) -> exp (Apply ("||", e1 :: [e2])) env store
+
 and expList es env store = 
     match es with 
     | []       -> ([],store)
