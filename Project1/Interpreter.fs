@@ -35,7 +35,7 @@ let nextLoc: unit -> int =  let n = ref 0
                             f
 
 
-let rec toString mapp = Map.fold (fun acc k v -> (string k) + " = " + (string v) + " \n ") "" mapp;;
+let rec toString mapp = Map.fold (fun acc k v -> "\n" + (string k) + " = " + (string v) + acc) " \n " mapp;;
 // creates nev environment based on args
 let rec newEnvFromArgs env = function 
     | []    -> env
@@ -58,9 +58,7 @@ let rec assignArgsToVals (env:Env) = function
 // exp: Exp -> Env -> Store -> Value * Store 
 let rec exp e (env:Env) (store:Store) = 
     match e with
-    | ArrVar(s, e) -> eprintf "%s" (string s)
-                      eprintf "%s" (string e)   
-                      let (IntVal index, newStore) = exp e env store
+    | ArrVar(s, e) -> let (IntVal index, newStore) = exp e env store
                       match Map.find s env with
                         | Reference loc -> let ArrayList(_, values) as x = Map.find loc store
                                            ((Array.get values index), store)
@@ -69,6 +67,18 @@ let rec exp e (env:Env) (store:Store) =
                      | Reference loc as refl -> (refl,store)
                      | IntVal i              -> printfn "%s" (string i) ; failwith "errorXXX"
                      | _                     -> failwith "errorYYY"
+    
+    | Attribute(s, a) -> let name = s + "." + a
+                         // eprintf "%s" (string name)
+                         // eprintf "%s" (toString(env))
+                         match Map.find s env with
+                         //TODO: Imma think its terrible, but Imma also pretty sure, 
+                         // it is working and length to be connected with array.
+                            | Reference loc -> match Map.find loc store with 
+                                                  | ArrayList(length, _) -> ((IntVal length),store)
+                                                  | _           -> failwith "error"
+                            | _             -> failwith "Attribute error"
+    
     | ContOf er    -> match exp er env store with
                       | (Reference loc,store1) -> //eprintf "%s" (toString env)
                                                   match Map.find loc store1 with 
@@ -78,12 +88,15 @@ let rec exp e (env:Env) (store:Store) =
 
     | Apply(f,es) -> let (vals, store1) = expList es env store
                      match Map.find f env with 
-                     | Primitive f   -> (f vals, store1) 
-                     | _              -> failwith "type error"                          
+                        | Primitive f   -> (f vals, store1) 
+                        | Reference r   -> match Map.find r store with
+                                            | Proc(args, locEnv,  st) as x -> let (value : option<Value>, newStore) = stm (Call(f, es)) env store 
+                                                                              (value.Value, newStore)
+                                            | _                            -> failwith "Error with function applying"
+                        | _              -> failwith "type error"
     | Int i       -> (IntVal i, store)
     | Bool b      -> (BoolVal b,store)
     | String s    -> (StringVal s,store)
-
 and expList es env store = 
     match es with 
     | []       -> ([],store)
@@ -95,8 +108,7 @@ and expList es env store =
 // stm: Stm -> Env -> Store -> option<Value> * Store
 and stm st (env:Env) (store:Store) = 
     match st with
-    | ArrAsg(s, ind, e) -> eprintf "%s" s
-                           let (value, valStore) = exp e env store
+    | ArrAsg(s, ind, e) -> let (value, valStore) = exp e env store
                            let (IntVal index, arrStore) = exp ind env valStore
                            let (ref, arrStore2) = exp (Var s) env arrStore
                            match ref with
@@ -117,10 +129,9 @@ and stm st (env:Env) (store:Store) =
                    match resl with 
                    | Reference loc -> (None, Map.add loc (SimpVal res) store2) 
                    | _                               -> failwith "type error"
-                   
-         
     | PrintLn e -> match exp e env store with
                    | (StringVal s,store1) -> (printfn "%s" s; (None,store1))
+                   | (IntVal s,store1) -> (printfn "%s" (string s); (None,store1))
                    | _                    -> failwith "error"                  
                                                                  
                                            
@@ -152,7 +163,7 @@ and stm st (env:Env) (store:Store) =
                                        //stm (While (Apply ("<",1; Attribute (exp listExp env store,"length"))), body) env store1
                                        //TODO: convert to while loop
                                        failwith "Not supported"
-    
+
 and decList ds env store = 
     match ds with
     | []       -> (env,store)
@@ -185,13 +196,14 @@ and dec d env store =
     | ArrDec(s, e, value) -> let lookup = exp e env store
                              let (IntVal length, newStore) = lookup //TODO: Perform conversion or handle error
                              let (initial, newStore2) = exp value env newStore
-                             let values = [| for i in 1 .. length -> initial |]
+                             let values = [| for i in 1 .. (int length) -> initial |]
                              let array = ArrayList(length, values)
+                             (* let lengthName = s + "." + "length"
+                             eprintf "%s" lengthName
+                             let lenLoc = nextLoc()
+                             let lenEnv = Map.add lengthName (Reference lenLoc) env
+                             let lenStore = Map.add lenLoc (SimpVal (IntVal(length))) store *)
                              let loc = nextLoc()
                              let arrayEnv = Map.add s (Reference loc) env
                              let arrayStore = Map.add loc array store
                              (arrayEnv, arrayStore)
-       
-                             
-
-

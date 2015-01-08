@@ -7,18 +7,18 @@ let
 
   proc crudeFold (arr, func) 
   let
-     sum : 0;
+     sum1 : 0;
      i   : 1
   in
     while <(!i, arr.length)
     do
-      sum := func(!sum, !arr[i])
+      sum1 := func(!sum1, !arr[i])
     od;
-    return sum 
+    return sum1 
   end
 
 in 
-   arraysum := crudeFold (a, sum);
+   arraySum := crudeFold (a, sum);
    print "Result is: ";
    print toString (!arraysum);
    print "Expected";

@@ -10,7 +10,8 @@ proc randomArray(ran, len)
 
 proc printArray(a)  
     let i: 0
-    in while <(!i,a.length)
+	in print a.length;
+    while <(!i,a.length)
       do print toString(a[!i]);
          i := +(!i,1)
       od
