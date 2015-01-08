@@ -59,8 +59,8 @@ let rec assignArgsToVals (env:Env) = function
 // exp: Exp -> Env -> Store -> Value * Store 
 let rec exp e (env:Env) (store:Store) = 
     match e with
-    | Var v       -> eprintf "%s\n" (string v)
-                     eprintf "%s\n" (toString env)
+    | Var v       -> //eprintf "%s\n" (string v)
+                     //eprintf "%s\n" (toString env)
                      match Map.find v env with
                      | Reference loc as refl -> (refl,store)
                      //why fail?
