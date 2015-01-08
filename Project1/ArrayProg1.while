@@ -1,3 +1,4 @@
 let rng: 100; len:10;  a[!len]: 1 ; sum : 15
-in print toString(!sum)
+in  print "Sum:";
+	print toString(a[5])
 end

@@ -13,7 +13,7 @@ type Exp = | Int of int
            | Length of string
 
 and  Stm = | Asg of Exp * Exp
-           | ArrayAsg of string * Exp * Exp
+           | ArrAsg of string * Exp * Exp
            | PrintLn of Exp
            | Seq of List<Stm>
            | While of Exp * Stm

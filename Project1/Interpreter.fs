@@ -18,9 +18,11 @@ type Value    = | IntVal of int
 and Env       = Map<string,Value>
 
 
+type Length = int
+type Array = Length * Value array;;
 type Closure =  List<string> * Env * Stm
 
-type Content = SimpVal of Value | Proc of Closure |  ArrayCnt of Value [];;
+type Content = SimpVal of Value | Proc of Closure |  ArrayList of Array;;
 
 type Store  = Map<Location,Content>  
   
@@ -39,10 +41,13 @@ let rec newEnvFromArgs env = function
     | []    -> env
     | s::xs -> Map.add s (Reference (nextLoc())) (newEnvFromArgs env xs);;  
 
-let rec newEnvForArray env aName initial = function 
-    | p     when p <= 0 -> env
+let rec newEnvForArray env store aName initial = function 
+    | p     when p <= 0 -> (env, store)
     | p                 -> let name = aName + "[" + string p + "]"
-                           Map.add name initial (newEnvForArray env aName initial (p-1))
+                           let loc = nextLoc()
+                           let newEnv = Map.add name (Reference loc) env
+                           let newStore = Map.add loc (SimpVal initial) store
+                           newEnvForArray newEnv newStore aName initial (p-1)
 
 let rec assignArgsToVals (env:Env) = function
     | ([], []) -> env
@@ -53,6 +58,13 @@ let rec assignArgsToVals (env:Env) = function
 // exp: Exp -> Env -> Store -> Value * Store 
 let rec exp e (env:Env) (store:Store) = 
     match e with
+    | ArrVar(s, e) -> eprintf "%s" (string s)
+                      eprintf "%s" (string e)   
+                      let (IntVal index, newStore) = exp e env store
+                      match Map.find s env with
+                        | Reference loc -> let ArrayList(_, values) as x = Map.find loc store
+                                           ((Array.get values index), store)
+                        | _             -> failwith "Array.get exception"
     | Var v       -> match Map.find v env with
                      | Reference loc as refl -> (refl,store)
                      | IntVal i              -> printfn "%s" (string i) ; failwith "errorXXX"
@@ -67,8 +79,7 @@ let rec exp e (env:Env) (store:Store) =
     | Apply(f,es) -> let (vals, store1) = expList es env store
                      match Map.find f env with 
                      | Primitive f   -> (f vals, store1) 
-                     | _              -> failwith "type error"          
-                                                               
+                     | _              -> failwith "type error"                          
     | Int i       -> (IntVal i, store)
     | Bool b      -> (BoolVal b,store)
     | String s    -> (StringVal s,store)
@@ -83,7 +94,18 @@ and expList es env store =
 
 // stm: Stm -> Env -> Store -> option<Value> * Store
 and stm st (env:Env) (store:Store) = 
-    match st with 
+    match st with
+    | ArrAsg(s, ind, e) -> eprintf "%s" s
+                           let (value, valStore) = exp e env store
+                           let (IntVal index, arrStore) = exp ind env valStore
+                           let (ref, arrStore2) = exp (Var s) env arrStore
+                           match ref with
+                            | Reference loc -> let ArrayList(length, values) as x = Map.find loc arrStore2
+                                               Array.set values index value
+                                               let newArray = ArrayList(length, values)
+                                               let newStore = Map.add loc newArray arrStore2
+                                               (None, Map.add loc newArray newStore)
+                            | _             -> failwith "Array assign failed due to type error"
     | Call(s, args) -> let (argValues, valStore) = expList args env store
                        let ((Reference procValue), procStore) = exp (Var(s)) env valStore
                        let Proc(largs, procEnv, stms) as x = Map.find procValue procStore
@@ -142,11 +164,12 @@ and dec d env store =
                                 (procEnv, newStore)
     | ArrDec(s, e, value) -> let (IntVal length, newStore) = exp e env store
                              let (initial, newStore2) = exp value env newStore
-                             let arrayVals = []
-                             let arrayNames = []
-                             let newEnv = newEnvForArray env s initial length
-                             (newEnv, store)
+                             let values = [| for i in 1 .. length -> initial |]
+                             let array = ArrayList(length, values)
+                             let loc = nextLoc()
+                             let arrayEnv = Map.add s (Reference loc) env
+                             let arrayStore = Map.add loc array store
+                             (arrayEnv, arrayStore)
                              
-
 
 
