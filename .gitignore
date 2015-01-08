@@ -3,6 +3,8 @@
 *.sln
 *.suo
 bin/
+Project1/Backup
+*.htm
 Parser.fs
 Lexer.fs
 Parser.fsi
