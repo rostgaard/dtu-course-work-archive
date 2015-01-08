@@ -39,6 +39,11 @@ let rec newEnvFromArgs env = function
     | []    -> env
     | s::xs -> Map.add s (Reference (nextLoc())) (newEnvFromArgs env xs);;  
 
+let rec newEnvForArray env aName initial = function 
+    | p     when p <= 0 -> env
+    | p                 -> let name = aName + "[" + string p + "]"
+                           Map.add name initial (newEnvForArray env aName initial (p-1))
+
 let rec assignArgsToVals (env:Env) = function
     | ([], []) -> env
     | (a::ax, v::vx) -> Map.add a v (assignArgsToVals env (ax,vx))
@@ -79,11 +84,11 @@ and expList es env store =
 // stm: Stm -> Env -> Store -> option<Value> * Store
 and stm st (env:Env) (store:Store) = 
     match st with 
-    | Call(s, args) -> let (res, store1) = expList args env store
-                       let ((Reference resl), store2) = exp (Var(s)) env store1
-                       let Proc(args1, env2, stms) as x = Map.find resl store2
-                       let env3 = assignArgsToVals env2 (args1,res)
-                       match stm stms env3 store2 with
+    | Call(s, args) -> let (argValues, valStore) = expList args env store
+                       let ((Reference procValue), procStore) = exp (Var(s)) env valStore
+                       let Proc(largs, procEnv, stms) as x = Map.find procValue procStore
+                       let localEnv = assignArgsToVals procEnv (largs,argValues)
+                       match stm stms localEnv procStore with
                             | result    -> result
     | Asg(el,e) -> let (res,store1) = exp e env store
                    let (resl, store2) = exp el env store1
@@ -131,8 +136,17 @@ and dec d env store =
                                                     (env2, store2)
                      | _                         -> failwith "error"
     | ProcDec (s, args, stm) -> let loc = nextLoc()
-                                let env2 = Map.add s (Reference loc) env
-                                let proc = Proc(args, env, stm)
-                                let store2 = Map.add loc proc store
-                                (env2, store2);;
+                                let procEnv = Map.add s (Reference loc) env
+                                let proc = Proc(args, procEnv, stm)
+                                let newStore = Map.add loc proc store
+                                (procEnv, newStore)
+    | ArrDec(s, e, value) -> let (IntVal length, newStore) = exp e env store
+                             let (initial, newStore2) = exp value env newStore
+                             let arrayVals = []
+                             let arrayNames = []
+                             let newEnv = newEnvForArray env s initial length
+                             (newEnv, store)
+                             
+
+
 

@@ -94,6 +94,8 @@ let p6 = parseFromFile "Factorial4.while";;
 let p7 = parseFromFile "Factorial5.while";;
 // let _ = ignore (stm p7 initEnv Map.empty);;
 
+let simpleArray = parseFromFile "ArrayProg1.while";;
+
 
 // Parsing and interpreting programs with arrays
 (*
