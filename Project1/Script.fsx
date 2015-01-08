@@ -61,9 +61,6 @@ let p3 = parseFromFile "Factorial1.while";;
 // Interpret the statement
 let _ = ignore (stm p3 initEnv Map.empty);;
 
-let p4 = parseFromFile "Factorial2.while";;
-let _ = ignore (stm p4 initEnv Map.empty);;
-
 let p5a =
   Block
     ([VarDec ("n",Int 4); VarDec ("y",Int 1) ; ProcDec ("test",["x"], PrintLn (Int 42))],
@@ -94,8 +91,8 @@ let _ = ignore (stm p5 initEnv Map.empty);;
 let p6 = parseFromFile "Factorial4.while";;
 let _ = ignore (stm p6 initEnv Map.empty);;
 
-//let p7 = parseFromFile "Factorial5.while";;
-//let _ = ignore (stm p7 initEnv Map.empty);;
+let p7 = parseFromFile "Factorial5.while";;
+let _ = ignore (stm p7 initEnv Map.empty);;
 
 
 // Parsing and interpreting programs with arrays
@@ -133,7 +130,16 @@ let _ = ignore (stm ap2 basisEnv basisStore);;
 
 
 printf "%s" "Tests:\n";;
-printf "%s" "  String as array index (fail) - ";;
+
+printf "%s" "  Factorial2.while - ";;
+let p4 = parseFromFile "Factorial2.while";;
+try
+  ignore (stm p4 initEnv Map.empty)
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+
+printf "%s" "  String as array index error - ";;
 let arrayTest = parseFromFile (testPath + "ArrayTestStringIndex.while");;
 try
   let _ = stm arrayTest basisEnv basisStore
@@ -147,7 +153,7 @@ printf "%s" "  If-Else parsing - ";;
 let ifelseparseTest = parseFromFile (testPath + "IfElseParse.while");;
 try
   let _ = stm ifelseparseTest basisEnv basisStore
-  printf "%s\n" "ok"
+  printf "%s\n" "(ok)"
 with
     | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 
