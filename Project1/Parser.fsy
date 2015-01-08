@@ -28,6 +28,7 @@ Main:
 
 Stm:
 	NAME ASG Exp                        { Asg(Var $1,$3) }
+  | NAME LSQPAR Exp RSQPAR ASG Exp      { ArrayAsg($1, $3, $6) }
   | SKIP                                { Skip }
   | WHILE Exp DO StmList OD             { While($2,Seq $4) }
   | IF Exp THEN StmList ELSE StmList FI { IfElse ($2, Seq $4, Seq $6) }
@@ -45,7 +46,7 @@ Dec:
      NAME COLON Exp                        { VarDec($1,$3) }  
    | NAME LSQPAR Exp RSQPAR COLON Exp      { ArrDec($1,$3,$6)}
    | REC PROC NAME LPAR ParamList RPAR Stm { ProcDec($3,$5,$7)}
-   | PROC NAME LPAR ParamList RPAR Stm     { ProcDec($2,$4,$6)}
+   | PROC NAME LPAR ParamList RPAR Stm     { ProcDec($2,$4,$6)} /* TODO: Turn into recursive procedure */
 
 ParamList:
                                         { []   }
@@ -63,7 +64,7 @@ Exp:
   | BOOL                                 { Bool $1 }
   | STRING                               { String $1}
   | NAME LENGTH                          { Length $1 }
-  | ARRAYEXP NAME LSQPAR Exp RSQPAR      { ArrExp ($2,$4) }
+  | NAME LSQPAR Exp RSQPAR               { ArrVar ($1, $3) }
   | CONTOF Exp                           { ContOf $2 }        
   | LPAR Exp RPAR                        { $2 }
   | NAME LPAR ExpList RPAR               { Apply($1, $3) } 
