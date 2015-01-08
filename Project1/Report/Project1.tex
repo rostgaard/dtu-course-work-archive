@@ -1,4 +1,4 @@
-\documentclass[11pt]{scrartcl}
+\documentclass[10pt]{scrartcl}
 \usepackage{geometry}
 \usepackage[parfill]{parskip}
 \usepackage{graphicx}
@@ -8,7 +8,7 @@
 \usepackage{listings}
 \lstset{
   frame=single,language=bash,
-  morekeywords={od, in, foreach},
+  morekeywords={od, in, foreach, let, end, and, or},
    basicstyle=\footnotesize,
   escapechar=\@,
   basicstyle=\footnotesize, frame=tb,
@@ -52,8 +52,18 @@ od
    \item \texttt{var} is not aliased to \texttt{collection[i]}, where \texttt{i} is the i'th element in the collection. This prevents programs from actually accessing \texttt{var} within the block of the foreach loop.
    \item To make the iteration progress, an increment statement should be appended to the body of the foreach loop
    \item The \texttt{.length} attribute, as of now, only handles declared arrays and not arrays returned from expressions. As foreach takes in an expression, further extensions are needed to the attribute system. 
- \end{itemize}
-   \section{Test cases}
+\end{itemize}
+\section{Infix logic operators}
+Initially we wanted to extend the language with infix versions the implemented operators. However, to avoid breaking already implemented test cases, we instead added two new operators -- the logic AND and OR. This enables the following syntax;
+\begin{lstlisting}
+let
+  boolvar :  <>(x,5) or <(y,10) and >(y,0)
+in
+  ...
+end
+\end{lstlisting}
+Parsing and evaluation works, but unfortunately we have a shift-reduce conflict in both logic expression that we have not been able to resolve.
+\section{Test cases}
 
 
 
