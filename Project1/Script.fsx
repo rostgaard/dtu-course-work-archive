@@ -92,10 +92,10 @@ let _ = ignore (stm p5 initEnv Map.empty);;
 
 
 let p6 = parseFromFile "Factorial4.while";;
-//let _ = ignore (stm p6 initEnv Map.empty);;
+let _ = ignore (stm p6 initEnv Map.empty);;
 
-let p7 = parseFromFile "Factorial5.while";;
-// let _ = ignore (stm p7 initEnv Map.empty);;
+//let p7 = parseFromFile "Factorial5.while";;
+//let _ = ignore (stm p7 initEnv Map.empty);;
 
 
 // Parsing and interpreting programs with arrays
@@ -123,10 +123,6 @@ let _ = ignore (stm ap1 basisEnv basisStore);;
 let ap2 = parseFromFile"ArrayProg2.while";; 
 let _ = ignore (stm ap2 basisEnv basisStore);;
 
-
-let arrTest = parseFromFile "ArrTest.while";;
-let _ = ignore (stm arrTest initEnv Map.empty);;
-
 //printf "%s\n" "Extensions - foreach";;
 
 //let foreachTest = parseFromFile "Foreach.while";;
@@ -141,7 +137,25 @@ printf "%s" "  String as array index (fail) - ";;
 let arrayTest = parseFromFile (testPath + "ArrayTestStringIndex.while");;
 try
   let _ = stm arrayTest basisEnv basisStore
-  failwith "Expected exception here."
+  printf "%s\n" "(fail) Expected exception here."
 with
-    | TypeError msg  -> printf "%s\n" "ok"
-    | _              -> failwith "Got unexpected exception!"
+    | TypeError msg  -> printf "%s\n" "(ok)"
+    | _              -> printf "%s\n" "(fail) Got unexpected exception!"
+
+
+printf "%s" "  If-Else parsing - ";;
+let ifelseparseTest = parseFromFile (testPath + "IfElseParse.while");;
+try
+  let _ = stm ifelseparseTest basisEnv basisStore
+  printf "%s\n" "ok"
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+printf "%s" "  Crude array folding - ";;
+let arrTest = parseFromFile (testPath + "ArrayFolding.while");;
+try
+  let _ = stm arrTest initEnv Map.empty
+  printf ""
+with
+  | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
