@@ -1,5 +1,5 @@
 let
   boolvar : true
 in
-  boolvar := false && true || false
+  boolvar := false and true or false
 end
