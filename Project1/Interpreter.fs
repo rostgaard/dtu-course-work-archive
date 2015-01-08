@@ -135,10 +135,23 @@ and stm st (env:Env) (store:Store) =
                                           | (None,store2) -> stm st env store2
                                           | result     -> result
                        | BoolVal false -> (None, store1)
-                       | _             -> failwith "type error"                     
+                       | _             -> failwith "Type error, expected Boolean expression for While condition"                  
  
     | Block(ds,st1) -> let (env1,store1) = decList ds env store 
-                       stm st1 env1 store1 
+                       stm st1 env1 store1
+    | Return (e) -> let (res, store1) = exp e env store
+                    (Some res,store1)
+
+    | IfElse (cond, tbrach, fbranch) -> let (evalCond,store1) = exp cond env store
+                                        match evalCond with
+                                        | BoolVal true  -> stm tbrach env store1
+                                        | BoolVal false -> stm tbrach env store1
+                                        | _             -> failwith "Type error, expected Boolean expression for If condition" 
+    | Skip                          -> failwith "Not supported"
+    | Foreach (iden, listExp, body) -> let localEnv = Map.add iden env
+                                       //stm (While (Apply ("<",1; Attribute (exp listExp env store,"length"))), body) env store1
+                                       //TODO: convert to while loop
+                                       failwith "Not supported"
     
 and decList ds env store = 
     match ds with
@@ -162,7 +175,15 @@ and dec d env store =
                                 let proc = Proc(args, procEnv, stm)
                                 let newStore = Map.add loc proc store
                                 (procEnv, newStore)
-    | ArrDec(s, e, value) -> let (IntVal length, newStore) = exp e env store
+    
+    | RecProcDec (s, args, stm) -> let loc = nextLoc()
+                                   let procEnv = Map.add s (Reference loc) env
+                                   let proc = Proc(args, procEnv, stm)
+                                   let newStore = Map.add loc proc store
+                                   (procEnv, newStore)
+
+    | ArrDec(s, e, value) -> let lookup = exp e env store
+                             let (IntVal length, newStore) = lookup //TODO: Perform conversion or handle error
                              let (initial, newStore2) = exp value env newStore
                              let values = [| for i in 1 .. length -> initial |]
                              let array = ArrayList(length, values)
@@ -170,6 +191,7 @@ and dec d env store =
                              let arrayEnv = Map.add s (Reference loc) env
                              let arrayStore = Map.add loc array store
                              (arrayEnv, arrayStore)
+       
                              
 
 
