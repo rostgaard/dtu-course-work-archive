@@ -96,6 +96,7 @@ let p7 = parseFromFile "Factorial5.while";;
 
 
 let arrTest = parseFromFile "ArrTest.while";;
+let _ = ignore (stm arrTest initEnv Map.empty);;
 // Parsing and interpreting programs with arrays
 
 let randomArray = parseDec "proc randomArray(rng, lng) 
@@ -116,10 +117,10 @@ let arrayUtilDecs = parseDecListFromFile "ArrayUtil.while";;
 let (basisEnv, basisStore) = decList arrayUtilDecs initEnv Map.empty;; 
 
 let ap1 = parseFromFile"ArrayProg1.while";; 
-//let _ = ignore (stm ap1 basisEnv basisStore);;
+let _ = ignore (stm ap1 basisEnv basisStore);;
 
 let ap2 = parseFromFile"ArrayProg2.while";; 
-//let _ = ignore (stm ap2 basisEnv basisStore);;
+let _ = ignore (stm ap2 basisEnv basisStore);;
 
 printf "%s\n" "ArrTest.while";;
 

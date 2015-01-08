@@ -1,6 +1,4 @@
 */obj
-*.fsproj
-*.sln
 *.suo
 bin/
 Project1/Backup
