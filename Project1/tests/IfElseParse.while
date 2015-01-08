@@ -1,0 +1,9 @@
+let
+  cond : 1
+in
+ if =(!cond,1) then
+   skip
+ else
+   skip
+ fi
+end
