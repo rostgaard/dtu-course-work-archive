@@ -104,4 +104,9 @@ We performed 7 tests that were already included in the project and 6 we created 
 \end{itemize}
 All tests are passing without problems and delivering proper values. 
 The default tests were modified to include the assertions (if statements).
+
+\section{Conclusions}
+We were able to implement all basic concepts (procedures, while loops, ITE, arrays) and few additional (foreach, infix boolean operators), which we evaluate as satisfying result. \\
+We can see some optimization possibilities, like rewriting the Exp and Value types, which may allow better reflection of natural code structures and properties (e.g. remove the possibility of storing non-Reference value in environment). \\
+During development, we discovered that actually we can divide objects into two categories: primitives and complex (similar to Java), where primitives can be send by reference/value, and complex only be reference. Even procedures falls into the categories of complex structure, which made really easy implementing functions as procedure arguments. 
 \end{document}  
