@@ -3,17 +3,16 @@
   y : 100;
   a[!x] : 5;
   b[!x] : 3;
-  proc sumArgs(a,b)
-	print +(!a, !b);
-  proc sumVal (a,b) 
-	print +(a,b)
+  proc sum(a,b)
+	a := +(!a,!b)
 in 
-	a := randomArray(y, x);
-	call printArray(!a);
-	call printArray(a);
-	call sumVal(!x,!y);
+	print "Original x";
 	print !x;
-	call sumArgs(x,y);
+	print "Values";
+	call sum(!x, !y);
+	print !x;
+	print "Args";
+	call sum(x, y);
 	print !x;
 	print ("done")
 end

@@ -83,9 +83,6 @@ let (basisEnv, basisStore) = decList arrayUtilDecs initEnv Map.empty;;
 
 
 
-//is the parser not allowing to assign to arguments?
-let ap3 = parseFromFile (testPath + "ArgsReferencesValues.while");; 
-let _ = ignore (stm ap3 basisEnv basisStore);;
 
 
 //printf "%s\n" "Return.while";;
@@ -184,3 +181,8 @@ printf "%s\n" "Extensions - foreach";;
 
 let foreachTest = parseFromFile (testPath + "ForeachLoop.while");;
 let _ = ignore (stm foreachTest basisEnv basisStore);;
+
+
+//is the parser not allowing to assign to arguments?
+let ap3 = parseFromFile (testPath + "ArgsReferencesValues.while");; 
+let _ = ignore (stm ap3 basisEnv basisStore);;

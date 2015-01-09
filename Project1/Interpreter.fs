@@ -66,9 +66,15 @@ let rec newEnvForArray env store aName initial = function
                            let newStore = Map.add loc (SimpVal initial) store
                            newEnvForArray newEnv newStore aName initial (p-1)
 
-let rec assignArgsToVals (env:Env) = function
-    | ([], []) -> env
-    | (a::ax, v::vx) -> Map.add a v (assignArgsToVals env (ax,vx))
+let rec assignArgsToVals (env:Env) (store:Store) = function
+    | ([], []) -> (env, store)
+    | (a::ax, v::vx) -> match v with 
+                        | Reference l as loc-> let newEnv = Map.add a loc env
+                                               assignArgsToVals newEnv store (ax,vx)
+                        | _ as value  -> let loc = nextLoc();
+                                         let newEnv = Map.add a (Reference loc) env
+                                         let newStore = Map.add loc (SimpVal value) store
+                                         assignArgsToVals newEnv newStore (ax,vx)
     | (_) -> failwith "Arguments list do not match the declaration"
 
 // exp: Exp -> Env -> Store -> Value * Store 
@@ -145,10 +151,9 @@ and stm st (env:Env) (store:Store) =
                             | _             -> raise (TypeError("Array assignment failed due to type error"))
     | Call(s, args) -> let (argValues, valStore) = expList args env store
                        let ((Reference procValue), procStore) = exp (Var(s)) env valStore
-                       
                        let Proc(largs, procEnv, stms) as x = Map.find procValue procStore
-                       let localEnv = assignArgsToVals procEnv (largs,argValues)
-                       match stm stms localEnv procStore with
+                       let (localEnv, localStore) = assignArgsToVals procEnv procStore (largs,argValues)
+                       match stm stms localEnv localStore with
                             | result    -> result
     | Asg(el,e) -> let (res,store1) = exp e env store
                    let (resl, store2) = exp el env store1
