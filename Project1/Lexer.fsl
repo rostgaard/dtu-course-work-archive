@@ -28,6 +28,7 @@ let keyword s =
     | "false"     -> BOOL(false)
     | "toString"  -> NAME("toString")
     | "foreach"   -> FOREACH
+    | "for"       -> FOR
     | _           -> NAME s  
 }
 

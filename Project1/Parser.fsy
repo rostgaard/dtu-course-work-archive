@@ -9,7 +9,7 @@ open AST
 %token <string> NAME
 %token TRUE FALSE
 %token ASG SKIP SEMI WHILE DO OD CONTOF LET IN END PROC CALL REC RETURN IF THEN ELSE FI
-%token FOREACH AND OR
+%token FOREACH AND OR FOR
 %token COLON COMMA PRINT PERIOD
 %token LPAR RPAR LSQPAR RSQPAR
 %token EOF
@@ -40,7 +40,8 @@ Stm:
   | PRINT Exp                           { PrintLn $2 }
   | CALL NAME LPAR ExpList RPAR         { Call ($2,$4)}
   | RETURN Exp                          { Return ($2)}
-  | FOREACH NAME IN NAME DO StmList OD   { Foreach ($2, $4, Seq $6)}
+  | FOREACH NAME IN NAME DO StmList OD  { Foreach ($2, $4, Seq $6)}
+  | FOR LPAR Stm SEMI Exp SEMI Stm RPAR DO StmList OD { For($3, $5, $7, Seq $10)}
 
 StmList:
     Stm                                 { [$1] }

@@ -76,6 +76,7 @@ fsyacc --module Parser "$(ProjectDir)Parser.fsy"</PreBuildEvent>
     <None Include="tests\IfElseParse.while" />
     <None Include="tests\ArgsReferencesValues.while" />
     <None Include="tests\ForeachLoop.while" />
+    <None Include="tests\ForLoop.while" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

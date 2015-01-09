@@ -176,12 +176,16 @@ with
   | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 
   
-printf "%s\n" "Extensions - foreach";;
+printf "%s\n" "Foreach";;
 
 let foreachTest = parseFromFile (testPath + "ForeachLoop.while");;
 let _ = ignore (stm foreachTest basisEnv basisStore);;
 
-
+printf "%s\n" "Arguments passing";;
 //is the parser not allowing to assign to arguments?
 let ap3 = parseFromFile (testPath + "ArgsReferencesValues.while");; 
 let _ = ignore (stm ap3 basisEnv basisStore);;
+
+
+let forTest = parseFromFile (testPath + "ForLoop.while");;
+let _ = ignore (stm forTest basisEnv basisStore);;

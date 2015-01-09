@@ -212,6 +212,9 @@ and stm st (env:Env) (store:Store) =
                                                                                            stm rewrite newEnv2 newStore2
                                                             | _ -> failwith "no array, no foreach"
                                         | _ as x        -> raise (TypeError ("Expected reference to variable in foreach loop, but: " + string x))
+    | For(def, con, inc, stms)   -> match stm def env store with
+                                    | (x , newStore)    -> let rewrite = While ((con), Seq[stms; inc]);
+                                                           stm rewrite env newStore
 and decList ds env store = 
     match ds with
     | []       -> (env,store)

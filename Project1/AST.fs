@@ -25,6 +25,7 @@ and  Stm = | Asg of Exp * Exp
            | Skip
            //Extensions.
            | Foreach of string * string * Stm
+           | For of Stm * Exp * Stm * Stm
 
 and Dec  = | VarDec     of string * Exp
            | ProcDec    of string * List<string> * Stm
