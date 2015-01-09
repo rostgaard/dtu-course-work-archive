@@ -93,5 +93,15 @@ end
 \end{lstlisting}
 Parsing and evaluation works, but unfortunately we have a shift-reduce conflict in both logic expression that we have not been able to resolve.
 \section{Test cases}
-
+We performed 7 tests that were already included in the project and 6 we created later to test extensions:
+\begin{itemize}
+\item \texttt{AndOrInfix} - for testing the boolean infix operators
+\item \texttt{ArrayFolding} - for testing arrays as function arguments, arrays attributes and accessing arrays cells.
+\item \texttt{ArrayTestStringIndex} - test that proves the string indices are not supported
+\item \texttt{IfElseParse} - for testing the ITE structure
+\item \texttt{ArgsReferencesValues} - for testing the passing arguments (by value and by reference)
+\item \texttt{ForeachLoop} - testing the correctness of foreach loop implementation
+\end{itemize}
+All tests are passing without problems and delivering proper values. 
+The default tests were modified to include the assertions (if statements).
 \end{document}  
