@@ -3,10 +3,14 @@ let
   output : 1;
   proc fac (n,y)  
      while <>(!n,0)
-                   do y := *(!n,!y);
+                   do print toString(!n); 
+                      print toString(!y);
+					  y := *(!n,!y);
                       n := -(!n,1) 
                    od    
 in call fac(x, output);
+   print toString(!x);
+   print toString(!output) ;
    if <>(!output, 24) then
       print "(failed assertion!)"
    else

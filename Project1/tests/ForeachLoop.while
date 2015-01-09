@@ -30,7 +30,13 @@
   end
 
 in 
-    arraySum := crudeFold2(!a, arraySum, sum);
+	print "While loop result: ";
+	arraySum := crudeFold(!a, !arraySum, sum);
+	print toString(!arraySum);
+	arraySum := 0;
+	print "Foreach loop result: ";
+    arraySum := crudeFold2(!a, !arraySum, sum);
+	print toString(!arraySum);
    if <>(!arraySum, *(a.length,10)) then
       print "(failed assertion!)"
    else

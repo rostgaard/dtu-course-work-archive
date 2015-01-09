@@ -41,7 +41,8 @@ Complex structures (procedure, array) can never be send as a value to the functi
 \subsection{Array handling}
 Array variable points to reference, that store the whole array object. Values can be assigned to array cells by calling \texttt{array[index] = newValue}. Each array has attribute "length" that can be access by \texttt{array.length}.
 \section{Recursive and non-recursive procedures}
-We decided to not explicitly implement the recursive procedures in our interpreter. Instead, each procedure (regardless the \texttt{rec} keyword) can include recursive calls.
+We decided to not explicitly implement the recursive procedures in our interpreter. Instead, each procedure (regardless the \texttt{rec} keyword) can include recursive calls. \\
+Procedure need to be always structured with let... in ... end, unless they contain only one statement (including \texttt{return}).
 \subsection{Return statements}
 Procedure can, but does not have to, return a value or reference. Reference to local value can be returned. Another arrays and procedures are always returned as references, not objects. 
 \subsection{Parameter passing}
@@ -58,18 +59,29 @@ end
 In the first case, described by \texttt{sum(x,y)}, we're sending the references to the function, so after this line, \texttt{x := 5}. After calling \texttt{sum(!x, !y)}, \texttt{x} value remains unchanged, as only the content of values is send to the procedure.
 \section{Control statements}
 \subsection{Conditionals}
-Conditionals are implemented, but only for boolean expressions on integer types.
+Conditionals are implemented, but only for boolean expressions on integer types. The if else statement is structured in following way:
+ \begin{lstlisting}
+if (condition) then
+	// do this
+else //optional
+	// do something else
+fi
+\end{lstlisting}
 \subsection{Loops}
 \subsubsection{While loop}
-While loop is supported. 
-\subsubsection{Syntactic sugar - foreach}
-We've implemented a basic foreach language construct that, within the interpreter, translates into a while loop. An example of a foreach construction can be seen below.
+While loop is supported in a form:
+ \begin{lstlisting}
+while (condition) do
+  // do something
+od
+\end{lstlisting}
+\subsubsection{Foreach loop}
+We've implemented a basic foreach language construct that, within the interpreter, translates into a while loop. An example f a foreach construction can be seen below.
   \begin{lstlisting}
 foreach var in collection do
   // statements where var is accessible
 od
- \end{lstlisting}
- As of this writing, the extensions' grammar, AST and translation is functional, \textbf{and it's working}
+\end{lstlisting}
 \section{Infix logic operators}
 Initially we wanted to extend the language with infix versions the implemented operators. However, to avoid breaking already implemented test cases, we instead added two new operators -- the logic AND and OR. This enables the following syntax;
 \begin{lstlisting}

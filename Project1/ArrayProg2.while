@@ -3,5 +3,10 @@ in a := randomArray(rng, len);
    call printArray(!a);
    sum := sumArray(!a);
    print "Sum:";
-   print toString(!sum)
+   print toString(!sum);
+   if <>(a.length, 10) then
+      print "(failed assertion!)"
+   else
+     print "(ok)"
+   fi
 end
