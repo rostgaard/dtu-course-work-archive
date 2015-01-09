@@ -52,7 +52,6 @@
     <Compile Include="ParserUtil.fs" />
     <Compile Include="Interpreter.fs" />
     <Compile Include="Program.fs" />
-    <Content Include="README.txt" />
     <None Include="Factorial2.while">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -64,6 +63,7 @@
     <None Include="ArrayProg1.while" />
     <None Include="ArrayProg2.while" />
     <Compile Include="Script.fsx" />
+    <None Include="ArrTest.while" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

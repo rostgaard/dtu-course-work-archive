@@ -30,12 +30,15 @@ let toString = let f vs =  match vs with
                            | [IntVal v] -> StringVal(string v)
                            | [BoolVal v] -> StringVal(string v)
                            | [StringVal v] -> StringVal v
-                           | _          -> failwith "error"
+                           | [Reference v] -> StringVal (string v)
+                           | _ as x         -> failwith ("error" + string x)
                Primitive f;;
 
 let initEnv = Map.ofList [("+",plusInt); ("-",minusInt); ("*",multInt); 
                           ("=",eqInt); ("<>",neqInt); ("<=",lessEqInt); ("<",lessInt); 
                           ("randomInt", randomInt); ("toString",toString)  ];;
+let dirDelimiter = "/" //Char.ToString System.IO.Path.PathSeparator;;
+let testPath = "tests" + dirDelimiter;
 
 // Parsing strings
 let s1 = parseStm "while <>(!n,0)
@@ -95,8 +98,6 @@ let p7 = parseFromFile "Factorial5.while";;
 // let _ = ignore (stm p7 initEnv Map.empty);;
 
 
-let arrTest = parseFromFile "ArrTest.while";;
-let _ = ignore (stm arrTest initEnv Map.empty);;
 // Parsing and interpreting programs with arrays
 
 let randomArray = parseDec "proc randomArray(rng, lng) 
@@ -122,8 +123,25 @@ let _ = ignore (stm ap1 basisEnv basisStore);;
 let ap2 = parseFromFile"ArrayProg2.while";; 
 let _ = ignore (stm ap2 basisEnv basisStore);;
 
-printf "%s\n" "ArrTest.while";;
 
-printf "%s\n" "Extensions - foreach";;
+let arrTest = parseFromFile "ArrTest.while";;
+let _ = ignore (stm arrTest initEnv Map.empty);;
 
-let foreachTest = parseFromFile "Foreach.while";;
+//printf "%s\n" "Extensions - foreach";;
+
+//let foreachTest = parseFromFile "Foreach.while";;
+
+//printf "%s\n" "Return.while";;
+//let returnTest = parseFromFile "Return.while";;
+//stm returnTest basisEnv basisStore
+
+
+printf "%s" "Tests:\n";;
+printf "%s" "  String as array index (fail) - ";;
+let arrayTest = parseFromFile (testPath + "ArrayTestStringIndex.while");;
+try
+  let _ = stm arrayTest basisEnv basisStore
+  failwith "Expected exception here."
+with
+    | TypeError msg  -> printf "%s\n" "ok"
+    | _              -> failwith "Got unexpected exception!"

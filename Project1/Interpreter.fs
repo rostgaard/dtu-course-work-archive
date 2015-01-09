@@ -22,6 +22,8 @@ type Length = int
 type Array = Length * Value array;;
 type Closure =  List<string> * Env * Stm
 
+exception TypeError of string
+
 type Content = SimpVal of Value | Proc of Closure |  ArrayList of Array;;
 
 type Store  = Map<Location,Content>  
@@ -54,36 +56,39 @@ let rec assignArgsToVals (env:Env) = function
     | (a::ax, v::vx) -> Map.add a v (assignArgsToVals env (ax,vx))
     | (_) -> failwith "Arguments list do not match the declaration"
 
-    
 // exp: Exp -> Env -> Store -> Value * Store 
 let rec exp e (env:Env) (store:Store) = 
     match e with
-    | ArrVar(s, e) -> let (IntVal index, newStore) = exp e env store
-                      match Map.find s env with
-                        | Reference loc -> let ArrayList(_, values) as x = Map.find loc store
-                                           ((Array.get values index), store)
-                        | _             -> failwith "Array.get exception"
-    | Var v       -> match Map.find v env with
+    | Var v       -> eprintf "%s\n" (string v)
+                     eprintf "%s\n" (toString env)
+                     match Map.find v env with
                      | Reference loc as refl -> (refl,store)
-                     | IntVal i              -> printfn "%s" (string i) ; failwith "errorXXX"
+                     //why fail?
+                     // | IntVal i              -> printfn "%s" (string i) ; failwith "errorXXX"
+                     | IntVal i as refl -> (refl, store)
                      | _                     -> failwith "errorYYY"
-    
-    | Attribute(s, a) -> let name = s + "." + a
-                         // eprintf "%s" (string name)
-                         // eprintf "%s" (toString(env))
-                         match Map.find s env with
-                         //TODO: Imma think its terrible, but Imma also pretty sure, 
-                         // it is working and length to be connected with array.
+     | ArrVar(s, e) -> match exp e env store with
+                        | (IntVal index, newStore) ->  match Map.find s env with
+                                                        | Reference loc -> match Map.find loc store with
+                                                                            | ArrayList(_, values) as x -> ((Array.get values index), store)
+                                                                            | _ as res -> failwith ("array failure" + string res)
+                                                        | _             -> failwith "Array.get exception"
+                        //Just so you now, I spend here one hour from 1 A.M. to 2 A.M. to discover someone forgot "!" next to the variable
+                        | (this, that)             -> failwith ("Array.get exception" + string this)
+    | Attribute(s, a) -> match Map.find s env with
+                         //TODO: Imma think it's terrible, but Imma also pretty sure, 
+                         // it is working and length has to be connected with the array.
                             | Reference loc -> match Map.find loc store with 
                                                   | ArrayList(length, _) -> ((IntVal length),store)
                                                   | _           -> failwith "error"
                             | _             -> failwith "Attribute error"
     
     | ContOf er    -> match exp er env store with
-                      | (Reference loc,store1) -> //eprintf "%s" (toString env)
-                                                  match Map.find loc store1 with 
+                      | (Reference loc,store1) -> match Map.find loc store1 with 
                                                   | SimpVal res -> (res,store1)
-                                                  | _           -> failwith "error"
+                                                  | ArrayList res   -> (Reference loc, store1)
+                                                  | Proc res    -> (Reference loc, store1)
+                                                  | _ as res          -> failwith ("error " + string res)
                       | _                   -> failwith "error"
 
     | Apply(f,es) -> let (vals, store1) = expList es env store
@@ -192,18 +197,13 @@ and dec d env store =
                                    let proc = Proc(args, procEnv, stm)
                                    let newStore = Map.add loc proc store
                                    (procEnv, newStore)
-
-    | ArrDec(s, e, value) -> let lookup = exp e env store
-                             let (IntVal length, newStore) = lookup //TODO: Perform conversion or handle error
-                             let (initial, newStore2) = exp value env newStore
-                             let values = [| for i in 1 .. (int length) -> initial |]
-                             let array = ArrayList(length, values)
-                             (* let lengthName = s + "." + "length"
-                             eprintf "%s" lengthName
-                             let lenLoc = nextLoc()
-                             let lenEnv = Map.add lengthName (Reference lenLoc) env
-                             let lenStore = Map.add lenLoc (SimpVal (IntVal(length))) store *)
-                             let loc = nextLoc()
-                             let arrayEnv = Map.add s (Reference loc) env
-                             let arrayStore = Map.add loc array store
-                             (arrayEnv, arrayStore)
+    | ArrDec(s, e, value) -> let loc = nextLoc()
+                             match exp e env store with
+                             | (IntVal length  as res, store1) -> let (initial, newStore2) = exp value env store1
+                                                                  let values = [| for i in 1 .. length -> initial |]
+                                                                  let array = ArrayList(length, values)
+                                                                  let loc = nextLoc()
+                                                                  let arrayEnv = Map.add s (Reference loc) env
+                                                                  let arrayStore = Map.add loc array store
+                                                                  (arrayEnv, arrayStore)
+                             | _                               -> raise(TypeError ("Error in declaration of index in array \""+s+"\""));;
