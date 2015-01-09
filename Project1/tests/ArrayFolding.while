@@ -5,7 +5,7 @@ let
   arraySum   :  0;
 
   proc sum (p1,p2) 
-	return +(p1,p2);
+	return +(!p1,!p2);
 
   proc crudeFold (arr, state, func) 
   let

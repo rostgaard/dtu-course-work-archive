@@ -4,12 +4,17 @@
   arraySum   :  0;
 
   proc sum (p1,p2) 
-	return +(p1,p2);
+	return +(!p1,!p2);
 
-  proc crudeFold2 (arr, state, func) 
+  proc crudeFold2 (arr, state, func)
+  let
+  in
 	foreach element in arr do
-        state := func(!state, !element)
+        state := func(!state, element)
 	od;
+
+	return !state
+  end;
 
   proc crudeFold (arr, state, func) 
   let
@@ -25,7 +30,6 @@
   end
 
 in 
-    arraySum := crudeFold(!a, arraySum, sum);
     arraySum := crudeFold2(!a, arraySum, sum);
    if <>(!arraySum, *(a.length,10)) then
       print "(failed assertion!)"
