@@ -5,6 +5,9 @@ let x: 4; output: 1;
                          return *(+(!n,1),fac(n))
                     fi    
 in output := fac(x);
-   print toString(!x);
-   print toString(!output) 
+   if <>(!output, 24) then
+      print "(failed assertion!)"
+   else
+     print "(ok)"
+   fi
 end

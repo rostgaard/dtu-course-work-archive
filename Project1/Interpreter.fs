@@ -23,6 +23,7 @@ type Array = Length * Value array;;
 type Closure =  List<string> * Env * Stm
 
 exception TypeError of string
+exception DeclarationNotFound of string
 
 type Content = SimpVal of Value | Proc of Closure |  ArrayList of Array;;
 
@@ -30,6 +31,15 @@ type Store  = Map<Location,Content>
   
 let closureOf(ps,st) env = (ps, env, st)
 
+let locateArray location store = 
+    try 
+       match Map.find location store with
+       | ArrayList(length, values) -> ArrayList(length, values)
+       | _                         -> raise (TypeError (""))
+     with
+     | TypeError msg -> raise (TypeError(msg))
+     | _         -> raise (DeclarationNotFound ("Variable"));;
+       
 
 // nextLoc() generates the next available location
 let nextLoc: unit -> int =  let n = ref 0
@@ -126,11 +136,12 @@ and stm st (env:Env) (store:Store) =
                            let (IntVal index, arrStore) = exp ind env valStore
                            let (ref, arrStore2) = exp (Var s) env arrStore
                            match ref with
-                            | Reference loc -> let ArrayList(length, values) as x = Map.find loc arrStore2
-                                               Array.set values index value
-                                               let newArray = ArrayList(length, values)
-                                               let newStore = Map.add loc newArray arrStore2
-                                               (None, Map.add loc newArray newStore)
+                            | Reference loc -> match locateArray loc arrStore2 with
+                                               | ArrayList(length, values) ->  Array.set values index value
+                                                                               let newArray = ArrayList(length, values)
+                                                                               let newStore = Map.add loc newArray arrStore2
+                                                                               (None, Map.add loc newArray newStore)
+                                               | _    -> raise (TypeError("Array assignment failed due to type error"))
                             | _             -> raise (TypeError("Array assignment failed due to type error"))
     | Call(s, args) -> let (argValues, valStore) = expList args env store
                        let ((Reference procValue), procStore) = exp (Var(s)) env valStore
