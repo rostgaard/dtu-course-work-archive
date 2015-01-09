@@ -41,19 +41,19 @@
 \maketitle
 \section{Object types}
 There are three main categories of objects defined in the language:
-\begin{itemize}
-\item procedures, represented by tuple of arguments' names, procedure environment and set of procedure statements
-\item arrays, represented by tuple of length and values stored in F\# array
-\item primitive values: int, string, boolean
+\begin{description}
+\item [procedures:] represented by tuple of arguments' names, procedure environment and set of procedure statements
+\item [arrays:] represented by tuple of length and values stored in F\# array
+\item [primitive values:] such as int, string, boolean
 Complex structures (procedure, array) can never be send as a value to the function - always as reference. 
-\end{itemize}
+\end{description}
 \subsection{Array handling}
 Array variable points to reference, that store the whole array object. Values can be assigned to array cells by calling \texttt{array[index] = newValue}. Each array has attribute "length" that can be access by \texttt{array.length}.
 \section{Recursive and non-recursive procedures}
-We decided to not explicitly implement the recursive procedures in our interpreter. Instead, each procedure (regardless the \texttt{rec} keyword) can include recursive calls. \\
-Procedure need to be always structured with let... in ... end, unless they contain only one statement (including \texttt{return}).
+We decided to not explicitly implement the recursive procedures in our interpreter. Instead, each procedure (regardless the \texttt{rec} keyword) can include recursive calls. The \texttt{rec} keyword is recognized, but ignored. \\
+Procedure with multiple statements need to be contained inside a \texttt{Block} unless they contain only one (non-block) statement (for instance; \texttt{return}).
 \subsection{Return statements}
-Procedure can, but does not have to, return a value or reference. Reference to local value can be returned. Another arrays and procedures are always returned as references, not objects. 
+Procedure can, but does not have to, return a value or reference. Reference to local value can be returned. Arrays and procedures are always returned as references. 
 \subsection{Parameter passing}
 The language support two ways of passing the primitive (string, int, bool) parameters to function: by reference and by value. 
 \begin{lstlisting}
@@ -71,9 +71,9 @@ In the first case, described by \texttt{sum(x,y)}, we're sending the references 
 Conditionals are implemented, but only for boolean expressions on integer types. The if else statement is structured in following way:
 \begin{lstlisting}
 if (condition) then
-	// do this
+	// invoke this
 else //optional
-	// do something else
+	// invoke something different
 fi
 \end{lstlisting}
 \subsection{Loops}
@@ -81,16 +81,17 @@ fi
 While loop is supported in a form:
 \begin{lstlisting}
 while (condition) do
-  // do something
+  // invoke something
 od
 \end{lstlisting}	
 \subsection{For loop - extension}
 The for loop was implemented in a form:
 \begin{lstlisting}
 for (assignment; condition; incrementation) do
-  // do something
+  // invoke something
 od
-\end{lstlisting}	
+\end{lstlisting}
+Where,\\
 \texttt{Assignment} is a \emph{statement} that assigns starting value to iterating variable. \\
 \texttt{Condition} is an \emph{expression} returning true or false. \\
 \texttt{Incrementation} is a \emph{statement} that is responsible for incrementing the iterating variable and is called at the end of each iteration.
@@ -110,7 +111,7 @@ in
   ...
 end
 \end{lstlisting}
-Parsing and evaluation works, but unfortunately we have a shift-reduce conflict in both logic expression that we have not been able to resolve.
+Parsing and evaluation works, but unfortunately we introduced a shift-reduce conflict in both logic expression that we have not been able to resolve.
 \section{Test cases}
 We performed 7 tests that were already included in the project and 7 we created later to test extensions:
 \begin{itemize}
@@ -128,5 +129,5 @@ The default tests were modified to include the assertions (if statements).
 \section{Conclusions}
 We were able to implement all basic concepts (procedures, while loops, ITE, arrays) and few additional (for, foreach, infix boolean operators), which we evaluate as satisfying result. \\
 We can see some optimization possibilities, like rewriting the Exp and Value types, which may allow better reflection of natural code structures and properties (e.g. remove the possibility of storing non-Reference value in environment). \\
-During development, we discovered that actually we can divide objects into two categories: primitives and complex (similar to Java), where primitives can be send by reference/value, and complex only be reference. Even procedures falls into the categories of complex structure, which made really easy implementing functions as procedure arguments. 
+During development, we discovered that actually we can divide objects into two categories: primitives and complex (similar to Java), where primitives can be send by reference/value, and complex only be reference. Even procedures falls into the categories of complex structure, which made really easy implementing functions as procedure arguments.
 \end{document}  
