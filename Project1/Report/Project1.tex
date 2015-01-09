@@ -8,7 +8,7 @@
 \usepackage{listings}
 \lstset{
   frame=single,language=bash,
-  morekeywords={od, in, foreach, let, end, and, or},
+  morekeywords={od, in, foreach, let, end, and, or, proc, while},
    basicstyle=\footnotesize,
   escapechar=\@,
   basicstyle=\footnotesize, frame=tb,
@@ -30,29 +30,35 @@
 \author{Anna Maria Walach - \textit {s121540@student.dtu.dk} \\ Kim Rostgaard Christensen - \textit {s084283@student.dtu.dk}}
 \begin{document}
 \maketitle
-\section{Non-recursive procedures}
-
-\section{Recursive procedures}
+\section{Object types}
+There are three main categories of objects defined in the language:
+\begin{itemize}
+\item procedures, represented by tuple of arguments' names, procedure environment and set of procedure statements
+\item arrays, represented by tuple of length and values stored in F\# array
+\item primitive values: int, string, boolean
+Complex structures (procedure, array) can never be send as a value to the function - always as reference. 
+\end{itemize}
+\subsection{Array handling}
+Array variable points to reference, that store the whole array object. Values can be assigned to array cells by calling \texttt{array[index] = newValue}. Each array has attribute "length" that can be access by \texttt{array.length}.
+\section{Recursive and non-recursive procedures}
+We decided to not explicitly implement the recursive procedures in our interpreter. Instead, each procedure (regardless the \texttt{rec} keyword) can include recursive calls.
 \subsection{Return statements}
+Procedure can, but does not have to, return a value or reference. Reference to local value can be returned. Another arrays and procedures are always returned as references, not objects. 
+\subsection{Parameter passing}
+\section{Control statements}
 \subsection{Conditionals}
 Conditionals are implemented, but only for boolean expressions on integer types.
-
-
-\section{Array handling}
-
-\section{Syntactic sugar - foreach}
+\subsection{Loops}
+\subsubsection{While loop}
+While loop is supported. 
+\subsubsection{Syntactic sugar - foreach}
 We've implemented a basic foreach language construct that, within the interpreter, translates into a while loop. An example of a foreach construction can be seen below.
   \begin{lstlisting}
 foreach var in collection do
   // statements where var is accessible
 od
  \end{lstlisting}
- As of this writing, the extensions' grammar, AST and translation is functional, but faces three obstacles before being fully working;
- \begin{itemize}
-   \item \texttt{var} is not aliased to \texttt{collection[i]}, where \texttt{i} is the i'th element in the collection. This prevents programs from actually accessing \texttt{var} within the block of the foreach loop.
-   \item To make the iteration progress, an increment statement should be appended to the body of the foreach loop
-   \item The \texttt{.length} attribute, as of now, only handles declared arrays and not arrays returned from expressions. As foreach takes in an expression, further extensions are needed to the attribute system. 
-\end{itemize}
+ As of this writing, the extensions' grammar, AST and translation is functional, \textbf{and it's working}
 \section{Infix logic operators}
 Initially we wanted to extend the language with infix versions the implemented operators. However, to avoid breaking already implemented test cases, we instead added two new operators -- the logic AND and OR. This enables the following syntax;
 \begin{lstlisting}
@@ -64,7 +70,5 @@ end
 \end{lstlisting}
 Parsing and evaluation works, but unfortunately we have a shift-reduce conflict in both logic expression that we have not been able to resolve.
 \section{Test cases}
-
-
 
 \end{document}  
