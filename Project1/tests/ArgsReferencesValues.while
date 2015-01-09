@@ -1,0 +1,19 @@
+﻿let 
+  x : 5;
+  y : 100;
+  a[!x] : 5;
+  b[!x] : 3;
+  proc sumArgs(a,b)
+	print +(!a, !b);
+  proc sumVal (a,b) 
+	print +(a,b)
+in 
+	a := randomArray(y, x);
+	call printArray(!a);
+	call printArray(a);
+	call sumVal(!x,!y);
+	print !x;
+	call sumArgs(x,y);
+	print !x;
+	print ("done")
+end

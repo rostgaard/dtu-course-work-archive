@@ -36,7 +36,12 @@ let nextLoc: unit -> int =  let n = ref 0
                             let f x = (n := !n+1; !n)
                             f
 
+                            
 
+let rec toStringEnv (mapp :Env) = Map.fold (fun acc k v -> "\n" + (string k) + " = " + match v with
+                                                                                        | Reference loc -> string (int loc)
+                                                                                        | _ as x        -> string x
+                                                                                       + acc) " \n " mapp;;
 let rec toString mapp = Map.fold (fun acc k v -> "\n" + (string k) + " = " + (string v) + acc) " \n " mapp;;
 // creates nev environment based on args
 let rec newEnvFromArgs env = function 
@@ -59,15 +64,13 @@ let rec assignArgsToVals (env:Env) = function
 // exp: Exp -> Env -> Store -> Value * Store 
 let rec exp e (env:Env) (store:Store) = 
     match e with
-    | Var v       -> //eprintf "%s\n" (string v)
-                     //eprintf "%s\n" (toString env)
-                     match Map.find v env with
+    | Var v       -> match Map.find v env with
                      | Reference loc as refl -> (refl,store)
                      //why fail?
                      // | IntVal i              -> printfn "%s" (string i) ; failwith "errorXXX"
                      | IntVal i as refl -> (refl, store)
                      | _ as refl        -> raise (TypeError("This is not supported var type " + string refl))
-     | ArrVar(s, e) -> match exp e env store with
+    | ArrVar(s, e) -> match exp e env store with
                         | (IntVal index, newStore) ->  match Map.find s env with
                                                         | Reference loc -> match Map.find loc store with
                                                                             | ArrayList(_, values) as x -> ((Array.get values index), store)
@@ -78,18 +81,21 @@ let rec exp e (env:Env) (store:Store) =
     | Attribute(s, a) -> match Map.find s env with
                          //TODO: Imma think it's terrible, but Imma also pretty sure, 
                          // it is working and length has to be connected with the array.
-                            | Reference loc -> match Map.find loc store with 
+                            | Reference loc -> //eprintf "Loc: %d\n" loc
+                                               //eprintf "Env: %s\n" (toStringEnv env)
+                                               //eprintf "Store: %s\n" (toString store)
+                                               match Map.find loc store with 
                                                   | ArrayList(length, _) -> ((IntVal length),store)
                                                   | _           -> raise (TypeError("Only support for array.length attribute"))
                             | _             -> raise (TypeError("This object stores no reference:" + s))
     
     | ContOf er    -> match exp er env store with
                       | (Reference loc,store1) -> match Map.find loc store1 with 
-                                                  | SimpVal res -> (res,store1)
-                                                  | ArrayList res   -> (Reference loc, store1)
-                                                  | Proc res    -> (Reference loc, store1)
-                                                  | _ as res          -> raise (TypeError("This is not legit content type: " + string res))
-                      | _                   -> failwith "error"
+                                                  | SimpVal res   -> (res,store1)
+                                                  | ArrayList res -> (Reference loc, store1)
+                                                  | Proc res      -> (Reference loc, store1)
+                                                  | _ as res      -> raise (TypeError("This is not legit content type: " + string res))
+                      | _                   -> raise (TypeError("This is not a proper reference:" + string er))
 
     | Apply(f,es) -> let (vals, store1) = expList es env store
                      match Map.find f env with
@@ -128,6 +134,9 @@ and stm st (env:Env) (store:Store) =
                             | _             -> raise (TypeError("Array assignment failed due to type error"))
     | Call(s, args) -> let (argValues, valStore) = expList args env store
                        let ((Reference procValue), procStore) = exp (Var(s)) env valStore
+                       eprintf "%s\n" (string argValues)
+                       //eprintf "%s\n" (toStringEnv env)
+                       //eprintf "%s\n" (toString store)
                        let Proc(largs, procEnv, stms) as x = Map.find procValue procStore
                        let localEnv = assignArgsToVals procEnv (largs,argValues)
                        match stm stms localEnv procStore with
@@ -135,7 +144,13 @@ and stm st (env:Env) (store:Store) =
     | Asg(el,e) -> let (res,store1) = exp e env store
                    let (resl, store2) = exp el env store1
                    match resl with 
-                   | Reference loc -> (None, Map.add loc (SimpVal res) store2) 
+                   | Reference loc -> //eprintf "%s" (string res)
+                                      //eprintf "%s" (toStringEnv env)
+                                      //eprintf "%s\n" (toString store)
+                                      match res with
+                                       | Reference value -> let result = Map.find value store2
+                                                            (None, Map.add loc result store2)
+                                       | _ as value -> (None, Map.add loc (SimpVal value) store2) 
                    | _             -> raise (TypeError("Variable assignment failed due to type error"))
     | PrintLn e -> match exp e env store with
                    | (StringVal s,store1) -> (printfn "%s" s; (None,store1))

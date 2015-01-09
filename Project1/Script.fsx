@@ -125,6 +125,11 @@ let _ = ignore (stm ap1 basisEnv basisStore);;
 let ap2 = parseFromFile"ArrayProg2.while";; 
 let _ = ignore (stm ap2 basisEnv basisStore);;
 
+
+//is the parser not allowing to assign to arguments?
+let ap3 = parseFromFile (testPath + "ArgsReferencesValues.while");; 
+let _ = ignore (stm ap3 basisEnv basisStore);;
+
 //printf "%s\n" "Extensions - foreach";;
 
 //let foreachTest = parseFromFile "Foreach.while";;

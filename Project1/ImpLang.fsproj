@@ -67,6 +67,7 @@
     <None Include="tests\ArrayFolding.while" />
     <None Include="tests\ArrayTestStringIndex.while" />
     <None Include="tests\IfElseParse.while" />
+    <None Include="tests\ArgsReferencesValues.while" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
