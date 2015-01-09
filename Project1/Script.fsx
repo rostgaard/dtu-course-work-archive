@@ -155,8 +155,7 @@ with
 printf "%s" "  If-Else parsing - ";;
 let ifelseparseTest = parseFromFile (testPath + "IfElseParse.while");;
 try
-  let _ = ignore(stm ifelseparseTest basisEnv basisStore)
-  printf "%s\n" "(ok)"
+  ignore (stm ifelseparseTest basisEnv basisStore)
 with
     | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 

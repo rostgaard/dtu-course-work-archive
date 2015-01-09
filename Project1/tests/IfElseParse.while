@@ -1,9 +1,20 @@
 let
-  cond : 1
+  cond      : 1;
+  successes : 0
 in
  if =(!cond,1) then
-   skip
+   successes := +(!successes,1) 
  else
-   skip
+   successes := 0
+ fi;
+
+ if =(!cond,1) then
+   successes := +(!successes,1) 
+ fi;
+
+ if =(!successes,2) then
+   print "(ok)"
+ else
+   print "(failed assertion!)"
  fi
 end
