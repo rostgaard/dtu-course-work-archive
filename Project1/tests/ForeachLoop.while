@@ -1,0 +1,9 @@
+﻿let 
+	a[10] : 5
+in 
+	call printArray(a);
+	foreach x in a do
+		print "Result:";
+		print toString(!x)
+	od
+end

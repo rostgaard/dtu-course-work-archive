@@ -87,11 +87,6 @@ let (basisEnv, basisStore) = decList arrayUtilDecs initEnv Map.empty;;
 let ap3 = parseFromFile (testPath + "ArgsReferencesValues.while");; 
 let _ = ignore (stm ap3 basisEnv basisStore);;
 
-printf "%s\n" "Extensions - foreach";;
-
-let foreachTest = parseFromFile "Foreach.while";;
-
-let _ = ignore (stm foreachTest basisEnv basisStore);;
 
 //printf "%s\n" "Return.while";;
 //let returnTest = parseFromFile "Return.while";;
@@ -183,3 +178,9 @@ try
   printf "%s\n" "(ok)"
 with
   | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+  
+printf "%s\n" "Extensions - foreach";;
+
+let foreachTest = parseFromFile (testPath + "ForeachLoop.while");;
+let _ = ignore (stm foreachTest basisEnv basisStore);;

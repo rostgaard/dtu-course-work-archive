@@ -81,7 +81,7 @@ let rec exp e (env:Env) (store:Store) =
                      | IntVal i as refl -> (refl, store)
                      | _ as refl        -> raise (TypeError("This is not supported var type " + string refl))
     | ArrVar(s, e) -> match exp e env store with
-                        | (IntVal index, newStore) ->  match Map.find s env with
+                        | (IntVal index, newStore) -> match Map.find s env with
                                                         | Reference loc -> match Map.find loc store with
                                                                             | ArrayList(_, values) as x -> ((Array.get values index), store)
                                                                             | _ as res -> raise (TypeError("Cant find attribute. This is not reference to an array: " + string res))
@@ -145,9 +145,7 @@ and stm st (env:Env) (store:Store) =
                             | _             -> raise (TypeError("Array assignment failed due to type error"))
     | Call(s, args) -> let (argValues, valStore) = expList args env store
                        let ((Reference procValue), procStore) = exp (Var(s)) env valStore
-                       eprintf "%s\n" (string argValues)
-                       //eprintf "%s\n" (toStringEnv env)
-                       //eprintf "%s\n" (toString store)
+                       
                        let Proc(largs, procEnv, stms) as x = Map.find procValue procStore
                        let localEnv = assignArgsToVals procEnv (largs,argValues)
                        match stm stms localEnv procStore with
@@ -155,10 +153,7 @@ and stm st (env:Env) (store:Store) =
     | Asg(el,e) -> let (res,store1) = exp e env store
                    let (resl, store2) = exp el env store1
                    match resl with 
-                   | Reference loc -> //eprintf "%s" (string res)
-                                      //eprintf "%s" (toStringEnv env)
-                                      //eprintf "%s\n" (toString store)
-                                      match res with
+                   | Reference loc -> match res with
                                        | Reference value -> let result = Map.find value store2
                                                             (None, Map.add loc result store2)
                                        | _ as value -> (None, Map.add loc (SimpVal value) store2) 
@@ -166,6 +161,7 @@ and stm st (env:Env) (store:Store) =
     | PrintLn e -> match exp e env store with
                    | (StringVal s,store1) -> (printfn "%s" s; (None,store1))
                    | (IntVal s,store1)    -> (printfn "%s" (string s); (None,store1))
+                   | (Reference s, store1)-> (printfn "%s" (string s); (None,store1))
                    | (_ as x, _)          -> raise (TypeError("Println does not support this type: " + string x))
     | Seq []        -> (None,store)
     | Seq (st::sts) -> match stm st env store with 
@@ -191,14 +187,26 @@ and stm st (env:Env) (store:Store) =
                                          | BoolVal false -> stm fbranch env store1
                                          | _ as x        -> raise(TypeError("Expected Boolean expression for If condition, but: "+ string x))
     | Skip                          -> None,store
-    | Foreach (iden, listExp, body) -> //TODO Push the local identifier onto the environment, and add an alias
+    | Foreach (iden, colName, body) -> //TODO Push the local identifier onto the environment, and add an alias
                                        //TODO Add iden increment function at end of body
                                        //TODO Extract the length attribute from the array expression
-                                       match exp listExp env store with
-                                       | Reference resl, store1 -> let rewrite = While (Apply ("<", [Int 1; Attribute ("FIXME","length")]), body)
-                                                                   stm rewrite env store
-                                       | (_ as x, _)            -> raise (TypeError ("Expected reference to variable in foreach loop, but: " + string x))
-
+                                       match Map.find colName env with
+                                        | Reference res -> match Map.find res store with
+                                                            | ArrayList(length, values) -> let iterLoc = nextLoc();
+                                                                                           let idenLoc = nextLoc();
+                                                                                           let iter = "i"
+                                                                                           let newEnv = Map.add iter (Reference iterLoc) env
+                                                                                           let newStore = Map.add iterLoc (SimpVal(IntVal 0)) store
+                                                                                           let newEnv2 = Map.add iden (Reference idenLoc) newEnv
+                                                                                           let newStore2 = Map.add idenLoc (SimpVal(values.[0])) newStore
+                                                                                           let rewrite = While (Apply ("<", [ContOf(Var iter); Int length]), 
+                                                                                                                        Seq[Asg(Var iden, ArrVar(colName, ContOf(Var iter)));
+                                                                                                                        body;
+                                                                                                                        Asg(Var iter, Apply("+",[ContOf(Var iter); Int 1]))]);
+                                                                                                                        
+                                                                                           stm rewrite newEnv2 newStore2
+                                                            | _ -> failwith "no array, no foreach"
+                                        | _ as x        -> raise (TypeError ("Expected reference to variable in foreach loop, but: " + string x))
 and decList ds env store = 
     match ds with
     | []       -> (env,store)

@@ -40,7 +40,7 @@ Stm:
   | PRINT Exp                           { PrintLn $2 }
   | CALL NAME LPAR ExpList RPAR         { Call ($2,$4)}
   | RETURN Exp                          { Return ($2)}
-  | FOREACH NAME IN Exp DO StmList OD   { Foreach ($2, $4, Seq $6)}
+  | FOREACH NAME IN NAME DO StmList OD   { Foreach ($2, $4, Seq $6)}
 
 StmList:
     Stm                                 { [$1] }
