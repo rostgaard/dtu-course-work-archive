@@ -12,6 +12,7 @@ type Exp = | Int of int
            | Attribute of string * string
            | AndOp     of Exp * Exp
            | OrOp      of Exp * Exp
+
 and  Stm = | Asg of Exp * Exp
            | ArrAsg of string * Exp * Exp
            | PrintLn of Exp
@@ -22,10 +23,10 @@ and  Stm = | Asg of Exp * Exp
            | Return of Exp
            | IfElse of Exp * Stm * Stm
            | Skip
-           //Exensions.
+           //Extensions.
            | Foreach of string * Exp * Stm
+
 and Dec  = | VarDec     of string * Exp
            | ProcDec    of string * List<string> * Stm
-           | RecProcDec of string * List<string> * Stm
            | ArrDec     of string * Exp * Exp
            ;;

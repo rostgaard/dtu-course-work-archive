@@ -147,7 +147,7 @@ with
 printf "%s" "  String as array index error - ";;
 let arrayTest = parseFromFile (testPath + "ArrayTestStringIndex.while");;
 try
-  let _ = stm arrayTest basisEnv basisStore
+  let _ = ignore(stm arrayTest basisEnv basisStore)
   printf "%s\n" "(fail) Expected exception here."
 with
     | TypeError msg  -> printf "%s\n" "(ok)"
@@ -157,7 +157,7 @@ with
 printf "%s" "  If-Else parsing - ";;
 let ifelseparseTest = parseFromFile (testPath + "IfElseParse.while");;
 try
-  let _ = stm ifelseparseTest basisEnv basisStore
+  let _ = ignore(stm ifelseparseTest basisEnv basisStore)
   printf "%s\n" "(ok)"
 with
     | _ -> printf "%s\n" "(fail) Got unexpected exception!"
@@ -165,7 +165,7 @@ with
 printf "%s" "  Crude array folding - ";;
 let arrTest = parseFromFile (testPath + "ArrayFolding.while");;
 try
-  let _ = stm arrTest initEnv Map.empty
+  let _ = ignore(stm arrTest initEnv Map.empty)
   printf ""
 with
   | _ -> printf "%s\n" "(fail) Got unexpected exception!"
@@ -173,8 +173,7 @@ with
 printf "%s" "  Infix logic parse - ";;
 let andOrTest = parseFromFile (testPath + "AndOrInfix.while");;
 try
-  let _ = stm andOrTest initEnv Map.empty
+  let _ = ignore(stm andOrTest initEnv Map.empty)
   printf "%s\n" "(ok)"
 with
   | _ -> printf "%s\n" "(fail) Got unexpected exception!"
-

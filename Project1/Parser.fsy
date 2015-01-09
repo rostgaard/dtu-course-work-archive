@@ -50,7 +50,7 @@ Dec:
      NAME COLON Exp                        { VarDec($1,$3) }  
    | NAME LSQPAR Exp RSQPAR COLON Exp      { ArrDec($1,$3,$6)}
    | REC PROC NAME LPAR ParamList RPAR Stm { ProcDec($3,$5,$7)}
-   | PROC NAME LPAR ParamList RPAR Stm     { ProcDec($2,$4,$6)} /* TODO: Turn into recursive procedure */
+   | PROC NAME LPAR ParamList RPAR Stm     { ProcDec($2,$4,$6)}
 
 ParamList:
                                         { []   }
