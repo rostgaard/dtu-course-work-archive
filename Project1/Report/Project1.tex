@@ -45,6 +45,17 @@ We decided to not explicitly implement the recursive procedures in our interpret
 \subsection{Return statements}
 Procedure can, but does not have to, return a value or reference. Reference to local value can be returned. Another arrays and procedures are always returned as references, not objects. 
 \subsection{Parameter passing}
+The language support two ways of passing the primitive (string, int, bool) parameters to function: by reference and by value. 
+\begin{lstlisting}
+let x : 5; y : 10;
+	proc sum (a, b)
+		a := +(!a,!b)
+in
+	call sum(x,y);
+	call sum(!x,!y)
+end
+\end{lstlisting}
+In the first case, described by \texttt{sum(x,y)}, we're sending the references to the function, so after this line, \texttt{x := 5}. After calling \texttt{sum(!x, !y)}, \texttt{x} value remains unchanged, as only the content of values is send to the procedure.
 \section{Control statements}
 \subsection{Conditionals}
 Conditionals are implemented, but only for boolean expressions on integer types.
