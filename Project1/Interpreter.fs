@@ -82,25 +82,19 @@ let rec exp e (env:Env) (store:Store) =
     match e with
     | Var v       -> match Map.find v env with
                      | Reference loc as refl -> (refl,store)
-                     //why fail?
-                     // | IntVal i              -> printfn "%s" (string i) ; failwith "errorXXX"
-                     | IntVal i as refl -> (refl, store)
-                     | _ as refl        -> raise (TypeError("This is not supported var type " + string refl))
+                     | IntVal i as refl      -> (refl, store)
+                     | StringVal s as refl   -> (refl, store)
+                     | BoolVal v as refl     -> (refl, store)
+                     | _ as refl             -> raise (TypeError("This is not supported var type " + string refl))
     | ArrVar(s, e) -> match exp e env store with
                         | (IntVal index, newStore) -> match Map.find s env with
                                                         | Reference loc -> match Map.find loc store with
                                                                             | ArrayList(_, values) as x -> ((Array.get values index), store)
                                                                             | _ as res -> raise (TypeError("Cant find attribute. This is not reference to an array: " + string res))
                                                         | _ as res      -> raise (TypeError("Cant find attribute. This is not reference: " + string res))
-                        //Just so you now, I spend here one hour from 1 A.M. to 2 A.M. to discover someone forgot "!" next to the variable
                         | (index, newStore)       -> raise (TypeError("This is not a proper index for array: " + string index))
     | Attribute(s, a) -> match Map.find s env with
-                         //TODO: Imma think it's terrible, but Imma also pretty sure, 
-                         // it is working and length has to be connected with the array.
-                            | Reference loc -> //eprintf "Loc: %d\n" loc
-                                               //eprintf "Env: %s\n" (toStringEnv env)
-                                               //eprintf "Store: %s\n" (toString store)
-                                               match Map.find loc store with 
+                            | Reference loc -> match Map.find loc store with 
                                                   | ArrayList(length, _) -> ((IntVal length),store)
                                                   | _           -> raise (TypeError("Only support for array.length attribute"))
                             | _             -> raise (TypeError("This object stores no reference:" + s))
@@ -192,10 +186,7 @@ and stm st (env:Env) (store:Store) =
                                          | BoolVal false -> stm fbranch env store1
                                          | _ as x        -> raise(TypeError("Expected Boolean expression for If condition, but: "+ string x))
     | Skip                          -> None,store
-    | Foreach (iden, colName, body) -> //TODO Push the local identifier onto the environment, and add an alias
-                                       //TODO Add iden increment function at end of body
-                                       //TODO Extract the length attribute from the array expression
-                                       match Map.find colName env with
+    | Foreach (iden, colName, body) -> match Map.find colName env with
                                         | Reference res -> match Map.find res store with
                                                             | ArrayList(length, values) -> let iterLoc = nextLoc();
                                                                                            let idenLoc = nextLoc();

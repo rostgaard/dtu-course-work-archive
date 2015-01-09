@@ -84,7 +84,7 @@ while (condition) do
   // do something
 od
 \end{lstlisting}	
-\subsection{For loop}
+\subsection{For loop - extension}
 The for loop was implemented in a form:
 \begin{lstlisting}
 for (assignment; condition; incrementation) do
@@ -94,14 +94,14 @@ od
 \texttt{Assignment} is a \emph{statement} that assigns starting value to iterating variable. \\
 \texttt{Condition} is an \emph{expression} returning true or false. \\
 \texttt{Incrementation} is a \emph{statement} that is responsible for incrementing the iterating variable and is called at the end of each iteration.
-\subsubsection{Foreach loop}
+\subsubsection{Foreach loop - extension}
 We've implemented a basic foreach language construct that, within the interpreter, translates into a while loop. An example f a foreach construction can be seen below.
   \begin{lstlisting}
 foreach var in collection do
   // statements where var is accessible
 od
 \end{lstlisting}
-\section{Infix logic operators}
+\section{Infix logic operators - extension}
 Initially we wanted to extend the language with infix versions the implemented operators. However, to avoid breaking already implemented test cases, we instead added two new operators -- the logic AND and OR. This enables the following syntax;
 \begin{lstlisting}
 let
@@ -112,7 +112,7 @@ end
 \end{lstlisting}
 Parsing and evaluation works, but unfortunately we have a shift-reduce conflict in both logic expression that we have not been able to resolve.
 \section{Test cases}
-We performed 7 tests that were already included in the project and 6 we created later to test extensions:
+We performed 7 tests that were already included in the project and 7 we created later to test extensions:
 \begin{itemize}
 \item \texttt{AndOrInfix} - for testing the boolean infix operators
 \item \texttt{ArrayFolding} - for testing arrays as function arguments, arrays attributes and accessing arrays cells.
@@ -120,12 +120,13 @@ We performed 7 tests that were already included in the project and 6 we created 
 \item \texttt{IfElseParse} - for testing the ITE structure
 \item \texttt{ArgsReferencesValues} - for testing the passing arguments (by value and by reference)
 \item \texttt{ForeachLoop} - testing the correctness of foreach loop implementation
+\item \texttt{ForLoop} - testing the correctness of for loop implementation
 \end{itemize}
 All tests are passing without problems and delivering proper values. 
 The default tests were modified to include the assertions (if statements).
 
 \section{Conclusions}
-We were able to implement all basic concepts (procedures, while loops, ITE, arrays) and few additional (foreach, infix boolean operators), which we evaluate as satisfying result. \\
+We were able to implement all basic concepts (procedures, while loops, ITE, arrays) and few additional (for, foreach, infix boolean operators), which we evaluate as satisfying result. \\
 We can see some optimization possibilities, like rewriting the Exp and Value types, which may allow better reflection of natural code structures and properties (e.g. remove the possibility of storing non-Reference value in environment). \\
 During development, we discovered that actually we can divide objects into two categories: primitives and complex (similar to Java), where primitives can be send by reference/value, and complex only be reference. Even procedures falls into the categories of complex structure, which made really easy implementing functions as procedure arguments. 
 \end{document}  
