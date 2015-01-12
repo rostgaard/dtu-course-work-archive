@@ -301,13 +301,18 @@ let rooty = 400.0;;
 
 let labelpadding = 10.0;
 
+let labelToPSString label = "("+ label + ") dup stringwidth pop 2 div neg 0 rmoveto show";
+
+
 let rec treePrint node level = 
   match node with 
   | Node ((label, reflPos),[])      -> let (abs_x, abs_y) = (absoluteOffset level reflPos)
-                                       (string abs_x) + " " + (string abs_y) + " moveto\n(" + label + ") show\n"  
+                                       (string abs_x) + " " + (string abs_y) + " moveto\n" +
+                                        (labelToPSString label) + "\n"
   | Node ((label, reflPos),subtree) -> let (abs_x, abs_y) = (absoluteOffset level reflPos)
-                                       (string abs_x) + " " + (string abs_y) + " moveto\n(" + label + ") show\n"
-                                       + subtreePrint (subtree,level+1.0, reflPos)
+                                       (string abs_x) + " " + (string abs_y) + " moveto\n" +
+                                       (labelToPSString label) + "\n" +
+                                       subtreePrint (subtree,level+1.0, reflPos)
 and absoluteOffset level reflectPos = ((reflectPos * lineWidth) + rootx), (rooty - (level * lineHeight))
 and subtreePrint = function
   | [],level,parentReflPos                                  -> ""
@@ -324,4 +329,4 @@ let PSfooter = "showpage";;
 
 printf "%s\n" (treePrint stuff 1.0);;
 
- File.WriteAllText ("output.ps", PSheader + (treePrint stuff 1.0) + PSfooter);;
+File.WriteAllText ("output.ps", PSheader + (treePrint stuff 1.0) + PSfooter);;
