@@ -1,0 +1,44 @@
+\documentclass[10pt]{scrartcl}
+\usepackage{geometry}
+\usepackage[parfill]{parskip}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{color}
+\usepackage{listings}
+\lstset{
+  frame=single,language=bash,
+  morekeywords={od, in, foreach, let, end, and, or, proc, while},
+   basicstyle=\footnotesize,
+  escapechar=\@,
+  basicstyle=\footnotesize, frame=tb,
+  numbers=left,
+  stepnumber=2,
+  numbersep=5pt, 
+  numberstyle=\tiny\color{mygray},
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth
+}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=20mm,
+ right=20mm,
+ top=20mm,
+ bottom=20mm,
+ }
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0,0}
+\definecolor{mygray}{rgb}{0.2,0.2,0.2}
+
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{02257 - Applied functional programming}
+\subtitle{Project 2 - Drawing trees}
+\author{Anna Maria Walach - \textit {s121540@student.dtu.dk} \\ Kim Rostgaard Christensen - \textit {s084283@student.dtu.dk}}
+\begin{document}
+\maketitle
+
+\section{Conclusions}
+\end{document}  
