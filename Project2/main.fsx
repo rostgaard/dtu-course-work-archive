@@ -8,6 +8,7 @@
 
 open AST
 open System
+open System.IO
 open ParserUtil
 
 exception TypeError of string
@@ -298,6 +299,8 @@ let lineWidth  = 100.0;;
 let rootx = 300.0;;
 let rooty = 400.0;;
 
+let labelpadding = 10.0;
+
 let rec treePrint node level = 
   match node with 
   | Node ((label, reflPos),[])      -> let (abs_x, abs_y) = (absoluteOffset level reflPos)
@@ -308,8 +311,17 @@ let rec treePrint node level =
 and absoluteOffset level reflectPos = ((reflectPos * lineWidth) + rootx), (rooty - (level * lineHeight))
 and subtreePrint = function
   | [],level,parentReflPos                                  -> ""
-  | Node ((label, reflPos),subtree)::rest,level,parentReflPos -> treePrint (Node ((label, reflPos+parentReflPos),subtree)) level + 
+  | Node ((label, reflPos),subtree)::rest,level,parentReflPos -> let (abs_par_x, abs_par_y) = (absoluteOffset (level-1.0) parentReflPos)
+                                                                 let (abs_x, abs_y) = (absoluteOffset (level) (reflPos+parentReflPos))
+                                                                 string (abs_par_x) + " " + string (abs_par_y-labelpadding) + " moveto\n" +
+                                                                 string (abs_x)     + " " + string (abs_y+labelpadding)     + " lineto stroke\n" + 
+                                                                 treePrint (Node ((label, reflPos+parentReflPos),subtree)) level + 
                                                                  subtreePrint (rest,level,parentReflPos);;
 
 
- printf "%s" (treePrint stuff 1.0);;
+let PSheader = "%!PS\n/Courier\n10 selectfont\n";;
+let PSfooter = "showpage";;
+
+printf "%s\n" (treePrint stuff 1.0);;
+
+ File.WriteAllText ("output.ps", PSheader + (treePrint stuff 1.0) + PSfooter);;
