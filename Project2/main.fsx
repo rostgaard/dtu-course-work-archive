@@ -264,3 +264,52 @@ let res4 = st ap3;;
 
 let forTest = parseFromFile (advTestPath + "ForLoop.while");;
 let res5 = st forTest;;
+
+let fig6 = Node ("A", 
+             [Node ("B", 
+               [Node ("C",
+                 [Node ("D",
+                   [Node ("E",[]);
+                    Node ("F",[])
+                   ])
+                 ]);
+                  Node ("G", 
+                    [Node ("H", [])
+                    ])
+                 ]);
+                Node ("I",
+                  [Node ("J",
+                    [Node ("K", [])
+                    ])
+                  ]);
+              Node ("L", 
+                [Node ("M",
+                  [Node ("N", 
+                    [Node ("O", [])
+                    ])
+                  ])
+                ])]);;
+               
+let stuff = design fig6;;
+
+let lineHeight = 50.0;;
+let lineWidth  = 100.0;;
+
+let rootx = 300.0;;
+let rooty = 400.0;;
+
+let rec treePrint node level = 
+  match node with 
+  | Node ((label, reflPos),[])      -> let (abs_x, abs_y) = (absoluteOffset level reflPos)
+                                       (string abs_x) + " " + (string abs_y) + " moveto\n(" + label + ") show\n"  
+  | Node ((label, reflPos),subtree) -> let (abs_x, abs_y) = (absoluteOffset level reflPos)
+                                       (string abs_x) + " " + (string abs_y) + " moveto\n(" + label + ") show\n"
+                                       + subtreePrint (subtree,level+1.0, reflPos)
+and absoluteOffset level reflectPos = ((reflectPos * lineWidth) + rootx), (rooty - (level * lineHeight))
+and subtreePrint = function
+  | [],level,parentReflPos                                  -> ""
+  | Node ((label, reflPos),subtree)::rest,level,parentReflPos -> treePrint (Node ((label, reflPos+parentReflPos),subtree)) level + 
+                                                                 subtreePrint (rest,level,parentReflPos);;
+
+
+ printf "%s" (treePrint stuff 1.0);;
