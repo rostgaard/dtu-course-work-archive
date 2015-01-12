@@ -1,6 +1,16 @@
-﻿#load "..\Project1\AST.fs"
+﻿(* Load the parser and interpreter *)
+#r "FSharp.PowerPack.dll"
+#I "..\Project1"
+#load "AST.fs"
+#load "Parser.fs"
+#load "Lexer.fs"
+#load "ParserUtil.fs"
 
 open AST
+open System
+open ParserUtil
+
+exception TypeError of string
 
 type 'a Tree = Node of ('a * 'a Tree list);;
 type Extent = (float * float) list;;
@@ -58,40 +68,19 @@ let child4 = Node("child4", []);;
 let root = Node("root", [child1; child2; child3; child4]);;
 let this = design root;;
 
-(*
-let transform = function
 
-// exp: Exp -> Env -> Store -> Value * Store 
-let rec exp e (env:Env) (store:Store) = 
+// exp: Exp -> Node
+let rec exp e  = 
     match e with
-    | Var v       -> match Map.find v env with
-                     | Reference loc as refl -> (refl,store)
-                     | IntVal i as refl      -> (refl, store)
-                     | StringVal s as refl   -> (refl, store)
-                     | BoolVal v as refl     -> (refl, store)
-                     | _ as refl             -> raise (TypeError("This is not supported var type " + string refl))
-    | ArrVar(s, e) -> match exp e env store with
-                        | (IntVal index, newStore) -> match Map.find s env with
-                                                        | Reference loc -> match Map.find loc store with
-                                                                            | ArrayList(_, values) as x -> ((Array.get values index), store)
-                                                                            | _ as res -> raise (TypeError("Cant find attribute. This is not reference to an array: " + string res))
-                                                        | _ as res      -> raise (TypeError("Cant find attribute. This is not reference: " + string res))
-                        | (index, newStore)       -> raise (TypeError("This is not a proper index for array: " + string index))
-    | Attribute(s, a) -> match Map.find s env with
-                            | Reference loc -> match Map.find loc store with 
-                                                  | ArrayList(length, _) -> ((IntVal length),store)
-                                                  | _           -> raise (TypeError("Only support for array.length attribute"))
-                            | _             -> raise (TypeError("This object stores no reference:" + s))
-    
-    | ContOf er    -> match exp er env store with
-                      | (Reference loc,store1) -> match Map.find loc store1 with 
-                                                  | SimpVal res   -> (res,store1)
-                                                  | ArrayList res -> (Reference loc, store1)
-                                                  | Proc res      -> (Reference loc, store1)
-                                                  | _ as res      -> raise (TypeError("This is not legit content type: " + string res))
-                      | _                   -> raise (TypeError("This is not a proper reference:" + string er))
-
-    | Apply(func,es) -> let child1 = Node("Arguments", [expList es])
+    | Var v       -> Node("Var", [Node(v, [])])
+    | ArrVar(s, e) -> let child1 = Node("Array", [Node(s, [])])
+                      let child2 = Node("Index", [exp e])
+                      Node("Array Cell", [child1; child2])
+    | Attribute(s, a) -> let child1 = Node("Object", [Node(s, [])])
+                         let child2 = Node("Attribute name", [Node(a, [])])
+                         Node("Attribute", [child1; child2])
+    | ContOf er    -> Node("ContOf", [exp er])
+    | Apply(func,es) -> let child1 = Node("Arguments", expList es)
                         let child2 = Node("Operator", [Node(func, [])])
                         Node("Apply", [child1; child2])
     | Int i       -> Node("IntVal", [Node(string i, [])])
@@ -99,16 +88,16 @@ let rec exp e (env:Env) (store:Store) =
     | String s    -> Node("StringVal", [Node(s, [])])
     | AndOp (e1, e2) -> let child1 = Node("Argument", [exp e1])
                         let child2 = Node("Argument", [exp e2])
-                        Node("And", [child1; child2]
+                        Node("And", [child1; child2])
     | OrOp  (e1, e2) -> let child1 = Node("Argument", [exp e1])
                         let child2 = Node("Argument", [exp e2])
-                        Node("Or", [child1; child2]
+                        Node("Or", [child1; child2])
 
 and expList = function
     | []       -> []
     | e::erest -> (exp e) :: (expList erest)
 
-// stm: Stm -> Env -> Store -> option<Value> * Store
+// stm: Stm -> Node
 and st stm = 
     match stm with
     | ArrAsg(s, ind, e) -> let child1 = Node("Array", [Node(s, [])])
@@ -116,36 +105,38 @@ and st stm =
                            let child3 = Node("Value", [exp e])
                            Node("Array Assign", [child1; child2; child3])
     | Call(s, args) -> let child1 = Node("Proc", [Node(s, [])])
-                       let child2 = Node("Args", [expList args])
+                       let child2 = Node("Args", expList args)
                        Node("Call", [child1;child2])
     | Asg(el,e) -> let child1 = Node("Var", [exp el]);
                    let child3 = Node("Value", [exp e])
                    Node("Assign", [child1; child3])
     | PrintLn e -> Node("print", [exp e])
-    | Seq (sts) -> List.map st sts
+    | Seq (sts) -> Node("Sequence", List.map st sts)
 
     | While(e,stms)  -> let child1 = Node("Condition", [exp e])
                         let child2 = Node("Statements", [st stms])
                         Node("While", [child1;child2]);
 
-    | Block(ds,stms) -> (decList ds) :: (st stms)
+    | Block(ds,stms) -> let child1 = Node("Declarations", (decList ds))
+                        let child2 = Node("Statements", [(st stms)])
+                        Node("Block", [child1;child2])
 
-    | Return (e)    -> Node("Return", [exp e]);
+    | Return (e)    -> Node("Return", [exp e])
 
     | IfElse (cond, tbranch, fbranch) -> let child1 = Node("Condition", [exp cond]);
                                          let child2 = Node("True branch", [st tbranch])
                                          let child3 = Node("False branch", [st fbranch])
-                                         Node("IfElse", [child1, child2, child3])
+                                         Node("IfElse", [child1; child2; child3])
     | Skip                          -> Node("Skip", [])
     | Foreach (iden, colName, body) -> let child1 = Node("Iterator", [Node(iden, [])])
                                        let child2 = Node("Array", [Node(colName,[])])
-                                       let child3 = Node("Statements", [st stms]);
+                                       let child3 = Node("Statements", [st body]);
                                        Node("Foreach", [child1; child2; child3])
     | For(def, con, inc, stms)   -> let child1 = Node("Initialization", [st def])
                                     let child2 = Node("Condition", [exp con])
                                     let child3 = Node("Incrementation", [st inc])
                                     let child4 = Node ("Statements", [st stms])
-                                    Node("For", [child1; child2; child3; child4]);;
+                                    Node("For", [child1; child2; child3; child4])
 
 and decList ds  = 
     match ds with
@@ -155,13 +146,121 @@ and decList ds  =
 and dec d =
     match d with 
     | VarDec(s,e) -> let child1 = Node("Var", [Node(s, [])])
-                     let child2 = Node(exp e, [])
+                     let child2 = Node("Value", [exp e])
                      Node("VarDec", [child1; child2])
-    | ProcDec (s, args, stm) -> let gChild = stList stm
-                                let child = Node("Proc " + s + "(" + args + ")", gChild)
-                                Node("ProcDec", [child])
+    | ProcDec (s, args, stm) -> let child1 = Node("Proc", [Node(s, [])])
+                                let child2 = Node("Args", (List.map (fun x -> Node(x, [])) args))
+                                let child3 = Node("Statements", [st stm])
+                                Node("ProcDec", [child1; child2; child3])
     | ArrDec(s, e, value) -> let child1 = Node("Name ", [Node(s,[])])
                              let child2 = Node("Length ", [exp e])
                              let child3 = Node("Value ", [exp value])
-                             Node(ArrDec, [child1; child2; child3]);;
-                             *)
+                             Node("ArrDec", [child1; child2; child3]);;
+
+
+//////////////////////////////////////////////////////////
+
+
+System.IO.Directory.SetCurrentDirectory __SOURCE_DIRECTORY__;;
+
+let advTestPath = "../Project1/tests/";;
+let testPath = "../Project1/";;
+printf "%s" "Tests:\n";;
+
+printf "%s" "  Factorial1.while - ";;
+let p3 = parseFromFile (testPath + "Factorial1.while");;
+try
+   st p3
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+printf "%s" "  Factorial2.while - ";;
+let p4 = parseFromFile (testPath + "Factorial2.while");;
+try
+  st p4
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+printf "%s" "  Factorial3.while - ";;
+let p5 = parseFromFile (testPath + "Factorial3.while");;
+try
+  st p5
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+printf "%s" "  Factorial4.while - ";;
+let p6 = parseFromFile (testPath + "Factorial4.while");;
+try
+  st p6
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+printf "%s" "  Factorial5.while - ";;
+let p7 = parseFromFile (testPath + "Factorial5.while");;
+try
+  st p7
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+printf "%s" "  ArrayProg1.while - ";;
+let ap1 = parseFromFile (testPath + "ArrayProg1.while");; 
+try
+  st ap1
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+printf "%s\n" "  ArrayProg2.while (manually expect output) ";;
+printf "%s\n" "=== ArrayProg2.while output ===";;
+let ap2 = parseFromFile (testPath + "ArrayProg2.while");; 
+try
+  st ap2
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+printf "%s\n" "=== End ArrayProg2.while output ===";;
+
+printf "%s" "  String as array index error - ";;
+let arrayTest = parseFromFile (advTestPath + "ArrayTestStringIndex.while");;
+try
+  let res0 = st arrayTest
+  printf "%s\n" "(fail) Expected exception here."
+with
+    | TypeError msg  -> printf "%s\n" "(ok)"
+    | _              -> printf "%s\n" "(fail) Got unexpected exception!"
+
+printf "%s" "  If-Else parsing - ";;
+let ifelseparseTest = parseFromFile (advTestPath + "IfElseParse.while");;
+try
+  st ifelseparseTest
+with
+    | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+printf "%s" "  Crude array folding - ";;
+let arrTest = parseFromFile (advTestPath + "ArrayFolding.while");;
+try
+  let res1 = st arrTest
+  printf ""
+with
+  | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+printf "%s" "  Infix logic parse - ";;
+let andOrTest = parseFromFile (advTestPath + "AndOrInfix.while");;
+try
+  let res2 = st andOrTest
+  printf "%s\n" "(ok)"
+with
+  | _ -> printf "%s\n" "(fail) Got unexpected exception!"
+
+  
+printf "%s\n" "Foreach";;
+
+let foreachTest = parseFromFile (advTestPath + "ForeachLoop.while");;
+let res3 = st foreachTest;;
+
+printf "%s\n" "Arguments passing";;
+//is the parser not allowing to assign to arguments?
+let ap3 = parseFromFile (advTestPath + "ArgsReferencesValues.while");; 
+let res4 = st ap3;;
+
+
+let forTest = parseFromFile (advTestPath + "ForLoop.while");;
+let res5 = st forTest;;
