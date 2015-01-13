@@ -26,7 +26,7 @@ let rec merge = function
     | (ps, [])  -> ps
     | ((p, _)::ps, (_,q)::qs)    -> (p,q) :: (merge (ps,qs));;
 
-let mergeList es = List.fold (fun acc e -> merge (e,acc)) [] es;;
+let mergeList es = List.fold (fun acc e -> merge (acc, e)) [] es ;;
 
 let rmax (p: float, q:float) = if p > q then p else q;;
 let rec fit = function 
@@ -311,7 +311,7 @@ let fig6a = Node ("A",
                 ])]);;
 
 
-let fig6refl = design fig6;;
+let fig6refl = design fig6a;;
 
 let lineHeight = 50.0;;
 let lineWidth  = 120.0;;
