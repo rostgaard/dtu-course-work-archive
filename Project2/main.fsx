@@ -314,7 +314,7 @@ let fig6a = Node ("A",
 let fig6refl = design fig6a;;
 
 let lineHeight = 50.0;;
-let lineWidth  = 120.0;;
+let lineWidth  = 60.0;;
 
 let rootx = 300.0;;
 let rooty = 800.0;;
@@ -331,7 +331,7 @@ let rec treePrint node level =
                                         (labelToPSString label) + "\n"
   | Node ((label, reflPos),subtree) -> let (abs_x, abs_y) = (absoluteOffset level reflPos)
                                        (string abs_x) + " " + (string abs_y) + " moveto\n" +
-                                       (labelToPSString (label + "  ("+ string (reflPos) + ")" )) + "\n" +
+                                       (labelToPSString label) + "\n" +
                                        subtreePrint (subtree,level+1.0, reflPos)
 and absoluteOffset level reflectPos = ((reflectPos * lineWidth) + rootx), (rooty - (level * lineHeight))
 and subtreePrint = function
@@ -340,18 +340,22 @@ and subtreePrint = function
                                                                  let (abs_x, abs_y) = (absoluteOffset level (reflPos+parentReflPos))
                                                                  let abs_x1 = abs_par_x + (reflPos*lineWidth)
                                                                  string (abs_par_x) + " " + string (abs_par_y-labelpadding) + " moveto\n" +
-                                                                 string (abs_x1)     + " " + string (abs_y+labelpadding)     + " lineto stroke\n" + 
+                                                                 string (abs_x1)     + " " + string (abs_par_y-labelpadding)     + " lineto\n" +
+                                                                 string (abs_x1)     + " " + string (abs_y+labelpadding)     + " lineto\n" +
+                                                                 " stroke\n" + 
                                                                  treePrint (Node ((label, reflPos+parentReflPos),subtree)) level + 
                                                                  subtreePrint (rest,level,parentReflPos);;
 
 
-let PSheader = "%!PS\n/Courier\n10 selectfont\n";;
+let PSheader = "%!PS\n0.7 0.7 scale /Courier\n10 selectfont\n";;
 let PSfooter = "showpage";;
 
 
 let PSFileWrite path tree = File.WriteAllText (path, PSheader + (treePrint tree 1.0) + PSfooter);;
 
 //let p5 = parseFromFile (testPath + "Factorial3.while");;
+
+let y = design fig6a
 
 PSFileWrite "Factorial3.ps" (design (st p5));;
 PSFileWrite "fig6.ps" (design fig6);;
