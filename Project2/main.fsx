@@ -1,6 +1,6 @@
 ﻿(* Load the parser and interpreter *)
 #r "FSharp.PowerPack.dll"
-#I "..\Project1"
+#I "../Project1"
 #load "AST.fs"
 #load "Parser.fs"
 #load "Lexer.fs"
@@ -60,15 +60,6 @@ let design tree =
                         let resulttree          = Node((label, 0.0), ptrees)
                         (resulttree, resultextents)
     fst (design' tree)
-
-let child1 = Node("child1", []);;
-let child2 = Node("child2", []);;
-let grandchild1 = Node("grandchild1", []);;
-let child3 = Node("child3", [grandchild1]);;
-let child4 = Node("child4", []);;
-let root = Node("root", [child1; child2; child3; child4]);;
-let this = design root;;
-
 
 // exp: Exp -> Node
 let rec exp e  = 
@@ -297,7 +288,7 @@ let lineHeight = 50.0;;
 let lineWidth  = 100.0;;
 
 let rootx = 300.0;;
-let rooty = 400.0;;
+let rooty = 800.0;;
 
 let labelpadding = 10.0;
 
@@ -327,6 +318,9 @@ and subtreePrint = function
 let PSheader = "%!PS\n/Courier\n10 selectfont\n";;
 let PSfooter = "showpage";;
 
-printf "%s\n" (treePrint stuff 1.0);;
 
-File.WriteAllText ("output.ps", PSheader + (treePrint stuff 1.0) + PSfooter);;
+let PSFileWrite path tree = File.WriteAllText (path, PSheader + (treePrint tree 1.0) + PSfooter);;
+
+let p5 = parseFromFile (testPath + "Factorial3.while");;
+
+ PSFileWrite "Factorial3.ps" (design (st p5));;
