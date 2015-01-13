@@ -39,6 +39,25 @@
 \author{Anna Maria Walach - \textit {s121540@student.dtu.dk} \\ Kim Rostgaard Christensen - \textit {s084283@student.dtu.dk}}
 \begin{document}
 \maketitle
+\section{Translating solution to F\#}
+\section{Generating PostScript file}
+Generation of PostScript content, is a matter of mapping nodes to PostScript commands. In our case we have found that the following macro works well.
+\begin{lstlisting}[language=PostScript]
+$node_x $node_y            moveto
+($label)                   dup stringwidth pop 2 div neg 0 rmoveto show
+$node_x $padded_node_y     moveto
+$parent_x $parent_y        lineto stroke
+\end{lstlisting}
+the \$ denotes values generated in the F\# program. This block adds a centered label and draws a line from a child node to its parent.
+We generate the drawing top-down, as the algorithm from \cite{kennedy1996functional} already handled the tree fitting for us.
 
+PostScript files contain both footers and headers that needs to be prepended and appended to the PostScript content -- respectively.
+\section{Visualizing AST's}
+\section{Efficiency}
+\section{Extensions}
 \section{Conclusions}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
 \end{document}  
