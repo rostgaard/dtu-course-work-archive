@@ -263,29 +263,58 @@ let fig6 = Node ("A",
                  [Node ("D",
                    [Node ("E",[]);
                     Node ("F",[])
-                   ])
-                 ]);
+                   ]);
                   Node ("G", 
                     [Node ("H", [])
-                    ])
+                  ])
                  ]);
                 Node ("I",
-                  [Node ("J",
+                 [Node ("J",
                     [Node ("K", [])
                     ])
                   ]);
+                 ]);
               Node ("L", 
                 [Node ("M",
                   [Node ("N", 
                     [Node ("O", [])
                     ])
                   ])
+                ]);
+                ]);;
+
+let fig6a = Node ("A", 
+             [Node ("B", 
+               [Node ("C",
+                 [Node ("D",
+                   [Node ("E",[]);
+                    Node ("F",[])
+                   ]);
+                  Node ("G", 
+                    [Node ("H", [])
+                  ])
+                 ]);
+                Node ("I",
+                 [Node ("J",
+                    [Node ("K", [])
+                    ])
+                  ]);
+                 Node ("C1",[])]);
+              Node ("L", 
+                [Node ("M",
+                  [Node ("N", 
+                    [Node ("O", [])
+                    ])
+                  ]);
+                 Node ("P",[]);
+                 Node ("Q",[])
                 ])]);;
-               
-let stuff = design fig6;;
+
+
+let fig6refl = design fig6;;
 
 let lineHeight = 50.0;;
-let lineWidth  = 100.0;;
+let lineWidth  = 120.0;;
 
 let rootx = 300.0;;
 let rooty = 800.0;;
@@ -302,15 +331,16 @@ let rec treePrint node level =
                                         (labelToPSString label) + "\n"
   | Node ((label, reflPos),subtree) -> let (abs_x, abs_y) = (absoluteOffset level reflPos)
                                        (string abs_x) + " " + (string abs_y) + " moveto\n" +
-                                       (labelToPSString label) + "\n" +
+                                       (labelToPSString (label + "  ("+ string (reflPos) + ")" )) + "\n" +
                                        subtreePrint (subtree,level+1.0, reflPos)
 and absoluteOffset level reflectPos = ((reflectPos * lineWidth) + rootx), (rooty - (level * lineHeight))
 and subtreePrint = function
   | [],level,parentReflPos                                  -> ""
   | Node ((label, reflPos),subtree)::rest,level,parentReflPos -> let (abs_par_x, abs_par_y) = (absoluteOffset (level-1.0) parentReflPos)
-                                                                 let (abs_x, abs_y) = (absoluteOffset (level) (reflPos+parentReflPos))
+                                                                 let (abs_x, abs_y) = (absoluteOffset level (reflPos+parentReflPos))
+                                                                 let abs_x1 = abs_par_x + (reflPos*lineWidth)
                                                                  string (abs_par_x) + " " + string (abs_par_y-labelpadding) + " moveto\n" +
-                                                                 string (abs_x)     + " " + string (abs_y+labelpadding)     + " lineto stroke\n" + 
+                                                                 string (abs_x1)     + " " + string (abs_y+labelpadding)     + " lineto stroke\n" + 
                                                                  treePrint (Node ((label, reflPos+parentReflPos),subtree)) level + 
                                                                  subtreePrint (rest,level,parentReflPos);;
 
@@ -321,6 +351,10 @@ let PSfooter = "showpage";;
 
 let PSFileWrite path tree = File.WriteAllText (path, PSheader + (treePrint tree 1.0) + PSfooter);;
 
-let p5 = parseFromFile (testPath + "Factorial3.while");;
+//let p5 = parseFromFile (testPath + "Factorial3.while");;
 
- PSFileWrite "Factorial3.ps" (design (st p5));;
+PSFileWrite "Factorial3.ps" (design (st p5));;
+PSFileWrite "fig6.ps" (design fig6);;
+PSFileWrite "fig6a.ps" (design fig6a);;
+
+design fig6a;
