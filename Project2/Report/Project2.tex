@@ -57,27 +57,29 @@ We visualize our abstract syntax trees from Project 1 by recursing trough them a
 \section{Efficiency}
 \begin{table} [!h]
 \centering
-\begin{tabular}{c|c|c}
-  \textbf{Typical concatenation}  & \textbf{StringBuilder concatenation} & \textbf{String.concat concatenation} \\
+\begin{tabular}{c|c|c|c}
+  \textbf{Program} & \textbf{Typical concatenation}  & \textbf{StringBuilder concatenation} & \textbf{String.concat concatenation} \\
   \hline
-  \textbf{00.002} & 00.007 & 00.008 \\
+  \textit{ArrayProg1} & \textbf{00.002} & 00.007 & 00.008 \\
   \hline
-  00.005 & \textbf{00.003} & \textbf{00.003} \\
+  \textit{ArrayProg2} & 00.005 & \textbf{00.003} & \textbf{00.003} \\
   \hline
-  \textbf{00.004} & \textbf{00.004} & \textbf{00.004} \\
+  \textit{Factorial4} & \textbf{00.004} & \textbf{00.004} & \textbf{00.004} \\
   \hline
-  00.004 & \textbf{00.003} & \textbf{00.003} \\
+  \textit{Factorial3} & 00.004 & \textbf{00.003} & \textbf{00.003} \\
   \hline
-  00.007 & \textbf{00.006} & 00.008 \\
+  \textit{ForeachLoop} & 00.007 & \textbf{00.006} & 00.008 \\
 \end{tabular} 
 \caption{Table showing the efficiency of different PostScript translator implementation}
 \label{tab:eff}
 \end{table}
 We performed various  tests to measure the efficiency of functions that translate the general tree to a string in Post Script format. The results are presented in table \ref{tab:eff}. The results are not containing the time of translating the AST to general tree. Those times were between 0.000 to 0.001 for all of the inputs. \\
 The conclusion from the results is, that \texttt{StringBuilder} is the most efficient way of concatenating strings. \\
-However, input files were rather small (from 100 to 800 bytes) and as though, the results may be not reliable (as they are counter in microseconds). Even though, the theoretical conclusions are similar to one received from real data - \texttt{StringBuilder} should be the fastest way of concatenating strings. 
+However, input files were rather small (from 100 to 800 bytes) and as though, the results may be not reliable (as they are counter in microseconds). Even though, the theoretical conclusions are similar to one received from real data - \texttt{StringBuilder} should be the fastest way of concatenating strings. \\
+We also performed tests on all of the input programs that were designed during Project 1, and all of them generate proper trees. 
 \section{Conclusions}
-We have not tested the limit on how big trees we can generate, but are clearly limited by not using tail recursion in our drawing algorithm. A nice improvement would be to make the algorithm tail recursive.
+The solution generates proper and nice looking trees for all tested cases. We have not tested the limit on how big trees we can generate, but are clearly limited by not using tail recursion in our drawing algorithm. A nice improvement would be to make the algorithm tail recursive.
+As another future improvement, we should introduce more complex examples to improve the performance and efficiency of our solution. 
 
 \bibliographystyle{plain}
 \bibliography{references}
