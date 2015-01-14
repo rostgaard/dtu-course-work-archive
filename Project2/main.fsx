@@ -73,12 +73,14 @@ let rec expToTree e  =
     | Attribute(s, a) -> let child1 = Node("Object", [Node(s, [])])
                          let child2 = Node("Attribute name", [Node(a, [])])
                          Node("Attribute", [child1; child2])
-    | ContOf er    -> let Node (lbl, list) = expToTree er
-                      Node ("!", [])
+    | ContOf er    -> match expToTree er with
+                      | Node (lbl, list) -> Node ("!"+lbl, list)
+                      // let Node (lbl, list) = expToTree er
+                      // Node ("!"+lbl, [])
     | Apply(func,es) -> Node(func, expListToTree es)
     | Int i       -> Node("Int: " + string i, [])
-    | Bool b      -> Node("BoolVal", [Node(string b, [])])
-    | String s    -> Node("StringVal", [Node(s, [])])
+    | Bool b      -> Node("Bool: " + string b, [])
+    | String s    -> Node("String: " + s, [])
     | AndOp (e1, e2) -> let child1 = Node("Argument", [expToTree e1])
                         let child2 = Node("Argument", [expToTree e2])
                         Node("And", [child1; child2])
@@ -100,12 +102,14 @@ and stmToTree stm =
     | Call(s, args) -> let child1 = Node("Proc", [Node(s, [])])
                        let child2 = Node("Args", expListToTree args)
                        Node("Call", [child1;child2])
-    | Asg(el,e) -> let child1 = Node("Var", [expToTree el]);
-                   let child3 = Node("Value", [expToTree e])
-                   Node("Assign", [child1; child3])
+    | Asg(el,e) -> let child1 = expToTree el
+                   let child3 = expToTree e
+                   Node(":=", [child1; child3])
     | PrintLn e -> Node("print", [expToTree e])
-    | Seq (sts) -> Node("Sequence", List.map stmToTree sts)
-
+    | Seq (sts) -> if (List.length sts) = 1 then
+                     stmToTree (List.head sts)
+                   else 
+                      Node("Sequence", List.map stmToTree sts)
     | While(e,stms)  -> let child1 = Node("Condition", [expToTree e])
                         let child2 = Node("Statements", [stmToTree stms])
                         Node("While", [child1;child2]);
@@ -251,42 +255,42 @@ printf "%s" "Tests:\n";;
 printf "%s" "  Factorial1.while - ";;
 let p3 = parseFromFile (testPath + "Factorial1.while");;
 try
-   st p3
+   ignore (st p3)
 with
     | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 
 printf "%s" "  Factorial2.while - ";;
 let p4 = parseFromFile (testPath + "Factorial2.while");;
 try
-  st p4
+  ignore (st p4)
 with
     | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 
 printf "%s" "  Factorial3.while - ";;
 let p5 = parseFromFile (testPath + "Factorial3.while");;
 try
-  st p5
+  ignore (st p5)
 with
     | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 
 printf "%s" "  Factorial4.while - ";;
 let p6 = parseFromFile (testPath + "Factorial4.while");;
 try
-  st p6
+  ignore (st p6)
 with
     | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 
 printf "%s" "  Factorial5.while - ";;
 let p7 = parseFromFile (testPath + "Factorial5.while");;
 try
-  st p7
+  ignore (st p7)
 with
     | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 
 printf "%s" "  ArrayProg1.while - ";;
 let ap1 = parseFromFile (testPath + "ArrayProg1.while");; 
 try
-  st ap1
+  ignore (st ap1)
 with
     | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 
@@ -294,7 +298,7 @@ printf "%s\n" "  ArrayProg2.while (manually expect output) ";;
 printf "%s\n" "=== ArrayProg2.while output ===";;
 let ap2 = parseFromFile (testPath + "ArrayProg2.while");; 
 try
-  st ap2
+  ignore (st ap2)
 with
     | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 printf "%s\n" "=== End ArrayProg2.while output ===";;
@@ -311,7 +315,7 @@ with
 printf "%s" "  If-Else parsing - ";;
 let ifelseparseTest = parseFromFile (advTestPath + "IfElseParse.while");;
 try
-  st ifelseparseTest
+  ignore (st ifelseparseTest)
 with
     | _ -> printf "%s\n" "(fail) Got unexpected exception!"
 
