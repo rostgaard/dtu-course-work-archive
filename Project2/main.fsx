@@ -62,6 +62,94 @@ let design tree =
                         (resulttree, resultextents)
     fst (design' tree)
 
+
+// exp: Exp -> Node
+let rec expToTree e  = 
+    match e with
+    | Var v       -> Node(v, [])
+    | ArrVar(s, e) -> let child1 = Node("Array", [Node(s, [])])
+                      let child2 = Node("Index", [expToTree e])
+                      Node("Array Cell", [child1; child2])
+    | Attribute(s, a) -> let child1 = Node("Object", [Node(s, [])])
+                         let child2 = Node("Attribute name", [Node(a, [])])
+                         Node("Attribute", [child1; child2])
+    | ContOf er    -> let Node (lbl, list) = expToTree er
+                      Node ("!", [])
+    | Apply(func,es) -> Node(func, expListToTree es)
+    | Int i       -> Node("Int: " + string i, [])
+    | Bool b      -> Node("BoolVal", [Node(string b, [])])
+    | String s    -> Node("StringVal", [Node(s, [])])
+    | AndOp (e1, e2) -> let child1 = Node("Argument", [expToTree e1])
+                        let child2 = Node("Argument", [expToTree e2])
+                        Node("And", [child1; child2])
+    | OrOp  (e1, e2) -> let child1 = Node("Argument", [expToTree e1])
+                        let child2 = Node("Argument", [expToTree e2])
+                        Node("Or", [child1; child2])
+
+and expListToTree = function
+    | []       -> []
+    | e::erest -> (expToTree e) :: (expListToTree erest)
+
+// stm: Stm -> Node
+and stmToTree stm = 
+    match stm with
+    | ArrAsg(s, ind, e) -> let child1 = Node("Array", [Node(s, [])])
+                           let child2 = Node("Index", [expToTree ind])
+                           let child3 = Node("Value", [expToTree e])
+                           Node("Array Assign", [child1; child2; child3])
+    | Call(s, args) -> let child1 = Node("Proc", [Node(s, [])])
+                       let child2 = Node("Args", expListToTree args)
+                       Node("Call", [child1;child2])
+    | Asg(el,e) -> let child1 = Node("Var", [expToTree el]);
+                   let child3 = Node("Value", [expToTree e])
+                   Node("Assign", [child1; child3])
+    | PrintLn e -> Node("print", [expToTree e])
+    | Seq (sts) -> Node("Sequence", List.map stmToTree sts)
+
+    | While(e,stms)  -> let child1 = Node("Condition", [expToTree e])
+                        let child2 = Node("Statements", [stmToTree stms])
+                        Node("While", [child1;child2]);
+
+    | Block(ds,stms) -> let child1 = Node("Declarations", (decListToTree ds))
+                        //match stms with
+                        //| Seq (stms) -> Node("Block", decListToTree ds @ List.map stmToTree stms)
+                        //| single_stm -> stmToTree single_stm
+                        let child2 = stmToTree stms
+                        Node("Block", [child1;child2])
+
+    | Return (e)    -> Node("Return", [expToTree e])
+
+    | IfElse (cond, tbranch, fbranch) -> let child1 = Node("Condition", [expToTree cond]);
+                                         let child2 = Node("True", [stmToTree tbranch])
+                                         let child3 = Node("False", [stmToTree fbranch])
+                                         Node("IfElse", [child1; child2; child3])
+    | Skip                          -> Node("Skip", [])
+    | Foreach (iden, colName, body) -> let child1 = Node("Iterator", [Node(iden, [])])
+                                       let child2 = Node("Array", [Node(colName,[])])
+                                       let child3 = Node("Statements", [stmToTree body]);
+                                       Node("Foreach", [child1; child2; child3])
+    | For(def, con, inc, stms)   -> let init = Node("Init", [stmToTree def])
+                                    let eval = Node("Eval", [expToTree con])
+                                    let incr = Node("Incr", [stmToTree inc])
+                                    let body = Node ("Body", [stmToTree stms])
+                                    Node("For", [init; eval; incr; body])
+
+and decListToTree ds  = 
+    match ds with
+    | []       -> []
+    | d::drest -> (decToTree d) :: decListToTree drest
+
+and decToTree d =
+    match d with 
+    | VarDec(s,e) -> Node("Var: " + s, [expToTree e])
+    | ProcDec (s, args, stm) -> let args = Node("Args", (List.map (fun x -> Node(x, [])) args))
+                                let stms = Node("Statements", [stmToTree stm])
+                                Node("Proc: " + s, [args; stms])
+    | ArrDec(s, e, value) -> let len  = Node("Length ", [expToTree e])
+                             let init = Node("Value ", [expToTree value])
+                             Node("Array: " + s, [len; init]);;
+
+
 // exp: Exp -> Node
 let rec exp e  = 
     match e with
@@ -315,7 +403,7 @@ let fig6a = Node ("A",
 let lineHeight = 50.0;;
 let lineWidth  = 60.0;;
 
-let rootx = 300.0;;
+let rootx = 600.0;;
 let rooty = 800.0;;
 
 let labelpadding = 10.0;
@@ -430,7 +518,7 @@ and subtreePrintCon = function
                                                                  // printf "%s\n" result
                                                                  result;;
 
-let PSheader = "%!PS\n0.7 0.7 scale /Courier\n10 selectfont\n";;
+let PSheader = "%!PS\n0.5 0.5 scale /Courier\n10 selectfont\n";;
 let PSfooter = "showpage";;
 
 
@@ -477,3 +565,7 @@ PSFileWriteCon "2c_ArrayProg2.ps" (design (st ap2));;
 PSFileWriteCon "3c_Factorial4.ps" (design (st p6));;
 PSFileWriteCon "4c_Factorial3.ps" (design (st p5));;
 PSFileWriteCon "5c_ForeachLoop.ps" (design (st foreachTest));;
+
+
+
+PSFileWriteCon "Factorial3.ps" (design (stmToTree p5));;
