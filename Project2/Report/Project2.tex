@@ -53,6 +53,7 @@ We generate the drawing top-down, as the algorithm from \cite{kennedy1996functio
 
 PostScript files contain both footers and headers that needs to be prepended and appended to the PostScript content -- respectively.
 \section{Visualizing AST's}
+We visualize our abstract syntax trees from Project 1 by recursing trough them and converting each AST node into a Tree Node. We've made two different implementations; one that maps every node within the AST to a Tree node, and one that tries to make it a bit more condense and readable. the F\# function \texttt{st, ex, dec} makes large tree, and the \texttt{*ToTree} equivalents makes the compact versions.
 \section{Efficiency}
 
 Typical concatenation
