@@ -10,6 +10,7 @@ open AST
 open System
 open System.IO
 open ParserUtil
+open System.Text
 
 exception TypeError of string
 
@@ -99,7 +100,7 @@ and st stm =
     | Call(s, args) -> let child1 = Node("Proc", [Node(s, [])])
                        let child2 = Node("Args", expList args)
                        Node("Call", [child1;child2])
-    | Asg(el,e) -> let child1 = Node("Var", [exp el]);
+    | Asg(el,e) -> let child1 = Node("Variable", [exp el]);
                    let child3 = Node("Value", [exp e])
                    Node("Assign", [child1; child3])
     | PrintLn e -> Node("print", [exp e])
@@ -137,7 +138,7 @@ and decList ds  =
 
 and dec d =
     match d with 
-    | VarDec(s,e) -> let child1 = Node("Var", [Node(s, [])])
+    | VarDec(s,e) -> let child1 = Node("Variable", [Node(s, [])])
                      let child2 = Node("Value", [exp e])
                      Node("VarDec", [child1; child2])
     | ProcDec (s, args, stm) -> let child1 = Node("Proc", [Node(s, [])])
@@ -311,8 +312,6 @@ let fig6a = Node ("A",
                 ])]);;
 
 
-let fig6refl = design fig6a;;
-
 let lineHeight = 50.0;;
 let lineWidth  = 60.0;;
 
@@ -347,18 +346,134 @@ and subtreePrint = function
                                                                  subtreePrint (rest,level,parentReflPos);;
 
 
+
+let labelToPSStringSB (builder : StringBuilder) (label : string) = builder.Append "(" 
+                                                                   builder.Append label 
+                                                                   builder.Append ") dup stringwidth pop 2 div neg 0 rmoveto show"
+                                                                   builder;;
+
+let treePrintSB' tree = 
+    let rec treePrintSB node level (sb : StringBuilder) =
+        match node with 
+        | Node ((label, reflPos),[])      -> let (abs_x, abs_y) = (absoluteOffsetSB level reflPos)
+                                             sb.Append (string abs_x)
+                                             sb.Append " " 
+                                             sb.Append (string abs_y)
+                                             sb.Append " moveto\n"
+                                             let sb2 = (labelToPSStringSB sb label) 
+                                             sb2.Append "\n"
+                                             sb2
+        | Node ((label, reflPos),subtree) -> let (abs_x, abs_y) = (absoluteOffset level reflPos)
+                                             sb.Append (string abs_x) 
+                                             sb.Append " " 
+                                             sb.Append (string abs_y) 
+                                             sb.Append " moveto\n" 
+                                             let sb2 = (labelToPSStringSB sb label) 
+                                             sb2.Append "\n" 
+                                             let sb3 = (subtreePrintSB (subtree,level+1.0, reflPos, sb2))
+                                             sb3
+    and absoluteOffsetSB level reflectPos = ((reflectPos * lineWidth) + rootx), (rooty - (level * lineHeight))
+    and subtreePrintSB = function
+      | [],level,parentReflPos, sb                                  -> sb
+      | Node ((label, reflPos),subtree)::rest,level,parentReflPos, sb -> let (abs_par_x, abs_par_y) = (absoluteOffsetSB (level-1.0) parentReflPos)
+                                                                         let (abs_x, abs_y) = (absoluteOffsetSB level (reflPos+parentReflPos))
+                                                                         let abs_x1 = abs_par_x + (reflPos*lineWidth)
+                                                                         sb.Append (string (abs_par_x))
+                                                                         sb.Append " " 
+                                                                         sb.Append (string (abs_par_y-labelpadding)) 
+                                                                         sb.Append " moveto\n" 
+                                                                         sb.Append (string (abs_x1))
+                                                                         sb.Append " " 
+                                                                         sb.Append (string (abs_par_y-labelpadding))
+                                                                         sb.Append " lineto\n" 
+                                                                         sb.Append (string (abs_x1))
+                                                                         sb.Append " " 
+                                                                         sb.Append (string (abs_y+labelpadding))
+                                                                         sb.Append " lineto\n" 
+                                                                         sb.Append " stroke\n" 
+                                                                         let sb2 = (treePrintSB (Node ((label, reflPos+parentReflPos),subtree)) level sb)
+                                                                         let sb3 = (subtreePrintSB (rest,level,parentReflPos, sb2))
+                                                                         sb3
+    let sb = StringBuilder()
+    let result = treePrintSB tree 1.0 sb
+    result.ToString();;
+
+
+let labelToPSStringCon label = let strings = seq["("; label; ") dup stringwidth pop 2 div neg 0 rmoveto show"]
+                               String.concat "" strings;;
+
+
+let rec treePrintCon node level = 
+  match node with 
+  | Node ((label, reflPos),[])      -> let (abs_x, abs_y) = (absoluteOffsetCon level reflPos)
+                                       let strings = seq[(string abs_x); " "; (string abs_y); " moveto\n";
+                                                         (labelToPSStringCon label); "\n"]
+                                       String.concat "" strings
+  | Node ((label, reflPos),subtree) -> let (abs_x, abs_y) = (absoluteOffsetCon level reflPos)
+                                       let strings = seq[(string abs_x); " "; (string abs_y); " moveto\n";
+                                                         (labelToPSStringCon label); "\n";
+                                                          subtreePrintCon (subtree,level+1.0, reflPos)];
+                                       String.concat "" strings
+and absoluteOffsetCon level reflectPos = ((reflectPos * lineWidth) + rootx), (rooty - (level * lineHeight))
+and subtreePrintCon = function
+  | [],level,parentReflPos                                  -> ""
+  | Node ((label, reflPos),subtree)::rest,level,parentReflPos -> let (abs_par_x, abs_par_y) = (absoluteOffsetCon (level-1.0) parentReflPos)
+                                                                 let (abs_x, abs_y) = (absoluteOffset level (reflPos+parentReflPos))
+                                                                 let abs_x1 = abs_par_x + (reflPos*lineWidth)
+                                                                 let strings = seq[string (abs_par_x); " "; string (abs_par_y-labelpadding);
+                                                                                 " moveto\n"; string (abs_x1); " "; string (abs_par_y-labelpadding);
+                                                                                 " lineto\n"; string (abs_x1); " "; string (abs_y+labelpadding);
+                                                                                 " lineto\n"; " stroke\n"; 
+                                                                                 treePrintCon (Node ((label, reflPos+parentReflPos),subtree)) level;
+                                                                                 subtreePrintCon (rest,level,parentReflPos)]
+                                                                 let result = String.concat "" strings
+                                                                 // printf "%s\n" result
+                                                                 result;;
+
 let PSheader = "%!PS\n0.7 0.7 scale /Courier\n10 selectfont\n";;
 let PSfooter = "showpage";;
 
 
 let PSFileWrite path tree = File.WriteAllText (path, PSheader + (treePrint tree 1.0) + PSfooter);;
+let PSFileWriteSB path tree = File.WriteAllText (path, PSheader + (treePrintSB' tree) + PSfooter);;
+let PSFileWriteCon path tree = File.WriteAllText (path, PSheader + (treePrintCon tree 1.0) + PSfooter);;
 
-//let p5 = parseFromFile (testPath + "Factorial3.while");;
+#time "on";;
 
-let y = design fig6a
+//PSFileWrite "fig6.ps" (design fig6);;
+//PSFileWrite "fig6a.ps" (design fig6a);;
 
-PSFileWrite "Factorial3.ps" (design (st p5));;
-PSFileWrite "fig6.ps" (design fig6);;
-PSFileWrite "fig6a.ps" (design fig6a);;
+// =================================================
+// Time testing 
+// =================================================
+let a1 = design (st ap1);;
+PSFileWrite "1_ArrayProg1.ps" (a1);;
+let a2 = design (st ap2);;
+PSFileWrite "2_ArrayProg2.ps" (a2);;
+let a3 = design (st p6);;
+PSFileWrite "3_Factorial4.ps" (a3);;
+let a4 = design (st p5);;
+PSFileWrite "4_Factorial3.ps" (a4);;
+let a5 = design (st foreachTest);;
+PSFileWrite "5_ForeachLoop.ps" (a5);;
 
-design fig6a;
+printf "%s" "Typical concatenation\n";;
+PSFileWrite "1a_ArrayProg1.ps" (design (st ap1));;
+PSFileWrite "2a_ArrayProg2.ps" (design (st ap2));;
+PSFileWrite "3a_Factorial4.ps" (design (st p6));;
+PSFileWrite "4a_Factorial3.ps" (design (st p5));;
+PSFileWrite "5a_ForeachLoop.ps" (design (st foreachTest));;
+
+printf "%s" "StringBuilder concatenation\n";;
+PSFileWriteSB "1b_ArrayProg1.ps" (design (st ap1));;
+PSFileWriteSB "2b_ArrayProg2.ps" (design (st ap2));;
+PSFileWriteSB "3b_Factorial4.ps" (design (st p6));;
+PSFileWriteSB "4b_Factorial3.ps" (design (st p5));;
+PSFileWriteSB "5b_ForeachLoop.ps" (design (st foreachTest));;
+
+printf "%s" "String.concat concatenation\n";;
+PSFileWriteCon "1c_ArrayProg1.ps" (design (st ap1));;
+PSFileWriteCon "2c_ArrayProg2.ps" (design (st ap2));;
+PSFileWriteCon "3c_Factorial4.ps" (design (st p6));;
+PSFileWriteCon "4c_Factorial3.ps" (design (st p5));;
+PSFileWriteCon "5c_ForeachLoop.ps" (design (st foreachTest));;
