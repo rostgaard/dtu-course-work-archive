@@ -12,3 +12,4 @@ Parser.fsi
 *.aux
 *.log
 *.gz
+Project2/*.ps
