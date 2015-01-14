@@ -54,6 +54,28 @@ We generate the drawing top-down, as the algorithm from \cite{kennedy1996functio
 PostScript files contain both footers and headers that needs to be prepended and appended to the PostScript content -- respectively.
 \section{Visualizing AST's}
 \section{Efficiency}
+
+Typical concatenation
+Real: 00:00:00.001, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
+> Real: 00:00:00.008, CPU: 00:00:00.000, GC gen0: 1, gen1: 0, gen2: 0\\
+Real: 00:00:00.009, CPU: 00:00:00.015, GC gen0: 2, gen1: 1, gen2: 1\\
+> Real: 00:00:00.011, CPU: 00:00:00.015, GC gen0: 0, gen1: 0, gen2: 0\\
+Real: 00:00:00.012, CPU: 00:00:00.015, GC gen0: 0, gen1: 0, gen2: 0\\
+> Real: 00:00:00.009, CPU: 00:00:00.015, GC gen0: 1, gen1: 0, gen2: 0\\\\
+StringBuilder concatenation
+Real: 00:00:00.001, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
+> Real: 00:00:00.011, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
+Real: 00:00:00.005, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
+> Real: 00:00:00.007, CPU: 00:00:00.015, GC gen0: 1, gen1: 0, gen2: 0\\
+Real: 00:00:00.005, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
+Real: 00:00:00.007, CPU: 00:00:00.015, GC gen0: 0, gen1: 0, gen2: 0\\\\
+> String.concat concatenation
+Real: 00:00:00.001, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
+Real: 00:00:00.012, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
+> Real: 00:00:00.005, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
+Real: 00:00:00.007, CPU: 00:00:00.000, GC gen0: 1, gen1: 0, gen2: 0\\
+> Real: 00:00:00.007, CPU: 00:00:00.000, GC gen0: 1, gen1: 0, gen2: 0\\
+Real: 00:00:00.010, CPU: 00:00:00.000, GC gen0: 2, gen1: 0, gen2: 0\\
 \section{Extensions}
 \section{Conclusions}
 We have not tested the limit on how big trees we can generate, but are clearly limited by not using tail recursion in our drawing algorithm. A nice improvement would be to make the algorithm tail recursive.

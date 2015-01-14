@@ -430,7 +430,7 @@ and subtreePrintCon = function
                                                                  // printf "%s\n" result
                                                                  result;;
 
-let PSheader = "%!PS\n0.7 0.7 scale /Courier\n10 selectfont\n";;
+let PSheader = "%!PS\n0.7 0.7 scale /Courier\n10 selectfont\n set pagesize A3 \n <</PageSize [842 1190] >> setpagedevice \n";;
 let PSfooter = "showpage";;
 
 
@@ -458,22 +458,22 @@ let a5 = design (st foreachTest);;
 PSFileWrite "5_ForeachLoop.ps" (a5);;
 
 printf "%s" "Typical concatenation\n";;
-PSFileWrite "1a_ArrayProg1.ps" (design (st ap1));;
-PSFileWrite "2a_ArrayProg2.ps" (design (st ap2));;
-PSFileWrite "3a_Factorial4.ps" (design (st p6));;
-PSFileWrite "4a_Factorial3.ps" (design (st p5));;
-PSFileWrite "5a_ForeachLoop.ps" (design (st foreachTest));;
+PSFileWrite "1a_ArrayProg1.ps" (a1);;
+PSFileWrite "2a_ArrayProg2.ps" (a2);;
+PSFileWrite "3a_Factorial4.ps" (a3);;
+PSFileWrite "4a_Factorial3.ps" (a4);;
+PSFileWrite "5a_ForeachLoop.ps" (a5);;
 
 printf "%s" "StringBuilder concatenation\n";;
-PSFileWriteSB "1b_ArrayProg1.ps" (design (st ap1));;
-PSFileWriteSB "2b_ArrayProg2.ps" (design (st ap2));;
-PSFileWriteSB "3b_Factorial4.ps" (design (st p6));;
-PSFileWriteSB "4b_Factorial3.ps" (design (st p5));;
-PSFileWriteSB "5b_ForeachLoop.ps" (design (st foreachTest));;
+PSFileWriteSB "1b_ArrayProg1.ps" (a1);;
+PSFileWriteSB "2b_ArrayProg2.ps" (a2);;
+PSFileWriteSB "3b_Factorial4.ps" (a3);;
+PSFileWriteSB "4b_Factorial3.ps" (a4);;
+PSFileWriteSB "5b_ForeachLoop.ps" (a5);;
 
 printf "%s" "String.concat concatenation\n";;
-PSFileWriteCon "1c_ArrayProg1.ps" (design (st ap1));;
-PSFileWriteCon "2c_ArrayProg2.ps" (design (st ap2));;
-PSFileWriteCon "3c_Factorial4.ps" (design (st p6));;
-PSFileWriteCon "4c_Factorial3.ps" (design (st p5));;
-PSFileWriteCon "5c_ForeachLoop.ps" (design (st foreachTest));;
+PSFileWriteCon "1c_ArrayProg1.ps" (a1);;
+PSFileWriteCon "2c_ArrayProg2.ps" (a2);;
+PSFileWriteCon "3c_Factorial4.ps" (a3);;
+PSFileWriteCon "4c_Factorial3.ps" (a4);;
+PSFileWriteCon "5c_ForeachLoop.ps" (a5);;
