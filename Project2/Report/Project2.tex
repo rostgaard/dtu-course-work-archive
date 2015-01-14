@@ -48,10 +48,9 @@ $node_x $node_y            moveto
 $node_x $padded_node_y     moveto
 $parent_x $parent_y        lineto stroke
 \end{lstlisting}
-the \$ denotes values generated in the F\# program. This block adds a centered label and draws a line from a child node to its parent.
-We generate the drawing top-down, as the algorithm from \cite{kennedy1996functional} already handled the tree fitting for us.
-
-PostScript files contain both footers and headers that needs to be prepended and appended to the PostScript content -- respectively.
+the \$ denotes values generated in the F\# program. This block adds a centered label and draws a direct line from a child node to its parent. The handed in version of the program draws angled lines instead of direct ones.
+We generate the drawing top-down, as the algorithm from \cite{kennedy1996functional} already handled the tree fitting for us, and pick an absolute point on the PS canvas and start drawing there.
+PostScript files contain both footers and headers that needs to be prepended and appended to the PostScript content, respectively. This is done by declaring these as string constants which are concatenated with generated content in the middle.
 \section{Visualizing AST's}
 We visualize our abstract syntax trees from Project 1 by recursing trough them and converting each AST node into a Tree Node. We've made two different implementations; one that maps every node within the AST to a Tree node, and one that tries to make it a bit more condense and readable. the F\# function \texttt{st, ex, dec} makes large tree, and the \texttt{*ToTree} equivalents makes the compact versions.
 \section{Efficiency}
