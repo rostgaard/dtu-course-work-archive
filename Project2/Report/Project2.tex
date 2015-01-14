@@ -40,6 +40,7 @@
 \begin{document}
 \maketitle
 \section{Translating solution to F\#}
+The solution presented in \cite{kennedy1996functional} was straight-forward to implement, except for a little variation in List.fold function. Translating it required more explicit declaration and actually changing the order of arguments to works as describe in article.
 \section{Generating PostScript file}
 Generation of PostScript content, is a matter of mapping nodes to PostScript commands. In our case we have found that the following macro works well.
 \begin{lstlisting}[language=PostScript]
@@ -59,29 +60,27 @@ In the basic version we treat Blocks as nodes having two children; declarations 
 
 the F\# function \texttt{st, ex, dec} makes large tree, and the \texttt{stToTree, } equivalents makes the compact versions.
 \section{Efficiency}
-
-Typical concatenation
-Real: 00:00:00.001, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
-> Real: 00:00:00.008, CPU: 00:00:00.000, GC gen0: 1, gen1: 0, gen2: 0\\
-Real: 00:00:00.009, CPU: 00:00:00.015, GC gen0: 2, gen1: 1, gen2: 1\\
-> Real: 00:00:00.011, CPU: 00:00:00.015, GC gen0: 0, gen1: 0, gen2: 0\\
-Real: 00:00:00.012, CPU: 00:00:00.015, GC gen0: 0, gen1: 0, gen2: 0\\
-> Real: 00:00:00.009, CPU: 00:00:00.015, GC gen0: 1, gen1: 0, gen2: 0\\\\
-StringBuilder concatenation
-Real: 00:00:00.001, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
-> Real: 00:00:00.011, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
-Real: 00:00:00.005, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
-> Real: 00:00:00.007, CPU: 00:00:00.015, GC gen0: 1, gen1: 0, gen2: 0\\
-Real: 00:00:00.005, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
-Real: 00:00:00.007, CPU: 00:00:00.015, GC gen0: 0, gen1: 0, gen2: 0\\\\
-> String.concat concatenation
-Real: 00:00:00.001, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
-Real: 00:00:00.012, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
-> Real: 00:00:00.005, CPU: 00:00:00.000, GC gen0: 0, gen1: 0, gen2: 0\\
-Real: 00:00:00.007, CPU: 00:00:00.000, GC gen0: 1, gen1: 0, gen2: 0\\
-> Real: 00:00:00.007, CPU: 00:00:00.000, GC gen0: 1, gen1: 0, gen2: 0\\
-Real: 00:00:00.010, CPU: 00:00:00.000, GC gen0: 2, gen1: 0, gen2: 0\\
-\section{Extensions}
+\begin{table} [!h]
+\centering
+\begin{tabular}{c|c|c}
+  \textbf{Typical concatenation}  & \textbf{StringBuilder concatenation} & \textbf{String.concat concatenation} \\
+  \hline
+  \textbf{00.002} & 00.007 & 00.008 \\
+  \hline
+  00.005 & \textbf{00.003} & \textbf{00.003} \\
+  \hline
+  \textbf{00.004} & \textbf{00.004} & \textbf{00.004} \\
+  \hline
+  00.004 & \textbf{00.003} & \textbf{00.003} \\
+  \hline
+  00.007 & \textbf{00.006} & 00.008 \\
+\end{tabular} 
+\caption{Table showing the efficiency of different PostScript translator implementation}
+\label{tab:eff}
+\end{table}
+We performed various  tests to measure the efficiency of functions that translate the general tree to a string in Post Script format. The results are presented in table \ref{tab:eff}. The results are not containing the time of translating the AST to general tree. Those times were between 0.000 to 0.001 for all of the inputs. \\
+The conclusion from the results is, that \texttt{StringBuilder} is the most efficient way of concatenating strings. \\
+However, input files were rather small (from 100 to 800 bytes) and as though, the results may be not reliable (as they are counter in microseconds). Even though, the theoretical conclusions are similar to one received from real data - \texttt{StringBuilder} should be the fastest way of concatenating strings. 
 \section{Conclusions}
 We have not tested the limit on how big trees we can generate, but are clearly limited by not using tail recursion in our drawing algorithm. A nice improvement would be to make the algorithm tail recursive.
 
