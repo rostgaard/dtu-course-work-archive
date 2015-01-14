@@ -53,7 +53,29 @@ the \$ denotes values generated in the F\# program. This block adds a centered l
 We generate the drawing top-down, as the algorithm from \cite{kennedy1996functional} already handled the tree fitting for us, and pick an absolute point on the PS canvas and start drawing there.
 PostScript files contain both footers and headers that needs to be prepended and appended to the PostScript content, respectively. This is done by declaring these as string constants which are concatenated with generated content in the middle.
 \section{Visualizing AST's}
-We visualize our abstract syntax trees from Project 1 by recursing trough them and converting each AST node into a Tree Node. We've made two different implementations; one that maps every node within the AST to a Tree node, and one that tries to make it a bit more condense and readable. the F\# function \texttt{st, ex, dec} makes large tree, and the \texttt{*ToTree} equivalents makes the compact versions.
+We visualize our abstract syntax trees from Project 1 by recursing trough them and converting each AST node into a Tree Node. We've made two different implementations; one that maps every node within the AST to a Tree node, and one that tries to make it a bit more condense and readable tree. 
+\subsection{Basic version}
+In the basic version we treat \texttt{Block} as nodes having two children; declarations and statement body. Statement lists are nodes with children who are their contained statements. Function applications have two child nodes; arguments and their statement body. The remaining statement, expressions and declarations are mapped more or less directly, or uses the rules from \texttt{Block} or \texttt{StmList} already covered.
+\subsection{Compact version}
+The compact version tries to reduce the number of branches and child levels by adding more information in single nodes, and exploiting semantic information. For instance; the \texttt{stmList} is reduced to a single statement if the list contains only one element. Apply is also rewritten, so that instead of producing;
+\begin{verbatim}
+           Apply
+             |
+            / \
+           /   \
+    Arguments  Function
+          |     |
+       (List)  Indentifier
+\end{verbatim}
+it produces;
+\begin{verbatim}
+         Indentifier
+           |___________
+          / \          \
+         /   \          \
+  Argument1  Argument2  ArgumentN
+\end{verbatim}
+the F\# function \texttt{st, ex, dec} makes large tree, and the \texttt{stToTree, exToTree decToTree} equivalents makes the compact versions.
 \section{Efficiency}
 \begin{table} [!h]
 \centering
