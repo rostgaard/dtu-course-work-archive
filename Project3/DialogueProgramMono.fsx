@@ -7,7 +7,7 @@
 open System 
 open System.Net 
 open System.Threading 
-open System.Windows.Forms 
+open System.Windows.Forms
 open System.Drawing 
 
 
@@ -21,6 +21,8 @@ let baseUrl = "http://ada-dk.org/files/";;
 let game = ["1.nimgame"; "2.nimgame";];;
 
 let gameUrl idx = baseUrl + (game.Item idx);;
+
+let gameDownloadButtons games = List.map games 
 
 let toGameState (text : string) =
   let lines  = text.Split [|'\n'|]
@@ -54,8 +56,13 @@ type AsyncEventQueue<'T>() =
             tryListen cont)
 
 let numberOfHeaps = 5;;
-let matches = [2;3;4;5;6];;
+let  mutable  matches = [3;4;4;5;6];;
 
+let pop idx offset = let curcount = matches.Item (idx-1)
+                     let newcount = curcount - (curcount - (offset-1))
+                     let arr = Array.ofList matches
+                     Array.set arr (idx-1) newcount
+                     List.ofArray arr
 
 // The window part
 let maxMatches matches = List.max matches;;
@@ -71,11 +78,13 @@ let matchIcon = Image.FromFile("Match_Icon_small.png");;
 let window =
   new Form(Text="Web Source Length", Size= Size(totalMatchW + buttonW, (max totalMatchH buttonH)), AutoScroll = true);;
   
-let panel = new Panel(Location = Point(0,0), Size = Size(totalMatchW + buttonW, (max totalMatchH buttonH)), BackColor = Color.Black);;
+let panel = new Panel(Location = Point(0,0), Size = Size(totalMatchW + buttonW, (max totalMatchH buttonH)), BackColor = Color.White);;
 
-let matchButton (x : int) (y : int) z = 
-  new Button(Location = Point(x,y), MinimumSize=Size(25,matchH),
-              MaximumSize=Size(20,100),Text= z, BackColor = Color.Black, Image = matchIcon, FlatStyle = FlatStyle.Flat)
+let matchButton (x : int) (y : int) z level = 
+    let btn = new Button(Location = Point(x,y), MinimumSize=Size(25,matchH),
+                     MaximumSize=Size(20,100),Text= z, BackColor = Color.White, Image = matchIcon, FlatStyle = FlatStyle.Flat)
+    btn.Click.Add (fun _ -> (matches <- (pop (int level) (int z))))
+    btn;;
  
 let startButton =
   new Button(Location=Point(totalMatchW,65),MinimumSize=Size(100,50),
@@ -174,7 +183,7 @@ let rec generateMatches level = function
     | x::xs -> generateHeap level x @ generateMatches (level+1) xs
 and generateHeap level = function
   | 0   -> []
-  | n   -> ((upcast (matchButton (n*matchW-matchW/2) (level*matchH-matchH/2) (string n))) : Control)::(generateHeap level (n-1));;
+  | n   -> ((upcast (matchButton (n*matchW-matchW/2) (level*matchH-matchH/2) (string n) (string level))) : Control)::(generateHeap level (n-1));;
 
 panel.Controls.AddRange (List.toArray (generateMatches 1 matches));;
 panel.Controls.Add urlBox
@@ -182,6 +191,7 @@ panel.Controls.Add ansBox
 panel.Controls.Add startButton
 panel.Controls.Add clearButton
 panel.Controls.Add cancelButton
+
 window.Controls.Add panel
 startButton.Click.Add (fun _ -> ev.Post (Start "Nothing"))
 clearButton.Click.Add (fun _ -> ev.Post Clear)
@@ -189,5 +199,6 @@ cancelButton.Click.Add (fun _ -> ev.Post Cancel)
 
 // Start
 Async.StartImmediate (ready())
-window.Show()
+Application.Run(window)
+//window.Show()
 
