@@ -10,6 +10,23 @@ open System.Threading
 open System.Windows.Forms 
 open System.Drawing 
 
+type NimGame   = State of List<int>;;
+type NimPlayer = AI | Human;;
+//type NimGame = NimGameState * NimPlayer;;
+
+let baseUrl = "http://ada-dk.org/files/";;
+let game = ["1.nimgame"; "2.nimgame";];;
+
+let gameUrl idx = baseUrl + (game.Item idx);;
+
+let toGameState (text : string) =
+  let lines  = text.Split [|'\n'|]
+  let filter = Array.filter (fun (elem:string) -> elem.Length > 0) lines
+  List.map int ( (Array.toList filter));;
+
+let test = toGameState "1\n2\n3\n4";;
+
+let gameStateToString gs  = string (List.map string gs);; 
 
 // An asynchronous event queue kindly provided by Don Syme 
 type AsyncEventQueue<'T>() = 
@@ -72,7 +89,7 @@ type Message =
 // The dialogue automaton 
 let ev = AsyncEventQueue()
 let rec ready() = 
-  async {urlBox.Text <- "http://"
+  async {urlBox.Text <- "http://ada-dk.org/files/2.nimgame"
          ansBox.Text <- ""
 
          disable [cancelButton]
@@ -100,7 +117,8 @@ and loading(url) =
          let! msg = ev.Receive()
          match msg with
          | Web html ->
-             let ans = "Length = " + String.Format("{0:D}",html.Length)
+             let _ = toGameState html
+             let ans = gameStateToString (toGameState html)
              return! finished(ans)
          | Error   -> return! finished("Error")
          | Cancel  -> ts.Cancel()
