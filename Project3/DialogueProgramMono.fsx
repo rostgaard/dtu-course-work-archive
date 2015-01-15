@@ -33,29 +33,43 @@ type AsyncEventQueue<'T>() =
         Async.FromContinuations (fun (cont,econt,ccont) -> 
             tryListen cont)
 
+let numberOfHeaps = 5;;
+let matches = [2;3;4;5;6];;
 
 
 // The window part
+let maxMatches matches = List.max matches;;
+let matchW = 50;;
+let matchH = 50;;
+let totalMatchW = ((maxMatches matches) + 1) * matchW;;
+let totalMatchH = (numberOfHeaps + 1) * matchH;;
+let buttonW = 200;;
+let buttonH = 400;;
 let window =
-  new Form(Text="Web Source Length", Size=Size(525,225))
+  new Form(Text="Web Source Length", Size= Size(totalMatchW + buttonW, (max totalMatchH buttonH)), AutoScroll = true);;
+  
+let panel = new Panel(Location = Point(0,0), Size = Size(totalMatchW + buttonW, (max totalMatchH buttonH)), BackColor = Color.Black);;
 
-let urlBox =
-  new TextBox(Location=Point(50,25),Size=Size(400,25))
-
-let ansBox =
-  new TextBox(Location=Point(150,150),Size=Size(200,25))
-
+let matchButton (x : int) (y : int) z = 
+  new Button(Location = Point(x,y), MinimumSize=Size(20,50),
+              MaximumSize=Size(20,100),Text= z, BackColor = Color.AntiqueWhite)
+ 
 let startButton =
-  new Button(Location=Point(50,65),MinimumSize=Size(100,50),
-              MaximumSize=Size(100,50),Text="START")
+  new Button(Location=Point(totalMatchW,65),MinimumSize=Size(100,50),
+              MaximumSize=Size(100,50),Text="Start new game")
 
 let clearButton =
-  new Button(Location=Point(200,65),MinimumSize=Size(100,50),
-              MaximumSize=Size(100,50),Text="CLEAR")
+  new Button(Location=Point(totalMatchW,165),MinimumSize=Size(100,50),
+              MaximumSize=Size(100,50),Text="End move")
 
 let cancelButton =
-  new Button(Location=Point(350,65),MinimumSize=Size(100,50),
-              MaximumSize=Size(100,50),Text="CANCEL")
+  new Button(Location=Point(totalMatchW,265),MinimumSize=Size(100,50),
+              MaximumSize=Size(100,50),Text="Give up")
+
+              
+let ansBox =
+  new TextBox(Location=Point(totalMatchW,10),Size=Size(100,25))
+
 
 let disable bs = 
     for b in [startButton;clearButton;cancelButton] do 
@@ -72,9 +86,7 @@ type Message =
 // The dialogue automaton 
 let ev = AsyncEventQueue()
 let rec ready() = 
-  async {urlBox.Text <- "http://"
-         ansBox.Text <- ""
-
+  async {
          disable [cancelButton]
          let! msg = ev.Receive()
          match msg with
@@ -127,17 +139,24 @@ and finished(s) =
          | _     ->  failwith("finished: unexpected message")}
 
 // Initialization
-window.Controls.Add urlBox
-window.Controls.Add ansBox
-window.Controls.Add startButton
-window.Controls.Add clearButton
-window.Controls.Add cancelButton
-startButton.Click.Add (fun _ -> ev.Post (Start urlBox.Text))
+let rec generateMatches level = function
+    | []    -> []
+    | x::xs -> generateHeap level x @ generateMatches (level+1) xs
+and generateHeap level = function
+  | 0   -> []
+  | n   -> ((upcast (matchButton (n*matchW) (level*matchH) (string n))) : Control)::(generateHeap level (n-1));;
+
+panel.Controls.AddRange (List.toArray (generateMatches 1 matches));;
+panel.Controls.Add ansBox
+panel.Controls.Add startButton
+panel.Controls.Add clearButton
+panel.Controls.Add cancelButton
+window.Controls.Add panel
+startButton.Click.Add (fun _ -> ev.Post (Start "Nothing"))
 clearButton.Click.Add (fun _ -> ev.Post Clear)
 cancelButton.Click.Add (fun _ -> ev.Post Cancel)
 
 // Start
 Async.StartImmediate (ready())
-Application.Run(window)
-// window.Show()
+window.Show()
 

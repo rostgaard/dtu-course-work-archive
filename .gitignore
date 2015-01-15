@@ -1,6 +1,7 @@
 */obj
 *.suo
 bin/
+
 Project1/Backup
 *.htm
 Parser.fs
@@ -12,4 +13,7 @@ Parser.fsi
 *.aux
 *.log
 *.gz
+*.bbl
+*.blg
+*.dvi
 Project2/*.ps
