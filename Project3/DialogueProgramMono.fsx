@@ -10,6 +10,9 @@ open System.Threading
 open System.Windows.Forms 
 open System.Drawing 
 
+
+System.IO.Directory.SetCurrentDirectory __SOURCE_DIRECTORY__;;
+
 type NimGame   = State of List<int>;;
 type NimPlayer = AI | Human;;
 //type NimGame = NimGameState * NimPlayer;;
@@ -57,19 +60,22 @@ let matches = [2;3;4;5;6];;
 // The window part
 let maxMatches matches = List.max matches;;
 let matchW = 50;;
-let matchH = 50;;
+let matchH = 80;;
 let totalMatchW = ((maxMatches matches) + 1) * matchW;;
 let totalMatchH = (numberOfHeaps + 1) * matchH;;
 let buttonW = 200;;
 let buttonH = 400;;
+let matchIcon = Image.FromFile("Match_Icon_small.png");;
+
+
 let window =
   new Form(Text="Web Source Length", Size= Size(totalMatchW + buttonW, (max totalMatchH buttonH)), AutoScroll = true);;
   
 let panel = new Panel(Location = Point(0,0), Size = Size(totalMatchW + buttonW, (max totalMatchH buttonH)), BackColor = Color.Black);;
 
 let matchButton (x : int) (y : int) z = 
-  new Button(Location = Point(x,y), MinimumSize=Size(20,50),
-              MaximumSize=Size(20,100),Text= z, BackColor = Color.AntiqueWhite)
+  new Button(Location = Point(x,y), MinimumSize=Size(25,matchH),
+              MaximumSize=Size(20,100),Text= z, BackColor = Color.Black, Image = matchIcon, FlatStyle = FlatStyle.Flat)
  
 let startButton =
   new Button(Location=Point(totalMatchW,65),MinimumSize=Size(100,50),
@@ -168,7 +174,7 @@ let rec generateMatches level = function
     | x::xs -> generateHeap level x @ generateMatches (level+1) xs
 and generateHeap level = function
   | 0   -> []
-  | n   -> ((upcast (matchButton (n*matchW) (level*matchH) (string n))) : Control)::(generateHeap level (n-1));;
+  | n   -> ((upcast (matchButton (n*matchW-matchW/2) (level*matchH-matchH/2) (string n))) : Control)::(generateHeap level (n-1));;
 
 panel.Controls.AddRange (List.toArray (generateMatches 1 matches));;
 panel.Controls.Add urlBox

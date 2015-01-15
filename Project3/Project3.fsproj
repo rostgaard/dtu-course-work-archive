@@ -36,6 +36,7 @@
     <Compile Include="DialogueProgramMono.fsx" />
     <None Include="Interface.fsi" />
     <None Include="Interface.fsx" />
+    <None Include="Match_Icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
