@@ -13,7 +13,7 @@ System.IO.Directory.SetCurrentDirectory __SOURCE_DIRECTORY__;;
 type NimPlayer = AI | Human;;
 
 type NimGameState = State of List<int>
-type GameEvent = EndTurn of NimPlayer | Move of NimGameState| EndGame | StartGame
+type GameEvent = EndTurn of NimGameState * NimPlayer | Move of NimGameState| EndGame | StartGame
 
 let gameStateToString (gs : List<int>)  = string (List.map string gs);; 
 
@@ -33,11 +33,14 @@ let nextMove (State x) = let m = calculateM 0 x
                          if m = 0 then
                             let maxi = List.max x
                             let index = List.findIndex (fun y -> (y = maxi)) x
-                            (index, 1)
+                            let array = List.toArray x
+                            Array.set array index (maxi-1)
+                            Array.toList array
                          else 
                             let (newValue, index) = getNewAk m 0 x
-                            (index, (List.nth x index)- newValue);;
-
+                            let array = List.toArray x
+                            Array.set array index ((List.nth x index)- newValue)
+                            Array.toList array
 
 
                             
@@ -69,13 +72,13 @@ let gameEvent =  AsyncEventQueue<GameEvent>()
 type NimGame =
   | Nim of NimGameState * NimPlayer
   member obj.endTurn = match obj with
-                       | Nim (state,Human) -> gameEvent.Post (EndTurn Human)
+                       | Nim (state,Human) -> gameEvent.Post (EndTurn (state,Human))
                                               Nim (state,AI)
-                       | Nim (state,AI)    -> gameEvent.Post (EndTurn AI)
+                       | Nim (state,AI)    -> gameEvent.Post (EndTurn (state,AI))
                                               Nim (state,Human)
   member obj.move row column = match obj with
                                | Nim (state,player) -> //let newState = reflectMove state row column
-                                                       gameEvent.Post (Move (state)) 
+                                                      // gameEvent.Post (Move (state)) 
                                                        Nim (state,AI)
   static member create intialState = Nim (State intialState, Human)
 
@@ -169,10 +172,10 @@ let rec ready () =
        printf "Ready: Got event!\n"
        let! msg = gameEvent.Receive()
        match msg with 
-       | EndGame        -> return! finish()
-       | Move (state)   -> return! move(state)
-       | EndTurn player -> return! nextPlayer(player)
-       | StartGame      -> return! setupBoard()
+       | EndGame                -> return! finish()
+       | Move (state)         -> return! move(state)
+       | EndTurn (state, player) -> return! nextPlayer(state, player)
+       | StartGame              -> return! setupBoard()
     }
 
 and setupBoard() =
@@ -182,7 +185,7 @@ and setupBoard() =
         match msg with 
          | EndGame        -> return! finish()
          | Move (state)   -> return! move(state)
-         | EndTurn player -> return! nextPlayer(player)
+         | EndTurn (state, player) -> return! nextPlayer(state, player)
          | StartGame      -> return! setupBoard()
         }
 
@@ -198,7 +201,7 @@ and move (state) =
         match msg with 
          | EndGame        -> return! finish()
          | Move (state)   -> return! move(state)
-         | EndTurn player -> return! nextPlayer(player)
+         | EndTurn (state, player) -> return! nextPlayer(state, player)
          | StartGame      -> return! setupBoard()
         }
 
@@ -209,18 +212,23 @@ and finish () =
         match msg with 
          | EndGame        -> return! finish()
          | Move (state)   -> return! move(state)
-         | EndTurn player -> return! nextPlayer(player)
+         | EndTurn (state, player) -> return! nextPlayer(state, player)
          | StartGame      -> return! setupBoard()
         }
 
-and nextPlayer (player) =
+and nextPlayer (state, player) =
+    matchPanel.Controls.Clear ()
+    match player with
+        | AI    -> let newState = nextMove(state)
+                   matchPanel.Controls.AddRange (generateButtonMatches newState)
+        | Human -> failwith "what"
     async {
         printf "nextPlayer: Got event!\n"
         let! msg = gameEvent.Receive()
         match msg with 
          | EndGame        -> return! finish()
          | Move (state)   -> return! move(state)
-         | EndTurn player -> return! nextPlayer(player)
+         | EndTurn (state, player) -> return! nextPlayer(state, player)
          | StartGame      -> return! setupBoard()
         }
 
