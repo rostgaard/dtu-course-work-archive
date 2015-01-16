@@ -74,9 +74,9 @@ type NimGame =
                        | Nim (state,AI)    -> gameEvent.Post (EndTurn AI)
                                               Nim (state,Human)
   member obj.move row column = match obj with
-                               | Nim (state,player) -> let newState = reflectMove state row column
-                                                       gameEvent.Post (Move (newState)) 
-                                                       Nim (newState,AI)
+                               | Nim (state,player) -> //let newState = reflectMove state row column
+                                                       gameEvent.Post (Move (state)) 
+                                                       Nim (state,AI)
   static member create intialState = Nim (State intialState, Human)
 
 
@@ -145,6 +145,17 @@ and generateHeap level = function
   | 0   -> []
   | n   -> ((upcast (matchButton (n*matchW-matchW/2) (level*matchH-matchH/2) (string level + "." + string n) (fun (_) -> handleMove (level,n)) )) : Control)::(generateHeap level (n-1));;
 
+let getPosition (button : Control) = let positions = Array.toList (button.Text.Split [|'.'|])
+                                     List.map (fun x -> int x) positions;;
+let reduceState matches button = let list = getPosition button
+                                 let index = List.nth list 0 
+                                 let newArray = List.toArray matches
+                                 Array.set newArray (index-1) (matches.[index-1] - 1)
+                                 State(Array.toList  newArray);;
+let generateButtonMatches matches = let (matchButtons : Control list) = (generateMatches 1 matches)
+                                    ignore(List.map (fun (button : Control) -> button.Click.Add (fun _ -> gameEvent.Post (Move (reduceState matches button)))) matchButtons)
+                                    List.toArray (matchButtons);;
+
 //let disable bs = 
 //    for b in [startButton;clearButton;cancelButton] do 
 //        b.Enabled  <- true
@@ -179,7 +190,7 @@ and move (state) =
     matchPanel.Controls.Clear ()    
     match state with
       | State [] -> failwith "Bad state"
-      | State s  -> matchPanel.Controls.AddRange (List.toArray (generateMatches 1 s))
+      | State s  -> matchPanel.Controls.AddRange (generateButtonMatches s)
 
     async {
         printf "Move: Got event!\n"
@@ -213,10 +224,8 @@ and nextPlayer (player) =
          | StartGame      -> return! setupBoard()
         }
 
-let getPosition (button : Control) = let positions = Array.toList (button.Text.Split [|'.'|])
-                                     List.map (fun x -> string x) positions;;
-let buttons = List.toArray (generateMatches 1 matches);;
-Array.map (fun (button : Control) -> button.Click.Add (fun _ -> gameEvent.Post (Move (State([1;2;3]))))) buttons;;
+
+let (buttons : Control []) = generateButtonMatches matches;;
 buttonPanel.Controls.Add startButton
 buttonPanel.Controls.Add urlBox
 buttonPanel.Controls.Add ansBox
