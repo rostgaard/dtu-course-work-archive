@@ -176,7 +176,8 @@ and generateHeap level = function
   | 0   -> []
   | n   -> ((upcast (matchButton (n*matchW-matchW/2) (level*matchH-matchH/2) (string n))) : Control)::(generateHeap level (n-1));;
 
-panel.Controls.AddRange (List.toArray (generateMatches 1 matches));;
+let buttons = generateMatches 1 matches
+panel.Controls.AddRange (List.toArray buttons);;
 panel.Controls.Add urlBox
 panel.Controls.Add ansBox
 panel.Controls.Add startButton
@@ -185,7 +186,7 @@ panel.Controls.Add cancelButton
 window.Controls.Add panel
 startButton.Click.Add (fun _ -> ev.Post (Start "Nothing"))
 clearButton.Click.Add (fun _ -> ev.Post Clear)
-cancelButton.Click.Add (fun _ -> ev.Post Cancel)
+
 
 // Start
 Async.StartImmediate (ready())

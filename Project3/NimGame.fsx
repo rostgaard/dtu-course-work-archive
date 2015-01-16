@@ -18,6 +18,27 @@ type GameEvent = EndTurn of NimPlayer | Move of NimGameState| EndGame | StartGam
 
 let gameStateToString (gs : List<int>)  = string (List.map string gs);; 
 
+let rec calculateM n = function
+    | []    -> n
+    | x::xs -> calculateM (n ^^^ x) xs;;
+
+let rec getNewAk m index = function 
+ | []    -> failwith "Cannot find appropriate move"
+ | x::xs -> let newV = x ^^^ m
+            if newV < x then
+                (newV, index)
+            else 
+                getNewAk m (index+1) xs
+
+let nextMove (State x) = let m = calculateM 0 x
+                         if m = 0 then
+                            let maxi = List.max x
+                            let index = List.findIndex (fun y -> (y = maxi)) x
+                            (index, 1)
+                         else 
+                            let (newValue, index) = getNewAk m 0 x
+                            (index, (List.nth x index)- newValue);;
+                            
 let reflectMove (state:NimGameState) 
                 (row:int)
                 (col:int) = printf "%s" (string state)
