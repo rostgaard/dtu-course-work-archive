@@ -148,7 +148,7 @@ let rec generateMatches level = function
     | x::xs -> generateHeap level x @ generateMatches (level+1) xs
 and generateHeap level = function
   | 0   -> []
-  | n   -> ((upcast (matchButton (n*matchW-matchW/2) (level*matchH-matchH/2) (string n) (fun (_) -> handleMove (level,n)) )) : Control)::(generateHeap level (n-1));;
+  | n   -> ((upcast (matchButton (n*matchW-matchW/2) (level*matchH-matchH/2) (string level + "." + string n) (fun (_) -> handleMove (level,n)) )) : Control)::(generateHeap level (n-1));;
 
 //let disable bs = 
 //    for b in [startButton;clearButton;cancelButton] do 
