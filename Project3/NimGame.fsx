@@ -218,6 +218,8 @@ and nextPlayer (player) =
          | StartGame      -> return! setupBoard()
         }
 
+let getPosition (button : Control) = let positions = Array.toList (button.Text.Split [|'.'|])
+                                     List.map (fun x -> string x) positions;;
 let buttons = List.toArray (generateMatches 1 matches);;
 Array.map (fun (button : Control) -> button.Click.Add (fun _ -> gameEvent.Post (Move (State([1;2;3]))))) buttons;;
 buttonPanel.Controls.Add startButton
