@@ -1,12 +1,14 @@
 #load "AsyncEventQueue.fs"
-
-// Prelude
 open AsyncEventQueue
 open System 
 open System.Net 
 open System.Threading 
 open System.Windows.Forms 
 open System.Drawing 
+
+
+System.IO.Directory.SetCurrentDirectory __SOURCE_DIRECTORY__;;
+
 
 type NimPlayer = AI | Human;;
 
@@ -35,6 +37,9 @@ let nextMove (State x) = let m = calculateM 0 x
                          else 
                             let (newValue, index) = getNewAk m 0 x
                             (index, (List.nth x index)- newValue);;
+
+
+
                             
 let reflectMove (state:NimGameState) 
                 (row:int)
@@ -138,7 +143,7 @@ let rec generateMatches level = function
     | x::xs -> generateHeap level x @ generateMatches (level+1) xs
 and generateHeap level = function
   | 0   -> []
-  | n   -> ((upcast (matchButton (n*matchW-matchW/2) (level*matchH-matchH/2) (string n) (fun (_) -> handleMove (level,n)) )) : Control)::(generateHeap level (n-1));;
+  | n   -> ((upcast (matchButton (n*matchW-matchW/2) (level*matchH-matchH/2) (string level + "." + string n) (fun (_) -> handleMove (level,n)) )) : Control)::(generateHeap level (n-1));;
 
 //let disable bs = 
 //    for b in [startButton;clearButton;cancelButton] do 
@@ -208,12 +213,14 @@ and nextPlayer (player) =
          | StartGame      -> return! setupBoard()
         }
 
+let buttons = List.toArray (generateMatches 1 matches);;
+Array.map (fun (button : Control) -> button.Click.Add (fun _ -> gameEvent.Post (Move (State([1;2;3]))))) buttons;;
 buttonPanel.Controls.Add startButton
 buttonPanel.Controls.Add urlBox
 buttonPanel.Controls.Add ansBox
 buttonPanel.Controls.Add endTurnButton
 buttonPanel.Controls.Add cancelButton
-matchPanel.Controls.AddRange (List.toArray (generateMatches 1 matches));;
+matchPanel.Controls.AddRange buttons
 window.Controls.Add matchPanel
 window.Controls.Add buttonPanel
 
@@ -221,5 +228,5 @@ startButton.Click.Add (fun _ -> gameEvent.Post (StartGame))
 endTurnButton.Click.Add (fun _ -> ignore (ng.endTurn))
 Async.StartImmediate (ready());
 
-Application.Run(window)
-
+//Application.Run(window)
+window.Show();;
