@@ -1,15 +1,19 @@
 #load "AsyncEventQueue.fs"
-#load "NimGameUIComponents.fs"
+//#load "NimGameUIComponents.fs"
 
 
 // Prelude
-open NimGameUIComponents
+//open NimGameUIComponents
 open AsyncEventQueue
 open System 
 open System.Net 
 open System.Threading 
 open System.Windows.Forms 
 open System.Drawing 
+
+
+System.IO.Directory.SetCurrentDirectory __SOURCE_DIRECTORY__;;
+
 
 type NimPlayer = AI | Human;;
 
@@ -38,6 +42,9 @@ let nextMove (State x) = let m = calculateM 0 x
                          else 
                             let (newValue, index) = getNewAk m 0 x
                             (index, (List.nth x index)- newValue);;
+
+
+
                             
 let reflectMove (state:NimGameState) 
                 (row:int)
@@ -211,19 +218,21 @@ and nextPlayer (player) =
          | StartGame      -> return! setupBoard()
         }
 
+let buttons = List.toArray (generateMatches 1 matches);;
+Array.map (fun (button : Control) -> button.Click.Add (fun _ -> gameEvent.Post (Move (State([1;2;3]))))) buttons;;
 buttonPanel.Controls.Add startButton
 buttonPanel.Controls.Add urlBox
 buttonPanel.Controls.Add ansBox
 buttonPanel.Controls.Add clearButton
 buttonPanel.Controls.Add cancelButton
-matchPanel.Controls.AddRange (List.toArray (generateMatches 1 matches));;
+matchPanel.Controls.AddRange buttons
 window.Controls.Add matchPanel
 window.Controls.Add buttonPanel
 
 startButton.Click.Add (fun _ -> gameEvent.Post (StartGame))
-//clearButton.Click.Add (fun _ -> ev.Post Clear)
-//cancelButton.Click.Add (fun _ -> ev.Post Cancel)
+clearButton.Click.Add (fun _ -> gameEvent.Post (EndTurn NimPlayer.Human))
+cancelButton.Click.Add (fun _ -> gameEvent.Post (EndGame))
 Async.StartImmediate (ready());
 
-Application.Run(window)
-
+//Application.Run(window)
+window.Show();;
