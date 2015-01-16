@@ -1,9 +1,6 @@
 #load "AsyncEventQueue.fs"
-#load "NimGameUIComponents.fs"
-
 
 // Prelude
-open NimGameUIComponents
 open AsyncEventQueue
 open System 
 open System.Net 
@@ -96,7 +93,7 @@ let buttonH = 400;;
 let matchIcon = Image.FromFile("Match_Icon_small.png");;
 
 let matchPanel  = new Panel(Location = Point(0,0), Size = Size(totalMatchW + buttonW, (max totalMatchH buttonH)), BackColor = Color.Black);;
-let buttonPanel = new Panel(Location = Point(0,matchPanel.Height), Size = Size(buttonW, 300), BackColor = Color.White);;
+let buttonPanel = new Panel(Location = Point(0,matchPanel.Height), Size = Size(matchPanel.Width, 300), BackColor = Color.White);;
 
 let window =
   new Form(Text="Nim game", Size= Size(max matchPanel.Width buttonPanel.Width, 
@@ -113,8 +110,8 @@ let startButton =
   new Button(Location=Point(30,30),MinimumSize=Size(100,50),
               MaximumSize=Size(100,50),Text="Start new game")
 
-let clearButton =
-  new Button(Location=Point(matchPanel.Height,165),MinimumSize=Size(100,50),
+let endTurnButton =
+  new Button(Location=Point(startButton.Width+30+30,30),MinimumSize=Size(100,50),
               MaximumSize=Size(100,50),Text="End move")
 
 let cancelButton =
@@ -214,15 +211,14 @@ and nextPlayer (player) =
 buttonPanel.Controls.Add startButton
 buttonPanel.Controls.Add urlBox
 buttonPanel.Controls.Add ansBox
-buttonPanel.Controls.Add clearButton
+buttonPanel.Controls.Add endTurnButton
 buttonPanel.Controls.Add cancelButton
 matchPanel.Controls.AddRange (List.toArray (generateMatches 1 matches));;
 window.Controls.Add matchPanel
 window.Controls.Add buttonPanel
 
 startButton.Click.Add (fun _ -> gameEvent.Post (StartGame))
-//clearButton.Click.Add (fun _ -> ev.Post Clear)
-//cancelButton.Click.Add (fun _ -> ev.Post Cancel)
+endTurnButton.Click.Add (fun _ -> ignore (ng.endTurn))
 Async.StartImmediate (ready());
 
 Application.Run(window)
