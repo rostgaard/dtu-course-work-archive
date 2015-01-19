@@ -4,7 +4,8 @@ open System.Threading
 open System.Windows.Forms 
 open System.Drawing 
 
-
+    let kittenW = 570
+    let kittenH = 456
 let matches = [1;1;1];;
 
 System.IO.Directory.SetCurrentDirectory __SOURCE_DIRECTORY__;;
@@ -96,37 +97,36 @@ type NimGame =
 
 
 // The window part
-let maxMatches matches = List.max matches;;
-let matchW = 50;;
-let matchH = 80;;
-let totalMatchW = ((maxMatches matches) + 1) * matchW;;
-let totalMatchH = (matches.Length + 1) * matchH;;
-let buttonW = 200;;
-let buttonH = 100;;
-let matchIcon = Image.FromFile("Match_Icon_small.png");;
-let kittenW = 570;;
-let kittenH = 456;;
-    let matchPanel  = new Panel(Location = Point(0,0), Size = Size(max (totalMatchW + buttonW) kittenW, (max totalMatchH kittenH)), BackColor = Color.Black);;
-    let buttonPanel = new Panel(Location = Point(0,matchPanel.Height), Size = Size(matchPanel.Width, buttonH), BackColor = Color.White);;
+let createGUI matches = 
+    let maxMatches matches = List.max matches
+    let matchW = 50
+    let matchH = 80
+    let totalMatchW = ((maxMatches matches) + 1) * matchW
+    let totalMatchH = (matches.Length + 1) * matchH
+    let buttonW = 200
+    let buttonH = 100
+    let matchIcon = Image.FromFile("Match_Icon_small.png")
+    let matchPanel  = new Panel(Location = Point(0,0), Size = Size(max (totalMatchW + buttonW) kittenW, (max totalMatchH kittenH)), BackColor = Color.Black)
+    let buttonPanel = new Panel(Location = Point(0,matchPanel.Height), Size = Size(matchPanel.Width, buttonH), BackColor = Color.White)
     let window =
-        new Form(Text="Nim game", Size= Size(max (matchPanel.Width + 50) (kittenW + 50), 
-                                       (max matchPanel.Height kittenH) + 50 + buttonPanel.Height), 
-                                       AutoScroll = true);;                  
+            new Form(Text="Nim game", Size= Size(max (matchPanel.Width + 50) (kittenW + 50), 
+                                           (max matchPanel.Height kittenH) + 50 + buttonPanel.Height), 
+                                           AutoScroll = true)
 
-  let matchButton (x : int) (y : int) z onClick = 
-    let btn = new Button(Location = Point(x,y), MinimumSize=Size(25,matchH),
-                         MaximumSize=Size(20,100),Text= z, BackColor = Color.Black, Image = matchIcon, FlatStyle = FlatStyle.Flat)
-    btn.Click.Add (onClick)
-    btn
-
-
-let resetBtn =
-  new Button(Location=Point((buttonPanel.Width-100)/2,(buttonPanel.Height-50)/2),MinimumSize=Size(100,50),
-              MaximumSize=Size(100,50),Text="Reset Game")
+    let matchButton (x : int) (y : int) z onClick = 
+        let btn = new Button(Location = Point(x,y), MinimumSize=Size(25,matchH),
+                             MaximumSize=Size(20,100),Text= z, BackColor = Color.Black, Image = matchIcon, FlatStyle = FlatStyle.Flat)
+        btn.Click.Add (onClick)
+        btn
 
 
-let mutable ng = NimGame.create (matches);;
+    let resetBtn =
+      new Button(Location=Point((buttonPanel.Width-100)/2,(buttonPanel.Height-50)/2),MinimumSize=Size(100,50),
+                  MaximumSize=Size(100,50),Text="Reset Game")
 
+    (window,matchPanel, buttonPanel, matchButton, resetBtn);;
+
+ 
 let handleMove (row:int, column:int) = gameEvent.Post (Move (row,column))
 
 // Initialization
@@ -153,6 +153,11 @@ let generateButtonMatches matches = let (matchButtons : Control list) = (generat
 
 let areAllZeroes (state : int list) = List.forall (fun x -> x = 0) state;;
 let simpler (State x) = x;;
+
+let     (window,matchPanel, buttonPanel, matchButton, resetBtn) = createGUI matches;;
+let initialState = State(matches);;
+window.Controls.Add matchPanel
+window.Controls.Add buttonPanel
 
 let rec ready (gameSetup) =
     let (buttons : Control []) = generateButtonMatches matches
@@ -222,9 +227,6 @@ and finish (player) =
          | StartGame (gameState) -> return! ready(gameState)
         }
 
-let initialState = State(matches);;
-window.Controls.Add matchPanel
-window.Controls.Add buttonPanel
 
 Async.StartImmediate (ready initialState);;
 
