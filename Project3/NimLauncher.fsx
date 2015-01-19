@@ -1,12 +1,14 @@
 ﻿module NimLauncher
 
+#load "NimGame.fsx"
+
 open System 
 open System.Net 
 open System.Threading 
 open System.Windows.Forms 
 open System.Drawing 
 
-
+open NimGame
 
 System.IO.Directory.SetCurrentDirectory __SOURCE_DIRECTORY__;;
 
@@ -40,7 +42,16 @@ let ev = AsyncEventQueue<Message>();;
  
 type NimLauncher = L of List<string> * AsyncEventQueue<Message>;;
 
-let startGame stringBuffer = printf "FIXME: Starting game %s\n" stringBuffer
+let splitString (text : string) =
+  let lines  = text.Split [|' '|]
+  let filter = Array.filter (fun (elem:string) -> elem.Length > 0) lines
+  List.ofArray filter
+
+
+let startGame (stringBuffer : string) = let gameUI = NimGame.create (splitString stringBuffer)
+                                        printf "FIXME: Starting game %s\n" stringBuffer
+                                        Application.Run (NimGame.window gameUI)
+
 
 let winX = 640;;
 let winY = 800;;
@@ -112,7 +123,7 @@ and loading(url, launchButton, cancelButton) =
              let _ = html
              let ans = html
              launchButton.Enabled <- true;
-             launchButton.Click.Add (fun (_) -> startGame html);
+             launchButton.Click. Add (fun (_) -> startGame html);
 
              return! finished(ans)
          | Error   -> return! finished("Error")
