@@ -1,6 +1,4 @@
 ﻿
-
-#r "AsyncEventQueue.dll"
 #r "NimLauncher.dll"
 
 // Prelude
