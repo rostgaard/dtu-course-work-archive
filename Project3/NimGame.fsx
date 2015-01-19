@@ -1,9 +1,10 @@
+module NimGame
+
 open System 
 open System.Net 
 open System.Threading 
 open System.Windows.Forms 
 open System.Drawing 
-
 
 System.IO.Directory.SetCurrentDirectory __SOURCE_DIRECTORY__;;
 
@@ -33,6 +34,8 @@ type NimPlayer = AI | Human;;
 
 type NimGameState = State of List<int>
 type GameEvent = Move of int * int | EndGame | StartGame of NimGameState
+
+type NimGameUI = GameUI of List<string> * AsyncEventQueue<GameEvent>;;
 
 let gameStateToString (gs : List<int>)  = string (List.map string gs);; 
 
@@ -73,7 +76,7 @@ let nextMove (State x) = let m = calculateM 0 x
    string -> List<int> 
 *)
 let gameStateFromString (text : string) =
-  let lines  = text.Split [|'\n'|]
+  let lines  = text.Split [|' '|]
   let filter = Array.filter (fun (elem:string) -> elem.Length > 0) lines
   List.map int ( (Array.toList filter));;
 
@@ -88,15 +91,12 @@ type NimGame =
                                                        gameEvent.Post (Move (row,column))
   static member create intialState = Nim (State intialState, Human)
 
-let numberOfHeaps = 5;;
-let matches = [2;3;4;5;6];;
-
 // The window part
 let maxMatches matches = List.max matches;;
 let matchW = 50;;
 let matchH = 80;;
-let totalMatchW = ((maxMatches matches) + 1) * matchW;;
-let totalMatchH = (numberOfHeaps + 1) * matchH;;
+let totalMatchW = (8 + 1) * matchW;;
+let totalMatchH = (6 + 1) * matchH;;
 let buttonW = 200;;
 let buttonH = 400;;
 let matchIcon = Image.FromFile("Match_Icon_small.png");;
@@ -104,7 +104,7 @@ let matchIcon = Image.FromFile("Match_Icon_small.png");;
 let matchPanel  = new Panel(Location = Point(0,0), Size = Size(totalMatchW + buttonW, (max totalMatchH buttonH)), BackColor = Color.Black);;
 let buttonPanel = new Panel(Location = Point(0,matchPanel.Height), Size = Size(matchPanel.Width, 300), BackColor = Color.White);;
 
-let window =
+let form =
   new Form(Text="Nim game", Size= Size(max matchPanel.Width buttonPanel.Width, 
                                        matchPanel.Height + buttonPanel.Height), 
                                        AutoScroll = true);;
@@ -134,9 +134,6 @@ let ansBox =
   
 let urlBox =
   new TextBox(Location=Point(totalMatchW,10),Size=Size(400,25))
-
-
-let mutable ng = NimGame.create (matches);;
 
 let handleMove (row:int, column:int) = gameEvent.Post (Move (row,column))
 
@@ -223,39 +220,24 @@ and finish () =
          | Move (heap,count)     -> failwith "No can do, sir."
          | StartGame (gameState) -> return! setupBoard()
         }
-(*
-and nextPlayer (state, player) =
-    matchPanel.Controls.Clear ()
-    match player with
-        | AI    -> let newState = nextMove(state)
-                   matchPanel.Controls.AddRange (generateButtonMatches newState)
-        | Human -> failwith "what"
-    async {
-        printf "nextPlayer: Got event!\n"
-        let! msg = gameEvent.Receive()
-        match msg with 
-         | EndGame        -> return! finish()
-         | Move (state)   -> return! move(state)
-         | EndTurn (state, player) -> return! nextPlayer(state, player)
-         | StartGame      -> return! setupBoard()
-        }
-*)
 
-let (buttons : Control []) = generateButtonMatches matches;;
+//let (buttons : Control []) = generateButtonMatches matches;;
 buttonPanel.Controls.Add startButton
 buttonPanel.Controls.Add urlBox
 buttonPanel.Controls.Add ansBox
 buttonPanel.Controls.Add endTurnButton
 buttonPanel.Controls.Add cancelButton
-matchPanel.Controls.AddRange buttons
-window.Controls.Add matchPanel
-window.Controls.Add buttonPanel
+//matchPanel.Controls.AddRange buttons
+form.Controls.Add matchPanel
+form.Controls.Add buttonPanel
 
-let initialState = [2;3;4;5;6]
 
-startButton.Click.Add (fun _ -> gameEvent.Post (StartGame ( State initialState)))
-//endTurnButton.Click.Add (fun _ -> ignore (ng.endTurn))
-Async.StartImmediate (ready(initialState));
+let create gameRepr = GameUI (gameRepr, gameEvent);;
 
-//Application.Run(window)
-window.Show();;
+let window obj =
+    match obj with 
+    | GameUI (gameRepr, ev) -> let intList = List.map int gameRepr
+                               matchPanel.Controls.AddRange (generateButtonMatches intList)
+                               startButton.Click.Add (fun _ -> gameEvent.Post (StartGame (State intList)))
+                               Async.StartImmediate (ready intList)
+                               form
