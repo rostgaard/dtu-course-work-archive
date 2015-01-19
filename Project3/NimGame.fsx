@@ -117,12 +117,11 @@ let matchButton (x : int) (y : int) z onClick = let btn = new Button(Location = 
                                                                       MaximumSize=Size(20,100),Text= z, BackColor = Color.Black, Image = matchIcon, FlatStyle = FlatStyle.Flat)
                                                 btn.Click.Add (onClick)
                                                 btn
-
-
 let resetBtn =
-  new Button(Location=Point((buttonPanel.Width-100)/2,(buttonPanel.Height-50)/2),MinimumSize=Size(100,50),
-              MaximumSize=Size(100,50),Text="Reset Game")
+      new Button(Location=Point((buttonPanel.Width-100)/2,(buttonPanel.Height-50)/2),MinimumSize=Size(100,50),
+                  MaximumSize=Size(100,50),Text="Reset Game")
 
+ 
 let handleMove (row:int, column:int) = gameEvent.Post (Move (row,column))
 
 // Initialization
