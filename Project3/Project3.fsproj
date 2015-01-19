@@ -38,6 +38,11 @@
     <None Include="Interface.fsx" />
     <None Include="Match_Icon.png" />
     <None Include="Match_Icon_small.png" />
+    <Compile Include="AsyncEventQueue.fs" />
+    <None Include="NimGame.fsx" />
+    <Compile Include="NimLauncher.fs" />
+    <Compile Include="NimLauncher.fsi" />
+    <None Include="NimMain.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
