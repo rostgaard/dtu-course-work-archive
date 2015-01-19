@@ -5,10 +5,35 @@
 \usepackage{amssymb}
 \usepackage{epstopdf}
 \usepackage{color}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,automata}
+
 \usepackage{listings}
+
+\lstdefinelanguage{FSharp}%
+{morekeywords={let, new, match, with, rec, open, module, namespace, type, of, member, %
+and, for, while, true, false, in, do, begin, end, fun, function, return, yield, try, %
+mutable, if, then, else, cloud, async, static, use, abstract, interface, inherit, finally },
+otherkeywords={ let!, return!, do!, yield!, use!, var, from, select, where, order, by },
+keywordstyle=\color{bluekeywords},
+sensitive=true,
+basicstyle=\ttfamily,
+breaklines=true,
+xleftmargin=\parindent,
+aboveskip=\bigskipamount,
+tabsize=4,
+morecomment=[l][\color{greencomments}]{///},
+morecomment=[l][\color{greencomments}]{//},
+morecomment=[s][\color{greencomments}]{{(*}{*)}},
+morestring=[b]",
+showstringspaces=false,
+literate={`}{\`}1,
+stringstyle=\color{redstrings},
+} 
+
 \lstset{
-  frame=single,language=bash,
-  morekeywords={od, in, foreach, let, end, and, or, proc, while},
+  frame=single,language=FSharp,
    basicstyle=\footnotesize,
   escapechar=\@,
   basicstyle=\footnotesize, frame=tb,
@@ -40,10 +65,70 @@
 \begin{document}
 \maketitle
 \section{Type declarations}
+\begin{lstlisting}
+type NimGameState = State of List<int>
+type NimPlayer    = AI | Human
+type NimGame      = Nim of State * NimPlayer
+\end{lstlisting}
+
+\begin{lstlisting}
+type NimGameUI
+type NimLancher
+\end{lstlisting}
+
 \section{Signatures of the main functions}
+
+
 \section{Structure overview}
+We've divided the user interface of the game into two larger components; the launcher and the game itself. The launcher handles download of games and may bootstrap the a game user interface with a downloaded game configuration.
 \subsection{Finite automaton}
+\begin{center}
+\begin{tikzpicture}[>=stealth',shorten >=1pt,auto,node distance=2.2cm]
+  \node[initial,state] (Ready)           {$Ready$};
+  \node[state]         (Turn)     [right of=Ready]  {$Turn$};
+  \node[state]         (AI)       [right of=Turn]   {$AI$};
+  \node[state]         (Ended) [below of=AI]     {$Ended$};
+
+
+  \path[->]
+     (Ready) edge [bend left]  node {move} (Turn)
+      (Turn) edge [bend left]  node {move} (AI)
+        (AI) edge [bend left]  node {done} (Ended)
+        (AI) edge [bend left]  node {move} (Turn)
+      (Turn) edge [bend right] node {done} (Ended);
+  \path[->, dashed]
+      (Ended) edge [bend left] node {reset} (Ready); 
+\end{tikzpicture}
+\end{center}
+The reset signal may, technically speaking, be sent from every state but is left out of the diagram to avoid clutter.
+\begin{center}
+%type Message =
+%  | Download of string * Control * Control| Cancel | Web of string | Error | Cancelled 
+
+
+\begin{tikzpicture}[>=stealth',shorten >=1pt,auto,node distance=3.2cm]
+  \node[initial,state,accepting,label=above:Ready] (Ready)                       {};
+  \node[state,label=above:Loading]                   (Loading)  [right of=Ready]   {};
+  \node[state,label=below:Aborting]                   (Aborting) [below of=Loading] {};
+  \node[state,label=below:Done]                   (Done)     [below of=Ready]   {};
+
+  \path[->]
+        (Ready) edge              node {fetch $url$}  (Loading)
+      (Loading) edge              node {cancel}       (Aborting)
+     (Aborting) edge [bend left]  node {error $html$} (Done)
+     (Aborting) edge [bend right] node {cancelled}    (Done)
+      (Loading) edge              node {OK $html$}    (Done);
+  \path[->,label]
+         (Done) edge              node {clear}        (Ready); 
+\end{tikzpicture}
+\end{center}
+
 \section{Extensions}
+We've extended the basic solution with a more accurate graphical representation of the heaps.	
+\begin{center}
+\includegraphics[width=0.5\textwidth]{game_ui}
+\end{center}
+
 \section{Conclusions}
 \bibliographystyle{plain}
 \bibliography{references}
