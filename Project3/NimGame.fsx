@@ -86,7 +86,6 @@ let gameStateFromString (text : string) =
 
 
 let gameEvent =  AsyncEventQueue<GameEvent>()
-
 (*
 type NimGame =
   | Nim of NimGameState * NimPlayer
@@ -97,7 +96,6 @@ type NimGame =
                                                        gameEvent.Post (Move (row,column))
   static member create intialState = Nim (State intialState, Human)
 *)
-
 // The window part
 let maxMatches matches = List.max matches;;
 let matchW = 50;;
@@ -105,35 +103,33 @@ let matchH = 80;;
 let totalMatchW = (8 + 1) * matchW;;
 let totalMatchH = (6 + 1) * matchH;;
 let buttonW = 200;;
-let buttonH = 50;;
+let buttonH = 100;;
 let matchIcon = Image.FromFile("Match_Icon_small.png");;
 let kittenW = 570;;
 let kittenH = 456;;
 let matchPanel  = new Panel(Location = Point(0,0), Size = Size(max (totalMatchW + buttonW) kittenW, (max totalMatchH kittenH)), BackColor = Color.Black);;
 let buttonPanel = new Panel(Location = Point(0,matchPanel.Height), Size = Size(matchPanel.Width, buttonH), BackColor = Color.White);;
 
-let form =
-  new Form(Text="Nim game", Size= Size(max (matchPanel.Width + 50) (kittenW + 50), 
-                                       (max matchPanel.Height kittenH) + 50 + buttonPanel.Height), 
-                                       AutoScroll = true);;
-
-  let matchButton (x : int) (y : int) z onClick = 
-    let btn = new Button(Location = Point(x,y), MinimumSize=Size(25,matchH),
-                         MaximumSize=Size(20,100),Text= z, BackColor = Color.Black, Image = matchIcon, FlatStyle = FlatStyle.Flat)
-    btn.Click.Add (onClick)
-    btn
+let form = new Form(Text="Nim game", Size= Size(max (matchPanel.Width + 50) (kittenW + 50),
+                        (max matchPanel.Height kittenH) + 50 + buttonPanel.Height),
+                         AutoScroll = true);;
+let matchButton (x : int) (y : int) z onClick = let btn = new Button(Location = Point(x,y), MinimumSize=Size(25,matchH),
+                                                                      MaximumSize=Size(20,100),Text= z, BackColor = Color.Black, Image = matchIcon, FlatStyle = FlatStyle.Flat)
+                                                btn.Click.Add (onClick)
+                                                btn
 
 
 let resetBtn =
-  new Button(Location=Point(matchPanel.Height+20,50),MinimumSize=Size(100,50),
+  new Button(Location=Point((buttonPanel.Width-100)/2,(buttonPanel.Height-50)/2),MinimumSize=Size(100,50),
               MaximumSize=Size(100,50),Text="Reset Game")
 
 let handleMove (row:int, column:int) = gameEvent.Post (Move (row,column))
 
 // Initialization
-let rec generateMatches level = function
+let rec generateMatches level state = 
+    match state with
     | []    -> []
-    | x::xs -> generateHeap level x @ generateMatches (level+1) xs
+    |  x::xs -> generateHeap level x @ generateMatches (level+1) xs
 and generateHeap level = function
   | 0   -> []
   | n   -> ((upcast (matchButton (n*matchW-matchW/2) (level*matchH-matchH/2) (string level + "." + string n) (fun (_) -> handleMove (level,n)) )) : Control)::(generateHeap level (n-1));;
@@ -153,9 +149,13 @@ let generateButtonMatches matches = let (matchButtons : Control list) = (generat
 //        b.Enabled  <- false
 
 let areAllZeroes (state : int list) = List.forall (fun x -> x = 0) state;;
-
+let simpler (State x) = x;;
 
 let rec ready (gameSetup) =
+    let (buttons : Control []) = generateButtonMatches gameSetup
+    matchPanel.Controls.AddRange buttons
+    matchPanel.BackColor <- Color.Black
+    matchPanel.BackgroundImage <- null
     let state = gameSetup
     async {
        printf "Ready: Setting up a new game!\n"
@@ -163,25 +163,12 @@ let rec ready (gameSetup) =
        match msg with 
        | EndGame player        -> return! finish(player)
        | Move (heap,count)     -> return! move(state, heap, count)
-       | StartGame (gameState) -> return! setupBoard()
+       | StartGame (gameState) -> return! ready(gameSetup)
     }
-
-// Currently unused..
-and setupBoard() =
-    async {
-        printf "SetupBoard: Got event!\n"
-        let! msg = gameEvent.Receive()
-        match msg with 
-         | EndGame player -> return! finish(player)
-         | _              -> failwith "implement me!"
-         //| Move (state)   -> return! move(state)
-         //| EndTurn (state, player) -> return! nextPlayer(state, player)
-         //| StartGame      -> return! setupBoard()
-        }
-
 and move (state, heapindex, count) =
     matchPanel.Controls.Clear ()
-    let newState = reduceState state heapindex count
+
+    let newState = reduceState (state) heapindex count
     
     // Update the matches panel with the new state
     match newState with
@@ -211,7 +198,7 @@ and AIMove (state) =
             match msg with
               | EndGame  player       -> return! finish(player)
               | Move (heap,count)     -> return! move(newIntState, heap, count)
-              | StartGame (gameState) -> return! setupBoard()
+              | StartGame (gameState) -> return! ready(simpler gameState)
     }
 and finish (player) =
     async {
@@ -227,20 +214,18 @@ and finish (player) =
         match msg with 
          | EndGame player        -> return! finish(player)
          | Move (heap,count)     -> failwith "No can do, sir."
-         | StartGame (gameState) -> return! setupBoard()
+         | StartGame (gameState) -> return! ready(simpler gameState)
         }
 
+
 let create gameRepr = GameUI (gameRepr, gameEvent);;
-
-buttonPanel.Controls.Add resetBtn
-form.Controls.Add matchPanel
-form.Controls.Add buttonPanel
-
 
 let window obj =
     match obj with 
     | GameUI (gameRepr, ev) -> let intList = List.map int gameRepr
-                               matchPanel.Controls.AddRange (generateButtonMatches intList)
+                               form.Controls.Add matchPanel
+                               form.Controls.Add buttonPanel
+                               buttonPanel.Controls.Add resetBtn
                                resetBtn.Click.Add (fun _ -> gameEvent.Post (StartGame (State intList)))
                                Async.StartImmediate (ready intList)
                                form
