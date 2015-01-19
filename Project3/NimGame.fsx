@@ -43,7 +43,7 @@ let rec calculateM n = function
 
 let rec getNewAk m index = function 
  | []    -> failwith "getNewAk: Cannot find appropriate move from an empty list!"
- | x::xs -> let newV = x ^^^ m
+ | x::xs -> let newV = x ^^^ m 
             if newV < x then
                 (newV, index)
             else 
@@ -62,20 +62,8 @@ let nextMove (State x) = let m = calculateM 0 x
                             let (newValue, index) = getNewAk m 0 x
                             printf  "m /= 0: newval:%d idx:%d" newValue index  
                             let array = List.toArray x
-                            Array.set array index ((List.nth x index)- newValue)
+                            Array.set array index (newValue)
                             Array.toList array
-
-
-                            
-let reflectMove (state:NimGameState) 
-                (row:int)
-                (col:int) = match state with
-                            | State []    -> failwith "reflectMove: Bad state (empty)!"
-                            | State s -> let listAsArr   = Array.ofList s
-                                         let heapSize    = Array.get listAsArr row-1 //Account for index skew.
-                                         let newHeapSize = heapSize - (heapSize - (col-1))
-                                         Array.set listAsArr (row-1) newHeapSize
-                                         State (List.ofArray listAsArr)
 
 (* 
    Returns a gamestate from a string buffer. The buffer must be formatted so that
@@ -160,13 +148,10 @@ and generateHeap level = function
   | 0   -> []
   | n   -> ((upcast (matchButton (n*matchW-matchW/2) (level*matchH-matchH/2) (string level + "." + string n) (fun (_) -> handleMove (level,n)) )) : Control)::(generateHeap level (n-1));;
 
-let getPosition (button : Control) = let positions = Array.toList (button.Text.Split [|'.'|])
-                                     List.map (fun x -> int x) positions;;
-let reduceState matches button = let list = getPosition button
-                                 let index = List.nth list 0 
-                                 let newArray = List.toArray matches
-                                 Array.set newArray (index-1) (matches.[index-1] - 1)
-                                 State(Array.toList  newArray);;
+let reduceState matches index position = let newArray = List.toArray matches
+                                         Array.set newArray (index-1) (position-1)
+                                         State(Array.toList  newArray);;
+
 let generateButtonMatches matches = let (matchButtons : Control list) = (generateMatches 1 matches)
 //                                    ignore(List.map (fun (button : Control) -> button.Click.Add (fun _ -> gameEvent.Post (Move (index button)))) matchButtons)
                                     List.toArray (matchButtons);;
@@ -205,7 +190,7 @@ and setupBoard() =
 
 and move (state, heapindex, count) =
     matchPanel.Controls.Clear ()
-    let newState = reflectMove state heapindex count
+    let newState = reduceState state heapindex count
 
     // Update the matches panel with the new state
     match newState with
@@ -226,7 +211,7 @@ and AIMove (state) =
         let! msg = gameEvent.Receive()
         match msg with 
          | EndGame               -> return! finish()
-         | Move (heap,count)     -> return! move(State newIntState, heap, count)
+         | Move (heap,count)     -> return! move(newIntState, heap, count)
          | StartGame (gameState) -> return! setupBoard()
         }
 and finish () =
@@ -266,11 +251,11 @@ matchPanel.Controls.AddRange buttons
 window.Controls.Add matchPanel
 window.Controls.Add buttonPanel
 
-let initialState = State [2;3;4;5;6]
+let initialState = [2;3;4;5;6]
 
-startButton.Click.Add (fun _ -> gameEvent.Post (StartGame initialState))
+startButton.Click.Add (fun _ -> gameEvent.Post (StartGame ( State initialState)))
 //endTurnButton.Click.Add (fun _ -> ignore (ng.endTurn))
 Async.StartImmediate (ready(initialState));
 
-Application.Run(window)
-//window.Show();;
+//Application.Run(window)
+window.Show();;
