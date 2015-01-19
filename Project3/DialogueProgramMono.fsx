@@ -190,7 +190,6 @@ panel.Controls.AddRange (List.toArray buttons);;
 panel.Controls.Add urlBox
 panel.Controls.Add ansBox
 panel.Controls.Add startButton
-panel.Controls.Add clearButton
 panel.Controls.Add cancelButton
 
 window.Controls.Add panel
@@ -200,6 +199,6 @@ clearButton.Click.Add (fun _ -> ev.Post Clear)
 
 // Start
 Async.StartImmediate (ready())
-Application.Run(window)
-//window.Show()
+//Application.Run(window)
+window.Show()
 
