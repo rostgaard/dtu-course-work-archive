@@ -15,4 +15,5 @@ let baseUrl = "http://ada-dk.org/files/";;
 let games = ["1.nimgame"; "2.nimgame"; "nonexisting.nimgame"];;
 
 let launcher = NimLauncher.create (List.map (fun (item) -> baseUrl + item) games) ;;
+
 Application.Run (NimLauncher.window launcher);;

@@ -17,3 +17,4 @@ Parser.fsi
 *.blg
 *.dvi
 Project2/*.ps
+*.DS_Store

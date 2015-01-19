@@ -32,8 +32,12 @@ type AsyncEventQueue<'T>() =
 
 type NimPlayer = AI | Human;;
 
+let toString = function
+ | AI -> "AI"
+ | Human -> "Human";;
+
 type NimGameState = State of List<int>
-type GameEvent = Move of int * int | EndGame | StartGame of NimGameState
+type GameEvent = Move of int * int | EndGame of NimPlayer| StartGame of NimGameState
 
 type NimGameUI = GameUI of List<string> * AsyncEventQueue<GameEvent>;;
 
@@ -82,6 +86,8 @@ let gameStateFromString (text : string) =
 
 
 let gameEvent =  AsyncEventQueue<GameEvent>()
+
+(*
 type NimGame =
   | Nim of NimGameState * NimPlayer
   //member obj.endTurn = match obj with
@@ -90,6 +96,7 @@ type NimGame =
                                | Nim (state,player) -> //let newState = reflectMove state row column
                                                        gameEvent.Post (Move (row,column))
   static member create intialState = Nim (State intialState, Human)
+*)
 
 // The window part
 let maxMatches matches = List.max matches;;
@@ -98,15 +105,16 @@ let matchH = 80;;
 let totalMatchW = (8 + 1) * matchW;;
 let totalMatchH = (6 + 1) * matchH;;
 let buttonW = 200;;
-let buttonH = 400;;
+let buttonH = 50;;
 let matchIcon = Image.FromFile("Match_Icon_small.png");;
-
-let matchPanel  = new Panel(Location = Point(0,0), Size = Size(totalMatchW + buttonW, (max totalMatchH buttonH)), BackColor = Color.Black);;
-let buttonPanel = new Panel(Location = Point(0,matchPanel.Height), Size = Size(matchPanel.Width, 300), BackColor = Color.White);;
+let kittenW = 570;;
+let kittenH = 456;;
+let matchPanel  = new Panel(Location = Point(0,0), Size = Size(max (totalMatchW + buttonW) kittenW, (max totalMatchH kittenH)), BackColor = Color.Black);;
+let buttonPanel = new Panel(Location = Point(0,matchPanel.Height), Size = Size(matchPanel.Width, buttonH), BackColor = Color.White);;
 
 let form =
-  new Form(Text="Nim game", Size= Size(max matchPanel.Width buttonPanel.Width, 
-                                       matchPanel.Height + buttonPanel.Height), 
+  new Form(Text="Nim game", Size= Size(max (matchPanel.Width + 50) (kittenW + 50), 
+                                       (max matchPanel.Height kittenH) + 50 + buttonPanel.Height), 
                                        AutoScroll = true);;
 
   let matchButton (x : int) (y : int) z onClick = 
@@ -114,26 +122,11 @@ let form =
                          MaximumSize=Size(20,100),Text= z, BackColor = Color.Black, Image = matchIcon, FlatStyle = FlatStyle.Flat)
     btn.Click.Add (onClick)
     btn
- 
-let startButton =
-  new Button(Location=Point(30,30),MinimumSize=Size(100,50),
-              MaximumSize=Size(100,50),Text="Start new game")
 
-let endTurnButton =
-  new Button(Location=Point(startButton.Width+30+30,30),MinimumSize=Size(100,50),
-              MaximumSize=Size(100,50),Text="End move")
 
-let cancelButton =
-  new Button(Location=Point(matchPanel.Height,265),MinimumSize=Size(100,50),
-              MaximumSize=Size(100,50),Text="Give up")
-
-              
-let ansBox =
-  new TextBox(Location=Point(totalMatchW,320),Size=Size(100,25))
-
-  
-let urlBox =
-  new TextBox(Location=Point(totalMatchW,10),Size=Size(400,25))
+let resetBtn =
+  new Button(Location=Point(matchPanel.Height+20,50),MinimumSize=Size(100,50),
+              MaximumSize=Size(100,50),Text="Reset Game")
 
 let handleMove (row:int, column:int) = gameEvent.Post (Move (row,column))
 
@@ -159,6 +152,7 @@ let generateButtonMatches matches = let (matchButtons : Control list) = (generat
 //     for (b:Button) in bs do 
 //        b.Enabled  <- false
 
+let areAllZeroes (state : int list) = List.forall (fun x -> x = 0) state;;
 
 
 let rec ready (gameSetup) =
@@ -167,7 +161,7 @@ let rec ready (gameSetup) =
        printf "Ready: Setting up a new game!\n"
        let! msg = gameEvent.Receive()
        match msg with 
-       | EndGame               -> return! finish()
+       | EndGame player        -> return! finish(player)
        | Move (heap,count)     -> return! move(state, heap, count)
        | StartGame (gameState) -> return! setupBoard()
     }
@@ -178,7 +172,7 @@ and setupBoard() =
         printf "SetupBoard: Got event!\n"
         let! msg = gameEvent.Receive()
         match msg with 
-         | EndGame        -> return! finish()
+         | EndGame player -> return! finish(player)
          | _              -> failwith "implement me!"
          //| Move (state)   -> return! move(state)
          //| EndTurn (state, player) -> return! nextPlayer(state, player)
@@ -188,7 +182,7 @@ and setupBoard() =
 and move (state, heapindex, count) =
     matchPanel.Controls.Clear ()
     let newState = reduceState state heapindex count
-
+    
     // Update the matches panel with the new state
     match newState with
       | State [] -> failwith "Bad state"
@@ -196,7 +190,12 @@ and move (state, heapindex, count) =
 
     async {
         printf "Move: Got event!\n"
-        return! AIMove (newState)
+        match newState with 
+            | State [] -> failwith "Bad state"
+            | State s -> if areAllZeroes s then
+                            return! finish(Human)
+                         else
+                            return! AIMove (newState)
     }
 
 and AIMove (state) =
@@ -205,39 +204,43 @@ and AIMove (state) =
     matchPanel.Controls.AddRange (generateButtonMatches newIntState)
     async {
         printf "nextPlayer: Got event!\n"
-        let! msg = gameEvent.Receive()
-        match msg with 
-         | EndGame               -> return! finish()
-         | Move (heap,count)     -> return! move(newIntState, heap, count)
-         | StartGame (gameState) -> return! setupBoard()
-        }
-and finish () =
+        if areAllZeroes newIntState then
+            return! finish(AI)
+        else
+            let! msg = gameEvent.Receive()
+            match msg with
+              | EndGame  player       -> return! finish(player)
+              | Move (heap,count)     -> return! move(newIntState, heap, count)
+              | StartGame (gameState) -> return! setupBoard()
+    }
+and finish (player) =
     async {
-        printf "Finish: Got event!\n"
+        printf "Finish: Got event!\n %s \n" (toString player)
+        if player = Human then
+            let image = Image.FromFile("won.jpg")
+            matchPanel.BackgroundImage <- image
+        else
+            let image = Image.FromFile("lost.jpg")
+            matchPanel.BackgroundImage <- image
+        matchPanel.Size <- Size(kittenW, kittenH)
         let! msg = gameEvent.Receive()
         match msg with 
-         | EndGame               -> return! finish()
+         | EndGame player        -> return! finish(player)
          | Move (heap,count)     -> failwith "No can do, sir."
          | StartGame (gameState) -> return! setupBoard()
         }
 
-//let (buttons : Control []) = generateButtonMatches matches;;
-buttonPanel.Controls.Add startButton
-buttonPanel.Controls.Add urlBox
-buttonPanel.Controls.Add ansBox
-buttonPanel.Controls.Add endTurnButton
-buttonPanel.Controls.Add cancelButton
-//matchPanel.Controls.AddRange buttons
+let create gameRepr = GameUI (gameRepr, gameEvent);;
+
+buttonPanel.Controls.Add resetBtn
 form.Controls.Add matchPanel
 form.Controls.Add buttonPanel
 
-
-let create gameRepr = GameUI (gameRepr, gameEvent);;
 
 let window obj =
     match obj with 
     | GameUI (gameRepr, ev) -> let intList = List.map int gameRepr
                                matchPanel.Controls.AddRange (generateButtonMatches intList)
-                               startButton.Click.Add (fun _ -> gameEvent.Post (StartGame (State intList)))
+                               resetBtn.Click.Add (fun _ -> gameEvent.Post (StartGame (State intList)))
                                Async.StartImmediate (ready intList)
                                form

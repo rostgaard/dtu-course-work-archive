@@ -49,9 +49,8 @@ let splitString (text : string) =
 
 
 let startGame (stringBuffer : string) = let gameUI = NimGame.create (splitString stringBuffer)
-                                        printf "FIXME: Starting game %s\n" stringBuffer
+                                        printf "Starting game %s\n" stringBuffer
                                         Application.Run (NimGame.window gameUI)
-
 
 let winX = 640;;
 let winY = 800;;

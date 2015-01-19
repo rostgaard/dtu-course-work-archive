@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -38,11 +38,9 @@
     <None Include="Interface.fsx" />
     <None Include="Match_Icon.png" />
     <None Include="Match_Icon_small.png" />
-    <Compile Include="AsyncEventQueue.fs" />
-    <None Include="NimGame.fsx" />
-    <Compile Include="NimLauncher.fs" />
-    <Compile Include="NimLauncher.fsi" />
-    <None Include="NimMain.fsx" />
+    <Compile Include="NimMain.fsx" />
+    <Compile Include="NimGame.fsx" />
+    <Compile Include="NimLauncher.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
