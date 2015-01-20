@@ -12,7 +12,7 @@
 \usepackage{listings}
 
 \lstdefinelanguage{FSharp}%
-{morekeywords={let, new, match, with, rec, open, module, namespace, type, of, member, %
+{morekeywords={let, new, match, with, rec, open, module, namespace, type, of, member, val, %
 and, for, while, true, false, in, do, begin, end, fun, function, return, yield, try, %
 mutable, if, then, else, cloud, async, static, use, abstract, interface, inherit, finally },
 otherkeywords={ let!, return!, do!, yield!, use!, var, from, select, where, order, by },
@@ -41,7 +41,7 @@ stringstyle=\color{redstrings},
   stepnumber=2,
   numbersep=5pt, 
   numberstyle=\tiny\color{mygray},
-  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth
+  xleftmargin=.1\textwidth, xrightmargin=.1\textwidth
 }
 \usepackage{geometry}
  \geometry{
@@ -65,18 +65,35 @@ stringstyle=\color{redstrings},
 \begin{document}
 \maketitle
 \section{Type declarations}
+The main types used in applications are presented in listing \ref{list:types}. 
+\begin{figure} [!ht]
 \begin{lstlisting}
-type NimGameState = State of List<int>
 type NimPlayer    = AI | Human
+type NimGameState = State of List<int>
 type NimGame      = Nim of State * NimPlayer
-\end{lstlisting}
+type GameEvent = Move of AsyncEventQueue<GameEvent> * int * int | EndGame of AsyncEventQueue<GameEvent> * NimPlayer | StartGame of AsyncEventQueue<GameEvent> * NimGameState
 
-\begin{lstlisting}
-type NimGameUI
-type NimLancher
+type NimGameUI = NimGameUI of NimGameState * GameEvent
 \end{lstlisting}
-
+\caption{Main types used in Nim application}
+\label{list:types}
+\end{figure}
 \section{Signatures of the main functions}
+\begin{figure} [!ht]
+\begin{lstlisting}
+//AI module
+val nextMove : State -> State
+//GUI module
+val updatePanels : Panel -> Panel -> Panel-> Form -> unit ()
+val generateButtonMatches : State -> (int -> int -> unit()) -> Control [];;
+\end{lstlisting}
+\caption{Signatures of main functions from AI and GUI module}
+\label{list:types}
+\end{figure}
+\subsection{NimAI}
+This module provide one main function (line 1 in listing \ref{list:types} and three helper function (for 3 difficulty levels), that are not being accessed anywhere beside the module and has exactly the same signatures. 
+\subsection{NimGUI}
+NimGUI has a lot of interesting functions, but we decided to only pick two most important. The first one (line 3 in listing \ref{list:types} has a side effects - it actually only update properties of elements send to it (it's a refresh function). Second one is one of the few functions that has another function as an argument - a click handler.
 %Something about the button generation function, gameUI, launcher and game object creation and manipulation.
 
 \section{Structure overview}

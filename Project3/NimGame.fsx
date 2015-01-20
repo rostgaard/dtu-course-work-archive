@@ -40,12 +40,11 @@ type NimPlayer = AI | Human;;
 let toString = function
  | AI -> "AI"
  | Human -> "Human";;
-
+ 
 type NimGameState = State of List<int>
 type GameEvent = Move of AsyncEventQueue<GameEvent> * int * int | EndGame of AsyncEventQueue<GameEvent> * NimPlayer 
                  | StartGame of AsyncEventQueue<GameEvent> * NimGameState
-type NimGameUI = GameUI of List<string> * AsyncEventQueue<GameEvent>;;
-
+type NimGameUI = NimGameUI of NimGameState * GameEvent
 
 let clickFunction (ev : AsyncEventQueue<GameEvent>) x y = ev.Post (Move (ev, x,y));;
 //GUI elements
