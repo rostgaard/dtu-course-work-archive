@@ -94,14 +94,13 @@ val generateButtonMatches : State -> (int -> int -> unit()) -> Control [];;
 \label{list:types}
 \end{figure}
 \subsection{NimAI}
-This module provide one main function (line 1 in listing \ref{list:types} and three helper functions (for 3 difficulty levels), that acts like a module private functions and has exactly the same signatures as the main one. 
+This module provide one main function (line 1 in listing \ref{list:types}) for generating next AI move and three helper functions (for 3 difficulty levels), that act like a module private functions and has exactly the same signatures as the main one. 
 \subsection{NimGUI}
-NimGUI has a lot of interesting functions, but we decided to only pick two most important. The first one (line 3 in listing \ref{list:types} has a side effects - it actually only update properties of elements send to it (it's a refresh function). Second one is one of the few functions that has another function as an argument - a click handler.
+NimGUI has a lot of interesting functions, but we decided to only pick the two most important. The first one (line 3 in listing \ref{list:types}) has a side effects - it actually only updates properties of elements send to it (it's a refresh function). Second one is one of the few functions used for generating buttons and it has another function as an argument - a click handler.
 
-%Something about the button generation function, gameUI, launcher and game object creation and manipulation.
 
 \section{Structure overview}
-We've divided the user interface of the game into two larger components; the launcher and the game itself. The launcher handles download of games and may bootstrap the a game user interface with a downloaded game configuration. The launcher builds up a list of known games from a list of urls. These are hardcoded as of now, but could just as well be initialized by a line-separated text file.
+We've divided the user interface of the game into two larger components; the launcher and the game itself. The launcher handles download of games and may bootstrap a game user interface with a downloaded game configuration. The launcher builds up a list of known games from a list of urls. These are hardcoded as of now, but could just as well be initialized by a line-separated text file.
 \subsection{Modules}
 The complete application itself is designed by the \emph{separation of concerns} principle and the following contains 5, largely independent, modules:
 \begin{itemize}
@@ -113,7 +112,7 @@ The complete application itself is designed by the \emph{separation of concerns}
 \end{itemize}
 
 \subsection{Finite automatons}
-As we have two major UI components, we also have two automatons in our game. The first one is part of the launcher (automaton below to the left) controls UI behavior and appearance. Once ready, a download click handler in the UI will send the automaton to the \textbf{Loading} State where it can either be cancelled, succeed or return an error. Once the download is done, the automaton will automatically go back to \textbf{Ready}, accepting new fetch commands. The UI responds to the commands by, when downloading, disabling every button -- except for the \textbf{Abort button}. When \textbf{Loading} completes, it will re-enable the buttons and -- if successful -- add a click handler for the launch button correlated with the download button that launches a new game UI instance. 
+As we have two major UI components, we also have two automatons in our game. The first one is part of the launcher (automaton below to the left). It controls UI behavior and appearance. Once ready, a download click handler in the UI will send the automaton to the \textbf{Loading} State where it can either be cancelled, succeed or return an error. Once the download is done, the automaton will automatically go back to \textbf{Ready}, accepting new fetch commands. The UI responds to the commands by, when downloading, enabling \textbf{Abort button}. When \textbf{Loading} completes, it will disable the button and -- if successful -- add a click handler for the launch button correlated with the download button that launches a new game UI instance and enable it.
 
 \begin{center}
 \begin{tikzpicture}[>=stealth',shorten >=1pt,auto,node distance=3.2cm]
@@ -149,11 +148,11 @@ As we have two major UI components, we also have two automatons in our game. The
 \end{center}
 The automaton for the game logic (above to the right) works by initializing a game object within the \textbf{Ready} state and then alternating it between \textbf{AI} and \textbf{Human} until there are no matches left in any heaps.
 The reset signal may, technically speaking, be sent from every state but these transitions have been left out of the diagram to avoid clutter.
-The automaton will then go to the \textbf{Ended} state and notify the player whether or not he/she has won or not. After a move (\textbf{AI} or \textbf{Human}), the panel with the matches will re-render, giving the visual representation of the current game. A move is performed by clicking a match. That match will then spawn a move operation stating which index it has and which heap it belongs to. The state machine will then reflect the move to the state and re-render. 
+The automaton will then go to the \textbf{Ended} state and notify the player whether he/she has won or not. After a move (\textbf{AI} or \textbf{Human}), the panel with the matches will re-render, giving the visual representation of the current game. A move is performed by clicking a match. That match will then spawn a move operation stating which index it has and which heap it belongs to. The state machine will then reflect the move to the state and re-render. 
 
 %type Message =
 %  | Download of string * Control * Control| Cancel | Web of string | Error | Cancelled 
-Note: naming and other minor differences between model and code are present in the current state of the project and should be considered as design models.
+Note: naming and other minor differences between model and code are present in the current state of the project and those automatons should be considered as design models.
 \section{Extensions}
 There is a possibility to restart an ongoing game and also set the difficulty. There are currently three levels of difficulty implemented; easy, intermediate and hard. They work by adjusting the AI's probability of ''making mistakes`` by performing a random move rather than a strategic one.
 
