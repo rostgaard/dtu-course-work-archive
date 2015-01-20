@@ -44,7 +44,7 @@ let toString = function
 type NimGameState = State of List<int>
 type GameEvent = Move of AsyncEventQueue<GameEvent> * int * int | EndGame of AsyncEventQueue<GameEvent> * NimPlayer 
                  | StartGame of AsyncEventQueue<GameEvent> * NimGameState
-type NimGameUI = NimGameUI of NimGameState * GameEvent
+type NimGameUI = GameUI of string list * AsyncEventQueue<GameEvent>
 
 let clickFunction (ev : AsyncEventQueue<GameEvent>) x y = ev.Post (Move (ev, x,y));;
 //GUI elements
@@ -130,15 +130,15 @@ let create gameRepr = GameUI (gameRepr, AsyncEventQueue<GameEvent>());;
 
 let window obj =
     match obj with 
-    | GameUI (gameRepr, ev) -> let intList = List.map int gameRepr
-                               let form = new Form()
-                               let buttonPanel = new Panel()
-                               matchPanel <- new Panel()
-                               NimGUI.updatePanels intList matchPanel buttonPanel form
-                               form.Controls.Add matchPanel
-                               form.Controls.Add buttonPanel
-                               let resetBtns = NimGUI.createResetBtn buttonPanel
-                               addResetClickOption ev intList 3 (Array.toList resetBtns)
-                               buttonPanel.Controls.AddRange resetBtns
-                               Async.StartImmediate (ready (ev, intList))
-                               form
+    | GameUI (gameRepr, ev) ->  let intList = List.map int gameRepr
+                                let form = new Form()
+                                let buttonPanel = new Panel()
+                                matchPanel <- new Panel()
+                                NimGUI.updatePanels intList matchPanel buttonPanel form
+                                form.Controls.Add matchPanel
+                                form.Controls.Add buttonPanel
+                                let resetBtns = NimGUI.createResetBtn buttonPanel
+                                addResetClickOption ev intList 3 (Array.toList resetBtns)
+                                buttonPanel.Controls.AddRange resetBtns
+                                Async.StartImmediate (ready (ev, intList))
+                                form
