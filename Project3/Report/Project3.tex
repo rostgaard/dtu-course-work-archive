@@ -81,6 +81,15 @@ type NimLancher
 
 \section{Structure overview}
 We've divided the user interface of the game into two larger components; the launcher and the game itself. The launcher handles download of games and may bootstrap the a game user interface with a downloaded game configuration.
+\subsection{Modules}
+The application contains 5 modules:
+\begin{itemize}
+\item \texttt{NimMain} - starting point for the whole application,
+\item \texttt{NimLauncher} - module responsible for handling the logic of download game window,
+\item \texttt{NimGame} - module responsible for handling the logic of the game
+\item \texttt{NimGUI} - module, that stores, updates and creates almost all GUI elements for \texttt{NimLauncher} and \texttt{NimGame}.
+\item \texttt{NimAI} - small modules that stores and provide functions to generate the AI move
+\end{itemize}
 \subsection{Finite automaton}
 \begin{center}
 \begin{tikzpicture}[>=stealth',shorten >=1pt,auto,node distance=2.2cm]
