@@ -68,12 +68,12 @@ let updateFinishScreen hasWon (matchPanel : Control) =
 
 
 // Launcher functions
-let winX = 640;;
-let winY = 800;;
+let winX = 650;;
+let winY = 840;;
 let margin = 100;;
 
 let form =
-  new Form(Text="Nim game launcher", Size=Size(winX,winY), AutoScroll = true)
+  new Form(Text="Nim game launcher", Size=Size(winX,winY))
 
 let urlBox =
   new TextBox(Location=Point(30,30),Size=Size(200,25));;
@@ -98,7 +98,7 @@ let makeLaunchButton x y =
 
 let cancelButton =
   new Button(Location=Point(250,margin+30),MinimumSize=Size(60,30),
-              MaximumSize=Size(90,30),Text="Abort download")
+              MaximumSize=Size(90,30),Text="Abort any download")
 
 let disable bs = 
     for (b : Control) in bs do 
