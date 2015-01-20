@@ -18,9 +18,9 @@ let kittenH = 456
 let updatePanels matches (matchPanel : Control) (buttonPanel : Control) (form : Form) =
     let maxMatches = List.max matches
     let totalMatchW = (maxMatches + 1) * matchW
-    let totalMatchH = (maxMatches + 1) * matchH
+    let totalMatchH = (matches.Length + 1) * matchH
     matchPanel.Location <- Point(0,0)
-    matchPanel.Size <- Size(max (totalMatchW + buttonW) kittenW, (max totalMatchH kittenH))
+    matchPanel.Size <- Size(max totalMatchW kittenW, max totalMatchH kittenH)
     matchPanel.BackColor <- Color.Black
     buttonPanel.Location <- Point(0,matchPanel.Height)
     buttonPanel.Size <- Size(matchPanel.Width, buttonH)
@@ -32,7 +32,7 @@ let updatePanels matches (matchPanel : Control) (buttonPanel : Control) (form : 
 
 
 let matchButton (x : int) (y : int) z onClick = let btn = new Button(Location = Point(x,y), MinimumSize=Size(25,matchH),
-                                                                        MaximumSize=Size(20,100),Text= z, BackColor = Color.Black, Image = matchIcon, FlatStyle = FlatStyle.Flat)
+                                                                        MaximumSize=Size(25,matchH),Text= z, BackColor = Color.Black, Image = matchIcon, FlatStyle = FlatStyle.Flat)
                                                 btn.Click.Add (onClick)
                                                 btn;;
 
@@ -81,13 +81,13 @@ let updateFinishScreen hasWon (matchPanel : Control) =
 
 
 // Launcher functions
-let winX = 650;;
-let winY = 840;;
+let winX = 640;;
+let winY = 800;;
 let margin = 100;;
 
 let form =
-  new Form(Text="Nim game launcher", Size=Size(winX,winY))
-
+  new Form(Text="Nim game launcher", Size=Size(winX,winY+40));;
+ 
 let urlBox =
   new TextBox(Location=Point(30,30),Size=Size(200,25));;
 

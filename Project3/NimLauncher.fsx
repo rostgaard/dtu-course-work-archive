@@ -114,7 +114,7 @@ let create urls = L (urls, ev);;
 //let show   : NimLancher   -> NimLancher
 let rec window l =
     match l with 
-    | L (urlList, ev) -> let panel =  new Panel (Location = Point(0,0), Size = Size(NimGUI.winX, NimGUI.winY), BackgroundImage = NimGUI.bgImage)
+    | L (urlList, ev) -> let panel =  new Panel (Location = Point(0,0), Size = Size(NimGUI.winX, NimGUI.winY), BackgroundImage = NimGUI.bgImage, AutoScroll = true)
                          let buttons = NimGUI.generateBtns 0 urlList
                          let (dwBtns : Control list, lncBtns, y) = List.unzip3 buttons
                          NimGUI.generateClickOptions dwnClickFunction NimGUI.cancelButton buttons
