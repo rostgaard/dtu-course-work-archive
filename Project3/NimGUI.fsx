@@ -36,9 +36,22 @@ let matchButton (x : int) (y : int) z onClick = let btn = new Button(Location = 
                                                 btn.Click.Add (onClick)
                                                 btn;;
 
-let resetBtn (buttonPanel : Control) =
+let resetBtnHard (buttonPanel : Control) =
+        new Button(Location=Point(((buttonPanel.Width-100)/2-150),(buttonPanel.Height-50)/2),MinimumSize=Size(100,50),
+                    MaximumSize=Size(100,50),Text="Reset Game - level hard");;
+
+let resetBtnInter (buttonPanel : Control) =
         new Button(Location=Point((buttonPanel.Width-100)/2,(buttonPanel.Height-50)/2),MinimumSize=Size(100,50),
-                    MaximumSize=Size(100,50),Text="Reset Game");;
+                    MaximumSize=Size(100,50),Text="Reset Game - level intermediate");;
+let resetBtnEasy (buttonPanel : Control) =
+        new Button(Location=Point(((buttonPanel.Width-100)/2+150),(buttonPanel.Height-50)/2),MinimumSize=Size(100,50),
+                    MaximumSize=Size(100,50),Text="Reset Game - level easy");;
+
+let createResetBtn (buttonPanel : Control) =
+     let resetBtHard = (upcast (resetBtnHard buttonPanel) : Control)
+     let resetBtInter = (upcast (resetBtnInter buttonPanel) : Control)
+     let resetBtEasy = (upcast (resetBtnEasy buttonPanel) : Control)
+     [|resetBtHard; resetBtInter; resetBtEasy|];;
 
 
 let generateButtonMatches matches postFunction = 
