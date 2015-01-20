@@ -74,8 +74,8 @@ type GameEvent    =
   | EndGame of AsyncEventQueue<GameEvent> * NimPlayer 
   | StartGame of AsyncEventQueue<GameEvent> * NimGameState
 type NimGameUI = GameUI of List<string> * AsyncEventQueue<GameEvent>
-
 \end{lstlisting}
+We pass around the event queue within the game automaton to avoid using a singleton instance.
 
 \begin{lstlisting}
 type NimGameUI
