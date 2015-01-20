@@ -117,6 +117,14 @@ and finish (ev, player) =
         }
 
 
+let resetClickOption (ev :  AsyncEventQueue<GameEvent>) state level = fun _ -> NimAI.level <- level
+                                                                               ev.Post(StartGame(ev, State state));;
+                                                                               
+let rec addResetClickOption ev state level = function
+    | _ when level <= 0  -> ()
+    | []                 -> ()
+    | (x : Control)::xs  -> x.Click.Add (resetClickOption ev state level)
+                            addResetClickOption ev state (level-1) xs;;
 
 //game setup
 let create gameRepr = GameUI (gameRepr, AsyncEventQueue<GameEvent>());;
@@ -128,10 +136,10 @@ let window obj =
                                let buttonPanel = new Panel()
                                matchPanel <- new Panel()
                                NimGUI.updatePanels intList matchPanel buttonPanel form
-                               let resetBtn = NimGUI.resetBtn buttonPanel
                                form.Controls.Add matchPanel
                                form.Controls.Add buttonPanel
-                               buttonPanel.Controls.Add resetBtn
-                               resetBtn.Click.Add (fun _ -> ev.Post (StartGame (ev, State intList)))
+                               let resetBtns = NimGUI.createResetBtn buttonPanel
+                               addResetClickOption ev intList 3 (Array.toList resetBtns)
+                               buttonPanel.Controls.AddRange resetBtns
                                Async.StartImmediate (ready (ev, intList))
                                form
