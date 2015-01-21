@@ -60,7 +60,7 @@
 \title{02257 Applied functional programming}
 
 % A subtitle is optional and this may be deleted
-\subtitle{Brief overview}
+\subtitle{Project debriefing}
 
 \author{Kim Rostgaard Christensen}
 
@@ -132,21 +132,6 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{WHILE interpreter}{Reflections}
-  \begin{itemize}
-  \item {
-    Very interesting applied project, good match for functional language
-  }
-  \item {
-    Possible extensions
-  }
-  \begin{itemize}
-    \item Stronger typing and/or type inference
-    \item Static analysis functions (from Program analysis course)
-    \end{itemize}
-  \end{itemize}
-\end{frame}
-
 \begin{frame}[fragile]{WHILE interpreter}{Extension - for loops}
 
 \begin{figure}
@@ -214,6 +199,22 @@ end
 \end{figure}
 \end{frame}
 
+\begin{frame}{WHILE interpreter}{Reflections}
+  \begin{itemize}
+  \item {
+    Very interesting applied project, good match for functional language
+  }
+  \item {
+    Possible extensions
+  }
+  \begin{itemize}
+    \item Stronger typing and/or type inference
+    \item Static analysis functions (from Program analysis course)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\section{Project 2 - Tree drawing}
 \begin{frame}[plain,c]
 \begin{center}
 \Huge Project 2\\
@@ -221,13 +222,11 @@ end
 \Large Tree drawing
 \end{center}
 \end{frame}
-
-\section{Project 2 - Tree drawing}
 \subsection{Project state}
 \begin{frame}{Tree drawing}{State of the project}
   \begin{itemize}
   \item {
-    Draws from fixed point on canvas (does not centralize tree)
+    Draws from fixed point on canvas (no auto-aligning of tree)
   }
   \item {
     Centralized labels
@@ -261,6 +260,20 @@ end
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Tree drawing}{Reflections}
+  \begin{itemize}
+%  \item {
+%    Very interesting applied project, good match for functional language
+%  }
+  \item {
+    Possible extensions
+  }
+  \begin{itemize}
+    \item PostSript macro possibilities
+    \item Bounding boxes for label containers
+    \end{itemize}
+  \end{itemize}
+\end{frame}
 \section{Project 3 - Graphical UI}
 \begin{frame}[plain,c]
 \begin{center}
@@ -275,7 +288,13 @@ end
 \begin{frame}{Graphical NIM game}{State of the game}
   \begin{itemize}
   \item {
-    Playable
+    Playable with AI opponent
+  }
+  \item {
+    Modularized by files and -- to some extent -- design pattern
+  }
+  \item {
+    Not all edge cases are covered, and some UI components still carry state
   }
   \end{itemize}
 \end{frame}
@@ -316,12 +335,6 @@ end
 \end{center}
 \end{frame}
 
-\begin{frame}{Graphical NIM game}{Graphical interfaces}
-\begin{center}
-\includegraphics[width=0.49\textwidth]{launcher_ui} \includegraphics[width=0.49\textwidth]{game_ui}
-\end{center}
-\end{frame}
-
 \subsection{Project state}
 \begin{frame}{Graphical NIM game}{Extensions}
   \begin{itemize}
@@ -329,12 +342,41 @@ end
     Graphical representation of match heaps
   }
   \item {
+    Strong separation of GUI components by responsibilities
+  }
+  \item {
     Multiple rounds of game, and launching of different games
   }
   \item {
-    Multiple difficulties (predefined)
+    Multiple difficulties (predefined probabilities of making a random move)
   }
   \end{itemize}
 \end{frame}
-\end{document}
 
+\begin{frame}{Graphical NIM game}{Graphical interfaces}
+\begin{center}
+\includegraphics[width=0.49\textwidth]{launcher_ui} \includegraphics[width=0.49\textwidth]{game_ui}
+\end{center}
+\end{frame}
+
+\begin{frame}{Graphical NIM game}{Reflections}
+  \begin{itemize}
+  \item {
+    Functional Reactive Programming is a suitable method for constructing user interfaces without distributed state everywhere
+  }
+  \item {
+    Possible extensions
+  }
+    \begin{itemize}
+      \item Extend the \texttt{AsyncEventQueue} to support multicast
+      \item Represent state machines as graphs combined with a (multicast) \texttt{AsyncEventQueue} to enable a cleaner MVC pattern
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain,c]
+\begin{center}
+\Huge EOT\\
+\end{center}
+\end{frame}
+\end{document}
