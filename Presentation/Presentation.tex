@@ -1,17 +1,3 @@
-% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
-%
-% In principle, this file can be redistributed and/or modified under
-% the terms of the GNU Public License, version 2.
-%
-% However, this file is supposed to be a template to be modified
-% for your own needs. For this reason, if you use this file as a
-% template and not specifically distribute it as part of a another
-% package/program, I grant the extra permission to freely copy and
-% modify this file as you see fit and even to delete this copyright
-% notice. 
-
-
-
 \documentclass{beamer}
 
 \usepackage{color}
@@ -77,22 +63,14 @@
 \subtitle{Brief overview}
 
 \author{Kim Rostgaard Christensen}
-% - Give the names in the same order as the appear in the paper.
-% - Use the \inst{?} command only if the authors have different
-%   affiliation.
 
 \institute[Techical University of Denmark] % (optional, but mostly needed)
 {
   
   DTU Compute\\
   Techical University of Denmark}
-% - Use the \inst command only if there are several affiliations.
-% - Keep it simple, no one is interested in your street address.
 
 \date{Jan. 22. 2015}
-% - Either use conference name or its abbreviation.
-% - Not really informative to the audience, more for people (including
-%   yourself) who are reading the slides online
 
 \subject{Project work overwiew}
 % This is only inserted into the PDF information catalog. Can be left
@@ -101,7 +79,6 @@
 % If you have a file called "university-logo-filename.xxx", where xxx
 % is a graphic format that can be processed by latex or pdflatex,
 % resp., then you can add a logo as follows:
-
 \pgfdeclareimage[height=0.8cm]{university-logo}{dtu-compute-logo.jpg}
 \logo{\pgfuseimage{university-logo}}
 
@@ -111,10 +88,18 @@
   \titlepage
 \end{frame}
 
-\section{Project 1 - WHILE iterpreter}
+\begin{frame}[plain,c]
+\begin{center}
+\Huge Project 1\\
+\vspace{5mm}
+\Large WHILE interpreter
+\end{center}
+\end{frame}
+
+\section{Project 1 - WHILE interpreter}
 \subsection{Project state}
 
-\begin{frame}{WHILE iterpreter}{State of the project}
+\begin{frame}{WHILE interpreter}{State of the project}
   \begin{itemize}
   \item {
     Handed out cases passing
@@ -130,11 +115,10 @@
     And..
   }
   \end{itemize}
-  
 \end{frame}
 
 \subsection{Extensions}
-\begin{frame}{WHILE iterpreter}{Extensions}
+\begin{frame}{WHILE interpreter}{Extensions}
   \begin{itemize}
   \item {
     For loops
@@ -148,7 +132,22 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{WHILE iterpreter}{Extension - for loops}
+\begin{frame}{WHILE interpreter}{Reflections}
+  \begin{itemize}
+  \item {
+    Very interesting applied project, good match for functional language
+  }
+  \item {
+    Possible extensions
+  }
+  \begin{itemize}
+    \item Stronger typing and/or type inference
+    \item Static analysis functions (from Program analysis course)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{WHILE interpreter}{Extension - for loops}
 
 \begin{figure}
 \begin{lstlisting}
@@ -173,7 +172,7 @@ end
 \end{figure}
 \end{frame}
 
-%\begin{frame}[fragile]{WHILE iterpreter}{Extension - sugarcoating}
+%\begin{frame}[fragile]{WHILE interpreter}{Extension - sugarcoating}
 %\begin{figure}
 %  \begin{lstlisting}
 %foreach @$var_{element}$@ in @$var_{array}$@ do
@@ -199,7 +198,7 @@ end
 %\end{figure}
 %\end{frame}
 
-\begin{frame}[fragile]{WHILE iterpreter}{Extension - infix logic operators}
+\begin{frame}[fragile]{WHILE interpreter}{Extension - infix logic operators}
 \begin{figure}
 \begin{lstlisting}
 let
@@ -215,10 +214,34 @@ end
 \end{figure}
 \end{frame}
 
+\begin{frame}[plain,c]
+\begin{center}
+\Huge Project 2\\
+\vspace{5mm}
+\Large Tree drawing
+\end{center}
+\end{frame}
+
 \section{Project 2 - Tree drawing}
 \subsection{Project state}
 \begin{frame}{Tree drawing}{State of the project}
+  \begin{itemize}
+  \item {
+    Draws from fixed point on canvas (does not centralize tree)
+  }
+  \item {
+    Centralized labels
+  }
+  \item {
+    Translates AST's from Project 1 into either
+      \begin{itemize}
+        \item an elaborate format mapped almost directly to AST with a deep tree structure or,
+        \item a simplified format that merges information from several nodes.
+     \end{itemize}       
+  }
+  \end{itemize}
 \end{frame}
+
 
 \subsection{Example}
 \begin{frame}{Tree drawing}{Example tree}
@@ -230,6 +253,10 @@ end
   \begin{itemize}
   \item {
     No extensions :-(
+  }
+  \pause
+  \item {
+    It took a few iterations to get the algorithm translated
   }
   \end{itemize}
 \end{frame}
