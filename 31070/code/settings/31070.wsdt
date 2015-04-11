@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>MyProject/Debug</Project></CurrentConfigs></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>182</Column0><Column1>11</Column1><Column2>27</Column2><Column3>1242260</Column3></ColumnWidths>
+      </Workspace>
+      <Build>
+        
+        
+        
+        
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1395</ColumnWidth1><ColumnWidth2>372</ColumnWidth2><ColumnWidth3>93</ColumnWidth3></Build>
+      <TerminalIO/>
+    <Disassembly><MixedMode>1</MixedMode><CodeCovShow>0</CodeCovShow><InstrProfShow>0</InstrProfShow></Disassembly><Find-in-Files><ColumnWidth0>440</ColumnWidth0><ColumnWidth1>62</ColumnWidth1><ColumnWidth2>754</ColumnWidth2></Find-in-Files><Debug-Log><ColumnWidth0>19</ColumnWidth0><ColumnWidth1>1223</ColumnWidth1></Debug-Log></Static>
+    <Windows>
+      
+      
+    <Wnd0>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-10323-27083</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>MyProject</ExpandedNode><ExpandedNode>MyProject/Application</ExpandedNode><ExpandedNode>MyProject/Application/Conversion</ExpandedNode><ExpandedNode>MyProject/Application/Converters</ExpandedNode><ExpandedNode>MyProject/Application/LCD</ExpandedNode><ExpandedNode>MyProject/Config</ExpandedNode><ExpandedNode>MyProject/System</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-745-27877</Identity>
+            <TabName>Build</TabName>
+            <Factory>Build</Factory>
+            <Session/>
+          </Tab>
+        <Tab><Identity>TabID-32758-9635</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab><Tab><Identity>TabID-6268-24658</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab></Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd1></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\touch_scr.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>45</SelStart><SelEnd>45</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\gpio.c</Filename><XPos>0</XPos><YPos>42</YPos><SelStart>58</SelStart><SelEnd>58</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\gpio.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>119</SelStart><SelEnd>119</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\timer.c</Filename><XPos>0</XPos><YPos>21</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\interrupt_handlers.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>180</SelStart><SelEnd>180</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\adc.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>160</SelStart><SelEnd>160</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\dac.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>175</SelStart><SelEnd>175</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\touch_scr.c</Filename><XPos>0</XPos><YPos>197</YPos><SelStart>4883</SelStart><SelEnd>4883</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\system\sys.c</Filename><XPos>0</XPos><YPos>15</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\frequency.c</Filename><XPos>0</XPos><YPos>3</YPos><SelStart>1057</SelStart><SelEnd>1057</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\adc.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>116</SelStart><SelEnd>116</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\main.c</Filename><XPos>0</XPos><YPos>518</YPos><SelStart>13761</SelStart><SelEnd>13761</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\config.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>532</SelStart><SelEnd>551</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\drv_glcd.c</Filename><XPos>0</XPos><YPos>369</YPos><SelStart>11339</SelStart><SelEnd>11339</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\interrupt_handlers.c</Filename><XPos>0</XPos><YPos>174</YPos><SelStart>5550</SelStart><SelEnd>5550</SelEnd></Tab><ActiveTab>14</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>C:\31070\v1\MyProject\application\zerocrossing.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>92</SelStart><SelEnd>92</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-00b0aef8><key>iaridepm.enu1</key></Toolbar-00b0aef8></Sizes></Row0></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>704</Bottom><Right>256</Right><x>-2</x><y>-2</y><xscreen>212</xscreen><yscreen>0</yscreen><sizeHorzCX>165625</sizeHorzCX><sizeHorzCY>0</sizeHorzCY><sizeVertCX>201563</sizeVertCX><sizeVertCY>736952</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>210</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>212</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>221294</sizeHorzCY><sizeVertCX>165625</sizeVertCX><sizeVertCY>0</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="transform.xsl"?>
+<system_information>
+  <network>
+    <tag1>data 1</tag1>
+    <tag2>data 2</tag2>
+    <tag3>data 3</tag3>
+    <tag4>data 4</tag4>
+    <tag5>data 5</tag5>
+    <tag6>data 6</tag6>
+  </network>
+  <network>
+    <tag1>data 1</tag1>
+    <tag2>data 2</tag2>
+    <tag3>data 3</tag3>
+    <tag4>data 4</tag4>
+    <tag5>data 5</tag5>
+    <tag6>data 6</tag6>
+  </network>
+  <network>
+    <tag1>data 1</tag1>
+    <tag2>data 2</tag2>
+    <tag3>data 3</tag3>
+    <tag4>data 4</tag4>
+    <tag5>data 5</tag5>
+    <tag6>data 6</tag6>
+  </network>
+  <network>
+    <tag1>data 1</tag1>
+    <tag2>data 2</tag2>
+    <tag3>data 3</tag3>
+    <tag4>data 4</tag4>
+    <tag5>data 5</tag5>
+    <tag6>data 6</tag6>
+  </network>
+</system_information>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="transform.xsl"?>
+<system-information>
+ <measurements>
+  <realtime-frequency> 50 </realtime-frequency>
+  <Vpp>
+   <max>3.3</max>
+   <min>0.1</min>
+  </Vpp>
+  <RMS>
+   <current>  1 </current>
+   <voltage>  2 </voltage>
+  </RMS>
+  <time>
+   <second>23</second>
+   <millisecond>44</millisecond>
+  </time>
+  <relay-status>
+   <relay1> on </relay1>
+   <relay2> off </relay2>
+  </relay-status>
+  <lcd>
+   <pressed> no </pressed>
+   <coordinates> 0,0 </coordinates>
+  </lcd>
+ </measurements>
+
+ <configuration>
+%! xml-configuration
+ </configuration>
+ 
+
+ 
+ <processes>
+%! processes
+ </processes>
+ 
+ <file-stats>
+%! file-stats
+ </file-stats>
+  
+ <tcp-connections>
+%! xml-tcp-connections
+ </tcp-connections>
+</system-information>
