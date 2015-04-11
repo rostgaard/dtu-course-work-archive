@@ -1,0 +1,5 @@
+let
+  boolvar : true
+in
+  boolvar := false and true or false
+end

@@ -1,0 +1,133 @@
+\documentclass[10pt]{scrartcl}
+\usepackage{geometry}
+\usepackage[parfill]{parskip}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{color}
+\usepackage{listings}
+\lstset{
+  frame=single,language=bash,
+  morekeywords={od, in, foreach, let, end, and, or, proc, while},
+   basicstyle=\footnotesize,
+  escapechar=\@,
+  basicstyle=\footnotesize, frame=tb,
+  numbers=left,
+  stepnumber=2,
+  numbersep=5pt, 
+  numberstyle=\tiny\color{mygray},
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth
+}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=20mm,
+ right=20mm,
+ top=20mm,
+ bottom=20mm,
+ }
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0,0}
+\definecolor{mygray}{rgb}{0.2,0.2,0.2}
+
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{02257 - Applied functional programming}
+\subtitle{Project1 - Interpreter}
+\author{Anna Maria Walach - \textit {s121540@student.dtu.dk} \\ Kim Rostgaard Christensen - \textit {s084283@student.dtu.dk}}
+\begin{document}
+\maketitle
+\section{Object types}
+There are three main categories of objects defined in the language:
+\begin{description}
+\item [procedures:] represented by tuple of arguments' names, procedure environment and set of procedure statements
+\item [arrays:] represented by tuple of length and values stored in F\# array
+\item [primitive values:] such as int, string, boolean
+Complex structures (procedure, array) can never be send as a value to the function - always as reference. 
+\end{description}
+\subsection{Array handling}
+Array variable points to reference, that store the whole array object. Values can be assigned to array cells by calling \texttt{array[index] = newValue}. Each array has attribute "length" that can be access by \texttt{array.length}.
+\section{Recursive and non-recursive procedures}
+We decided to not explicitly implement the recursive procedures in our interpreter. Instead, each procedure (regardless the \texttt{rec} keyword) can include recursive calls. The \texttt{rec} keyword is recognized, but ignored. \\
+Procedure with multiple statements need to be contained inside a \texttt{Block} unless they contain only one (non-block) statement (for instance; \texttt{return}).
+\subsection{Return statements}
+Procedure can, but does not have to, return a value or reference. Reference to local value can be returned. Arrays and procedures are always returned as references. 
+\subsection{Parameter passing}
+The language support two ways of passing the primitive (string, int, bool) parameters to function: by reference and by value. 
+\begin{lstlisting}
+let x : 5; y : 10;
+	proc sum (a, b)
+		a := +(!a,!b)
+in
+	call sum(x,y);
+	call sum(!x,!y)
+end
+\end{lstlisting}
+In the first case, described by \texttt{sum(x,y)}, we're sending the references to the function, so after this line, \texttt{x := 5}. After calling \texttt{sum(!x, !y)}, \texttt{x} value remains unchanged, as only the content of values is send to the procedure.
+\section{Control statements}
+\subsection{Conditionals}
+Conditionals are implemented, but only for boolean expressions on integer types. The if else statement is structured in following way:
+\begin{lstlisting}
+if (condition) then
+	// invoke this
+else //optional
+	// invoke something different
+fi
+\end{lstlisting}
+\subsection{Loops}
+\subsubsection{While loop}
+While loop is supported in a form:
+\begin{lstlisting}
+while (condition) do
+  // invoke something
+od
+\end{lstlisting}	
+\subsection{For loop - extension}
+The for loop was implemented in a form:
+\begin{lstlisting}
+for (assignment; condition; incrementation) do
+  // invoke something
+od
+\end{lstlisting}
+Where,\\
+\texttt{Assignment} is a \emph{statement} that assigns starting value to iterating variable. \\
+\texttt{Condition} is an \emph{expression} returning true or false. \\
+\texttt{Incrementation} is a \emph{statement} that is responsible for incrementing the iterating variable and is called at the end of each iteration.
+\subsubsection{Foreach loop - extension}
+We've implemented a basic foreach language construct that, within the interpreter, translates into a while loop. An example f a foreach construction can be seen below.
+  \begin{lstlisting}
+foreach var in collection do
+  // statements where var is accessible
+od
+\end{lstlisting}
+\section{Infix logic operators - extension}
+Initially we wanted to extend the language with infix versions the implemented operators. However, to avoid breaking already implemented test cases, we instead added two new operators -- the logic AND and OR. This enables the following syntax;
+\begin{lstlisting}
+let
+  boolvar :  <>(x,5) or <(y,10) and >(y,0)
+in
+  ...
+end
+\end{lstlisting}
+Parsing and evaluation works, but unfortunately we introduced a shift-reduce conflict in both logic expression that we have not been able to resolve.
+\section{Test cases}
+We performed 7 tests that were already included in the project and 7 we created later to test extensions:
+\begin{itemize}
+\item \texttt{AndOrInfix} - for testing the boolean infix operators
+\item \texttt{ArrayFolding} - for testing arrays as function arguments, arrays attributes and accessing arrays cells.
+\item \texttt{ArrayTestStringIndex} - test that proves the string indices are not supported
+\item \texttt{IfElseParse} - for testing the ITE structure
+\item \texttt{ArgsReferencesValues} - for testing the passing arguments (by value and by reference)
+\item \texttt{ForeachLoop} - testing the correctness of foreach loop implementation
+\item \texttt{ForLoop} - testing the correctness of for loop implementation
+\end{itemize}
+All tests are passing without problems and delivering proper values. 
+The default tests were modified to include the assertions (if statements).
+
+\section{Conclusions}
+We were able to implement all basic concepts (procedures, while loops, ITE, arrays) and few additional (for, foreach, infix boolean operators), which we evaluate as satisfying result. \\
+We can see some optimization possibilities, like rewriting the Exp and Value types, which may allow better reflection of natural code structures and properties (e.g. remove the possibility of storing non-Reference value in environment). \\
+During development, we discovered that actually we can divide objects into two categories: primitives and complex (similar to Java), where primitives can be send by reference/value, and complex only be reference. Even procedures falls into the categories of complex structure, which made really easy implementing functions as procedure arguments.
+\end{document}  

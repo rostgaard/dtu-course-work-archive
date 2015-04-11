@@ -1,0 +1,109 @@
+\documentclass[10pt]{scrartcl}
+\usepackage{geometry}
+\usepackage[parfill]{parskip}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{color}
+\usepackage{listings}
+\lstset{
+  frame=single,language=bash,
+  morekeywords={od, in, foreach, let, end, and, or, proc, while},
+   basicstyle=\footnotesize,
+  escapechar=\@,
+  basicstyle=\footnotesize, frame=tb,
+  numbers=left,
+  stepnumber=2,
+  numbersep=5pt, 
+  numberstyle=\tiny\color{mygray},
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth
+}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=20mm,
+ right=20mm,
+ top=20mm,
+ bottom=20mm,
+ }
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0,0}
+\definecolor{mygray}{rgb}{0.2,0.2,0.2}
+
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{02257 - Applied functional programming}
+\subtitle{Project 2 - Drawing trees}
+\author{Anna Maria Walach - \textit {s121540@student.dtu.dk} \\ Kim Rostgaard Christensen - \textit {s084283@student.dtu.dk}}
+\begin{document}
+\maketitle
+\section{Translating solution to F\#}
+The solution presented in \cite{kennedy1996functional} was straight-forward to implement, except for a little variation in List.fold function. Translating it required more explicit declaration and actually changing the order of arguments to works as describe in article.
+\section{Generating PostScript file}
+Generation of PostScript content, is a matter of mapping nodes to PostScript commands. In our case we have found that the following macro works well.
+\begin{lstlisting}[language=PostScript]
+$node_x $node_y            moveto
+($label)                   dup stringwidth pop 2 div neg 0 rmoveto show
+$node_x $padded_node_y     moveto
+$parent_x $parent_y        lineto stroke
+\end{lstlisting}
+the \$ denotes values generated in the F\# program. This block adds a centered label and draws a direct line from a child node to its parent. The handed in version of the program draws angled lines instead of direct ones.
+We generate the drawing top-down, as the algorithm from \cite{kennedy1996functional} already handled the tree fitting for us, and pick an absolute point on the PS canvas and start drawing there.
+PostScript files contain both footers and headers that needs to be prepended and appended to the PostScript content, respectively. This is done by declaring these as string constants which are concatenated with generated content in the middle.
+\section{Visualizing AST's}
+We visualize our abstract syntax trees from Project 1 by recursing trough them and converting each AST node into a Tree Node. We've made two different implementations; one that maps every node within the AST to a Tree node, and one that tries to make it a bit more condense and readable tree. 
+\subsection{Basic version}
+In the basic version we treat \texttt{Block} as nodes having two children; declarations and statement body. Statement lists are nodes with children who are their contained statements. Function applications have two child nodes; arguments and their statement body. The remaining statement, expressions and declarations are mapped more or less directly, or uses the rules from \texttt{Block} or \texttt{StmList} already covered.
+\subsection{Compact version}
+The compact version tries to reduce the number of branches and child levels by adding more information in single nodes, and exploiting semantic information. For instance; the \texttt{stmList} is reduced to a single statement if the list contains only one element. Apply is also rewritten, so that instead of producing;
+\begin{verbatim}
+           Apply
+             |
+            / \
+           /   \
+    Arguments  Function
+          |     |
+       (List)  Indentifier
+\end{verbatim}
+it produces;
+\begin{verbatim}
+         Indentifier
+           |___________
+          / \          \
+         /   \          \
+  Argument1  Argument2  ArgumentN
+\end{verbatim}
+the F\# function \texttt{st, ex, dec} makes large tree, and the \texttt{stToTree, exToTree decToTree} equivalents makes the compact versions.
+\section{Efficiency}
+\begin{table} [!h]
+\centering
+\begin{tabular}{c|c|c|c}
+  \textbf{Program} & \textbf{Typical concatenation}  & \textbf{StringBuilder concatenation} & \textbf{String.concat concatenation} \\
+  \hline
+  \textit{ArrayProg1} & \textbf{00.002} & 00.007 & 00.008 \\
+  \hline
+  \textit{ArrayProg2} & 00.005 & \textbf{00.003} & \textbf{00.003} \\
+  \hline
+  \textit{Factorial4} & \textbf{00.004} & \textbf{00.004} & \textbf{00.004} \\
+  \hline
+  \textit{Factorial3} & 00.004 & \textbf{00.003} & \textbf{00.003} \\
+  \hline
+  \textit{ForeachLoop} & 00.007 & \textbf{00.006} & 00.008 \\
+\end{tabular} 
+\caption{Table showing the efficiency of different PostScript translator implementation}
+\label{tab:eff}
+\end{table}
+We performed various  tests to measure the efficiency of functions that translate the general tree to a string in Post Script format. The results are presented in table \ref{tab:eff}. The results are not containing the time of translating the AST to general tree. Those times were between 0.000 to 0.001 for all of the inputs. \\
+The conclusion from the results is, that \texttt{StringBuilder} is the most efficient way of concatenating strings. \\
+However, input files were rather small (from 100 to 800 bytes) and as though, the results may be not reliable (as they are counter in microseconds). Even though, the theoretical conclusions are similar to one received from real data - \texttt{StringBuilder} should be the fastest way of concatenating strings. \\
+We also performed tests on all of the input programs that were designed during Project 1, and all of them generate proper trees. 
+\section{Conclusions}
+The solution generates proper and nice looking trees for all tested cases. We have not tested the limit on how big trees we can generate, but are clearly limited by not using tail recursion in our drawing algorithm. A nice improvement would be to make the algorithm tail recursive.
+As another future improvement, we should introduce more complex examples to improve the performance and efficiency of our solution. 
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}  

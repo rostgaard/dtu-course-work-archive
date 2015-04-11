@@ -1,0 +1,30 @@
+
+let
+  s          :  3;
+  a[+(!s,1)] : 10;
+  arraySum   :  0;
+
+  proc sum (p1,p2) 
+	return +(!p1,!p2);
+
+  proc crudeFold (arr, state, func) 
+  let
+     i    : 0
+  in
+    while <(!i, arr.length)
+    do
+      state := func(!state, arr[!i]);
+	  i     := +(!i, 1)
+    od;
+
+    return !state 
+  end
+
+in 
+   arraySum := crudeFold(!a, arraySum, sum);
+   if <>(!arraySum, *(a.length,10)) then
+      print "(failed assertion!)"
+   else
+     print "(ok)"
+   fi
+end

@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{81854949-5B95-4BA9-9DC9-5A1D14A49511}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>WhileInterpreter</RootNamespace>
+    <AssemblyName>WhileInterpreter</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <Name>ImpLang</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <Tailcalls>false</Tailcalls>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Debug\WhileInterpreter.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Release\WhileInterpreter.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets" Condition="Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')" />
+  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft F#\v4.0\Microsoft.FSharp.Targets" Condition="(!Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')) And (Exists('$(MSBuildExtensionsPath32)\..\Microsoft F#\v4.0\Microsoft.FSharp.Targets'))" />
+  <Import Project="$(MSBuildExtensionsPath32)\FSharp\1.0\Microsoft.FSharp.Targets" Condition="(!Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')) And (!Exists('$(MSBuildExtensionsPath32)\..\Microsoft F#\v4.0\Microsoft.FSharp.Targets')) And (Exists('$(MSBuildExtensionsPath32)\FSharp\1.0\Microsoft.FSharp.Targets'))" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>fslex "$(ProjectDir)Lexer.fsl"
+fsyacc --module Parser "$(ProjectDir)Parser.fsy"</PreBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AST.fs" />
+    <Compile Include="Parser.fs">
+      <Link>Parser.fs</Link>
+    </Compile>
+    <Compile Include="Lexer.fs">
+      <Link>Lexer.fs</Link>
+    </Compile>
+    <FsYacc Include="Parser.fsy">
+      <OtherFlags>--module Parser</OtherFlags>
+    </FsYacc>
+    <FsLex Include="Lexer.fsl">
+      <!-- <OtherFlags>- -unicode</OtherFlags> -->
+    </FsLex>
+    <Compile Include="ParserUtil.fs" />
+    <Compile Include="Interpreter.fs" />
+    <None Include="Factorial2.while">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Factorial3.while" />
+    <None Include="Factorial4.while" />
+    <None Include="Factorial5.while" />
+    <None Include="Factorial1.while" />
+    <None Include="ArrayUtil.while" />
+    <None Include="ArrayProg1.while" />
+    <None Include="ArrayProg2.while" />
+    <Compile Include="Script.fsx" />
+    <None Include="tests\AndOrInfix.while" />
+    <None Include="tests\ArrayFolding.while" />
+    <None Include="tests\ArrayTestStringIndex.while" />
+    <None Include="tests\IfElseParse.while" />
+    <None Include="tests\ArgsReferencesValues.while" />
+    <None Include="tests\ForeachLoop.while" />
+    <None Include="tests\ForLoop.while" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="FSharp.PowerPack">
+      <HintPath>FSharp.PowerPack\bin\FSharp.PowerPack.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharp.Compiler.CodeDom">
+      <HintPath>FSharp.PowerPack\bin\FSharp.Compiler.CodeDom.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharp.PowerPack.Metadata">
+      <HintPath>FSharp.PowerPack\bin\FSharp.PowerPack.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharp.PowerPack.Build.Tasks">
+      <HintPath>FSharp.PowerPack\bin\FSharp.PowerPack.Build.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharp.PowerPack.Compatibility">
+      <HintPath>FSharp.PowerPack\bin\FSharp.PowerPack.Compatibility.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	     Other similar extension points exist, see Microsoft.Common.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>

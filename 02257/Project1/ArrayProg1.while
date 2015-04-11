@@ -1,0 +1,8 @@
+let rng: 100; len:10;  a[!len]: 1 ; sum : sumArray(a)
+in print toString(!sum);
+   if <>(!sum, 10) then
+      print "(failed assertion!)"
+   else
+     print "(ok)"
+   fi
+end
