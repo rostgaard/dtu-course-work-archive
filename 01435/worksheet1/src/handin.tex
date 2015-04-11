@@ -1,0 +1,130 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+
+\usepackage{color}
+
+\def\File#1{\textsf{#1}}
+\def\Code#1{\texttt{#1}}
+\def\Key#1{\textsf{#1}}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{mygray},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2                       % sets default tabsize to 2 spaces
+%  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\title{01435 Practical Cryptanalysis}
+%\author{Kim Rostgaard Christensen - s084283}
+\author{Thomas Pedersen - s103665}
+\begin{document}
+\maketitle
+
+%\paragraph{Exercise 1:} Decrypt the following ciphertext that was encrypted with a Caesar cipher
+%\1begin{center}
+%GJBFW JYMJN IJXTK RFWHM
+%\end{center}
+%Output from program \Code{exercise\_01.adb}:
+
+%\lstinputlisting[frame=single] {../output/exercise_01.output}
+
+%\paragraph{Exercise 2:}
+%The ciphertext ``ABQZ'' can translate to either ``STIR'' or ``OPEN''.
+
+%9.000+ was found by means of brute force and an English dictionary.
+
+\paragraph{Exercise 3:}
+Known plaintext is a special case of chosen plaintext.
+\begin{description}
+\item[Known plaintext attacks:]
+The simple caesar cipher, can be broken only knowing a sigle letter, but a more real life example is WEP(Wired Equivalent Privacy).\\
+It has been shown that it can be broken, with a passive attack but that requires thousands of packages.\\
+In 2006 Bittau, Handly and Lackey showed that by only capturing a single package, followed by sending 128 packages, it is possible to get the key.\footnote{Source: http://en.wikipedia.org/wiki/Wired\_Equivalent\_Privacy}
+
+\item[chosen plaintext attacks:] If we look at the Vigenère cipher, that one can easily be broken if you choose a text that is at least the key lengh, which only consists of the same letter, for instance: if the Key is "HALLO" then we could choose the plaintext "AAAAA", which would be encrypted to: HALLO. and just like that we get the key.\footnote{Source: http://en.wikipedia.org/wiki/Vigen\%C3\%A8re\_cipher
+}
+
+\end{description}
+
+
+%Source: 
+
+
+
+%\paragraph{Exercise 4:}
+\paragraph{Exercise 5:}
+%In one hour 11.385.500.000 keys tested.
+
+For this implementation, 2.160.000.000 keys was tested in an hour.\\\\
+This gives $600000 \cdot 24 \cdot 365 = 18.921.600.000.000 \approx 19 \cdot 10^{12}$ in a year.\\\\
+Given a cluster of 1 million machines, the number would be $19 \cdot 10^{12} \cdot 10^6 = 19 \cdot 10^{18}$ keys attempted, roughly corresponding to ~64 bit.\\\\
+Code is listed in figure \ref{lst:exercise_05}.
+
+\begin{figure}
+\lstinputlisting[frame=single,language=Ada] {../src/exercise_05.adb}
+\caption{exercise\_05.adb}
+\label{lst:exercise_05}
+\end{figure}
+
+\section*{Exercise 6}
+For $|K|$, our keyspace is $26!$, $R_L$ is $26$, which gives us;
+\begin{equation}
+UD \approx \frac{\log_2{26!}}{0.7 \cdot \log_2{26}} \Leftrightarrow UD \approx 26.7
+\end{equation}
+
+%\section*{Exercise 7}
+%\section*{Exercise 8}
+\section*{Exercise 9}
+Our test-population is 1000, given that we have 1000 \emph{pairs}.\\
+Feeding the this to the $\chi^2$ test gives the following;
+\begin{eqnarray}
+\chi^2 = \frac{\left(231 - 500\right)^2}{250} + 
+         \frac{\left(271 - 500\right)^2}{250} + 
+         \frac{\left(270 - 500\right)^2}{250} + 
+         \frac{\left(228 - 500\right)^2}{250} \\
+\chi^2 = 6.744
+\end{eqnarray}
+
+This is then fed to R, which gives out:
+
+\begin{eqnarray}
+CHIDIST \left(6.744,3\right) = 0.08
+\end{eqnarray}
+
+Around 8\% of the experiments will result in a distribution similar to this. We should not reject this as acceptable output, as it is within the standard 95\% confidence interval. Since the probability is so low, more data should be acquired to get more accurate results.
+
+%\section*{Exercise 10}
+\section*{Exercise 11}
+Putting the table into a functional graph, we observe that it consists of two disjoint cycles. One of them being merely $4 \rightarrow 1 \rightarrow 4$.
+When using the input vector consisting of identical elements (all 3's), we observe the function repeating itself after 14 iterations.\\
+The only exception is when using 9 as initialization vector. This gives us a loop of one, repeating 9 as input for the next element.
+
+\end{document}

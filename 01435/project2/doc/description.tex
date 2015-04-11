@@ -1,0 +1,133 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[scaled]{beramono}
+%\usepackage{bera}
+
+\usepackage{libertine}
+\usepackage[T1]{fontenc}
+
+
+\usepackage{color}
+
+\def\File#1{\textsf{#1}}
+\def\Code#1{\texttt{#1}}
+\def\Key#1{\textsf{#1}}
+\usepackage{color}
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0,0}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.2,0.2,0.2}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\usepackage{listings}
+%\lstset{
+%}
+
+\lstset{ %
+  language=Java,
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  showspaces=false,
+  basicstyle=\footnotesize\ttfamily,  % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+%  keywordstyle=\color{blue},       % keyword style
+%  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{mygray},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  commentstyle=\color{greencomments},
+  keywordstyle=\color{bluekeywords}\bfseries,
+  stringstyle=\color{redstrings},
+  showtabs=false,
+  breaklines=true,
+  breakatwhitespace=true,
+  numberstyle=\footnotesize\ttfamily,
+  numbers=left,
+  stepnumber=3,
+  breaklines=true
+  escapeinside={(*@}{@*)},
+  tabsize=2                       % sets default tabsize to 2 spaces
+%  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+
+\title{01435 Practical Cryptanalysis\\Project 2}
+\author{Kim Rostgaard Christensen - s084283}
+%\author{Thomas Pedersen - s103665}
+%\author{Lars Kristensen - s072662}
+\begin{document}
+\maketitle
+\begin{abstract}
+The purpose of this report is to document the tool developed for generation and testing of Rainbow tables using a practical simulated attack.\\
+Full sources can be found at:\\
+ \url{https://github.com/rostgaard/practical_cryptoanalysis/}
+\end{abstract}
+
+\section*{Project description}
+The program developed here is a small simulation of a man-in-the-middle attack with the purpose of making a communicating party reveal it's private key. For this, rainbow tables are used. The simulation is realized by simulating a fob for unlocking a car - and responding on behalf of the car.
+\section*{Design and implementation}
+To get the secret out of the fob, we generate a Non-Perfect Rainbow table based on the fixed $U$ we send to it.
+The code implementing a serializable Rainbow table - with generation - is shown in figure \ref{fig:rainbow}. The serialization enables us to save and load generated tables - thus saving computation time across software runs.\\
+We use a hashed map that contains sets of values, so we can store multiple start values for the same endpoint.
+The idea when we generate the rainbow table is that we have a random secret, as start value, but the value we parse to MD5, is the secret concatenated with a fixed challenge $U$. That way, we have the same hash value as we would get from the fob, but the key that is saved, is only the secret. Of course when we generate a chain in the rainbow table, we also use a different reduction-function on each hash value. So; $S \rightarrow MD5(S ||U) \rightarrow  Hash \rightarrow  ReductionFunction  - N$.
+\begin{figure}[h]
+\begin{lstlisting}
+public class RainbowTable extends    HashMap<Long, HashSet<Long>> 
+                          implements Serializable {
+                          
+  public void generate(long u, long rows, long chainlength) {
+    this.u           = u;
+    this.rows        = rows
+    this.chainlength = chainlength;
+    
+    SecureRandom ran = new SecureRandom();
+    long     bitMask = 0xfffff;
+
+    for (int i = 0; i < this.rows; i++) {
+        long startValue = ran.nextInt() % bitMask;
+        long accumulator = startValue;
+        
+        for (int j = 0; j < this.chainLength; j++) {
+          long cipher = Utilities.MD5_Hash(Utilities.combine(accumulator, this.u, bitMask), bitMask);
+          long reducedCipher = Utilities.reductionFunction(cipher, j, bitMask + 1);
+          accumulator = reducedCipher;
+        }
+
+        this,put(accumulator, startValue);
+      }
+  }
+}
+\end{lstlisting}
+\caption{Code for generating a rainbow table.}
+\label{fig:rainbow}
+\end{figure}
+\section*{Usage and test}
+When the program starts, it generates a Rainbow table - if not already present. It then uses the Rainbow table to start a simulation
+We get a success rate of around 50\%
+\begin{small}
+
+\begin{verbatim}
+\end{verbatim}
+\end{small}
+
+\section*{Further work}
+\end{document}

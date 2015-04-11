@@ -1,0 +1,13 @@
+#!/usr/bin/env Rscript
+f <- file("stdin")
+open(f)
+while(length(line <- readLines(f,n=1)) > 0) {
+  #write(line, stderr())
+  # process line
+  tmp <- strsplit(line, ",")
+
+  x <- eval(parse(text=line))
+
+  # x <- 1-pchisq (tmp[1][1],df=tmp[1][2])
+  write (x, stderr())
+}

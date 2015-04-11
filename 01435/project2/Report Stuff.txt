@@ -1,0 +1,9 @@
+To get the secret out of the fob, we generate a Non-Perfect Rainbow table based on the picked U we send to it.
+If we look more deeply into how we generate the rainbow table, we have this function
+
+% INSERT JAVA CODE %
+
+The idea when we generate the rainbow table is that we have a random secret, as start value, but the value we parse to MD5, is the secret concatinated with a picked challenge U. That way, we have the same hash value as we would get from the fob, but the key that is saved, is only the secret. Of course when we generate a chain in the rainbow table, we also use a different reductionfunction on each hash value.
+Secret S -> MD5(S || U) -> Hash -> ReductionFunction-N
+
+//Perfect Rainbow Table!!!! <<<<<<<<<<<<<<<<<< HUSK <<<<<<<<<<<<<<<<<<<
