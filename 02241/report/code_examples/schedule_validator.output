@@ -1,0 +1,9 @@
+Schedule is invalid
+    1   2   3   4   5   6   7   8   9  10  11  12  13
+ 1 aa, ab, bb, bc, cc, cd, dd, de, ee, ef, ff, ff, ff
+ 2 gg, gh, hh, hi, ii, di, dd, dd, dd, dj, jj, jj, jj
+ 3 mm, mn, nn, an, aa, ab, bb, bc, cc, cd, dd, de, ee
+Reason:
+
+raised RAILVAL.VALIDATOR.TRAIN_COLLISION : Collision at (7, 2)
+

@@ -1,0 +1,21 @@
+STAT Klampenborg kl
+STAT Hillerød hi
+STAT Holte ho
+STAT Lyngby ly
+STAT Hellerup he
+STAT København kø
+STAT Bagsværd ba
+STAT Farum fa
+CONN kl n1
+CONN hi ho
+CONN ho ly
+CONN ly n1
+CONN n1 he
+CONN he n2
+CONN n2 kø
+CONN n2 ba
+CONN ba fa
+ENDP hi
+ENDP kl
+ENDP kø
+ENDP fa
