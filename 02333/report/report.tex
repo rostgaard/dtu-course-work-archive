@@ -1,0 +1,166 @@
+% This is the main report file
+
+\documentclass{acm_proc_article-sp}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\begin{document}
+
+\title{02333 Parallel and Real-time Systems F10}
+\subtitle{[Report on the work done in this course]
+\titlenote{This report should also be available online at \texttt{www.retrospekt.dk/02333report}}}
+
+\numberofauthors{4} %  in this sample file, there are a *total*
+\author{
+% 1st. author
+\alignauthor
+Andreas Rask Jensen\\
+%       \affaddr{}\\
+%       \affaddr{}\\
+       \email{s083165@student.dtu.dk}
+% 2nd. author
+\alignauthor
+Demmus Hentze Højgaard\\
+       \email{s062591@student.dtu.dk}
+% 3rd. author
+\alignauthor
+Hjallgrim Gunnar Mohr Hentze\\
+       \email{s062418@student.dtu.dk}
+\and  % use '\and' if you need 'another row' of author names
+% 4th. author
+\alignauthor 
+Kim Rostgaard Christensen\\
+       \email{s084283@student.dtu.dk}
+}
+
+\maketitle
+
+\begin{abstract}
+%Abstract; A brief summary of all of the report including the conclusion section
+%but excluding the acknowledgements, references and any appendixes.
+The purpose of this report is to describe in detail how we implemented the tasks in the course. The overall goal is to build a tiny operating system using the technologies also available in contemporary, widely used operating systems. We have decided to name the operating system GunKiAnDem. Our mascot is a walking stick (figure~\ref{fig:mascot}) Because we are using a skeleton code, and it kind of looks like a skeleton. 
+\begin{figure}
+\centering
+\epsfig{file=fig/mascot.eps, height=0.5in}
+\caption{The GunKiAnDem mascot}
+\label{fig:mascot}
+\end{figure}
+\end{abstract}
+% XXX Should this be here? 
+% A category with the (minimum) three required fields
+%\category{H.4}{Information Systems Applications}{Miscellaneous}
+%A category including the fourth, optional field follows...
+%\category{D.2.8}{Software Engineering}{Metrics}[complexity measures, performance measures]
+
+%\terms{Report}
+
+%\keywords{ACM proceedings, \LaTeX, text tagging} % NOT required for Proceedings
+
+
+\section{Introduction}
+\input{introduction.tex}
+
+%\section{Related work}
+%\input{related_work.tex}
+
+
+%Body; A number of sections describing the work done.
+
+\section{System calls}
+\input{task1.tex}
+\label{sec:system_calls}
+
+\section{Processes}
+\input{task2.tex}
+\label{sec:processes}
+
+\section{Scheduling}
+\input{task3.tex}
+\label{sec:scheduling}
+
+\section{Memory management}
+\input{task4.tex}
+\label{sec:memory_managemet}
+
+\section{Interprocess communication}
+\input{task5.tex}
+\label{sec:ipc}
+
+% Task 6 - Thread synchronization
+\section{Thread synchronization}
+\input{task6.tex}
+\label{sec:thread_syncronization}
+
+\section{Device driver}
+\input{task7.tex}
+\label{sec:device_driver}
+
+\section{A practical approach}
+\input{task8.tex}
+\label{sec:practical}
+
+
+\section{Conclusion}
+\label{sec:conclusion}
+%Conclusions; All experiences and conclusions drawn from the work.
+\input{conclusions.tex}
+
+%ACKNOWLEDGMENTS are optional
+%\section{Acknowledgments}
+%\input{acknowledgements.tex}
+%Acknowledgments; Acknowledge any persons important to the work.
+
+%References; A list of reference material used. All material must be cited in the
+%text.
+
+
+\appendix
+\section{Work distribution}
+Kim Rostgaard Christensen (s084283) 
+\begin{itemize}
+\item Sections: abstract, Introduction, Processes, Thread synchronization, A practical approach and Conclusion
+\item Tasks: B4, A6 and B8
+\end{itemize}
+
+Andreas Rask Jensen (s083165)
+\begin{itemize}
+\item Sections: System calls and Interprocess communication
+\item Tasks: B7 and B6
+\end{itemize}
+
+Demmus Hentze Højgaards (062591)
+\begin{itemize}
+\item Sections: Scheduling 4.1 and Device driver
+\item Tasks: B1 and B2
+\end{itemize}
+
+Hjallgrim Gunnar Mohr Hentzes (062418)
+\begin{itemize}
+\item Sections: Scheduling 4.2-4 and Memory Management
+\item Tasks: B3, A3 and B5
+\end{itemize}
+
+
+
+
+% The following two commands are all you need in the
+% initial runs of your .tex file to
+% produce the bibliography for the citations in your paper.
+\bibliographystyle{plain}
+\nocite{*}
+\bibliography{sigproc}  % sigproc.bib is the name of the Bibliography in this case
+% You must have a proper ".bib" file
+%  and remember to run:
+% latex bibtex latex latex
+% to resolve all references
+%
+% ACM needs 'a single self-contained file'!
+%
+%APPENDICES are optional
+
+
+%Appendixes; Appendixes holds, for example, results or figures that are not
+%relevant to place in the body of the report. Appendixes should generally be
+%avoided and might not be read by the course staff.
+
+
+\end{document}
