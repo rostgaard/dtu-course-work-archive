@@ -1,0 +1,82 @@
+\chapter{Trying it out}
+In this chapter we will provide some results from running the implemented tool on some concrete programs.
+\\\\
+First we will consider the program listed below to determine the program slice:
+
+\begin{figure}[H]
+  \begin{lstlisting}
+x:= 0;
+x:= 3;
+if z=x then 
+  z:=0;
+else
+  z:=x;
+fi
+y:= x;
+x:=y+z;
+ \end{lstlisting}
+ \caption{Reaching definition example}
+\label{code:RD_test_example}
+\end{figure}
+Using the tool to calculate the program slice gives the following output:
+
+\begin{figure}[H]
+  \begin{lstlisting}[numbers=none]
+==== Program slice ====
+POI: 1 result: [1]
+POI: 2 result: [2]
+POI: 3 result: [3]
+POI: 4 result: [4]
+POI: 5 result: [5, 2]
+POI: 6 result: [6, 2]
+POI: 7 result: [7, 4, 5, 6, 2]
+\end{lstlisting}
+\caption{Output from analysis on code from figure \ref{code:RD_test_example}}
+\label{code:RD_test_example_output}
+\end{figure}
+The result shows that the program slice for label 7 is the following labels 7, 4, 5, 6 and 2.
+\\\\
+Next we consider the program below:
+
+\begin{figure}[H]
+  \begin{lstlisting}
+[i:=-1]@$^1$@
+while [i<2]@$^2$@ do
+  [a[i]:=i+1]@$^3$@
+  [i:=i+1]@$^4$@
+od
+[a[-1]:=1]@$^5$@
+if [a[i]=0]@$^6$@ then
+  [skip]@$^7$@
+else
+  [skip]@$^8$@
+fi
+while [a[i]<0]@$^9$@ do
+  [i:=i+a[3]]@$^10$@
+od
+ \end{lstlisting}
+ \caption{Juicy array example}
+\label{code:juicy_array_example}
+\end{figure}
+
+Where \texttt{a} is defined as an array with two elements and \texttt{i} is in integer variable. The thing -- or rather things -- that make this program extra interesting is that is contains loads of errors. Jumping the gun, we can observe the output (see figure \ref{code:juicy_array_example_output}) our tool given this program as input.
+\begin{figure}[H]
+  \begin{lstlisting}[numbers=none]
+==== Buffer Underflow =====
+Potential underflow detected at label: 3
+Potential underflow detected at label: 5
+Potential underflow detected at label: 6
+Potential underflow detected at label: 9
+==== Interval =====
+Range check failed at: 3
+Range check failed at: 5
+Range check failed at: 6
+Range check failed at: 9
+Range check failed at: 10
+\end{lstlisting}
+\caption{Output from analysis on code from figure \ref{code:juicy_array_example}}
+\label{code:juicy_array_example_output}
+\end{figure}
+We correctly detect the potential underflows on the assignments at label 3, 5, 6 and 9, which we can verify is correct by manually inspecting the code. What is more interesting however, is the fact that we detect the same labels with the interval analysis -- plus a fifth one; the one with the overflow.
+\\\\
+The attached folder with programs contains more programs that can be tested.

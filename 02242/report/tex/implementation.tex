@@ -1,0 +1,48 @@
+{\setlength{\chapterfontsize}{24pt}
+\chapter{General about implementation}
+}
+This chapter will first present the implementation of the parser for the \texttt{While} language. Then the implementations of the analysis' described in the previous section will be discussed.
+\\\\
+The Java language has been chosen as the implementation language.
+\\\\
+For the implementation we have chosen to map the label $\ell$ to a Node object. The label is still present within the node and is used for representation but also contains additional information, such as the which statement it maps to.
+
+\section{Parsing the program}
+Before any analysis can take place it necessary that the program is parsed. This is done by having a parser. ANTLR is used as the framework for constructing a lexer and a parser that can take a program written in the extended \texttt{While} language and construct an abstract syntax tree (AST) using the data structures described in section~\ref{section:Abstractsyntaxtreedatastructure}. 
+\begin{itemize}
+	\item \textbf{The Lexer} - We've implemented the lexer as a grammar file for ANTLR, supplying us with a basic tokenizer that is able to attach extra information to the streamed tokens. The grammar file is located in the appended code for those interested.
+	\item \textbf{The parser} - The parser is created by extending the grammar file hereby enabling it to expand the grammar to a generated parser. The parser harvests information from the lexer in order to provide an AST containing the information we need for out analysis` later on.
+\end{itemize}
+
+
+\section{Generalizing the analysis}
+To abstract away the analysis from the general parser tool, we've created an interface that implemented by our abstract Statement class.
+\begin{figure}
+\centering
+\begin{tikzpicture} 
+\umlclass[type=interface]{Analyzable}{}{ 
+  + \umlvirt {labels () : NodeSet} \\
+  + \umlvirt {initial () : Node} \\
+  + \umlvirt {finalNodes () : NodeSet} \\
+  + \umlvirt {flow () : FlowSet } \\
+  + \umlvirt{transferfunction(Analysis[$\ell$]): Boolean} \\
+%  + \textbf{\umlvirt{hasPotentialUnderFlow(Analysis[$\ell$]): Boolean}} \\
+} 
+\end{tikzpicture}
+\caption{The Analyzable interface}
+\label{fig:analysable_basic_definition}.
+\end{figure}The interface basically maps the \textit{label(S)}, \textit{init(S)}, \textit{final(S)} and \textit{flow(S)} functions from table~\ref{table:flow_graph_functions} to abstract statement, so we can use it later on to harvest flows and labels via recursion. This is done using the interface \texttt{Analyzable} as defined in figure~\ref{fig:analysable_basic_definition}.
+Specific objects has been created to hold all the definitions and statements. The class \texttt{StatementList} holds all the statements in the program. By simple asking for the \texttt{flow} of the \texttt{statementSet} the complete flow graph will be returned as a \texttt{FlowSet}.
+\\\\
+In order to perform the analysis an abstract interface \texttt{Lattice} has been created. This defines the basic elements for performing an analysis such as $\iota$ and $\bot$. For each of the tree analysis' a class that implements this interface has been created.
+\begin{itemize}
+	\item \texttt{RDLattice} - Reaching definitions analysis.
+	\item \texttt{SignsLattice} - Detection of signs analysis.
+	\item \texttt{IntervalLattice} - Interval analysis.
+\end{itemize}
+If a new similar analysis needed to be implemented I would be easy to add a new class implementing this interface.
+
+
+\subsection{Calculating a solution}
+In order to solve the equations provided by the analysis' the general worklist algorithm for computing the MFP solution has been implemented. The algorithm is placed as the method \texttt{execute} in a \texttt{Program}. It takes a specific analysis as a parameter and returns a result of the analysis for each label in the program as a result, based on the class of the input. All the flows are added to the worklist.\\
+In running time of the algorithm could be optimized by sorting the flow according to reverse post order. The transfer functions are called on the nodes during execution of the algorithm in order to calculate the result of the analysis. As an addition compared to how we defined the analysis, also the label of the node that the flows goes to is send when using the transfer function. This is done in order to have two different transfer functions for \texttt{if} and \texttt{while} statements. An \texttt{if} statement can then check if the flow is going to the true or the false branch and then use determine the new state by evaluating the condition. This makes a more precise solution.

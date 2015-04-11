@@ -1,0 +1,331 @@
+{\setlength{\chapterfontsize}{24pt}
+\chapter{Buffer Overflow Interval Analysis}
+}
+Interval analysis establishes intervals. In the sign detection analysis from chapter~\ref{sec:exercise3} a solution to the buffer overflow problem by only considering the lower bound was provided. Using interval analysis it is possible to consider the upper bound as well by keeping intervals for each variable as determine if the max of the interval is potentially larger than the bounds.
+
+\section{Monotone framework}
+The analysis is based on a monotone framework, which has the form:
+\begin{equation}
+  \left(L, \mathcal{F}, F, E, \iota, \mathrm{f}.  \right)
+  \label{eq:monotone_framework}
+\end{equation}
+\\\\
+Table~\ref{table:latticedefinition} define our lattice for this analysis. In figure~\ref{fig:interval_analysis_complete_lattice} the lattice for the analysis is shown. This is a complete lattice, as every subset in the partial ordered set have a least upper bound and a greatest lower bound.\\
+It also holds the Ascending Chain Property, because the lattice has a finite height, and will thus, eventually stabilize.
+\begin{table}[H]
+\begin{tabular}{| l | l |}
+  \hline
+  Instance & $(L,\sqsubseteq,\bigsqcup, \bigsqcap, \top, \bot )$ \\
+  \hline
+  \hline
+  Lattice  & (Interval, $\sqsubseteq$) \\
+  \hline
+  Interval & $\{\bot\} \bigcup \{[z_1, z_2] | z_1 < z_2, z_1, z_2, \in Z' \bigcup \{- \infty, \infty \} \} $ \\
+           & where $Z' = \{ z | \min \leq z \leq \max \}$ and $ - \infty \leq \infty $, and $ \min, \max \in Z$ \\
+           \hline
+   $\sqsubseteq$-Ordering &  $\subseteq$ (subset ordering).\\
+                          & Interval$_1 \sqsubseteq $ Interval$_2 $ if, and only if $\beta($Interval$_1) \subseteq \beta($Interval$_2)$, where \\
+                          & $\beta(\bot) = \emptyset$ \\
+                          & $\beta([z_1, z_2]) = \{ z \in Z | z_1 \leq z \leq z_2\} $ if $z_1 \in Z' \bigcup \{  -\infty\} $ and $ z_2 \in Z' \bigcup \{\infty\}$ \\
+                          & $\beta(\{-\infty, -\infty\}) = \{z | z < \min\}$ \\
+                          & $\beta(\{\infty, \infty\}) = \{z | z > \max\}$ \\
+   \hline
+   Least upper bound      & $\bigsqcup Y = \bigcup Y$\\
+   \hline
+   Greatest lower bound   & $\bigsqcap Y = \bigcap Y$\\
+   \hline
+   $\bot$                 & Bottom, least element : $\emptyset$\\
+   \hline
+   $\top$                 & Top, greatest element : $[-\infty, \infty]$\\
+\hline   
+\end{tabular}
+  \centering
+  \caption{Lattice definition}
+  \label{table:latticedefinition}
+\end{table}
+\noindent For this analysis we define the flow as:
+
+\begin{description}
+  \item[Flow $F$:] flow ($S_*$) (forward analysis)
+  \item[Extremal label $E$:] \{init($S_*$)\}
+\end{description}
+
+\noindent The analysis is defined as:
+\begin{table}[H]
+\begin{tabular}{| l | l |}
+  \hline
+  Analysis$_\circ(\ell)$ & $ \bigsqcup \{$ Analysis$_\bullet (\ell') | (\ell', \ell) \in F \} \bigcup \iota_E^{\ell} $ \\
+                         & where $\iota_E^{\ell} = \begin{cases} \iota & \text{if } \ell \in E \\ 
+                                                                 \bot  & \text{if } \ell \notin E
+                                                   \end{cases}$\\
+  \hline
+  Analysis$_\bullet(\ell)$ & f$_\ell$(Analysis$_\circ(\ell)$)\\
+  \hline
+\end{tabular}
+\centering
+\caption{Analysis definitions}
+\end{table}
+
+ \begin{figure}
+ \centering
+ \begin{tikzpicture}
+   \tikzstyle{line} = [draw, -latex'] 
+   \node (top) at (6,8)  {$[-\infty,\infty]$};
+   \node (minusinfmax) at (3,6)  {$[-\infty,max]$};
+   \node (mininf) at (9,6)  {$[min,\infty]$};
+
+   \node (bot) at (6,0)  {$\bot$};
+   \node (minusinfminusinf) at (0,2)  {$[-\infty,-\infty]$};
+   \node (minmin) at (2,2)  {$[min,min]$};
+   \node (minusoneminusone) at (4,2)  {$[-1,-1]$};
+   \node (zerozero) at (6,2)  {$[0,0]$};
+   \node (oneone) at (8,2)  {$[1,1]$};
+   \node (maxmax) at (10,2)  {$[max,max]$};
+   \node (infinf) at (12,2)  {$[\infty,\infty]$};
+   
+   \node (minusinfmin) at (1,3)  {$[-\infty,min]$};
+   \node (minusonezero) at (5,3)  {$[-1,0]$};
+   \node (zeroone) at (7,3)  {$[0,1]$};
+   \node (maxinf) at (11,3)  {$[max,\infty]$};
+   
+   \node (minustwozero) at (4,4)  {$[-2,0]$};
+   \node (minusoneone) at (6,4)  {$[-1,1]$};
+   \node (zerotwo) at (8,4)  {$[0,2]$};
+ 
+   
+   \path [-] (bot) edge (minusinfminusinf);
+   \path [-] (bot) edge (minmin);
+   \path [-] (bot) edge (minusoneminusone);
+   \path [-] (bot) edge (zerozero);
+   \path [-] (bot) edge (oneone);
+   \path [-] (bot) edge (maxmax);
+   \path [-] (bot) edge (infinf);
+   \path [dotted] (minmin) edge (minusoneminusone);
+   \path [dotted] (oneone) edge (maxmax);
+   
+   \path [-] (minusinfminusinf) edge (minusinfmin);
+   \path [-] (minmin) edge (minusinfmin);
+ \path [-] (minusoneminusone) edge (minusonezero);
+ \path [-] (zerozero) edge (minusonezero);
+ \path [-] (zerozero) edge (zeroone);
+ \path [-] (oneone) edge (zeroone);
+   \path [-] (maxmax) edge (maxinf);
+   \path [-] (infinf) edge (maxinf);
+   \path [dotted] (maxinf) edge (zeroone);
+   \path [dotted] (minusinfmin) edge (minusonezero);
+   
+   \path [-] (minusonezero) edge (minustwozero);
+   \path [-] (minusonezero) edge (minusoneone);
+   \path [-] (zeroone) edge (minusoneone);
+   \path [-] (zeroone) edge (zerotwo);
+   
+   \path [-] (minustwozero) edge (3,5);
+   \path [-] (minustwozero) edge (5,5);
+   \path [-] (minusoneone) edge (5,5);
+   \path [-] (minusoneone) edge (7,5);
+   \path [-] (zerotwo) edge (7,5);
+   \path [-] (zerotwo) edge (9,5);
+   
+   \path [dotted] (minusinfmin) edge (minusinfmax);
+   \path [dotted] (maxinf) edge (mininf);
+   
+   \path [-] (minusinfmax) edge (top);
+   \path [-] (mininf) edge (top);
+   
+   
+ \end{tikzpicture}
+  \caption{Complete lattice of interval analysis instance}
+ 
+  \label{fig:interval_analysis_complete_lattice}
+ \end{figure}
+
+Table~\ref{table:interval_analysis_functions} shows our transfer function for the extended \texttt{WHILE} language.
+\begin{table}[h]
+\begin{tabular}{| l | l |}
+  \hline
+  Statement & Function \\
+  \hline
+  \hline
+  [x := a]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[x \mapsto \mathcal{A}_I[\![a]\!] \widehat{\sigma} ]$ \\
+  \hline
+ [skip]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
+  \hline
+ [b]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
+  \hline
+  [A[a$_1$] := a$_2$]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}[A\mapsto \widehat{\sigma}(A)\cup \mathcal{A}_I[\![a_2]\!] \widehat{\sigma}]$\\
+  \hline
+  [read x]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = [x \mapsto \top]$ \\
+  \hline
+  [read A[a]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) =  \widehat{\sigma}[A\mapsto \widehat{\sigma}(A)\cup \top]$\\
+  \hline
+  [write x]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
+  \hline
+  [write A[n]]$^\ell$ & f$_\ell^I (\widehat{\sigma}) = \widehat{\sigma}$\\
+  \hline
+\end{tabular}
+\centering
+\caption{Transfer functions for sign detection}
+\label{table:interval_analysis_functions}
+\end{table}
+
+
+\subsection{Evaluate arithmetic expressions}
+In order to determine the interval of an expression we need to define the semantics of expressions in the \texttt{WHILE} language for the interval analysis.
+\begin{equation}
+A_I : AExp \rightarrow (\widehat{\text{State}_{\text{I}}} \rightarrow \textbf{Interval})
+\end{equation}
+Where  \textbf{Interval}$=\{\bot\}\cup\{[z_1,z_2]|z_1\leq z_2,z_1,z_2\in Z'\cup\{-\infty,\infty\}\}$
+\\\\
+Further we define the following functions:\\
+$A_I[\![x]\!]\widehat{\sigma} = \widehat{\sigma}(x)$ \\
+$A_I[\![n]\!]\widehat{\sigma} = 
+     \begin{cases} 
+        [n;n] & \text{if } \min \leq n \leq \max \\
+        [-\infty;-\infty] & \text{if } n < \min\\
+        [\infty;\infty] & \text{if } n > \max\\
+     \end{cases}$\\
+$A_I[\![a_1 op_a a_2 ]\!] = A_I[\![a_1]\!] \widehat{\text{op}_a} A_I[\![a_1]\!]\sigma $\\\\
+where $\widehat{\text{op}_a}$ : interval $\times$ interval $\rightarrow$ interval is an abstract operator on intervals and $\widehat{\text{ op}_A}$ is a specific arithmetic operator from the set op$_a \{+,-,*,/\}$.
+The definitions for these operators at listen below.
+
+\subsection{Addition on intervals}
+$[Z_{11},Z_{12}] + [Z_{21},Z_{22}] = [Z_{1},Z_{2}] =
+     \begin{cases} 
+        Z_{1i} + Z_{2i} & \text{if } \min \leq Z_{1i} + Z_{2i} \leq \max \\
+        -\infty         & \text{if } Z_{1i} + Z_{2i} < \min \\
+        \infty          & \text{if } Z_{1i} + Z_{2i} > \max\\
+     \end{cases}
+$
+
+\subsection{Subtraction on intervals}
+$[Z_{11},Z_{12}] - [Z_{21},Z_{22}] = [Z_{1},Z_{2}] =
+     \begin{cases} 
+        Z_{1i} - Z_{2i} & \text{if } \min \leq Z_{1i} - Z_{2i} \leq \max \\
+        -\infty         & \text{if } Z_{1i} - Z_{2i} < \min \text{, or } Z_12 = -\infty  \text{or } Z_21 = -\infty\\
+        \infty          & \text{if } Z_{1i} - Z_{2i} > \max \text{, or } Z_12 = \infty  \text{or } Z_21 = \infty\\
+     \end{cases}
+$
+
+\subsection{Multiplication on intervals}
+First, we define:\\
+$
+a = \min(z_{11} \cdot z_{21}, z_{11} \cdot z_{22}, z_{12} \cdot z_{21}, z_{12} \cdot z_{22})\\
+b = \max(z_{11} \cdot z_{21}, z_{11} \cdot z_{22}, z_{12} \cdot z_{21}, z_{12} \cdot z_{22})\\
+$\\\\
+$z_1 =
+     \begin{cases} 
+        a       & \text{if } \min \leq a \leq \max \\
+        -\infty & \text{if } a < \min \text{, or } \exists (i,j) : {Z_{ij} = -\infty} \\
+        \infty & \text{if } a > \max \text{, or } \exists (i,j) : {Z_{ij} = \infty} \\
+     \end{cases}\\
+z_2 =
+     \begin{cases} 
+        b       & \text{if } \min \leq b \leq \max \\
+        -\infty & \text{if } b < \min \text{, or } \exists (i,j) : {Z_{ij} = -\infty} \\
+        \infty & \text{if } b > \max \text{, or } \exists (i,j) : {Z_{ij} = \infty} \\
+     \end{cases}
+$
+\subsection{Division on intervals}
+First, we define:\\
+$
+[z_{11}, z_{12}] / [z_{21}, z_{22}] = [z_{1}, z_{2}]\
+[z_{1}, z_{2}] = \top \text{ when } 0 \text{not} \in [z_{21}, z_{22}]\\
+a = \min(z_{11} / z_{21}, z_{11} / z_{22}, z_{12} / z_{21}, z_{12} / z_{22})\\
+b = \max(z_{11} / z_{21}, z_{11} / z_{22}, z_{12} / z_{21}, z_{12} / z_{22})\\
+$\\\\
+$Z_1 =
+     \begin{cases} 
+        a       & \text{if } \min \leq a \leq \max \\
+        -\infty & \text{if } a < \min \text{, or } \exists (i,j) : {Z_{ij} = -\infty} \\
+        \infty & \text{if } a > \max \text{, or } \exists (i,j) : {Z_{ij} = \infty} \\
+     \end{cases}\\
+Z_2 =
+     \begin{cases} 
+        b       & \text{if } \min \leq b \leq \max \\
+        -\infty & \text{if } b < \min \text{, or } \exists (i,j) : {Z_{ij} = -\infty} \\
+        \infty & \text{if } b > \max \text{, or } \exists (i,j) : {Z_{ij} = \infty} \\
+     \end{cases}
+$\\
+
+\begin{figure}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.0cm,
+                    semithick]
+  \tikzstyle{every state}=[fill=none,draw=black,text=black]
+
+  \node[state] (IR)                     {In range};
+  \node[state] (MM) [right of=IR,xshift=1.0cm]       {Min/Max};
+  \node[state] (II) [below of=IR,xshift=1.5cm] {$-\infty$/$\infty$};
+
+  \path (IR) edge [bend left] node {} (MM)
+             edge  node {} (II)
+        (MM) edge [bend left] node {} (IR)
+             edge  node {} (II);
+\end{tikzpicture}
+\centering
+\caption{Interval states}
+\label{figure:interval_states}
+\end{figure}
+
+A property if the interval is that once it has exceeded the extremal values of it's bounds, and gone to $-\infty$ or $\infty$, there is not going back, as this could result in false positives. The states and transitions of interval states is illustrated in figure \ref{figure:interval_states}.
+
+\section{Algorithm for calculating buffer overflow}
+The result of an interval analysis can be used to calculate whenever a buffer overflow is present. Algorithm~\ref{algorithm:bufferoverflow2} returns true if a buffer overflow is present for a specific label. It is assumed that the provided label contains an array operation.
+\begin{algorithm}
+ \begin{algorithmic}[1]
+ \Procedure{Buffer overflow}{$l$}
+\State A:=$l.get\_array()$
+\State a:=$A.get\_index\_expression()$
+\State $index\_interval:=A_I[a]$
+\State $array\_bounds:=[0,A.get\_size()-1]$
+\If {$index\_interval.is\_within(array\_bounds)$}
+\State \textbf{return} false
+\Else
+\State \textbf{return} true
+\EndIf 
+ \EndProcedure
+ \end{algorithmic}
+ \caption{Calculate buffer overflow}
+ \label{algorithm:bufferoverflow2}
+\end{algorithm}
+
+\section{Example solution}
+The above analysis can be used to check for buffer overflows in the program from figure~\ref{code:array_example}. The equations is shown in figure~\ref{table:interval_equations}. The solution to these constraints is shown in table~\ref{tabel:interval_example_equations_solution}. It can be seen that there might be an underflow at label 5.
+\begin{table}[h]
+\begin{tabular}{| l | l |}
+\hline
+A$_\circ (1) = \iota \{\text{init}(S_*) \} $ & A$_\bullet(1) = \text{f}_{\text{int A[2]}} (\text{A}_\circ (1))$ \\
+\hline
+A$_\circ (2) =$A$_\bullet(1) $ & A$_\bullet(2) = \text{f}_{\text{int i}} (\text{A}_\circ (2))$ \\
+\hline
+A$_\circ (3) = $A$_\bullet(2)$ & A$_\bullet(3) = \text{f}_{\text{i := -1}} (\text{A}_\circ (3))$  \\
+\hline
+A$_\circ (4) = $A$_\bullet(3) \bigcup $A$_\bullet(6) $ & A$_\bullet(4) = \text{f}_{\text{i < 3}} (\text{A}_\circ (4))$ \\
+\hline
+A$_\circ (5) = $A$_\bullet(4)$ & A$_\bullet(5) = \text{f}_{\text{A[i] := i + 1}} (\text{A}_\circ (5))$ \\
+\hline
+A$_\circ (6) = $A$_\bullet(5)$ & A$_\bullet(6) = \text{f}_{\text{i := i + 1}} (\text{A}_\circ (6))$ \\
+
+\hline
+\end{tabular}
+\centering
+\caption{Equations for the program from figure~\ref{code:array_example}}
+\label{table:interval_equations}
+\end{table}
+
+\begin{table}
+\begin{tabular}{| r | c | c | c |}
+\hline
+A$_\bullet (\cdot) $ & A   & i \\
+\hline
+1         & $[0,2]$    & $\bot$ \\
+2         & $[0,2]$ & $[0,0]$ \\
+3         & $[0,2]$ & $[-1,0]$ \\
+4         & $[-1,2]$ & $[-1,1]$ \\
+5         & $[-1,2]$ & $[-1,1]$ \\
+6         & $[-1,2]$ & $[-1,1]$ \\
+\hline
+\end{tabular}
+\centering
+\caption{Solution to equations}
+\label{tabel:interval_example_equations_solution}
+\end{table}

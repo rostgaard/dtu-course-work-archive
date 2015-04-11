@@ -1,0 +1,9 @@
+program
+	int A[2];
+	int i;
+	i:= -1;
+	while i<0 do
+		A[i] := i+1; (* Array out of lower bounds *)
+		i:= i+1;
+	od
+end

@@ -1,0 +1,100 @@
+\documentclass[11pt,a4paper]{report}
+\newcommand{\confdir}{../conf/} % Set the folder which contains preamble.tex, titlepage.tex and the general img/ folder
+\newcommand{\imgdir}{../img/} % Set the folder which contains the specific images for the report
+\newcommand{\texdir}{../tex/} % Set the folder which contains the content (.tex files)
+\input{\confdir preamble}
+\usepackage{listings}
+\usepackage[normalem]{ulem}
+\usepackage[scaled]{beramono}
+\usepackage{tikz}
+\usepackage{tikz-uml}
+\usetikzlibrary{shapes,arrows, automata}
+\usepackage{libertine}
+\usepackage[T1]{fontenc}
+\usepackage{color}
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0,0}
+\usepackage{amsmath}
+\usepackage{MnSymbol}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\definecolor{mygray}{rgb}{0.2,0.2,0.2}
+\usepackage[toc,page]{appendix}
+
+\lstset{
+  frame=single,language=bash,
+  morekeywords={od},
+   basicstyle=\footnotesize,
+  escapechar=\@,
+  basicstyle=\footnotesize, frame=tb,
+  numbers=left,
+  stepnumber=2,
+  numbersep=5pt, 
+  numberstyle=\tiny\color{mygray},
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth
+}
+% Define block styles
+\tikzstyle{block} = [rectangle, draw, fill=white!20, 
+    text width=3.2em, text centered, rounded corners, minimum height=3em]
+\tikzstyle{line} = [draw, -latex']
+
+%%%%%%%%%%%
+%% SETUP %%
+%%%%%%%%%%%
+
+%% Set the course number and course name
+% Usage: \setcourse{<course no>}{<course name>}
+	\setcourse{02242}{Program Analysis}
+
+%% Set the title of the report
+% Usage: \settitle{<title>}
+	\settitle{Exam Project}
+
+%% Set the subtitle of the report
+% Usage: \setsubtitle{<subtitle>}
+	\setsubtitle{Program analysis tool}
+
+%% Set the date the report is handed in
+% Usage: \setdate{<hand-in date>}
+	\setdate{December 2nd, 2013}
+
+%% Add the authors of the report
+% Usage: \addauthor{<study number>}{<first name(s)>}{<last name>}
+	\addauthor{s093477}{Ibrahim}{Nemli}
+	\addauthor{s084283}{Kim Rostgaard}{Christensen}
+	\addauthor{s093263}{Peter Gammelgaard}{Poulsen}
+
+%%%% END OF SETUP
+
+
+\begin{document}
+
+%% Insert titlepage
+\inserttitlepage
+
+%% Insert list of todos
+% \listoftodos
+
+%% Insert table-of-contents
+\inserttoc
+
+%% Input files for the report
+\import{\texdir}{introduction}
+\import{\texdir}{exercise1}
+\import{\texdir}{exercise2}
+\import{\texdir}{exercise3}
+\import{\texdir}{exercise4}
+\import{\texdir}{implementation}
+\import{\texdir}{improvements}
+\import{\texdir}{test}
+\import{\texdir}{conclusion}
+
+\import{\texdir}{appendices}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\nocite{*}
+
+\end{document}

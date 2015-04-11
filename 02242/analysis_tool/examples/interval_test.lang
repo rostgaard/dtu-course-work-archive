@@ -1,0 +1,26 @@
+program
+int x;
+int z;
+int y;
+x:= 0;
+x:= 3;
+if z=x then
+  z:=2;
+else
+  z:= -x;
+fi
+y:= x;
+x:=y+z;
+read z;
+if x=y then
+  skip;
+  z := z - 1;
+  z := z + 2;
+  z := z - 3; 
+else
+  skip;
+  z := z - 1; 
+  z := z + 2; 
+fi
+skip;
+end

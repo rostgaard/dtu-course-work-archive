@@ -1,0 +1,41 @@
+.DS_Store
+*.aux
+*.glo
+*.idx
+*.log
+*.toc
+*.ist
+*.acn
+*.acr
+*.alg
+*.bbl
+*.blg
+*.dvi
+*.glg
+*.gls
+*.ilg
+*.ind
+*.lof
+*.lot
+*.maf
+*.mtc
+*.mtc1
+*.out
+*.synctex.gz
+.idea/
+# report/Main/final.pdf
+report/report.pdf
+
+#java specific
+*.class
+
+#netbeans ignore personal stuff 
+nbproject/private/
+
+
+## generic files to ignore
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out

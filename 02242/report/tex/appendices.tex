@@ -1,0 +1,44 @@
+\begin{appendices}
+\chapter{How to run the application?}
+Open the command line from the application folder and type in:
+\begin{description}
+	\item java -jar AnalysisTool.jar $<programfile>$ 
+\end{description}
+
+Replace $"<programfile>"$ with the name of your while-language program file. And optionally append ''-v`` to get extra output from the program.
+\\\\
+\textbf{Example:}\\
+java -jar AnalysisTool.jar sample.lang
+\\\\
+The output to the console will be formatted as following:
+\\\\
+\begin{figure}[H]
+\begin{lstlisting}
+==== Program =====
+(While-language code)
+
+==== End program =====
+==== Program slice ====
+(Result of program slice)
+==== Buffer Underflow =====
+(Result of buffer underflow)
+==== Interval =====
+(Result of buffer overflow)
+ \end{lstlisting}
+ \caption{Example program for demonstrating buffer overflow using sign detection}
+ \label{code:array_example}
+\end{figure}
+\noindent The first part will print the input source file with labels.\\
+The second part will print the result of program slicing together with point of interest (POI)\\
+The third part print results for found buffer overflows and finally the last part will print the results for buffer overflow.
+
+\chapter{Who did what?}
+This project has been created in a well functioning group where every member has been willing and able to contribute appropriately in all areas. The content of this chapter will not represent the actual work distribution as almost every section or file has been worked on by more than one person.
+\\\\
+\begin{itemize}
+	\item \textbf{Ibrahim Nemli (s093477)} - Introduction, The WHILE language, Flow graph for program, Equations, Monotome framework(Sign detection), Example solution, Generalizing the analysis, Overflow detection optimizations, Overflow detection optimizations.
+	\item \textbf{Kim Rostgaard Christensen (s084283)} - Abstract syntax tree data structure, Reaching Definitions analysis, Buffer underflow calculation algorithm, Monotome framework(Interval analysis), Underflow detection, Trying it out.
+	\item \textbf{Peter Gammelgaard Poulsen (s093263)} - Flow graph data structure, Program graph data structure, Program slice calculation algorithm, Determine signs, Algorithm for calculating buffer overflow, Parsing the program, Functions for underflow detection.
+\end{itemize}
+
+\end{appendices}
