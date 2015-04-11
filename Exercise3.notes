@@ -1,0 +1,75 @@
+# Notes for exercise 3 
+Mostly just expressions that go directly into Wolfram Alpha
+
+
+The first proposition results in the following expression:
+
+Iff a is a knight, and tells the truth, then all of the inhabitants are knaves. So
+
+  a => !a && !b && !c
+?!a => !a && ((b && c) || (!b and c) || (b and !c))
+
+Second statement:
+
+b => (!a && b && !c);
+
+!b => (a && !b && c) || (!a && !b && c)
+
+Since these are predicates, we can and them and use the iff expression on them
+
+a => !a && !b && !c <=> b => (a && !b && !c) || (!a && b && !c) || (!a && b && !c)
+
+
+
+!a || (!a && !b && !c)
+
+
+c <=> !(a & b)
+
+(c => !(a & b)) &  (!(a & b) => c)
+
+(!c | !(a & b)) & ((a & b) | c)
+
+(A IMPLIES ((NOT A) AND (NOT B) AND (NOT C))) AND 
+(((NOT A) AND (NOT B) AND (NOT C)) IMPLIES A)
+
+Minimal: NOT A AND (B OR C)
+
+----
+B IMPLIES (B AND NOT A AND NOT C) 
+NOT B IMPLIES  ((NOT B AND A AND C) OR (NOT B AND NOT A AND NOT C))
+min: (A AND NOT B AND C) OR (NOT A AND NOT C)
+
+B IMPLIES ((A AND NOT B AND C) OR (NOT A AND NOT C))
+min: (NOT A AND NOT C) OR NOT B
+
+((A AND NOT B AND C) OR (NOT A AND NOT C)) IMPLIES B
+min: (A AND NOT C) OR (NOT A AND C) OR B
+
+impl: ((A AND NOT C) OR (NOT A AND C) OR B) AND ((NOT A AND NOT C) OR NOT B)
+min: (A AND NOT N AND NOT C) OT (NOT A AND B AND NOT C) OR (NOT A AND NOT B AND C)
+
+
+WORKING SOLUTION:
+----------
+ a: (NOT A) AND 
+!a: ((NOT A AND NOT C) OR (NOT B)) AND 
+ b: (A OR B OR C) AND 
+!b: ((A AND C) OR (NOT A AND NOT C) OR B)
+
+For wolfram - WORKING SOLUTION
+(NOT A) AND ((NOT A AND NOT C) OR (NOT B)) AND (A OR B OR C) AND ((A AND C) OR (NOT A AND NOT C) OR B)
+---
+
+
+
+Minimal: ((NOT A) OR (NOT B) OR (NOT C)) AND ((NOT A AND NOT C) OR B)
+
+
+NOT A IMPLES ((NOT A) OR (NOT B) OR (NOT C)) AND (NOT A) OR (NOT B) OR (NOT C) IMPLIES NOT A
+
+
+
+
+TOTAL:
+(((NOT A) OR (NOT B) OR (NOT C)) AND ((NOT A AND NOT C) OR B)) AND (NOT A AND (B OR C))
