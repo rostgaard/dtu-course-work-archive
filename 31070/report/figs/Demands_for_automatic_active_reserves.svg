@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="616.98749"
+   height="245.3875"
+   id="svg2"
+   xml:space="preserve"><defs
+     id="defs6" /><g
+     transform="matrix(1.25,0,0,-1.25,-53.15,416.1875)"
+     id="g12"><path
+       d="m 221.1,273.06 102.05,0 0,51.024 -102.05,0 0,-51.024 z"
+       id="path14"
+       style="fill:#cdcdcd;fill-opacity:1;fill-rule:evenodd;stroke:none" /><path
+       d="m 221.1,273.06 0,51.03 102.05,0 0,-51.03 -102.05,0 z m 1.8,1.8 0,47.43 98.45,0 0,-47.43 -98.45,0 z"
+       id="path16"
+       style="fill:none;stroke:#cdcdcd;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><path
+       d="m 212.6,281.57 102.05,0 0,51.024 -102.05,0 0,-51.024 z"
+       id="path18"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" /><path
+       d="m 212.6,281.57 0,51.02 102.05,0 0,-51.02 -102.05,0 z m 1.8,1.8 0,47.42 98.45,0 0,-47.42 -98.45,0 z"
+       id="path20"
+       style="fill:none;stroke:#000000;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><text
+       transform="matrix(1,0,0,-1,226.27,314.28)"
+       id="text22"><tspan
+         x="0 4.8867121 7.5509281 12.000096 16.449265 20.898432 25.347601 29.796768 33.796871 37.796974 40.019543 44.01965 48.468815 52.917984 55.140553 57.804768 62.253937 64.031258 65.808578 70.257744 74.706909"
+         y="0"
+         id="tspan24"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">Frequency controlled </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,246.73,304.68)"
+       id="text26"><tspan
+         x="0 5.7774239 10.226592 14.226696 18.675863 21.34008 25.340183 29.789352"
+         y="0"
+         id="tspan28"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">Reserves</tspan></text>
+<path
+       d="m 365.67,230.55 68.031,0 0,34.016 -68.031,0 0,-34.016 z"
+       id="path30"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" /><path
+       d="m 365.67,230.55 68.031,0 0,34.016 -68.031,0 0,-34.016 z"
+       id="path32"
+       style="fill:none;stroke:#000000;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><text
+       transform="matrix(1,0,0,-1,378.34,254.75)"
+       id="text34"><tspan
+         x="0 5.7774239 7.5547438 11.554848 13.777416 18.226583 20.8908 25.339968 29.789137 34.238304 38.238407 42.687576"
+         y="0"
+         id="tspan36"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">Disturbance </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,384.35,245.15)"
+       id="text38"><tspan
+         x="0 2.664216 7.1133838 11.113488 15.562656 18.226871 22.226976 26.676144"
+         y="0"
+         id="tspan40"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">reserves</tspan></text>
+<path
+       d="m 263.62,281.57 0,-12.76 136.07,0 0,-4.25"
+       id="path42"
+       style="fill:none;stroke:#000000;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><path
+       d="m 110.55,230.55 68.031,0 0,34.016 -68.031,0 0,-34.016 z"
+       id="path44"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" /><path
+       d="m 110.55,230.55 68.031,0 0,34.016 -68.031,0 0,-34.016 z"
+       id="path46"
+       style="fill:none;stroke:#000000;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><text
+       transform="matrix(1,0,0,-1,113.89,254.75)"
+       id="text48"><tspan
+         x="0 5.7774239 10.226592 12.890808 19.55484 24.004007 25.781328 28.003897 32.453064 36.902233 41.351398 44.015617 48.464783 50.687351 52.464672 56.913841 61.363007"
+         y="0"
+         id="tspan50"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">Normal operation </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,129.23,245.15)"
+       id="text52"><tspan
+         x="0 2.664216 7.1133838 11.113488 15.562656 18.226871 22.226976 26.676144"
+         y="0"
+         id="tspan54"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">reserves</tspan></text>
+<path
+       d="m 263.62,281.57 0,-12.76 -119.05,0 0,-4.25"
+       id="path56"
+       style="fill:none;stroke:#000000;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><path
+       d="m 442.2,281.57 93.543,0 0,51.024 -93.543,0 0,-51.024 z"
+       id="path58"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" /><path
+       d="m 442.2,281.57 0,51.02 93.55,0 0,-51.02 -93.55,0 z m 1.8,1.8 0,47.42 89.95,0 0,-47.42 -89.95,0 z"
+       id="path60"
+       style="fill:none;stroke:#000000;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><text
+       transform="matrix(1,0,0,-1,452.51,319.08)"
+       id="text62"><tspan
+         x="0 5.3357759 9.7849436 13.785048 18.234217 20.456783 23.121 27.570168 31.570272 36.01944 38.683655 42.683762 47.132927 49.355495 53.355598 57.804768 62.253937 66.703102 68.480423 72.929588"
+         y="0"
+         id="tspan64"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">Each reserve should </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,457.17,309.48)"
+       id="text66"><tspan
+         x="0 4.4491682 8.8983364 12.89844 17.347609 19.570175 21.792744 26.241913 30.69108 32.913647 37.362816 41.811985 44.034554 45.811871 50.26104 54.710209 56.932777 61.381943 63.604511"
+         y="0"
+         id="tspan68"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">have the option of </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,455.85,299.88)"
+       id="text70"><tspan
+         x="0 4.4491682 8.8983364 13.347504 15.124824 19.573992 24.023161 26.245728 28.468296 32.917465 35.58168 39.581783 44.030952 48.480122 50.702686 52.480007 58.702679 64.480103 66.257423"
+         y="0"
+         id="tspan72"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">beeing forced ’ON’ </tspan></text>
+<path
+       d="m 314.65,307.08 127.55,0"
+       id="path74"
+       style="fill:none;stroke:#000000;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><path
+       d="m 42.52,137 85.039,0 0,68.032 -85.039,0 0,-68.032 z"
+       id="path76"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" /><path
+       d="m 42.52,137 85.039,0 0,68.032 -85.039,0 0,-68.032 z"
+       id="path78"
+       style="fill:none;stroke:#000000;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><text
+       transform="matrix(1,0,0,-1,46.794,183.02)"
+       id="text80"><tspan
+         x="0 5.3357759 9.7849436 14.234112 18.683281 20.4606 24.909767 27.132336 31.581505 36.03067 38.253239 42.253345 46.702511 53.366543 57.815712 59.593033 64.042198 66.264771 70.713936 72.491257 76.491364"
+         y="0"
+         id="tspan82"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">Should be completely </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,48.905,173.42)"
+       id="text84"><tspan
+         x="0 4.4491682 8.4492722 10.67184 12.44916 16.449265 20.898432 23.121 27.570168 32.019337 34.241905 38.691071 40.913639 43.136208 45.358776"
+         y="0"
+         id="tspan86"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">activated at f </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,96.486,173.42)"
+       id="text88"><tspan
+         x="0 4.671936"
+         y="0"
+         id="tspan90"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">= </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,103.38,173.42)"
+       id="text92"><tspan
+         x="0 4.4491682"
+         y="0"
+         id="tspan94"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">49</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,112.28,173.42)"
+       id="text96"><tspan
+         x="0"
+         y="0"
+         id="tspan98"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">.</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,114.5,173.42)"
+       id="text100"><tspan
+         x="0"
+         y="0"
+         id="tspan102"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">9</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,118.95,173.42)"
+       id="text104"><tspan
+         x="0"
+         y="0"
+         id="tspan106"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">/</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,70.143,163.82)"
+       id="text108"><tspan
+         x="0 4.4491682"
+         y="0"
+         id="tspan110"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">50</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,79.041,163.82)"
+       id="text112"><tspan
+         x="0"
+         y="0"
+         id="tspan114"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">.</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,81.264,163.82)"
+       id="text116"><tspan
+         x="0 4.4491682"
+         y="0"
+         id="tspan118"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">1 </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,87.936,163.82)"
+       id="text120"><tspan
+         x="0 5.7774239"
+         y="0"
+         id="tspan122"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">Hz</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,97.713,163.82)"
+       id="text124"><tspan
+         x="0"
+         y="0"
+         id="tspan126"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">.</tspan></text>
+<path
+       d="m 144.57,230.55 0,-17.01 -59.531,0 0,-8.51"
+       id="path128"
+       style="fill:none;stroke:#000000;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><path
+       d="m 161.57,137 93.543,0 0,68.032 -93.543,0 0,-68.032 z"
+       id="path130"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" /><path
+       d="m 161.57,137 93.543,0 0,68.032 -93.543,0 0,-68.032 z"
+       id="path132"
+       style="fill:none;stroke:#000000;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><text
+       transform="matrix(1,0,0,-1,164.32,187.82)"
+       id="text134"><tspan
+         x="0 2.222568 4.4451361 6.6677041 8.8902721 13.33944 17.788609 20.452824 24.901993 27.124559 28.90188 32.901985 35.124554 39.573719 41.796288 44.460503 48.909672 53.358841 55.136162 59.585327 61.807896 65.807999 70.257172 74.706337 79.155502 83.604675 88.053841"
+         y="0"
+         id="tspan136"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">If there is a rapid change </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,163.66,178.22)"
+       id="text138"><tspan
+         x="0 2.222568 6.6717358"
+         y="0"
+         id="tspan140"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">to </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,172.55,178.22)"
+       id="text142"><tspan
+         x="0 4.4491682"
+         y="0"
+         id="tspan144"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">49</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,181.45,178.22)"
+       id="text146"><tspan
+         x="0"
+         y="0"
+         id="tspan148"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">.</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,183.67,178.22)"
+       id="text150"><tspan
+         x="0"
+         y="0"
+         id="tspan152"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">9</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,188.12,178.22)"
+       id="text154"><tspan
+         x="0"
+         y="0"
+         id="tspan156"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">/</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,190.34,178.22)"
+       id="text158"><tspan
+         x="0 4.4491682"
+         y="0"
+         id="tspan160"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">50</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,199.24,178.22)"
+       id="text162"><tspan
+         x="0"
+         y="0"
+         id="tspan164"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">.</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,201.47,178.22)"
+       id="text166"><tspan
+         x="0 4.4491682"
+         y="0"
+         id="tspan168"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">1 </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,208.14,178.22)"
+       id="text170"><tspan
+         x="0 5.7774239"
+         y="0"
+         id="tspan172"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">Hz</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,217.91,178.22)"
+       id="text174"><tspan
+         x="0 2.222568"
+         y="0"
+         id="tspan176"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">, </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,222.36,178.22)"
+       id="text178"><tspan
+         x="0 2.664216 7.1133838 11.113488 15.562656 18.226871 22.226976 26.676144 30.676249"
+         y="0"
+         id="tspan180"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">reserves </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,168.54,168.62)"
+       id="text182"><tspan
+         x="0 4.000104 8.4492722 12.89844 17.347609 19.124928 23.574097 25.796663 30.245832 34.695 36.917568 39.581783 44.030952 48.480122 52.929287 57.378456 59.601025 64.050194 68.499359 70.721931 75.171097 79.620262"
+         y="0"
+         id="tspan184"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">should be reguated up </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,165.44,159.02)"
+       id="text186"><tspan
+         x="0 4.4491682 8.8983364 14.67576 19.124928 21.347496 27.12492 28.902241 31.124807 35.573975 37.351295 41.800465"
+         y="0"
+         id="tspan188"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">down within </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,209.46,159.02)"
+       id="text190"><tspan
+         x="0"
+         y="0"
+         id="tspan192"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">2</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,213.91,159.02)"
+       id="text194"><tspan
+         x="0"
+         y="0"
+         id="tspan196"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">-</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,216.57,159.02)"
+       id="text198"><tspan
+         x="0 4.4491682"
+         y="0"
+         id="tspan200"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">3 </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,223.24,159.02)"
+       id="text202"><tspan
+         x="0 6.664032 8.4413519 12.89052 17.339687 19.562256 24.011423"
+         y="0"
+         id="tspan204"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">minutes</tspan></text>
+<path
+       d="m 144.57,230.55 0,-17.01 63.78,0 0,-8.51"
+       id="path206"
+       style="fill:none;stroke:#000000;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><path
+       d="m 280.63,137 102.05,0 0,68.032 -102.05,0 0,-68.032 z"
+       id="path208"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" /><path
+       d="m 280.63,137 102.05,0 0,68.032 -102.05,0 0,-68.032 z"
+       id="path210"
+       style="fill:none;stroke:#000000;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><text
+       transform="matrix(1,0,0,-1,287.41,183.02)"
+       id="text212"><tspan
+         x="0 5.7774239 10.226592 16.004017 20.453184 23.117399 27.566568 31.566671 33.789242 36.453457 40.902622 45.351791 49.800961 51.578281 56.027447 58.250015 60.027336 64.476501 68.925674 71.148239 77.812271 82.261436 86.261543 88.484116"
+         y="0"
+         id="tspan214"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">Upwards regulation must </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,295.41,173.42)"
+       id="text216"><tspan
+         x="0 4.4491682 8.8983364 11.120904 13.343472 17.792641 19.56996 23.570065 28.019232 30.2418 32.906017 34.683334 38.683441 43.132607 45.355175 47.577744 52.026913 54.249481 58.698647 60.921215 65.370384 69.81955 72.483765"
+         y="0"
+         id="tspan218"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">not give rise to other </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,289.42,163.82)"
+       id="text220"><tspan
+         x="0 4.4491682 7.1133838 11.562552 16.011721 17.78904 22.238209 28.902241 32.902344 35.124912 36.902233 41.351398 43.573967 45.796535 50.245705 54.694874 56.917439 60.917545 64.917648 68.917755 71.14032 75.589485"
+         y="0"
+         id="tspan222"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">problems in the system</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,371.67,163.82)"
+       id="text224"><tspan
+         x="0"
+         y="0"
+         id="tspan226"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">.</tspan></text>
+<path
+       d="m 416.69,137 119.06,0 0,68.032 -119.06,0 0,-68.032 z"
+       id="path228"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" /><path
+       d="m 416.69,137 119.06,0 0,68.032 -119.06,0 0,-68.032 z"
+       id="path230"
+       style="fill:none;stroke:#000000;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><text
+       transform="matrix(1,0,0,-1,419.3,197.42)"
+       id="text232"><tspan
+         x="0 4.8867121 9.3358803 13.785048 16.007616 18.671831 23.121 27.121103 31.570272 34.234489 38.234592 42.683762 44.906326 48.906433 53.355598 57.804768 62.253937 64.031258 68.480423 70.702995 75.152161 79.601326 81.823898 86.273064 90.27317 92.495735 94.273056 98.273163 102.72233 104.94489 109.39407 113.84323"
+         y="0"
+         id="tspan234"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">The reserve should be activated </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,431.74,187.82)"
+       id="text236"><tspan
+         x="0 4.4491682 6.6717358"
+         y="0"
+         id="tspan238"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">at </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,440.64,187.82)"
+       id="text240"><tspan
+         x="0 4.4491682"
+         y="0"
+         id="tspan242"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">49</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,449.54,187.82)"
+       id="text244"><tspan
+         x="0"
+         y="0"
+         id="tspan246"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">.</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,451.76,187.82)"
+       id="text248"><tspan
+         x="0 4.4491682"
+         y="0"
+         id="tspan250"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">9 </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,458.43,187.82)"
+       id="text252"><tspan
+         x="0 5.7774239 9.7775278 12.000096 16.449265 20.898432 25.347601 27.570168 31.570272 36.01944 40.468609 44.917774 46.695095 51.144264 53.366833 57.816002 62.265167"
+         y="0"
+         id="tspan254"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">Hz and should be </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,421.75,178.22)"
+       id="text256"><tspan
+         x="0 4.000104 8.4492722 15.113304 19.562471 21.339792 25.78896 28.011528 32.460697 34.238014 38.238121 40.46069 44.909855 48.909962 51.132526 52.909847 56.90995 61.359119 63.581688 68.030853 70.253426"
+         y="0"
+         id="tspan258"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">completely active at </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,494.23,178.22)"
+       id="text260"><tspan
+         x="0 4.4491682"
+         y="0"
+         id="tspan262"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">49</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,503.13,178.22)"
+       id="text264"><tspan
+         x="0"
+         y="0"
+         id="tspan266"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">.</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,505.35,178.22)"
+       id="text268"><tspan
+         x="0 4.4491682"
+         y="0"
+         id="tspan270"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">5 </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,512.02,178.22)"
+       id="text272"><tspan
+         x="0 5.7774239"
+         y="0"
+         id="tspan274"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">Hz</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,521.8,178.22)"
+       id="text276"><tspan
+         x="0 2.222568"
+         y="0"
+         id="tspan278"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">. </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,526.24,178.22)"
+       id="text280"><tspan
+         x="0 2.222568 4.4451361"
+         y="0"
+         id="tspan282"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">It </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,430.64,168.62)"
+       id="text284"><tspan
+         x="0 6.664032 11.1132 15.113304 17.335873 19.558439 21.33576 25.784927 29.785032 32.449249 36.898415 41.347584 45.347687 49.796856 52.019424 56.468594 60.468697 62.691265 67.140434 71.5896 76.038765 80.487938 82.710503 87.159676 91.159775"
+         y="0"
+         id="tspan286"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">must increase as good as </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,423.3,159.02)"
+       id="text288"><tspan
+         x="0 1.77732 3.5546401 8.003808 12.452976 16.902143 19.56636 21.343679 25.343784 27.566353 29.343672 33.792839 36.015408 38.237976 42.687145 47.136311 49.358879 52.023094 56.472263 60.921432 65.370598 69.819771"
+         y="0"
+         id="tspan290"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">linearly in the range </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,495.34,159.02)"
+       id="text292"><tspan
+         x="0 4.4491682"
+         y="0"
+         id="tspan294"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">49</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,504.24,159.02)"
+       id="text296"><tspan
+         x="0"
+         y="0"
+         id="tspan298"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">.</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,506.46,159.02)"
+       id="text300"><tspan
+         x="0"
+         y="0"
+         id="tspan302"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">9</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,510.91,159.02)"
+       id="text304"><tspan
+         x="0"
+         y="0"
+         id="tspan306"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">-</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,513.57,159.02)"
+       id="text308"><tspan
+         x="0 4.4491682"
+         y="0"
+         id="tspan310"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">49</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,522.47,159.02)"
+       id="text312"><tspan
+         x="0"
+         y="0"
+         id="tspan314"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">.</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,524.69,159.02)"
+       id="text316"><tspan
+         x="0 4.4491682"
+         y="0"
+         id="tspan318"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">5 </tspan></text>
+<text
+       transform="matrix(1,0,0,-1,470.22,149.42)"
+       id="text320"><tspan
+         x="0 5.7774239"
+         y="0"
+         id="tspan322"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">Hz</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,480,149.42)"
+       id="text324"><tspan
+         x="0 2.222568"
+         y="0"
+         id="tspan326"
+         style="font-size:7.99991989px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">. </tspan></text>
+<path
+       d="m 399.69,230.55 0,-21.26 -68.04,0 0,-4.26"
+       id="path328"
+       style="fill:none;stroke:#000000;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><path
+       d="m 399.69,230.55 0,-21.26 76.53,0 0,-4.26"
+       id="path330"
+       style="fill:none;stroke:#000000;stroke-width:0.72000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" /><text
+       transform="matrix(1,0,0,-1,128.56,277.97)"
+       id="text332"><tspan
+         x="0 9.3340797 16.007977 19.342079 22.008167 28.682064"
+         y="0"
+         id="tspan334"
+         style="font-size:12.00024033px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">Outlet</tspan></text>
+<text
+       transform="matrix(1,0,0,-1,373.66,277.97)"
+       id="text336"><tspan
+         x="0 6.6738958 9.3399839 16.01388 22.687777 26.021879 29.355984 36.029881 42.703777 45.369865"
+         y="0"
+         id="tspan338"
+         style="font-size:12.00024033px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Arial;-inkscape-font-specification:Arial">Light bulb</tspan></text>
+</g></svg>
