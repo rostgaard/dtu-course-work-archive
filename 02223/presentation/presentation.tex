@@ -1,0 +1,239 @@
+\documentclass[presentation]{beamer}   % to compile the presentation
+% \documentclass[handout]{beamer}        % to compile 2x2 handouts
+\usepackage[ansinew]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,textcomp}
+\usepackage{breakurl}
+
+\usepackage{listings}
+\usetheme{dtu}
+
+\begin{document}
+
+% The DTU and MIC logos
+\pgfdeclareimage[height=2cm]{dtulogo}{dtu_logo}
+\pgfdeclareimage[width=0.8\framesep]{miclogo}{mic_logo}
+
+\author{Kim Rostgaard Christensen}
+\title{SPARK - Correctness by Construction}
+
+\date{Nov 30 2010}
+\institute[%
+  Dept. of Informatics and Mathematical Modelling
+  ]{%
+  DTU -- Technical University of Denmark \\
+}
+% \titlegraphic{\pgfuseimage{dtulogo}} % Graphics for title slide
+%\logo{\pgfuseimage{miclogo}} % The left logo
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Correctness by construction}
+\begin{frame}
+  \frametitle{Correctness by construction}
+  \framesubtitle{Putting engineering back into software engineering}
+  \begin{itemize}
+    \item CbyC challenges testing and debugging
+    \item Manifested by the SPARK toolkit
+    \item Proves the correctness of software
+    \item  - By subsetting the Ada programming language
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Subsetting the language}
+  \framesubtitle{Static programs for static analysis}
+  \begin{itemize}
+    \item No dynamic behaviour
+      \begin{itemize}
+        \item Only bounded types
+        \item No pointers
+        \item No aliasing
+        \item No tasking/threading (will be relaxed)
+      \end{itemize}
+    \item All sizes known at compile-time
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Is subsetting enough?}
+  \framesubtitle{Warning: trick question}
+      \begin{itemize}
+        \item Introduce a formalism
+        \item Elaborates requirements 
+        \item Design-by-contract
+      \end{itemize}
+\end{frame}
+
+\section{Design-by-contract}
+\begin{frame}
+  \frametitle{Design-by-contract?}
+  \framesubtitle{The fine print}
+  \begin{itemize}
+    \item Translate requirements to a formal language
+    \item Use this as the specification
+    \item Hold the implementation to this
+	\item Use automated tools
+      \begin{itemize}
+        \item Unambiguous
+        \item Not subject to human error
+        \item Human code review -> producing proof
+      \end{itemize}
+%    \item Upon validation failure, either
+%      \begin{itemize}
+%        \item The implementation is wrong (incomplete)
+%        \item The specification is wrong; redesign!
+%      \end{itemize}  
+  \end{itemize}
+\end{frame}
+
+\section{Example}
+\begin{frame}
+  \frametitle{Example contract}
+  \framesubtitle{How does it work}
+ 
+  \begin{block}{Quick question: What does this procedure do?}
+ \lstinputlisting[language=Ada]{ada_example.ada}
+ \end{block}
+\end{frame}
+\begin{frame}
+  \frametitle{Example contract}
+  \framesubtitle{How does it work}
+  \begin{block}{Is this implementation correct ?}
+ \lstinputlisting[language=Ada]{ada_example_impl.ada}
+ \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Example contract}
+  \framesubtitle{Elaboration}
+  \begin{block}{Annotated correctly}
+ \lstinputlisting[language=Ada]{spark_example.ada}
+ \end{block}
+
+\end{frame}
+
+\section{Proving correctness}
+\begin{frame}
+  \frametitle{Proving correctness by static analysis}
+  \framesubtitle{Quod erat demonstrandum}
+   \begin{itemize}
+        \item Uses pre- and postconditions
+        \item Data flow analysis
+        \begin{itemize}
+         \item Starts by the postconditions
+         \item  - and seeks to deduct the preconditions
+         \end{itemize}
+        \item Converts postconditions to conclusions
+        \item Constructs hypothesises by visiting all branches
+         \begin{itemize}
+         \item The rest is simple reduction
+         \item (don't worry, there is a tool)
+         \end{itemize}
+        \item Internally done by matrix calculations
+      \end{itemize}  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Outlook}
+  \framesubtitle{Development phases}
+ \begin{enumerate}
+   \item Convert informal requirements to specification
+   \item Use a lot of time on design
+   \item Validate specification
+   \item Break down implementation modules
+   \item Write one module at a time, proving it after
+   \item Test and debug
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Gains}
+  \framesubtitle{Warning: limited information}
+  Productivity is lines of code (loc) per day, and defects are measured per kloc.
+\begin{table}[h]
+\centering
+    \begin{tabular}{ | l | l | r | r | r |}
+    \hline
+    Project & Year & Size & Productivity & Defects \\ \hline 
+    \hline
+    CDIS      & 1992 & 197 kloc & 12.7 & 0.75 \\ \hline
+    SHOLIS    & 1997 &  27 kloc &  7.0 & 0.22 \\ \hline
+    MULTOS CA & 1999 & 100 kloc & 28.0 & 0.04 \\ \hline
+    A         & 2001 &  39 kloc & 11.0 & 0.05 \\ \hline
+    NSA       & 2003 &  10 kloc & 38.0 & 0 \\ \hline        
+    \end{tabular}
+\caption{Comparison of projects using SPARK}
+\label{table:spark_projects_comparison}
+\end{table}      
+\end{frame}
+
+\section{Gains}
+\begin{frame}
+  \frametitle{Gains}
+  \framesubtitle{The doubleplusgood}
+  \begin{itemize}
+        \item Formal and systematic approach to development
+        \item Produce low defect rate on software
+        \begin{itemize}
+          \item Increase reliability and availability
+        \end{itemize}
+        \item Proof == 100\% correctness (according to specification)
+        \item Forces you to spend time on design
+        \item Provokes a lot of reflection (provability)
+        \item Encourages modularity -> improves maintainability
+        \item Guarantees analysis done in P time
+      \end{itemize}       
+\end{frame}
+
+\section{Challenges}
+\begin{frame}
+  \frametitle{Challenges}
+  \framesubtitle{The doubleplusungood}
+  \begin{itemize}
+        \item Fairly uncharted waters - no wide adoption
+        \item Steep learning curve, not for the average programmer
+        \item Strong bounds on language features
+        \item Paradigm shift
+      \end{itemize}       
+\end{frame}
+
+\section{Final words}
+\begin{frame}
+  \frametitle{Real-time domain language}
+  \framesubtitle{Ada terminology}
+  \begin{itemize}
+     \item Run-time has built-in dispatcher
+     \item Ada task == Real-time task
+     \item Compiler supports locking policies
+   \end{itemize}       
+\end{frame}
+
+\begin{frame}
+  \frametitle{Real-time domain language}
+  \framesubtitle{Safety-critical}
+  \begin{itemize}
+     \item Uses profiles to assert conformance
+     \item RavenSPARK profile enables SPARK tasking
+     \item Schedulabiliy analysis is directly applicable
+     \item Check out the Assert project
+   \end{itemize}       
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Questions?}
+  \framesubtitle{}
+      
+\end{frame}
+
+
+\end{document} 

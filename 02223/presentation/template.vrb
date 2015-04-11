@@ -1,0 +1,9 @@
+\frametitle {Verbatim material}
+  If the slide contains verbatim material you must use the \texttt{fragile} option for the frame.
+
+  \begin{verbatim}
+  This is verbatim text
+  !"#%&/()=?
+  \end{verbatim}
+
+  The \texttt{listings} package can be used for more fancy verbatim text and pretty printing of source code.
