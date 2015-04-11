@@ -1,0 +1,19 @@
+During development of the circuit, we did out testing via a number of VHDL testbenches. These were used to assert that our 
+develeopment went in the right direction, and also to verify that the indivudial circuits worked as planned.
+
+\subsection{Testbenches}
+During development we used three major testbenches. One for the combinatorial circuit, one for the register, and one for the 
+two put together. 
+
+\subsubsection{Combinatorial circuit}
+To make sure the logic of the circuit was working correctly we made a testbench where we gave all possible inputs to the circuit,
+did a simulation and compared the outputs from modelsim to our truth table. This testbench can be found in the file ``Runner\_logic\_tb.vhd''.
+
+\subsubsection{Register}
+Testing the behavior of the register was a matter of setting a value to input, and wait for a rising edge clock. The input value 
+should then be updated. This was also done by visual inspection in modelsim. This testbench can be found in the file ``Runner\_Registry\_tb.vhd''. 
+(We apologize for misspelling register.)
+
+\subsubsection{Interaction between register and combinatorial circuit}
+The file ``Runner\_tb.vhd'' does simulation on the circuits put together, and their interaction with each other over time (clock cycles). 
+When running the testbench we observe both the state increment and the digit and top outputs change according to our truth table.

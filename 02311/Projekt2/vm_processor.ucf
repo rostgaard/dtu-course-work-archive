@@ -1,0 +1,63 @@
+#Constraints for the XUP FPGA and DIO4 boards used for project 2 of course 02311
+
+#######################################
+##	System clock available on the XUP board(100Mhz)
+#######################################
+NET "clk100" LOC = "AJ15";
+NET "clk100" IOSTANDARD = LVCMOS25;
+NET "clk100" TNM_NET = "clk100";
+TIMESPEC "TS_clk100" = PERIOD "clk100" 10.00 ns HIGH 50 %;
+
+#######################################
+##	Switches on DIO4
+#######################################
+NET "reset"	LOC = "N6";	#SW1
+#NET "SW<2>"	LOC = "L5"; #SW2
+#NET "SW<3>"	LOC = "M2"; #SW3
+#NET "SW<4>"	LOC = "P9"; #SW4
+#NET "SW<5>"	LOC = "M4"; #SW5
+#NET "SW<6>"	LOC = "N1"; #SW6
+NET "debug<0>"	LOC = "P8"; #SW7
+NET "debug<1>"	LOC = "N4"; #SW8
+
+
+#######################################
+#	Buttons on DIO4
+#######################################
+NET "BTN<1>"	LOC = "P3";
+NET "BTN<2>"	LOC = "P2";
+NET "BTN<3>"	LOC = "W3";
+NET "BTN<4>"	LOC = "V8";
+NET "BTN<5>"	LOC = "AA1";
+
+#######################################
+#	LEDS on DIO4
+#######################################
+NET "LED<1>"	LOC = "T8";
+NET "LED<2>"	LOC = "U5";
+NET "LED<3>"	LOC = "W2";
+NET "LED<4>"	LOC = "U9";
+NET "LED<5>"	LOC = "V4";
+NET "LED<6>"	LOC = "Y1";
+#NET "LED<7>"	LOC = "U8";
+#NET "LED<8>"	LOC = "V6";
+
+NET "LEDG"	LOC = "V7";
+
+#######################################
+#	7 Segment on DIO4
+#######################################
+NET "sseg<7>"	LOC = "N3"; # Dot
+NET "sseg<6>"	LOC = "N5";	# A
+NET "sseg<5>"	LOC = "L4";	# B
+NET "sseg<4>"	LOC = "N2";	# C
+NET "sseg<3>"	LOC = "R9";	# D
+NET "sseg<2>"	LOC = "M3";	# E
+NET "sseg<1>"	LOC = "P1";	# F
+NET "sseg<0>"	LOC = "P7";	# G
+
+NET "an<3>"	LOC = "W4";
+NET "an<2>"	LOC = "W5";
+NET "an<1>"	LOC = "AB1";
+NET "an<0>"	LOC = "Y4";
+

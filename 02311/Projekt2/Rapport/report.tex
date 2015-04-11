@@ -1,0 +1,86 @@
+%% LyX 1.6.5 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{graphicx}
+
+\usepackage[letterpaper]{geometry}
+\usepackage{listings}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
+
+\usepackage[final]{pdfpages} % For including extra pages.
+
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
+
+
+
+\usepackage{listings}
+\lstset{ language=VHDL }   % For code blocks
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+\makeatother
+
+\usepackage{babel}
+
+% The following can be used if not using custom frontpage
+\title{<document title>}
+\author{<name>\\
+        \\
+        <student id>
+}
+\date{\today}
+
+
+
+\begin{document}
+%\includepdf{frontpage.pdf}
+\input{frontpage.tex}
+
+\begin{abstract}
+ \input{abstract.tex}
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Project description}
+\label{sec:project_description}
+\input{projekt_description.tex}
+
+\section{Specification analysis}
+\input{specification_analysis.tex}
+
+\section{Solution description}
+\label{sec:solutions_description}
+\input{solutions_description.tex}
+
+\section{Development process}
+\label{sec:development_process}
+\input{development_process.tex}	
+
+\section{Tests}
+\label{sec:tests}
+\input{tests.tex}
+
+\section{Conclusion}
+\input{conclusion.tex}
+
+\newpage
+\appendix
+\section{Timetable}
+\input{timetable.tex}
+
+\section{Report distribution}
+\input{report_distribution.tex}
+
+\section{Figures}
+\input{figures.tex}
+
+\end{document}

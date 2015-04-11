@@ -1,0 +1,34 @@
+#UCF file used for testing the latch8 component
+
+#######################################
+##	Switches on DIO4
+#######################################
+NET "d<0>"	LOC = "N6";	#SW1
+NET "d<1>"	LOC = "L5";	#SW2
+NET "d<2>"	LOC = "M2";	#SW3
+NET "d<3>"	LOC = "P9";	#SW4
+NET "d<4>"	LOC = "M4";	#SW5
+NET "d<5>"	LOC = "N1";	#SW6
+NET "d<6>"	LOC = "P8";	#SW7
+NET "d<7>"	LOC = "N4";	#SW8
+
+#######################################
+#	Buttons on DIO4
+#######################################
+# Defined as single scalars
+NET "clk"	LOC = "AA1"; #BTN5
+
+#######################################
+#	LEDS on DIO4
+#######################################
+# Defined as a vector called LED
+NET "q<0>"	LOC = "T8"; #LED1
+NET "q<1>"	LOC = "U5"; #LED2
+NET "q<2>"	LOC = "W2"; #LED3
+NET "q<3>"	LOC = "U9"; #LED4
+NET "q<4>"	LOC = "V4"; #LED5
+NET "q<5>"	LOC = "Y1"; #LED6
+NET "q<6>"	LOC = "U8"; #LED7
+NET "q<7>"	LOC = "V6"; #LED8
+
+NET "LEDG"	LOC = "V7"; #LEDG
