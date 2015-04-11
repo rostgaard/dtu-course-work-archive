@@ -1,0 +1,119 @@
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 2.5cm
+\topmargin 2.5cm
+\rightmargin 2.5cm
+\bottommargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\align center
+
+\family sans
+\shape smallcaps
+02321 Hardware/Software Programmering (E10)
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size larger
+Home assignment 9
+\end_layout
+
+\begin_layout Standard
+\align center
+Morten Hillebo (s072923)
+\begin_inset Newline newline
+\end_inset
+
+Kim Rostgaard Christensen (s084283)
+\end_layout
+
+\begin_layout Standard
+\align center
+Group 2
+\end_layout
+
+\begin_layout Subsection*
+Problem 16.4
+\end_layout
+
+\begin_layout Standard
+See attached code
+\end_layout
+
+\begin_layout Subsection*
+Problem 16.6
+\end_layout
+
+\begin_layout Standard
+See attached code
+\end_layout
+
+\begin_layout Subsection*
+Problem 16.8
+\end_layout
+
+\begin_layout Standard
+Arrays are passed as reference, so the activation record minimum size becomes
+ 4;
+\end_layout
+
+\begin_layout Subsection*
+Problem 16.12
+\end_layout
+
+\begin_layout Standard
+The function LowerCase returns the pointer to a locally declared array.
+ The problem is solved in the attached code by modifying the original array
+ instead of a new one.
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,175 @@
+#######################################
+##	System clock 
+##	To correctly enable the system clock you should uncoment all 4 lines that describe the clock!
+#######################################
+NET "clk100" LOC = "AJ15";		#Understående er blevet rettet fra clk til clk100  
+NET "clk100" IOSTANDARD = LVCMOS25;
+NET "clk100" TNM_NET = "clk100";
+TIMESPEC "TS_clk" = PERIOD "clk100" 10.00 ns HIGH 50 %;
+
+
+#***********************************************************************************#
+#***********************************************************************************#
+#       UCF onstraints for the DIO4 board                                           #
+#                                                                                   #
+#***********************************************************************************#
+#***********************************************************************************#
+
+
+#######################################
+##	Switches on DIO4
+#######################################
+# Defined as a vector called SW
+NET "sw_i<0>"	LOC = "N6";	
+NET "sw_i<1>"	LOC = "L5";
+NET "sw_i<2>"	LOC = "M2";
+NET "sw_i<3>"	LOC = "P9";
+NET "sw_i<4>"	LOC = "M4";
+NET "sw_i<5>"	LOC = "N1";
+NET "sw_i<6>"	LOC = "P8";
+NET "sw_i<7>"	LOC = "N4";
+
+NET "sw_i<*>" IOSTANDARD = LVTTL;
+
+#######################################
+#	Buttons on DIO4
+#######################################
+# Defined as a vector called BTN
+NET "btn_i<0>"	LOC = "P3";
+NET "btn_i<1>"	LOC = "P2";
+NET "btn_i<2>"	LOC = "W3";
+NET "btn_i<3>"	LOC = "V8";
+NET "btn_i<4>"	LOC = "AA1";
+NET "btn_i<*>" IOSTANDARD = LVTTL;
+
+
+#######################################
+#	LEDS on DIO4
+#######################################
+# Defined as a vector called LED
+# and enable bit called LEDG
+NET "led<0>"	LOC = "T8";
+NET "led<1>"	LOC = "U5";
+NET "led<2>"	LOC = "W2";
+NET "led<3>"	LOC = "U9";
+NET "led<4>"	LOC = "V4";
+NET "led<5>"	LOC = "Y1";
+NET "led<6>"	LOC = "U8";
+NET "led<7>"	LOC = "V6";
+
+NET "ledg"	LOC = "V7";
+
+NET "led*" IOSTANDARD = LVTTL;
+
+
+#######################################
+#	7 Segment on DIO4
+#######################################
+NET "seg<6>"	LOC = "N5";	# A #MHI Understående er blevet rettet ved at flytte dem en plads så de passer til vores display og ikke edgars.
+NET "seg<5>"	LOC = "L4";	# B
+NET "seg<4>"	LOC = "N2";	# C
+NET "seg<3>"	LOC = "R9";	# D
+NET "seg<2>"	LOC = "M3";	# E
+NET "seg<1>"	LOC = "P1";	# F
+NET "seg<0>"	LOC = "P7";	# G
+NET "seg<7>"	LOC = "N3"; # Dot
+NET "seg<*>" IOSTANDARD = LVTTL;
+#
+NET "an<3>"	LOC = "W4";
+NET "an<2>"	LOC = "W5";
+NET "an<1>"	LOC = "AB1";
+NET "an<0>"	LOC = "Y4";
+
+NET "an<*>" IOSTANDARD = LVTTL;
+
+
+
+
+
+
+#######################################
+##	PS2 port (Keyboard or mouse) (on the DIO4 board)
+#######################################
+#NET "PS2_CLOCK" LOC = "R8";  #PS2_CLOCK
+#NET "PS2_DATA" LOC = "R7";   #PS2_DATA     
+
+#######################################
+## VGA on the DIO board (recommended)
+#######################################
+NET "hsync" LOC = "R6" |  IOSTANDARD = LVTTL;   #HS
+NET "vsync" LOC = "T2"  |  IOSTANDARD = LVTTL;   #VS
+NET "rgb<2>"  LOC = "R2"  |  IOSTANDARD = LVTTL;   #R
+NET "rgb<1>"  LOC = "P4"  |  IOSTANDARD = LVTTL;   #G
+NET "rgb<0>"  LOC = "P5"  |  IOSTANDARD = LVTTL;   #B
+
+#######################################
+##	Serial port (on the DIO4 board)
+#######################################
+NET "tx" LOC = "AE7" | IOSTANDARD = LVCMOS25 | DRIVE = 8 | SLEW = SLOW;
+NET "rx" LOC = "AJ8" | IOSTANDARD = LVCMOS25 | DRIVE = 8 | SLEW = SLOW;
+
+
+
+#######################################
+#	Main Board switches/leds/buttons
+#######################################
+
+NET "mb_led_o<0>" LOC = "AC4" | IOSTANDARD = LVTTL | DRIVE = 12 | SLEW = SLOW;
+NET "mb_led_o<1>" LOC = "AC3" | IOSTANDARD = LVTTL | DRIVE = 12 | SLEW = SLOW;
+NET "mb_led_o<2>" LOC = "AA6" | IOSTANDARD = LVTTL | DRIVE = 12 | SLEW = SLOW;
+NET "mb_led_o<3>" LOC = "AA5" | IOSTANDARD = LVTTL | DRIVE = 12 | SLEW = SLOW;
+
+#NET "MB_BTN_RESET" LOC = "AG5" | IOSTANDARD = LVTTL;
+#NET "MB_BTN_LEFT" LOC = "AH1" | IOSTANDARD = LVTTL;
+#NET "MB_BTN_DOWN" LOC = "AG3" | IOSTANDARD = LVTTL;
+#NET "MB_BTN_RIGHT" LOC = "AH2" | IOSTANDARD = LVTTL;
+#NET "MB_BTN_UP" LOC = "AH4" | IOSTANDARD = LVTTL;
+
+NET "mb_btn_i<4>" LOC = "AG5" | IOSTANDARD = LVTTL;
+NET "mb_btn_i<3>" LOC = "AH1" | IOSTANDARD = LVTTL;
+NET "mb_btn_i<2>" LOC = "AG3" | IOSTANDARD = LVTTL;
+NET "mb_btn_i<1>" LOC = "AH2" | IOSTANDARD = LVTTL;
+NET "mb_btn_i<0>" LOC = "AH4" | IOSTANDARD = LVTTL;
+
+
+NET "mb_sw_i<0>" LOC = "AC11" | IOSTANDARD = LVCMOS25;
+NET "mb_sw_i<1>" LOC = "AD11" | IOSTANDARD = LVCMOS25;
+NET "mb_sw_i<2>" LOC = "AF8"  | IOSTANDARD = LVCMOS25;
+NET "mb_sw_i<3>" LOC = "AF9"  | IOSTANDARD = LVCMOS25;
+
+
+
+#######################################
+##	VGA on Main Board
+#######################################
+#NET "blank_out"  LOC = "A8" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "sog_out"  LOC = "G12" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "hsync_out"  LOC = "B8" | IOSTANDARD = LVTTL  | DRIVE = 12  | SLEW = SLOW ; 
+#NET "pixelclk_out"  LOC = "H12" | IOSTANDARD = LVTTL  | DRIVE = 12  | SLEW = FAST ; 
+#NET "vsync_out"  LOC = "D11" | IOSTANDARD = LVTTL  | DRIVE = 12  | SLEW = SLOW ; 
+#NET "b_out<0>"  LOC = "D15" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "b_out<1>"  LOC = "E15" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "b_out<2>"  LOC = "H15" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "b_out<3>"  LOC = "J15" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "b_out<4>"  LOC = "C13" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "b_out<5>"  LOC = "D13" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "b_out<6>"  LOC = "D14" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "b_out<7>"  LOC = "E14" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "g_out<0>"  LOC = "G10" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "g_out<1>"  LOC = "E10" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "g_out<2>"  LOC = "D10" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "g_out<3>"  LOC = "D8" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "g_out<4>"  LOC = "C8" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "g_out<5>"  LOC = "H11" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "g_out<6>"  LOC = "G11" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "g_out<7>"  LOC = "E11" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "r_out<0>"  LOC = "G8" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "r_out<1>"  LOC = "H9" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "r_out<2>"  LOC = "G9" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "r_out<3>"  LOC = "F9" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "r_out<4>"  LOC = "F10" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "r_out<5>"  LOC = "D7" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "r_out<6>"  LOC = "C7" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+#NET "r_out<7>"  LOC = "H10" | IOSTANDARD = LVTTL  | SLEW = SLOW  | DRIVE = 12 ; 
+########################
+

@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+
+\bibitem{chu2008fpga}
+P.P. Chu.
+\newblock {\em {FPGA prototyping by VHDL examples: Xilinx Spartan-3 version}}.
+\newblock Wiley-Interscience, 2008.
+
+\bibitem{patt2000introduction}
+Y.N. Patt and S.~Patel.
+\newblock {\em {Introduction to Computing Systems: From Bits and Gates to C and
+  Beyond, Osborne}}.
+\newblock McGraw-Hill, Berkeley, CA, 2000.
+
+\end{thebibliography}
