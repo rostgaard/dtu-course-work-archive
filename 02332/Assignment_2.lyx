@@ -1,0 +1,500 @@
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 2.5cm
+\topmargin 2.5cm
+\rightmargin 2.5cm
+\bottommargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\align center
+
+\family sans
+\shape smallcaps
+02332 Compilerteknik (E10)
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size larger
+Assignment 2
+\end_layout
+
+\begin_layout Standard
+\align center
+Javid Bahramzy (s040804)
+\begin_inset Newline newline
+\end_inset
+
+Kim Rostgaard Christensen (s084283)
+\begin_inset Newline newline
+\end_inset
+
+Mikkel Kragelund Nielsen (s083325)
+\end_layout
+
+\begin_layout Subsection*
+1.
+ Mark keywords and tokens 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Assignment 2 - Opgave 1.pdf
+	width 90col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+2.
+ IR tree
+\end_layout
+
+\begin_layout Standard
+See next page
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Graphics
+	filename assignment 2 - Opgave 2.pdf
+	width 50col%
+	rotateAngle 270
+
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+3.
+ Fields and variables
+\end_layout
+
+\begin_layout Standard
+See 2.
+\end_layout
+
+\begin_layout Subsection*
+4.
+ Class table
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="3">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Class name
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Fields (type and name) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Methods(return type, name, arguments 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Main
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+void, main, args
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Position
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+int x, int y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+void, move,relx, rely
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Misc
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+String result
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+int, factorial, x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+5.
+ Node types
+\end_layout
+
+\begin_layout Standard
+See 2.
+\end_layout
+
+\begin_layout Subsection*
+6.
+ Find 9 (10) errors 
+\end_layout
+
+\begin_layout Enumerate
+Line 2: Static keywork is missing, it is mandatory according tp the miniJava
+ specification
+\end_layout
+
+\begin_layout Enumerate
+Line 10: Move is missing a return type
+\end_layout
+
+\begin_layout Enumerate
+After line 14: Missing return
+\end_layout
+
+\begin_layout Enumerate
+Line 19: Missing lhs argument.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Line 21: Missing lhs argument.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Line 24: Missing lhs argument.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Line 26: Missing lhs argument.
+\end_layout
+
+\begin_layout Enumerate
+Line 27: Missing semicolon.
+\end_layout
+
+\begin_layout Enumerate
+Line 27: Attempt to assign an int to a String.
+\end_layout
+
+\begin_layout Enumerate
+Line 30: Return void and not int.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+class Main {
+\end_layout
+
+\begin_layout Plain Layout
+
+    public void main(String[] args) {
+\end_layout
+
+\begin_layout Plain Layout
+
+        System.out.println(42);
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class Position {
+\end_layout
+
+\begin_layout Plain Layout
+
+    int x;
+\end_layout
+
+\begin_layout Plain Layout
+
+    int y;
+\end_layout
+
+\begin_layout Plain Layout
+
+    public move(int relx, int rely) {
+\end_layout
+
+\begin_layout Plain Layout
+
+        x = x + relx;
+\end_layout
+
+\begin_layout Plain Layout
+
+        y = y + rely; 
+\end_layout
+
+\begin_layout Plain Layout
+
+   } 
+\end_layout
+
+\begin_layout Plain Layout
+
+} 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class Misc {
+\end_layout
+
+\begin_layout Plain Layout
+
+    String result = "";
+\end_layout
+
+\begin_layout Plain Layout
+
+    public int factorial(int x) {
+\end_layout
+
+\begin_layout Plain Layout
+
+         =  0;
+\end_layout
+
+\begin_layout Plain Layout
+
+        if (x == 0) {
+\end_layout
+
+\begin_layout Plain Layout
+
+            =  1;
+\end_layout
+
+\begin_layout Plain Layout
+
+        } else {
+\end_layout
+
+\begin_layout Plain Layout
+
+            if (x == 1) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                =  1;
+\end_layout
+
+\begin_layout Plain Layout
+
+            } else {
+\end_layout
+
+\begin_layout Plain Layout
+
+                =  factorial( -1 );
+\end_layout
+
+\begin_layout Plain Layout
+
+               result = x *
+\end_layout
+
+\begin_layout Plain Layout
+
+            }
+\end_layout
+
+\begin_layout Plain Layout
+
+        }
+\end_layout
+
+\begin_layout Plain Layout
+
+        return;
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

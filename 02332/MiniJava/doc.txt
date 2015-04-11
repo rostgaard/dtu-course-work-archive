@@ -1,0 +1,9 @@
+We decided to keep the code structure given to us at the start of the project.
+
+We have constructed some test files. Both test, that should compile successfully.
+(test.java)
+But also test scenarios that should result in errors when trying to compile them
+(testForErrors.java)
+
+To test for all the errors, each test scenario should be placed in a file of their own and tested individually. 
+This way the compiler would not just stop by the first error and not test the rest
