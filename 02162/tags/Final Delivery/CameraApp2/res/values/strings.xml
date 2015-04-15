@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Camera App</string>
+    <string name="status_value">Not connected</string>
+    <string name="action_settings">Settings</string>
+    
+</resources>

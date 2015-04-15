@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Assignment 2</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_">Activity</string>
+    <string name="title_activity_test">Test</string>
+    <string name="title_activity_shake_alert">ShakeAlertActivity</string>
+    <string name="alert">Alert</string>
+    
+    <color name="red">#FF4444</color>
+    <color name="yellow">#FFBB33</color>
+
+</resources>

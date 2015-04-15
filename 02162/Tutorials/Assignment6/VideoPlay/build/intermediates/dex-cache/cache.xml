@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="C:\Users\stefan\Dropbox\SoftengTuts\VideoPlay\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.0-bd61e007c28d2f986f86ae031bc37b54506dcc00.jar"
+        jar="C:\Users\stefan\Dropbox\SoftengTuts\VideoPlay\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\libs\internal_impl-21.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0"/>
+    <item
+        dex="C:\Users\stefan\Dropbox\SoftengTuts\VideoPlay\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.0-4b9e36dfeb5a96ed1c4ae77094196a02e3d01011.jar"
+        jar="C:\Users\stefan\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.0\support-annotations-21.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e"/>
+    <item
+        dex="C:\Users\stefan\Dropbox\SoftengTuts\VideoPlay\app\build\intermediates\pre-dexed\debug\classes-0dec1998c4b584b6d2c474491055bc8e39360159.jar"
+        jar="C:\Users\stefan\Dropbox\SoftengTuts\VideoPlay\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.0\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="95fd37732ec852e99f07eeb516a3650172f1d136"/>
+    <item
+        dex="C:\Users\stefan\Dropbox\SoftengTuts\VideoPlay\app\build\intermediates\pre-dexed\debug\classes-46f270b08eac799c311500c741e53d49a7345a2e.jar"
+        jar="C:\Users\stefan\Dropbox\SoftengTuts\VideoPlay\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6"/>
+
+</pre-dex-items>

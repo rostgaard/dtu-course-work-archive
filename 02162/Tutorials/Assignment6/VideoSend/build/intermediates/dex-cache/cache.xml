@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="C:\Users\stefan\Dropbox\SoftengTuts\VideoSend\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.0-4b9e36dfeb5a96ed1c4ae77094196a02e3d01011.jar"
+        jar="C:\Users\stefan\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.0\support-annotations-21.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e"/>
+    <item
+        dex="C:\Users\stefan\Dropbox\SoftengTuts\VideoSend\app\build\intermediates\pre-dexed\debug\classes-eb242e153049b639c8177daa64948fca8953252a.jar"
+        jar="C:\Users\stefan\Dropbox\SoftengTuts\VideoSend\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6"/>
+    <item
+        dex="C:\Users\stefan\Dropbox\SoftengTuts\VideoSend\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.0-8a9c1a925d88b70835d5b3eabab2d3d4da5cf195.jar"
+        jar="C:\Users\stefan\Dropbox\SoftengTuts\VideoSend\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\libs\internal_impl-21.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0"/>
+    <item
+        dex="C:\Users\stefan\Dropbox\SoftengTuts\VideoSend\app\build\intermediates\pre-dexed\debug\classes-b76dd9b53e1530fcbb5019f1673a34ad8e76d371.jar"
+        jar="C:\Users\stefan\Dropbox\SoftengTuts\VideoSend\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.0\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="95fd37732ec852e99f07eeb516a3650172f1d136"/>
+
+</pre-dex-items>
