@@ -1,0 +1,26 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.blank.title', type.modelName) /}
+
+<div id="crudBlank" class="${type.name}">
+
+    <h2 id="crudBlankTitle">&{'crud.blank.title', type.modelName}</h2>
+
+    <div class="objectForm">
+
+       
+    #{form action:@add(resolution.solutionFor.id), enctype:'multipart/form-data'}
+
+#{field 'resolution'}
+<p>
+  <label>Proposal</label>
+  <input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}" />
+</p>
+
+#{/}
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+</div>

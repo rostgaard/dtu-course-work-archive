@@ -1,0 +1,12 @@
+#{extends 'admin.html' /}
+#{set title:messages.get('crud.list.title', type.name) /}
+
+ <p id="newDocument" >
+	<a href="@{documentForm()}"><span>+</span> Add a new document, phase = ${phase}</a>
+</p>
+#{list items:documents, as:'document'}
+    <p class="post ${document_parity}">
+        <a href="@{Documents.documentForm(document.id)}">${document.title}</a>
+    </p>
+#{/list}
+ 

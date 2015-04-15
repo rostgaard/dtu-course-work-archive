@@ -1,0 +1,76 @@
+#{extends 'admin.html' /}
+#{set title:'Home' /}
+ 
+<div style="width=100%;">
+    <div id="box_right" style="float: right; width: 30%;">
+        <h4>Latest document revisions</h4>
+        #{if documents}
+    #{list items:documents, as:'document'}
+    <p class="post ${document_parity}">
+        <a href="@{Documents.list(document.id)}">${document}</a>
+    </p>
+    #{/list}
+    #{/if}
+    <a href="@{Documents.listAll()}">Show all documents</a>
+    
+    </div>
+    <h2>Tasks</h2>
+    <h4>Certificates</h4>
+    #{if certificates}
+    #{list items:certificates, as:'certificate'}
+    <p class="certificate ${certificate_parity}">
+        <a href="@{Certificates.show(certificate.id)}">${certificate}</a>
+    </p>
+    #{/list}
+    <a class="button green" href="@{Certificates.add()}">Add another</a>
+    #{/if}
+    #{else}
+    <p>
+        <em>You have not yet provided any certificate information; please add it by clicking <a href="@{Certificates.add()}">here</a></em>
+    </p>
+    <h3>Statistics</h3>
+    <ul>
+        <li>Compliant: ${stats.numCompliant}</li>
+        <li>Non-Compliant: ${stats.numNonCompliant}</li>
+        <li>Major observations: ${stats.numMajorObservations}</li>
+        <li>Minor observations: ${stats.numMinorObservations}</li>
+    </ul>
+    #{/else}
+</div>
+
+<div style="width=100%;">
+
+    #{if activities}
+    <h3>Pending activites</h3>    
+    #{list items:activities, as:'activity'}
+    
+    <table>
+        <thead><td> ${activity}</td></thead>
+        #{if activity.requirements}
+        
+        #{list items:activity.requirements, as:'requirement'}
+        <tr class="post ${requirement_parity}">
+            <td><span class="${requirement?.status?.css_class}">${requirement.status}</span></td>
+            <td>
+                <a class="button" href="@{Requirements.view(requirement.id)}"><strong>${requirement}</strong></a>
+          </td>
+          
+          <td><a  class="button" href="@{Resolutions.propose(requirement.id)}">Propose resolution</a></td>
+          <td><a  class="button" href="#">Add oberservation</a></td>
+        </tr>
+        #{/list}
+        
+        #{/if}
+    
+    
+    #{/list}
+    </table>
+    #{/if}
+    
+</div>
+
+
+<div style="width=100%;">
+
+    
+</div>

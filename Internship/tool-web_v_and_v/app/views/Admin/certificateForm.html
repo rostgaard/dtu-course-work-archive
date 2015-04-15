@@ -1,0 +1,46 @@
+#{extends 'admin.html' /}
+ 
+#{ifnot certificate?.id}
+    <h3>Add <span>a new certificate</span></h3>
+#{/ifnot}
+#{else}
+    <h3>Editing <span>this certificate </span></h3>
+#{/else}
+ 
+#{form @saveCertificate(certificate?.id)}
+ 
+    #{ifErrors}
+        <p class="error">
+            Please correct these errors.
+        </p>
+    #{/ifErrors}
+     
+    <p>
+        #{field 'type'}
+        <label>Certificate type</label>
+        <input type="text" name="${field.name}" 
+            value="${certificate?.type}" class="${field.errorClass}" />
+        #{/field}
+    </p>
+ 
+    <p>
+        #{field 'number'}
+        <label>Certificate number</label>
+        <input type="text" name="${field.name}" 
+            value="${certificate?.number}" class="${field.errorClass}" />
+        #{/field}
+    </p>
+
+    <p>
+        #{field 'expirationDate'}
+        <label>Expiration Date</label>
+        <input type="text" name="${field.name}" 
+            value="${certificate?.expirationDate}" class="${field.errorClass}" />
+        #{/field}
+    </p>
+    
+    <p>
+        <input type="submit" value="Update" />
+    </p>
+    
+#{/form}

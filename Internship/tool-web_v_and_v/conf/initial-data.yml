@@ -1,0 +1,159 @@
+# Test data
+
+ProjectPhase(1):
+    phaseName:      Proposal design
+    
+ProjectPhase(2):
+    phaseName:      Conceptual design
+
+Company(sc):
+    name:           Safety Consultant
+    
+Company(fbas):
+    name:           FBAS
+
+Company(re):
+    name:           Railway Engineering
+    
+Document(doc1):
+    title:          Internal1.xls
+    projectPhase:   1
+    owner:          sc
+ 
+
+Document(doc2):
+    title:          WP-224411.doc
+    projectPhase:   1
+    owner:          re    
+
+DocumentRevision(rev1):
+  originDocument: doc1
+  name:        draft
+  
+   
+DocumentRevision(rev2):
+    originDocument: doc2
+    name:        20055
+
+Issue(1):
+    description:     Not enough information about authors
+    documentRevision: rev1
+
+User(u1):
+    email:          krc@gir.dk
+    password:       123
+    fullname:       Kim
+    isAdmin:        true
+    employedAt:     sc
+    
+User(u2):
+    email:          test@test.dk
+    password:       123
+    fullname:       John
+    
+User(bob):
+    email:          bob@gmail.com
+    password:       secret
+    fullname:       Bob
+    isAdmin:        true
+    
+User(jeff):
+    email:          jeff@gmail.com
+    password:       secret
+    fullname:       Jeff   
+
+RequirementStatus(nc):
+    name:           Non-compliant
+    css_class:      nonCompliant
+    
+RequirementStatus(c):
+    name:           Compliant
+    css_class:      compliant
+    
+RequirementStatus(mao):
+    name:           Major observation
+    css_class:      majorObservation
+    
+RequirementStatus(mio):
+    name:           Minor observation
+    css_class:      minorObservation
+    
+
+En50126Phase(615a):
+    name:           6.1.5a
+    description:    Assesment of the adequacy of the information, and where appropriate, data and other statistics, used as input to RAMS tasks with this phase.
+    phase:          1
+
+En50126Phase(615b):
+    name:           6.1.5b
+    description:    Assessment of the adequacy of the system environment statement defined under Requirement 1.
+    phase:          1
+
+En50126Phase(615c):
+    name:           6.1.5c
+    description:    
+    phase:          1
+    
+En50126Phase(615d):
+    name:           6.1.5d
+    description:    
+    phase:          1
+    
+En50126Phase(615e):
+    name:           6.1.5e
+    description:    
+    phase:          1
+
+En50126Phase(6251a):
+    name:           6.2.5.1a
+    
+En50126Phase(6251b):
+    name:           6.2.5.1b    
+    
+En50126Phase(6251c):
+    name:           6.2.5.1c
+    
+En50126Phase(6251d):
+    name:           6.2.5.1d
+    
+En50126Phase(6251ez):
+    name:           6.2.5.1e
+
+Activity(1):
+  description:      Identify source of hazards
+  responsible:      sc
+
+Activity(2):
+  description:      Obtain information about previous RAMS performance
+  responsible:      sc
+
+Requirement(1):
+  en50126Phase:     6251a
+  status:           nc
+  activity:         1
+  
+Requirement(2):
+  en50126Phase:     6251b
+  status:           nc
+  activity:         1
+
+Requirement(3):
+  en50126Phase:     6251c
+  status:           nc
+  activity:         1
+
+IssueType(a):
+    name:           Issue for conditional acceptance
+    description:    Some elaboration/help text
+    severity:       A
+    
+IssueType(b):
+    name:           Issue to correct
+    description:    Some elaboration/help text
+    severity:       B
+    
+IssueType(c):
+    name:           Issue for consideration
+    description:    Some elaboration/help text
+    severity:       C
+    
