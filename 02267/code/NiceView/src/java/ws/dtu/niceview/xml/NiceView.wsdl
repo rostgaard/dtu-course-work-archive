@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="NiceView" targetNamespace="http://niceview.dtu.ws/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+             xmlns:tns="http://niceview.dtu.ws/" 
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" 
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+             xmlns:bs="urn://types.fastmoney.imm.dtu.dk"
+             xmlns:ns0="urn://types.niceview.dtu.ws/">
+    <types>
+        <xsd:schema targetNamespace="http://niceview.dtu.ws/" xmlns:tns="http://niceview.dtu.ws/">
+            <xsd:import namespace="urn://types.fastmoney.imm.dtu.dk" schemaLocation="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1"/>
+            <xsd:import namespace="urn://types.niceview.dtu.ws/" schemaLocation="NiceView.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="GetHotelsRequest">
+        <part name="city" type="xsd:string"/>
+        <part name="arrival" type="xsd:date"/>
+        <part name="departure" type="xsd:date"/>
+    </message>
+    <message name="GetHotelsResponse">
+        <part name="hotels" type="ns0:hotelList"/>
+    </message>
+    <message name="BookHotelRequest">
+        <part name="bookingNo" type="xsd:string"/>
+        <part name="ccInformation" type="bs:creditCardInfoType"/>
+    </message>
+    <message name="BookHotelResponse">
+        <part name="status" type="xsd:boolean"/>
+    </message>
+    <message name="BookHotelFault">
+        <part name="fault" element="ns0:fault"/>
+    </message>
+    <message name="CancelHotelRequest">
+        <part name="bookingNo" type="xsd:string"/>
+    </message>
+    <message name="CancelHotelResponse">
+        <part name="status" type="xsd:boolean"/>
+    </message>
+    <message name="CancelHotelFault">
+        <part name="fault" element="ns0:fault"/>
+    </message>
+    <portType name="NiceViewPortType">
+        <operation name="GetHotels">
+            <input name="input1" message="tns:GetHotelsRequest"/>
+            <output name="output1" message="tns:GetHotelsResponse"/>
+        </operation>
+        <operation name="BookHotel">
+            <input name="input2" message="tns:BookHotelRequest"/>
+            <output name="output2" message="tns:BookHotelResponse"/>
+            <fault name="fault2" message="tns:BookHotelFault"/>
+        </operation>
+        <operation name="CancelHotel">
+            <input name="input3" message="tns:CancelHotelRequest"/>
+            <output name="output3" message="tns:CancelHotelResponse"/>
+            <fault name="fault3" message="tns:CancelHotelFault"/>
+        </operation>
+    </portType>
+    <binding name="NiceViewBinding" type="tns:NiceViewPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="GetHotels">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal" namespace="http://niceview.dtu.ws/"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal" namespace="http://niceview.dtu.ws/"/>
+            </output>
+        </operation>
+        <operation name="BookHotel">
+            <soap:operation/>
+            <input name="input2">
+                <soap:body use="literal" namespace="http://niceview.dtu.ws/"/>
+            </input>
+            <output name="output2">
+                <soap:body use="literal" namespace="http://niceview.dtu.ws/"/>
+            </output>
+            <fault name="fault2">
+                <soap:fault name="fault2"/>
+            </fault>
+        </operation>
+        <operation name="CancelHotel">
+            <soap:operation/>
+            <input name="input3">
+                <soap:body use="literal" namespace="http://niceview.dtu.ws/"/>
+            </input>
+            <output name="output3">
+                <soap:body use="literal" namespace="http://niceview.dtu.ws/"/>
+            </output>
+            <fault name="fault3">
+                <soap:fault name="fault3"/>
+            </fault>
+        </operation>
+    </binding>
+    <service name="NiceViewService">
+        <port name="NiceViewPort" binding="tns:NiceViewBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/NiceViewService/NiceViewPort"/>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="NiceView">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes. 
+        In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+        A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="NiceViewPortTypeRole" portType="tns:NiceViewPortType"/>
+    </plnk:partnerLinkType>
+</definitions>

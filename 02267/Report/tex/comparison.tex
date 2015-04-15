@@ -1,0 +1,49 @@
+{\setlength{\chapterfontsize}{26pt}
+\chapter{Comparison of RESTful and SOAP/BPEL web services}
+}
+\kim
+
+\noindent
+In general technologies covered in this project are standardized, interoperability is much less of a hassle than if every protocol should be implemented from scratch. Using formalized languages -- such as WSDL, SOAP and BPEL -- provides additional non-quantifiable benefits such as implicit documentation.
+
+As we have implemented the TravelGood business process using both RESTful and SOAP/BPEL, a number of strengths and weaknesses have been experienced, which will be discussed in this chapter.
+
+\section{Implementation}
+\mrb
+
+\noindent
+Beginning with the tool chain, the easiest technology to get started with is REST. As a lot of concepts and tool-dependant processes are linked to BPEL. Since the actual syntax of BPEL is in XML format, it is very hard for humans to write it without tooling. On the other hand, REST is ``just code'', all you really need is an editor and a compiler (and preferably a framework). When implementing RESTful, the developer has to make sure that he comply with the design decisions on how to use the http verbs and there is no static check. Using BPEL, all types are locked based on the wsdl file, so the developer can focus on the actual logic of the system. 
+
+\section{Understanding the implementation}
+\mkt
+
+\noindent
+In general the basics of a RESTful web-service is easy to understand for anyone familiar with the HTTP verbs, however the business logic in a complicated RESTFul web-service can be hard to get an overview of. There is not a single place where a complete overview of the web-service can be found, but instead one is required to go through each of the resources in order to try to get an understanding of the processes. Usually a RESTful web-service will rely on some documentation describing the API. This documentation would have to be kept maintained according to the current implementation. 
+
+The BPEL implementation is easier to read and understand for people with a non-technical background due to the visual representation of the processes. It directly shows the flow of progress in a web service. Furthermore the visual representation makes it possible to get an overview of all processes from a single place. It is, however, not as versatile as a RESTful implementation as only a limited set of operations are possible in the BPEL environment.
+
+\section{Adaptability to change}
+\pet
+
+\noindent
+Change of requirements is something that is very probable and a is part of almost every project. It is therefore important that the technology used, adapts well to such changes, to keep the system maintainable.
+
+For REST there is no standard metadata format which means that changes in the REST interface or the format returned will require services using the web-service to adapt to these changes as well. What usually happens today when a RESTful web-service in production is changed is that a new version of the web-service next to the old version, which will be kept running until all users has adapted to the new version. Several solutions exist for providing metadata for a RESTful web-service including \texttt{WADL}, but none of these has been widely adapted yet. Furthermore as a developer of a RESTful web-service new resources will have to be introduced.
+
+In SOAP/BPEL the \texttt{WSDL} files makes it easier for services using the web-service to adapt to the changes since the interface is specified in the \texttt{WSDL}. The other web-services would still have to adapt for the changes made to this interface though, but these should be minimal if the same service is provided.
+
+\section{Scalability and performance}
+\kim
+
+\noindent
+Both SOAP and RESTful web-services are deployed in large setups in the industry which indicates that both solutions can scale properly. The transmission overhead in a RESTful web-service is significantly lower especially when using JSON compared to SOAP/BPEL. When using advanced web-service technologies such as WS-Addressing and WS-Security more overhead is introduced on the bandwidth and parsing of the messages, however in practice does not have that much impact on the performance, as messages may be compressed during transfer\footnote{XML compresses well.}.
+
+
+\section{Summary}
+\mrb
+
+\noindent
+In conclusion, it is feasible to implement TravelGood using both technologies. Given the choice, BPEL should be considered as first choice, as it is intended to be used to implement business processes. RESTful on the other hand is aimed towards stateless applications, which a business process is not. However, BPEL has a higher cost-of-entry for an average programmer, as it is conceptually very different from using RESTful, which should also be considered when making the choice.
+
+%A thing that may have the most significant impact on SOAP/BPEL performance is the strict abstraction layer, which removes (or at least makes it harder) the possibilities to use classic optimization strategies such as caching proxies. This is due to the fact that is not part of the WS-* scope and must thus be handled \emph{ad hoc} with; either a separate BPEL caching process - or outside the scope of the application. RESTful is by-design built for distributed, proxyable (and thus cacheable) operation - effectively making scalability a natural part of the development process.
+

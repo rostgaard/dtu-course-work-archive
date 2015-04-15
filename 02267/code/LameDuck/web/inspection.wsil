@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<inspection xmlns="http://schemas.xmlsoap.org/ws/2001/10/inspection/">
+    <service>
+        <name>LameDuck</name>
+        <abstract><br> The LameDuck webservice offers a  range of operations related to searching the flight database, booking and cancelling flight.
+                    <br> - getFlights finds a list of possible flights from an origin to a destination on a specific date.
+                    <br> - bookFlight will attempt to book a flight with a specified booking number. If this bookingnumber has already been used or the payment fails, a fault is returned.
+		    <br> - cancelFLight will attempt to cancel a booked flight based on booking number and repay half of the original price. If the reimbursement fails, a fault is returned.
+                    <br> See source for details.
+		</abstract>
+        <description referencedNamespace="http://schemas.xmlsoap.org/wsdl/"
+                 location="http://localhost:8080/LameDuck/LameDuckService?wsdl"/>
+    </service>
+	<link referencedNamespace="http://schemas.xmlsoap.org/ws/2001/10/inspection/"
+				location="http://localhost:8080/NiceView/inspection.wsil"/>
+	<link referencedNamespace="http://schemas.xmlsoap.org/ws/2001/10/inspection/"
+				location="http://{bpelinspectionaddress}"/>
+</inspection>

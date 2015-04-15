@@ -1,0 +1,68 @@
+\documentclass[11pt,a4paper]{report}
+\newcommand{\confdir}{../conf/} % Set the folder which contains preamble.tex, titlepage.tex and the general img/ folder
+\newcommand{\imgdir}{../img/} % Set the folder which contains the specific images for the report
+\newcommand{\texdir}{../tex/} % Set the folder which contains the content (.tex files)
+\input{\confdir preamble}
+
+
+%%%%%%%%%%%
+%% SETUP %%
+%%%%%%%%%%%
+
+%% Set the course number and course name
+% Usage: \setcourse{<course no>}{<course name>}
+	\setcourse{02267}{Software Development of Web Services}
+
+%% Set the title of the report
+% Usage: \settitle{<title>}
+	\settitle{TravelGood Web Service}
+
+%% Set the subtitle of the report
+% Usage: \setsubtitle{<subtitle>}
+	\setsubtitle{Report -- Fall 2013}
+
+%% Set the date the report is handed in
+% Usage: \setdate{<hand-in date>}
+	\setdate{December 3rd, 2013}
+
+%% Add the authors of the report
+% Usage: \addauthor{<study number>}{<first name(s)>}{<last name>}
+	\addauthor{s084283}{Kim Rostgaard}{Christensen}
+	\addauthor{s093280}{Martin}{Tange}
+	\addauthor{s093255}{Mikkel Riber}{Bojsen}
+	\addauthor{s093263}{Peter Gammelgaard}{Poulsen}
+
+%%%% END OF SETUP
+
+\newcommand{\mrb}{\emph{Mikkel Riber Bojsen, s093255}}
+\newcommand{\pet}{\emph{Peter Gammelgaard Poulsen, s093263}}
+\newcommand{\mkt}{\emph{Martin Tange, s093280}}
+\newcommand{\kim}{\emph{Kim Rostgaard Christensen, s084283}}
+
+\begin{document}
+
+%% Insert titlepage
+\inserttitlepage
+
+%% Insert list of todos
+% \listoftodos
+
+%% Insert table-of-contents
+\inserttoc
+
+%% Input files for the report
+\import{\texdir}{introduction}
+\import{\texdir}{coordinationprotocol}
+\import{\texdir}{implementation}
+\import{\texdir}{discovery}
+\import{\texdir}{comparison}
+\import{\texdir}{advanced}
+\import{\texdir}{conclusion}
+\import{\texdir}{whodidwhat}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\nocite{*}
+
+\end{document}

@@ -1,0 +1,72 @@
+\documentclass[11pt,presentation]{beamer}   % to compile the presentation
+% \documentclass[handout]{beamer}        % to compile 2x2 handouts
+\usepackage[ansinew]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,textcomp}
+\usepackage{breakurl}
+\usepackage{listings}                 	% Source code printer for LaTeX
+\usepackage{xcolor}                   	% Support for using colours
+\usepackage[noabbrev,nameinlink]{cleveref}   % Clever references. Options: "fig. [1]" --> "[Figure 1]"
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{xcolor}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,positioning,topaths}
+
+\definecolor{dtured}{cmyk}{0,.91,.72,.23}
+\definecolor{dtugray}{cmyk}{0,0,0,.56}
+\definecolor{s05}{cmyk}{.0,1,.0,.0}    % magenta
+\definecolor{s06}{cmyk}{.25,1,.0,.0}
+\definecolor{s07}{cmyk}{.25,1,0,0}
+\definecolor{s08}{cmyk}{.75,1,0,0}
+\definecolor{s09}{cmyk}{.75,.75,.0,.0}
+\definecolor{s10}{cmyk}{.5,0,0,0}
+\definecolor{s11}{cmyk}{.5,.0,.0,.0}
+\definecolor{s13}{cmyk}{.75,.50,.0,.0} % blue
+\definecolor{s14}{cmyk}{.5,0,1,0}      % green
+\definecolor{s14a}{cmyk}{.6,0,1,.25}      % green
+
+
+%%%%%%%%%%%%
+% Listings %
+%%%%%%%%%%%%
+\crefname{lstlisting}{listing}{listings}
+\Crefname{lstlisting}{Listing}{Listings}
+
+\usetheme{dtu}
+
+\graphicspath{{img/}}
+
+\newcommand{\comm}[1]{}
+\AtBeginSection[]
+{
+ \begin{frame}<beamer>
+ \frametitle{Outline}
+ \tableofcontents[currentsection]
+ \end{frame}
+}
+
+\newcommand {\framedgraphic}[2] {%
+    \begin{frame}{#1}%
+        \begin{center}%
+            \includegraphics[width=1.0\textwidth,height=0.75\textheight,keepaspectratio]{#2}%
+        \end{center}
+    \end{frame}
+}
+% USAGE:
+%\framedgraphic{OCL: Enterprise Report}{Class_Diagram/OCLEnterpriseReport}
+
+
+\begin{document}
+
+% The DTU and MIC logos
+\pgfdeclareimage[height=2.0cm]{dtulogo}{dtu_logo}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\input{content}
+
+
+\end{document} 

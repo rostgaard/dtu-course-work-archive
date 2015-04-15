@@ -1,0 +1,119 @@
+
+\title{TravelGood Webservice}
+\subtitle{Webservices final project}
+\author{Group 03}
+\date{December 17, 2013}
+
+\begin{frame}
+	\maketitle
+\end{frame}
+
+
+\section{Overview}
+\framedgraphic{Overview}{overview}
+\framedgraphic{TravelGood Protocol}{Protocol}
+
+\subsection{SOAP}
+\begin{frame}{SOAP}
+\begin{itemize}[<+->]
+\item LameDuck and NiceView
+\item Defined by WSDL/XSD documents
+\item Communicates with BankService
+\item Implemented to fit wanted unit tests
+\end{itemize}
+\end{frame}
+
+
+\subsection{REST}
+\begin{frame}{Overview - REST}
+\begin{itemize}[<+->]
+	
+	\item Resources
+	\begin{itemize}[<2->]
+		\item ItineraryResource
+		\item ItineraryBookingResource
+		\item FlightResource
+		\item HotelResource
+		\item ResetResource
+	\end{itemize}
+		
+	\medskip\item <3-> Representations - Data and links
+	\begin{itemize}[<4->]
+		\item ItineraryRepresentation
+		\item FlightRepresentation
+		\item HotelRepresentation
+		\item StatusRepresentation
+	\end{itemize}
+	
+	\item <5-> Mime type: \texttt{application/itinerary+xml}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Overview - REST}
+\begin{itemize}[<+->]
+	
+	\item Mapping to HTTP verbs
+	\begin{itemize}	[<2->]
+		\item \texttt{GET} for idempotent
+		\item \texttt{PUT} for updating
+		\item \texttt{POST} for creation
+		\item \texttt{DELETE} for removal
+	\end{itemize}
+		
+	\medskip\item <3-> Itinerary mapping example
+	\begin{itemize}[<4->]
+		\item createItinerary (POST) creates the itinerary
+		\item getItinerary (GET) gives the idempotent state of the itinerary
+		\item addFlight (PUT) adds a new flight to the itinerary
+		\item addHotel (PUT) adds a new hotel to the itinerary
+		\item removeItinerary (DELETE) removes the itinerary
+	\end{itemize}
+
+\end{itemize}
+\end{frame}
+
+\subsection{BPEL}
+\begin{frame}{Overview - BPEL}
+\begin{itemize}[<+->]
+	\item Correlation set: \texttt{itineraryID} and \texttt{customerID}
+
+	\medskip\item Planning/Booking phase
+	\begin{itemize}
+		\item Get flights/hotels
+		\item<3-> Plan flights/hotels -- kept in global variables
+		\item Attempt booking, loops all planned flights/hotels
+		\item Compensation handler on each booking attempt
+	\end{itemize}
+
+	\medskip\item Cancel phase
+	\begin{itemize}
+		\item Attempts to cancel all flights/hotels
+		\item<7-> Times out after a certain point in time
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\framedgraphic{Overview - BPEL}{bpel_cut}
+
+
+\section{Comparison}
+\begin{frame}{Comparison BPEL vs REST}
+\begin{itemize}
+\item Getting Started
+\item Non-technical Validation
+\item Flexibility
+\item This Project
+\end{itemize}
+\end{frame}
+
+
+\section{Who did what}
+\begin{frame}{Who did what}
+\begin{itemize}
+	\item Group effort
+	\item See the report for details.
+\end{itemize}
+\end{frame}
+
+

@@ -1,0 +1,14 @@
+\subsection{WS-Security}
+WS-Security is an extension to SOAP which goal it to provide end-to-end security in a web service. It comes with 3 main mechanisms:
+\begin{itemize}
+	\item \textbf{Signatures:} Mechanism for signing a SOAP message in order to assure the integrity of the message.
+	\item \textbf{Encryption:} Mechanism for encrypting a SOAP message in order to assure the confidentiality of the message.
+	\item \textbf{Authentication:} Mechanism for attaching security token to reveal the identity of the sender.
+\end{itemize}
+
+Instead of defining new solutions for secure communication WS-Security provides a interface for using existing standards and specifications. This is done by providing a SOAP header element where security related data can be stored. The content of this header element will depend on the choice of security standard used. Supported standards are for instance:
+\begin{itemize}
+	\item X.509 certificates
+	\item Kerberos tickets
+	\item Username/Password
+\end{itemize}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="NiceViewReset" targetNamespace="http://ws.dtu.NiceView.reset"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.dtu.NiceView.reset" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types/>
+    <message name="NiceViewResetOperationRequest"/>
+    <portType name="NiceViewResetPortType">
+        <operation name="NiceViewResetOperation">
+            <input name="input1" message="tns:NiceViewResetOperationRequest"/>
+        </operation>
+    </portType>
+    <binding name="NiceViewResetBinding" type="tns:NiceViewResetPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="NiceViewResetOperation">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal" namespace="http://ws.dtu.NiceView.reset"/>
+            </input>
+        </operation>
+    </binding>
+    <service name="NiceViewResetService">
+        <port name="NiceViewResetPort" binding="tns:NiceViewResetBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/NiceViewResetService/NiceViewResetPort"/>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="NiceViewReset">
+        <plnk:role name="NiceViewResetPortTypeRole" portType="tns:NiceViewResetPortType"/>
+    </plnk:partnerLinkType>
+</definitions>
