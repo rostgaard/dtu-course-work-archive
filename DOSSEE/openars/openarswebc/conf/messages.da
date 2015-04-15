@@ -1,0 +1,66 @@
+# You can specialize this file for each language.
+# For example, for French create a messages.fr file
+#
+# how to use it -> <h1>&{'password'}</h1>
+password=Nøgle
+join_poll=Tilslut afstemning
+join_poll_pollid=Afstemning#
+join_poll_teaser=Indtast numerisk ID på den afstemning du ønsker at deltage i
+join_poll_submit=Tilslut afstemning &raquo;
+create_poll=Opret afstemning
+create_poll_teaser=Her kan du oprette en afstemning der kan benyttes i mange forskellige scenarier; forelæsninger, præsentationer - eller endda på din lokale bar for at få afgjort et væddemål! Det tager kun få minutter at oprette en poll. Bagefter modtager du et link og et unikt nummer du kan deles ud til dem du ønsker tilslutter sig afstemningen.
+create_poll_link=Opret afstemning &raquo;
+manage_poll=Administrer afstemning
+manage_poll_teaser= Har du allerede oprettet en afstemning, og ønsker at aktivere, redigere eller vise statestikker for den? - Indtast afstemning ID sammen med den nøgle du har modtaget ved oprettelsen.
+manage_poll_pollid=Afstemnings ID:
+manage_poll_password=Nøgle:
+manage_poll_submit=Log ind &raquo;
+question=Spørgsmål
+answer=Svar
+name=Navn
+option=Svarmulighed
+poll_keyword=Poll nøgle
+submit=Videre
+edit=Rediger
+stats=Statestikker
+activate=Aktivér!
+poll=Afstemning
+poll=Afstemings ID
+total=Total
+validation.required.atLeastTwo=Du skal mindst have to svarmuligheder (ellers vil det jo ikke være et spørgsmål)!
+validation.required=Må ikke være tom
+createpoll.success.header=Afstemning oprettet
+createpoll.success.text=Din afstemning er nu oprettet! Der er sendt en email til dig med de følgende informationer, men skriv dem evt. ned i tilfælde af at emailen ikke kommer frem.<br /><br />Du kan logge ind på <a href="/">openARS.dk</a> ved at indtaste de følgende information under 'Administrer afstemning':
+createpoll.manage_poll_now=Administrer afstemning nu &raquo;
+createpoll.form.email=Email adresse:
+createpoll.form.question=Spørgsmål:
+createpoll.form.answers=Svarmuligheder:
+createpoll.form.removeAnswer=x
+createpoll.form.addAnswer=Tilføj svar
+createpoll.form.pollType=Afstemningstype
+createpoll.form.pollType.single=Enkelt svar
+createpoll.form.pollType.multiple=Flere svar
+createpoll.form.submit=Opret spørgsmål
+createpoll.form.cancel=Annuller
+createpoll.errors.errorsinform=Der blev fundet en indtastningsfejl du skal rette før du kan fortsætte.
+vote=Stem!
+joinpoll.voterecieved.header=Din stemme blev modtaget
+joinpoll.voterecieved.text=Din stemme er nu gemt i databasen, og så snart vi afstemningen er færdig, vil resultatet blive vist her.
+loading=Venter...
+joinpoll.nopoll.header=Igen afstemning med ID %s
+joinpoll.nopoll.text=Vi har ikke pt. nogen aktiv afstemning med det angivne ID. Du kan enten gå tilbage for at rette ID'et, eller klikke forneden for at prøve det igen. 
+joinpoll.nopoll.retry=Prøv igen
+joinpoll.success.yAxis=Antal stemmer
+joinpoll.success.votes=stemmer
+managepoll.activatepoll.header=Aktiver afstemning
+managepoll.activatepoll.text=Her kan du aktivere din afstemining for et bestemt tidsinterval. I løbet af den aktive periode vil det være muligt at stemme i afstemningen.
+managepoll.activatepoll.form.minutes=Minutter
+managepoll.activatepoll.form.seconds=Sekunder
+managepoll.editpoll=Rediger afstemning &raquo;
+managepoll.editpoll.header=Rediger afstemning
+managepoll.editpoll.text=Hvis du ønsker at redigere afstemningen kan du bruge knappen forneden. Du får mulighed for at ændre svarene, spørgsmålet, typen og emailen.
+managepoll.pollstatistics=Se statestik &raquo;
+managepoll.pollstatistics.header=Afstemnings statestik
+managepoll.pollstatistics.text=Hvis du ønsker at se statestikken for din afstemning, kan du bruge knappen forneden. Statestikken blive automatisk opdateret hvert 5. sekund, so det er muligt at følge med i afstemningen live.
+managepoll.activate.pollStarted.header=Afstemning %s er startet!
+managepoll.activate.pollStarted.text=Gå til <b>openars.dk/%s</b> eller brug id'et <b>%s</b> på din Android telefon for at stemme!.

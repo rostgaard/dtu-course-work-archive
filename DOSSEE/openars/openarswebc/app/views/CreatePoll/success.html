@@ -1,0 +1,12 @@
+#{extends 'main.html' /} #{ set title:'Created poll #' + pollID /} 
+#{set moreStyles:'createpoll.success' /}
+
+<div id="main" class="greybg success">
+	<div class="wrapper">
+		<h1>&{'createpoll.success.header'}</h1>
+		<p>&{'createpoll.success.text'}</p>
+		<p><b>&{'manage_poll_pollid'}</b> ${pollID}<br />
+		<b>&{'manage_poll_password'}</b> ${adminkey}</p>
+		<a href="@{ManagePoll.index()}?pollID=${pollID}&adminkey=${adminkey}" class="button">&{'createpoll.manage_poll_now'}</a>
+	</div>
+</div>

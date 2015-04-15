@@ -1,0 +1,21 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Import CRUD routes
+*		/admin									module:crud
+
+# Home page
+GET     /                                       Application.index
+GET     /createpoll                            	CreatePoll.index
+GET     /joinpoll                            	JoinPoll.index
+
+GET     /{<[0-9]+>id}                           JoinPoll.index
+GET     /{<[0-9]+>pollID}/{adminkey}                Managepoll.index
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}
+
